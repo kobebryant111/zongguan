@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tansun.wf.platform.mapper.WfActHiCommentMapper">
+
+
+    <resultMap id="actRuIdentitylinkMap" type="com.tansun.wf.platform.model.ActRuIdentitylinkEntity">
+        <result column="ID_" property="id" javaType="java.lang.String"/>
+        <result column="REV_" property="rev" javaType="java.lang.Integer"/>
+        <result column="GROUP_ID_" property="groupId" javaType="java.lang.String"/>
+        <result column="TYPE_" property="type" javaType="java.lang.String"/>
+        <result column="USER_ID_" property="userId" javaType="java.lang.String"/>
+        <result column="TASK_ID_" property="taskId" javaType="java.lang.String"/>
+        <result column="PROC_INST_ID_" property="procInstId" javaType="java.lang.String"/>
+        <result column="PROC_DEF_ID_" property="procDefId" javaType="java.lang.String"/>
+        <result column="ORG_CODE" property="orgCode" javaType="java.lang.String"/>
+        <result column="DEPT_CODE" property="deptCode" javaType="java.lang.String"/>
+        <result column="ROLE_CODE" property="roleCode" javaType="java.lang.String"/>
+        <result column="TASK_DEF_KEY" property="taskDefKey" javaType="java.lang.String"/>
+        <result column="DUE_DATE" property="dueDate" javaType="java.util.Date" />
+    </resultMap>
+
+    <sql id="actAuIdentitylinkColumns">
+		ID_,
+		REV_,
+		GROUP_ID_,
+		TYPE_,
+		USER_ID_,
+		TASK_ID_,
+		PROC_DEF_ID_,
+		ORG_CODE,
+		DEPT_CODE,
+		ROLE_CODE,
+		TASK_DEF_KEY,
+		DUE_DATE
+	</sql>
+
+    <select id="findList"  resultMap="actRuIdentitylinkMap"
+            parameterType="com.tansun.wf.platform.query.ActRuIdentityLinkQuery">
+        select
+        <include refid="actAuIdentitylinkColumns"/>
+        from act_ru_identitylink
+        <where>
+            <if test="taskIds != null and taskIds.size > 0">
+                AND TASK_ID_ IN
+                <foreach collection="taskIds" item="taskId" open="(" separator="," close=")">
+                    #{taskId}
+                </foreach>
+            </if>
+            <if test="taskId != null and taskId != ''"  >
+                AND TASK_ID_ = #{taskId}
+            </if>
+            <if test="tenantId != null and tenantId != ''"  >
+                AND TENANT_ID_ = #{tenantId}
+            </if>
+            <if  test="type !=null and  type !='' ">
+               AND  TYPE_ =#{type}
+            </if>
+            <if  test ="userId != null and userId !='' ">
+               AND USER_ID_ = #{userId}
+            </if>
+        </where>
+    </select>
+
+    <delete id="deleteByTaskId" parameterType="java.lang.String">
+        delete  from act_ru_identitylink where TASK_ID_ = #{taskId}
+    </delete>
+
+    <insert id="insertBatch" >
+        INSERT INTO act_ru_identitylink
+        (ID_, REV_, GROUP_ID_,TYPE_,USER_ID_,TASK_ID_,PROC_DEF_ID_,TENANT_ID_,DEPT_CODE,ORG_CODE,ROLE_CODE,TASK_DEF_KEY,DUE_DATE)
+        <if  test="_databaseId !='oracle'">
+        VALUES
+        <foreach collection ="list" item="ActRuIdentitylinkEntity" separator =",">
+            (#{ActRuIdentitylinkEntity.id},
+             #{ActRuIdentitylinkEntity.rev}, 
+             #{ActRuIdentitylinkEntity.groupId},
+             #{ActRuIdentitylinkEntity.type},
+             #{ActRuIdentitylinkEntity.userId},
+             #{ActRuIdentitylinkEntity.taskId},
+             #{ActRuIdentitylinkEntity.procDefId},
+             #{ActRuIdentitylinkEntity.tenantId},
+             #{ActRuIdentitylinkEntity.deptCode},
+             #{ActRuIdentitylinkEntity.orgCode},
+             #{ActRuIdentitylinkEntity.roleCode},
+             #{ActRuIdentitylinkEntity.taskDefKey},
+             #{ActRuIdentitylinkEntity.dueDate})
+        </foreach >
+       </if>  
+       <if test="_databaseId=='oracle'">
+        select 
+          ID_,
+          REV_,
+          GROUP_ID_,
+          TYPE_,
+          USER_ID_,
+          TASK_ID_,
+          PROC_DEF_ID_,
+           TENANT_ID_,
+          DEPT_CODE,
+          ORG_CODE,
+          ROLE_CODE,
+          TASK_DEF_KEY,
+          DUE_DATE
+       FROM (
+		<foreach collection="list" item="item" index="index" separator="UNION ALL">  
+		  select 
+		     #{item.id, jdbcType=VARCHAR}  ID_,
+		     #{item.rev,jdbcType=BIGINT}  REV_,
+		     #{item.groupId, jdbcType=VARCHAR}  GROUP_ID_,
+             #{item.type, jdbcType=VARCHAR}  TYPE_,
+             #{item.userId, jdbcType=VARCHAR}  USER_ID_,
+             #{item.taskId, jdbcType=VARCHAR}   TASK_ID_,
+             #{item.procDefId, jdbcType=VARCHAR}  PROC_DEF_ID_,
+             #{item.tenantId, jdbcType=VARCHAR}  TENANT_ID_,
+             #{item.deptCode, jdbcType=VARCHAR}  DEPT_CODE,
+             #{item.orgCode, jdbcType=VARCHAR} ORG_CODE,
+             #{item.roleCode, jdbcType=VARCHAR}  ROLE_CODE,
+             #{item.taskDefKey, jdbcType=VARCHAR} TASK_DEF_KEY,
+             #{item.dueDate, jdbcType=DATE}  DUE_DATE      
+          FROM dual	    	
+	    </foreach>
+		 ) A
+       
+       </if>
+    </insert>
+    
+    <insert id="insert" parameterType="com.tansun.wf.platform.model.ActRuIdentitylinkEntity">
+      INSERT INTO act_ru_identitylink (
+			ID_,
+			REV_,
+			GROUP_ID_,
+			TYPE_,
+			USER_ID_,
+			TASK_ID_,
+			PROC_DEF_ID_,
+			TENANT_ID_,
+			DEPT_CODE,
+			ORG_CODE,
+			ROLE_CODE,
+		    TASK_DEF_KEY,
+		    DUE_DATE)
+		 VALUES (
+		 	 #{id, jdbcType=VARCHAR} ,
+		     #{rev,jdbcType=BIGINT}  ,
+		     #{groupId, jdbcType=VARCHAR} ,
+             #{type, jdbcType=VARCHAR}  ,
+             #{userId, jdbcType=VARCHAR}  ,
+             #{taskId, jdbcType=VARCHAR}   ,
+             #{procDefId, jdbcType=VARCHAR} ,
+             #{tenantId, jdbcType=VARCHAR} ,
+             #{deptCode, jdbcType=VARCHAR} ,
+             #{orgCode, jdbcType=VARCHAR} ,
+             #{roleCode, jdbcType=VARCHAR}  ,
+             #{taskDefKey, jdbcType=VARCHAR} ,
+             #{dueDate, jdbcType=DATE}    
+		 )
+    
+    
+    </insert>
+    
+    <update  id="update" parameterType="com.tansun.wf.platform.model.ActRuIdentitylinkEntity">
+		UPDATE act_ru_identitylink a
+		<trim prefix="SET" suffixOverrides=",">
+		   <if test="userId !=null and userId != '' ">
+		      a.USER_ID_ =#{userId} 
+		   </if>
+		</trim>
+		WHERE a.ID_ = #{id}
+    </update>
+
+
+</mapper>

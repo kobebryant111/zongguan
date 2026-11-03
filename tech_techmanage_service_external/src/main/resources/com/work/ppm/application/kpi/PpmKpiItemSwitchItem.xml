@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k1327 2021-06-05 -->
+<mapper namespace="com.work.ppm.application.model.kpi.PpmKpiItemSwitchItem">
+	 <resultMap type="ppmKpiItemSwitchItem" id="PPMKPIITEMSWITCHITEM_ALL">
+        <result property="id" column="ID" />
+		<result property="term" column="TERM" />
+		<result property="content" column="CONTENT" />
+		<result property="relroles" column="RELROLES" />
+		<result property="islaunch" column="ISLAUNCH" />
+		<result property="isswitch" column="ISSWITCH" />
+		<result property="finishtime" column="FINISHTIME" />
+		<result property="itype" column="ITYPE" />
+		<result property="launchtime" column="LAUNCHTIME" />
+		<result property="isdisabled" column="ISDISABLED" />
+		<result property="isvisible" column="ISVISIBLE" />
+		<result property="itemtype" column="ITEMTYPE" />
+		 <result property="endtime" column="ENDTIME" />
+     </resultMap>
+
+     <!-- 所有字段名称 -->
+        <sql id="sql_flied_all">
+        	ID,
+			TERM,
+			CONTENT,
+			RELROLES,
+			ISLAUNCH,
+			ISSWITCH,
+			FINISHTIME,
+			ITYPE,
+			LAUNCHTIME,
+			ISDISABLED,
+			ISVISIBLE,
+			ITEMTYPE,
+			ENDTIME
+        </sql>
+        <sql id="sql_select_condition">
+            <trim prefix="WHERE" suffixOverrides="AND">
+                <if test="id != null " > ID = #{id} AND </if>
+				<if test="term != null  and term != '' " > TERM = #{term} AND </if>
+				<if test="content != null  and content != '' " > CONTENT = #{content} AND </if>
+				<if test="relroles != null  and relroles != '' " > RELROLES = #{relroles} AND </if>
+				<if test="islaunch != null " > ISLAUNCH = #{islaunch} AND </if>
+				<if test="isswitch != null " > ISSWITCH = #{isswitch} AND </if>
+				<if test="finishtime != null  and finishtime != '' " > FINISHTIME = #{finishtime} AND </if>
+				<if test="itype != null  and itype != '' " > ITYPE = #{itype} AND </if>
+				<if test="launchtime != null " > LAUNCHTIME = #{launchtime} AND </if>
+				<if test="isdisabled != null " > ISDISABLED = #{isdisabled} AND </if>
+				<if test="isvisible != null " > ISVISIBLE = #{isvisible} AND </if>
+				<if test="itemtype != null  and itemtype != '' " > ITEMTYPE = #{itemtype} AND </if>
+				
+            </trim>
+        </sql>
+    	<!-- 查询分页  2021-06-05 k1327  -->
+        <select id="queryPagerList" parameterType="map" resultMap="PPMKPIITEMSWITCHITEM_ALL">
+        	SELECT
+            <include refid="sql_flied_all" />
+            FROM PPM_KPI_ITEM_SWITCH_ITEM
+            <include refid="sql_select_condition" />
+        </select>
+
+        <!-- 新增  2021-06-05 k1327  -->
+        <insert id="addPojo" parameterType="ppmKpiItemSwitchItem">
+    		INSERT INTO PPM_KPI_ITEM_SWITCH_ITEM (
+    		<trim suffixOverrides=",">
+    		 <if test="id != null " > ID , </if>
+				<if test="term != null  and term != '' " > TERM , </if>
+				<if test="content != null  and content != '' " > CONTENT , </if>
+				<if test="relroles != null  and relroles != '' " > RELROLES , </if>
+				<if test="islaunch != null " > ISLAUNCH , </if>
+				<if test="isswitch != null " > ISSWITCH , </if>
+				<if test="finishtime != null  and finishtime != '' " > FINISHTIME , </if>
+				<if test="itype != null  and itype != '' " > ITYPE , </if>
+				<if test="launchtime != null " > LAUNCHTIME , </if>
+				<if test="isdisabled != null " > ISDISABLED , </if>
+				<if test="isvisible != null " > ISVISIBLE , </if>
+				<if test="itemtype != null  and itemtype != '' " > ITEMTYPE , </if>
+				<if test="endtime != null  and endtime != '' " > ENDTIME , </if>
+              </trim>
+    		)
+    		VALUES(
+    		<trim suffixOverrides=",">
+    		 <if test="id != null " > #{id} , </if>
+				<if test="term != null  and term != '' " > #{term} , </if>
+				<if test="content != null  and content != '' " > #{content} , </if>
+				<if test="relroles != null  and relroles != '' " > #{relroles} , </if>
+				<if test="islaunch != null " > #{islaunch} , </if>
+				<if test="isswitch != null " > #{isswitch} , </if>
+				<if test="finishtime != null  and finishtime != '' " > #{finishtime} , </if>
+				<if test="itype != null  and itype != '' " > #{itype} , </if>
+				<if test="launchtime != null " > #{launchtime} , </if>
+				<if test="isdisabled != null " > #{isdisabled} , </if>
+				<if test="isvisible != null " > #{isvisible} , </if>
+				<if test="itemtype != null  and itemtype != '' " > #{itemtype} , </if>
+				<if test="endtime != null  and endtime != '' " > #{endtime} , </if>
+            </trim>
+    		)
+        </insert>
+
+        <!--通过id查询  k1327 2021-06-05 -->
+        <select id="queryDetail" parameterType="ppmKpiItemSwitchItem" resultMap="PPMKPIITEMSWITCHITEM_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_KPI_ITEM_SWITCH_ITEM  WHERE ID=#{id}
+        </select>
+
+         <!--查询集合  k1327 2021-06-05 -->
+        <select id="getList" parameterType="ppmKpiItemSwitchItem" resultMap="PPMKPIITEMSWITCHITEM_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_KPI_ITEM_SWITCH_ITEM
+        	<include refid="sql_select_condition" />
+        </select>
+        <!-- update sql -->
+        <sql id="update_pojo_sql">
+        	<trim prefix="SET" suffixOverrides=",">
+        		<if test="id != null " > ID=#{id} , </if>
+				<if test="term != null  and term != '' " > TERM=#{term} , </if>
+				<if test="content != null  and content != '' " > CONTENT=#{content} , </if>
+				<if test="relroles != null  and relroles != '' " > RELROLES=#{relroles} , </if>
+				<if test="islaunch != null " > ISLAUNCH=#{islaunch} , </if>
+				<if test="isswitch != null " > ISSWITCH=#{isswitch} , </if>
+				<if test="finishtime != null  and finishtime != '' " > FINISHTIME=#{finishtime} , </if>
+				<if test="itype != null  and itype != '' " > ITYPE=#{itype} , </if>
+				<if test="launchtime != null " > LAUNCHTIME=#{launchtime} , </if>
+				<if test="isdisabled != null " > ISDISABLED=#{isdisabled} , </if>
+				<if test="isvisible != null " > ISVISIBLE=#{isvisible} , </if>
+				<if test="itemtype != null  and itemtype != '' " > ITEMTYPE=#{itemtype} , </if>
+				<if test="endtime != null  and endtime != '' " > ENDTIME=#{endtime} , </if>
+            </trim>
+        </sql>
+
+        <!--通过id编辑 k1327 2021-06-05 -->
+    	<update id="updatePojo" parameterType="ppmKpiItemSwitchItem">
+        	UPDATE
+        	PPM_KPI_ITEM_SWITCH_ITEM
+        	<include refid="update_pojo_sql" />
+        	WHERE ID=#{id}
+        </update>
+
+        <!--通过id批量删除  k1327 2021-06-05 -->
+        <delete id="deleteById" parameterType="ppmKpiItemSwitchItem">
+        	DELETE
+        	FROM
+        	PPM_KPI_ITEM_SWITCH_ITEM
+        	WHERE ID = #{id}
+        </delete>
+
+</mapper>

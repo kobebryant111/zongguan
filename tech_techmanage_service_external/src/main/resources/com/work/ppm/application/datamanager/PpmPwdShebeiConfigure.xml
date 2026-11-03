@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k6991 2021-10-11 -->
+<mapper namespace="com.work.ppm.application.model.datamanager.PpmPwdShebeiConfigure">
+    <resultMap type="ppmPwdShebeiConfigure" id="PPMPWDSHEBEICONFIGURE_ALL">
+        <result property="id" column="ID"/>
+        <result property="depid" column="DEPID"/>
+        <result property="systemid" column="SYSTEMID"/>
+        <result property="usertype" column="USERTYPE"/>
+        <result property="ip" column="IP"/>
+        <result property="userid" column="USERID"/>
+        <result property="spuser" column="SPUSER"/>
+        <result property="checkindate" column="CHECKINDATE"/>
+        <result property="applytime" column="APPLYTIME"/>
+        <result property="applyer" column="APPLYER"/>
+        <result property="status" column="STATUS"/>
+        <result property="iswhite" column="ISWHITE"/>
+        <result property="operatortype" column="OPERATORTYPE"/>
+        <result property="logintype" column="LOGINTYPE"/>
+        <result property="groupname" column="GROUPNAME"/>
+        <result property="servername" column="SERVERNAME"/>
+        <result property="networkprotocol" column="NETWORKPROTOCOL"/>
+        <result property="otherdept" column="OTHERDEPT"/>
+        <result property="pwd" column="PWD"/>
+
+    </resultMap>
+
+    <!-- 所有字段名称 -->
+    <sql id="sql_flied_all">
+        ID,
+        DEPID,
+        SYSTEMID,
+        USERTYPE,
+        IP,
+        USERID,
+        SPUSER,
+        CHECKINDATE,
+        APPLYTIME,
+        APPLYER,
+        STATUS,
+        ISWHITE,
+        OPERATORTYPE,
+        LOGINTYPE,
+        GROUPNAME,
+        SERVERNAME,
+        NETWORKPROTOCOL,
+        OTHERDEPT,
+        PWD
+    </sql>
+    <sql id="sql_select_condition">
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="id != null ">ID = #{id} AND</if>
+            <if test="depid != null  and depid != '' ">DEPID = #{depid} AND</if>
+            <if test="systemid != null  and systemid != '' ">SYSTEMID = #{systemid} AND</if>
+            <if test="usertype != null  and usertype != '' ">USERTYPE = #{usertype} AND</if>
+            <if test="ip != null  and ip != '' ">IP = #{ip} AND</if>
+            <if test="userid != null  and userid != '' ">USERID = #{userid} AND</if>
+            <if test="spuser != null  and spuser != '' ">SPUSER = #{spuser} AND</if>
+            <if test="checkindate != null ">CHECKINDATE = #{checkindate} AND</if>
+            <if test="applytime != null ">APPLYTIME = #{applytime} AND</if>
+            <if test="applyer != null  and applyer != '' ">APPLYER = #{applyer} AND</if>
+            <if test="status != null  and status != '' ">STATUS = #{status} AND</if>
+            <if test="iswhite != null  and iswhite != '' ">ISWHITE = #{iswhite} AND</if>
+            <if test="operatortype != null  and operatortype != '' ">OPERATORTYPE = #{operatortype} AND</if>
+            <if test="logintype != null  and logintype != '' ">LOGINTYPE = #{logintype} AND</if>
+            <if test="groupname != null  and groupname != '' ">GROUPNAME = #{groupname} AND</if>
+            <if test="servername != null  and servername != '' ">SERVERNAME = #{servername} AND</if>
+            <if test="networkprotocol != null  and networkprotocol != '' ">NETWORKPROTOCOL = #{networkprotocol} AND</if>
+            <if test="otherdept != null  and otherdept != '' ">OTHERDEPT = #{otherdept} AND</if>
+            <if test="pwd != null  and pwd != '' ">PWD = #{pwd} AND</if>
+
+        </trim>
+    </sql>
+    <!-- 查询分页  2021-10-11 k6991  -->
+    <select id="queryPagerList" parameterType="map" resultMap="PPMPWDSHEBEICONFIGURE_ALL">
+        select t.depid,t.systemid,t.usertype,t.ip,t.userid,t.iswhite,
+        t.OPERATORTYPE,t.logintype,t.groupname,t.id
+        from PPM_PWD_SHEBEI_CONFIGURE t
+        <trim prefix="where" suffixOverrides="AND">
+            <if test="true">
+                t.usertype not in ('备用管理员用户','数据库查询用户','服务器查询用户') and t.status='0'
+                AND
+            </if>
+            <if test="systemid != null and systemid != ''">
+                t.systemid =#{systemid} AND
+            </if>
+            <if test="usertype != null and usertype != ''">
+                t.usertype like '%'||trim(#{usertype})||'%' AND
+            </if>
+            <if test="ip != null and ip != ''">
+                t.ip like '%'||trim(#{ip})||'%' AND
+            </if>
+            <if test="userid != null and userid != ''">
+                t.userid like '%'||trim(#{userid})||'%' AND
+            </if>
+            <if test="depid != null and depid != ''">
+                ','||#{depid}||',' like '%,'||t.depid||',%' AND
+            </if>
+            <if test="isXitong != null and isXitong != ''">
+                t.depid not like '%总行金融科技部-网络管理部%' and t.depid not like '%分行' AND
+            </if>
+        </trim>
+        order by t.depid,t.systemid desc
+    </select>
+
+
+    <!--查询集合  k6991 2021-10-11 -->
+    <select id="getList" parameterType="ppmPwdShebeiConfigure" resultMap="PPMPWDSHEBEICONFIGURE_ALL">
+        select t.depid,t.systemid,t.usertype,t.ip,t.servername,
+        t.userid,t.id,t.iswhite,t.OPERATORTYPE,t.logintype,
+        t.groupname
+        from PPM_PWD_SHEBEI_CONFIGURE t
+        left join ppm_system_wihte t1 on t1.sysname=t.systemid
+        <trim prefix="where" suffixOverrides="AND">
+            <if test="true">
+                t.usertype not in ('备用管理员用户','数据库查询用户','服务器查询用户') and t.status='0'
+                AND
+            </if>
+            <if test="systemid != null and systemid != ''">
+                t.systemid IN (${systemid}) AND
+            </if>
+            <if test="ip != null and ip != ''">
+                t.ip =#{ip} AND
+            </if>
+            <if test="usertype != null and usertype != ''">
+                t.usertype like '%'||trim(#{usertype})||'%' AND
+            </if>
+            <if test="ip != null and ip != ''">
+                t.ip like '%'||trim(#{ip})||'%' AND
+            </if>
+            <if test="userid != null and userid != ''">
+                t.userid like '%'||trim(#{userid})||'%' AND
+            </if>
+            <if test="deptid != null and deptid != ''">
+                ','||#{deptid}||',' like '%,'||t.depid||',%' AND
+            </if>
+            <if test="isXitong != null and isXitong != ''">
+                t.depid not like '%总行金融科技部-网络管理部%' and t.depid not like '%分行' AND
+            </if>
+        </trim>
+        order by t.depid,t.systemid asc
+    </select>
+    <!-- update sql -->
+    <sql id="update_pojo_sql">
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="id != null ">ID=#{id} ,</if>
+            <if test="depid != null  and depid != '' ">DEPID=#{depid} ,</if>
+            <if test="systemid != null  and systemid != '' ">SYSTEMID=#{systemid} ,</if>
+            <if test="usertype != null  and usertype != '' ">USERTYPE=#{usertype} ,</if>
+            <if test="ip != null  and ip != '' ">IP=#{ip} ,</if>
+            <if test="userid != null  and userid != '' ">USERID=#{userid} ,</if>
+            <if test="spuser != null  and spuser != '' ">SPUSER=#{spuser} ,</if>
+            <if test="checkindate != null ">CHECKINDATE=#{checkindate} ,</if>
+            <if test="applytime != null ">APPLYTIME=#{applytime} ,</if>
+            <if test="applyer != null  and applyer != '' ">APPLYER=#{applyer} ,</if>
+            <if test="status != null  and status != '' ">STATUS=#{status} ,</if>
+            <if test="iswhite != null  and iswhite != '' ">ISWHITE=#{iswhite} ,</if>
+            <if test="operatortype != null  and operatortype != '' ">OPERATORTYPE=#{operatortype} ,</if>
+            <if test="logintype != null  and logintype != '' ">LOGINTYPE=#{logintype} ,</if>
+            <if test="groupname != null  and groupname != '' ">GROUPNAME=#{groupname} ,</if>
+            <if test="servername != null  and servername != '' ">SERVERNAME=#{servername} ,</if>
+            <if test="networkprotocol != null  and networkprotocol != '' ">NETWORKPROTOCOL=#{networkprotocol} ,</if>
+            <if test="otherdept != null  and otherdept != '' ">OTHERDEPT=#{otherdept} ,</if>
+            <if test="pwd != null  and pwd != '' ">PWD=#{pwd} ,</if>
+
+        </trim>
+    </sql>
+
+    <!--通过id编辑 k6991 2021-10-11 -->
+    <update id="updatePojo" parameterType="ppmPwdShebeiConfigure">
+        UPDATE
+        PPM_PWD_SHEBEI_CONFIGURE
+        <include refid="update_pojo_sql"/>
+        WHERE ID=#{id}
+    </update>
+    <select id="queryDetail" parameterType="ppmPwdShebeiConfigure" resultMap="PPMPWDSHEBEICONFIGURE_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM PPM_PWD_SHEBEI_CONFIGURE
+        WHERE SYSTEMID=#{systemid} AND ROWNUM =1
+    </select>
+    <!-- 查看详情 -->
+    <select id="getSheBei" parameterType="ppmPwdShebeiConfigure" resultMap="PPMPWDSHEBEICONFIGURE_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM PPM_PWD_SHEBEI_CONFIGURE
+        <include refid="sql_select_condition"/>
+    </select>
+</mapper>

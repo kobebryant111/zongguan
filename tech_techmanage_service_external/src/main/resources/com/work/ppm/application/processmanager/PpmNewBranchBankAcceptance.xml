@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:213736 2021-09-03 -->
+<mapper namespace="com.work.ppm.application.model.processmanager.PpmNewBranchBankAcceptance">
+    <resultMap type="ppmNewBranchBankAcceptance" id="PPMNEWBRANCHBANKACCEPTANCE_ALL">
+        <result property="id" column="ID"/>
+        <result property="instanceId" column="INSTANCE_ID"/>
+        <result property="badge" column="BADGE"/>
+        <result property="deptId" column="DEPT_ID"/>
+        <result property="contact" column="CONTACT"/>
+        <result property="createDate" column="CREATE_DATE"/>
+        <result property="processType" column="PROCESS_TYPE"/>
+        <result property="processTitle" column="PROCESS_TITLE"/>
+        <result property="processDescribe" column="PROCESS_DESCRIBE"/>
+        <result property="netcoolManagerId" column="NETCOOL_MANAGER_ID"/>
+        <result property="netcoolDecision" column="NETCOOL_DECISION"/>
+        <result property="upsManagerId" column="UPS_MANAGER_ID"/>
+        <result property="upsDecision" column="UPS_DECISION"/>
+        <result property="ackManagerId" column="ACK_MANAGER_ID"/>
+        <result property="ackDecision" column="ACK_DECISION"/>
+        <result property="userName" column="USER_NAME"/>
+        <result property="currentId" column="CURRENT_ID"/>
+        <result property="lastMofiyDate" column="LAST_MOFIY_DATE"/>
+        <result property="state" column="STATE"/>
+
+    </resultMap>
+
+    <!-- 所有字段名称 -->
+    <sql id="sql_flied_all">
+        ID,
+        INSTANCE_ID,
+        BADGE,
+        DEPT_ID,
+        CONTACT,
+        CREATE_DATE,
+        PROCESS_TYPE,
+        PROCESS_TITLE,
+        PROCESS_DESCRIBE,
+        NETCOOL_MANAGER_ID,
+        NETCOOL_DECISION,
+        UPS_MANAGER_ID,
+        UPS_DECISION,
+        ACK_MANAGER_ID,
+        ACK_DECISION,
+        USER_NAME,
+        CURRENT_ID,
+        LAST_MOFIY_DATE,
+        STATE
+    </sql>
+    <sql id="sql_select_condition">
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="id != null ">ID = #{id} AND</if>
+            <if test="instanceId != null  and instanceId != '' ">INSTANCE_ID = #{instanceId} AND</if>
+            <if test="badge != null  and badge != '' ">BADGE = #{badge} AND</if>
+            <if test="deptId != null  and deptId != '' ">DEPT_ID = #{deptId} AND</if>
+            <if test="contact != null  and contact != '' ">CONTACT = #{contact} AND</if>
+            <if test="createDate != null ">CREATE_DATE = #{createDate} AND</if>
+            <if test="processType != null and processType != '' ">PROCESS_TYPE = #{processType} AND</if>
+            <if test="processTitle != null  and processTitle != '' "> INSTR(PROCESS_TITLE , #{processTitle}) > 0
+                AND</if>
+            <if test="processDescribe != null  and processDescribe != '' ">PROCESS_DESCRIBE = #{processDescribe} AND
+            </if>
+            <if test="netcoolManagerId != null  and netcoolManagerId != '' ">NETCOOL_MANAGER_ID = #{netcoolManagerId}
+                AND
+            </if>
+            <if test="netcoolDecision != null ">NETCOOL_DECISION = #{netcoolDecision} AND</if>
+            <if test="upsManagerId != null  and upsManagerId != '' ">UPS_MANAGER_ID = #{upsManagerId} AND</if>
+            <if test="upsDecision != null ">UPS_DECISION = #{upsDecision} AND</if>
+            <if test="ackManagerId != null  and ackManagerId != '' ">ACK_MANAGER_ID = #{ackManagerId} AND</if>
+            <if test="ackDecision != null ">ACK_DECISION = #{ackDecision} AND</if>
+            <if test="userName != null and userName != '' "> instr(USER_NAME , #{userName}) > 0 AND</if>
+            <if test="currentId != null  and currentId != '' ">CURRENT_ID = #{currentId} AND</if>
+            <if test="lastMofiyDate != null ">LAST_MOFIY_DATE = #{lastMofiyDate} AND</if>
+            <if test="state != null ">STATE = #{state} AND</if>
+            <if test="startDate != null and startDate != ''">
+                CREATE_DATE BETWEEN
+                to_date(#{startDate},'YYYY-MM-DD hh24:mi:ss')
+                AND
+                to_date(#{endDate},'YYYY-MM-DD hh24:mi:ss')
+                AND
+            </if>
+        </trim>
+    </sql>
+
+    <resultMap id="QUERYPAGERLIST_MAP" type="ppmNewBranchBankAcceptanceInfo" extends="PPMNEWBRANCHBANKACCEPTANCE_ALL">
+    </resultMap>
+    <!-- 查询分页  2021-09-03 213736  -->
+    <select id="queryPagerList" parameterType="map" resultMap="QUERYPAGERLIST_MAP">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM PPM_NEW_BRANCH_BANK_ACCEPTANCE
+        <include refid="sql_select_condition"/>
+        ORDER BY CREATE_DATE DESC
+    </select>
+
+    <!-- 新增  2021-09-03 213736  -->
+    <insert id="addPojo" parameterType="ppmNewBranchBankAcceptance">
+        INSERT INTO PPM_NEW_BRANCH_BANK_ACCEPTANCE (
+        <trim suffixOverrides=",">
+            <if test="id != null ">ID ,</if>
+            <if test="instanceId != null  and instanceId != '' ">INSTANCE_ID ,</if>
+            <if test="badge != null  and badge != '' ">BADGE ,</if>
+            <if test="deptId != null  and deptId != '' ">DEPT_ID ,</if>
+            <if test="contact != null  and contact != '' ">CONTACT ,</if>
+            <if test="createDate != null ">CREATE_DATE ,</if>
+            <if test="processType != null and processType != '' ">PROCESS_TYPE ,</if>
+            <if test="processTitle != null  and processTitle != '' ">PROCESS_TITLE ,</if>
+            <if test="processDescribe != null  and processDescribe != '' ">PROCESS_DESCRIBE ,</if>
+            <if test="netcoolManagerId != null  and netcoolManagerId != '' ">NETCOOL_MANAGER_ID ,</if>
+            <if test="netcoolDecision != null ">NETCOOL_DECISION ,</if>
+            <if test="upsManagerId != null  and upsManagerId != '' ">UPS_MANAGER_ID ,</if>
+            <if test="upsDecision != null ">UPS_DECISION ,</if>
+            <if test="ackManagerId != null  and ackManagerId != '' ">ACK_MANAGER_ID ,</if>
+            <if test="ackDecision != null ">ACK_DECISION ,</if>
+            <if test="userName != null  and userName != '' ">USER_NAME ,</if>
+            <if test="currentId != null  and currentId != '' ">CURRENT_ID ,</if>
+            <if test="lastMofiyDate != null ">LAST_MOFIY_DATE ,</if>
+            <if test="state != null ">STATE ,</if>
+
+        </trim>
+        )
+        VALUES(
+        <trim suffixOverrides=",">
+            <if test="id != null ">#{id} ,</if>
+            <if test="instanceId != null  and instanceId != '' ">#{instanceId} ,</if>
+            <if test="badge != null  and badge != '' ">#{badge} ,</if>
+            <if test="deptId != null  and deptId != '' ">#{deptId} ,</if>
+            <if test="contact != null  and contact != '' ">#{contact} ,</if>
+            <if test="createDate != null ">#{createDate} ,</if>
+            <if test="processType != null and processType != '' ">#{processType} ,</if>
+            <if test="processTitle != null  and processTitle != '' ">#{processTitle} ,</if>
+            <if test="processDescribe != null  and processDescribe != '' ">#{processDescribe} ,</if>
+            <if test="netcoolManagerId != null  and netcoolManagerId != '' ">#{netcoolManagerId} ,</if>
+            <if test="netcoolDecision != null ">#{netcoolDecision} ,</if>
+            <if test="upsManagerId != null  and upsManagerId != '' ">#{upsManagerId} ,</if>
+            <if test="upsDecision != null ">#{upsDecision} ,</if>
+            <if test="ackManagerId != null  and ackManagerId != '' ">#{ackManagerId} ,</if>
+            <if test="ackDecision != null ">#{ackDecision} ,</if>
+            <if test="userName != null  and userName != '' ">#{userName} ,</if>
+            <if test="currentId != null  and currentId != '' ">#{currentId} ,</if>
+            <if test="lastMofiyDate != null ">#{lastMofiyDate} ,</if>
+            <if test="state != null ">#{state} ,</if>
+
+        </trim>
+        )
+    </insert>
+
+    <!--通过id查询  213736 2021-09-03 -->
+    <select id="queryDetail" parameterType="ppmNewBranchBankAcceptance" resultMap="PPMNEWBRANCHBANKACCEPTANCE_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM PPM_NEW_BRANCH_BANK_ACCEPTANCE
+        WHERE INSTANCE_ID=#{instanceId} AND ROWNUM=1
+    </select>
+
+    <!--查询集合  213736 2021-09-03 -->
+    <select id="getList" parameterType="ppmNewBranchBankAcceptance" resultMap="PPMNEWBRANCHBANKACCEPTANCE_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM PPM_NEW_BRANCH_BANK_ACCEPTANCE
+        <include refid="sql_select_condition"/>
+    </select>
+    <!-- update sql -->
+    <sql id="update_pojo_sql">
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="id != null ">ID=#{id} ,</if>
+            <if test="instanceId != null  and instanceId != '' ">INSTANCE_ID=#{instanceId} ,</if>
+            <if test="badge != null  and badge != '' ">BADGE=#{badge} ,</if>
+            <if test="deptId != null  and deptId != '' ">DEPT_ID=#{deptId} ,</if>
+            <if test="contact != null  and contact != '' ">CONTACT=#{contact} ,</if>
+            <if test="createDate != null ">CREATE_DATE=#{createDate} ,</if>
+            <if test="processType != null and processType != '' ">PROCESS_TYPE=#{processType} ,</if>
+            <if test="processTitle != null  and processTitle != '' ">PROCESS_TITLE=#{processTitle} ,</if>
+            <if test="processDescribe != null  and processDescribe != '' ">PROCESS_DESCRIBE=#{processDescribe} ,</if>
+            <if test="netcoolManagerId != null  and netcoolManagerId != '' ">NETCOOL_MANAGER_ID=#{netcoolManagerId} ,
+            </if>
+            <if test="netcoolDecision != null ">NETCOOL_DECISION=#{netcoolDecision} ,</if>
+            <if test="upsManagerId != null  and upsManagerId != '' ">UPS_MANAGER_ID=#{upsManagerId} ,</if>
+            <if test="upsDecision != null ">UPS_DECISION=#{upsDecision} ,</if>
+            <if test="ackManagerId != null  and ackManagerId != '' ">ACK_MANAGER_ID=#{ackManagerId} ,</if>
+            <if test="ackDecision != null ">ACK_DECISION=#{ackDecision} ,</if>
+            <if test="userName != null  and userName != '' ">USER_NAME=#{userName} ,</if>
+            <if test="currentId != null  and currentId != '' ">CURRENT_ID=#{currentId} ,</if>
+            <if test="lastMofiyDate != null ">LAST_MOFIY_DATE=#{lastMofiyDate} ,</if>
+            <if test="state != null ">STATE=#{state} ,</if>
+        </trim>
+    </sql>
+
+    <!--通过id编辑 213736 2021-09-03 -->
+    <update id="updatePojo" parameterType="ppmNewBranchBankAcceptance">
+        UPDATE
+        PPM_NEW_BRANCH_BANK_ACCEPTANCE
+        <include refid="update_pojo_sql"/>
+        WHERE INSTANCE_ID=#{instanceId}
+    </update>
+
+    <!--通过id批量删除  213736 2021-09-03 -->
+    <delete id="deleteById" parameterType="ppmNewBranchBankAcceptance">
+        DELETE
+        FROM
+        PPM_NEW_BRANCH_BANK_ACCEPTANCE
+        WHERE ID = #{id}
+    </delete>
+    <resultMap id="GETCURRENTINFO_MAP" type="ppmNewBranchBankAcceptanceInfo" extends="PPMNEWBRANCHBANKACCEPTANCE_ALL">
+        <result property="userName" column="USER_NAME"/>
+        <result property="contact" column="MOBILE"/>
+        <result property="deptName" column="DEPT_NAME"/>
+    </resultMap>
+    <!-- 获取个人信息 -->
+    <select id="getCurrentInfo" parameterType="ppmNewBranchBankAcceptance" resultMap="GETCURRENTINFO_MAP">
+        SELECT * FROM (
+        SELECT
+        E.BADGE BADGE,
+        E.EMPNAME USER_NAME,
+        TO_CHAR(E.DEPID) DEPT_ID,
+        E.MOBILETELPHONE MOBILE,
+        D.LOCATION DEPT_NAME
+        FROM COMM_EMPLOYEE E
+        LEFT JOIN COMM_DEPARTMENT D ON(E.DEPID=D.DEPID)
+        UNION ALL
+        SELECT
+        B.JOB_ID BADGE,
+        B.USER_NAME USER_NAME,
+        B.DEPT_ID DEPT_ID,
+        B.MOBILE MOBILE,
+        D.LOCATION DEPT_NAME
+        FROM PPM_OUTSOURCING_BASIC B
+        LEFT JOIN COMM_DEPARTMENT D ON(B.DEPT_ID=D.DEPID)
+        ) TEMP WHERE TEMP.BADGE=#{badge}
+    </select>
+    <update id="cleanInfo" parameterType="java.lang.String" >
+        UPDATE
+        PPM_NEW_BRANCH_BANK_ACCEPTANCE
+        SET
+        NETCOOL_MANAGER_ID=null,
+        NETCOOL_DECISION=null,
+        UPS_MANAGER_ID=null,
+        UPS_DECISION=null,
+        ACK_MANAGER_ID=null,
+        ACK_DECISION=null
+        WHERE INSTANCE_ID=#{instanceId}
+    </update>
+</mapper>

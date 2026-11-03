@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k6991 2020-03-18 -->
+<mapper namespace="com.work.ppm.application.model.systemmanager.EosDictType">
+	 <resultMap type="eosDictType" id="EOSDICTTYPE_ALL">
+        <result property="dicttypeid" column="DICTTYPEID" />
+		<result property="dicttypename" column="DICTTYPENAME" />
+		<result property="rank" column="RANK" />
+		<result property="parentid" column="PARENTID" />
+		<result property="seqno" column="SEQNO" />
+		
+     </resultMap>
+
+     <!-- 所有字段名称 -->
+        <sql id="sql_flied_all">
+        	DICTTYPEID,
+			DICTTYPENAME,
+			RANK,
+			PARENTID,
+			SEQNO
+        </sql>
+    	<!-- 查询分页  2020-03-18 k6991  -->
+        <select id="queryPagerList" parameterType="map" resultMap="EOSDICTTYPE_ALL">
+        	SELECT
+            <include refid="sql_flied_all" />
+            FROM EOS_DICT_TYPE
+            <trim prefix="WHERE" suffixOverrides="AND">
+                <if test="dicttypeid != null  and dicttypeid != '' " > DICTTYPEID = #{dicttypeid} AND </if>
+				<if test="dicttypename != null  and dicttypename != '' " > DICTTYPENAME = #{dicttypename} AND </if>
+				<if test="rank != null " > RANK = #{rank} AND </if>
+				<if test="parentid != null  and parentid != '' " > PARENTID = #{parentid} AND </if>
+				<if test="seqno != null  and seqno != '' " > SEQNO = #{seqno} AND </if>
+				
+            </trim>
+        </select>
+
+        <!-- 新增  2020-03-18 k6991  -->
+        <insert id="addPojo" parameterType="eosDictType">
+    		INSERT INTO EOS_DICT_TYPE (
+    		DICTTYPEID,
+			DICTTYPENAME,
+			RANK,
+			PARENTID,
+			SEQNO
+    		)
+    		VALUES(
+    		#{dicttypeid},
+			#{dicttypename},
+			#{rank},
+			#{parentid},
+			#{seqno}
+    		)
+        </insert>
+
+        <!--通过id查询  k6991 2020-03-18 -->
+        <select id="queryDetail" parameterType="map" resultMap="EOSDICTTYPE_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM EOS_DICT_TYPE  WHERE DICTTYPEID=#{dicttypeid}
+        </select>
+
+         <!--查询集合  k6991 2020-03-18 -->
+        <select id="getList" parameterType="map" resultMap="EOSDICTTYPE_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM EOS_DICT_TYPE
+        	<trim prefix="WHERE" suffixOverrides="AND">
+        		<if test="dicttypeid != null  and dicttypeid != '' " > DICTTYPEID=#{dicttypeid} AND </if>
+				<if test="dicttypename != null  and dicttypename != '' " > DICTTYPENAME=#{dicttypename} AND </if>
+				<if test="rank != null " > RANK=#{rank} AND </if>
+				<if test="parentid != null  and parentid != '' " > PARENTID=#{parentid} AND </if>
+				<if test="seqno != null  and seqno != '' " > SEQNO=#{seqno} AND </if>
+				
+            </trim>
+        </select>
+        <!-- update sql -->
+        <sql id="update_pojo_sql">
+        	<trim prefix="SET" suffixOverrides=",">
+        		<if test="dicttypeid != null  and dicttypeid != '' " > DICTTYPEID=#{dicttypeid} , </if>
+				<if test="dicttypename != null  and dicttypename != '' " > DICTTYPENAME=#{dicttypename} , </if>
+				<if test="rank != null " > RANK=#{rank} , </if>
+				<if test="parentid != null  and parentid != '' " > PARENTID=#{parentid} , </if>
+				<if test="seqno != null  and seqno != '' " > SEQNO=#{seqno} , </if>
+				
+            </trim>
+        </sql>
+
+        <!--通过id编辑 k6991 2020-03-18 -->
+    	<update id="updatePojo" parameterType="eosDictType">
+        	UPDATE
+        	EOS_DICT_TYPE
+        	<include refid="update_pojo_sql" />
+        	WHERE DICTTYPEID=#{dicttypeid}
+        </update>
+
+        <!--通过id批量删除  k6991 2020-03-18 -->
+        <delete id="deleteById" parameterType="eosDictType">
+        	DELETE
+        	FROM
+        	EOS_DICT_TYPE
+        	WHERE DICTTYPEID = #{dicttypeid}
+        </delete>
+</mapper>

@@ -1,0 +1,349 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k6991 2020-06-22 -->
+<mapper namespace="com.work.ppm.application.model.othermanager.PpmOutsourcingInfo">
+    <resultMap type="ppmOutsourcingInfo" id="PPMOUTSOURCINGINFO_ALL">
+        <result property="id" column="ID"/>
+        <result property="outsourcname" column="OUTSOURCNAME"/>
+        <result property="orgcode" column="ORGCODE"/>
+        <result property="regcapital" column="REGCAPITAL"/>
+        <result property="establishtime" column="ESTABLISHTIME"/>
+        <result property="companyaddress" column="COMPANYADDRESS"/>
+        <result property="mainbusiness" column="MAINBUSINESS"/>
+        <result property="service" column="SERVICE"/>
+        <result property="contactsname" column="CONTACTSNAME"/>
+        <result property="contactspost" column="CONTACTSPOST"/>
+        <result property="contactsemail" column="CONTACTSEMAIL"/>
+        <result property="caseinfo" column="CASEINFO"/>
+        <result property="qualificationinfo" column="QUALIFICATIONINFO"/>
+        <result property="companystaser" column="COMPANYSTASER"/>
+        <result property="telephone" column="TELEPHONE"/>
+        <result property="companynum" column="COMPANYNUM"/>
+        <result property="isdel" column="ISDEL"/>
+        <result property="createtime" column="CREATETIME"/>
+        <result property="creators" column="CREATORS"/>
+        <result property="lastmodtime" column="LASTMODTIME"/>
+        <result property="lastmoduser" column="LASTMODUSER"/>
+        <result property="abbreviation" column="ABBREVIATION"/>
+        <result property="cgSupplierId" column="CG_SUPPLIER_ID"/>
+        <result property="isFeat" column="IS_FEAT"/>
+
+    </resultMap>
+	<resultMap id="PPMOUTSOURCINGINFO_ALL_EXT" type="ppmOutsourcingInfoExt" extends="PPMOUTSOURCINGINFO_ALL">
+		<result property="orgCodeVal" column="ORGCODEVAL" />
+     </resultMap>
+
+    <!-- 所有字段名称 -->
+    <sql id="sql_flied_all">
+        ID,
+        OUTSOURCNAME,
+        ORGCODE,
+        REGCAPITAL,
+        ESTABLISHTIME,
+        COMPANYADDRESS,
+        MAINBUSINESS,
+        SERVICE,
+        CONTACTSNAME,
+        CONTACTSPOST,
+        CONTACTSEMAIL,
+        CASEINFO,
+        QUALIFICATIONINFO,
+        COMPANYSTASER,
+        TELEPHONE,
+        COMPANYNUM,
+        ISDEL,
+        CREATETIME,
+        CREATORS,
+        LASTMODTIME,
+        LASTMODUSER,
+        ABBREVIATION,
+        CG_SUPPLIER_ID,
+        IS_FEAT
+		
+    </sql>
+    <!-- 查询分页  2020-06-22 k6991  -->
+    <select id="queryPagerList" parameterType="map" resultMap="PPMOUTSOURCINGINFO_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM PPM_OUTSOURCING_INFO
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="id != null ">ID = #{id} AND</if>
+            <if test="outsourcname != null  and outsourcname != '' ">INSTR( OUTSOURCNAME , #{outsourcname}) > 0 AND</if>
+            <if test="orgcode != null  and orgcode != '' ">ORGCODE = #{orgcode} AND</if>
+            <if test="regcapital != null  and regcapital != '' ">REGCAPITAL = #{regcapital} AND</if>
+            <if test="establishtime != null ">ESTABLISHTIME = #{establishtime} AND</if>
+            <if test="companyaddress != null  and companyaddress != '' ">COMPANYADDRESS = #{companyaddress} AND</if>
+            <if test="mainbusiness != null  and mainbusiness != '' ">MAINBUSINESS = #{mainbusiness} AND</if>
+            <if test="service != null  and service != '' ">SERVICE = #{service} AND</if>
+            <if test="contactsname != null  and contactsname != '' ">CONTACTSNAME = #{contactsname} AND</if>
+            <if test="contactspost != null  and contactspost != '' ">CONTACTSPOST = #{contactspost} AND</if>
+            <if test="contactsemail != null  and contactsemail != '' ">CONTACTSEMAIL = #{contactsemail} AND</if>
+            <if test="caseinfo != null  and caseinfo != '' ">CASEINFO = #{caseinfo} AND</if>
+            <if test="qualificationinfo != null  and qualificationinfo != '' ">QUALIFICATIONINFO = #{qualificationinfo}
+                AND
+            </if>
+            <if test="companystaser != null  and companystaser != '' ">COMPANYSTASER = #{companystaser} AND</if>
+            <if test="telephone != null  and telephone != '' ">TELEPHONE = #{telephone} AND</if>
+            <if test="companynum != null ">COMPANYNUM = #{companynum} AND</if>
+            <if test="isdel != null ">ISDEL = #{isdel} AND</if>
+            <if test="createtime != null ">CREATETIME = #{createtime} AND</if>
+            <if test="creators != null  and creators != '' ">CREATORS = #{creators} AND</if>
+            <if test="lastmodtime != null ">LASTMODTIME = #{lastmodtime} AND</if>
+            <if test="lastmoduser != null  and lastmoduser != '' ">LASTMODUSER = #{lastmoduser} AND</if>
+            <if test="abbreviation != null  and abbreviation != '' ">ABBREVIATION = #{abbreviation} AND</if>
+            <if test="cgSupplierId != null  and cgSupplierId != '' ">CG_SUPPLIER_ID = #{cgSupplierId} AND</if>
+            <if test="isFeat != null  and isFeat != '' ">IS_FEAT = #{isFeat} AND</if>
+
+        </trim>
+    </select>
+
+    <!-- 新增  2020-06-22 k6991  -->
+    <insert id="addPojo" parameterType="ppmOutsourcingInfo">
+        INSERT INTO PPM_OUTSOURCING_INFO (
+        <trim suffixOverrides=",">
+            <if test="id != null ">ID ,</if>
+            <if test="outsourcname != null  and outsourcname != '' ">OUTSOURCNAME ,</if>
+            <if test="orgcode != null  and orgcode != '' ">ORGCODE ,</if>
+            <if test="regcapital != null  and regcapital != '' ">REGCAPITAL ,</if>
+            <if test="establishtime != null ">ESTABLISHTIME ,</if>
+            <if test="companyaddress != null  and companyaddress != '' ">COMPANYADDRESS ,</if>
+            <if test="mainbusiness != null  and mainbusiness != '' ">MAINBUSINESS ,</if>
+            <if test="service != null  and service != '' ">SERVICE ,</if>
+            <if test="contactsname != null  and contactsname != '' ">CONTACTSNAME ,</if>
+            <if test="contactspost != null  and contactspost != '' ">CONTACTSPOST ,</if>
+            <if test="contactsemail != null  and contactsemail != '' ">CONTACTSEMAIL ,</if>
+            <if test="caseinfo != null  and caseinfo != '' ">CASEINFO ,</if>
+            <if test="qualificationinfo != null  and qualificationinfo != '' ">QUALIFICATIONINFO ,</if>
+            <if test="companystaser != null  and companystaser != '' ">COMPANYSTASER ,</if>
+            <if test="telephone != null  and telephone != '' ">TELEPHONE ,</if>
+            <if test="companynum != null ">COMPANYNUM ,</if>
+            <if test="isdel != null ">ISDEL ,</if>
+            <if test="createtime != null ">CREATETIME ,</if>
+            <if test="creators != null  and creators != '' ">CREATORS ,</if>
+            <if test="lastmodtime != null ">LASTMODTIME ,</if>
+            <if test="lastmoduser != null  and lastmoduser != '' ">LASTMODUSER ,</if>
+            <if test="abbreviation != null  and abbreviation != '' ">ABBREVIATION ,</if>
+            <if test="cgSupplierId != null  and cgSupplierId != '' ">CG_SUPPLIER_ID ,</if>
+            <if test="isFeat != null  and isFeat != '' ">IS_FEAT ,</if>
+
+        </trim>
+        )
+        VALUES(
+        <trim suffixOverrides=",">
+            <if test="id != null ">#{id} ,</if>
+            <if test="outsourcname != null  and outsourcname != '' ">#{outsourcname} ,</if>
+            <if test="orgcode != null  and orgcode != '' ">#{orgcode} ,</if>
+            <if test="regcapital != null  and regcapital != '' ">#{regcapital} ,</if>
+            <if test="establishtime != null ">#{establishtime} ,</if>
+            <if test="companyaddress != null  and companyaddress != '' ">#{companyaddress} ,</if>
+            <if test="mainbusiness != null  and mainbusiness != '' ">#{mainbusiness} ,</if>
+            <if test="service != null  and service != '' ">#{service} ,</if>
+            <if test="contactsname != null  and contactsname != '' ">#{contactsname} ,</if>
+            <if test="contactspost != null  and contactspost != '' ">#{contactspost} ,</if>
+            <if test="contactsemail != null  and contactsemail != '' ">#{contactsemail} ,</if>
+            <if test="caseinfo != null  and caseinfo != '' ">#{caseinfo} ,</if>
+            <if test="qualificationinfo != null  and qualificationinfo != '' ">#{qualificationinfo} ,</if>
+            <if test="companystaser != null  and companystaser != '' ">#{companystaser} ,</if>
+            <if test="telephone != null  and telephone != '' ">#{telephone} ,</if>
+            <if test="companynum != null ">#{companynum} ,</if>
+            <if test="isdel != null ">#{isdel} ,</if>
+            <if test="createtime != null ">#{createtime} ,</if>
+            <if test="creators != null  and creators != '' ">#{creators} ,</if>
+            <if test="lastmodtime != null ">#{lastmodtime} ,</if>
+            <if test="lastmoduser != null  and lastmoduser != '' ">#{lastmoduser} ,</if>
+            <if test="abbreviation != null  and abbreviation != '' ">#{abbreviation} ,</if>
+            <if test="cgSupplierId != null  and cgSupplierId != '' ">#{cgSupplierId} ,</if>
+            <if test="isFeat != null  and isFeat != '' ">#{isFeat} ,</if>
+
+        </trim>
+        )
+    </insert>
+
+    <!--通过id查询  k6991 2020-06-22 -->
+    <select id="queryDetail" parameterType="map" resultMap="PPMOUTSOURCINGINFO_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM PPM_OUTSOURCING_INFO 
+		<trim prefix="WHERE" suffixOverrides="AND">
+            <if test="id != null ">ID=#{id} AND</if>
+            <if test="orgcode != null  and orgcode != '' ">ORGCODE=#{orgcode} AND</if>
+            <if test="cgSupplierId != null  and cgSupplierId != '' ">CG_SUPPLIER_ID=#{cgSupplierId} AND ISDEL = '0' AND </if>
+            <if test="outsourcname != null  and outsourcname != '' ">OUTSOURCNAME =#{outsourcname} AND ISDEL = '0' AND </if>
+        </trim>
+    </select>
+
+    <!--通过orgcode查询  k6991 2020-06-22 -->
+    <select id="queryDetailByOrgCode" parameterType="map" resultMap="PPMOUTSOURCINGINFO_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM PPM_OUTSOURCING_INFO WHERE orgcode=#{orgcode}
+    </select>
+
+    <!--查询集合  k6991 2020-06-22 -->
+    <select id="getList" parameterType="map" resultMap="PPMOUTSOURCINGINFO_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM PPM_OUTSOURCING_INFO
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="id != null ">ID=#{id} AND</if>
+            <if test="outsourcname != null  and outsourcname != '' ">OUTSOURCNAME=#{outsourcname} AND</if>
+            <if test="orgcode != null  and orgcode != '' ">ORGCODE=#{orgcode} AND</if>
+            <if test="regcapital != null  and regcapital != '' ">REGCAPITAL=#{regcapital} AND</if>
+            <if test="establishtime != null ">ESTABLISHTIME=#{establishtime} AND</if>
+            <if test="companyaddress != null  and companyaddress != '' ">COMPANYADDRESS=#{companyaddress} AND</if>
+            <if test="mainbusiness != null  and mainbusiness != '' ">MAINBUSINESS=#{mainbusiness} AND</if>
+            <if test="service != null  and service != '' ">SERVICE=#{service} AND</if>
+            <if test="contactsname != null  and contactsname != '' ">CONTACTSNAME=#{contactsname} AND</if>
+            <if test="contactspost != null  and contactspost != '' ">CONTACTSPOST=#{contactspost} AND</if>
+            <if test="contactsemail != null  and contactsemail != '' ">CONTACTSEMAIL=#{contactsemail} AND</if>
+            <if test="caseinfo != null  and caseinfo != '' ">CASEINFO=#{caseinfo} AND</if>
+            <if test="qualificationinfo != null  and qualificationinfo != '' ">QUALIFICATIONINFO=#{qualificationinfo}
+                AND
+            </if>
+            <if test="companystaser != null  and companystaser != '' ">COMPANYSTASER=#{companystaser} AND</if>
+            <if test="telephone != null  and telephone != '' ">TELEPHONE=#{telephone} AND</if>
+            <if test="companynum != null ">COMPANYNUM=#{companynum} AND</if>
+            <if test="isdel != null ">ISDEL=#{isdel} AND</if>
+            <if test="createtime != null ">CREATETIME=#{createtime} AND</if>
+            <if test="creators != null  and creators != '' ">CREATORS=#{creators} AND</if>
+            <if test="lastmodtime != null ">LASTMODTIME=#{lastmodtime} AND</if>
+            <if test="lastmoduser != null  and lastmoduser != '' ">LASTMODUSER=#{lastmoduser} AND</if>
+            <if test="abbreviation != null  and abbreviation != '' ">ABBREVIATION=#{abbreviation} AND</if>
+            <if test="orgnos != null  and orgnos != '' ">ORGCODE in (${orgnos}) AND</if>
+            <if test="cgSupplierId != null  and cgSupplierId != '' ">CG_SUPPLIER_ID=#{cgSupplierId} AND</if>
+            <if test="isFeat != null  and isFeat != '' ">IS_FEAT=#{isFeat} AND</if>
+        </trim>
+    </select>
+    <!-- update sql -->
+    <sql id="update_pojo_sql">
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="id != null ">ID=#{id} ,</if>
+            <if test="outsourcname != null  and outsourcname != '' ">OUTSOURCNAME=#{outsourcname} ,</if>
+            <if test="orgcode != null  and orgcode != '' ">ORGCODE=#{orgcode} ,</if>
+            <if test="regcapital != null  and regcapital != '' ">REGCAPITAL=#{regcapital} ,</if>
+            <if test="establishtime != null ">ESTABLISHTIME=#{establishtime} ,</if>
+            <if test="companyaddress != null  and companyaddress != '' ">COMPANYADDRESS=#{companyaddress} ,</if>
+            <if test="mainbusiness != null  and mainbusiness != '' ">MAINBUSINESS=#{mainbusiness} ,</if>
+            <if test="service != null  and service != '' ">SERVICE=#{service} ,</if>
+            <if test="contactsname != null  and contactsname != '' ">CONTACTSNAME=#{contactsname} ,</if>
+            <if test="contactspost != null  and contactspost != '' ">CONTACTSPOST=#{contactspost} ,</if>
+            <if test="contactsemail != null  and contactsemail != '' ">CONTACTSEMAIL=#{contactsemail} ,</if>
+            <if test="caseinfo != null  and caseinfo != '' ">CASEINFO=#{caseinfo} ,</if>
+            <if test="qualificationinfo != null  and qualificationinfo != '' ">QUALIFICATIONINFO=#{qualificationinfo}
+                ,
+            </if>
+            <if test="companystaser != null  and companystaser != '' ">COMPANYSTASER=#{companystaser} ,</if>
+            <if test="telephone != null  and telephone != '' ">TELEPHONE=#{telephone} ,</if>
+            <if test="companynum != null ">COMPANYNUM=#{companynum} ,</if>
+            <if test="isdel != null ">ISDEL=#{isdel} ,</if>
+            <if test="createtime != null ">CREATETIME=#{createtime} ,</if>
+            <if test="creators != null  and creators != '' ">CREATORS=#{creators} ,</if>
+            <if test="lastmodtime != null ">LASTMODTIME=#{lastmodtime} ,</if>
+            <if test="lastmoduser != null  and lastmoduser != '' ">LASTMODUSER=#{lastmoduser} ,</if>
+            <if test="abbreviation != null  and abbreviation != '' ">ABBREVIATION=#{abbreviation} ,</if>
+            <if test="cgSupplierId != null  and cgSupplierId != '' ">CG_SUPPLIER_ID=#{cgSupplierId} ,</if>
+            <if test="isFeat != null  and isFeat != '' ">IS_FEAT=#{isFeat} ,</if>
+
+        </trim>
+    </sql>
+
+    <!--通过id编辑 k6991 2020-06-22 -->
+    <update id="updatePojo" parameterType="ppmOutsourcingInfo">
+        UPDATE
+        PPM_OUTSOURCING_INFO
+        <include refid="update_pojo_sql"/>
+        WHERE ID=#{id}
+    </update>
+
+    <!--通过id批量删除  k6991 2020-06-22 -->
+    <delete id="deleteById" parameterType="ppmOutsourcingInfo">
+        DELETE
+        FROM
+        PPM_OUTSOURCING_INFO
+        WHERE ID = #{id}
+    </delete>
+	
+    <!-- 根据外包商名称 查询 编号 k6991 2021-05-11 -->
+    <select id="queryIdByName" parameterType="ppmOutsourcingInfo" resultMap="PPMOUTSOURCINGINFO_ALL">
+        SELECT ORGCODE FROM PPM_OUTSOURCING_INFO WHERE INSTR(OUTSOURCNAME,#{outsourcname}) > 0
+    </select>
+	
+	<!-- 根据外包商编号 查询 名称 ywwb905 2023-01-29 -->
+    <select id="queryNameById" parameterType="ppmOutsourcingInfo" resultMap="PPMOUTSOURCINGINFO_ALL">
+        SELECT OUTSOURCNAME FROM PPM_OUTSOURCING_INFO WHERE ORGCODE = #{orgcode}
+    </select>
+	
+	<!-- 根据外包商名称 查询 编号 k6991 2021-05-11 -->
+    <select id="queryRosterPageList" parameterType="ppmOutsourcingInfo" resultMap="PPMOUTSOURCINGINFO_ALL">
+        SELECT 
+			ID,
+			OUTSOURCNAME,
+			ORGCODE,
+			ISDEL,
+			CG_SUPPLIER_ID,
+			IS_FEAT
+		FROM 
+			PPM_OUTSOURCING_INFO 
+		<trim prefix="WHERE" suffixOverrides="AND">
+            <if test="id != null ">ID=#{id} AND</if>
+            <if test="outsourcname != null  and outsourcname != '' ">OUTSOURCNAME=#{outsourcname} AND</if>
+            <if test="orgcode != null  and orgcode != '' ">ORGCODE=#{orgcode} AND</if>
+            <if test="isdel != null ">ISDEL=#{isdel} AND</if>
+            <if test="cgSupplierId != null  and cgSupplierId != '' ">CG_SUPPLIER_ID=#{cgSupplierId} AND</if>
+            <if test="isFeat != null  and isFeat != '' ">IS_FEAT=#{isFeat} AND</if>
+        </trim>
+		ORDER BY ID ASCs
+    </select>
+	
+	
+	<!-- 根据外包商名称 查询 编号 ywwb905 2023-01-11 -->
+    <select id="queryNextOrgCode" parameterType="ppmOutsourcingInfoExt" resultMap="PPMOUTSOURCINGINFO_ALL_EXT">
+		SELECT ORGCODE FROM (
+		   SELECT ORGCODE FROM PPM_OUTSOURCING_INFO WHERE ORGCODE LIKE ${orgCodeVal} ORDER BY ORGCODE DESC 
+		   ) WHERE ROWNUM = 1         
+    </select>
+	
+	
+	<select id="getListForNotCg" parameterType="map" resultMap="PPMOUTSOURCINGINFO_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM PPM_OUTSOURCING_INFO
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="true">CG_SUPPLIER_ID IS NOT NULL AND ISDEL = '0' AND</if>
+            <if test="id != null ">ID=#{id} AND</if>
+            <if test="outsourcname != null  and outsourcname != '' ">OUTSOURCNAME=#{outsourcname} AND</if>
+            <if test="orgcode != null  and orgcode != '' ">ORGCODE=#{orgcode} AND</if>
+            <if test="regcapital != null  and regcapital != '' ">REGCAPITAL=#{regcapital} AND</if>
+            <if test="establishtime != null ">ESTABLISHTIME=#{establishtime} AND</if>
+            <if test="companyaddress != null  and companyaddress != '' ">COMPANYADDRESS=#{companyaddress} AND</if>
+            <if test="mainbusiness != null  and mainbusiness != '' ">MAINBUSINESS=#{mainbusiness} AND</if>
+            <if test="service != null  and service != '' ">SERVICE=#{service} AND</if>
+            <if test="contactsname != null  and contactsname != '' ">CONTACTSNAME=#{contactsname} AND</if>
+            <if test="contactspost != null  and contactspost != '' ">CONTACTSPOST=#{contactspost} AND</if>
+            <if test="contactsemail != null  and contactsemail != '' ">CONTACTSEMAIL=#{contactsemail} AND</if>
+            <if test="caseinfo != null  and caseinfo != '' ">CASEINFO=#{caseinfo} AND</if>
+            <if test="qualificationinfo != null  and qualificationinfo != '' ">QUALIFICATIONINFO=#{qualificationinfo}
+                AND
+            </if>
+            <if test="companystaser != null  and companystaser != '' ">COMPANYSTASER=#{companystaser} AND</if>
+            <if test="telephone != null  and telephone != '' ">TELEPHONE=#{telephone} AND</if>
+            <if test="companynum != null ">COMPANYNUM=#{companynum} AND</if>
+            <if test="isdel != null ">ISDEL=#{isdel} AND</if>
+            <if test="createtime != null ">CREATETIME=#{createtime} AND</if>
+            <if test="creators != null  and creators != '' ">CREATORS=#{creators} AND</if>
+            <if test="lastmodtime != null ">LASTMODTIME=#{lastmodtime} AND</if>
+            <if test="lastmoduser != null  and lastmoduser != '' ">LASTMODUSER=#{lastmoduser} AND</if>
+            <if test="abbreviation != null  and abbreviation != '' ">ABBREVIATION=#{abbreviation} AND</if>
+            <if test="cgSupplierId != null  and cgSupplierId != '' ">CG_SUPPLIER_ID=#{cgSupplierId} AND</if>
+            <if test="isFeat != null  and isFeat != '' ">IS_FEAT=#{isFeat} AND</if>
+        </trim>
+    </select>
+
+    <select id="getAffilCompanyList" parameterType="map" resultMap="PPMOUTSOURCINGINFO_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM PPM_OUTSOURCING_INFO
+    </select>
+
+
+</mapper>

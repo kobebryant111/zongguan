@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k6522 2020-04-23 -->
+<mapper namespace="com.work.ppm.application.model.systemmanager.PpmFhkjDeptRecord">
+	 <resultMap type="ppmFhkjDeptRecord" id="PPMFHKJDEPTRECORD_ALL">
+        <result property="id" column="ID" />
+		<result property="depid" column="DEPID" />
+		<result property="deptname" column="DEPTNAME" />
+		<result property="status" column="STATUS" />
+		
+     </resultMap>
+
+     <!-- 所有字段名称 -->
+        <sql id="sql_flied_all">
+        	ID,
+			DEPID,
+			DEPTNAME,
+			STATUS
+        </sql>
+    	<!-- 查询分页  2020-04-23 k6522  -->
+        <select id="queryPagerList" parameterType="map" resultMap="PPMFHKJDEPTRECORD_ALL">
+        	SELECT
+            <include refid="sql_flied_all" />
+            FROM PPM_FHKJ_DEPT_RECORD
+            <trim prefix="WHERE" suffixOverrides="AND">
+                <if test="id != null  and id != '' " > ID = #{id} AND </if>
+				<if test="depid != null  and depid != '' " > DEPID = #{depid} AND </if>
+				<if test="deptname != null  and deptname != '' " > DEPTNAME = #{deptname} AND </if>
+				<if test="status != null  and status != '' " > STATUS = #{status} AND </if>
+				
+            </trim>
+        </select>
+
+        <!-- 新增  2020-04-23 k6522  -->
+        <insert id="addPojo" parameterType="ppmFhkjDeptRecord">
+    		INSERT INTO PPM_FHKJ_DEPT_RECORD (
+    		<trim suffixOverrides=",">
+    		 <if test="id != null  and id != '' " > ID , </if>
+				<if test="depid != null  and depid != '' " > DEPID , </if>
+				<if test="deptname != null  and deptname != '' " > DEPTNAME , </if>
+				<if test="status != null  and status != '' " > STATUS , </if>
+				
+              </trim>
+    		)
+    		VALUES(
+    		<trim suffixOverrides=",">
+    		 <if test="id != null  and id != '' " > #{id} , </if>
+				<if test="depid != null  and depid != '' " > #{depid} , </if>
+				<if test="deptname != null  and deptname != '' " > #{deptname} , </if>
+				<if test="status != null  and status != '' " > #{status} , </if>
+				
+            </trim>
+    		)
+        </insert>
+
+        <!--通过id查询  k6522 2020-04-23 -->
+        <select id="queryDetail" parameterType="map" resultMap="PPMFHKJDEPTRECORD_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_FHKJ_DEPT_RECORD  WHERE ID=#{id}
+        </select>
+
+         <!--查询集合  k6522 2020-04-23 -->
+        <select id="getList" parameterType="map" resultMap="PPMFHKJDEPTRECORD_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_FHKJ_DEPT_RECORD
+        	<trim prefix="WHERE" suffixOverrides="AND">
+        		<if test="id != null  and id != '' " > ID=#{id} AND </if>
+				<if test="depid != null  and depid != '' " > DEPID=#{depid} AND </if>
+				<if test="deptname != null  and deptname != '' " > DEPTNAME=#{deptname} AND </if>
+				<if test="status != null  and status != '' " > STATUS=#{status} AND </if>
+				
+            </trim>
+        </select>
+        <!-- update sql -->
+        <sql id="update_pojo_sql">
+        	<trim prefix="SET" suffixOverrides=",">
+        		<if test="id != null  and id != '' " > ID=#{id} , </if>
+				<if test="depid != null  and depid != '' " > DEPID=#{depid} , </if>
+				<if test="deptname != null  and deptname != '' " > DEPTNAME=#{deptname} , </if>
+				<if test="status != null  and status != '' " > STATUS=#{status} , </if>
+				
+            </trim>
+        </sql>
+
+        <!--通过id编辑 k6522 2020-04-23 -->
+    	<update id="updatePojo" parameterType="ppmFhkjDeptRecord">
+        	UPDATE
+        	PPM_FHKJ_DEPT_RECORD
+        	<include refid="update_pojo_sql" />
+        	WHERE ID=#{id}
+        </update>
+
+        <!--通过id批量删除  k6522 2020-04-23 -->
+        <delete id="deleteById" parameterType="ppmFhkjDeptRecord">
+        	DELETE
+        	FROM
+        	PPM_FHKJ_DEPT_RECORD
+        	WHERE ID = #{id}
+        </delete>
+
+        <!-- 获取主键id -->
+        <select id="getPrimaryKey" parameterType="map" resultType="long">
+            SELECT MAX(ID) FROM PPM_FHKJ_DEPT_RECORD
+        </select>
+</mapper>

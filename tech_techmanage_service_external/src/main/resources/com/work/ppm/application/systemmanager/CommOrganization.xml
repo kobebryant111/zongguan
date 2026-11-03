@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k6991 2020-01-15 -->
+<mapper namespace="com.work.ppm.application.model.systemmanager.CommOrganization">
+    <resultMap type="commOrganization" id="COMMORGANIZATION_ALL">
+        <result property="compid" column="COMPID"/>
+        <result property="disableddate" column="DISABLEDDATE"/>
+        <result property="displaycode" column="DISPLAYCODE"/>
+        <result property="compcate" column="COMPCATE"/>
+        <result property="isdisabled" column="ISDISABLED"/>
+        <result property="remark" column="REMARK"/>
+        <result property="lastupdatedate" column="LASTUPDATEDATE"/>
+        <result property="compcode" column="COMPCODE"/>
+        <result property="location" column="LOCATION"/>
+        <result property="abbreviation" column="ABBREVIATION"/>
+        <result property="compcharge" column="COMPCHARGE"/>
+        <result property="updateflg" column="UPDATEFLG"/>
+        <result property="adminid" column="ADMINID"/>
+        <result property="compidhr" column="COMPIDHR"/>
+        <result property="effectdate" column="EFFECTDATE"/>
+        <result property="compgrade" column="COMPGRADE"/>
+        <result property="director" column="DIRECTOR"/>
+        <result property="comorgid" column="COMORGID"/>
+    </resultMap>
+
+    <!-- 所有字段名称 -->
+    <sql id="sql_flied_all">
+        COMPID,
+        DISABLEDDATE,
+        DISPLAYCODE,
+        COMPCATE,
+        ISDISABLED,
+        REMARK,
+        LASTUPDATEDATE,
+        COMPCODE,
+        LOCATION,
+        ABBREVIATION,
+        COMPCHARGE,
+        UPDATEFLG,
+        ADMINID,
+        COMPIDHR,
+        EFFECTDATE,
+        COMPGRADE,
+        DIRECTOR,
+        COMORGID
+    </sql>
+    <resultMap id="queryPagerListMap" type="commOrganizationInfo" extends="COMMORGANIZATION_ALL">
+        <result column="PARENT_NAME" property="parentName"/>
+
+    </resultMap>
+    <!-- 查询分页  2020-01-15 k6991  -->
+    <select id="queryPagerList" parameterType="map" resultMap="queryPagerListMap">
+        SELECT
+        <include refid="sql_flied_all"/>,
+        (SELECT LOCATION FROM COMM_ORGANIZATION WHERE COMPID= T.ADMINID AND ROWNUM=1) PARENT_NAME
+        FROM COMM_ORGANIZATION T
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="compid != null ">COMPID = #{compid} AND</if>
+            <if test="disableddate != null ">DISABLEDDATE = #{disableddate} AND</if>
+            <if test="displaycode != null  and displaycode != '' ">DISPLAYCODE = #{displaycode} AND</if>
+            <if test="compcate != null ">COMPCATE = #{compcate} AND</if>
+            <if test="isdisabled != null ">ISDISABLED = #{isdisabled} AND</if>
+            <if test="remark != null  and remark != '' ">REMARK = #{remark} AND</if>
+            <if test="lastupdatedate != null ">LASTUPDATEDATE = #{lastupdatedate} AND</if>
+            <if test="compcode != null  and compcode != '' ">COMPCODE = #{compcode} AND</if>
+            <if test="location != null  and location != '' ">LOCATION = #{location} AND</if>
+            <if test="abbreviation != null  and abbreviation != '' ">ABBREVIATION = #{abbreviation} AND</if>
+            <if test="compcharge != null ">COMPCHARGE = #{compcharge} AND</if>
+            <if test="updateflg != null  and updateflg != '' ">UPDATEFLG = #{updateflg} AND</if>
+            <if test="adminid != null ">ADMINID = #{adminid} AND</if>
+            <if test="compidhr != null ">COMPIDHR = #{compidhr} AND</if>
+            <if test="effectdate != null ">EFFECTDATE = #{effectdate} AND</if>
+            <if test="compgrade != null  and compgrade != '' ">COMPGRADE = #{compgrade} AND</if>
+            <if test="director != null ">DIRECTOR = #{director} AND</if>
+            <if test="comorgid != null ">COMORGID = #{comorgid} AND</if>
+            <if test="size != null "> <![CDATA[ ROWNUM <= #{size} AND ]]> </if>
+        </trim>
+    </select>
+
+    <!-- 新增  2020-01-15 k6991  -->
+    <insert id="addPojo" parameterType="commOrganization">
+        INSERT INTO COMM_ORGANIZATION (
+        COMPID,
+        DISABLEDDATE,
+        DISPLAYCODE,
+        COMPCATE,
+        ISDISABLED,
+        REMARK,
+        LASTUPDATEDATE,
+        COMPCODE,
+        LOCATION,
+        ABBREVIATION,
+        COMPCHARGE,
+        UPDATEFLG,
+        ADMINID,
+        COMPIDHR,
+        EFFECTDATE,
+        COMPGRADE,
+        DIRECTOR,
+        COMORGID
+        )
+        VALUES(
+        #{compid},
+        #{disableddate},
+        #{displaycode},
+        #{compcate},
+        #{isdisabled},
+        #{remark},
+        #{lastupdatedate},
+        #{compcode},
+        #{location},
+        #{abbreviation},
+        #{compcharge},
+        #{updateflg},
+        #{adminid},
+        #{compidhr},
+        #{effectdate},
+        #{compgrade},
+        #{director},
+        #{comorgid}
+        )
+    </insert>
+
+    <!--通过id查询  k6991 2020-01-15 -->
+    <select id="queryById" parameterType="map" resultMap="COMMORGANIZATION_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM COMM_ORGANIZATION WHERE COMPID=#{compid}
+    </select>
+
+    <!--查询集合  k6991 2020-01-15 -->
+    <select id="queryListById" parameterType="map" resultMap="COMMORGANIZATION_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM COMM_ORGANIZATION
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="compid != null ">COMPID=#{compid} AND</if>
+            <if test="disableddate != null ">DISABLEDDATE=#{disableddate} AND</if>
+            <if test="displaycode != null  and displaycode != '' ">DISPLAYCODE=#{displaycode} AND</if>
+            <if test="compcate != null ">COMPCATE=#{compcate} AND</if>
+            <if test="isdisabled != null ">ISDISABLED=#{isdisabled} AND</if>
+            <if test="remark != null  and remark != '' ">REMARK=#{remark} AND</if>
+            <if test="lastupdatedate != null ">LASTUPDATEDATE=#{lastupdatedate} AND</if>
+            <if test="compcode != null  and compcode != '' ">COMPCODE=#{compcode} AND</if>
+            <if test="location != null  and location != '' ">LOCATION=#{location} AND</if>
+            <if test="abbreviation != null  and abbreviation != '' ">ABBREVIATION=#{abbreviation} AND</if>
+            <if test="compcharge != null ">COMPCHARGE=#{compcharge} AND</if>
+            <if test="updateflg != null  and updateflg != '' ">UPDATEFLG=#{updateflg} AND</if>
+            <choose>
+                <when test="adminid == -1">ADMINID is null AND</when>
+                <otherwise>ADMINID=#{adminid} AND</otherwise>
+            </choose>
+            <if test="compidhr != null ">COMPIDHR=#{compidhr} AND</if>
+            <if test="effectdate != null ">EFFECTDATE=#{effectdate} AND</if>
+            <if test="compgrade != null  and compgrade != '' ">COMPGRADE=#{compgrade} AND</if>
+            <if test="director != null ">DIRECTOR=#{director} AND</if>
+            <if test="comorgid != null ">COMORGID=#{comorgid} AND</if>
+
+        </trim>
+        ORDER BY COMPID ASC
+    </select>
+    <!-- update sql -->
+    <sql id="update_pojo_sql">
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="compid != null ">COMPID=#{compid} ,</if>
+            <if test="disableddate != null ">DISABLEDDATE=#{disableddate} ,</if>
+            <if test="displaycode != null  and displaycode != '' ">DISPLAYCODE=#{displaycode} ,</if>
+            <if test="compcate != null ">COMPCATE=#{compcate} ,</if>
+            <if test="isdisabled != null ">ISDISABLED=#{isdisabled} ,</if>
+            <if test="remark != null  and remark != '' ">REMARK=#{remark} ,</if>
+            <if test="lastupdatedate != null ">LASTUPDATEDATE=#{lastupdatedate} ,</if>
+            <if test="compcode != null  and compcode != '' ">COMPCODE=#{compcode} ,</if>
+            <if test="location != null  and location != '' ">LOCATION=#{location} ,</if>
+            <if test="abbreviation != null  and abbreviation != '' ">ABBREVIATION=#{abbreviation} ,</if>
+            <if test="compcharge != null ">COMPCHARGE=#{compcharge} ,</if>
+            <if test="updateflg != null  and updateflg != '' ">UPDATEFLG=#{updateflg} ,</if>
+            <if test="adminid != null ">ADMINID=#{adminid} ,</if>
+            <if test="compidhr != null ">COMPIDHR=#{compidhr} ,</if>
+            <if test="effectdate != null ">EFFECTDATE=#{effectdate} ,</if>
+            <if test="compgrade != null  and compgrade != '' ">COMPGRADE=#{compgrade} ,</if>
+            <if test="director != null ">DIRECTOR=#{director} ,</if>
+            <if test="comorgid != null ">COMORGID=#{comorgid} ,</if>
+
+        </trim>
+    </sql>
+
+    <!--通过id编辑 k6991 2020-01-15 -->
+    <update id="updatePojo" parameterType="commOrganization">
+        UPDATE
+        COMM_ORGANIZATION
+        <include refid="update_pojo_sql"/>
+        WHERE COMPID=#{compid}
+    </update>
+
+    <!--通过id批量删除  k6991 2020-01-15 -->
+    <delete id="deleteById" parameterType="commOrganization">
+        DELETE
+        FROM
+        COMM_ORGANIZATION
+        WHERE COMPID = #{compid}
+    </delete>
+    <!-- 机构数组件，不包括其他 k6991 2020-08-19 -->
+    <select id="queryOrgTreeComponents" resultType="commTree">
+        select *
+        from (select o.compid id,
+        o.adminid pid,
+        o.location text,
+        'org' attr,
+        case
+        when o.compcode = '9000000000' then
+        'order1'
+        else
+        case
+        when o.compcode = '3320000000' then
+        'order2'
+        else
+        ''
+        end
+        end order_by
+        from comm_organization o
+        where o.adminid = '1'
+        and o.isdisabled = '0'
+        union
+        select 1 id, -1 pid, 'XX银行' text, 'org' attr, 'order0' order_by
+        from dual)
+        order by order_by asc
+    </select>
+    <!-- 根据父机构编号查询子机构数据 2020-08-20 k6991-->
+    <select id="queryOrgTree" parameterType="map" resultType="commTree">
+        select o.compid id , o.adminid pid , o.location text , 'org' attr
+        from comm_organization o where adminid = #{id} and isdisabled = '0'
+    </select>
+    <!-- 根据编号返回记录数 2020-08-20 k6991 -->
+    <select id="hasOrg" parameterType="map" resultType="long">
+        select count(compid) from comm_organization where adminid = #{id} and isdisabled = '0'
+    </select>
+    <!-- 查询详情 2021-09-27 K6991-->
+    <select id="queryDetail" parameterType="commOrganization" resultMap="COMMORGANIZATION_ALL" >
+        select * from (
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM COMM_ORGANIZATION
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="compid != null ">COMPID=#{compid} AND</if>
+            <if test="location != null  and location != '' "> INSTR(LOCATION,#{location}) > 0 AND</if>
+            <if test="compcode != null ">COMPCODE=#{compcode} AND</if>
+        </trim>
+        ) where rownum =1
+    </select>
+    <!-- 根据用户编号查询分行编号-->
+    <select id="queryFHIdforUserId" parameterType="map" resultMap="COMMORGANIZATION_ALL">
+        SELECT ADMINID,COMPID,COMPCODE FROM COMM_ORGANIZATION O WHERE O.COMPID=
+        (SELECT COMPID FROM COMM_EMPLOYEE E WHERE E.BADGE=#{userId}) AND ROWNUM=1
+    </select>
+    <select id="queryBranchThree" resultType="commTree">
+        select *
+        from (select a.*,
+        case
+        when a.pcode = '9000000000' then
+        'order1'
+        else
+        case
+        when a.pcode = '3320000000' then
+        'order2'
+        else
+        case
+        when a.pcode = '6000000000' then
+        'order3'
+        else
+        ''
+        end
+        end
+        end order_by,
+        ord
+        from (select 'org' || t.compid id,
+        t.compcode pcode,
+        t.location text,
+        'org' || t.adminid pid,
+        'org' attr,
+        '' textpy
+        from comm_organization t
+        where t.adminid = '1'
+        and t.location like '%分行'
+        and t.isdisabled = '0') a
+        left join ppm_dept_ord o
+        on a.id = o.depid)
+        order by order_by, ord, pcode asc
+    </select>
+</mapper>

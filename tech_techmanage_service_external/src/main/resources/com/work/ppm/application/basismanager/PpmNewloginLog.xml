@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k6991 2021-12-01 -->
+<mapper namespace="com.work.ppm.application.model.basismanager.PpmNewloginLog">
+	 <resultMap type="ppmNewloginLog" id="PPMNEWLOGINLOG_ALL">
+        <result property="id" column="ID" />
+		<result property="userId" column="USER_ID" />
+		<result property="userName" column="USER_NAME" />
+		<result property="createTime" column="CREATE_TIME" />
+		<result property="ip" column="IP" />
+		<result property="ifSingle" column="IF_SINGLE" />
+		<result property="singleParams" column="SINGLE_PARAMS" />
+		
+     </resultMap>
+
+     <!-- 所有字段名称 -->
+        <sql id="sql_flied_all">
+        	ID,
+			USER_ID,
+			USER_NAME,
+			CREATE_TIME,
+			IP,
+			IF_SINGLE,
+			SINGLE_PARAMS
+        </sql>
+        <sql id="sql_select_condition">
+            <trim prefix="WHERE" suffixOverrides="AND">
+                <if test="id != null " > ID = #{id} AND </if>
+				<if test="userId != null  and userId != '' " > USER_ID = #{userId} AND </if>
+				<if test="userName != null  and userName != '' " > (INSTR(USER_NAME , #{userName}) > 0
+					OR INSTR(USER_ID , #{userName}) > 0) AND </if>
+				<if test="startTime != null and startTime != ''" > CREATE_TIME BETWEEN TO_DATE(#{startTime},'yyyy-MM-dd')
+					AND
+					TO_DATE(#{endTime},'yyyy-MM-dd HH24:MI:SS') AND </if>
+				<if test="ip != null  and ip != '' " > IP = #{ip} AND </if>
+				<if test="ifSingle != null " > IF_SINGLE = #{ifSingle} AND </if>
+				<if test="singleParams != null  and singleParams != '' " > SINGLE_PARAMS = #{singleParams} AND </if>
+				
+            </trim>
+        </sql>
+    	<!-- 查询分页  2021-12-01 k6991  -->
+        <select id="queryPagerList" parameterType="map" resultMap="PPMNEWLOGINLOG_ALL">
+        	SELECT
+            <include refid="sql_flied_all" />
+            FROM PPM_NEWLOGIN_LOG
+            <include refid="sql_select_condition" />
+			ORDER BY CREATE_TIME DESC
+        </select>
+
+        <!-- 新增  2021-12-01 k6991  -->
+        <insert id="addPojo" parameterType="ppmNewloginLog">
+    		INSERT INTO PPM_NEWLOGIN_LOG (
+    		<trim suffixOverrides=",">
+    		 <if test="id != null " > ID , </if>
+				<if test="userId != null  and userId != '' " > USER_ID , </if>
+				<if test="userName != null  and userName != '' " > USER_NAME , </if>
+				<if test="createTime != null " > CREATE_TIME , </if>
+				<if test="ip != null  and ip != '' " > IP , </if>
+				<if test="ifSingle != null " > IF_SINGLE , </if>
+				<if test="singleParams != null  and singleParams != '' " > SINGLE_PARAMS , </if>
+				
+              </trim>
+    		)
+    		VALUES(
+    		<trim suffixOverrides=",">
+    		 <if test="id != null " > #{id} , </if>
+				<if test="userId != null  and userId != '' " > #{userId} , </if>
+				<if test="userName != null  and userName != '' " > #{userName} , </if>
+				<if test="createTime != null " > #{createTime} , </if>
+				<if test="ip != null  and ip != '' " > #{ip} , </if>
+				<if test="ifSingle != null " > #{ifSingle} , </if>
+				<if test="singleParams != null  and singleParams != '' " > #{singleParams} , </if>
+				
+            </trim>
+    		)
+        </insert>
+
+        <!--通过id查询  k6991 2021-12-01 -->
+        <select id="queryDetail" parameterType="ppmNewloginLog" resultMap="PPMNEWLOGINLOG_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_NEWLOGIN_LOG  WHERE ID=#{id}
+        </select>
+
+         <!--查询集合  k6991 2021-12-01 -->
+        <select id="getList" parameterType="ppmNewloginLog" resultMap="PPMNEWLOGINLOG_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_NEWLOGIN_LOG
+        	<include refid="sql_select_condition" />
+        </select>
+        <!-- update sql -->
+        <sql id="update_pojo_sql">
+        	<trim prefix="SET" suffixOverrides=",">
+        		<if test="id != null " > ID=#{id} , </if>
+				<if test="userId != null  and userId != '' " > USER_ID=#{userId} , </if>
+				<if test="userName != null  and userName != '' " > USER_NAME=#{userName} , </if>
+				<if test="createTime != null " > CREATE_TIME=#{createTime} , </if>
+				<if test="ip != null  and ip != '' " > IP=#{ip} , </if>
+				<if test="ifSingle != null " > IF_SINGLE=#{ifSingle} , </if>
+				<if test="singleParams != null  and singleParams != '' " > SINGLE_PARAMS=#{singleParams} , </if>
+				
+            </trim>
+        </sql>
+
+        <!--通过id编辑 k6991 2021-12-01 -->
+    	<update id="updatePojo" parameterType="ppmNewloginLog">
+        	UPDATE
+        	PPM_NEWLOGIN_LOG
+        	<include refid="update_pojo_sql" />
+        	WHERE ID=#{id}
+        </update>
+
+        <!--通过id批量删除  k6991 2021-12-01 -->
+        <delete id="deleteById" parameterType="ppmNewloginLog">
+        	DELETE
+        	FROM
+        	PPM_NEWLOGIN_LOG
+        	WHERE ID = #{id}
+        </delete>
+
+</mapper>

@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tansun.wf.platform.mapper.WfActHiTaskinstMapper">
+
+	<select id="findPageByWfSuccessList" parameterType="com.tansun.wf.platform.query.WfActHiTaskinstQuery"
+			resultType="com.tansun.wf.platform.model.WfActHiTaskinstEntity">
+		SELECT
+			a.name_ AS "name",
+			a.assignee_ AS "assignee",
+			AVG(a.duration_ ) as "avgTime",
+			MAX(a.duration_ ) as "maxTime",
+			COUNT(a.task_def_key_) as "countNum",
+			b.name_ AS "procDefName"
+		FROM act_hi_taskinst a 
+			LEFT JOIN act_re_procdef b
+				ON a.proc_def_id_ =b.ID_	
+		<where>
+				a.duration_ is not null		
+			<if test="name != null and name != ''">
+			<bind name="likeName" value="'%' + _parameter.name + '%'"/>
+			AND a.name_ LIKE #{likeName}
+			</if>
+			<if test="procDefName != null and procDefName != ''">
+				<bind name="likeProcDefName" value="'%' + _parameter.procDefName + '%'"/>
+			AND b.name_ LIKE #{likeProcDefName}
+			</if>
+		</where>
+		GROUP BY a.task_def_key_, b.name_, a.assignee_,a.name_
+		<choose>
+			<when test="orderBy != null and orderBy != ''">
+				ORDER BY ${orderBy}
+			</when>
+			<otherwise>
+			ORDER BY a.task_def_key_ desc,a.name_  desc
+			</otherwise>
+		</choose>
+	</select>
+		
+		
+	<!--查询处理效率红蓝榜数据（人员维度）  -->
+	<select id="getWfProEffPersonnelInfo" parameterType="com.tansun.wf.platform.query.WfActHiTaskinstQuery"
+			resultType="com.tansun.wf.platform.model.WfActHiTaskinstEntity">
+		SELECT
+			a.assignee_ AS "assignee",
+			AVG(a.duration_) as avgTime,
+			COUNT(a.task_def_key_) as "countNum"
+	<include refid="fromWfProEffPersonnel"/>
+	</select>
+	<sql id="fromWfProEffPersonnel">
+	 FROM act_hi_taskinst a
+		<where>
+				a.duration_ is not null
+				and a.assignee_ is not null
+			<if test="_databaseId == 'mysql' and beginDate != null and beginDate != ''">
+				<![CDATA[AND a.start_time_ >= str_to_date(#{beginDate},'%Y-%m-%d %H:%i:%s')]]>
+			</if>
+			<if test="_databaseId == 'mysql' and endDate != null and endDate != ''">
+				<![CDATA[AND a.start_time_ <= str_to_date(#{endDate},'%Y-%m-%d %H:%i:%s')]]>
+			</if>
+			<if test="_databaseId == 'oracle' and beginDate != null and beginDate != ''">
+				<![CDATA[AND a.start_time_ &gt;= to_date(#{beginDate},'YYYY-MM-DD HH24:MI:SS')]]>
+			</if>
+			<if test="_databaseId == 'oracle' and endDate != null and endDate != ''">
+				<![CDATA[AND a.start_time_ &lt;= to_date(#{endDate},'YYYY-MM-DD HH24:MI:SS')]]>
+			</if>
+		</where>
+			GROUP BY a.assignee_
+		<if test="orderBy != null and orderBy != ''">
+				ORDER BY ${orderBy}
+		</if>
+	</sql>
+
+	<!--查询处理效率红蓝榜数据（机构维度）  -->
+	<select id="getWfProEffOrganizaInfo" parameterType="com.tansun.wf.platform.query.WfActHiTaskinstQuery"
+			resultType="com.tansun.wf.platform.model.WfActHiTaskinstEntity">
+		SELECT
+			d.org_name as "assignee",
+			AVG(a.duration_) as avgTime,
+			COUNT(a.task_def_key_) as "countNum"
+		<include refid="fromWfProEffOrganiza"/>
+	</select>
+	<sql id="fromWfProEffOrganiza">
+	 FROM act_hi_taskinst a
+		left join sys_user b
+			on a.assignee_=b.login_name
+		inner join sys_user_org_rel c
+		    on b.user_num = c.user_num
+		inner join sys_organization d
+			on c.org_code=d.org_code
+		<where>
+				a.duration_ is not null
+				and a.assignee_ is not null
+			<if test="_databaseId == 'mysql' and beginDate != null and beginDate != ''">
+				<![CDATA[AND a.start_time_ >= str_to_date(#{beginDate},'%Y-%m-%d %H:%i:%s')]]>
+			</if>
+			<if test="_databaseId == 'mysql' and endDate != null and endDate != ''">
+				<![CDATA[AND a.start_time_ <= str_to_date(#{endDate},'%Y-%m-%d %H:%i:%s')]]>
+			</if>
+			<if test="_databaseId == 'oracle' and beginDate != null and beginDate != ''">
+				<![CDATA[AND a.start_time_ &gt;= to_date(#{beginDate},'YYYY-MM-DD HH24:MI:SS')]]>
+			</if>
+			<if test="_databaseId == 'oracle' and endDate != null and endDate != ''">
+				<![CDATA[AND a.start_time_ &lt;= to_date(#{endDate},'YYYY-MM-DD HH24:MI:SS')]]>
+			</if>
+		</where>
+			GROUP BY d.org_name
+		<if test="orderBy != null and orderBy != ''">
+				ORDER BY ${orderBy}
+		</if>
+	</sql>
+
+	<!--查询处理效率红蓝榜数据（流程维度）  -->
+	<select id="getWfProEffProcessInfo" parameterType="com.tansun.wf.platform.query.WfActHiTaskinstQuery"
+			resultType="com.tansun.wf.platform.model.WfActHiTaskinstEntity">
+		SELECT
+			b.name_ as "assignee",
+			AVG(a.duration_) as avgTime,
+			COUNT(a.task_def_key_) as "countNum"
+		<include refid="fromWfProEffProcess"/>
+	</select>
+	<sql id="fromWfProEffProcess">
+	 FROM act_hi_taskinst a
+		left join act_re_procdef b
+			on a.proc_def_id_=b.id_
+		<where>
+				a.duration_ is not null
+				and a.assignee_ is not null
+			<if test="_databaseId == 'mysql' and beginDate != null and beginDate != ''">
+				<![CDATA[AND a.start_time_ >= str_to_date(#{beginDate},'%Y-%m-%d %H:%i:%s')]]>
+			</if>
+			<if test="_databaseId == 'mysql' and endDate != null and endDate != ''">
+				<![CDATA[AND a.start_time_ <= str_to_date(#{endDate},'%Y-%m-%d %H:%i:%s')]]>
+			</if>
+			<if test="_databaseId == 'oracle' and beginDate != null and beginDate != ''">
+				<![CDATA[AND a.start_time_ &gt;= to_date(#{beginDate},'YYYY-MM-DD HH24:MI:SS')]]>
+			</if>
+			<if test="_databaseId == 'oracle' and endDate != null and endDate != ''">
+				<![CDATA[AND a.start_time_ &lt;= to_date(#{endDate},'YYYY-MM-DD HH24:MI:SS')]]>
+			</if>
+		</where>
+			GROUP BY b.name_
+ 		<if test="orderBy != null and orderBy != ''">
+				ORDER BY ${orderBy}
+		</if>
+	</sql>
+	
+</mapper>

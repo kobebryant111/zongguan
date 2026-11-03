@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:ywwb905 2023-03-27 -->
+<!--  考勤信息表-其他部门 查询脚本 -->
+<mapper namespace="com.work.ppm.application.model.otherdeptmanager.PpmKqRecordOther">
+	 <resultMap type="ppmKqRecordOther" id="PPMKQRECORDOTHER_ALL">
+        <result property="id" column="ID" />
+		<result property="jobId" column="JOB_ID" />
+		<result property="deptId" column="DEPT_ID" />
+		<result property="attendanceDate" column="ATTENDANCE_DATE" />
+		<result property="workingTime" column="WORKING_TIME" />
+		<result property="closingTime" column="CLOSING_TIME" />
+		<result property="isHoliday" column="IS_HOLIDAY" />
+		<result property="whetherOvernight" column="WHETHER_OVERNIGHT" />
+		<result property="createdTime" column="CREATED_TIME" />
+		<result property="createdBy" column="CREATED_BY" />
+		<result property="modifiedTime" column="MODIFIED_TIME" />
+		<result property="modifiedBy" column="MODIFIED_BY" />
+		
+     </resultMap>
+	 <resultMap type="ppmKqRecordOtherExt" id="PPMKQRECORDOTHER_ALL_EXT" extends="PPMKQRECORDOTHER_ALL">
+        <result property="deptVal" column="DEPT_VAL" />
+		<result property="pmValue" column="PM_VALUE" />
+		<result property="proPerson" column="PRO_PERSON" />
+		<result property="proPersonName" column="PRO_PERSON_NAME" />
+		<result property="attendanceStart" column="ATTENDANCE_START" />
+		<result property="attendanceEnd" column="ATTENDANCE_END" />
+		<result property="deptName" column="DEPT_NAME" />
+		<result property="userName" column="USER_NAME" />
+		<result property="attendanceDateValue" column="ATTENDANCE_DATE_VALUE" />
+		<result property="adminId" column="ADMINID" />
+     </resultMap>
+
+     <!-- 所有字段名称 -->
+    <sql id="sql_flied_all">
+        ID,
+		JOB_ID,
+		DEPT_ID,
+		ATTENDANCE_DATE,
+		WORKING_TIME,
+		CLOSING_TIME,
+		IS_HOLIDAY,
+		WHETHER_OVERNIGHT,
+		CREATED_TIME,
+		CREATED_BY,
+		MODIFIED_TIME,
+		MODIFIED_BY
+    </sql>
+    <sql id="sql_select_condition">
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="id != null  and id != '' " > ID = #{id} AND </if>
+			<if test="jobId != null  and jobId != '' " > JOB_ID = #{jobId} AND </if>
+			<if test="deptId != null  and deptId != '' " > DEPT_ID = #{deptId} AND </if>
+			<if test="attendanceDate != null " > ATTENDANCE_DATE = #{attendanceDate} AND </if>
+			<if test="workingTime != null " > WORKING_TIME = #{workingTime} AND </if>
+			<if test="closingTime != null " > CLOSING_TIME = #{closingTime} AND </if>
+			<if test="isHoliday != null  and isHoliday != '' " > IS_HOLIDAY = #{isHoliday} AND </if>
+			<if test="whetherOvernight != null and whetherOvernight != '' " > WHETHER_OVERNIGHT = #{whetherOvernight} AND </if>
+			<if test="createdTime != null " > CREATED_TIME = #{createdTime} AND </if>
+			<if test="createdBy != null  and createdBy != '' " > CREATED_BY = #{createdBy} AND </if>
+			<if test="modifiedTime != null " > MODIFIED_TIME = #{modifiedTime} AND </if>
+			<if test="modifiedBy != null  and modifiedBy != '' " > MODIFIED_BY = #{modifiedBy} AND </if>
+        </trim>
+    </sql>
+    <!-- 查询分页  2023-03-27 ywwb905  -->
+    <select id="queryPagerList" parameterType="map" resultMap="PPMKQRECORDOTHER_ALL">
+        SELECT
+        <include refid="sql_flied_all" />
+        FROM PPM_KQ_RECORD_OTHER
+        <include refid="sql_select_condition" />
+    </select>
+
+    <!-- 新增  2023-03-27 ywwb905  -->
+    <insert id="addPojo" parameterType="ppmKqRecordOther">
+        INSERT INTO PPM_KQ_RECORD_OTHER (
+        <trim suffixOverrides=",">
+			<if test="id != null  and id != '' " > ID , </if>
+			<if test="jobId != null  and jobId != '' " > JOB_ID , </if>
+			<if test="deptId != null  and deptId != '' " > DEPT_ID , </if>
+			<if test="attendanceDate != null " > ATTENDANCE_DATE , </if>
+			<if test="workingTime != null " > WORKING_TIME , </if>
+			<if test="closingTime != null " > CLOSING_TIME , </if>
+			<if test="isHoliday != null  and isHoliday != '' " > IS_HOLIDAY , </if>
+			<if test="whetherOvernight != null and whetherOvernight != '' " > WHETHER_OVERNIGHT , </if>
+			<if test="createdTime != null " > CREATED_TIME , </if>
+			<if test="createdBy != null  and createdBy != '' " > CREATED_BY , </if>
+			<if test="modifiedTime != null " > MODIFIED_TIME , </if>
+			<if test="modifiedBy != null  and modifiedBy != '' " > MODIFIED_BY , </if>
+				
+          </trim>
+        )
+        VALUES(
+        <trim suffixOverrides=",">
+			<if test="id != null  and id != '' " > #{id} , </if>
+			<if test="jobId != null  and jobId != '' " > #{jobId} , </if>
+			<if test="deptId != null  and deptId != '' " > #{deptId} , </if>
+			<if test="attendanceDate != null " > #{attendanceDate} , </if>
+			<if test="workingTime != null " > #{workingTime} , </if>
+			<if test="closingTime != null " > #{closingTime} , </if>
+			<if test="isHoliday != null  and isHoliday != '' " > #{isHoliday} , </if>
+			<if test="whetherOvernight != null  and whetherOvernight != '' " > #{whetherOvernight} , </if>
+			<if test="createdTime != null " > #{createdTime} , </if>
+			<if test="createdBy != null  and createdBy != '' " > #{createdBy} , </if>
+			<if test="modifiedTime != null " > #{modifiedTime} , </if>
+			<if test="modifiedBy != null  and modifiedBy != '' " > #{modifiedBy} , </if>
+        </trim>
+        )
+    </insert>
+
+    <!--通过id查询  ywwb905 2023-03-27 -->
+    <select id="queryDetail" parameterType="ppmKqRecordOther" resultMap="PPMKQRECORDOTHER_ALL">
+        SELECT
+        <include refid="sql_flied_all" />
+        FROM PPM_KQ_RECORD_OTHER  
+		<trim prefix="WHERE" suffixOverrides="AND">
+			<if test="id != null and id != '' ">ID = #{id} AND</if>
+			<if test="jobId != null and jobId != '' and attendanceDate != null">JOB_ID =#{jobId} AND ATTENDANCE_DATE=#{attendanceDate} AND </if>
+        </trim>
+    </select>
+
+     <!--查询集合  ywwb905 2023-03-27 -->
+    <select id="getList" parameterType="ppmKqRecordOther" resultMap="PPMKQRECORDOTHER_ALL">
+        SELECT
+        <include refid="sql_flied_all" />
+        FROM PPM_KQ_RECORD_OTHER
+        <include refid="sql_select_condition" />
+    </select>
+    <!-- update sql -->
+    <sql id="update_pojo_sql">
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="id != null  and id != '' " > ID=#{id} , </if>
+			<if test="jobId != null  and jobId != '' " > JOB_ID=#{jobId} , </if>
+			<if test="deptId != null  and deptId != '' " > DEPT_ID=#{deptId} , </if>
+			<if test="attendanceDate != null " > ATTENDANCE_DATE=#{attendanceDate} , </if>
+			<if test="workingTime != null " > WORKING_TIME=#{workingTime} , </if>
+			<if test="closingTime != null " > CLOSING_TIME=#{closingTime} , </if>
+			<if test="isHoliday != null  and isHoliday != '' " > IS_HOLIDAY=#{isHoliday} , </if>
+			<if test="whetherOvernight != null  and whetherOvernight != '' " > WHETHER_OVERNIGHT=#{whetherOvernight} , </if>
+			<if test="createdTime != null " > CREATED_TIME=#{createdTime} , </if>
+			<if test="createdBy != null  and createdBy != '' " > CREATED_BY=#{createdBy} , </if>
+			<if test="modifiedTime != null " > MODIFIED_TIME=#{modifiedTime} , </if>
+			<if test="modifiedBy != null  and modifiedBy != '' " > MODIFIED_BY=#{modifiedBy} , </if>
+        </trim>
+    </sql>
+
+    <!--通过id编辑 ywwb905 2023-03-27 -->
+    <update id="updatePojo" parameterType="ppmKqRecordOther">
+        UPDATE
+        PPM_KQ_RECORD_OTHER
+        <include refid="update_pojo_sql" />
+        WHERE ID=#{id}
+    </update>
+
+    <!--通过id批量删除  ywwb905 2023-03-27 -->
+    <delete id="deleteById" parameterType="ppmKqRecordOther">
+        DELETE
+        FROM
+        PPM_KQ_RECORD_OTHER
+        WHERE ID = #{id}
+    </delete>
+	
+	<select id="queryBaseInfoList" parameterType="ppmKqRecordOtherExt" resultMap="PPMKQRECORDOTHER_ALL_EXT">
+		SELECT 
+			KR.ID,
+			KR.JOB_ID,
+			OP.USER_NAME,
+			OP.DEPT_ID,
+			CD.LOCATION DEPT_NAME,
+			CD.ADMINID,
+			OP.PRO_PERSON,
+			CE.EMPNAME PRO_PERSON_NAME,
+			KR.ATTENDANCE_DATE,
+			KR.WORKING_TIME,
+			KR.CLOSING_TIME,
+			KR.IS_HOLIDAY,
+			KR.WHETHER_OVERNIGHT,
+			KR.CREATED_TIME,
+			KR.CREATED_BY,
+			KR.MODIFIED_TIME,
+			KR.MODIFIED_BY
+		FROM PPM_KQ_RECORD_OTHER KR
+			LEFT JOIN PPM_OUTSOURCE_PERSONLEDGE OP ON KR.JOB_ID = OP.JOB_ID
+			LEFT JOIN COMM_EMPLOYEE CE ON OP.PRO_PERSON = CE.BADGE
+			LEFT JOIN COMM_DEPARTMENT CD ON OP.DEPT_ID = CD.DEPID
+		<trim prefix="WHERE" suffixOverrides="AND">
+			<if test="jobId != null and jobId != '' ">KR.JOB_ID like '%${jobId}%' AND</if>
+            <if test="pmValue != null and pmValue != '' ">(CE.EMPNAME like '%${pmValue}%' OR OP.PRO_PERSON like '%${pmValue}%') AND</if>
+            <if test="userName != null and userName != '' ">OP.USER_NAME like '%${userName}%' AND</if>
+            <if test="deptVal != null and deptVal != '' ">(OP.DEPT_ID like '%${deptVal}%' OR CD.LOCATION like '%${deptVal}%') AND</if>
+            <if test="deptId != null and deptId != '' ">OP.DEPT_ID = #{deptId} AND</if>
+            <if test="proPerson != null and proPerson != '' ">OP.PRO_PERSON = #{proPerson} AND</if>
+            <if test="isHoliday != null and isHoliday != '' ">KR.IS_HOLIDAY = #{isHoliday} AND</if>
+            <if test="adminId != null ">CD.ADMINID = #{adminId} AND</if>
+			<if test="whetherHandle != null and whetherHandle != ''">KR.WHETHER_HANDLE = #{whetherHandle} AND </if>
+			<if test="attendanceStart != null and attendanceStart != ''">KR.ATTENDANCE_DATE &gt;= TO_DATE(#{attendanceStart},'yyyy-MM-dd') AND</if>
+			<if test="attendanceEnd != null and attendanceEnd != ''">KR.ATTENDANCE_DATE &lt;= TO_DATE(#{attendanceEnd},'yyyy-MM-dd') AND</if>
+        </trim>
+		ORDER BY KR.ATTENDANCE_DATE DESC ,TO_NUMBER(KR.ID) DESC
+	</select>
+	
+    <update id="updateHolidayForDate" parameterType="ppmKqRecordOtherExt">
+        UPDATE
+        PPM_KQ_RECORD_OTHER
+        set IS_HOLIDAY = #{isHoliday}
+        WHERE TO_CHAR(ATTENDANCE_DATE,'yyyy-MM-dd') = #{attendanceDateValue}
+    </update>
+
+</mapper>

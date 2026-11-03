@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k6991 2020-07-01 -->
+<mapper namespace="com.work.ppm.application.model.usermanager.PpmDaTeamUser">
+	 <resultMap type="ppmDaTeamUser" id="PPMDATEAMUSER_ALL">
+        <result property="id" column="ID" />
+		<result property="teamnum" column="TEAMNUM" />
+		<result property="userid" column="USERID" />
+		<result property="state" column="STATE" />
+		<result property="teamgrpupid" column="TEAMGRPUPID" />
+		<result property="gw" column="GW" />
+		
+     </resultMap>
+
+     <!-- 所有字段名称 -->
+        <sql id="sql_flied_all">
+        	ID,
+			TEAMNUM,
+			USERID,
+			STATE,
+			TEAMGRPUPID,
+			GW
+        </sql>
+    	<!-- 查询分页  2020-07-01 k6991  -->
+        <select id="queryPagerList" parameterType="map" resultMap="PPMDATEAMUSER_ALL">
+        	SELECT
+            <include refid="sql_flied_all" />
+            FROM PPM_DA_TEAM_USER
+            <trim prefix="WHERE" suffixOverrides="AND">
+                <if test="id != null  and id != '' " > ID = #{id} AND </if>
+				<if test="teamnum != null  and teamnum != '' " > TEAMNUM = #{teamnum} AND </if>
+				<if test="userid != null  and userid != '' " > USERID = #{userid} AND </if>
+				<if test="state != null " > STATE = #{state} AND </if>
+				<if test="teamgrpupid != null  and teamgrpupid != '' " > TEAMGRPUPID = #{teamgrpupid} AND </if>
+				<if test="gw != null  and gw != '' " > GW = #{gw} AND </if>
+				
+            </trim>
+        </select>
+
+        <!-- 新增  2020-07-01 k6991  -->
+        <insert id="addPojo" parameterType="ppmDaTeamUser">
+    		INSERT INTO PPM_DA_TEAM_USER (
+    		<trim suffixOverrides=",">
+    		 <if test="id != null  and id != '' " > ID , </if>
+				<if test="teamnum != null  and teamnum != '' " > TEAMNUM , </if>
+				<if test="userid != null  and userid != '' " > USERID , </if>
+				<if test="state != null " > STATE , </if>
+				<if test="teamgrpupid != null  and teamgrpupid != '' " > TEAMGRPUPID , </if>
+				<if test="gw != null  and gw != '' " > GW , </if>
+				
+              </trim>
+    		)
+    		VALUES(
+    		<trim suffixOverrides=",">
+    		 <if test="id != null  and id != '' " > #{id} , </if>
+				<if test="teamnum != null  and teamnum != '' " > #{teamnum} , </if>
+				<if test="userid != null  and userid != '' " > #{userid} , </if>
+				<if test="state != null " > #{state} , </if>
+				<if test="teamgrpupid != null  and teamgrpupid != '' " > #{teamgrpupid} , </if>
+				<if test="gw != null  and gw != '' " > #{gw} , </if>
+				
+            </trim>
+    		)
+        </insert>
+
+        <!--通过id查询  k6991 2020-07-01 -->
+        <select id="queryDetail" parameterType="map" resultMap="PPMDATEAMUSER_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_DA_TEAM_USER  WHERE ID=#{id}
+        </select>
+
+         <!--查询集合  k6991 2020-07-01 -->
+        <select id="getList" parameterType="map" resultMap="PPMDATEAMUSER_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_DA_TEAM_USER
+        	<trim prefix="WHERE" suffixOverrides="AND">
+        		<if test="id != null  and id != '' " > ID=#{id} AND </if>
+				<if test="teamnum != null  and teamnum != '' " > TEAMNUM=#{teamnum} AND </if>
+				<if test="userid != null  and userid != '' " > USERID=#{userid} AND </if>
+				<if test="state != null " > STATE=#{state} AND </if>
+				<if test="teamgrpupid != null  and teamgrpupid != '' " > TEAMGRPUPID=#{teamgrpupid} AND </if>
+				<if test="gw != null  and gw != '' " > GW=#{gw} AND </if>
+				
+            </trim>
+        </select>
+        <!-- update sql -->
+        <sql id="update_pojo_sql">
+        	<trim prefix="SET" suffixOverrides=",">
+        		<if test="id != null  and id != '' " > ID=#{id} , </if>
+				<if test="teamnum != null  and teamnum != '' " > TEAMNUM=#{teamnum} , </if>
+				<if test="userid != null  and userid != '' " > USERID=#{userid} , </if>
+				<if test="state != null " > STATE=#{state} , </if>
+				<if test="teamgrpupid != null  and teamgrpupid != '' " > TEAMGRPUPID=#{teamgrpupid} , </if>
+				<if test="gw != null  and gw != '' " > GW=#{gw} , </if>
+				
+            </trim>
+        </sql>
+
+        <!--通过id编辑 k6991 2020-07-01 -->
+    	<update id="updatePojo" parameterType="ppmDaTeamUser">
+        	UPDATE
+        	PPM_DA_TEAM_USER
+        	<include refid="update_pojo_sql" />
+        	WHERE ID=#{id}
+        </update>
+		<update id="updatePojoOther" parameterType="ppmDaTeamUser">
+			UPDATE
+			PPM_DA_TEAM_USER
+			set USERID = 'l' ||
+			CASE
+			WHEN #{userid} LIKE 'ywwb%' THEN substr(#{userid}, 5)
+			ELSE substr(#{userid}, 2)
+			END
+			WHERE USERID =#{userid}
+		</update>
+
+        <!--通过id批量删除  k6991 2020-07-01 -->
+        <delete id="deleteById" parameterType="ppmDaTeamUser">
+        	DELETE
+        	FROM
+        	PPM_DA_TEAM_USER
+        	WHERE ID = #{id}
+        </delete>
+
+        <!-- 获取主键id -->
+        <select id="getPrimaryKey" parameterType="map" resultType="long">
+            SELECT MAX(ID) FROM PPM_DA_TEAM_USER
+        </select>
+
+
+	<!--通过userid查询  k1327 2021-01-01 -->
+	<select id="queryDetailByUserid" parameterType="map" resultMap="PPMDATEAMUSER_ALL">
+		SELECT
+		<include refid="sql_flied_all" />
+		FROM PPM_DA_TEAM_USER  WHERE USERID=#{userid}
+	</select>
+	<!--定时器修改外包信息里面岗位和小组 -->
+	<update id="updateBasic" parameterType="ppmDaTeamUser">
+		update ppm_outsourcing_basic b set (b.group_id,b.post_id)=(SELECT u.teamgrpupid,u.gw FROM PPM_DA_TEAM_USER u where b.job_id=u.userid)
+		where exists (select 1 from  PPM_DA_TEAM_USER u  where u.userid=b.job_id) and b.state='0'
+	</update>
+</mapper>

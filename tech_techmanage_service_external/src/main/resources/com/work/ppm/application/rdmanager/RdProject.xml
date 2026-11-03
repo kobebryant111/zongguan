@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.work.ppm.application.dao.rdManager.RdProjectMapper">
+
+    <sql id="sql_flied_all">
+        GENDER,
+        UPDATEFLG,
+        LASTUPDATEDATE,
+        REPORTTO,
+        ISDISABLED,
+        SHORTPHONE,
+        EMPNAME,
+        EMPAUTH,
+        CHARGE_NAME,
+        BIRTHDAY,
+        CERTIFICATE_TYPE,
+        CERTIFICATE_NUMBER,
+        AUTHPROPERTY,
+        REMARK,
+        FULLNAME,
+        JOBID,
+        EID,
+        BADGE,
+        COMPID,
+        EMPSTATUS,
+        OFFICEPHONE,
+        EIDHR,
+        BOARDLINE,
+        SPELLNAME,
+        DEPID,
+        HEADSHIP,
+        MOBILETELPHONE,
+        NATURE,
+        DEPGRADE
+    </sql>
+    <select id="queryPager" resultType="com.work.ppm.application.model.rdmanager.RdProject">
+        select t.pk_id,
+        t.project_code,
+        t.project_name,
+        d.location competent_name,
+        t.competent_dept,
+        t.sys_no,
+        t.sys_name,
+        t.start_date,
+        t.end_date,
+        t.create_by,
+        t.create_date,
+        t.update_by,
+        t.update_date,
+        t.project_state,
+        t.head_user,
+        t.dev_user,
+        t.deleted,
+        t.participating_dept,
+        t.bus_innova,
+        t.tech_innova
+        from ppm.rd_project t
+        left join ppm.comm_rd_department d
+        on (d.depid = t.competent_dept)
+        where t.DELETED='0'
+        <if test="projectCode != null  and projectCode != '' ">and t.project_code like '%'||#{projectCode}||'%'</if>
+        <if test="projectName != null  and projectName != '' ">and t.project_name like '%'||#{projectName}||'%'</if>
+        <if test="competentDept != null  and competentDept != '' ">and t.competent_dept like
+            '%'||#{competentDept}||'%'
+        </if>
+        <if test="sysName != null  and sysName != '' ">and t.sys_name like '%'||#{sysName}||'%'</if>
+        <if test="notRdProjectContractId != null  and notRdProjectContractId != '' ">
+            and not exists(select 1 from ppm.rd_project_contract_relation r
+            where r.rd_project_contract_id = #{notRdProjectContractId} and r.rd_project_id=t.pk_id)
+        </if>
+        <if test="prop != null  and  prop != '' and order != null and  prop != 'competent_Name' and order != ''">
+            order by t.${prop} ${order}
+        </if>
+        <if test="order != '' and  prop == 'competent_Name' and order != ''">
+            order by ${prop} ${order}
+        </if>
+        <if test="prop == null  or prop == '' or order == null  or order == ''">
+            order by t.project_code desc
+        </if>
+
+    </select>
+
+    <select id="queryPagerExcel" resultType="RdProjectExcel">
+        select  t.pk_id,
+        t.project_code,
+        t.project_name,
+        t.start_date,
+        t.end_date,
+        t.project_state,
+        t.sys_name,
+        d.location competent_dept,
+        t.participating_dept,
+        t.head_user,
+        t.dev_user,
+        r.BUDGET_CODE,
+        r.Budget_Name,
+        r.CONTRACT_CODE,
+        r.CONTRACT_NAME,
+        r.CONTRACT_START_DATE,
+        r.CONTRACT_END_DATE,
+        r.CONTRACT_AMOUNT,
+        r.PAYMENT_SCHEDULING,
+        p.RATIO project_allocation_ratio
+        from ppm.rd_project t
+        inner join ppm.rd_project_contract_relation p
+        on (t.pk_id = p.rd_project_id)
+        left join ppm.rd_project_contract r
+        on (p.rd_project_contract_id = r.pk_id)
+        left join ppm.COMM_RD_DEPARTMENT d
+        on (d.depid = t.competent_dept)
+        where t.DELETED = '0'
+        order by t.PROJECT_CODE desc, r.CONTRACT_END_DATE desc
+    </select>
+
+    <select id="departmentExcel" parameterType="map" resultType="String">
+        SELECT LISTAGG(LOCATION, ',') WITHIN GROUP(ORDER BY DEPID) FROM PPM.COMM_RD_DEPARTMENT WHERE DEPID IN
+        <foreach collection="depids" item="depid" open="(" separator="," close=")" >
+            #{depid}
+        </foreach>
+    </select>
+    <select id="queryByRdProjectCode" parameterType="map" resultType="CommRdEmployeeDto">
+        select
+        c.location CHARGE_NAME, e.BADGE, e.EMPNAME, e.eid
+        from COMM_RD_EMPLOYEE e left join
+        ppm.RD_PROJECT_EMPLOYEE t
+        on (e.eid=t.eid)
+        left join ppm.COMM_RD_DEPARTMENT c
+        on(e.depid=c.depid)
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="projectCode != null and projectCode != '' ">PROJECT_CODE =#{projectCode} AND</if>
+        </trim>
+    </select>
+</mapper>

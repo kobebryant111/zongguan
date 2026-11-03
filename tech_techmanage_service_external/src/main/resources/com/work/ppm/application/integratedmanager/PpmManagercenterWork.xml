@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k6991 2020-06-04 -->
+<mapper namespace="com.work.ppm.application.model.integratedmanager.PpmManagercenterWork">
+	 <resultMap type="ppmManagercenterWork" id="PPMMANAGERCENTERWORK_ALL">
+        <result property="id" column="ID" />
+		<result property="creator" column="CREATOR" />
+		<result property="dep" column="DEP" />
+		<result property="telphone" column="TELPHONE" />
+		<result property="createtime" column="CREATETIME" />
+		<result property="projectname" column="PROJECTNAME" />
+		<result property="projectno" column="PROJECTNO" />
+		<result property="dealdeptid" column="DEALDEPTID" />
+		<result property="projectmanager" column="PROJECTMANAGER" />
+		<result property="planstartdate" column="PLANSTARTDATE" />
+		<result property="planenddate" column="PLANENDDATE" />
+		<result property="helpdep" column="HELPDEP" />
+		<result property="supply" column="SUPPLY" />
+		<result property="projectdetail" column="PROJECTDETAIL" />
+		<result property="state" column="STATE" />
+		<result property="projectprocess" column="PROJECTPROCESS" />
+		<result property="entertime" column="ENTERTIME" />
+		<result property="instanceid" column="INSTANCEID" />
+		<result property="depname" column="DEPNAME" />
+		<result property="creatorname" column="CREATORNAME" />
+		<result property="dealdeptname" column="DEALDEPTNAME" />
+		<result property="projectmanagername" column="PROJECTMANAGERNAME" />
+		<result property="helpdepname" column="HELPDEPNAME" />
+		<result property="worktype" column="WORKTYPE" />
+		<result property="projectfrom" column="PROJECTFROM" />
+		<result property="finalchecker" column="FINALCHECKER" />
+		
+     </resultMap>
+
+     <!-- 所有字段名称 -->
+        <sql id="sql_flied_all">
+        	ID,
+			CREATOR,
+			DEP,
+			TELPHONE,
+			CREATETIME,
+			PROJECTNAME,
+			PROJECTNO,
+			DEALDEPTID,
+			PROJECTMANAGER,
+			PLANSTARTDATE,
+			PLANENDDATE,
+			HELPDEP,
+			SUPPLY,
+			PROJECTDETAIL,
+			STATE,
+			PROJECTPROCESS,
+			ENTERTIME,
+			INSTANCEID,
+			DEPNAME,
+			CREATORNAME,
+			DEALDEPTNAME,
+			PROJECTMANAGERNAME,
+			HELPDEPNAME,
+			WORKTYPE,
+			PROJECTFROM,
+			FINALCHECKER
+        </sql>
+    	<!-- 查询分页  2020-06-04 k6991  -->
+        <select id="queryPagerList" parameterType="map" resultMap="PPMMANAGERCENTERWORK_ALL">
+        	SELECT
+            <include refid="sql_flied_all" />
+            FROM PPM_MANAGERCENTER_WORK
+            <trim prefix="WHERE" suffixOverrides="AND">
+                <if test="id != null  and id != '' " > ID = #{id} AND </if>
+				<if test="creator != null  and creator != '' " > CREATOR = #{creator} AND </if>
+				<if test="dep != null  and dep != '' " > DEP = #{dep} AND </if>
+				<if test="telphone != null  and telphone != '' " > TELPHONE = #{telphone} AND </if>
+				<if test="createtime != null " > CREATETIME = #{createtime} AND </if>
+				<if test="projectname != null  and projectname != '' " > PROJECTNAME = #{projectname} AND </if>
+				<if test="projectno != null  and projectno != '' " > PROJECTNO = #{projectno} AND </if>
+				<if test="dealdeptid != null  and dealdeptid != '' " > DEALDEPTID = #{dealdeptid} AND </if>
+				<if test="projectmanager != null  and projectmanager != '' " > PROJECTMANAGER = #{projectmanager} AND </if>
+				<if test="planstartdate != null " > PLANSTARTDATE = #{planstartdate} AND </if>
+				<if test="planenddate != null " > PLANENDDATE = #{planenddate} AND </if>
+				<if test="helpdep != null  and helpdep != '' " > HELPDEP = #{helpdep} AND </if>
+				<if test="supply != null  and supply != '' " > SUPPLY = #{supply} AND </if>
+				<if test="projectdetail != null  and projectdetail != '' " > PROJECTDETAIL = #{projectdetail} AND </if>
+				<if test="state != null  and state != '' " > STATE = #{state} AND </if>
+				<if test="projectprocess != null  and projectprocess != '' " > PROJECTPROCESS = #{projectprocess} AND </if>
+				<if test="entertime != null " > ENTERTIME = #{entertime} AND </if>
+				<if test="instanceid != null  and instanceid != '' " > INSTANCEID = #{instanceid} AND </if>
+				<if test="depname != null  and depname != '' " > DEPNAME = #{depname} AND </if>
+				<if test="creatorname != null  and creatorname != '' " > CREATORNAME = #{creatorname} AND </if>
+				<if test="dealdeptname != null  and dealdeptname != '' " > DEALDEPTNAME = #{dealdeptname} AND </if>
+				<if test="projectmanagername != null  and projectmanagername != '' " > PROJECTMANAGERNAME = #{projectmanagername} AND </if>
+				<if test="helpdepname != null  and helpdepname != '' " > HELPDEPNAME = #{helpdepname} AND </if>
+				<if test="worktype != null  and worktype != '' " > WORKTYPE = #{worktype} AND </if>
+				<if test="projectfrom != null  and projectfrom != '' " > PROJECTFROM = #{projectfrom} AND </if>
+				<if test="finalchecker != null  and finalchecker != '' " > FINALCHECKER = #{finalchecker} AND </if>
+				
+            </trim>
+        </select>
+
+        <!-- 新增  2020-06-04 k6991  -->
+        <insert id="addPojo" parameterType="ppmManagercenterWork">
+    		INSERT INTO PPM_MANAGERCENTER_WORK (
+    		<trim suffixOverrides=",">
+    		 <if test="id != null  and id != '' " > ID , </if>
+				<if test="creator != null  and creator != '' " > CREATOR , </if>
+				<if test="dep != null  and dep != '' " > DEP , </if>
+				<if test="telphone != null  and telphone != '' " > TELPHONE , </if>
+				<if test="createtime != null " > CREATETIME , </if>
+				<if test="projectname != null  and projectname != '' " > PROJECTNAME , </if>
+				<if test="projectno != null  and projectno != '' " > PROJECTNO , </if>
+				<if test="dealdeptid != null  and dealdeptid != '' " > DEALDEPTID , </if>
+				<if test="projectmanager != null  and projectmanager != '' " > PROJECTMANAGER , </if>
+				<if test="planstartdate != null " > PLANSTARTDATE , </if>
+				<if test="planenddate != null " > PLANENDDATE , </if>
+				<if test="helpdep != null  and helpdep != '' " > HELPDEP , </if>
+				<if test="supply != null  and supply != '' " > SUPPLY , </if>
+				<if test="projectdetail != null  and projectdetail != '' " > PROJECTDETAIL , </if>
+				<if test="state != null  and state != '' " > STATE , </if>
+				<if test="projectprocess != null  and projectprocess != '' " > PROJECTPROCESS , </if>
+				<if test="entertime != null " > ENTERTIME , </if>
+				<if test="instanceid != null  and instanceid != '' " > INSTANCEID , </if>
+				<if test="depname != null  and depname != '' " > DEPNAME , </if>
+				<if test="creatorname != null  and creatorname != '' " > CREATORNAME , </if>
+				<if test="dealdeptname != null  and dealdeptname != '' " > DEALDEPTNAME , </if>
+				<if test="projectmanagername != null  and projectmanagername != '' " > PROJECTMANAGERNAME , </if>
+				<if test="helpdepname != null  and helpdepname != '' " > HELPDEPNAME , </if>
+				<if test="worktype != null  and worktype != '' " > WORKTYPE , </if>
+				<if test="projectfrom != null  and projectfrom != '' " > PROJECTFROM , </if>
+				<if test="finalchecker != null  and finalchecker != '' " > FINALCHECKER , </if>
+				
+              </trim>
+    		)
+    		VALUES(
+    		<trim suffixOverrides=",">
+    		 <if test="id != null  and id != '' " > #{id} , </if>
+				<if test="creator != null  and creator != '' " > #{creator} , </if>
+				<if test="dep != null  and dep != '' " > #{dep} , </if>
+				<if test="telphone != null  and telphone != '' " > #{telphone} , </if>
+				<if test="createtime != null " > #{createtime} , </if>
+				<if test="projectname != null  and projectname != '' " > #{projectname} , </if>
+				<if test="projectno != null  and projectno != '' " > #{projectno} , </if>
+				<if test="dealdeptid != null  and dealdeptid != '' " > #{dealdeptid} , </if>
+				<if test="projectmanager != null  and projectmanager != '' " > #{projectmanager} , </if>
+				<if test="planstartdate != null " > #{planstartdate} , </if>
+				<if test="planenddate != null " > #{planenddate} , </if>
+				<if test="helpdep != null  and helpdep != '' " > #{helpdep} , </if>
+				<if test="supply != null  and supply != '' " > #{supply} , </if>
+				<if test="projectdetail != null  and projectdetail != '' " > #{projectdetail} , </if>
+				<if test="state != null  and state != '' " > #{state} , </if>
+				<if test="projectprocess != null  and projectprocess != '' " > #{projectprocess} , </if>
+				<if test="entertime != null " > #{entertime} , </if>
+				<if test="instanceid != null  and instanceid != '' " > #{instanceid} , </if>
+				<if test="depname != null  and depname != '' " > #{depname} , </if>
+				<if test="creatorname != null  and creatorname != '' " > #{creatorname} , </if>
+				<if test="dealdeptname != null  and dealdeptname != '' " > #{dealdeptname} , </if>
+				<if test="projectmanagername != null  and projectmanagername != '' " > #{projectmanagername} , </if>
+				<if test="helpdepname != null  and helpdepname != '' " > #{helpdepname} , </if>
+				<if test="worktype != null  and worktype != '' " > #{worktype} , </if>
+				<if test="projectfrom != null  and projectfrom != '' " > #{projectfrom} , </if>
+				<if test="finalchecker != null  and finalchecker != '' " > #{finalchecker} , </if>
+				
+            </trim>
+    		)
+        </insert>
+
+        <!--通过id查询  k6991 2020-06-04 -->
+        <select id="queryDetail" parameterType="map" resultMap="PPMMANAGERCENTERWORK_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_MANAGERCENTER_WORK  WHERE ID=#{id}
+        </select>
+
+         <!--查询集合  k6991 2020-06-04 -->
+        <select id="getList" parameterType="map" resultMap="PPMMANAGERCENTERWORK_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_MANAGERCENTER_WORK
+        	<trim prefix="WHERE" suffixOverrides="AND">
+        		<if test="id != null  and id != '' " > ID=#{id} AND </if>
+				<if test="creator != null  and creator != '' " > CREATOR=#{creator} AND </if>
+				<if test="dep != null  and dep != '' " > DEP=#{dep} AND </if>
+				<if test="telphone != null  and telphone != '' " > TELPHONE=#{telphone} AND </if>
+				<if test="createtime != null " > CREATETIME=#{createtime} AND </if>
+				<if test="projectname != null  and projectname != '' " > PROJECTNAME=#{projectname} AND </if>
+				<if test="projectno != null  and projectno != '' " > PROJECTNO=#{projectno} AND </if>
+				<if test="dealdeptid != null  and dealdeptid != '' " > DEALDEPTID=#{dealdeptid} AND </if>
+				<if test="projectmanager != null  and projectmanager != '' " > PROJECTMANAGER=#{projectmanager} AND </if>
+				<if test="planstartdate != null " > PLANSTARTDATE=#{planstartdate} AND </if>
+				<if test="planenddate != null " > PLANENDDATE=#{planenddate} AND </if>
+				<if test="helpdep != null  and helpdep != '' " > HELPDEP=#{helpdep} AND </if>
+				<if test="supply != null  and supply != '' " > SUPPLY=#{supply} AND </if>
+				<if test="projectdetail != null  and projectdetail != '' " > PROJECTDETAIL=#{projectdetail} AND </if>
+				<if test="state != null  and state != '' " > STATE=#{state} AND </if>
+				<if test="projectprocess != null  and projectprocess != '' " > PROJECTPROCESS=#{projectprocess} AND </if>
+				<if test="entertime != null " > ENTERTIME=#{entertime} AND </if>
+				<if test="instanceid != null  and instanceid != '' " > INSTANCEID=#{instanceid} AND </if>
+				<if test="depname != null  and depname != '' " > DEPNAME=#{depname} AND </if>
+				<if test="creatorname != null  and creatorname != '' " > CREATORNAME=#{creatorname} AND </if>
+				<if test="dealdeptname != null  and dealdeptname != '' " > DEALDEPTNAME=#{dealdeptname} AND </if>
+				<if test="projectmanagername != null  and projectmanagername != '' " > PROJECTMANAGERNAME=#{projectmanagername} AND </if>
+				<if test="helpdepname != null  and helpdepname != '' " > HELPDEPNAME=#{helpdepname} AND </if>
+				<if test="worktype != null  and worktype != '' " > WORKTYPE=#{worktype} AND </if>
+				<if test="projectfrom != null  and projectfrom != '' " > PROJECTFROM=#{projectfrom} AND </if>
+				<if test="finalchecker != null  and finalchecker != '' " > FINALCHECKER=#{finalchecker} AND </if>
+				
+            </trim>
+        </select>
+        <!-- update sql -->
+        <sql id="update_pojo_sql">
+        	<trim prefix="SET" suffixOverrides=",">
+        		<if test="id != null  and id != '' " > ID=#{id} , </if>
+				<if test="creator != null  and creator != '' " > CREATOR=#{creator} , </if>
+				<if test="dep != null  and dep != '' " > DEP=#{dep} , </if>
+				<if test="telphone != null  and telphone != '' " > TELPHONE=#{telphone} , </if>
+				<if test="createtime != null " > CREATETIME=#{createtime} , </if>
+				<if test="projectname != null  and projectname != '' " > PROJECTNAME=#{projectname} , </if>
+				<if test="projectno != null  and projectno != '' " > PROJECTNO=#{projectno} , </if>
+				<if test="dealdeptid != null  and dealdeptid != '' " > DEALDEPTID=#{dealdeptid} , </if>
+				<if test="projectmanager != null  and projectmanager != '' " > PROJECTMANAGER=#{projectmanager} , </if>
+				<if test="planstartdate != null " > PLANSTARTDATE=#{planstartdate} , </if>
+				<if test="planenddate != null " > PLANENDDATE=#{planenddate} , </if>
+				<if test="helpdep != null  and helpdep != '' " > HELPDEP=#{helpdep} , </if>
+				<if test="supply != null  and supply != '' " > SUPPLY=#{supply} , </if>
+				<if test="projectdetail != null  and projectdetail != '' " > PROJECTDETAIL=#{projectdetail} , </if>
+				<if test="state != null  and state != '' " > STATE=#{state} , </if>
+				<if test="projectprocess != null  and projectprocess != '' " > PROJECTPROCESS=#{projectprocess} , </if>
+				<if test="entertime != null " > ENTERTIME=#{entertime} , </if>
+				<if test="instanceid != null  and instanceid != '' " > INSTANCEID=#{instanceid} , </if>
+				<if test="depname != null  and depname != '' " > DEPNAME=#{depname} , </if>
+				<if test="creatorname != null  and creatorname != '' " > CREATORNAME=#{creatorname} , </if>
+				<if test="dealdeptname != null  and dealdeptname != '' " > DEALDEPTNAME=#{dealdeptname} , </if>
+				<if test="projectmanagername != null  and projectmanagername != '' " > PROJECTMANAGERNAME=#{projectmanagername} , </if>
+				<if test="helpdepname != null  and helpdepname != '' " > HELPDEPNAME=#{helpdepname} , </if>
+				<if test="worktype != null  and worktype != '' " > WORKTYPE=#{worktype} , </if>
+				<if test="projectfrom != null  and projectfrom != '' " > PROJECTFROM=#{projectfrom} , </if>
+				<if test="finalchecker != null  and finalchecker != '' " > FINALCHECKER=#{finalchecker} , </if>
+				
+            </trim>
+        </sql>
+
+        <!--通过id编辑 k6991 2020-06-04 -->
+    	<update id="updatePojo" parameterType="ppmManagercenterWork">
+        	UPDATE
+        	PPM_MANAGERCENTER_WORK
+        	<include refid="update_pojo_sql" />
+        	WHERE ID=#{id}
+        </update>
+
+        <!--通过id批量删除  k6991 2020-06-04 -->
+        <delete id="deleteById" parameterType="ppmManagercenterWork">
+        	DELETE
+        	FROM
+        	PPM_MANAGERCENTER_WORK
+        	WHERE ID = #{id}
+        </delete>
+
+        <!-- 获取主键id -->
+        <select id="getPrimaryKey" parameterType="map" resultType="long">
+            SELECT MAX(ID) FROM PPM_MANAGERCENTER_WORK
+        </select>
+</mapper>

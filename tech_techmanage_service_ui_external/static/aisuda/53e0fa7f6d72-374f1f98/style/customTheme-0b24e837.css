@@ -1,0 +1,10 @@
+:root {
+      --Form-input-borderRadius: 4px;--borderRadius: 3px;--borderRadius: 3px;--borderRadius: 3px;--primary: #FAAD14;--primary-onHover: #FAAD14;--primary-onActive: #FAAD14;--info: #FAAD14;--info-onHover: #FAAD14;--info-onActive: #FAAD14;
+    }
+.amis-scope .font-form {
+  font-size: 14px;
+}
+
+.amis-scope .myclass .cxd-NestedSelectControl {
+  max-width: 300px;
+}

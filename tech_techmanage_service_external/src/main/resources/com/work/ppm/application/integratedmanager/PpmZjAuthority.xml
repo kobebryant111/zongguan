@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:ywwb436 2022-07-19 -->
+<!--  闸机权限管理 查询脚本 -->
+<mapper namespace="com.work.ppm.application.model.integratedmanager.PpmZjAuthority">
+    <resultMap type="ppmZjAuthority" id="PPMZJAUTHORITY_ALL">
+        <result property="id" column="ID"/>
+        <result property="instanceid" column="INSTANCEID"/>
+        <result property="ppmZjId" column="PPM_ZJ_ID"/>
+        <result property="zjname" column="zjname"/>
+        <result property="badge" column="BADGE"/>
+        <result property="empname" column="EMPNAME"/>
+        <result property="certificateType" column="CERTIFICATE_TYPE"/>
+        <result property="certificateNumber" column="CERTIFICATE_NUMBER"/>
+        <result property="depid" column="DEPID"/>
+        <result property="depname" column="DEPNAME"/>
+        <result property="empstatus" column="EMPSTATUS"/>
+        <result property="applyType" column="APPLY_TYPE"/>
+        <result property="beginDate" column="BEGIN_DATE"/>
+        <result property="endDate" column="END_DATE"/>
+        <result property="flag" column="FLAG"/>
+    </resultMap>
+
+    <!-- 所有字段名称 -->
+    <sql id="sql_flied_all">
+        t.ID,
+        t.INSTANCEID,
+        t.PPM_ZJ_ID,
+        t.BADGE,
+        t.EMPNAME,
+        t.CERTIFICATE_TYPE,
+        t.CERTIFICATE_NUMBER,
+        t.DEPID,
+        (select SUBSTR(LOCATION,INSTR(LOCATION,'-') + 1) from comm_department where DEPID = t.depid) depname,
+        (select NAME from ppm_zj_manager where index_code = t.ppm_zj_id) zjname,
+        t.EMPSTATUS,
+        t.APPLY_TYPE,
+        t.BEGIN_DATE,
+        t.END_DATE,
+        t.FLAG
+    </sql>
+    <sql id="sql_select_condition">
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="empname != null  and empname != '' ">EMPNAME = #{empname} AND</if>
+            <if test="id != null ">ID = #{id} AND</if>
+            <if test="instanceid != null  and instanceid != '' ">INSTANCEID = #{instanceid} AND</if>
+            <if test="ppmZjId != null and ppmZjId != '' ">PPM_ZJ_ID = #{ppmZjId} AND</if>
+            <if test="depid != null ">DEPID = #{depid} AND</if>
+            <if test="badge != null  and badge != '' ">BADGE = #{badge} AND</if>
+            <if test="certificateType != null  and certificateType != '' ">
+                CERTIFICATE_TYPE = #{certificateType} AND
+            </if>
+            <if test="certificateNumber != null  and certificateNumber != '' ">
+                CERTIFICATE_NUMBER = #{certificateNumber} AND
+            </if>
+            <if test="empstatus != null  and empstatus != '' ">EMPSTATUS = #{empstatus} AND</if>
+            <if test="applyType != null ">APPLY_TYPE = #{applyType} AND</if>
+            <if test="beginDate != null ">BEGIN_DATE = #{beginDate} AND</if>
+            <if test="endDate != null ">END_DATE = #{endDate} AND</if>
+            <if test="flag != null ">FLAG = #{flag} AND</if>
+        </trim>
+    </sql>
+
+    <!-- 查询分页  2022-07-19 ywwb436  -->
+    <select id="queryPagerList" parameterType="map" resultMap="PPMZJAUTHORITY_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM PPM_ZJ_AUTHORITY t
+        <include refid="sql_select_condition"/>
+    </select>
+
+    <!-- 新增  2022-07-19 ywwb436  -->
+    <insert id="addPojo" parameterType="ppmZjAuthority">
+        INSERT INTO PPM_ZJ_AUTHORITY (
+        <trim suffixOverrides=",">
+            <if test="empname != null  and empname != '' ">EMPNAME ,</if>
+            <if test="id != null ">ID ,</if>
+            <if test="instanceid != null  and instanceid != '' ">INSTANCEID ,</if>
+            <if test="ppmZjId != null and ppmZjId != '' ">PPM_ZJ_ID ,</if>
+            <if test="depid != null ">DEPID ,</if>
+            <if test="badge != null  and badge != '' ">BADGE ,</if>
+            <if test="certificateType != null  and certificateType != '' ">CERTIFICATE_TYPE,</if>
+            <if test="certificateNumber != null  and certificateNumber != '' ">CERTIFICATE_NUMBER,</if>
+            <if test="empstatus != null  and empstatus != '' ">EMPSTATUS ,</if>
+            <if test="applyType != null ">APPLY_TYPE ,</if>
+            <if test="beginDate != null ">BEGIN_DATE ,</if>
+            <if test="endDate != null ">END_DATE ,</if>
+            <if test="flag != null ">FLAG ,</if>
+        </trim>
+        )
+        VALUES(
+        <trim suffixOverrides=",">
+            <if test="empname != null  and empname != '' ">#{empname} ,</if>
+            <if test="id != null ">#{id} ,</if>
+            <if test="instanceid != null  and instanceid != '' ">#{instanceid} ,</if>
+            <if test="ppmZjId != null and ppmZjId != '' ">#{ppmZjId} ,</if>
+            <if test="depid != null ">#{depid} ,</if>
+            <if test="badge != null  and badge != '' ">#{badge} ,</if>
+            <if test="certificateType != null  and certificateType != '' ">#{certificateType},</if>
+            <if test="certificateNumber != null  and certificateNumber != '' ">#{certificateNumber},</if>
+            <if test="empstatus != null  and empstatus != '' ">#{empstatus} ,</if>
+            <if test="applyType != null ">#{applyType} ,</if>
+            <if test="beginDate != null ">#{beginDate} ,</if>
+            <if test="endDate != null ">#{endDate} ,</if>
+            <if test="flag != null ">#{flag} ,</if>
+        </trim>
+        )
+    </insert>
+
+    <!--通过id查询  ywwb436 2022-07-19 -->
+    <select id="queryDetail" parameterType="ppmZjAuthority" resultMap="PPMZJAUTHORITY_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM PPM_ZJ_AUTHORITY t WHERE t.ID=#{id}
+    </select>
+
+    <!--通过id查询  ywwb436 2022-07-19 -->
+    <select id="queryByZjAuth" parameterType="ppmZjAuthority" resultMap="PPMZJAUTHORITY_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM PPM_ZJ_AUTHORITY t,Ppm_Zj_Person t2
+        where t2.certificate_no = t.certificate_number and t.flag = 1
+        and t2.person_id = #{certificateNumber}
+        <if test="ppmZjId != null and ppmZjId != ''">
+            and t.PPM_ZJ_ID = #{ppmZjId}
+        </if>
+    </select>
+
+    <!--检查过期数据  ywwb436 2022-07-19 -->
+    <select id="getExpire" parameterType="ppmZjAuthority" resultMap="PPMZJAUTHORITY_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM PPM_ZJ_AUTHORITY t
+        where t.flag = 1
+            and t.END_DATE &lt; #{endDate}
+    </select>
+
+    <!--查询集合  ywwb436 2022-07-19 -->
+    <select id="getList" parameterType="ppmZjAuthority" resultMap="PPMZJAUTHORITY_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM PPM_ZJ_AUTHORITY t
+        <include refid="sql_select_condition"/>
+    </select>
+
+    <!--查询集合  213184 2022-07-19 -->
+    <select id="getListNew" parameterType="ppmZjAuthority" resultMap="PPMZJAUTHORITY_ALL">
+        SELECT
+            DISTINCT BADGE,
+            EMPNAME,
+            CERTIFICATE_NUMBER,
+            DEPID,
+            DEPNAME
+        FROM (
+            SELECT
+                t.BADGE,
+                t.EMPNAME,
+                t.CERTIFICATE_NUMBER,
+                t.DEPID,
+                (select SUBSTR(LOCATION, INSTR(LOCATION, '-') + 1)
+                    from comm_department where DEPID = t.depid) DEPNAME
+                FROM PPM_ZJ_AUTHORITY t
+                <include refid="sql_select_condition"/>
+        )
+    </select>
+
+    <!--检查重复  ywwb436 2022-07-19 -->
+    <select id="checkRepeatAuth" parameterType="ppmZjAuthority" resultMap="PPMZJAUTHORITY_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM PPM_ZJ_AUTHORITY t
+        where t.flag &gt;= 0
+        and PPM_ZJ_ID = #{ppmZjId}
+        and CERTIFICATE_NUMBER = #{certificateNumber}
+    </select>
+    <!-- update sql -->
+    <sql id="update_pojo_sql">
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="empname != null  and empname != '' ">EMPNAME=#{empname} ,</if>
+            <if test="id != null ">ID=#{id} ,</if>
+            <if test="instanceid != null  and instanceid != '' ">INSTANCEID=#{instanceid} ,</if>
+            <if test="ppmZjId != null and ppmZjId != '' ">PPM_ZJ_ID=#{ppmZjId} ,</if>
+            <if test="depid != null ">DEPID=#{depid} ,</if>
+            <if test="badge != null  and badge != '' ">BADGE=#{badge} ,</if>
+            <if test="certificateType != null  and certificateType != '' ">
+                CERTIFICATE_TYPE = #{certificateType},
+            </if>
+            <if test="certificateNumber != null  and certificateNumber != '' ">
+                CERTIFICATE_NUMBER = #{certificateNumber},
+            </if>
+            <if test="empstatus != null  and empstatus != '' ">EMPSTATUS=#{empstatus} ,</if>
+            <if test="applyType != null ">APPLY_TYPE=#{applyType} ,</if>
+            <if test="beginDate != null ">BEGIN_DATE=#{beginDate} ,</if>
+            <if test="endDate != null ">END_DATE=#{endDate} ,</if>
+            <if test="flag != null ">FLAG=#{flag} ,</if>
+        </trim>
+    </sql>
+
+    <!--通过id编辑 ywwb436 2022-07-19 -->
+    <update id="updatePojo" parameterType="ppmZjAuthority">
+        UPDATE PPM_ZJ_AUTHORITY
+        <include refid="update_pojo_sql"/>
+        WHERE ID=#{id}
+    </update>
+
+    <!--通过id批量删除  ywwb436 2022-07-19 -->
+    <delete id="deleteById" parameterType="ppmZjAuthority">
+        DELETE FROM PPM_ZJ_AUTHORITY
+        WHERE ID=#{id}
+    </delete>
+
+    <!--通过id批量删除  ywwb436 2022-07-19 -->
+    <delete id="deleteByInstanceId" parameterType="ppmZjAuthority">
+        DELETE FROM PPM_ZJ_AUTHORITY
+        WHERE INSTANCEID=#{instanceid}
+    </delete>
+
+</mapper>

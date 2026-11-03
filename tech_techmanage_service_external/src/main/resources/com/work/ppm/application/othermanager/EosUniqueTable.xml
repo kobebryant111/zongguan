@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k6991 2020-08-11 -->
+<mapper namespace="com.work.ppm.application.model.othermanager.EosUniqueTable">
+    <resultMap type="eosUniqueTable" id="EOSUNIQUETABLE_ALL">
+        <result property="name" column="NAME"/>
+        <result property="code" column="CODE"/>
+
+    </resultMap>
+
+    <!--通过id查询  k6991 2020-08-11 -->
+    <select id="queryDetail" parameterType="eosUniqueTable" resultMap="EOSUNIQUETABLE_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM EOS_UNIQUE_TABLE WHERE NAME=#{name} FOR UPDATE WAIT 3
+    </select>
+
+    <!-- 所有字段名称 -->
+    <sql id="sql_flied_all">
+        NAME,
+        CODE
+    </sql>
+    <sql id="sql_select_condition">
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="name != null  and name != '' ">NAME = #{name} AND</if>
+            <if test="code != null ">CODE = #{code} AND</if>
+
+        </trim>
+    </sql>
+
+    <!--查询集合  k6991 2020-08-11 -->
+    <select id="getList" parameterType="eosUniqueTable" resultMap="EOSUNIQUETABLE_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM EOS_UNIQUE_TABLE
+        <include refid="sql_select_condition"/>
+    </select>
+    <!-- update sql -->
+    <sql id="update_pojo_sql">
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null  and name != '' ">NAME=#{name} ,</if>
+            <if test="code != null ">CODE=#{code} ,</if>
+
+        </trim>
+    </sql>
+
+
+    <!-- 新增  2020-11-26 k6991  -->
+    <insert id="addPojo" parameterType="eosUniqueTable">
+        INSERT INTO EOS_UNIQUE_TABLE (
+        <trim suffixOverrides=",">
+            <if test="name != null  and name != '' " > NAME , </if>
+            <if test="code != null " > CODE , </if>
+        </trim>
+        )
+        VALUES(
+        <trim suffixOverrides=",">
+            <if test="name != null  and name != '' " > #{name} , </if>
+            <if test="code != null " > #{code} , </if>
+        </trim>
+        )
+    </insert>
+
+    <!--通过id编辑 k6991 2020-08-11 -->
+    <update id="updatePojo" parameterType="eosUniqueTable">
+        UPDATE
+        EOS_UNIQUE_TABLE
+        <include refid="update_pojo_sql"/>
+        WHERE NAME=#{name}
+    </update>
+    <!-- 获取表序列id 2020-08-12 k6991 -->
+    <select id="getTableSequence" parameterType="map" resultType="long">
+        <![CDATA[
+        SELECT MAX(${fieldId}) FROM ${tableName}
+        ]]>
+    </select>
+
+    <!-- 查询主键是否重复 k6991 2021-05-18 -->
+    <select id="getCheckedSequence" parameterType="map" resultType="long">
+        <![CDATA[
+        SELECT count(1) FROM ${tableName} WHERE ${fieldId}=#{id}
+        ]]>
+    </select>
+</mapper>

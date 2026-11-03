@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:ywwb905 2023-05-23 -->
+<!--  监保部台账门禁卡流程详情 查询脚本 -->
+<mapper namespace="com.work.ppm.application.model.otherdeptmanager.PpmAccessCardApplyInfo">
+	 <resultMap type="ppmAccessCardApplyInfo" id="PPMACCESSCARDAPPLYINFO_ALL">
+        <result property="id" column="ID" />
+		<result property="instanceId" column="INSTANCE_ID" />
+		<result property="bizObjectId" column="BIZ_OBJECT_ID" />
+		<result property="jobId" column="JOB_ID" />
+		<result property="deptId" column="DEPT_ID" />
+		<result property="virtualMachineId" column="VIRTUAL_MACHINE_ID" />
+		<result property="accessCardNumber" column="ACCESS_CARD_NUMBER" />
+		<result property="ifReceiveCard" column="IF_RECEIVE_CARD" />
+		<result property="receiveTime" column="RECEIVE_TIME" />
+		<result property="ifReturnCard" column="IF_RETURN_CARD" />
+		<result property="returnTime" column="RETURN_TIME" />
+		<result property="remark" column="REMARK" />
+		<result property="isDel" column="IS_DEL" />
+		<result property="createdTime" column="CREATED_TIME" />
+		<result property="createdBy" column="CREATED_BY" />
+		<result property="modifiedTime" column="MODIFIED_TIME" />
+		<result property="modifiedBy" column="MODIFIED_BY" />
+     </resultMap>
+	 <resultMap id="PPMACCESSCARDAPPLYINFO_ALL_EXT" type="ppmAccessCardApplyInfoExt" extends="PPMACCESSCARDAPPLYINFO_ALL">
+		<result property="userName" column="USER_NAME" />
+		<result property="deptName" column="DEPT_NAME" />
+		<result property="idCardNo" column="ID_CARD_NO" />
+		<result property="telephone" column="TELEPHONE" />
+		<result property="outsourceNo" column="OUTSOURCE_NO" />
+		<result property="outsourceName" column="OUTSOURCE_NAME" />
+		<result property="ifMakeCard" column="IF_MAKE_CARD" />
+		<result property="sex" column="SEX" />
+     </resultMap>
+
+     <!-- 所有字段名称 -->
+    <sql id="sql_flied_all">
+        ID,
+			INSTANCE_ID,
+			BIZ_OBJECT_ID,
+			JOB_ID,
+			DEPT_ID,
+			VIRTUAL_MACHINE_ID,
+			ACCESS_CARD_NUMBER,
+			IF_RECEIVE_CARD,
+			RECEIVE_TIME,
+			IF_RETURN_CARD,
+			RETURN_TIME,
+			REMARK,
+			IS_DEL,
+			CREATED_TIME,
+			CREATED_BY,
+			MODIFIED_TIME,
+			MODIFIED_BY
+    </sql>
+    <sql id="sql_select_condition">
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="id != null  and id != '' " > ID = #{id} AND </if>
+				<if test="instanceId != null  and instanceId != '' " > INSTANCE_ID = #{instanceId} AND </if>
+				<if test="bizObjectId != null  and bizObjectId != '' " > BIZ_OBJECT_ID = #{bizObjectId} AND </if>
+				<if test="jobId != null  and jobId != '' " > JOB_ID = #{jobId} AND </if>
+				<if test="deptId != null  and deptId != '' " > DEPT_ID = #{deptId} AND </if>
+				<if test="virtualMachineId != null  and virtualMachineId != '' " > VIRTUAL_MACHINE_ID = #{virtualMachineId} AND </if>
+				<if test="accessCardNumber != null  and accessCardNumber != '' " > ACCESS_CARD_NUMBER = #{accessCardNumber} AND </if>
+				<if test="ifReceiveCard != null  and ifReceiveCard != '' " > IF_RECEIVE_CARD = #{ifReceiveCard} AND </if>
+				<if test="receiveTime != null " > RECEIVE_TIME = #{receiveTime} AND </if>
+				<if test="ifReturnCard != null  and ifReturnCard != '' " > IF_RETURN_CARD = #{ifReturnCard} AND </if>
+				<if test="returnTime != null " > RETURN_TIME = #{returnTime} AND </if>
+				<if test="remark != null  and remark != '' " > REMARK = #{remark} AND </if>
+				<if test="isDel != null  and isDel != '' " > IS_DEL = #{isDel} AND </if>
+				<if test="createdTime != null " > CREATED_TIME = #{createdTime} AND </if>
+				<if test="createdBy != null  and createdBy != '' " > CREATED_BY = #{createdBy} AND </if>
+				<if test="modifiedTime != null " > MODIFIED_TIME = #{modifiedTime} AND </if>
+				<if test="modifiedBy != null  and modifiedBy != '' " > MODIFIED_BY = #{modifiedBy} AND </if>
+				
+        </trim>
+    </sql>
+    <!-- 查询分页  2023-05-23 ywwb905  -->
+    <select id="queryPagerList" parameterType="map" resultMap="PPMACCESSCARDAPPLYINFO_ALL">
+        SELECT
+        <include refid="sql_flied_all" />
+        FROM PPM_ACCESS_CARD_APPLY_INFO
+        <include refid="sql_select_condition" />
+    </select>
+
+    <!-- 新增  2023-05-23 ywwb905  -->
+    <insert id="addPojo" parameterType="ppmAccessCardApplyInfo">
+        INSERT INTO PPM_ACCESS_CARD_APPLY_INFO (
+        <trim suffixOverrides=",">
+         <if test="id != null  and id != '' " > ID , </if>
+				<if test="instanceId != null  and instanceId != '' " > INSTANCE_ID , </if>
+				<if test="bizObjectId != null  and bizObjectId != '' " > BIZ_OBJECT_ID , </if>
+				<if test="jobId != null  and jobId != '' " > JOB_ID , </if>
+				<if test="deptId != null  and deptId != '' " > DEPT_ID , </if>
+				<if test="virtualMachineId != null  and virtualMachineId != '' " > VIRTUAL_MACHINE_ID , </if>
+				<if test="accessCardNumber != null  and accessCardNumber != '' " > ACCESS_CARD_NUMBER , </if>
+				<if test="ifReceiveCard != null  and ifReceiveCard != '' " > IF_RECEIVE_CARD , </if>
+				<if test="receiveTime != null " > RECEIVE_TIME , </if>
+				<if test="ifReturnCard != null  and ifReturnCard != '' " > IF_RETURN_CARD , </if>
+				<if test="returnTime != null " > RETURN_TIME , </if>
+				<if test="remark != null  and remark != '' " > REMARK , </if>
+				<if test="isDel != null  and isDel != '' " > IS_DEL , </if>
+				<if test="createdTime != null " > CREATED_TIME , </if>
+				<if test="createdBy != null  and createdBy != '' " > CREATED_BY , </if>
+				<if test="modifiedTime != null " > MODIFIED_TIME , </if>
+				<if test="modifiedBy != null  and modifiedBy != '' " > MODIFIED_BY , </if>
+				
+          </trim>
+        )
+        VALUES(
+        <trim suffixOverrides=",">
+         <if test="id != null  and id != '' " > #{id} , </if>
+				<if test="instanceId != null  and instanceId != '' " > #{instanceId} , </if>
+				<if test="bizObjectId != null  and bizObjectId != '' " > #{bizObjectId} , </if>
+				<if test="jobId != null  and jobId != '' " > #{jobId} , </if>
+				<if test="deptId != null  and deptId != '' " > #{deptId} , </if>
+				<if test="virtualMachineId != null  and virtualMachineId != '' " > #{virtualMachineId} , </if>
+				<if test="accessCardNumber != null  and accessCardNumber != '' " > #{accessCardNumber} , </if>
+				<if test="ifReceiveCard != null  and ifReceiveCard != '' " > #{ifReceiveCard} , </if>
+				<if test="receiveTime != null " > #{receiveTime} , </if>
+				<if test="ifReturnCard != null  and ifReturnCard != '' " > #{ifReturnCard} , </if>
+				<if test="returnTime != null " > #{returnTime} , </if>
+				<if test="remark != null  and remark != '' " > #{remark} , </if>
+				<if test="isDel != null  and isDel != '' " > #{isDel} , </if>
+				<if test="createdTime != null " > #{createdTime} , </if>
+				<if test="createdBy != null  and createdBy != '' " > #{createdBy} , </if>
+				<if test="modifiedTime != null " > #{modifiedTime} , </if>
+				<if test="modifiedBy != null  and modifiedBy != '' " > #{modifiedBy} , </if>
+				
+        </trim>
+        )
+    </insert>
+
+    <!--通过id查询  ywwb905 2023-05-23 -->
+    <select id="queryDetail" parameterType="ppmAccessCardApplyInfo" resultMap="PPMACCESSCARDAPPLYINFO_ALL">
+        SELECT
+        <include refid="sql_flied_all" />
+        FROM PPM_ACCESS_CARD_APPLY_INFO  WHERE ID=#{id}
+    </select>
+
+     <!--查询集合  ywwb905 2023-05-23 -->
+    <select id="getList" parameterType="ppmAccessCardApplyInfo" resultMap="PPMACCESSCARDAPPLYINFO_ALL">
+        SELECT
+        <include refid="sql_flied_all" />
+        FROM PPM_ACCESS_CARD_APPLY_INFO
+        <include refid="sql_select_condition" />
+    </select>
+    <!-- update sql -->
+    <sql id="update_pojo_sql">
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="id != null  and id != '' " > ID=#{id} , </if>
+				<if test="instanceId != null  and instanceId != '' " > INSTANCE_ID=#{instanceId} , </if>
+				<if test="bizObjectId != null  and bizObjectId != '' " > BIZ_OBJECT_ID=#{bizObjectId} , </if>
+				<if test="jobId != null  and jobId != '' " > JOB_ID=#{jobId} , </if>
+				<if test="deptId != null  and deptId != '' " > DEPT_ID=#{deptId} , </if>
+				<if test="virtualMachineId != null  and virtualMachineId != '' " > VIRTUAL_MACHINE_ID=#{virtualMachineId} , </if>
+				<if test="accessCardNumber != null  and accessCardNumber != '' " > ACCESS_CARD_NUMBER=#{accessCardNumber} , </if>
+				<if test="ifReceiveCard != null  and ifReceiveCard != '' " > IF_RECEIVE_CARD=#{ifReceiveCard} , </if>
+				<if test="receiveTime != null " > RECEIVE_TIME=#{receiveTime} , </if>
+				<if test="ifReturnCard != null  and ifReturnCard != '' " > IF_RETURN_CARD=#{ifReturnCard} , </if>
+				<if test="returnTime != null " > RETURN_TIME=#{returnTime} , </if>
+				<if test="remark != null  and remark != '' " > REMARK=#{remark} , </if>
+				<if test="isDel != null  and isDel != '' " > IS_DEL=#{isDel} , </if>
+				<if test="createdTime != null " > CREATED_TIME=#{createdTime} , </if>
+				<if test="createdBy != null  and createdBy != '' " > CREATED_BY=#{createdBy} , </if>
+				<if test="modifiedTime != null " > MODIFIED_TIME=#{modifiedTime} , </if>
+				<if test="modifiedBy != null  and modifiedBy != '' " > MODIFIED_BY=#{modifiedBy} , </if>
+				
+        </trim>
+    </sql>
+
+    <!--通过id编辑 ywwb905 2023-05-23 -->
+    <update id="updatePojo" parameterType="ppmAccessCardApplyInfo">
+        UPDATE
+        PPM_ACCESS_CARD_APPLY_INFO
+        <include refid="update_pojo_sql" />
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="id != null  and id != '' " > ID = #{id} AND </if>
+			<if test="instanceId != null  and instanceId != '' " > INSTANCE_ID = #{instanceId} AND </if>
+			<if test="id == null  and instanceId == null " >ID = '' AND</if>
+        </trim>
+    </update>
+
+    <!--通过id批量删除  ywwb905 2023-05-23 -->
+    <delete id="deleteById" parameterType="ppmAccessCardApplyInfo">
+        DELETE
+        FROM
+        PPM_ACCESS_CARD_APPLY_INFO
+        WHERE ID = #{id}
+    </delete>
+	
+	<delete id="deleteByInstanceId" parameterType="ppmAccessCardApplyInfo">
+        DELETE
+        FROM
+        PPM_ACCESS_CARD_APPLY_INFO
+        WHERE INSTANCE_ID = #{instanceId}
+    </delete>
+	
+	 <!--查询集合  ywwb905 2023-05-23 -->
+    <select id="getListForInstanceId" parameterType="ppmAccessCardApplyInfoExt" resultMap="PPMACCESSCARDAPPLYINFO_ALL_EXT">
+        SELECT
+			AI.ID,
+			AI.INSTANCE_ID,
+			AI.BIZ_OBJECT_ID,
+			AI.JOB_ID,
+			B.DEPT_ID,
+			AI.VIRTUAL_MACHINE_ID,
+			AI.ACCESS_CARD_NUMBER,
+			AI.IF_RECEIVE_CARD,
+			AI.RECEIVE_TIME,
+			AI.IF_RETURN_CARD,
+			AI.RETURN_TIME,
+			AI.REMARK,
+			AI.IS_DEL,
+			AI.CREATED_TIME,
+			AI.CREATED_BY,
+			AI.MODIFIED_TIME,
+			AI.MODIFIED_BY,
+			B.USER_NAME,
+			B.CERTIFICATE_NUMBER ID_CARD_NO,
+			B.MOBILE TELEPHONE,
+			B.OUTSOURCE_NO,
+			B.SEX,
+			I.OUTSOURCNAME OUTSOURCE_NAME,
+			D.LOCATION DEPT_NAME,
+			CL.IF_MAKE_CARD
+        FROM PPM_ACCESS_CARD_APPLY_INFO AI 
+			LEFT JOIN PPM_ACCESS_CARD_LEDGER CL ON AI.BIZ_OBJECT_ID = CL.ID
+			LEFT JOIN PPM_OUTSOURCING_BASIC B ON B.JOB_ID = AI.JOB_ID
+			LEFT JOIN COMM_DEPARTMENT D ON B.DEPT_ID = D.DEPID
+			LEFT JOIN PPM_OUTSOURCING_INFO I ON I.ORGCODE = B.OUTSOURCE_NO
+		WHERE INSTANCE_ID = #{instanceId}
+    </select>
+	
+	
+	<select id="queryBaseInfoList" parameterType="ppmAccessCardApplyInfoExt" resultMap="PPMACCESSCARDAPPLYINFO_ALL_EXT">
+		SELECT 
+			AI.ID,
+			AI.IS_DEL,
+			B.JOB_ID,
+			B.USER_NAME,
+			B.CERTIFICATE_NUMBER ID_CARD_NO,
+			B.MOBILE TELEPHONE,
+			B.OUTSOURCE_NO,
+			I.OUTSOURCNAME OUTSOURCE_NAME,
+			B.ENTRANCE_CARD VIRTUAL_MACHINE_ID,
+			B.DEPT_ID,
+			B.SEX,
+			D.LOCATION DEPT_NAME,
+			L.ID LEDGER_ID,
+			L.IF_CREATE_RETURN,
+			L.IF_MAKE_CARD,
+			L.ACCESS_CARD_NUMBER,
+			L.IF_RECEIVE_CARD,
+			L.RECEIVE_TIME,
+			L.IF_RETURN_CARD,
+			L.RETURN_TIME,
+			L.CREDIT_CARD_NUMBERS,
+			L.ACCOUNT_NUMBER,
+			L.PLACE_OF_ACCOUNT,
+			L.REMARK_YGB,
+			L.REMARK_JBB
+        FROM PPM_ACCESS_CARD_APPLY_INFO AI
+			LEFT JOIN PPM_ACCESS_CARD_APPLY CA ON AI.INSTANCE_ID = CA.INSTANCE_ID
+			LEFT JOIN PPM_ACCESS_CARD_LEDGER L ON AI.BIZ_OBJECT_ID = L.ID
+			LEFT JOIN PPM_OUTSOURCING_BASIC B ON  B.JOB_ID = AI.JOB_ID
+			LEFT JOIN COMM_DEPARTMENT D ON B.DEPT_ID = D.DEPID
+			LEFT JOIN PPM_OUTSOURCING_INFO I ON I.ORGCODE = B.OUTSOURCE_NO
+		<trim prefix="WHERE" suffixOverrides="AND">
+            <if test="jobId != null and jobId != '' ">B.JOB_ID = #{jobId} AND</if>
+            <if test="userName != null and userName != '' ">B.USER_NAME like '%'||#{userName}||'%' AND</if>
+            <if test="deptId != null and deptId != '' ">B.DEPT_ID = #{deptId} AND</if>
+            <if test="ifMakeCard != null and ifMakeCard != '' "> L.IF_MAKE_CARD = #{ifMakeCard} AND </if>
+            <if test="ifReceiveCard != null and ifReceiveCard != ''">L.IF_RECEIVE_CARD = #{ifReceiveCard} AND </if>
+            <if test="ifReturnCard != null and ifReturnCard != ''">L.IF_RETURN_CARD = #{ifReturnCard} AND </if>
+        </trim>
+		ORDER BY B.ID DESC
+	</select>
+
+</mapper>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k6991 2020-12-23 -->
+<mapper namespace="com.work.ppm.application.model.othermanager.PpmEsbMsgerrlog">
+	 <resultMap type="ppmEsbMsgerrlog" id="PPMESBMSGERRLOG_ALL">
+        <result property="id" column="ID" />
+		<result property="userid" column="USERID" />
+		<result property="title" column="TITLE" />
+		<result property="text" column="TEXT" />
+		<result property="loginfo" column="LOGINFO" />
+		
+     </resultMap>
+
+     <!-- 所有字段名称 -->
+        <sql id="sql_flied_all">
+        	ID,
+			USERID,
+			TITLE,
+			TEXT,
+			LOGINFO
+        </sql>
+        <sql id="sql_select_condition">
+            <trim prefix="WHERE" suffixOverrides="AND">
+                <if test="id != null  and id != '' " > ID = #{id} AND </if>
+				<if test="userid != null  and userid != '' " > USERID = #{userid} AND </if>
+				<if test="title != null  and title != '' " > TITLE = #{title} AND </if>
+				<if test="text != null  and text != '' " > TEXT = #{text} AND </if>
+				<if test="loginfo != null  and loginfo != '' " > LOGINFO = #{loginfo} AND </if>
+				
+            </trim>
+        </sql>
+
+        <!-- 新增  2020-12-23 k6991  -->
+        <insert id="addPojo" parameterType="ppmEsbMsgerrlog">
+    		INSERT INTO PPM_ESB_MSGERRLOG (
+    		<trim suffixOverrides=",">
+    		 <if test="id != null  and id != '' " > ID , </if>
+				<if test="userid != null  and userid != '' " > USERID , </if>
+				<if test="title != null  and title != '' " > TITLE , </if>
+				<if test="text != null  and text != '' " > TEXT , </if>
+				<if test="loginfo != null  and loginfo != '' " > LOGINFO , </if>
+				
+              </trim>
+    		)
+    		VALUES(
+    		<trim suffixOverrides=",">
+    		 <if test="id != null  and id != '' " > #{id} , </if>
+				<if test="userid != null  and userid != '' " > #{userid} , </if>
+				<if test="title != null  and title != '' " > #{title} , </if>
+				<if test="text != null  and text != '' " > #{text} , </if>
+				<if test="loginfo != null  and loginfo != '' " > #{loginfo} , </if>
+				
+            </trim>
+    		)
+        </insert>
+
+</mapper>

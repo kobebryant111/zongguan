@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k6991 2021-09-03 -->
+<mapper namespace="com.work.ppm.application.model.projectmanager.PpmDemandQueue">
+	 <resultMap type="ppmDemandQueue" id="PPMDEMANDQUEUE_ALL">
+        <result property="indexorder" column="INDEXORDER" />
+		<result property="isresearched" column="ISRESEARCHED" />
+		<result property="isdel" column="ISDEL" />
+		<result property="createtime" column="CREATETIME" />
+		<result property="creators" column="CREATORS" />
+		<result property="lastmodtime" column="LASTMODTIME" />
+		<result property="lastmoduser" column="LASTMODUSER" />
+		<result property="hangupdesc" column="HANGUPDESC" />
+		<result property="id" column="ID" />
+		<result property="demandno" column="DEMANDNO" />
+		<result property="demandname" column="DEMANDNAME" />
+		<result property="sysno" column="SYSNO" />
+		<result property="busideptno" column="BUSIDEPTNO" />
+		<result property="deptno" column="DEPTNO" />
+		<result property="status" column="STATUS" />
+		
+     </resultMap>
+
+     <!-- 所有字段名称 -->
+        <sql id="sql_flied_all">
+        	INDEXORDER,
+			ISRESEARCHED,
+			ISDEL,
+			CREATETIME,
+			CREATORS,
+			LASTMODTIME,
+			LASTMODUSER,
+			HANGUPDESC,
+			ID,
+			DEMANDNO,
+			DEMANDNAME,
+			SYSNO,
+			BUSIDEPTNO,
+			DEPTNO,
+			STATUS
+        </sql>
+        <sql id="sql_select_condition">
+            <trim prefix="WHERE" suffixOverrides="AND">
+                <if test="indexorder != null " > INDEXORDER = #{indexorder} AND </if>
+				<if test="isresearched != null  and isresearched != '' " > ISRESEARCHED = #{isresearched} AND </if>
+				<if test="isdel != null " > ISDEL = #{isdel} AND </if>
+				<if test="createtime != null " > CREATETIME = #{createtime} AND </if>
+				<if test="creators != null  and creators != '' " > CREATORS = #{creators} AND </if>
+				<if test="lastmodtime != null " > LASTMODTIME = #{lastmodtime} AND </if>
+				<if test="lastmoduser != null  and lastmoduser != '' " > LASTMODUSER = #{lastmoduser} AND </if>
+				<if test="hangupdesc != null  and hangupdesc != '' " > HANGUPDESC = #{hangupdesc} AND </if>
+				<if test="id != null " > ID = #{id} AND </if>
+				<if test="demandno != null  and demandno != '' " > DEMANDNO = #{demandno} AND </if>
+				<if test="demandname != null  and demandname != '' " > DEMANDNAME = #{demandname} AND </if>
+				<if test="sysno != null  and sysno != '' " > SYSNO = #{sysno} AND </if>
+				<if test="busideptno != null  and busideptno != '' " > BUSIDEPTNO = #{busideptno} AND </if>
+				<if test="deptno != null  and deptno != '' " > DEPTNO = #{deptno} AND </if>
+				<if test="status != null  and status != '' " > STATUS = #{status} AND </if>
+				
+            </trim>
+        </sql>
+
+
+        <!-- 新增  2021-09-03 k6991  -->
+        <insert id="addPojo" parameterType="ppmDemandQueue">
+    		INSERT INTO PPM_DEMAND_QUEUE (
+    		<trim suffixOverrides=",">
+    		 <if test="indexorder != null " > INDEXORDER , </if>
+				<if test="isresearched != null  and isresearched != '' " > ISRESEARCHED , </if>
+				<if test="isdel != null " > ISDEL , </if>
+				<if test="createtime != null " > CREATETIME , </if>
+				<if test="creators != null  and creators != '' " > CREATORS , </if>
+				<if test="lastmodtime != null " > LASTMODTIME , </if>
+				<if test="lastmoduser != null  and lastmoduser != '' " > LASTMODUSER , </if>
+				<if test="hangupdesc != null  and hangupdesc != '' " > HANGUPDESC , </if>
+				<if test="id != null " > ID , </if>
+				<if test="demandno != null  and demandno != '' " > DEMANDNO , </if>
+				<if test="demandname != null  and demandname != '' " > DEMANDNAME , </if>
+				<if test="sysno != null  and sysno != '' " > SYSNO , </if>
+				<if test="busideptno != null  and busideptno != '' " > BUSIDEPTNO , </if>
+				<if test="deptno != null  and deptno != '' " > DEPTNO , </if>
+				<if test="status != null  and status != '' " > STATUS , </if>
+				
+              </trim>
+    		)
+    		VALUES(
+    		<trim suffixOverrides=",">
+    		 <if test="indexorder != null " > #{indexorder} , </if>
+				<if test="isresearched != null  and isresearched != '' " > #{isresearched} , </if>
+				<if test="isdel != null " > #{isdel} , </if>
+				<if test="createtime != null " > #{createtime} , </if>
+				<if test="creators != null  and creators != '' " > #{creators} , </if>
+				<if test="lastmodtime != null " > #{lastmodtime} , </if>
+				<if test="lastmoduser != null  and lastmoduser != '' " > #{lastmoduser} , </if>
+				<if test="hangupdesc != null  and hangupdesc != '' " > #{hangupdesc} , </if>
+				<if test="id != null " > #{id} , </if>
+				<if test="demandno != null  and demandno != '' " > #{demandno} , </if>
+				<if test="demandname != null  and demandname != '' " > #{demandname} , </if>
+				<if test="sysno != null  and sysno != '' " > #{sysno} , </if>
+				<if test="busideptno != null  and busideptno != '' " > #{busideptno} , </if>
+				<if test="deptno != null  and deptno != '' " > #{deptno} , </if>
+				<if test="status != null  and status != '' " > #{status} , </if>
+				
+            </trim>
+    		)
+        </insert>
+
+
+</mapper>

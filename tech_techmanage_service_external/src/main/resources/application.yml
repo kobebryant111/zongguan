@@ -1,0 +1,160 @@
+server:
+  port:
+  servlet:
+    context-path:
+
+spring:
+  application:
+    name: tech-techmanage-service
+  datasource:
+    driver-class-name: oracle.jdbc.driver.OracleDriver
+    url:
+    username:
+    password:
+    type: com.alibaba.druid.pool.DruidDataSource
+    initial-size:
+    min-idle:
+    max-active:
+    max-wait:
+    min-evictable-idle-time-millis:
+    time-between-eviction-runs-millis:
+    validation-query:
+    validation-query-time:
+    test-on-borrow:
+    test-on-return:
+    test-while-idle:
+    use-unfair-lock:
+    remove-abandoned:
+    remove-abandoned-time:
+    kepp-alive:
+    read-time:
+  servlet:
+    multipart:
+      enabled:
+      file-size-threshold:
+      max-file-size:
+      max-request-size:
+      location:
+
+apollo:
+  bootstrap:
+    enabled:
+    namespaces:
+
+jasypt:
+  encryptor:
+    password:
+
+api:
+  version:
+
+mybatis-plus:
+  configuration:
+    jdbc-type-for-null: 'null'
+
+mybatis:
+  mapper-locations: classpath*:com/work/ppm/**/*.xml
+  type-aliases-package: com.work.ppm.application.model
+  type-handlers-package:
+  configuration:
+    jdbc-type-for-null: 'null'
+
+sys:
+  mapper-refresh:
+  mapper-locations: classpath*:com/work/ppm/application/rdmanager/*.xml
+
+file:
+  upload-path:
+  data-path:
+  data-path-sftp:
+  weak-password:
+  sys_list:
+  devicedata-path:
+  temp-path:
+  template-path:
+  static-access-path:
+  enable-degist:
+  host:
+  preview:
+  purchase:
+  assess:
+    rl01-name:
+    xm01-name:
+    pg01-name:
+  assessCard:
+    ar01-docx:
+    ar01-xlsx:
+  personnelInterview:
+  oss:
+    authorization:
+    url:
+
+excelModelPath:
+  base-packages:
+
+amla:
+  address:
+  username:
+  password:
+
+amterm:
+  pubId:
+  verificationPubId:
+  url:
+
+mercuryoa:
+  oss:
+    publicNginxXJHG:
+    endpoint-Bucket:
+    accessKey:
+    secretKey:
+
+artemis:
+  host:
+  app-key:
+  app-secret:
+  subscribe-url:
+
+loginForOA:
+  websso-url:
+
+serviceAddress:
+appID:
+cmdbServiceAddress:
+
+kafka:
+  servers:
+
+logfile:
+  pathprefix:
+
+face:
+  url:
+
+kfBank:
+  productId:
+  cgplat-serverId:
+  appPush-serverId:
+
+appKey:
+appSendMessage:
+  pubId:
+appUrl:
+  interview:
+  access:
+  demand:
+  accessCard:
+  leaving:
+  sendRecord:
+
+cbmp:
+  url:
+
+esb:
+  timeout:
+  host:
+  port:
+  url:
+
+swagger:
+  flag:

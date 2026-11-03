@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k6991 2021-06-24 -->
+<mapper namespace="com.work.ppm.application.model.processmanager.PpmChagedeviceMaster">
+	 <resultMap type="ppmChagedeviceMaster" id="PPMCHAGEDEVICEMASTER_ALL">
+        <result property="id" column="ID" />
+		<result property="devices" column="DEVICES" />
+		
+     </resultMap>
+
+     <!-- 所有字段名称 -->
+        <sql id="sql_flied_all">
+        	ID,
+			DEVICES
+        </sql>
+        <sql id="sql_select_condition">
+            <trim prefix="WHERE" suffixOverrides="AND">
+                <if test="id != null " > ID = #{id} AND </if>
+				<if test="devices != null  and devices != '' " > DEVICES = #{devices} AND </if>
+				
+            </trim>
+        </sql>
+    	<!-- 查询分页  2021-06-24 k6991  -->
+        <select id="queryPagerList" parameterType="map" resultMap="PPMCHAGEDEVICEMASTER_ALL">
+        	SELECT
+            <include refid="sql_flied_all" />
+            FROM PPM_CHAGEDEVICE_MASTER
+            <include refid="sql_select_condition" />
+        </select>
+
+        <!-- 新增  2021-06-24 k6991  -->
+        <insert id="addPojo" parameterType="ppmChagedeviceMaster">
+    		INSERT INTO PPM_CHAGEDEVICE_MASTER (
+    		<trim suffixOverrides=",">
+    		 <if test="id != null " > ID , </if>
+				<if test="devices != null  and devices != '' " > DEVICES , </if>
+				
+              </trim>
+    		)
+    		VALUES(
+    		<trim suffixOverrides=",">
+    		 <if test="id != null " > #{id} , </if>
+				<if test="devices != null  and devices != '' " > #{devices} , </if>
+				
+            </trim>
+    		)
+        </insert>
+
+        <!--通过id查询  k6991 2021-06-24 -->
+        <select id="queryDetail" parameterType="ppmChagedeviceMaster" resultMap="PPMCHAGEDEVICEMASTER_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_CHAGEDEVICE_MASTER  WHERE ID=#{id}
+        </select>
+
+         <!--查询集合  k6991 2021-06-24 -->
+        <select id="getList" parameterType="ppmChagedeviceMaster" resultMap="PPMCHAGEDEVICEMASTER_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_CHAGEDEVICE_MASTER
+        	<include refid="sql_select_condition" />
+        </select>
+        <!-- update sql -->
+        <sql id="update_pojo_sql">
+        	<trim prefix="SET" suffixOverrides=",">
+        		<if test="id != null " > ID=#{id} , </if>
+				<if test="devices != null  and devices != '' " > DEVICES=#{devices} , </if>
+				
+            </trim>
+        </sql>
+
+        <!--通过id编辑 k6991 2021-06-24 -->
+    	<update id="updatePojo" parameterType="ppmChagedeviceMaster">
+        	UPDATE
+        	PPM_CHAGEDEVICE_MASTER
+        	<include refid="update_pojo_sql" />
+        	WHERE ID=#{id}
+        </update>
+
+        <!--通过id批量删除  k6991 2021-06-24 -->
+        <delete id="deleteById" parameterType="ppmChagedeviceMaster">
+        	DELETE
+        	FROM
+        	PPM_CHAGEDEVICE_MASTER
+        	WHERE ID = #{id}
+        </delete>
+
+</mapper>

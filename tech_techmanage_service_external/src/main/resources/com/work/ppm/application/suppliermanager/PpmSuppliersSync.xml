@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:ywwb905 2022-12-07 -->
+<!--  同步采购数据 - 项目供应商信息表 查询脚本 -->
+<mapper namespace="com.work.ppm.application.model.suppliermanager.PpmSuppliersSync">
+	 <resultMap type="ppmSuppliersSync" id="PPMSUPPLIERSSYNC_ALL">
+        <result property="id" column="ID" />
+		<result property="xmbh" column="XMBH" />
+		<result property="htid" column="HTID" />
+		<result property="htbh" column="HTBH" />
+		<result property="htmc" column="HTMC" />
+		<result property="xmmc" column="XMMC" />
+		<result property="htlb" column="HTLB" />
+		<result property="cgnr" column="CGNR" />
+		<result property="htje" column="HTJE" />
+		<result property="jfrq" column="JFRQ" />
+		<result property="gq" column="GQ" />
+		<result property="yzbm" column="YZBM" />
+		<result property="khh" column="KHH" />
+		<result property="zh" column="ZH" />
+		<result property="htzzrq" column="HTZZRQ" />
+		<result property="skdwmc" column="SKDWMC" />
+		<result property="dsfkhh" column="DSFKHH" />
+		<result property="dsfzh" column="DSFZH" />
+		<result property="dxccid" column="DXCCID" />
+		<result property="gysbh" column="GYSBH" />
+		<result property="gsmc" column="GSMC" />
+		<result property="gsjc" column="GSJC" />
+		<result property="sfzgjw" column="SFZGJW" />
+		<result property="gbdq" column="GBDQ" />
+		<result property="clnf" column="CLNF" />
+		<result property="zczj" column="ZCZJ" />
+		<result property="syncTime" column="SYNC_TIME" />
+		
+     </resultMap>
+
+     <!-- 所有字段名称 -->
+    <sql id="sql_flied_all">
+        ID,
+			XMBH,
+			HTID,
+			HTBH,
+			HTMC,
+			XMMC,
+			HTLB,
+			CGNR,
+			HTJE,
+			JFRQ,
+			GQ,
+			YZBM,
+			KHH,
+			ZH,
+			HTZZRQ,
+			SKDWMC,
+			DSFKHH,
+			DSFZH,
+			DXCCID,
+			GYSBH,
+			GSMC,
+			GSJC,
+			SFZGJW,
+			GBDQ,
+			CLNF,
+			ZCZJ,
+			SYNC_TIME
+    </sql>
+    <sql id="sql_select_condition">
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="id != null " > ID = #{id} AND </if>
+			<if test="xmbh != null  and xmbh != '' " > XMBH = #{xmbh} AND </if>
+			<if test="htid != null  and htid != '' " > HTID = #{htid} AND </if>
+			<if test="htbh != null  and htbh != '' " > HTBH = #{htbh} AND </if>
+			<if test="htmc != null  and htmc != '' " > HTMC = #{htmc} AND </if>
+			<if test="xmmc != null  and xmmc != '' " > XMMC = #{xmmc} AND </if>
+			<if test="htlb != null and htlb != ''" > HTLB = #{htlb} AND </if>
+			<if test="cgnr != null  and cgnr != '' " > CGNR = #{cgnr} AND </if>
+			<if test="htje != null " > HTJE = #{htje} AND </if>
+			<if test="jfrq != null and jfrq != ''" > JFRQ = #{jfrq} AND </if>
+			<if test="gq != null and gq != ''" > GQ = #{gq} AND </if>
+			<if test="yzbm != null  and yzbm != '' " > YZBM = #{yzbm} AND </if>
+			<if test="khh != null  and khh != '' " > KHH = #{khh} AND </if>
+			<if test="zh != null  and zh != '' " > ZH = #{zh} AND </if>
+			<if test="htzzrq != null and htzzrq != ''" > HTZZRQ = #{htzzrq} AND </if>
+			<if test="skdwmc != null  and skdwmc != '' " > SKDWMC = #{skdwmc} AND </if>
+			<if test="dsfkhh != null  and dsfkhh != '' " > DSFKHH = #{dsfkhh} AND </if>
+			<if test="dsfzh != null  and dsfzh != '' " > DSFZH = #{dsfzh} AND </if>
+			<if test="dxccid != null  and dxccid != '' " > DXCCID = #{dxccid} AND </if>
+			<if test="gysbh != null  and gysbh != '' " > GYSBH = #{gysbh} AND </if>
+			<if test="gsmc != null  and gsmc != '' " > GSMC = #{gsmc} AND </if>
+			<if test="gsjc != null  and gsjc != '' " > GSJC = #{gsjc} AND </if>
+			<if test="sfzgjw != null and sfzgjw != ''"> SFZGJW = #{sfzgjw} AND </if>
+			<if test="gbdq != null  and gbdq != '' " > GBDQ = #{gbdq} AND </if>
+			<if test="clnf != null and clnf != ''" > CLNF = #{clnf} AND </if>
+			<if test="zczj != null " > ZCZJ = #{zczj} AND </if>
+			<if test="syncTime != null " > SYNC_TIME = #{syncTime} AND </if>
+				
+        </trim>
+    </sql>
+    <!-- 查询分页  2022-12-07 ywwb905  -->
+    <select id="queryPagerList" parameterType="map" resultMap="PPMSUPPLIERSSYNC_ALL">
+        SELECT
+        <include refid="sql_flied_all" />
+        FROM PPM_SUPPLIERS_SYNC
+        <include refid="sql_select_condition" />
+    </select>
+
+    <!-- 新增  2022-12-07 ywwb905  -->
+    <insert id="addPojo" parameterType="ppmSuppliersSync">
+        INSERT INTO PPM_SUPPLIERS_SYNC (
+        <trim suffixOverrides=",">
+        	 <if test="id != null " > ID , </if>
+			<if test="xmbh != null  and xmbh != '' " > XMBH , </if>
+			<if test="htid != null  and htid != '' " > HTID , </if>
+			<if test="htbh != null  and htbh != '' " > HTBH , </if>
+			<if test="htmc != null  and htmc != '' " > HTMC , </if>
+			<if test="xmmc != null  and xmmc != '' " > XMMC , </if>
+			<if test="htlb != null and htlb != ''" > HTLB , </if>
+			<if test="cgnr != null  and cgnr != '' " > CGNR , </if>
+			<if test="htje != null " > HTJE , </if>
+			<if test="jfrq != null and jfrq != ''" > JFRQ , </if>
+			<if test="gq != null and gq != ''" > GQ , </if>
+			<if test="yzbm != null  and yzbm != '' " > YZBM , </if>
+			<if test="khh != null  and khh != '' " > KHH , </if>
+			<if test="zh != null  and zh != '' " > ZH , </if>
+			<if test="htzzrq != null and htzzrq != ''" > HTZZRQ , </if>
+			<if test="skdwmc != null  and skdwmc != '' " > SKDWMC , </if>
+			<if test="dsfkhh != null  and dsfkhh != '' " > DSFKHH , </if>
+			<if test="dsfzh != null  and dsfzh != '' " > DSFZH , </if>
+			<if test="dxccid != null  and dxccid != '' " > DXCCID , </if>
+			<if test="gysbh != null  and gysbh != '' " > GYSBH , </if>
+			<if test="gsmc != null  and gsmc != '' " > GSMC , </if>
+			<if test="gsjc != null  and gsjc != '' " > GSJC , </if>
+			<if test="sfzgjw != null and sfzgjw != ''" > SFZGJW , </if>
+			<if test="gbdq != null  and gbdq != '' " > GBDQ , </if>
+			<if test="clnf != null and clnf != ''" > CLNF , </if>
+			<if test="zczj != null " > ZCZJ , </if>
+			<if test="syncTime != null " > SYNC_TIME , </if>
+				
+          </trim>
+        )
+        VALUES(
+        <trim suffixOverrides=",">
+         	<if test="id != null " > #{id} , </if>
+			<if test="xmbh != null  and xmbh != '' " > #{xmbh} , </if>
+			<if test="htid != null  and htid != '' " > #{htid} , </if>
+			<if test="htbh != null  and htbh != '' " > #{htbh} , </if>
+			<if test="htmc != null  and htmc != '' " > #{htmc} , </if>
+			<if test="xmmc != null  and xmmc != '' " > #{xmmc} , </if>
+			<if test="htlb != null and htlb != ''" > #{htlb} , </if>
+			<if test="cgnr != null  and cgnr != '' " > #{cgnr} , </if>
+			<if test="htje != null " > #{htje} , </if>
+			<if test="jfrq != null and jfrq != ''" > #{jfrq} , </if>
+			<if test="gq != null and gq != ''" > #{gq} , </if>
+			<if test="yzbm != null  and yzbm != '' " > #{yzbm} , </if>
+			<if test="khh != null  and khh != '' " > #{khh} , </if>
+			<if test="zh != null  and zh != '' " > #{zh} , </if>
+			<if test="htzzrq != null and htzzrq != ''" > #{htzzrq} , </if>
+			<if test="skdwmc != null  and skdwmc != '' " > #{skdwmc} , </if>
+			<if test="dsfkhh != null  and dsfkhh != '' " > #{dsfkhh} , </if>
+			<if test="dsfzh != null  and dsfzh != '' " > #{dsfzh} , </if>
+			<if test="dxccid != null  and dxccid != '' " > #{dxccid} , </if>
+			<if test="gysbh != null  and gysbh != '' " > #{gysbh} , </if>
+			<if test="gsmc != null  and gsmc != '' " > #{gsmc} , </if>
+			<if test="gsjc != null  and gsjc != '' " > #{gsjc} , </if>
+			<if test="sfzgjw != null and sfzgjw != ''" > #{sfzgjw} , </if>
+			<if test="gbdq != null  and gbdq != '' " > #{gbdq} , </if>
+			<if test="clnf != null and clnf != ''" > #{clnf} , </if>
+			<if test="zczj != null " > #{zczj} , </if>
+			<if test="syncTime != null " > #{syncTime} , </if>
+				
+        </trim>
+        )
+    </insert>
+
+    <!--通过id查询  ywwb905 2022-12-07 -->
+    <select id="queryDetail" parameterType="ppmSuppliersSync" resultMap="PPMSUPPLIERSSYNC_ALL">
+        SELECT
+        <include refid="sql_flied_all" />
+        FROM PPM_SUPPLIERS_SYNC  
+		<trim prefix="WHERE" suffixOverrides="AND">
+            <if test="id != null " > ID = #{id} AND </if>
+			<if test="xmbh != null  and xmbh != '' " > XMBH = #{xmbh} AND </if>
+			<if test="yzbm != null  and yzbm != '' " > YZBM = #{yzbm} AND </if>
+        </trim>
+    </select>
+
+     <!--查询集合  ywwb905 2022-12-07 -->
+    <select id="getList" parameterType="ppmSuppliersSync" resultMap="PPMSUPPLIERSSYNC_ALL">
+        SELECT
+        <include refid="sql_flied_all" />
+        FROM PPM_SUPPLIERS_SYNC
+        <include refid="sql_select_condition" />
+    </select>
+	
+	 <!--查询集合  ywwb905 2022-12-07 -->
+    <select id="getProjectList" parameterType="ppmSuppliersSync" resultMap="PPMSUPPLIERSSYNC_ALL">
+        SELECT
+			ID,
+			XMMC,
+			XMBH,
+			YZBM,
+			SYNC_TIME
+        FROM PPM_SUPPLIERS_SYNC
+        <include refid="sql_select_condition" />
+    </select>
+    <!-- update sql -->
+    <sql id="update_pojo_sql">
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="id != null " > ID=#{id} , </if>
+			<if test="xmbh != null  and xmbh != '' " > XMBH=#{xmbh} , </if>
+			<if test="htid != null  and htid != '' " > HTID=#{htid} , </if>
+			<if test="htbh != null  and htbh != '' " > HTBH=#{htbh} , </if>
+			<if test="htmc != null  and htmc != '' " > HTMC=#{htmc} , </if>
+			<if test="xmmc != null  and xmmc != '' " > XMMC=#{xmmc} , </if>
+			<if test="htlb != null and htlb != ''" > HTLB=#{htlb} , </if>
+			<if test="cgnr != null  and cgnr != '' " > CGNR=#{cgnr} , </if>
+			<if test="htje != null " > HTJE=#{htje} , </if>
+			<if test="jfrq != null and jfrq != ''" > JFRQ=#{jfrq} , </if>
+			<if test="gq != null and gq != ''" > GQ=#{gq} , </if>
+			<if test="yzbm != null  and yzbm != '' " > YZBM=#{yzbm} , </if>
+			<if test="khh != null  and khh != '' " > KHH=#{khh} , </if>
+			<if test="zh != null  and zh != '' " > ZH=#{zh} , </if>
+			<if test="htzzrq != null and htzzrq != ''" > HTZZRQ=#{htzzrq} , </if>
+			<if test="skdwmc != null  and skdwmc != '' " > SKDWMC=#{skdwmc} , </if>
+			<if test="dsfkhh != null  and dsfkhh != '' " > DSFKHH=#{dsfkhh} , </if>
+			<if test="dsfzh != null  and dsfzh != '' " > DSFZH=#{dsfzh} , </if>
+			<if test="dxccid != null  and dxccid != '' " > DXCCID=#{dxccid} , </if>
+			<if test="gysbh != null  and gysbh != '' " > GYSBH=#{gysbh} , </if>
+			<if test="gsmc != null  and gsmc != '' " > GSMC=#{gsmc} , </if>
+			<if test="gsjc != null  and gsjc != '' " > GSJC=#{gsjc} , </if>
+			<if test="sfzgjw != null and sfzgjw != ''" > SFZGJW=#{sfzgjw} , </if>
+			<if test="gbdq != null  and gbdq != '' " > GBDQ=#{gbdq} , </if>
+			<if test="clnf != null and clnf != ''" > CLNF=#{clnf} , </if>
+			<if test="zczj != null " > ZCZJ=#{zczj} , </if>
+			<if test="syncTime != null " > SYNC_TIME=#{syncTime} , </if>
+        </trim>
+    </sql>
+
+    <!--通过id编辑 ywwb905 2022-12-07 -->
+    <update id="updatePojo" parameterType="ppmSuppliersSync">
+        UPDATE
+        PPM_SUPPLIERS_SYNC
+        <include refid="update_pojo_sql" />
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="id != null " > ID = #{id} AND </if>
+			<if test="xmbh != null  and xmbh != '' " > XMBH = #{xmbh} AND </if>
+			<if test="id == null  and xmbh == null " > ID = '' AND </if>
+        </trim>
+    </update>
+
+    <!--通过id批量删除  ywwb905 2022-12-07 -->
+    <delete id="deleteById" parameterType="ppmSuppliersSync">
+        DELETE
+        FROM
+        PPM_SUPPLIERS_SYNC
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="id != null " > ID = #{id} AND </if>
+			<if test="xmbh != null  and xmbh != '' " > XMBH = #{xmbh} AND </if>
+			<if test="id == null  and xmbh == null " > ID = '' AND </if>
+        </trim>
+    </delete>
+
+</mapper>

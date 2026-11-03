@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k6991 2020-03-24 -->
+<mapper namespace="com.work.ppm.application.model.othermanager.PpmDocumentCatalog">
+	 <resultMap type="ppmDocumentCatalog" id="PPMDOCUMENTCATALOG_ALL">
+        <result property="id" column="ID" />
+		<result property="catalogno" column="CATALOGNO" />
+		<result property="pno" column="PNO" />
+		<result property="catalogname" column="CATALOGNAME" />
+		<result property="stockpath" column="STOCKPATH" />
+		<result property="isdel" column="ISDEL" />
+		<result property="createtime" column="CREATETIME" />
+		<result property="creators" column="CREATORS" />
+		<result property="lastmodtime" column="LASTMODTIME" />
+		<result property="lastmoduser" column="LASTMODUSER" />
+		<result property="depono" column="DEPONO" />
+		
+     </resultMap>
+
+     <!-- 所有字段名称 -->
+        <sql id="sql_flied_all">
+        	ID,
+			CATALOGNO,
+			PNO,
+			CATALOGNAME,
+			STOCKPATH,
+			ISDEL,
+			CREATETIME,
+			CREATORS,
+			LASTMODTIME,
+			LASTMODUSER,
+			DEPONO
+        </sql>
+    	<!-- 查询分页  2020-03-24 k6991  -->
+        <select id="queryPagerList" parameterType="map" resultMap="PPMDOCUMENTCATALOG_ALL">
+        	SELECT
+            <include refid="sql_flied_all" />
+            FROM PPM_DOCUMENT_CATALOG
+            <trim prefix="WHERE" suffixOverrides="AND">
+                <if test="id != null " > ID = #{id} AND </if>
+				<if test="catalogno != null  and catalogno != '' " > CATALOGNO = #{catalogno} AND </if>
+				<if test="pno != null  and pno != '' " > PNO = #{pno} AND </if>
+				<if test="catalogname != null  and catalogname != '' " > CATALOGNAME = #{catalogname} AND </if>
+				<if test="stockpath != null  and stockpath != '' " > STOCKPATH = #{stockpath} AND </if>
+				<if test="isdel != null " > ISDEL = #{isdel} AND </if>
+				<if test="createtime != null " > CREATETIME = #{createtime} AND </if>
+				<if test="creators != null  and creators != '' " > CREATORS = #{creators} AND </if>
+				<if test="lastmodtime != null " > LASTMODTIME = #{lastmodtime} AND </if>
+				<if test="lastmoduser != null  and lastmoduser != '' " > LASTMODUSER = #{lastmoduser} AND </if>
+				<if test="depono != null  and depono != '' " > DEPONO = #{depono} AND </if>
+				
+            </trim>
+        </select>
+
+        <!-- 新增  2020-03-24 k6991  -->
+        <insert id="addPojo" parameterType="ppmDocumentCatalog">
+    		INSERT INTO PPM_DOCUMENT_CATALOG (
+    		ID,
+			CATALOGNO,
+			PNO,
+			CATALOGNAME,
+			STOCKPATH,
+			ISDEL,
+			CREATETIME,
+			CREATORS,
+			LASTMODTIME,
+			LASTMODUSER,
+			DEPONO
+    		)
+    		VALUES(
+    		#{id},
+			#{catalogno},
+			#{pno},
+			#{catalogname},
+			#{stockpath},
+			#{isdel},
+			#{createtime},
+			#{creators},
+			#{lastmodtime},
+			#{lastmoduser},
+			#{depono}
+    		)
+        </insert>
+
+        <!--通过id查询  k6991 2020-03-24 -->
+        <select id="queryDetail" parameterType="ppmDocumentCatalog" resultMap="PPMDOCUMENTCATALOG_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_DOCUMENT_CATALOG  WHERE CATALOGNO=#{catalogno}
+        </select>
+
+         <!--查询集合  k6991 2020-03-24 -->
+        <select id="getList" parameterType="map" resultMap="PPMDOCUMENTCATALOG_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_DOCUMENT_CATALOG
+        	<trim prefix="WHERE" suffixOverrides="AND">
+        		<if test="id != null " > ID=#{id} AND </if>
+				<if test="catalogno != null  and catalogno != '' " > CATALOGNO=#{catalogno} AND </if>
+				<if test="pno != null  and pno != '' " > PNO=#{pno} AND </if>
+				<if test="catalogname != null  and catalogname != '' " > CATALOGNAME=#{catalogname} AND </if>
+				<if test="stockpath != null  and stockpath != '' " > STOCKPATH=#{stockpath} AND </if>
+				<if test="isdel != null " > ISDEL=#{isdel} AND </if>
+				<if test="createtime != null " > CREATETIME=#{createtime} AND </if>
+				<if test="creators != null  and creators != '' " > CREATORS=#{creators} AND </if>
+				<if test="lastmodtime != null " > LASTMODTIME=#{lastmodtime} AND </if>
+				<if test="lastmoduser != null  and lastmoduser != '' " > LASTMODUSER=#{lastmoduser} AND </if>
+				<if test="depono != null  and depono != '' " > DEPONO=#{depono} AND </if>
+				
+            </trim>
+        </select>
+        <!-- update sql -->
+        <sql id="update_pojo_sql">
+        	<trim prefix="SET" suffixOverrides=",">
+        		<if test="id != null " > ID=#{id} , </if>
+				<if test="catalogno != null  and catalogno != '' " > CATALOGNO=#{catalogno} , </if>
+				<if test="pno != null  and pno != '' " > PNO=#{pno} , </if>
+				<if test="catalogname != null  and catalogname != '' " > CATALOGNAME=#{catalogname} , </if>
+				<if test="stockpath != null  and stockpath != '' " > STOCKPATH=#{stockpath} , </if>
+				<if test="isdel != null " > ISDEL=#{isdel} , </if>
+				<if test="createtime != null " > CREATETIME=#{createtime} , </if>
+				<if test="creators != null  and creators != '' " > CREATORS=#{creators} , </if>
+				<if test="lastmodtime != null " > LASTMODTIME=#{lastmodtime} , </if>
+				<if test="lastmoduser != null  and lastmoduser != '' " > LASTMODUSER=#{lastmoduser} , </if>
+				<if test="depono != null  and depono != '' " > DEPONO=#{depono} , </if>
+				
+            </trim>
+        </sql>
+
+        <!--通过id编辑 k6991 2020-03-24 -->
+    	<update id="updatePojo" parameterType="ppmDocumentCatalog">
+        	UPDATE
+        	PPM_DOCUMENT_CATALOG
+        	<include refid="update_pojo_sql" />
+        	WHERE ID=#{id}
+        </update>
+
+        <!--通过id批量删除  k6991 2020-03-24 -->
+        <delete id="deleteById" parameterType="ppmDocumentCatalog">
+        	DELETE
+        	FROM
+        	PPM_DOCUMENT_CATALOG
+        	WHERE ID = #{id}
+        </delete>
+</mapper>

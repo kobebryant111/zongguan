@@ -1,0 +1,332 @@
+@import "common/theme";
+#app {
+
+  .main-container {
+    //min-height: 100%;
+    transition: margin-left .28s;
+  }
+
+  .sidebar-container {
+
+    // reset element-ui css
+    .horizontal-collapse-transition {
+      transition: 0s width ease-in-out, 0s padding-left ease-in-out, 0s padding-right ease-in-out;
+    }
+
+    .el-scrollbar__bar.is-vertical {
+      right: 0px;
+    }
+
+    .el-scrollbar {
+      height: 100%;
+    }
+
+    .is-horizontal {
+      display: none;
+    }
+
+    .menu-wrapper {
+      display: inline-block;
+      width: 100px;
+    }
+
+    a {
+      display: inline-block;
+      // width: 100%;
+      overflow: hidden;
+    }
+
+    .svg-icon {
+      display: block;
+      margin: 10px auto;
+      // margin-right: 16px;
+    }
+
+    // menu hover
+    .submenu-title-noDropdown,
+    .el-submenu__title {
+      padding: 0;
+      &:hover {
+        background-color: $menuHover !important;
+      }
+    }
+
+    .is-active>.el-submenu__title {
+      color: $subMenuActiveText !important;
+    }
+
+    & .nest-menu .el-submenu>.el-submenu__title,
+    & .el-submenu .el-menu-item {
+      min-width: $sideBarWidth !important;
+      background-color: $subMenuBg !important;
+
+      &:hover {
+        background-color: $subMenuHover !important;
+      }
+    }
+  }
+
+  .hideSidebar {
+
+    .submenu-title-noDropdown {
+      padding: 0 !important;
+      position: relative;
+
+      .el-tooltip {
+        padding: 0 !important;
+
+        .svg-icon {
+          margin-left: 20px;
+        }
+      }
+    }
+
+    .el-submenu {
+      overflow: hidden;
+
+      &>.el-submenu__title {
+        padding: 0 !important;
+
+        .svg-icon {
+          margin-left: 20px;
+        }
+
+        .el-submenu__icon-arrow {
+          display: none;
+        }
+      }
+    }
+
+    .el-menu--collapse {
+      .el-submenu {
+        &>.el-submenu__title {
+          &>span {
+            height: 0;
+            width: 0;
+            overflow: hidden;
+            visibility: hidden;
+            display: inline-block;
+          }
+        }
+      }
+    }
+  }
+
+  .el-menu--collapse .el-menu .el-submenu {
+    min-width: $sideBarWidth !important;
+  }
+
+  // mobile responsive
+  .mobile {
+    .main-container {
+      margin-left: 0px;
+    }
+
+    .sidebar-container {
+      transition: transform .28s;
+      width: $sideBarWidth !important;
+    }
+
+    &.hideSidebar {
+      .sidebar-container {
+        pointer-events: none;
+        transition-duration: 0.3s;
+        transform: translate3d(-$sideBarWidth, 0, 0);
+      }
+    }
+  }
+
+  .withoutAnimation {
+
+    .main-container,
+    .sidebar-container {
+      transition: none;
+    }
+  }
+}
+
+// when menu collapsed
+.el-menu--vertical {
+  &>.el-menu {
+    .svg-icon {
+      margin-right: 16px;
+    }
+  }
+
+  .nest-menu .el-submenu>.el-submenu__title,
+  .el-menu-item {
+    &:hover {
+      // you can use $subMenuHover
+      background-color: $menuHover !important;
+    }
+  }
+
+  // the scroll bar appears when the subMenu is too long
+  >.el-menu--popup {
+    max-height: 100vh;
+    overflow-y: auto;
+
+    &::-webkit-scrollbar-track-piece {
+      background: #d3dce6;
+    }
+
+    &::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: #99a9bf;
+      border-radius: 20px;
+    }
+  }
+}
+
+// 横向导航菜单样式
+.ts-horizontal-menu {
+  padding-left: 30px;
+  border-top:1px solid $submenu-color;
+  box-shadow:0px 5px 7px 0px rgba(108,117,125,0.15), 0px 1px 0px 0px rgba(18,142,219,0.2);
+  min-height: 40px;
+  @include top-background();
+
+  .ts-menu-list {
+    z-index: 99;
+    display: inline-block;
+    min-width: 110px;
+    height: 40px;
+    margin: 0;
+    padding-left: 0;
+    list-style: none;
+    opacity: .9;
+    @include menu-list-style();
+
+    &:hover {
+      opacity:1;
+      @include menu-list-select-style();
+      .ts-menu-title {
+        @include menu-select-color();
+      }
+    }
+
+    &:hover .ts-submenu {
+      max-height: 30000px;
+      visibility:visible;
+      transition:max-height 50s linear;
+      display: block;
+    }
+
+    &:hover .ts-menu-center::after {
+      z-index: 100;
+      left: 50%;
+      bottom:-1px;
+      transform: translate(-50%,0%);
+      content: '';
+      position: absolute;
+      border-bottom: solid 6px #FEFEFE;
+      border-left: solid 12px transparent;
+      border-right: solid 12px transparent;
+    }
+  }
+  .ts-menu {
+    position: relative;
+    display: flex;
+    width: 100%;
+    cursor: pointer;
+    margin: 0 auto;
+    &-center{
+      display: flex;
+      margin:auto;
+
+      &:hover::after{
+        z-index: 100;
+        left: 50%;
+        bottom:-1px;
+        transform: translate(-50%,0%);
+        content: '';
+        position: absolute;
+        border-bottom: solid 6px #FEFEFE;
+        border-left: solid 12px transparent;
+        border-right: solid 12px transparent;
+      }
+    }
+
+    &-icon {
+      width:18px;
+      height:18px;
+      margin-top: 10px;
+      margin-right: 3px;
+    }
+    &-title{
+      font-size: 14px;
+      height: 40px;
+      line-height: 40px;
+      @include top-text-color();
+    }
+  }
+  // 二级菜单展示
+  .ts-submenu {
+    //display: none;
+    max-height:0;
+    overflow:hidden;
+    visibility: hidden;
+    opacity: 0.96;
+    position: absolute;
+    z-index: 99;
+    top: 90px;
+    left: 0;
+    right: 0;
+    padding: 15px 25px 10px;
+    background:#FEFEFE;
+    box-shadow: 0px 1px 6px rgba(0,0,0,0.1);
+
+    &.hide-submenu {
+      display: none!important;
+    }
+    &-item {
+      margin-bottom: 15px;
+      padding-left: 5px;
+      border-left: 3px solid $submenu-color;
+    }
+    &-title {
+      margin-bottom: 10px;
+      padding-left: 18px;
+      color: $submeun-unselect-color;
+      font-size: 14px;
+      font-weight: bold;
+    }
+    &-link {
+      position: relative;
+      display: inline-block;
+      margin-left: 9px;
+      padding: 0 9px;
+      height: 18px;
+      line-height: 18px;
+      font-size: 13px;
+      color: #5a5a5a;
+      border:1px solid #ffffff;
+      &:last-child {
+        &:after {
+          content: ''
+        }
+      };
+      &:after {
+        content: 'l';
+        position: absolute;
+        right: -7px;
+        top: 0;
+        color: $submenu-color;
+      }
+      &:hover {
+        color: $submenu-color;
+        border:1px solid $submenu-color;
+        border-radius:4px;
+      }
+      & * {
+        width: 100%;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+      }
+    }
+  }
+}

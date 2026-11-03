@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k6991 2021-09-06 -->
+<mapper namespace="com.work.ppm.application.model.projectmanager.PpmFhspbmpz">
+    <resultMap type="ppmFhspbmpz" id="PPMFHSPBMPZ_ALL">
+        <result property="fhyfjl" column="FHYFJL"/>
+        <result property="fhyfjlName" column="FHYFJL_NAME"/>
+        <result property="id" column="ID"/>
+        <result property="deptno" column="DEPTNO"/>
+        <result property="deptname" column="DEPTNAME"/>
+        <result property="hgbzjl" column="HGBZJL"/>
+        <result property="hgbzjlname" column="HGBZJLNAME"/>
+        <result property="rlzybzjl" column="RLZYBZJL"/>
+        <result property="rlzybzjlname" column="RLZYBZJLNAME"/>
+        <result property="isdel" column="ISDEL"/>
+        <result property="createuserid" column="CREATEUSERID"/>
+        <result property="createusername" column="CREATEUSERNAME"/>
+        <result property="createtime" column="CREATETIME"/>
+    </resultMap>
+
+    <!-- 所有字段名称 -->
+    <sql id="sql_flied_all">
+        FHYFJL,
+        FHYFJL_NAME,
+        ID,
+        DEPTNO,
+        DEPTNAME,
+        HGBZJL,
+        HGBZJLNAME,
+        RLZYBZJL,
+        RLZYBZJLNAME,
+        ISDEL,
+        CREATEUSERID,
+        CREATEUSERNAME,
+        CREATETIME
+    </sql>
+    <sql id="sql_select_condition">
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="fhyfjl != null  and fhyfjl != '' ">FHYFJL = #{fhyfjl} AND</if>
+            <if test="fhyfjlName != null  and fhyfjlName != '' ">FHYFJL_NAME = #{fhyfjlName} AND</if>
+            <if test="id != null  and id != '' ">ID = #{id} AND</if>
+            <if test="deptno != null  and deptno != '' ">DEPTNO = #{deptno} AND</if>
+            <if test="deptname != null  and deptname != '' ">DEPTNAME = #{deptname} AND</if>
+            <if test="hgbzjl != null  and hgbzjl != '' ">HGBZJL = #{hgbzjl} AND</if>
+            <if test="hgbzjlname != null  and hgbzjlname != '' ">HGBZJLNAME = #{hgbzjlname} AND</if>
+            <if test="rlzybzjl != null  and rlzybzjl != '' ">RLZYBZJL = #{rlzybzjl} AND</if>
+            <if test="rlzybzjlname != null  and rlzybzjlname != '' ">RLZYBZJLNAME = #{rlzybzjlname} AND</if>
+            <if test="isdel != null  and isdel != '' ">ISDEL = #{isdel} AND</if>
+            <if test="createuserid != null  and createuserid != '' ">CREATEUSERID = #{createuserid} AND</if>
+            <if test="createusername != null  and createusername != '' ">CREATEUSERNAME = #{createusername} AND</if>
+            <if test="createtime != null ">CREATETIME = #{createtime} AND</if>
+        </trim>
+    </sql>
+    <!-- 查询分页  2021-09-06 k6991  -->
+    <select id="queryPagerList" parameterType="map" resultMap="PPMFHSPBMPZ_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM PPM_FHSPBMPZ
+        <include refid="sql_select_condition"/>
+    </select>
+
+    <!-- 新增  2021-09-06 k6991  -->
+    <insert id="addPojo" parameterType="ppmFhspbmpz">
+        INSERT INTO PPM_FHSPBMPZ (
+        <trim suffixOverrides=",">
+            <if test="fhyfjl != null  and fhyfjl != '' ">FHYFJL ,</if>
+            <if test="fhyfjlName != null  and fhyfjlName != '' ">FHYFJL_NAME ,</if>
+            <if test="id != null  and id != '' ">ID ,</if>
+            <if test="deptno != null  and deptno != '' ">DEPTNO ,</if>
+            <if test="deptname != null  and deptname != '' ">DEPTNAME ,</if>
+            <if test="hgbzjl != null  and hgbzjl != '' ">HGBZJL ,</if>
+            <if test="hgbzjlname != null  and hgbzjlname != '' ">HGBZJLNAME ,</if>
+            <if test="rlzybzjl != null  and rlzybzjl != '' ">RLZYBZJL ,</if>
+            <if test="rlzybzjlname != null  and rlzybzjlname != '' ">RLZYBZJLNAME ,</if>
+            <if test="isdel != null  and isdel != '' ">ISDEL ,</if>
+            <if test="createuserid != null  and createuserid != '' ">CREATEUSERID ,</if>
+            <if test="createusername != null  and createusername != '' ">CREATEUSERNAME ,</if>
+            <if test="createtime != null ">CREATETIME ,</if>
+
+        </trim>
+        )
+        VALUES(
+        <trim suffixOverrides=",">
+            <if test="fhyfjl != null  and fhyfjl != '' ">#{fhyfjl} ,</if>
+            <if test="fhyfjlName != null  and fhyfjlName != '' ">#{fhyfjlName} ,</if>
+            <if test="id != null  and id != '' ">#{id} ,</if>
+            <if test="deptno != null  and deptno != '' ">#{deptno} ,</if>
+            <if test="deptname != null  and deptname != '' ">#{deptname} ,</if>
+            <if test="hgbzjl != null  and hgbzjl != '' ">#{hgbzjl} ,</if>
+            <if test="hgbzjlname != null  and hgbzjlname != '' ">#{hgbzjlname} ,</if>
+            <if test="rlzybzjl != null  and rlzybzjl != '' ">#{rlzybzjl} ,</if>
+            <if test="rlzybzjlname != null  and rlzybzjlname != '' ">#{rlzybzjlname} ,</if>
+            <if test="isdel != null  and isdel != '' ">#{isdel} ,</if>
+            <if test="createuserid != null  and createuserid != '' ">#{createuserid} ,</if>
+            <if test="createusername != null  and createusername != '' ">#{createusername} ,</if>
+            <if test="createtime != null ">#{createtime} ,</if>
+
+        </trim>
+        )
+    </insert>
+
+    <!--通过id查询  k6991 2021-09-06 -->
+    <select id="queryDetail" parameterType="ppmFhspbmpz" resultMap="PPMFHSPBMPZ_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM PPM_FHSPBMPZ
+        <where>
+            <if test="deptno != null  and deptno != '' "> AND DEPTNO=#{deptno} </if>
+            <if test="id != null  and id != '' "> AND ID=#{id} </if>
+            <if test="isdel != null  and isdel != '' "> AND ISDEL=#{isdel} </if>
+        </where>
+    </select>
+
+    <!--查询集合  k6991 2021-09-06 -->
+    <select id="getList" parameterType="ppmFhspbmpz" resultMap="PPMFHSPBMPZ_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM PPM_FHSPBMPZ
+        <include refid="sql_select_condition"/>
+    </select>
+    <!-- update sql -->
+    <sql id="update_pojo_sql">
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="fhyfjl != null  and fhyfjl != '' ">FHYFJL=#{fhyfjl} ,</if>
+            <if test="fhyfjlName != null  and fhyfjlName != '' ">FHYFJL_NAME=#{fhyfjlName} ,</if>
+            <if test="id != null  and id != '' ">ID=#{id} ,</if>
+            <if test="deptno != null  and deptno != '' ">DEPTNO=#{deptno} ,</if>
+            <if test="deptname != null  and deptname != '' ">DEPTNAME=#{deptname} ,</if>
+            <if test="hgbzjl != null  and hgbzjl != '' ">HGBZJL=#{hgbzjl} ,</if>
+            <if test="hgbzjlname != null  and hgbzjlname != '' ">HGBZJLNAME=#{hgbzjlname} ,</if>
+            <if test="rlzybzjl != null  and rlzybzjl != '' ">RLZYBZJL=#{rlzybzjl} ,</if>
+            <if test="rlzybzjlname != null  and rlzybzjlname != '' ">RLZYBZJLNAME=#{rlzybzjlname} ,</if>
+            <if test="isdel != null  and isdel != '' ">ISDEL=#{isdel} ,</if>
+            <if test="createuserid != null  and createuserid != '' ">CREATEUSERID=#{createuserid} ,</if>
+            <if test="createusername != null  and createusername != '' ">CREATEUSERNAME=#{createusername} ,</if>
+            <if test="createtime != null ">CREATETIME=#{createtime} ,</if>
+
+        </trim>
+    </sql>
+
+    <!--通过id编辑 k6991 2021-09-06 -->
+    <update id="updatePojo" parameterType="ppmFhspbmpz">
+        UPDATE
+        PPM_FHSPBMPZ
+        <include refid="update_pojo_sql"/>
+        <where>
+            <if test="id != null  and id != '' "> AND ID=#{id} </if>
+            <if test="deptno != null  and deptno != '' "> AND DEPTNO=#{deptno} </if>
+        </where>
+    </update>
+
+</mapper>

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:ywwb905 2022-10-8 -->
+<!--  加班开始时间配置 查询脚本 -->
+<mapper namespace="com.work.ppm.application.model.integratedmanager.PpmKqOvertimeConfig">
+	 <resultMap type="ppmKqOvertimeConfig" id="PPMKQOVERTIMECONFIG_ALL">
+        <result property="id" column="ID" />
+		<result property="startTime" column="START_TIME" />
+		<result property="effectDate" column="EFFECT_DATE" />
+		<result property="status" column="STATUS" />
+		<result property="statusWhere" column="STATUS" />
+		<result property="createdTime" column="CREATED_TIME" />
+     </resultMap>
+
+     <!-- 所有字段名称 -->
+    <sql id="sql_flied_all">
+        ID,
+			START_TIME,
+			EFFECT_DATE,
+			STATUS,
+			CREATED_TIME
+    </sql>
+    <sql id="sql_select_condition">
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="id != null " > ID = #{id} AND </if>
+				<if test="startTime != null " > START_TIME = #{startTime} AND </if>
+				<if test="effectDate != null " > EFFECT_DATE = TO_DATE(#{effectDate},'yyyy-MM-dd') AND </if>
+				<if test="status != null and status !='' " > STATUS = #{status} AND </if>
+				<if test="createdTime != null" > CREATED_TIME = #{createdTime} AND </if>
+        </trim>
+    </sql>
+
+    <!-- 新增  2022-10-08 ywwb905  -->
+    <insert id="addPojo" parameterType="ppmKqOvertimeConfig">
+        INSERT INTO PPM_KQ_OVERTIME_CONFIG (
+        <trim suffixOverrides=",">
+         <if test="id != null " > ID , </if>
+				<if test="startTime != null " > START_TIME , </if>
+				<if test="effectDate != null " > EFFECT_DATE , </if>
+				<if test="status != null and status !='' " > STATUS , </if>
+				<if test="createdTime != null " > CREATED_TIME , </if>
+          </trim>
+        )
+        VALUES(
+        <trim suffixOverrides=",">
+         <if test="id != null " > #{id} , </if>
+				<if test="startTime != null " > #{startTime} , </if>
+				<if test="effectDate != null " > #{effectDate} , </if>
+				<if test="status != null and status !='' " > #{status} , </if>
+				<if test="createdTime != null" > #{createdTime} , </if>
+        </trim>
+        )
+    </insert>
+
+    <!--通过id查询  ywwb905 2022-10-08 -->
+    <select id="queryDetail" parameterType="ppmKqOvertimeConfig" resultMap="PPMKQOVERTIMECONFIG_ALL">
+        SELECT
+        <include refid="sql_flied_all" />
+        FROM PPM_KQ_OVERTIME_CONFIG
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="id != null " > ID = #{id} AND </if>
+            <if test="startTime != null " > START_TIME = #{startTime} AND </if>
+            <if test="effectDate != null " > EFFECT_DATE = #{effectDate} AND </if>
+            <if test="status != null and status !='' " > STATUS = #{status} AND </if>
+        </trim>
+    </select>
+
+     <!--查询集合  ywwb905 2022-10-08 -->
+    <select id="getList" parameterType="ppmKqOvertimeConfig" resultMap="PPMKQOVERTIMECONFIG_ALL">
+        SELECT
+        <include refid="sql_flied_all" />
+        FROM PPM_KQ_OVERTIME_CONFIG
+        <include refid="sql_select_condition" />
+    </select>
+    <!-- update sql -->
+    <sql id="update_pojo_sql">
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="id != null " > ID=#{id} , </if>
+				<if test="startTime != null " > START_TIME=#{startTime} , </if>
+				<if test="effectDate != null " > EFFECT_DATE=#{effectDate} , </if>
+				<if test="status != null and status != ''" > STATUS=#{status} , </if>
+				<if test="createdTime != null" > CREATED_TIME=#{createdTime} , </if>
+
+        </trim>
+    </sql>
+
+    <!--通过id编辑 ywwb905 2022-10-08 -->
+    <update id="updatePojo" parameterType="ppmKqOvertimeConfig">
+        UPDATE
+        PPM_KQ_OVERTIME_CONFIG
+        <include refid="update_pojo_sql" />
+        WHERE ID = #{id}
+    </update>
+	
+	<!--通过status编辑 ywwb905 2022-10-08 -->
+	<update id="updatePojoStatus" parameterType="ppmKqOvertimeConfig">
+        UPDATE
+        PPM_KQ_OVERTIME_CONFIG
+        <include refid="update_pojo_sql" />
+        WHERE STATUS = #{statusWhere}
+    </update>
+
+    <!--通过id批量删除  ywwb436 2022-06-30 -->
+    <delete id="deleteById" parameterType="ppmKqOvertimeConfig">
+        DELETE
+        FROM
+        PPM_KQ_OVERTIME_CONFIG
+        WHERE START_TIME = #{startTime} AND EFFECT_DATE = TO_DATE(#{effectDate},'yyyy-MM-dd') AND STATUS = #{status}
+    </delete>
+
+</mapper>

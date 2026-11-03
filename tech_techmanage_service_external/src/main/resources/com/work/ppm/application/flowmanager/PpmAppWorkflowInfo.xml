@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:ywwb905 2023-03-17 -->
+<!--  对接手机平台信息 查询脚本 -->
+<mapper namespace="com.work.ppm.application.model.flowmanager.PpmAppWorkflowInfo">
+	 <resultMap type="ppmAppWorkflowInfo" id="PPMAPPWORKFLOWINFO_ALL">
+        <result property="id" column="ID" />
+		<result property="userId" column="USER_ID" />
+		<result property="taskId" column="TASK_ID" />
+		<result property="instanceId" column="INSTANCE_ID" />
+		<result property="pushTitle" column="PUSH_TITLE" />
+		<result property="pushContent" column="PUSH_CONTENT" />
+		<result property="pushStatus" column="PUSH_STATUS" />
+		<result property="createdTime" column="CREATED_TIME" />
+		<result property="modifiedTime" column="MODIFIED_TIME" />
+		
+     </resultMap>
+
+     <!-- 所有字段名称 -->
+    <sql id="sql_flied_all">
+        ID,
+		USER_ID,
+		TASK_ID,
+		INSTANCE_ID,
+		PUSH_TITLE,
+		PUSH_CONTENT,
+		PUSH_STATUS,
+		CREATED_TIME,
+		MODIFIED_TIME
+    </sql>
+    <sql id="sql_select_condition">
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="id != null and id != ''" > ID = #{id} AND </if>
+			<if test="userId != null  and userId != '' " > USER_ID = #{userId} AND </if>
+			<if test="taskId != null  and taskId != '' " > TASK_ID = #{taskId} AND </if>
+			<if test="instanceId != null  and instanceId != '' " > INSTANCE_ID = #{instanceId} AND </if>
+			<if test="pushTitle != null  and pushTitle != '' " > PUSH_TITLE = #{pushTitle} AND </if>
+			<if test="pushContent != null  and pushContent != '' " > PUSH_CONTENT = #{pushContent} AND </if>
+			<if test="pushStatus != null  and pushStatus != '' " > PUSH_STATUS = #{pushStatus} AND </if>
+			<if test="createdTime != null " > CREATED_TIME = #{createdTime} AND </if>
+			<if test="modifiedTime != null " > MODIFIED_TIME = #{modifiedTime} AND </if>
+				
+        </trim>
+    </sql>
+    <!-- 查询分页  2023-03-17 ywwb905  -->
+    <select id="queryPagerList" parameterType="map" resultMap="PPMAPPWORKFLOWINFO_ALL">
+        SELECT
+        <include refid="sql_flied_all" />
+        FROM PPM_APP_WORKFLOW_INFO
+        <include refid="sql_select_condition" />
+    </select>
+
+    <!-- 新增  2023-03-17 ywwb905  -->
+    <insert id="addPojo" parameterType="ppmAppWorkflowInfo">
+        INSERT INTO PPM_APP_WORKFLOW_INFO (
+        <trim suffixOverrides=",">
+			<if test="id != null and id != ''" > ID , </if>
+			<if test="userId != null  and userId != '' " > USER_ID , </if>
+			<if test="taskId != null  and taskId != '' " > TASK_ID , </if>
+			<if test="instanceId != null  and instanceId != '' " > INSTANCE_ID , </if>
+			<if test="pushTitle != null  and pushTitle != '' " > PUSH_TITLE , </if>
+			<if test="pushContent != null  and pushContent != '' " > PUSH_CONTENT , </if>
+			<if test="pushStatus != null  and pushStatus != '' " > PUSH_STATUS , </if>
+			<if test="createdTime != null " > CREATED_TIME , </if>
+			<if test="modifiedTime != null " > MODIFIED_TIME , </if>
+          </trim>
+        )
+        VALUES(
+        <trim suffixOverrides=",">
+			<if test="id != null and id != ''" > #{id} , </if>
+			<if test="userId != null  and userId != '' " > #{userId} , </if>
+			<if test="taskId != null  and taskId != '' " > #{taskId} , </if>
+			<if test="instanceId != null  and instanceId != '' " > #{instanceId} , </if>
+			<if test="pushTitle != null  and pushTitle != '' " > #{pushTitle} , </if>
+			<if test="pushContent != null  and pushContent != '' " > #{pushContent} , </if>
+			<if test="pushStatus != null  and pushStatus != '' " > #{pushStatus} , </if>
+			<if test="createdTime != null " > #{createdTime} , </if>
+			<if test="modifiedTime != null " > #{modifiedTime} , </if>
+				
+        </trim>
+        )
+    </insert>
+
+    <!--通过id查询  ywwb905 2023-03-17 -->
+    <select id="queryDetail" parameterType="ppmAppWorkflowInfo" resultMap="PPMAPPWORKFLOWINFO_ALL">
+        SELECT
+        <include refid="sql_flied_all" />
+        FROM PPM_APP_WORKFLOW_INFO  WHERE ID=#{id}
+    </select>
+	
+	<!--通过id查询  ywwb905 2023-03-17 -->
+    <select id="queryDetailForTaskId" parameterType="ppmAppWorkflowInfo" resultMap="PPMAPPWORKFLOWINFO_ALL">
+        SELECT
+        <include refid="sql_flied_all" />
+        FROM PPM_APP_WORKFLOW_INFO  WHERE TASK_ID=#{taskId} AND PUSH_STATUS = 'push'
+    </select>
+
+     <!--查询集合  ywwb905 2023-03-17 -->
+    <select id="getList" parameterType="ppmAppWorkflowInfo" resultMap="PPMAPPWORKFLOWINFO_ALL">
+        SELECT
+        <include refid="sql_flied_all" />
+        FROM PPM_APP_WORKFLOW_INFO
+        <include refid="sql_select_condition" />
+    </select>
+    <!-- update sql -->
+    <sql id="update_pojo_sql">
+        <trim prefix="SET" suffixOverrides=",">
+			<if test="userId != null  and userId != '' " > USER_ID=#{userId} , </if>
+			<if test="taskId != null  and taskId != '' " > TASK_ID=#{taskId} , </if>
+			<if test="pushTitle != null  and pushTitle != '' " > PUSH_TITLE=#{pushTitle} , </if>
+			<if test="pushContent != null  and pushContent != '' " > PUSH_CONTENT=#{pushContent} , </if>
+			<if test="pushStatus != null  and pushStatus != '' " > PUSH_STATUS=#{pushStatus} , </if>
+			<if test="createdTime != null " > CREATED_TIME=#{createdTime} , </if>
+			<if test="modifiedTime != null " > MODIFIED_TIME=#{modifiedTime} , </if>
+        </trim>
+    </sql>
+
+    <!--通过id编辑 ywwb905 2023-03-17 -->
+    <update id="updatePojo" parameterType="ppmAppWorkflowInfo">
+        UPDATE
+        PPM_APP_WORKFLOW_INFO
+        <include refid="update_pojo_sql" />
+        WHERE ID=#{id}
+    </update>
+
+    <!--通过id批量删除  ywwb905 2023-03-17 -->
+    <delete id="deleteById" parameterType="ppmAppWorkflowInfo">
+        DELETE
+        FROM
+        PPM_APP_WORKFLOW_INFO
+        WHERE ID = #{id}
+    </delete>
+
+</mapper>

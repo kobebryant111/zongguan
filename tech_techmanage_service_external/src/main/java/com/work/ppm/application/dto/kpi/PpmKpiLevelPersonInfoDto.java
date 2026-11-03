@@ -1,0 +1,63 @@
+package com.work.ppm.application.dto.kpi;
+
+import com.work.ppm.commons.annotaion.Id;
+import lombok.Data;
+
+import java.util.Date;
+
+
+/**
+ * 描述
+ */
+@Data
+public class PpmKpiLevelPersonInfoDto {
+   /**
+   *	主键
+   **/
+   @Id
+   private Long id;
+   /**
+   *	部门
+   **/
+   private String depid;
+   /**
+   *	中心
+   **/
+   private String centerid;
+   /**
+   *	类型（1：二级部，2：中心，3：一级部）
+   **/
+   private String otype;
+   /**
+   *	应用角色
+   **/
+   private String role;
+   /**
+   *	等级A。。。
+   **/
+   private String tlevel;
+   /**
+   *	人数
+   **/
+   private Long nums;
+   /**
+   *	创建时间
+   **/
+   private Date createtime;
+   /**
+   *	创建人
+   **/
+   private String createuserid;
+   /**
+    *	部门名称
+    **/
+   private String depname;
+   /**
+    *	中心名称
+    **/
+   private String centername;
+   /**
+    *	排序列
+    **/
+   private Long sortno;
+}

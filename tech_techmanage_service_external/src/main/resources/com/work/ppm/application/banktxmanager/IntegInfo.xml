@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:ywwb2216 2024-07-04 -->
+<!--  调休积分表 查询脚本 -->
+<mapper namespace="com.work.ppm.application.model.banktxmanager.IntegInfo">
+    <resultMap type="IntegInfo" id="INTEGINFODTO_ALL">
+        <result property="detailId" column="DETAIL_ID"/>
+        <result property="empName" column="EMP_NAME"/>
+        <result property="badge" column="BADGE"/>
+        <result property="registerData" column="REGISTER_DATA"/>
+        <result property="dataType" column="DATA_TYPE"/>
+        <result property="startTime" column="START_TIME"/>
+        <result property="endTime" column="END_TIME"/>
+        <result property="integNum" column="INTEG_NUM"/>
+        <result property="workType" column="WORK_TYPE"/>
+        <result property="integReason" column="INTEG_REASON"/>
+        <result property="integBackReason" column="INTEG_BACK_REASON"/>
+        <result property="integCurrentApprover" column="INTEG_CURRENT_APPROVER"/>
+        <result property="integApproverTime" column="INTEG_APPROVER_TIME"/>
+        <result property="createTime" column="CREATE_TIME"/>
+        <result property="updateTime" column="UPDATE_TIME"/>
+        <result property="state" column="STATE"/>
+    </resultMap>
+
+    <!-- 所有字段名称 -->
+    <sql id="sql_flied_all">
+        DETAIL_ID,
+        EMP_NAME,
+        BADGE,
+        REGISTER_DATA,
+        DATA_TYPE,
+        START_TIME,
+        END_TIME,
+        INTEG_NUM,
+        WORK_TYPE,
+        INTEG_REASON,
+        INTEG_BACK_REASON,
+        INTEG_CURRENT_APPROVER,
+        INTEG_APPROVER_TIME,
+        CREATE_TIME,
+        UPDATE_TIME,
+        STATE
+    </sql>
+    <sql id="sql_select_condition">
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="detailId != null ">DETAIL_ID = #{detailId} AND</if>
+            <if test="empName != null ">EMP_NAME = #{empName} AND</if>
+            <if test="badge != null ">BADGE = #{badge} AND</if>
+            <if test="registerData != null ">REGISTER_DATA = #{registerData} AND</if>
+            <if test="dataType != null ">DATA_TYPE = #{dataType} AND</if>
+            <if test="startTime != null ">START_TIME = #{startTime} AND</if>
+            <if test="endTime != null ">END_TIME = #{endTime} AND</if>
+            <if test="integNum != null ">INTEG_NUM = #{integNum} AND</if>
+            <if test="workType != null ">WORK_TYPE = #{workType} AND</if>
+            <if test="integReason != null ">INTEG_REASON = #{integReason} AND</if>
+            <if test="integBackReason != null ">INTEG_BACK_REASON = #{integBackReason} AND</if>
+            <if test="integCurrentApprover != null ">INTEG_CURRENT_APPROVER = #{integCurrentApprover} AND</if>
+            <if test="integApproverTime != null ">INTEG_APPROVER_TIME = #{integApproverTime} AND</if>
+            <if test="createTime != null ">CREATE_TIME = #{createTime} AND</if>
+            <if test="updateTime != null ">UPDATE_TIME = #{updateTime} AND</if>
+            <if test="state != null ">STATE = #{state} AND</if>
+            <if test="entryStartDate != null and entryEndDate != null">REGISTER_DATA between #{entryStartDate} and
+                #{entryEndDate} AND
+            </if>
+        </trim>
+    </sql>
+
+    <!-- update sql -->
+    <sql id="update_pojo_sql">
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="registerData != null and registerData != '' ">REGISTER_DATA = to_date(#{registerData} ,
+                'yyyy/MM/dd') ,
+            </if>
+            <if test="dataType != null and dataType != '' ">DATA_TYPE = #{dataType} ,</if>
+            <if test="startTime != null and startTime != '' ">START_TIME = to_date(#{startTime} , 'yyyy/MM/dd
+                hh24:mi:ss') ,
+            </if>
+            <if test="endTime != null and endTime != '' ">END_TIME = to_date(#{endTime} , 'yyyy/MM/dd hh24:mi:ss') ,
+            </if>
+            <if test="integNum != null and integNum != '' ">INTEG_NUM = #{integNum} ,</if>
+            <if test="workType != null and workType != '' ">WORK_TYPE = #{workType} ,</if>
+            <if test="integReason != null and integReason != '' ">INTEG_REASON = #{integReason} ,</if>
+            <if test="integBackReason != null and integBackReason != '' ">INTEG_BACK_REASON = #{integBackReason} ,</if>
+            <if test="integCurrentApprover != null and integCurrentApprover != '' ">INTEG_CURRENT_APPROVER =
+                #{integCurrentApprover} ,
+            </if>
+            <if test="integApproverTime != null and integApproverTime != '' ">
+                INTEG_APPROVER_TIME = #{integApproverTime} ,
+            </if>
+            <if test="updateTime != null and updateTime != '' ">UPDATE_TIME = #{updateTime},</if>
+            <if test="state != null and state != '' ">STATE = #{state},</if>
+        </trim>
+    </sql>
+
+    <!-- 查询分页  2024-07-04 ywwb2216  -->
+    <select id="queryPagerList" parameterType="map" resultMap="INTEGINFODTO_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM INTEG_INFO
+        <include refid="sql_select_condition"/>
+        order by REGISTER_DATA desc
+    </select>
+
+    <delete id="deleteByDetailId" parameterType="map">
+        DELETE
+        FROM
+        INTEG_INFO
+        WHERE DETAIL_ID = #{detailId}
+    </delete>
+
+    <update id="updateInfo" parameterType="map">
+        UPDATE
+        PPM.INTEG_INFO
+        <include refid="update_pojo_sql"/>
+        WHERE DETAIL_ID = #{detailId}
+    </update>
+
+    <insert id="insertInfo" parameterType="map">
+        INSERT INTO PPM.INTEG_INFO (
+        <trim suffixOverrides=",">
+            <if test="detailId != null  and detailId != '' ">DETAIL_ID ,</if>
+            <if test="empName != null  and empName != '' ">EMP_NAME ,</if>
+            <if test="badge != null and badge != '' ">BADGE ,</if>
+            <if test="registerData != null and registerData != '' ">REGISTER_DATA ,</if>
+            <if test="dataType != null  and dataType != '' ">DATA_TYPE ,</if>
+            <if test="startTime != null ">START_TIME ,</if>
+            <if test="endTime != null ">END_TIME ,</if>
+            <if test="integNum != null and integNum != '' ">INTEG_NUM ,</if>
+            <if test="workType != null and workType != '' ">WORK_TYPE ,</if>
+            <if test="integReason != null  and integReason != '' ">INTEG_REASON ,</if>
+            <if test="integBackReason != null  and integBackReason != '' ">INTEG_BACK_REASON ,</if>
+            <if test="integCurrentApprover != null and integCurrentApprover != '' ">INTEG_CURRENT_APPROVER ,</if>
+            <if test="integApproverTime != null and integApproverTime != '' ">INTEG_APPROVER_TIME ,</if>
+            <if test="createTime != null and createTime != '' ">CREATE_TIME ,</if>
+            <if test="updateTime != null and updateTime != '' ">INTEG_CURRENT_APPROVER ,</if>
+            <if test="state != null and state != '' ">STATE ,</if>
+        </trim>
+        )
+        SELECT
+        <trim suffixOverrides=",">
+            <if test="detailId != null  and detailId != '' ">#{detailId} ,</if>
+            <if test="empName != null  and empName != '' ">#{empName} ,</if>
+            <if test="badge != null and badge != '' ">#{badge} ,</if>
+            <if test="registerData != null and registerData != '' ">to_date(#{registerData} , 'yyyy/MM/dd') ,</if>
+            <if test="dataType != null  and dataType != '' ">#{dataType} ,</if>
+            <if test="startTime != null ">to_date(#{startTime} , 'yyyy/MM/dd hh24:mi:ss') ,</if>
+            <if test="endTime != null ">to_date(#{endTime} , 'yyyy/MM/dd hh24:mi:ss') ,</if>
+            <if test="integNum != null and integNum != '' ">#{integNum} ,</if>
+            <if test="workType != null and workType != '' ">#{workType} ,</if>
+            <if test="integReason != null  and integReason != '' ">#{integReason} ,</if>
+            <if test="integBackReason != null  and integBackReason != '' ">#{integBackReason} ,</if>
+            <if test="integCurrentApprover != null and integCurrentApprover != '' ">#{integCurrentApprover} ,</if>
+            <if test="integApproverTime != null and integApproverTime != '' ">#{integApproverTime} ,</if>
+            <if test="createTime != null and createTime != '' ">#{createTime} ,</if>
+            <if test="updateTime != null and updateTime != '' ">#{updateTime} ,</if>
+            <if test="state != null and state != '' ">#{state} ,</if>
+        </trim>
+        FROM dual
+        WHERE NOT EXISTS(
+        SELECT 1
+        FROM  INTEG_INFO
+        WHERE
+        <trim suffixOverrides="AND">
+            <if test="empName != null and empName != ''  ">EMP_NAME = #{empName} AND</if>
+            <if test="badge != null  and badge != '' ">BADGE = #{badge} AND</if>
+            <if test="startTime != null  and startTime != '' ">to_char(START_TIME , 'yyyy-MM-dd') = #{startFormatData} AND</if>
+        </trim>
+        )
+    </insert>
+
+
+    <update id="updateState" parameterType="map">
+        UPDATE
+          PPM.INTEG_INFO
+        SET STATE = #{state}
+        WHERE
+        <if test="idList != null and idList.size() > 0">
+            DETAIL_ID IN
+            <foreach collection= "idList" index="index" item="id" open="(" separator="," close=")">
+                #{id}
+            </foreach>
+        </if>
+    </update>
+
+    <select id="getReportto" parameterType="map" resultMap="INTEGINFODTO_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM INTEG_INFO
+        <include refid="sql_select_condition"/>
+        order by REGISTER_DATA desc
+    </select>
+
+
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

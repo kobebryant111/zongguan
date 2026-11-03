@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+    <springProperty scope="context" name="springAppName" source="spring.application.name"/>
+    <springProperty scope="context" name="currentEnv" source="spring.profiles.active"/>
+
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <!-- 控制台日志输出格式 -->
+            <pattern>%d{HH:mm:ss.SSS} %X{X-B3-TraceId:-} %X{X-B3-SpanId:-} [%thread] %-5level  %logger : %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- 时间滚动输出（全量日志） -->
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- 日志文件输出格式 -->
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} %X{X-B3-TraceId:-} %X{X-B3-SpanId:-} [%thread] %-5level  %logger : %msg%n</pattern>
+        </encoder>
+        <append>true</append>
+        <!-- 日志记录器的滚动策略，按日期、大小记录 -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- 每天日志归档路径以及格式 -->
+            <fileNamePattern>/home/logs/${springAppName}-${currentEnv}/%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy
+                    class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <!-- 每个日志文件最多50M -->
+                <maxFileSize>50MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+            <!-- 日志文件保留天数 -->
+            <MaxHistory>100</MaxHistory>
+            <!-- 日志文件最多保留10G -->
+            <totalSizeCap>10GB</totalSizeCap>
+            <!-- 启动时清理日志文件 -->
+            <cleanHistoryOnStart>true</cleanHistoryOnStart>
+        </rollingPolicy>
+    </appender>
+
+    <!-- 时间滚动输出（ERROR错误日志） -->
+    <appender name="ERROR_LOG" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- 日志文件输出格式 -->
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} %X{X-B3-TraceId:-} %X{X-B3-SpanId:-} [%thread] %-5level  %logger : %msg%n</pattern>
+        </encoder>
+        <append>true</append>
+        <!-- 日志记录器的滚动策略，按日期、大小记录 -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- 每天日志归档路径以及格式 -->
+            <fileNamePattern>/home/logs/${springAppName}-${currentEnv}/error/%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy
+                    class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <!-- 每个日志文件最多50M -->
+                <maxFileSize>50MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+            <!-- 日志文件保留天数 -->
+            <MaxHistory>100</MaxHistory>
+            <!-- 日志文件最多保留10G -->
+            <totalSizeCap>2GB</totalSizeCap>
+            <!-- 启动时清理日志文件 -->
+            <cleanHistoryOnStart>true</cleanHistoryOnStart>
+        </rollingPolicy>
+        <!-- 此日志文件只记录error级别的 -->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+    <!-- 异步记录全量日志 -->
+    <appender name="ASYNC-FILE" class="ch.qos.logback.classic.AsyncAppender">
+        <!-- 不丢失日志。（默认值为-1，如果队列的80%已满，则会丢弃TRACE、DEBUG、INFO级别的日志）-->
+        <discardingThreshold>0</discardingThreshold>
+        <!-- 更改默认的队列的深度，该值会影响性能，默认为256 -->
+        <queueSize>512</queueSize>
+        <!-- 添加附加的appender，最多添加一个 -->
+        <appender-ref ref="FILE"></appender-ref>
+    </appender>
+
+    <!-- 异步记录错误日志 -->
+    <appender name="ASYNC-ERROR" class="ch.qos.logback.classic.AsyncAppender">
+        <!-- 更改默认的队列的深度，该值会影响性能，默认为256 -->
+        <queueSize>512</queueSize>
+        <!-- 添加附加的appender，最多添加一个 -->
+        <appender-ref ref="ERROR_LOG"></appender-ref>
+    </appender>
+
+    <!-- 本地环境 -->
+    <springProfile name="local">
+        <root level="DEBUG">
+            <appender-ref ref="CONSOLE"/>
+        </root>
+        <logger name="com.work.ppm" level="DEBUG"/>
+        <logger name="org.apache" level="INFO"/>
+        <logger name="org.springframework" level="INFO"/>
+        <logger name="com.ulisesbocchio" level="INFO"/>
+        <logger name="springfox.documentation" level="INFO"/>
+        <logger name="org.mybatis" level="INFO"/>
+        <logger name="com.zaxxer.hikari" level="INFO"/>
+        <logger name="com.baomidou.mybatisplus" level="INFO"/>
+    </springProfile>
+
+    <!-- dev，sit环境 -->
+    <springProfile name="dev,sit,uat">
+        <root level="DEBUG">
+            <appender-ref ref="CONSOLE"/>
+            <appender-ref ref="ASYNC-FILE"/>
+            <appender-ref ref="ASYNC-ERROR"/>
+        </root>
+        <logger name="com.work.ppm" level="DEBUG"/>
+        <logger name="org.apache.http" level="INFO"/>
+        <logger name="org.springframework" level="INFO"/>
+        <logger name="com.ulisesbocchio" level="INFO"/>
+        <logger name="springfox.documentation" level="INFO"/>
+        <logger name="org.mybatis" level="INFO"/>
+        <logger name="org.apache.skywalking" level="INFO"/>
+        <logger name="com.zaxxer.hikari" level="INFO"/>
+    </springProfile>
+
+    <!-- uat1，uat2环境 -->
+    <springProfile name="uat1,uat2">
+        <root level="INFO">
+            <appender-ref ref="ASYNC-FILE"/>
+            <appender-ref ref="ASYNC-ERROR"/>
+        </root>
+        <logger name="com.work.ppm" level="INFO"/>
+        <logger name="com.component.work" level="DEBUG"/>
+        <logger name="com.csii.pe.transport.transform" level="DEBUG"/>
+    </springProfile>
+
+    <!-- 生产环境 -->
+    <springProfile name="prod">
+        <root level="INFO">
+            <appender-ref ref="ASYNC-FILE"/>
+            <appender-ref ref="ASYNC-ERROR"/>
+        </root>
+        <logger name="com.work.ppm" level="DEBUG"/>
+        <logger name="com.component.work" level="DEBUG"/>
+        <logger name="com.csii.pe.transport.transform" level="DEBUG"/>
+        <logger name="org.apache.http" level="INFO"/>
+        <logger name="org.springframework" level="INFO"/>
+        <logger name="com.ulisesbocchio" level="INFO"/>
+        <logger name="springfox.documentation" level="INFO"/>
+        <logger name="org.mybatis" level="INFO"/>
+        <logger name="org.apache.skywalking" level="INFO"/>
+        <logger name="com.zaxxer.hikari" level="INFO"/>
+    </springProfile>
+</configuration>

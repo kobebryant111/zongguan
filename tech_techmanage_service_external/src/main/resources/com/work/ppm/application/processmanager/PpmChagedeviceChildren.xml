@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k6991 2021-06-24 -->
+<mapper namespace="com.work.ppm.application.model.processmanager.PpmChagedeviceChildren">
+	 <resultMap type="ppmChagedeviceChildren" id="PPMCHAGEDEVICECHILDREN_ALL">
+        <result property="id" column="ID" />
+		<result property="mid" column="MID" />
+		<result property="itemName" column="ITEM_NAME" />
+		<result property="itemType" column="ITEM_TYPE" />
+		<result property="notifications" column="NOTIFICATIONS" />
+		 <result property="fields" column="FIELDS" />
+		 <result property="soft" column="SOFT" />
+     </resultMap>
+
+     <!-- 所有字段名称 -->
+        <sql id="sql_flied_all">
+        	ID,
+			MID,
+			ITEM_NAME,
+			ITEM_TYPE,
+			NOTIFICATIONS,
+			FIELDS,
+			SOFT
+        </sql>
+        <sql id="sql_select_condition">
+            <trim prefix="WHERE" suffixOverrides="AND">
+                <if test="id != null " > ID = #{id} AND </if>
+				<if test="mid != null " > MID = #{mid} AND </if>
+				<if test="itemName != null  and itemName != '' " > ITEM_NAME = #{itemName} AND </if>
+				<if test="itemType != null " > ITEM_TYPE = #{itemType} AND </if>
+				<if test="notifications != null " > NOTIFICATIONS = #{notifications} AND </if>
+				<if test="fields != null and fields != ''" > FIELDS = #{fields} AND </if>
+				<if test="soft != null" > SOFT = #{soft} AND </if>
+            </trim>
+        </sql>
+    	<!-- 查询分页  2021-06-24 k6991  -->
+        <select id="queryPagerList" parameterType="map" resultMap="PPMCHAGEDEVICECHILDREN_ALL">
+        	SELECT
+            <include refid="sql_flied_all" />
+            FROM PPM_CHAGEDEVICE_CHILDREN
+            <include refid="sql_select_condition" />
+        </select>
+
+        <!-- 新增  2021-06-24 k6991  -->
+        <insert id="addPojo" parameterType="ppmChagedeviceChildren">
+    		INSERT INTO PPM_CHAGEDEVICE_CHILDREN (
+    		<trim suffixOverrides=",">
+    		 <if test="id != null " > ID , </if>
+				<if test="mid != null " > MID , </if>
+				<if test="itemName != null  and itemName != '' " > ITEM_NAME , </if>
+				<if test="itemType != null " > ITEM_TYPE , </if>
+				<if test="notifications != null " > NOTIFICATIONS , </if>
+				<if test="fields != null and fields != ''" > FIELDS , </if>
+				<if test="soft != null" > SOFT , </if>
+              </trim>
+    		)
+    		VALUES(
+    		<trim suffixOverrides=",">
+    		 <if test="id != null " > #{id} , </if>
+				<if test="mid != null " > #{mid} , </if>
+				<if test="itemName != null  and itemName != '' " > #{itemName} , </if>
+				<if test="itemType != null " > #{itemType} , </if>
+				<if test="notifications != null " > #{notifications} , </if>
+				<if test="fields != null and fields != ''" > #{fields} , </if>
+				<if test="soft != null" > #{soft} , </if>
+            </trim>
+    		)
+        </insert>
+
+        <!--通过id查询  k6991 2021-06-24 -->
+        <select id="queryDetail" parameterType="ppmChagedeviceChildren" resultMap="PPMCHAGEDEVICECHILDREN_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_CHAGEDEVICE_CHILDREN  WHERE ID=#{id}
+        </select>
+
+         <!--查询集合  k6991 2021-06-24 -->
+        <select id="getList" parameterType="ppmChagedeviceChildren" resultMap="PPMCHAGEDEVICECHILDREN_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_CHAGEDEVICE_CHILDREN
+        	<include refid="sql_select_condition" />
+			ORDER BY SOFT ASC
+        </select>
+        <!-- update sql -->
+        <sql id="update_pojo_sql">
+        	<trim prefix="SET" suffixOverrides=",">
+        		<if test="id != null " > ID=#{id} , </if>
+				<if test="mid != null " > MID=#{mid} , </if>
+				<if test="itemName != null  and itemName != '' " > ITEM_NAME=#{itemName} , </if>
+				<if test="itemType != null " > ITEM_TYPE=#{itemType} , </if>
+				<if test="notifications != null " > NOTIFICATIONS=#{notifications} , </if>
+				<if test="fields != null and fields != ''" > FIELDS = #{fields} , </if>
+				<if test="soft != null" > SOFT = #{soft} , </if>
+            </trim>
+        </sql>
+
+        <!--通过id编辑 k6991 2021-06-24 -->
+    	<update id="updatePojo" parameterType="ppmChagedeviceChildren">
+        	UPDATE
+        	PPM_CHAGEDEVICE_CHILDREN
+        	<include refid="update_pojo_sql" />
+        	WHERE ID=#{id}
+        </update>
+
+        <!--通过id批量删除  k6991 2021-06-24 -->
+        <delete id="deleteById" parameterType="ppmChagedeviceChildren">
+        	DELETE
+        	FROM
+        	PPM_CHAGEDEVICE_CHILDREN
+        	WHERE ID = #{id}
+        </delete>
+</mapper>

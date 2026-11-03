@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:ywwb436 2022-08-09 -->
+<!--  闸机管理 查询脚本 -->
+<mapper namespace="com.work.ppm.application.model.integratedmanager.PpmZjManager">
+    <resultMap type="ppmZjManager" id="PPMZJMANAGER_ALL">
+        <result property="indexCode" column="INDEX_CODE"/>
+        <result property="name" column="NAME"/>
+        <result property="resourceType" column="RESOURCE_TYPE"/>
+        <result property="doorNo" column="DOOR_NO"/>
+        <result property="doorSerial" column="DOOR_SERIAL"/>
+        <result property="description" column="DESCRIPTION"/>
+        <result property="parentIndexCode" column="PARENT_INDEX_CODE"/>
+        <result property="regionIndexCode" column="REGION_INDEX_CODE"/>
+        <result property="treatyType" column="TREATY_TYPE"/>
+        <result property="channelType" column="CHANNEL_TYPE"/>
+        <result property="channelNo" column="CHANNEL_NO"/>
+        <result property="controlOneId" column="CONTROL_ONE_ID"/>
+        <result property="controlTwoId" column="CONTROL_TWO_ID"/>
+        <result property="readerInId" column="READER_IN_ID"/>
+        <result property="readerOutId" column="READER_OUT_ID"/>
+        <result property="createTime" column="CREATE_TIME"/>
+        <result property="updateTime" column="UPDATE_TIME"/>
+        <result property="regionPath" column="REGION_PATH"/>
+        <result property="regionName" column="REGION_NAME"/>
+        <result property="regionPathName" column="REGION_PATH_NAME"/>
+
+    </resultMap>
+
+    <!-- 所有字段名称 -->
+    <sql id="sql_flied_all">
+        INDEX_CODE,
+        NAME,
+        RESOURCE_TYPE,
+        DOOR_NO,
+        DOOR_SERIAL,
+        DESCRIPTION,
+        PARENT_INDEX_CODE,
+        REGION_INDEX_CODE,
+        TREATY_TYPE,
+        CHANNEL_TYPE,
+        CHANNEL_NO,
+        CONTROL_ONE_ID,
+        CONTROL_TWO_ID,
+        READER_IN_ID,
+        READER_OUT_ID,
+        CREATE_TIME,
+        UPDATE_TIME,
+        REGION_PATH,
+        REGION_NAME,
+        REGION_PATH_NAME
+    </sql>
+    <sql id="sql_select_condition">
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="indexCode != null  and indexCode != '' ">INDEX_CODE = #{indexCode} AND</if>
+            <if test="name != null  and name != '' ">NAME = #{name} AND</if>
+            <if test="resourceType != null  and resourceType != '' ">RESOURCE_TYPE = #{resourceType} AND</if>
+            <if test="doorNo != null  and doorNo != '' ">DOOR_NO = #{doorNo} AND</if>
+            <if test="doorSerial != null  and doorSerial != '' ">DOOR_SERIAL = #{doorSerial} AND</if>
+            <if test="description != null  and description != '' ">DESCRIPTION = #{description} AND</if>
+            <if test="parentIndexCode != null  and parentIndexCode != '' ">PARENT_INDEX_CODE = #{parentIndexCode} AND
+            </if>
+            <if test="regionIndexCode != null  and regionIndexCode != '' ">REGION_INDEX_CODE = #{regionIndexCode} AND
+            </if>
+            <if test="treatyType != null  and treatyType != '' ">TREATY_TYPE = #{treatyType} AND</if>
+            <if test="channelType != null  and channelType != '' ">CHANNEL_TYPE = #{channelType} AND</if>
+            <if test="channelNo != null">CHANNEL_NO = #{channelNo} AND</if>
+            <if test="controlOneId != null  and controlOneId != '' ">CONTROL_ONE_ID = #{controlOneId} AND</if>
+            <if test="controlTwoId != null  and controlTwoId != '' ">CONTROL_TWO_ID = #{controlTwoId} AND</if>
+            <if test="readerInId != null  and readerInId != '' ">READER_IN_ID = #{readerInId} AND</if>
+            <if test="readerOutId != null  and readerOutId != '' ">READER_OUT_ID = #{readerOutId} AND</if>
+            <if test="createTime != null ">CREATE_TIME = #{createTime} AND</if>
+            <if test="updateTime != null ">UPDATE_TIME = #{updateTime} AND</if>
+            <if test="regionPath != null  and regionPath != '' ">REGION_PATH = #{regionPath} AND</if>
+            <if test="regionName != null  and regionName != '' ">REGION_NAME = #{regionName} AND</if>
+            <if test="regionPathName != null  and regionPathName != '' ">REGION_PATH_NAME = #{regionPathName} AND</if>
+
+        </trim>
+    </sql>
+    <!-- 查询分页  2022-08-09 ywwb436  -->
+    <select id="queryPagerList" parameterType="map" resultMap="PPMZJMANAGER_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM PPM_ZJ_MANAGER
+        <include refid="sql_select_condition"/>
+    </select>
+
+    <!-- 新增  2022-08-09 ywwb436  -->
+    <insert id="addPojo" parameterType="ppmZjManager">
+        INSERT INTO PPM_ZJ_MANAGER (
+        <trim suffixOverrides=",">
+            <if test="indexCode != null  and indexCode != '' ">INDEX_CODE ,</if>
+            <if test="name != null  and name != '' ">NAME ,</if>
+            <if test="resourceType != null  and resourceType != '' ">RESOURCE_TYPE ,</if>
+            <if test="doorNo != null  and doorNo != '' ">DOOR_NO ,</if>
+            <if test="doorSerial != null  and doorSerial != '' ">DOOR_SERIAL ,</if>
+            <if test="description != null  and description != '' ">DESCRIPTION ,</if>
+            <if test="parentIndexCode != null  and parentIndexCode != '' ">PARENT_INDEX_CODE ,</if>
+            <if test="regionIndexCode != null  and regionIndexCode != '' ">REGION_INDEX_CODE ,</if>
+            <if test="treatyType != null  and treatyType != '' ">TREATY_TYPE ,</if>
+            <if test="channelType != null  and channelType != '' ">CHANNEL_TYPE ,</if>
+            <if test="channelNo != null">CHANNEL_NO ,</if>
+            <if test="controlOneId != null  and controlOneId != '' ">CONTROL_ONE_ID ,</if>
+            <if test="controlTwoId != null  and controlTwoId != '' ">CONTROL_TWO_ID ,</if>
+            <if test="readerInId != null  and readerInId != '' ">READER_IN_ID ,</if>
+            <if test="readerOutId != null  and readerOutId != '' ">READER_OUT_ID ,</if>
+            <if test="createTime != null ">CREATE_TIME ,</if>
+            <if test="updateTime != null ">UPDATE_TIME ,</if>
+            <if test="regionPath != null  and regionPath != '' ">REGION_PATH ,</if>
+            <if test="regionName != null  and regionName != '' ">REGION_NAME ,</if>
+            <if test="regionPathName != null  and regionPathName != '' ">REGION_PATH_NAME ,</if>
+
+        </trim>
+        )
+        VALUES(
+        <trim suffixOverrides=",">
+            <if test="indexCode != null  and indexCode != '' ">#{indexCode} ,</if>
+            <if test="name != null  and name != '' ">#{name} ,</if>
+            <if test="resourceType != null  and resourceType != '' ">#{resourceType} ,</if>
+            <if test="doorNo != null  and doorNo != '' ">#{doorNo} ,</if>
+            <if test="doorSerial != null  and doorSerial != '' ">#{doorSerial} ,</if>
+            <if test="description != null  and description != '' ">#{description} ,</if>
+            <if test="parentIndexCode != null  and parentIndexCode != '' ">#{parentIndexCode} ,</if>
+            <if test="regionIndexCode != null  and regionIndexCode != '' ">#{regionIndexCode} ,</if>
+            <if test="treatyType != null  and treatyType != '' ">#{treatyType} ,</if>
+            <if test="channelType != null  and channelType != '' ">#{channelType} ,</if>
+            <if test="channelNo != null ">#{channelNo} ,</if>
+            <if test="controlOneId != null  and controlOneId != '' ">#{controlOneId} ,</if>
+            <if test="controlTwoId != null  and controlTwoId != '' ">#{controlTwoId} ,</if>
+            <if test="readerInId != null  and readerInId != '' ">#{readerInId} ,</if>
+            <if test="readerOutId != null  and readerOutId != '' ">#{readerOutId} ,</if>
+            <if test="createTime != null ">#{createTime} ,</if>
+            <if test="updateTime != null ">#{updateTime} ,</if>
+            <if test="regionPath != null  and regionPath != '' ">#{regionPath} ,</if>
+            <if test="regionName != null  and regionName != '' ">#{regionName} ,</if>
+            <if test="regionPathName != null  and regionPathName != '' ">#{regionPathName} ,</if>
+
+        </trim>
+        )
+    </insert>
+
+    <!--通过id查询  ywwb436 2022-08-09 -->
+    <select id="queryDetail" parameterType="ppmZjManager" resultMap="PPMZJMANAGER_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM PPM_ZJ_MANAGER WHERE INDEX_CODE=#{indexCode}
+    </select>
+
+    <!--查询集合  ywwb436 2022-08-09 -->
+    <select id="getList" parameterType="ppmZjManager" resultMap="PPMZJMANAGER_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM PPM_ZJ_MANAGER
+        <include refid="sql_select_condition"/>
+    </select>
+    <!-- update sql -->
+    <sql id="update_pojo_sql">
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="indexCode != null  and indexCode != '' ">INDEX_CODE=#{indexCode} ,</if>
+            <if test="name != null  and name != '' ">NAME=#{name} ,</if>
+            <if test="resourceType != null  and resourceType != '' ">RESOURCE_TYPE=#{resourceType} ,</if>
+            <if test="doorNo != null  and doorNo != '' ">DOOR_NO=#{doorNo} ,</if>
+            <if test="doorSerial != null  and doorSerial != '' ">DOOR_SERIAL=#{doorSerial} ,</if>
+            <if test="description != null  and description != '' ">DESCRIPTION=#{description} ,</if>
+            <if test="parentIndexCode != null  and parentIndexCode != '' ">PARENT_INDEX_CODE=#{parentIndexCode} ,</if>
+            <if test="regionIndexCode != null  and regionIndexCode != '' ">REGION_INDEX_CODE=#{regionIndexCode} ,</if>
+            <if test="treatyType != null  and treatyType != '' ">TREATY_TYPE=#{treatyType} ,</if>
+            <if test="channelType != null  and channelType != '' ">CHANNEL_TYPE=#{channelType} ,</if>
+            <if test="channelNo != null ">CHANNEL_NO=#{channelNo} ,</if>
+            <if test="controlOneId != null  and controlOneId != '' ">CONTROL_ONE_ID=#{controlOneId} ,</if>
+            <if test="controlTwoId != null  and controlTwoId != '' ">CONTROL_TWO_ID=#{controlTwoId} ,</if>
+            <if test="readerInId != null  and readerInId != '' ">READER_IN_ID=#{readerInId} ,</if>
+            <if test="readerOutId != null  and readerOutId != '' ">READER_OUT_ID=#{readerOutId} ,</if>
+            <if test="createTime != null ">CREATE_TIME=#{createTime} ,</if>
+            <if test="updateTime != null ">UPDATE_TIME=#{updateTime} ,</if>
+            <if test="regionPath != null  and regionPath != '' ">REGION_PATH=#{regionPath} ,</if>
+            <if test="regionName != null  and regionName != '' ">REGION_NAME=#{regionName} ,</if>
+            <if test="regionPathName != null  and regionPathName != '' ">REGION_PATH_NAME=#{regionPathName} ,</if>
+
+        </trim>
+    </sql>
+
+    <!--通过id编辑 ywwb436 2022-08-09 -->
+    <update id="updatePojo" parameterType="ppmZjManager">
+        UPDATE
+        PPM_ZJ_MANAGER
+        <include refid="update_pojo_sql"/>
+        WHERE INDEX_CODE=#{indexCode}
+    </update>
+
+    <!--通过id批量删除  ywwb436 2022-08-09 -->
+    <delete id="deleteById" parameterType="ppmZjManager">
+        DELETE
+        FROM
+        PPM_ZJ_MANAGER
+        WHERE INDEX_CODE = #{indexCode}
+    </delete>
+
+</mapper>

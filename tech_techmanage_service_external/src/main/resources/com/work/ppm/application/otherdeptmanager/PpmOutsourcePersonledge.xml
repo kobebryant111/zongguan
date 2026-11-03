@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:ywwb905 2023-03-27 -->
+<!--  非科技外包人员台账表 查询脚本 -->
+<mapper namespace="com.work.ppm.application.model.otherdeptmanager.PpmOutsourcePersonledge">
+	 <resultMap type="ppmOutsourcePersonledge" id="PPMOUTSOURCEPERSONLEDGE_ALL">
+		<result property="id" column="ID" />
+        <result property="jobId" column="JOB_ID" />
+		<result property="userName" column="USER_NAME" />
+		<result property="deptId" column="DEPT_ID" />
+		<result property="supplierId" column="SUPPLIER_ID" />
+		<result property="outsourceType" column="OUTSOURCE_TYPE" />
+		<result property="cardId" column="CARD_ID" />
+		<result property="startingTime" column="STARTING_TIME" />
+		<result property="endingTime" column="ENDING_TIME" />
+		<result property="state" column="STATE" />
+		<result property="proPerson" column="PRO_PERSON" />
+		<result property="telphone" column="TELPHONE" />
+		<result property="imageNo" column="IMAGE_NO" />
+		<result property="createdTime" column="CREATED_TIME" />
+		<result property="createdBy" column="CREATED_BY" />
+		<result property="modifiedTime" column="MODIFIED_TIME" />
+		<result property="modifiedBy" column="MODIFIED_BY" />
+     </resultMap>
+	 <resultMap id="PPMOUTSOURCEPERSONLEDGE_ALL_EXT" type="ppmOutsourcePersonledgeExt" extends="PPMOUTSOURCEPERSONLEDGE_ALL">
+		<result property="deptName" column="DEPT_NAME" />
+		<result property="supplierName" column="SUPPLIER_NAME" />
+		<result property="outsourceTypeName" column="OUTSOURCE_TYPE_NAME" />
+		<result property="proPersonName" column="PRO_PERSON_NAME" />
+		<result property="userNameVal" column="USER_NAME_VAL" />
+		<result property="deptVal" column="DEPT_VAL" />
+		<result property="pmVal" column="PM_VAL" />
+		<result property="adminId" column="ADMINID" />
+     </resultMap>
+
+     <!-- 所有字段名称 -->
+    <sql id="sql_flied_all">
+		ID,
+        JOB_ID,
+		USER_NAME,
+		DEPT_ID,
+		SUPPLIER_ID,
+		OUTSOURCE_TYPE,
+		CARD_ID,
+		STARTING_TIME,
+		ENDING_TIME,
+		STATE,
+		PRO_PERSON,
+		TELPHONE,
+		IMAGE_NO,
+		CREATED_TIME,
+		CREATED_BY,
+		MODIFIED_TIME,
+		MODIFIED_BY	
+    </sql>
+    <sql id="sql_select_condition">
+        <trim prefix="WHERE" suffixOverrides="AND">
+			<if test="id != null  and id != '' " > ID = #{id} AND </if>
+            <if test="jobId != null  and jobId != '' " > JOB_ID = #{jobId} AND </if>
+			<if test="userName != null  and userName != '' " > USER_NAME = #{userName} AND </if>
+			<if test="deptId != null  and deptId != '' " > DEPT_ID = #{deptId} AND </if>
+			<if test="supplierId != null  and supplierId != '' " > SUPPLIER_ID = #{supplierId} AND </if>
+			<if test="outsourceType != null  and outsourceType != '' " > OUTSOURCE_TYPE = #{outsourceType} AND </if>
+			<if test="cardId != null  and cardId != '' " > CARD_ID = #{cardId} AND </if>
+			<if test="startingTime != null " > STARTING_TIME = #{startingTime} AND </if>
+			<if test="endingTime != null " > ENDING_TIME = #{endingTime} AND </if>
+			<if test="state != null  and state != '' " > STATE = #{state} AND </if>
+			<if test="proPerson != null  and proPerson != '' " > PRO_PERSON = #{proPerson} AND </if>
+			<if test="telphone != null  and telphone != '' " > TELPHONE = #{telphone} AND </if>
+			<if test="imageNo != null  and imageNo != '' " > IMAGE_NO = #{imageNo} AND </if>
+			<if test="createdTime != null " > CREATED_TIME = #{createdTime} AND </if>
+			<if test="createdBy != null  and createdBy != '' " > CREATED_BY = #{createdBy} AND </if>
+			<if test="modifiedTime != null " > MODIFIED_TIME = #{modifiedTime} AND </if>
+			<if test="modifiedBy != null  and modifiedBy != '' " > MODIFIED_BY = #{modifiedBy} AND </if>
+			
+        </trim>
+    </sql>
+    <!-- 查询分页  2023-03-27 ywwb905  -->
+    <select id="queryPagerList" parameterType="map" resultMap="PPMOUTSOURCEPERSONLEDGE_ALL">
+        SELECT
+        <include refid="sql_flied_all" />
+        FROM PPM_OUTSOURCE_PERSONLEDGE
+        <include refid="sql_select_condition" />
+    </select>
+
+    <!-- 新增  2023-03-27 ywwb905  -->
+    <insert id="addPojo" parameterType="ppmOutsourcePersonledge">
+        INSERT INTO PPM_OUTSOURCE_PERSONLEDGE (
+        <trim suffixOverrides=",">
+			<if test="id != null  and id != '' " > ID , </if>
+			<if test="jobId != null  and jobId != '' " > JOB_ID , </if>
+			<if test="userName != null  and userName != '' " > USER_NAME , </if>
+			<if test="deptId != null  and deptId != '' " > DEPT_ID , </if>
+			<if test="supplierId != null  and supplierId != '' " > SUPPLIER_ID , </if>
+			<if test="outsourceType != null  and outsourceType != '' " > OUTSOURCE_TYPE , </if>
+			<if test="cardId != null  and cardId != '' " > CARD_ID , </if>
+			<if test="startingTime != null " > STARTING_TIME , </if>
+			<if test="endingTime != null " > ENDING_TIME , </if>
+			<if test="state != null  and state != '' " > STATE , </if>
+			<if test="proPerson != null  and proPerson != '' " > PRO_PERSON , </if>
+			<if test="telphone != null  and telphone != '' " > TELPHONE , </if>
+			<if test="imageNo != null  and imageNo != '' " > IMAGE_NO , </if>
+			<if test="createdTime != null " > CREATED_TIME , </if>
+			<if test="createdBy != null  and createdBy != '' " > CREATED_BY , </if>
+			<if test="modifiedTime != null " > MODIFIED_TIME , </if>
+			<if test="modifiedBy != null  and modifiedBy != '' " > MODIFIED_BY , </if>	
+          </trim>
+        )
+        VALUES(
+        <trim suffixOverrides=",">
+			<if test="id != null  and id != '' " > #{id} , </if>
+			<if test="jobId != null  and jobId != '' " > #{jobId} , </if>
+			<if test="userName != null  and userName != '' " > #{userName} , </if>
+			<if test="deptId != null  and deptId != '' " > #{deptId} , </if>
+			<if test="supplierId != null  and supplierId != '' " > #{supplierId} , </if>
+			<if test="outsourceType != null  and outsourceType != '' " > #{outsourceType} , </if>
+			<if test="cardId != null  and cardId != '' " > #{cardId} , </if>
+			<if test="startingTime != null " > #{startingTime} , </if>
+			<if test="endingTime != null " > #{endingTime} , </if>
+			<if test="state != null  and state != '' " > #{state} , </if>
+			<if test="proPerson != null  and proPerson != '' " > #{proPerson} , </if>
+			<if test="telphone != null  and telphone != '' " > #{telphone} , </if>
+			<if test="imageNo != null  and imageNo != '' " > #{imageNo} , </if>
+			<if test="createdTime != null " > #{createdTime} , </if>
+			<if test="createdBy != null  and createdBy != '' " > #{createdBy} , </if>
+			<if test="modifiedTime != null " > #{modifiedTime} , </if>
+			<if test="modifiedBy != null  and modifiedBy != '' " > #{modifiedBy} , </if>		
+        </trim>
+        )
+    </insert>
+
+    <!--通过id查询  ywwb905 2023-03-27 -->
+    <select id="queryDetail" parameterType="ppmOutsourcePersonledge" resultMap="PPMOUTSOURCEPERSONLEDGE_ALL">
+        SELECT
+        <include refid="sql_flied_all" />
+        FROM PPM_OUTSOURCE_PERSONLEDGE  
+		<trim prefix="WHERE" suffixOverrides="AND">
+			<if test="id != null and id != '' ">OP.ID = #{id} AND</if>
+			<if test="jobId != null and jobId != '' ">OP.JOB_ID = #{jobId} AND</if>
+        </trim>
+    </select>
+
+     <!--查询集合  ywwb905 2023-03-27 -->
+    <select id="getList" parameterType="ppmOutsourcePersonledge" resultMap="PPMOUTSOURCEPERSONLEDGE_ALL">
+        SELECT
+        <include refid="sql_flied_all" />
+        FROM PPM_OUTSOURCE_PERSONLEDGE
+        <include refid="sql_select_condition" />
+    </select>
+    <!-- update sql -->
+    <sql id="update_pojo_sql">
+        <trim prefix="SET" suffixOverrides=",">
+			<if test="id != null  and id != '' " > ID=#{id} , </if>
+            <if test="jobId != null  and jobId != '' " > JOB_ID=#{jobId} , </if>
+			<if test="userName != null  and userName != '' " > USER_NAME=#{userName} , </if>
+			<if test="deptId != null  and deptId != '' " > DEPT_ID=#{deptId} , </if>
+			<if test="supplierId != null  and supplierId != '' " > SUPPLIER_ID=#{supplierId} , </if>
+			<if test="outsourceType != null  and outsourceType != '' " > OUTSOURCE_TYPE=#{outsourceType} , </if>
+			<if test="cardId != null  and cardId != '' " > CARD_ID=#{cardId} , </if>
+			<if test="startingTime != null " > STARTING_TIME=#{startingTime} , </if>
+			<if test="endingTime != null " > ENDING_TIME=#{endingTime} , </if>
+			<if test="state != null  and state != '' " > STATE=#{state} , </if>
+			<if test="proPerson != null  and proPerson != '' " > PRO_PERSON=#{proPerson} , </if>
+			<if test="telphone != null  and telphone != '' " > TELPHONE=#{telphone} , </if>
+			<if test="imageNo != null  and imageNo != '' " > IMAGE_NO=#{imageNo} , </if>
+			<if test="createdTime != null " > CREATED_TIME=#{createdTime} , </if>
+			<if test="createdBy != null  and createdBy != '' " > CREATED_BY=#{createdBy} , </if>
+			<if test="modifiedTime != null " > MODIFIED_TIME=#{modifiedTime} , </if>
+			<if test="modifiedBy != null  and modifiedBy != '' " > MODIFIED_BY=#{modifiedBy} , </if>
+        </trim>
+    </sql>
+
+    <!--通过id编辑 ywwb905 2023-03-27 -->
+    <update id="updatePojo" parameterType="ppmOutsourcePersonledge">
+        UPDATE
+        PPM_OUTSOURCE_PERSONLEDGE
+        <include refid="update_pojo_sql" />
+        WHERE ID=#{id}
+    </update>
+
+    <!--通过id批量删除  ywwb905 2023-03-27 -->
+    <delete id="deleteById" parameterType="ppmOutsourcePersonledge">
+        DELETE
+        FROM
+        PPM_OUTSOURCE_PERSONLEDGE
+        WHERE ID = #{id}
+    </delete>
+	
+	<select id="queryBaseInfo" parameterType="ppmOutsourcePersonledgeExt" resultMap="PPMOUTSOURCEPERSONLEDGE_ALL_EXT">
+		SELECT 
+		  OP.ID,
+		  OP.JOB_ID,
+		  OP.USER_NAME,
+		  OP.DEPT_ID,
+		  CD.ADMINID,
+		  CD.LOCATION DEPT_NAME,
+		  OP.PRO_PERSON,
+		  CE.EMPNAME PRO_PERSON_NAME,
+		  OP.SUPPLIER_ID,
+		  OI.OUTSOURCNAME SUPPLIER_NAME,
+		  OP.OUTSOURCE_TYPE,
+		  E1.DICTNAME OUTSOURCE_TYPE_NAME,
+		  OP.CARD_ID,
+		  OP.STARTING_TIME,
+		  OP.ENDING_TIME,
+		  OP.STATE,
+		  OP.TELPHONE,
+		  OP.IMAGE_NO,
+		  OP.CREATED_TIME,
+		  OP.CREATED_BY
+		FROM 
+			PPM_OUTSOURCE_PERSONLEDGE OP
+		LEFT JOIN 
+			COMM_EMPLOYEE CE ON OP.PRO_PERSON = CE.BADGE
+		LEFT JOIN 
+			COMM_DEPARTMENT CD ON OP.DEPT_ID = CD.DEPID
+		LEFT JOIN 
+			PPM_OUTSOURCING_INFO OI ON OP.SUPPLIER_ID = OI.ORGCODE
+		LEFT JOIN 
+			EOS_DICT_ENTRY E1 ON OP.OUTSOURCE_TYPE = E1.DICTID AND E1.DICTTYPEID = 'BUSI_OUTSOURCE_OUTSOURCETYPE'
+		<trim prefix="WHERE" suffixOverrides="AND">
+			<if test="id != null and id != '' ">OP.ID = #{id} AND</if>
+			<if test="jobId != null and jobId != '' ">OP.JOB_ID = #{jobId} AND</if>
+        </trim>
+	</select>
+	
+	<select id="queryBaseInfoList" parameterType="ppmOutsourcePersonledgeExt" resultMap="PPMOUTSOURCEPERSONLEDGE_ALL_EXT">
+		SELECT 
+		  OP.ID,
+		  OP.JOB_ID,
+		  OP.USER_NAME,
+		  OP.DEPT_ID,
+		  CD.ADMINID,
+		  CD.LOCATION DEPT_NAME,
+		  OP.PRO_PERSON,
+		  CE.EMPNAME PRO_PERSON_NAME,
+		  OP.SUPPLIER_ID,
+		  OI.OUTSOURCNAME SUPPLIER_NAME,
+		  OP.OUTSOURCE_TYPE,
+		  E1.DICTNAME OUTSOURCE_TYPE_NAME,
+		  OP.CARD_ID,
+		  OP.STARTING_TIME,
+		  OP.ENDING_TIME,
+		  OP.STATE,
+		  OP.TELPHONE,
+		  OP.IMAGE_NO,
+		  OP.CREATED_TIME,
+		  OP.CREATED_BY
+		FROM 
+			PPM_OUTSOURCE_PERSONLEDGE OP
+		LEFT JOIN 
+			COMM_EMPLOYEE CE ON OP.PRO_PERSON = CE.BADGE
+		LEFT JOIN 
+			COMM_DEPARTMENT CD ON OP.DEPT_ID = CD.DEPID
+		LEFT JOIN 
+			PPM_OUTSOURCING_INFO OI ON OP.SUPPLIER_ID = OI.ORGCODE
+		LEFT JOIN 
+			EOS_DICT_ENTRY E1 ON OP.OUTSOURCE_TYPE = E1.DICTID AND E1.DICTTYPEID = 'BUSI_OUTSOURCE_OUTSOURCETYPE'
+		<trim prefix="WHERE" suffixOverrides="AND">
+            <if test="id != null and id != '' ">OP.ID = #{id} AND</if>
+			<if test="jobId != null and jobId != '' ">OP.JOB_ID = #{jobId} AND</if>
+			<if test="userName != null and userName != '' ">OP.USER_NAME = #{userName} AND</if>
+			<if test="userNameVal != null and userNameVal != '' ">OP.USER_NAME like '%${userNameVal}%' AND</if>
+            <if test="deptId != null and deptId != '' ">OP.DEPT_ID = #{deptId} AND</if>
+            <if test="proPerson != null and proPerson != '' ">OP.PRO_PERSON = #{proPerson} AND</if>
+            <if test="pmVal != null and pmVal != '' ">(OP.PRO_PERSON like '%${pmVal}%' OR CE.EMPNAME like '%${pmVal}%') AND</if>
+            <if test="deptVal != null and deptVal != '' "> CD.LOCATION like '%${deptVal}%' AND</if>
+            <if test="supplierId != null and supplierId != '' ">OP.SUPPLIER_ID = #{supplierId} AND</if>
+            <if test="state != null and state != '' ">OP.STATE = #{state} AND</if>
+            <if test="adminId != null ">CD.ADMINID = #{adminId} AND</if>
+        </trim>
+		ORDER BY OP.CREATED_TIME DESC
+	</select>
+	
+	
+
+</mapper>

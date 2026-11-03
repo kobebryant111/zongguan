@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k6991 2020-01-15 -->
+<mapper namespace="com.work.ppm.application.model.safetymanager.EmployeeDepartMsg">
+    <resultMap type="commEmployee" id="COMMEMPLOYEE_ALL">
+        <result property="badge" column="BADGE"/>
+        <result property="empname" column="EMPNAME"/>
+        <result property="depcode" column="DEPCODE"/>
+        <result property="location" column="LOCATION"/>
+    </resultMap>
+
+    <!-- 所有字段名称 -->
+    <sql id="sql_flied_all">
+        BADGE,
+        EMPNAME,
+        DEPCODE,
+        LOCATION
+    </sql>
+    <resultMap id="QUERYPAGERLIST_MAP" type="commEmployeeInfo" extends="COMMEMPLOYEE_ALL">
+        <result column="COMP_NAME" property="compName"/>
+        <result column="CHARGE_NAME" property="chargeName"/>
+        <result column="COMORG_NAME" property="comorgName"/>
+    </resultMap>
+
+</mapper>

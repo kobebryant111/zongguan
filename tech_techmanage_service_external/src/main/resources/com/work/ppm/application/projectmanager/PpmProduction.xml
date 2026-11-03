@@ -1,0 +1,604 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k6991 2021-11-01 -->
+<mapper namespace="com.work.ppm.application.model.projectmanager.PpmProduction">
+	 <resultMap type="ppmProduction" id="PPMPRODUCTION_ALL">
+        <result property="bugissucess" column="BUGISSUCESS" />
+		<result property="isddldata" column="ISDDLDATA" />
+		<result property="id" column="ID" />
+		<result property="applyno" column="APPLYNO" />
+		<result property="applytype" column="APPLYTYPE" />
+		<result property="userid" column="USERID" />
+		<result property="timeapply" column="TIMEAPPLY" />
+		<result property="deptno" column="DEPTNO" />
+		<result property="sysno" column="SYSNO" />
+		<result property="expect" column="EXPECT" />
+		<result property="emeruserid" column="EMERUSERID" />
+		<result property="testuserid" column="TESTUSERID" />
+		<result property="productype" column="PRODUCTYPE" />
+		<result property="network" column="NETWORK" />
+		<result property="region" column="REGION" />
+		<result property="operagrade" column="OPERAGRADE" />
+		<result property="success" column="SUCCESS" />
+		<result property="exectime" column="EXECTIME" />
+		<result property="backtime" column="BACKTIME" />
+		<result property="score" column="SCORE" />
+		<result property="risklevel" column="RISKLEVEL" />
+		<result property="step" column="STEP" />
+		<result property="backscheme" column="BACKSCHEME" />
+		<result property="remark" column="REMARK" />
+		<result property="chgdate" column="CHGDATE" />
+		<result property="chgsever" column="CHGSEVER" />
+		<result property="chglist" column="CHGLIST" />
+		<result property="dtctuserid" column="DTCTUSERID" />
+		<result property="kjzmuserid" column="KJZMUSERID" />
+		<result property="bluser" column="BLUSER" />
+		<result property="blinfo" column="BLINFO" />
+		<result property="instanceid" column="INSTANCEID" />
+		<result property="flowid" column="FLOWID" />
+		<result property="isdel" column="ISDEL" />
+		<result property="createtime" column="CREATETIME" />
+		<result property="creators" column="CREATORS" />
+		<result property="lastmodtime" column="LASTMODTIME" />
+		<result property="lastmoduser" column="LASTMODUSER" />
+		<result property="prodis" column="PRODIS" />
+		<result property="clresult" column="CLRESULT" />
+		<result property="chageinfo" column="CHAGEINFO" />
+		<result property="isarchchange" column="ISARCHCHANGE" />
+		<result property="sysadminid" column="SYSADMINID" />
+		<result property="ismonichange" column="ISMONICHANGE" />
+		<result property="fjhtcnof" column="FJHTCNOF" />
+		<result property="updateman" column="UPDATEMAN" />
+		<result property="reviewman" column="REVIEWMAN" />
+		<result property="outsourcenum" column="OUTSOURCENUM" />
+		<result property="terminal" column="TERMINAL" />
+		<result property="holdingtime" column="HOLDINGTIME" />
+		<result property="begintime" column="BEGINTIME" />
+		<result property="istimeup" column="ISTIMEUP" />
+		<result property="ispackge" column="ISPACKGE" />
+		<result property="reason" column="REASON" />
+		<result property="isfunctional" column="ISFUNCTIONAL" />
+		<result property="checkresult" column="CHECKRESULT" />
+		<result property="checklist" column="CHECKLIST" />
+		<result property="inventory" column="INVENTORY" />
+		<result property="istopwd" column="ISTOPWD" />
+		<result property="pwduseendtime" column="PWDUSEENDTIME" />
+		<result property="usestarttime" column="USESTARTTIME" />
+		<result property="pwdnote" column="PWDNOTE" />
+		<result property="usehour" column="USEHOUR" />
+		<result property="isrepair" column="ISREPAIR" />
+		<result property="isyfchange" column="ISYFCHANGE" />
+		<result property="ischangeback" column="ISCHANGEBACK" />
+		<result property="ischangecause" column="ISCHANGECAUSE" />
+		<result property="changename" column="CHANGENAME" />
+		<result property="tccontent" column="TCCONTENT" />
+		<result property="cygjfunction" column="CYGJFUNCTION" />
+		<result property="systemworked" column="SYSTEMWORKED" />
+		<result property="process" column="PROCESS" />
+		<result property="network1" column="NETWORK1" />
+		<result property="journal" column="JOURNAL" />
+		<result property="autotask" column="AUTOTASK" />
+		<result property="port" column="PORT" />
+		<result property="databaselink" column="DATABASELINK" />
+		<result property="serverstate" column="SERVERSTATE" />
+		<result property="batchprocessing" column="BATCHPROCESSING" />
+		<result property="ramfreshen" column="RAMFRESHEN" />
+		<result property="issdset" column="ISSDSET" />
+		<result property="zpurl" column="ZPURL" />
+		<result property="jxurl" column="JXURL" />
+		<result property="istemporarychange" column="ISTEMPORARYCHANGE" />
+		<result property="changelevel" column="CHANGELEVEL" />
+		<result property="changestatus" column="CHANGESTATUS" />
+		<result property="temporaryreason" column="TEMPORARYREASON" />
+		<result property="isdataupdate" column="ISDATAUPDATE" />
+		
+     </resultMap>
+
+     <!-- 所有字段名称 -->
+        <sql id="sql_flied_all">
+        	BUGISSUCESS,
+			ISDDLDATA,
+			ID,
+			APPLYNO,
+			APPLYTYPE,
+			USERID,
+			TIMEAPPLY,
+			DEPTNO,
+			SYSNO,
+			EXPECT,
+			EMERUSERID,
+			TESTUSERID,
+			PRODUCTYPE,
+			NETWORK,
+			REGION,
+			OPERAGRADE,
+			SUCCESS,
+			EXECTIME,
+			BACKTIME,
+			SCORE,
+			RISKLEVEL,
+			STEP,
+			BACKSCHEME,
+			REMARK,
+			CHGDATE,
+			CHGSEVER,
+			CHGLIST,
+			DTCTUSERID,
+			KJZMUSERID,
+			BLUSER,
+			BLINFO,
+			INSTANCEID,
+			FLOWID,
+			ISDEL,
+			CREATETIME,
+			CREATORS,
+			LASTMODTIME,
+			LASTMODUSER,
+			PRODIS,
+			CLRESULT,
+			CHAGEINFO,
+			ISARCHCHANGE,
+			SYSADMINID,
+			ISMONICHANGE,
+			FJHTCNOF,
+			UPDATEMAN,
+			REVIEWMAN,
+			OUTSOURCENUM,
+			TERMINAL,
+			HOLDINGTIME,
+			BEGINTIME,
+			ISTIMEUP,
+			ISPACKGE,
+			REASON,
+			ISFUNCTIONAL,
+			CHECKRESULT,
+			CHECKLIST,
+			INVENTORY,
+			ISTOPWD,
+			PWDUSEENDTIME,
+			USESTARTTIME,
+			PWDNOTE,
+			USEHOUR,
+			ISREPAIR,
+			ISYFCHANGE,
+			ISCHANGEBACK,
+			ISCHANGECAUSE,
+			CHANGENAME,
+			TCCONTENT,
+			CYGJFUNCTION,
+			SYSTEMWORKED,
+			PROCESS,
+			NETWORK1,
+			JOURNAL,
+			AUTOTASK,
+			PORT,
+			DATABASELINK,
+			SERVERSTATE,
+			BATCHPROCESSING,
+			RAMFRESHEN,
+			ISSDSET,
+			ZPURL,
+			JXURL,
+			ISTEMPORARYCHANGE,
+			CHANGELEVEL,
+			CHANGESTATUS,
+			TEMPORARYREASON,
+			ISDATAUPDATE
+        </sql>
+        <sql id="sql_select_condition">
+            <trim prefix="WHERE" suffixOverrides="AND">
+                <if test="bugissucess != null  and bugissucess != '' " > BUGISSUCESS = #{bugissucess} AND </if>
+				<if test="isddldata != null  and isddldata != '' " > ISDDLDATA = #{isddldata} AND </if>
+				<if test="id != null " > ID = #{id} AND </if>
+				<if test="applyno != null  and applyno != '' " > APPLYNO = #{applyno} AND </if>
+				<if test="applytype != null  and applytype != '' " > APPLYTYPE = #{applytype} AND </if>
+				<if test="userid != null  and userid != '' " > USERID = #{userid} AND </if>
+				<if test="timeapply != null " > TIMEAPPLY = #{timeapply} AND </if>
+				<if test="deptno != null  and deptno != '' " > DEPTNO = #{deptno} AND </if>
+				<if test="sysno != null  and sysno != '' " > SYSNO = #{sysno} AND </if>
+				<if test="expect != null " > EXPECT = #{expect} AND </if>
+				<if test="emeruserid != null  and emeruserid != '' " > EMERUSERID = #{emeruserid} AND </if>
+				<if test="testuserid != null  and testuserid != '' " > TESTUSERID = #{testuserid} AND </if>
+				<if test="productype != null  and productype != '' " > PRODUCTYPE = #{productype} AND </if>
+				<if test="network != null  and network != '' " > NETWORK = #{network} AND </if>
+				<if test="region != null  and region != '' " > REGION = #{region} AND </if>
+				<if test="operagrade != null  and operagrade != '' " > OPERAGRADE = #{operagrade} AND </if>
+				<if test="success != null  and success != '' " > SUCCESS = #{success} AND </if>
+				<if test="exectime != null  and exectime != '' " > EXECTIME = #{exectime} AND </if>
+				<if test="backtime != null  and backtime != '' " > BACKTIME = #{backtime} AND </if>
+				<if test="score != null " > SCORE = #{score} AND </if>
+				<if test="risklevel != null  and risklevel != '' " > RISKLEVEL = #{risklevel} AND </if>
+				<if test="step != null  and step != '' " > STEP = #{step} AND </if>
+				<if test="backscheme != null  and backscheme != '' " > BACKSCHEME = #{backscheme} AND </if>
+				<if test="remark != null  and remark != '' " > REMARK = #{remark} AND </if>
+				<if test="chgdate != null " > CHGDATE = #{chgdate} AND </if>
+				<if test="chgsever != null  and chgsever != '' " > CHGSEVER = #{chgsever} AND </if>
+				<if test="chglist != null  and chglist != '' " > CHGLIST = #{chglist} AND </if>
+				<if test="dtctuserid != null  and dtctuserid != '' " > DTCTUSERID = #{dtctuserid} AND </if>
+				<if test="kjzmuserid != null  and kjzmuserid != '' " > KJZMUSERID = #{kjzmuserid} AND </if>
+				<if test="bluser != null  and bluser != '' " > BLUSER = #{bluser} AND </if>
+				<if test="blinfo != null  and blinfo != '' " > BLINFO = #{blinfo} AND </if>
+				<if test="instanceid != null  and instanceid != '' " > INSTANCEID = #{instanceid} AND </if>
+				<if test="flowid != null  and flowid != '' " > FLOWID = #{flowid} AND </if>
+				<if test="isdel != null " > ISDEL = #{isdel} AND </if>
+				<if test="createtime != null " > CREATETIME = #{createtime} AND </if>
+				<if test="creators != null  and creators != '' " > CREATORS = #{creators} AND </if>
+				<if test="lastmodtime != null " > LASTMODTIME = #{lastmodtime} AND </if>
+				<if test="lastmoduser != null  and lastmoduser != '' " > LASTMODUSER = #{lastmoduser} AND </if>
+				<if test="prodis != null  and prodis != '' " > PRODIS = #{prodis} AND </if>
+				<if test="clresult != null  and clresult != '' " > CLRESULT = #{clresult} AND </if>
+				<if test="chageinfo != null  and chageinfo != '' " > CHAGEINFO = #{chageinfo} AND </if>
+				<if test="isarchchange != null  and isarchchange != '' " > ISARCHCHANGE = #{isarchchange} AND </if>
+				<if test="sysadminid != null  and sysadminid != '' " > SYSADMINID = #{sysadminid} AND </if>
+				<if test="ismonichange != null  and ismonichange != '' " > ISMONICHANGE = #{ismonichange} AND </if>
+				<if test="fjhtcnof != null  and fjhtcnof != '' " > FJHTCNOF = #{fjhtcnof} AND </if>
+				<if test="updateman != null  and updateman != '' " > UPDATEMAN = #{updateman} AND </if>
+				<if test="reviewman != null  and reviewman != '' " > REVIEWMAN = #{reviewman} AND </if>
+				<if test="outsourcenum != null  and outsourcenum != '' " > OUTSOURCENUM = #{outsourcenum} AND </if>
+				<if test="terminal != null  and terminal != '' " > TERMINAL = #{terminal} AND </if>
+				<if test="holdingtime != null  and holdingtime != '' " > HOLDINGTIME = #{holdingtime} AND </if>
+				<if test="begintime != null  and begintime != '' " > BEGINTIME = #{begintime} AND </if>
+				<if test="istimeup != null  and istimeup != '' " > ISTIMEUP = #{istimeup} AND </if>
+				<if test="ispackge != null  and ispackge != '' " > ISPACKGE = #{ispackge} AND </if>
+				<if test="reason != null  and reason != '' " > REASON = #{reason} AND </if>
+				<if test="isfunctional != null  and isfunctional != '' " > ISFUNCTIONAL = #{isfunctional} AND </if>
+				<if test="checkresult != null  and checkresult != '' " > CHECKRESULT = #{checkresult} AND </if>
+				<if test="checklist != null  and checklist != '' " > CHECKLIST = #{checklist} AND </if>
+				<if test="inventory != null  and inventory != '' " > INVENTORY = #{inventory} AND </if>
+				<if test="istopwd != null  and istopwd != '' " > ISTOPWD = #{istopwd} AND </if>
+				<if test="pwduseendtime != null " > PWDUSEENDTIME = #{pwduseendtime} AND </if>
+				<if test="usestarttime != null " > USESTARTTIME = #{usestarttime} AND </if>
+				<if test="pwdnote != null  and pwdnote != '' " > PWDNOTE = #{pwdnote} AND </if>
+				<if test="usehour != null  and usehour != '' " > USEHOUR = #{usehour} AND </if>
+				<if test="isrepair != null  and isrepair != '' " > ISREPAIR = #{isrepair} AND </if>
+				<if test="isyfchange != null  and isyfchange != '' " > ISYFCHANGE = #{isyfchange} AND </if>
+				<if test="ischangeback != null  and ischangeback != '' " > ISCHANGEBACK = #{ischangeback} AND </if>
+				<if test="ischangecause != null  and ischangecause != '' " > ISCHANGECAUSE = #{ischangecause} AND </if>
+				<if test="changename != null  and changename != '' " > CHANGENAME = #{changename} AND </if>
+				<if test="tccontent != null  and tccontent != '' " > TCCONTENT = #{tccontent} AND </if>
+				<if test="cygjfunction != null  and cygjfunction != '' " > CYGJFUNCTION = #{cygjfunction} AND </if>
+				<if test="systemworked != null  and systemworked != '' " > SYSTEMWORKED = #{systemworked} AND </if>
+				<if test="process != null  and process != '' " > PROCESS = #{process} AND </if>
+				<if test="network1 != null  and network1 != '' " > NETWORK1 = #{network1} AND </if>
+				<if test="journal != null  and journal != '' " > JOURNAL = #{journal} AND </if>
+				<if test="autotask != null  and autotask != '' " > AUTOTASK = #{autotask} AND </if>
+				<if test="port != null  and port != '' " > PORT = #{port} AND </if>
+				<if test="databaselink != null  and databaselink != '' " > DATABASELINK = #{databaselink} AND </if>
+				<if test="serverstate != null  and serverstate != '' " > SERVERSTATE = #{serverstate} AND </if>
+				<if test="batchprocessing != null  and batchprocessing != '' " > BATCHPROCESSING = #{batchprocessing} AND </if>
+				<if test="ramfreshen != null  and ramfreshen != '' " > RAMFRESHEN = #{ramfreshen} AND </if>
+				<if test="issdset != null  and issdset != '' " > ISSDSET = #{issdset} AND </if>
+				<if test="zpurl != null  and zpurl != '' " > ZPURL = #{zpurl} AND </if>
+				<if test="jxurl != null  and jxurl != '' " > JXURL = #{jxurl} AND </if>
+				<if test="istemporarychange != null  and istemporarychange != '' " > ISTEMPORARYCHANGE = #{istemporarychange} AND </if>
+				<if test="changelevel != null  and changelevel != '' " > CHANGELEVEL = #{changelevel} AND </if>
+				<if test="changestatus != null  and changestatus != '' " > CHANGESTATUS = #{changestatus} AND </if>
+				<if test="temporaryreason != null  and temporaryreason != '' " > TEMPORARYREASON = #{temporaryreason} AND </if>
+				<if test="isdataupdate != null  and isdataupdate != '' " > ISDATAUPDATE = #{isdataupdate} AND </if>
+				
+            </trim>
+        </sql>
+    	<!-- 查询分页  2021-11-01 k6991  -->
+        <select id="queryPagerList" parameterType="map" resultMap="PPMPRODUCTION_ALL">
+        	SELECT
+            <include refid="sql_flied_all" />
+            FROM PPM_PRODUCTION
+            <include refid="sql_select_condition" />
+        </select>
+
+        <!-- 新增  2021-11-01 k6991  -->
+        <insert id="addPojo" parameterType="ppmProduction">
+    		INSERT INTO PPM_PRODUCTION (
+    		<trim suffixOverrides=",">
+    		 <if test="bugissucess != null  and bugissucess != '' " > BUGISSUCESS , </if>
+				<if test="isddldata != null  and isddldata != '' " > ISDDLDATA , </if>
+				<if test="id != null " > ID , </if>
+				<if test="applyno != null  and applyno != '' " > APPLYNO , </if>
+				<if test="applytype != null  and applytype != '' " > APPLYTYPE , </if>
+				<if test="userid != null  and userid != '' " > USERID , </if>
+				<if test="timeapply != null " > TIMEAPPLY , </if>
+				<if test="deptno != null  and deptno != '' " > DEPTNO , </if>
+				<if test="sysno != null  and sysno != '' " > SYSNO , </if>
+				<if test="expect != null " > EXPECT , </if>
+				<if test="emeruserid != null  and emeruserid != '' " > EMERUSERID , </if>
+				<if test="testuserid != null  and testuserid != '' " > TESTUSERID , </if>
+				<if test="productype != null  and productype != '' " > PRODUCTYPE , </if>
+				<if test="network != null  and network != '' " > NETWORK , </if>
+				<if test="region != null  and region != '' " > REGION , </if>
+				<if test="operagrade != null  and operagrade != '' " > OPERAGRADE , </if>
+				<if test="success != null  and success != '' " > SUCCESS , </if>
+				<if test="exectime != null  and exectime != '' " > EXECTIME , </if>
+				<if test="backtime != null  and backtime != '' " > BACKTIME , </if>
+				<if test="score != null " > SCORE , </if>
+				<if test="risklevel != null  and risklevel != '' " > RISKLEVEL , </if>
+				<if test="step != null  and step != '' " > STEP , </if>
+				<if test="backscheme != null  and backscheme != '' " > BACKSCHEME , </if>
+				<if test="remark != null  and remark != '' " > REMARK , </if>
+				<if test="chgdate != null " > CHGDATE , </if>
+				<if test="chgsever != null  and chgsever != '' " > CHGSEVER , </if>
+				<if test="chglist != null  and chglist != '' " > CHGLIST , </if>
+				<if test="dtctuserid != null  and dtctuserid != '' " > DTCTUSERID , </if>
+				<if test="kjzmuserid != null  and kjzmuserid != '' " > KJZMUSERID , </if>
+				<if test="bluser != null  and bluser != '' " > BLUSER , </if>
+				<if test="blinfo != null  and blinfo != '' " > BLINFO , </if>
+				<if test="instanceid != null  and instanceid != '' " > INSTANCEID , </if>
+				<if test="flowid != null  and flowid != '' " > FLOWID , </if>
+				<if test="isdel != null " > ISDEL , </if>
+				<if test="createtime != null " > CREATETIME , </if>
+				<if test="creators != null  and creators != '' " > CREATORS , </if>
+				<if test="lastmodtime != null " > LASTMODTIME , </if>
+				<if test="lastmoduser != null  and lastmoduser != '' " > LASTMODUSER , </if>
+				<if test="prodis != null  and prodis != '' " > PRODIS , </if>
+				<if test="clresult != null  and clresult != '' " > CLRESULT , </if>
+				<if test="chageinfo != null  and chageinfo != '' " > CHAGEINFO , </if>
+				<if test="isarchchange != null  and isarchchange != '' " > ISARCHCHANGE , </if>
+				<if test="sysadminid != null  and sysadminid != '' " > SYSADMINID , </if>
+				<if test="ismonichange != null  and ismonichange != '' " > ISMONICHANGE , </if>
+				<if test="fjhtcnof != null  and fjhtcnof != '' " > FJHTCNOF , </if>
+				<if test="updateman != null  and updateman != '' " > UPDATEMAN , </if>
+				<if test="reviewman != null  and reviewman != '' " > REVIEWMAN , </if>
+				<if test="outsourcenum != null  and outsourcenum != '' " > OUTSOURCENUM , </if>
+				<if test="terminal != null  and terminal != '' " > TERMINAL , </if>
+				<if test="holdingtime != null  and holdingtime != '' " > HOLDINGTIME , </if>
+				<if test="begintime != null  and begintime != '' " > BEGINTIME , </if>
+				<if test="istimeup != null  and istimeup != '' " > ISTIMEUP , </if>
+				<if test="ispackge != null  and ispackge != '' " > ISPACKGE , </if>
+				<if test="reason != null  and reason != '' " > REASON , </if>
+				<if test="isfunctional != null  and isfunctional != '' " > ISFUNCTIONAL , </if>
+				<if test="checkresult != null  and checkresult != '' " > CHECKRESULT , </if>
+				<if test="checklist != null  and checklist != '' " > CHECKLIST , </if>
+				<if test="inventory != null  and inventory != '' " > INVENTORY , </if>
+				<if test="istopwd != null  and istopwd != '' " > ISTOPWD , </if>
+				<if test="pwduseendtime != null " > PWDUSEENDTIME , </if>
+				<if test="usestarttime != null " > USESTARTTIME , </if>
+				<if test="pwdnote != null  and pwdnote != '' " > PWDNOTE , </if>
+				<if test="usehour != null  and usehour != '' " > USEHOUR , </if>
+				<if test="isrepair != null  and isrepair != '' " > ISREPAIR , </if>
+				<if test="isyfchange != null  and isyfchange != '' " > ISYFCHANGE , </if>
+				<if test="ischangeback != null  and ischangeback != '' " > ISCHANGEBACK , </if>
+				<if test="ischangecause != null  and ischangecause != '' " > ISCHANGECAUSE , </if>
+				<if test="changename != null  and changename != '' " > CHANGENAME , </if>
+				<if test="tccontent != null  and tccontent != '' " > TCCONTENT , </if>
+				<if test="cygjfunction != null  and cygjfunction != '' " > CYGJFUNCTION , </if>
+				<if test="systemworked != null  and systemworked != '' " > SYSTEMWORKED , </if>
+				<if test="process != null  and process != '' " > PROCESS , </if>
+				<if test="network1 != null  and network1 != '' " > NETWORK1 , </if>
+				<if test="journal != null  and journal != '' " > JOURNAL , </if>
+				<if test="autotask != null  and autotask != '' " > AUTOTASK , </if>
+				<if test="port != null  and port != '' " > PORT , </if>
+				<if test="databaselink != null  and databaselink != '' " > DATABASELINK , </if>
+				<if test="serverstate != null  and serverstate != '' " > SERVERSTATE , </if>
+				<if test="batchprocessing != null  and batchprocessing != '' " > BATCHPROCESSING , </if>
+				<if test="ramfreshen != null  and ramfreshen != '' " > RAMFRESHEN , </if>
+				<if test="issdset != null  and issdset != '' " > ISSDSET , </if>
+				<if test="zpurl != null  and zpurl != '' " > ZPURL , </if>
+				<if test="jxurl != null  and jxurl != '' " > JXURL , </if>
+				<if test="istemporarychange != null  and istemporarychange != '' " > ISTEMPORARYCHANGE , </if>
+				<if test="changelevel != null  and changelevel != '' " > CHANGELEVEL , </if>
+				<if test="changestatus != null  and changestatus != '' " > CHANGESTATUS , </if>
+				<if test="temporaryreason != null  and temporaryreason != '' " > TEMPORARYREASON , </if>
+				<if test="isdataupdate != null  and isdataupdate != '' " > ISDATAUPDATE , </if>
+				
+              </trim>
+    		)
+    		VALUES(
+    		<trim suffixOverrides=",">
+    		 <if test="bugissucess != null  and bugissucess != '' " > #{bugissucess} , </if>
+				<if test="isddldata != null  and isddldata != '' " > #{isddldata} , </if>
+				<if test="id != null " > #{id} , </if>
+				<if test="applyno != null  and applyno != '' " > #{applyno} , </if>
+				<if test="applytype != null  and applytype != '' " > #{applytype} , </if>
+				<if test="userid != null  and userid != '' " > #{userid} , </if>
+				<if test="timeapply != null " > #{timeapply} , </if>
+				<if test="deptno != null  and deptno != '' " > #{deptno} , </if>
+				<if test="sysno != null  and sysno != '' " > #{sysno} , </if>
+				<if test="expect != null " > #{expect} , </if>
+				<if test="emeruserid != null  and emeruserid != '' " > #{emeruserid} , </if>
+				<if test="testuserid != null  and testuserid != '' " > #{testuserid} , </if>
+				<if test="productype != null  and productype != '' " > #{productype} , </if>
+				<if test="network != null  and network != '' " > #{network} , </if>
+				<if test="region != null  and region != '' " > #{region} , </if>
+				<if test="operagrade != null  and operagrade != '' " > #{operagrade} , </if>
+				<if test="success != null  and success != '' " > #{success} , </if>
+				<if test="exectime != null  and exectime != '' " > #{exectime} , </if>
+				<if test="backtime != null  and backtime != '' " > #{backtime} , </if>
+				<if test="score != null " > #{score} , </if>
+				<if test="risklevel != null  and risklevel != '' " > #{risklevel} , </if>
+				<if test="step != null  and step != '' " > #{step} , </if>
+				<if test="backscheme != null  and backscheme != '' " > #{backscheme} , </if>
+				<if test="remark != null  and remark != '' " > #{remark} , </if>
+				<if test="chgdate != null " > #{chgdate} , </if>
+				<if test="chgsever != null  and chgsever != '' " > #{chgsever} , </if>
+				<if test="chglist != null  and chglist != '' " > #{chglist} , </if>
+				<if test="dtctuserid != null  and dtctuserid != '' " > #{dtctuserid} , </if>
+				<if test="kjzmuserid != null  and kjzmuserid != '' " > #{kjzmuserid} , </if>
+				<if test="bluser != null  and bluser != '' " > #{bluser} , </if>
+				<if test="blinfo != null  and blinfo != '' " > #{blinfo} , </if>
+				<if test="instanceid != null  and instanceid != '' " > #{instanceid} , </if>
+				<if test="flowid != null  and flowid != '' " > #{flowid} , </if>
+				<if test="isdel != null " > #{isdel} , </if>
+				<if test="createtime != null " > #{createtime} , </if>
+				<if test="creators != null  and creators != '' " > #{creators} , </if>
+				<if test="lastmodtime != null " > #{lastmodtime} , </if>
+				<if test="lastmoduser != null  and lastmoduser != '' " > #{lastmoduser} , </if>
+				<if test="prodis != null  and prodis != '' " > #{prodis} , </if>
+				<if test="clresult != null  and clresult != '' " > #{clresult} , </if>
+				<if test="chageinfo != null  and chageinfo != '' " > #{chageinfo} , </if>
+				<if test="isarchchange != null  and isarchchange != '' " > #{isarchchange} , </if>
+				<if test="sysadminid != null  and sysadminid != '' " > #{sysadminid} , </if>
+				<if test="ismonichange != null  and ismonichange != '' " > #{ismonichange} , </if>
+				<if test="fjhtcnof != null  and fjhtcnof != '' " > #{fjhtcnof} , </if>
+				<if test="updateman != null  and updateman != '' " > #{updateman} , </if>
+				<if test="reviewman != null  and reviewman != '' " > #{reviewman} , </if>
+				<if test="outsourcenum != null  and outsourcenum != '' " > #{outsourcenum} , </if>
+				<if test="terminal != null  and terminal != '' " > #{terminal} , </if>
+				<if test="holdingtime != null  and holdingtime != '' " > #{holdingtime} , </if>
+				<if test="begintime != null  and begintime != '' " > #{begintime} , </if>
+				<if test="istimeup != null  and istimeup != '' " > #{istimeup} , </if>
+				<if test="ispackge != null  and ispackge != '' " > #{ispackge} , </if>
+				<if test="reason != null  and reason != '' " > #{reason} , </if>
+				<if test="isfunctional != null  and isfunctional != '' " > #{isfunctional} , </if>
+				<if test="checkresult != null  and checkresult != '' " > #{checkresult} , </if>
+				<if test="checklist != null  and checklist != '' " > #{checklist} , </if>
+				<if test="inventory != null  and inventory != '' " > #{inventory} , </if>
+				<if test="istopwd != null  and istopwd != '' " > #{istopwd} , </if>
+				<if test="pwduseendtime != null " > #{pwduseendtime} , </if>
+				<if test="usestarttime != null " > #{usestarttime} , </if>
+				<if test="pwdnote != null  and pwdnote != '' " > #{pwdnote} , </if>
+				<if test="usehour != null  and usehour != '' " > #{usehour} , </if>
+				<if test="isrepair != null  and isrepair != '' " > #{isrepair} , </if>
+				<if test="isyfchange != null  and isyfchange != '' " > #{isyfchange} , </if>
+				<if test="ischangeback != null  and ischangeback != '' " > #{ischangeback} , </if>
+				<if test="ischangecause != null  and ischangecause != '' " > #{ischangecause} , </if>
+				<if test="changename != null  and changename != '' " > #{changename} , </if>
+				<if test="tccontent != null  and tccontent != '' " > #{tccontent} , </if>
+				<if test="cygjfunction != null  and cygjfunction != '' " > #{cygjfunction} , </if>
+				<if test="systemworked != null  and systemworked != '' " > #{systemworked} , </if>
+				<if test="process != null  and process != '' " > #{process} , </if>
+				<if test="network1 != null  and network1 != '' " > #{network1} , </if>
+				<if test="journal != null  and journal != '' " > #{journal} , </if>
+				<if test="autotask != null  and autotask != '' " > #{autotask} , </if>
+				<if test="port != null  and port != '' " > #{port} , </if>
+				<if test="databaselink != null  and databaselink != '' " > #{databaselink} , </if>
+				<if test="serverstate != null  and serverstate != '' " > #{serverstate} , </if>
+				<if test="batchprocessing != null  and batchprocessing != '' " > #{batchprocessing} , </if>
+				<if test="ramfreshen != null  and ramfreshen != '' " > #{ramfreshen} , </if>
+				<if test="issdset != null  and issdset != '' " > #{issdset} , </if>
+				<if test="zpurl != null  and zpurl != '' " > #{zpurl} , </if>
+				<if test="jxurl != null  and jxurl != '' " > #{jxurl} , </if>
+				<if test="istemporarychange != null  and istemporarychange != '' " > #{istemporarychange} , </if>
+				<if test="changelevel != null  and changelevel != '' " > #{changelevel} , </if>
+				<if test="changestatus != null  and changestatus != '' " > #{changestatus} , </if>
+				<if test="temporaryreason != null  and temporaryreason != '' " > #{temporaryreason} , </if>
+				<if test="isdataupdate != null  and isdataupdate != '' " > #{isdataupdate} , </if>
+				
+            </trim>
+    		)
+        </insert>
+
+        <!--通过id查询  k6991 2021-11-01 -->
+        <select id="queryDetail" parameterType="ppmProduction" resultMap="PPMPRODUCTION_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_PRODUCTION  WHERE BUGISSUCESS=#{bugissucess}
+        </select>
+
+         <!--查询集合  k6991 2021-11-01 -->
+        <select id="getList" parameterType="ppmProduction" resultMap="PPMPRODUCTION_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_PRODUCTION
+        	<include refid="sql_select_condition" />
+        </select>
+        <!-- update sql -->
+        <sql id="update_pojo_sql">
+        	<trim prefix="SET" suffixOverrides=",">
+        		<if test="bugissucess != null  and bugissucess != '' " > BUGISSUCESS=#{bugissucess} , </if>
+				<if test="isddldata != null  and isddldata != '' " > ISDDLDATA=#{isddldata} , </if>
+				<if test="id != null " > ID=#{id} , </if>
+				<if test="applyno != null  and applyno != '' " > APPLYNO=#{applyno} , </if>
+				<if test="applytype != null  and applytype != '' " > APPLYTYPE=#{applytype} , </if>
+				<if test="userid != null  and userid != '' " > USERID=#{userid} , </if>
+				<if test="timeapply != null " > TIMEAPPLY=#{timeapply} , </if>
+				<if test="deptno != null  and deptno != '' " > DEPTNO=#{deptno} , </if>
+				<if test="sysno != null  and sysno != '' " > SYSNO=#{sysno} , </if>
+				<if test="expect != null " > EXPECT=#{expect} , </if>
+				<if test="emeruserid != null  and emeruserid != '' " > EMERUSERID=#{emeruserid} , </if>
+				<if test="testuserid != null  and testuserid != '' " > TESTUSERID=#{testuserid} , </if>
+				<if test="productype != null  and productype != '' " > PRODUCTYPE=#{productype} , </if>
+				<if test="network != null  and network != '' " > NETWORK=#{network} , </if>
+				<if test="region != null  and region != '' " > REGION=#{region} , </if>
+				<if test="operagrade != null  and operagrade != '' " > OPERAGRADE=#{operagrade} , </if>
+				<if test="success != null  and success != '' " > SUCCESS=#{success} , </if>
+				<if test="exectime != null  and exectime != '' " > EXECTIME=#{exectime} , </if>
+				<if test="backtime != null  and backtime != '' " > BACKTIME=#{backtime} , </if>
+				<if test="score != null " > SCORE=#{score} , </if>
+				<if test="risklevel != null  and risklevel != '' " > RISKLEVEL=#{risklevel} , </if>
+				<if test="step != null  and step != '' " > STEP=#{step} , </if>
+				<if test="backscheme != null  and backscheme != '' " > BACKSCHEME=#{backscheme} , </if>
+				<if test="remark != null  and remark != '' " > REMARK=#{remark} , </if>
+				<if test="chgdate != null " > CHGDATE=#{chgdate} , </if>
+				<if test="chgsever != null  and chgsever != '' " > CHGSEVER=#{chgsever} , </if>
+				<if test="chglist != null  and chglist != '' " > CHGLIST=#{chglist} , </if>
+				<if test="dtctuserid != null  and dtctuserid != '' " > DTCTUSERID=#{dtctuserid} , </if>
+				<if test="kjzmuserid != null  and kjzmuserid != '' " > KJZMUSERID=#{kjzmuserid} , </if>
+				<if test="bluser != null  and bluser != '' " > BLUSER=#{bluser} , </if>
+				<if test="blinfo != null  and blinfo != '' " > BLINFO=#{blinfo} , </if>
+				<if test="instanceid != null  and instanceid != '' " > INSTANCEID=#{instanceid} , </if>
+				<if test="flowid != null  and flowid != '' " > FLOWID=#{flowid} , </if>
+				<if test="isdel != null " > ISDEL=#{isdel} , </if>
+				<if test="createtime != null " > CREATETIME=#{createtime} , </if>
+				<if test="creators != null  and creators != '' " > CREATORS=#{creators} , </if>
+				<if test="lastmodtime != null " > LASTMODTIME=#{lastmodtime} , </if>
+				<if test="lastmoduser != null  and lastmoduser != '' " > LASTMODUSER=#{lastmoduser} , </if>
+				<if test="prodis != null  and prodis != '' " > PRODIS=#{prodis} , </if>
+				<if test="clresult != null  and clresult != '' " > CLRESULT=#{clresult} , </if>
+				<if test="chageinfo != null  and chageinfo != '' " > CHAGEINFO=#{chageinfo} , </if>
+				<if test="isarchchange != null  and isarchchange != '' " > ISARCHCHANGE=#{isarchchange} , </if>
+				<if test="sysadminid != null  and sysadminid != '' " > SYSADMINID=#{sysadminid} , </if>
+				<if test="ismonichange != null  and ismonichange != '' " > ISMONICHANGE=#{ismonichange} , </if>
+				<if test="fjhtcnof != null  and fjhtcnof != '' " > FJHTCNOF=#{fjhtcnof} , </if>
+				<if test="updateman != null  and updateman != '' " > UPDATEMAN=#{updateman} , </if>
+				<if test="reviewman != null  and reviewman != '' " > REVIEWMAN=#{reviewman} , </if>
+				<if test="outsourcenum != null  and outsourcenum != '' " > OUTSOURCENUM=#{outsourcenum} , </if>
+				<if test="terminal != null  and terminal != '' " > TERMINAL=#{terminal} , </if>
+				<if test="holdingtime != null  and holdingtime != '' " > HOLDINGTIME=#{holdingtime} , </if>
+				<if test="begintime != null  and begintime != '' " > BEGINTIME=#{begintime} , </if>
+				<if test="istimeup != null  and istimeup != '' " > ISTIMEUP=#{istimeup} , </if>
+				<if test="ispackge != null  and ispackge != '' " > ISPACKGE=#{ispackge} , </if>
+				<if test="reason != null  and reason != '' " > REASON=#{reason} , </if>
+				<if test="isfunctional != null  and isfunctional != '' " > ISFUNCTIONAL=#{isfunctional} , </if>
+				<if test="checkresult != null  and checkresult != '' " > CHECKRESULT=#{checkresult} , </if>
+				<if test="checklist != null  and checklist != '' " > CHECKLIST=#{checklist} , </if>
+				<if test="inventory != null  and inventory != '' " > INVENTORY=#{inventory} , </if>
+				<if test="istopwd != null  and istopwd != '' " > ISTOPWD=#{istopwd} , </if>
+				<if test="pwduseendtime != null " > PWDUSEENDTIME=#{pwduseendtime} , </if>
+				<if test="usestarttime != null " > USESTARTTIME=#{usestarttime} , </if>
+				<if test="pwdnote != null  and pwdnote != '' " > PWDNOTE=#{pwdnote} , </if>
+				<if test="usehour != null  and usehour != '' " > USEHOUR=#{usehour} , </if>
+				<if test="isrepair != null  and isrepair != '' " > ISREPAIR=#{isrepair} , </if>
+				<if test="isyfchange != null  and isyfchange != '' " > ISYFCHANGE=#{isyfchange} , </if>
+				<if test="ischangeback != null  and ischangeback != '' " > ISCHANGEBACK=#{ischangeback} , </if>
+				<if test="ischangecause != null  and ischangecause != '' " > ISCHANGECAUSE=#{ischangecause} , </if>
+				<if test="changename != null  and changename != '' " > CHANGENAME=#{changename} , </if>
+				<if test="tccontent != null  and tccontent != '' " > TCCONTENT=#{tccontent} , </if>
+				<if test="cygjfunction != null  and cygjfunction != '' " > CYGJFUNCTION=#{cygjfunction} , </if>
+				<if test="systemworked != null  and systemworked != '' " > SYSTEMWORKED=#{systemworked} , </if>
+				<if test="process != null  and process != '' " > PROCESS=#{process} , </if>
+				<if test="network1 != null  and network1 != '' " > NETWORK1=#{network1} , </if>
+				<if test="journal != null  and journal != '' " > JOURNAL=#{journal} , </if>
+				<if test="autotask != null  and autotask != '' " > AUTOTASK=#{autotask} , </if>
+				<if test="port != null  and port != '' " > PORT=#{port} , </if>
+				<if test="databaselink != null  and databaselink != '' " > DATABASELINK=#{databaselink} , </if>
+				<if test="serverstate != null  and serverstate != '' " > SERVERSTATE=#{serverstate} , </if>
+				<if test="batchprocessing != null  and batchprocessing != '' " > BATCHPROCESSING=#{batchprocessing} , </if>
+				<if test="ramfreshen != null  and ramfreshen != '' " > RAMFRESHEN=#{ramfreshen} , </if>
+				<if test="issdset != null  and issdset != '' " > ISSDSET=#{issdset} , </if>
+				<if test="zpurl != null  and zpurl != '' " > ZPURL=#{zpurl} , </if>
+				<if test="jxurl != null  and jxurl != '' " > JXURL=#{jxurl} , </if>
+				<if test="istemporarychange != null  and istemporarychange != '' " > ISTEMPORARYCHANGE=#{istemporarychange} , </if>
+				<if test="changelevel != null  and changelevel != '' " > CHANGELEVEL=#{changelevel} , </if>
+				<if test="changestatus != null  and changestatus != '' " > CHANGESTATUS=#{changestatus} , </if>
+				<if test="temporaryreason != null  and temporaryreason != '' " > TEMPORARYREASON=#{temporaryreason} , </if>
+				<if test="isdataupdate != null  and isdataupdate != '' " > ISDATAUPDATE=#{isdataupdate} , </if>
+				
+            </trim>
+        </sql>
+
+        <!--通过id编辑 k6991 2021-11-01 -->
+    	<update id="updatePojo" parameterType="ppmProduction">
+        	UPDATE
+        	PPM_PRODUCTION
+        	<include refid="update_pojo_sql" />
+        	WHERE BUGISSUCESS=#{bugissucess}
+        </update>
+
+        <!--通过id批量删除  k6991 2021-11-01 -->
+        <delete id="deleteById" parameterType="ppmProduction">
+        	DELETE
+        	FROM
+        	PPM_PRODUCTION
+        	WHERE BUGISSUCESS = #{bugissucess}
+        </delete>
+
+</mapper>

@@ -1,0 +1,325 @@
+<!-- 模板管理 -->
+<template>
+    <div class="web-container">
+        <div class="back-bread">
+            <el-button size="small" icon="el-icon-arrow-left" @click="goBack">返回</el-button>
+        </div>
+        <div class="web-head">
+            <el-form inline>
+                <div class="web-head-content xkg-borderradius-4px">
+                    <div class="web-head-left">
+                        <el-row>
+                            <el-col :span="6">
+                                <el-form-item>
+                                    <el-input v-model="paramsForm.name">
+                                        <template slot="prefix">考核项：</template>
+                                    </el-input>
+                                </el-form-item>
+                            </el-col>
+                        </el-row>
+                    </div>
+                    <div class="web-head-right">
+                        <div class="web-head-right-clean" @click="resetForm">
+                            <clean-btn size="small" :forms="this.paramsForm" />
+                        </div>
+                        <div class="web-head-right-search">
+                            <buttonOrange buttonName="搜 索" size="small" :fns="submitBtn"></buttonOrange>
+                        </div>
+                    </div>
+                </div>
+            </el-form>
+        </div>
+        <div class="web-body xkg-borderradius-4px">
+            <div class="web-body-operation">
+                <button-orange size="small" buttonName="通过审批" :fns="batch"></button-orange>
+            </div>
+            <div class="web-body-table">
+                <el-table :data="tableData" height="450" @selection-change="handleSelectionChange">
+                    <el-table-column type="selection" width="50"></el-table-column>
+                    <el-table-column type="index" label="序号" width="55"></el-table-column>
+                    <el-table-column label="考核项" width="200" prop="name" :show-overflow-tooltip="true"></el-table-column>
+                    <el-table-column label="备注" width="200" prop="remark" :show-overflow-tooltip="true"></el-table-column>
+                    <el-table-column label="基准分" width="100" prop="basepoint"></el-table-column>
+                    <el-table-column label="指标使用部门" width="300" :show-overflow-tooltip="true">
+                        <template slot-scope="scope">
+                            {{scope.row.depnamelist.join(',').replace(/总行金融科技部-/g, '')}}
+                        </template>
+                    </el-table-column>
+                   <el-table-column label="状态" width="110" prop="status" align="center">
+                        <template slot-scope="scope">
+                            <div>{{getStatusName(scope.row.status)}}</div>
+                        </template>
+                    </el-table-column>
+                    <el-table-column label="操作" width="150" fixed="right" align="center">
+                        <template slot-scope="scope">
+                            <div>
+                                <el-button class="xkg-marginleft-10px" size="mini" @click="indicatorItemsJump(scope.row)">审批</el-button>
+                            </div>
+                        </template>
+                    </el-table-column>
+                    <el-table-column></el-table-column>
+                </el-table>
+                <div class="pager-zj">
+                    <pager :fns="getPager" :total="totalNumber" :pageSize="size" v-model="$attrs" ref="pager" />
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+<script>
+    import { mapGetters } from "vuex";
+    import common from "@/api/common";
+    import cleanBtn from "@/components/CleanBtn";
+    import buttonOrange from '@/components/eleButton/buttonOrange';
+    import { getDicEntry } from "@/api/eosDictEntry";
+    import { queryGgSpPagerList, spCommit } from "@/api/zzkhApi/ppmDepkpiDepCheck";
+    import pager from "@/components/Pager";
+    export default {
+        name: 'ggkhzd',
+        components: { pager, cleanBtn, buttonOrange },
+        data() {
+            return {
+                size: 10, // 初始值 默认：50
+                index: 1, // 初始值 默认：1
+                totalNumber: 0, // 总数
+                tableData: [],
+                sign: null,
+                tyear: null,
+                state_options: [],
+                paramsForm: {
+                    name:  null
+                }
+            }
+        },
+        props:{},
+        created(){
+            this.sign = this.$route.query.sign;
+            this.tyear = this.$route.query.tyear;
+        },
+        computed: {
+            ...mapGetters([
+                'userId'
+            ])
+        },
+        mounted() {
+            this.getDic();
+            this.submitBtn();
+        },
+        methods: {
+            //返回前一页
+            goBack(){
+                this.$router.push({path:"/myDepKpiDb"});
+            },
+
+            // 查询业务字典
+            getDic() {
+                getDicEntry({ dicttypeid: "DEP_KPI_MAIN_STATUS" }).then(res => {
+                    if (res.data.status !== 200) {
+                        this.$alert(res.data.message, { type: "error" });
+                        return false;
+                    }
+                    let data = res.data.results;
+                  
+                    //状态
+                    this.state_options = data.filter(item => {
+                        if (item.dicttypeid == "DEP_KPI_MAIN_STATUS") {
+                            item.dictid = Number(item.dictid);
+                            return item
+                        }
+                    });
+                    return data;
+                });
+            },
+
+            // 查询
+            submitBtn: function () {
+                let params = {};
+                params.size = this.size;
+                params.index = this.index;
+                params.name = this.paramsForm.name;
+                this.seaTableData(params);
+            },
+
+            // 查询列表数据
+            seaTableData(val) {
+                val.sign = this.sign;
+                val.tyear = this.tyear;
+                const loading = common.loading(this);
+                let data = common.paramsFormat(val);
+                queryGgSpPagerList(data).then(res => {
+                    loading.close();
+                    console.log('查询列表数据', res.data)
+                    if (res.data.status == 200) {
+                        this.totalNumber = res.data.total;
+                        this.tableData = res.data.results;
+                    }
+                }).catch(error => {
+                    loading.close();
+                    this.$message.error(error)
+                })
+            },
+
+            // 分页
+            getPager: function (size, index) {
+                let params = {};
+                params.size = size;
+                params.index = index;
+                this.size = size;
+                this.index = index;
+                this.seaTableData(params);
+            },
+
+            getStatusName(id){
+                var item = this.state_options.find(item => item.dictid == Number(id));
+                if(item){
+                    return item.dictname;
+                }else{
+                    return "-";
+                }
+            },
+
+            // 重置
+            resetForm() {
+            },
+
+             // 指标项配置页面跳转
+            indicatorItemsJump(val) {
+                this.$router.push({ 
+                    path: '/ggkhspmx', 
+                    query: {
+                        targetid: val.targetid, 
+                        basepoint: val.basepoint,
+                        evaltype: val.evaltype,
+                        maxpoint: val.maxpoint,
+                        minpoint: val.minpoint,
+                        detailidlist: JSON.stringify(val.idlist), 
+                        sign: this.sign, 
+                        name: val.name, 
+                        tyear: this.tyear
+                    }
+                });
+            },
+
+            // 表格选中变化
+            handleSelectionChange(val) {
+                console.log("分页表格选中", val)
+                this.selectRow = val;
+            },
+
+            batch(){
+                this.$confirm('确认批量审核吗?', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
+                    var allargs = [];
+                    if(this.selectRow.length == 0){
+                        loading.close();
+                        this.$message.error('未选择数据');
+                        return;
+                    }
+                    this.selectRow.forEach(item => {
+                        allargs.push({
+                            detailidstring:  item.targetid + "_" + item.basepoint + "_" + this.tyear,
+                            idlist: item.idlist
+                        });
+                    })
+                    var obj = {
+                        'allargs': JSON.stringify(allargs)
+                    }
+                    const loading = common.loading(this);
+                    let data = common.paramsFormat(obj);
+                    spCommit(data).then(res => {
+                        loading.close();
+                        if (res.data.status == 200) {
+                            this.$message.success('审核成功');
+                            this.submitBtn();
+                        } else {
+                            this.$message.error(res.data.message);
+                        }
+                    }).catch(error => {
+                        loading.close();
+                        this.$message.error(error)
+                    })
+                }).catch(error => { })
+            }
+        },
+    }
+</script>
+<style scoped>
+    .web-container {
+        padding: 25px;
+    }
+
+    .web-head-content {
+        background: #FFFFFF;
+        padding: 15px;
+        margin-bottom: 15px;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+        -webkit-justify-content: space-between;
+        justify-content: space-between;
+    }
+
+    .back-bread {
+        margin-bottom: 15px;
+    }
+
+    .back-bread .el-breadcrumb {
+        display: inline-block;
+        vertical-align: middle;
+        margin-left: 10px;
+    }
+
+    .web-head-left {
+        flex: 1;
+    }
+    .web-head-right {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        padding-right: 15px;
+        width: 145px;
+        display: flex;
+    }
+
+    .web-head-right-clean {
+        flex: 1;
+    }
+
+    .web-head-right-search {
+        padding-left: 10px;
+        flex: 1;
+    }
+
+    .web-body {
+        padding: 15px;
+        background: #FFFFFF;
+    }
+
+    .web-body-operation {
+        float: right;
+    }
+
+    .pager-zj {
+        text-align: center;
+    }
+</style>
+
+<style>
+    .web-head-left .el-input--prefix .el-input__inner {
+        padding-left: 50px;
+    }
+
+    .web-head-left-threeword .el-input--prefix .el-input__inner {
+        padding-left: 85px;
+    }
+
+    .web-head-left .el-form-item {
+        margin-bottom: 0;
+    }
+</style>

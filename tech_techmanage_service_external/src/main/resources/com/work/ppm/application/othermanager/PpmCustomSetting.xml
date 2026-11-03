@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k6991 2020-12-23 -->
+<mapper namespace="com.work.ppm.application.model.othermanager.PpmCustomSetting">
+	 <resultMap type="ppmCustomSetting" id="PPMCUSTOMSETTING_ALL">
+        <result property="id" column="ID" />
+		<result property="userid" column="USERID" />
+		<result property="name" column="NAME" />
+		<result property="flowid" column="FLOWID" />
+		<result property="isyj" column="ISYJ" />
+		<result property="isdx" column="ISDX" />
+		<result property="iswx" column="ISWX" />
+		
+     </resultMap>
+
+     <!-- 所有字段名称 -->
+        <sql id="sql_flied_all">
+        	ID,
+			USERID,
+			NAME,
+			FLOWID,
+			ISYJ,
+			ISDX,
+			ISWX
+        </sql>
+        <sql id="sql_select_condition">
+            <trim prefix="WHERE" suffixOverrides="AND">
+                <if test="id != null " > ID = #{id} AND </if>
+				<if test="userid != null  and userid != '' " > USERID = #{userid} AND </if>
+				<if test="name != null  and name != '' " > NAME = #{name} AND </if>
+				<if test="flowid != null  and flowid != '' " > FLOWID = #{flowid} AND </if>
+				<if test="isyj != null  and isyj != '' " > ISYJ = #{isyj} AND </if>
+				<if test="isdx != null  and isdx != '' " > ISDX = #{isdx} AND </if>
+				<if test="iswx != null  and iswx != '' " > ISWX = #{iswx} AND </if>
+            </trim>
+        </sql>
+
+        <!--通过id查询  k6991 2020-12-23 -->
+        <select id="queryDetail" parameterType="ppmCustomSetting" resultMap="PPMCUSTOMSETTING_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_CUSTOM_SETTING
+			<include refid="sql_select_condition" />
+        </select>
+</mapper>

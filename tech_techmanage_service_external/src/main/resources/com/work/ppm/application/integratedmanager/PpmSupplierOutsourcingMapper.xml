@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.work.ppm.application.services.integratedmanager.IPpmSupplierOutsourcingMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.work.ppm.application.model.integratedmanager.PpmSupplierOutsourcing">
+        <id column="ID" jdbcType="NUMERIC" property="id" />
+        <result column="JOB_ID" jdbcType="VARCHAR" property="jobId" />
+        <result column="USER_NAME" jdbcType="VARCHAR" property="userName" />
+        <result column="EVALUATION_LEVEL" jdbcType="VARCHAR" property="evaluationLevel" />
+        <result column="PRICE" jdbcType="NUMERIC" property="price" />
+        <result column="WORK_TIME" jdbcType="VARCHAR" property="workTime" />
+        <result column="WORK_BEGIN_DATE" jdbcType="TIMESTAMP" property="workBeginDate" />
+        <result column="WORK_END_DATE" jdbcType="TIMESTAMP" property="workEndDate" />
+        <result column="RELATE_STATE" jdbcType="VARCHAR" property="relateState" />
+        <result column="RELATE_ID" jdbcType="VARCHAR" property="relateId" />
+        <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate" />
+        <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        ID, JOB_ID, USER_NAME, EVALUATION_LEVEL, PRICE, WORK_TIME, WORK_BEGIN_DATE, WORK_END_DATE, RELATE_STATE, RELATE_ID, CREATE_DATE, UPDATE_DATE
+    </sql>
+
+    <!-- 查询考勤工作量明细 -->
+    <select id="selectWorkload" parameterType="java.util.HashMap"
+            resultType="com.work.ppm.application.model.integratedmanager.ext.PpmWorkloadKqInfoView">
+        SELECT
+        poi.OUTSOURCNAME,
+        psc.CONTRACT_NAME,
+        pso.JOB_ID,
+        pso.USER_NAME,
+        pso.EVALUATION_LEVEL,
+        pso.PRICE,
+        pso.WORK_TIME,
+        pso.WORK_BEGIN_DATE,
+        pso.WORK_END_DATE,
+        psc.CONTRACT_NO,
+        <!-- 交集开始时间：startDate为空时取WORK_BEGIN_DATE -->
+        CASE
+        WHEN #{startDate, jdbcType=TIMESTAMP} IS NULL THEN pso.WORK_BEGIN_DATE
+        ELSE GREATEST(pso.WORK_BEGIN_DATE, #{startDate, jdbcType=TIMESTAMP})
+        END AS INTERSECT_START,
+        <!-- 交集结束时间：endDate为空时取WORK_END_DATE(为空则SYSDATE) -->
+        CASE
+        WHEN #{endDate, jdbcType=TIMESTAMP} IS NULL THEN NVL(pso.WORK_END_DATE, SYSDATE)
+        ELSE LEAST(NVL(pso.WORK_END_DATE, SYSDATE), #{endDate, jdbcType=TIMESTAMP})
+        END AS INTERSECT_END
+        FROM
+        PPM_SUPPLIER_OUTSOURCING pso
+        INNER JOIN PPM_SUPPLIER_CONTRACT psc ON (pso.RELATE_ID = psc.ID)
+        LEFT JOIN PPM_OUTSOURCING_INFO poi ON (psc.SUPPLIER_ID = poi.ORGCODE)
+        LEFT JOIN PPM_OUTSOURCING_BASIC pob ON (pso.JOB_ID = pob.JOB_ID)
+
+        <trim prefix="WHERE" prefixOverrides="AND |OR ">
+            <if test="userName != null and userName != ''">
+                AND pso.USER_NAME = #{userName}
+            </if>
+
+            <if test="deptValue != null and deptValue != ''">
+                AND pob.DEPT_ID = #{deptValue}
+            </if>
+
+            <if test="pmId != null and pmId != ''">
+                AND pob.PERSON_IN_CHARGE = #{pmId}
+            </if>
+
+            <if test="supplierId != null and supplierId != ''">
+                AND psc.SUPPLIER_ID = #{supplierId}
+            </if>
+
+            <if test="startDate != null and endDate != null">
+                AND pso.WORK_BEGIN_DATE &lt;= #{endDate, jdbcType=TIMESTAMP}
+                AND (pso.WORK_END_DATE >= #{startDate, jdbcType=TIMESTAMP} OR pso.WORK_END_DATE IS NULL)
+            </if>
+        </trim>
+
+        ORDER BY psc.CREATE_DATE DESC, pso.CREATE_DATE DESC
+    </select>
+
+</mapper>

@@ -1,0 +1,434 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k6991 2020-08-06 -->
+<mapper namespace="com.work.ppm.application.model.projectmanager.AapSystem">
+    <resultMap type="aapSystem" id="AAPSYSTEM_ALL">
+        <result property="sysNameShort" column="SYS_NAME_SHORT"/>
+        <result property="intelnet" column="INTELNET"/>
+        <result property="resId" column="RES_ID"/>
+        <result property="systemId" column="SYSTEM_ID"/>
+        <result property="sysName" column="SYS_NAME"/>
+        <result property="sysBusName" column="SYS_BUS_NAME"/>
+        <result property="alias" column="ALIAS"/>
+        <result property="devStrategy" column="DEV_STRATEGY"/>
+        <result property="procStatus" column="PROC_STATUS"/>
+        <result property="sysStatus" column="SYS_STATUS"/>
+        <result property="sysFun" column="SYS_FUN"/>
+        <result property="arcRegion" column="ARC_REGION"/>
+        <result property="arcLayer" column="ARC_LAYER"/>
+        <result property="funSort" column="FUN_SORT"/>
+        <result property="omLevel" column="OM_LEVEL"/>
+        <result property="serviceTime" column="SERVICE_TIME"/>
+        <result property="rto" column="RTO"/>
+        <result property="rpo" column="RPO"/>
+        <result property="dataIntegrity" column="DATA_INTEGRITY"/>
+        <result property="createTime" column="CREATE_TIME"/>
+        <result property="modifyTime" column="MODIFY_TIME"/>
+        <result property="createPerson" column="CREATE_PERSON"/>
+        <result property="modifyPerson" column="MODIFY_PERSON"/>
+        <result property="sysBackground" column="SYS_BACKGROUND"/>
+        <result property="sysMaintain" column="SYS_MAINTAIN"/>
+        <result property="sysSuggest" column="SYS_SUGGEST"/>
+        <result property="transport" column="TRANSPORT"/>
+        <result property="f5" column="F5"/>
+        <result property="soundcode" column="SOUNDCODE"/>
+        <result property="backupDisaster" column="BACKUP_DISASTER"/>
+        <result property="sensitive" column="SENSITIVE"/>
+        <result property="changePlan" column="CHANGE_PLAN"/>
+        <result property="xuqiuquanxian" column="XUQIUQUANXIAN"/>
+        <result property="pResId" column="P_RES_ID"/>
+        <result property="yewushengpi" column="YEWUSHENGPI"/>
+        <result property="whitetype" column="WHITETYPE"/>
+        <result property="secCondept" column="SEC_CONDEPT"/>
+        <result property="ischild" column="ISCHILD"/>
+        <result property="systype" column="SYSTYPE"/>
+        <result property="sysgroup" column="SYSGROUP"/>
+        <result property="refmoney" column="REFMONEY"/>
+        <result property="serviceTimeType" column="SERVICE_TIME_TYPE"/>
+        <result property="usedMonitorBuild" column="USED_MONITOR_BUILD"/>
+        <result property="importantInfoSystem" column="IMPORTANT_INFO_SYSTEM"/>
+
+    </resultMap>
+
+    <!-- 所有字段名称 -->
+    <sql id="sql_flied_all">
+        SYS_NAME_SHORT,
+        INTELNET,
+        RES_ID,
+        SYSTEM_ID,
+        SYS_NAME,
+        SYS_BUS_NAME,
+        ALIAS,
+        DEV_STRATEGY,
+        PROC_STATUS,
+        SYS_STATUS,
+        SYS_FUN,
+        ARC_REGION,
+        ARC_LAYER,
+        FUN_SORT,
+        OM_LEVEL,
+        SERVICE_TIME,
+        RTO,
+        RPO,
+        DATA_INTEGRITY,
+        CREATE_TIME,
+        MODIFY_TIME,
+        CREATE_PERSON,
+        MODIFY_PERSON,
+        SYS_BACKGROUND,
+        SYS_MAINTAIN,
+        SYS_SUGGEST,
+        TRANSPORT,
+        F5,
+        SOUNDCODE,
+        BACKUP_DISASTER,
+        SENSITIVE,
+        CHANGE_PLAN,
+        XUQIUQUANXIAN,
+        P_RES_ID,
+        YEWUSHENGPI,
+        WHITETYPE,
+        SEC_CONDEPT,
+        ISCHILD,
+        SYSTYPE,
+        SYSGROUP,
+        REFMONEY,
+        SERVICE_TIME_TYPE,
+        USED_MONITOR_BUILD,
+        IMPORTANT_INFO_SYSTEM
+    </sql>
+    <sql id="sql_select_condition">
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="sysNameShort != null  and sysNameShort != '' ">SYS_NAME_SHORT = #{sysNameShort} AND</if>
+            <if test="intelnet != null  and intelnet != '' ">INTELNET = #{intelnet} AND</if>
+            <if test="resId != null  and resId != '' ">RES_ID = #{resId} AND</if>
+            <if test="systemId != null  and systemId != '' ">SYSTEM_ID = #{systemId} AND</if>
+            <if test="sysName != null  and sysName != '' ">SYS_NAME = #{sysName} AND</if>
+            <if test="sysBusName != null  and sysBusName != '' ">SYS_BUS_NAME = #{sysBusName} AND</if>
+            <if test="alias != null  and alias != '' ">ALIAS = #{alias} AND</if>
+            <if test="devStrategy != null  and devStrategy != '' ">DEV_STRATEGY = #{devStrategy} AND</if>
+            <if test="procStatus != null  and procStatus != '' ">PROC_STATUS = #{procStatus} AND</if>
+            <if test="sysStatus != null  and sysStatus != '' ">SYS_STATUS = #{sysStatus} AND</if>
+            <if test="sysFun != null  and sysFun != '' ">SYS_FUN = #{sysFun} AND</if>
+            <if test="arcRegion != null  and arcRegion != '' ">ARC_REGION = #{arcRegion} AND</if>
+            <if test="arcLayer != null  and arcLayer != '' ">ARC_LAYER = #{arcLayer} AND</if>
+            <if test="funSort != null  and funSort != '' ">FUN_SORT = #{funSort} AND</if>
+            <if test="omLevel != null  and omLevel != '' ">OM_LEVEL = #{omLevel} AND</if>
+            <if test="serviceTime != null  and serviceTime != '' ">SERVICE_TIME = #{serviceTime} AND</if>
+            <if test="rto != null  and rto != '' ">RTO = #{rto} AND</if>
+            <if test="rpo != null  and rpo != '' ">RPO = #{rpo} AND</if>
+            <if test="dataIntegrity != null  and dataIntegrity != '' ">DATA_INTEGRITY = #{dataIntegrity} AND</if>
+            <if test="createTime != null ">CREATE_TIME = #{createTime} AND</if>
+            <if test="modifyTime != null ">MODIFY_TIME = #{modifyTime} AND</if>
+            <if test="createPerson != null  and createPerson != '' ">CREATE_PERSON = #{createPerson} AND</if>
+            <if test="modifyPerson != null  and modifyPerson != '' ">MODIFY_PERSON = #{modifyPerson} AND</if>
+            <if test="sysBackground != null ">SYS_BACKGROUND = #{sysBackground} AND</if>
+            <if test="sysMaintain != null ">SYS_MAINTAIN = #{sysMaintain} AND</if>
+            <if test="sysSuggest != null ">SYS_SUGGEST = #{sysSuggest} AND</if>
+            <if test="transport != null  and transport != '' ">TRANSPORT = #{transport} AND</if>
+            <if test="f5 != null  and f5 != '' ">F5 = #{f5} AND</if>
+            <if test="soundcode != null  and soundcode != '' ">SOUNDCODE = #{soundcode} AND</if>
+            <if test="backupDisaster != null  and backupDisaster != '' ">BACKUP_DISASTER = #{backupDisaster} AND</if>
+            <if test="sensitive != null  and sensitive != '' ">SENSITIVE = #{sensitive} AND</if>
+            <if test="changePlan != null  and changePlan != '' ">CHANGE_PLAN = #{changePlan} AND</if>
+            <if test="xuqiuquanxian != null  and xuqiuquanxian != '' ">XUQIUQUANXIAN = #{xuqiuquanxian} AND</if>
+            <if test="pResId != null  and pResId != '' ">P_RES_ID = #{pResId} AND</if>
+            <if test="yewushengpi != null  and yewushengpi != '' ">YEWUSHENGPI = #{yewushengpi} AND</if>
+            <if test="whitetype != null  and whitetype != '' ">WHITETYPE = #{whitetype} AND</if>
+            <if test="secCondept != null  and secCondept != '' ">SEC_CONDEPT = #{secCondept} AND</if>
+            <if test="ischild != null  and ischild != '' ">ISCHILD = #{ischild} AND</if>
+            <if test="systype != null  and systype != '' ">SYSTYPE = #{systype} AND</if>
+            <if test="sysgroup != null  and sysgroup != '' ">SYSGROUP = #{sysgroup} AND</if>
+            <if test="refmoney != null  and refmoney != '' ">REFMONEY = #{refmoney} AND</if>
+            <if test="serviceTimeType != null  and serviceTimeType != '' ">SERVICE_TIME_TYPE = #{serviceTimeType} AND
+            </if>
+            <if test="usedMonitorBuild != null  and usedMonitorBuild != '' ">USED_MONITOR_BUILD = #{usedMonitorBuild}
+                AND
+            </if>
+            <if test="importantInfoSystem != null  and importantInfoSystem != '' ">IMPORTANT_INFO_SYSTEM =
+                #{importantInfoSystem} AND
+            </if>
+
+        </trim>
+    </sql>
+    <!-- 查询分页  2020-08-06 k6991  -->
+    <select id="queryPagerList" parameterType="map" resultMap="AAPSYSTEM_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM AAP_SYSTEM
+        <include refid="sql_select_condition"/>
+    </select>
+
+    <!-- 新增  2020-08-06 k6991  -->
+    <insert id="addPojo" parameterType="aapSystem">
+        INSERT INTO AAP_SYSTEM (
+        <trim suffixOverrides=",">
+            <if test="sysNameShort != null  and sysNameShort != '' ">SYS_NAME_SHORT ,</if>
+            <if test="intelnet != null  and intelnet != '' ">INTELNET ,</if>
+            <if test="resId != null  and resId != '' ">RES_ID ,</if>
+            <if test="systemId != null  and systemId != '' ">SYSTEM_ID ,</if>
+            <if test="sysName != null  and sysName != '' ">SYS_NAME ,</if>
+            <if test="sysBusName != null  and sysBusName != '' ">SYS_BUS_NAME ,</if>
+            <if test="alias != null  and alias != '' ">ALIAS ,</if>
+            <if test="devStrategy != null  and devStrategy != '' ">DEV_STRATEGY ,</if>
+            <if test="procStatus != null  and procStatus != '' ">PROC_STATUS ,</if>
+            <if test="sysStatus != null  and sysStatus != '' ">SYS_STATUS ,</if>
+            <if test="sysFun != null  and sysFun != '' ">SYS_FUN ,</if>
+            <if test="arcRegion != null  and arcRegion != '' ">ARC_REGION ,</if>
+            <if test="arcLayer != null  and arcLayer != '' ">ARC_LAYER ,</if>
+            <if test="funSort != null  and funSort != '' ">FUN_SORT ,</if>
+            <if test="omLevel != null  and omLevel != '' ">OM_LEVEL ,</if>
+            <if test="serviceTime != null  and serviceTime != '' ">SERVICE_TIME ,</if>
+            <if test="rto != null  and rto != '' ">RTO ,</if>
+            <if test="rpo != null  and rpo != '' ">RPO ,</if>
+            <if test="dataIntegrity != null  and dataIntegrity != '' ">DATA_INTEGRITY ,</if>
+            <if test="createTime != null ">CREATE_TIME ,</if>
+            <if test="modifyTime != null ">MODIFY_TIME ,</if>
+            <if test="createPerson != null  and createPerson != '' ">CREATE_PERSON ,</if>
+            <if test="modifyPerson != null  and modifyPerson != '' ">MODIFY_PERSON ,</if>
+            <if test="sysBackground != null ">SYS_BACKGROUND ,</if>
+            <if test="sysMaintain != null ">SYS_MAINTAIN ,</if>
+            <if test="sysSuggest != null ">SYS_SUGGEST ,</if>
+            <if test="transport != null  and transport != '' ">TRANSPORT ,</if>
+            <if test="f5 != null  and f5 != '' ">F5 ,</if>
+            <if test="soundcode != null  and soundcode != '' ">SOUNDCODE ,</if>
+            <if test="backupDisaster != null  and backupDisaster != '' ">BACKUP_DISASTER ,</if>
+            <if test="sensitive != null  and sensitive != '' ">SENSITIVE ,</if>
+            <if test="changePlan != null  and changePlan != '' ">CHANGE_PLAN ,</if>
+            <if test="xuqiuquanxian != null  and xuqiuquanxian != '' ">XUQIUQUANXIAN ,</if>
+            <if test="pResId != null  and pResId != '' ">P_RES_ID ,</if>
+            <if test="yewushengpi != null  and yewushengpi != '' ">YEWUSHENGPI ,</if>
+            <if test="whitetype != null  and whitetype != '' ">WHITETYPE ,</if>
+            <if test="secCondept != null  and secCondept != '' ">SEC_CONDEPT ,</if>
+            <if test="ischild != null  and ischild != '' ">ISCHILD ,</if>
+            <if test="systype != null  and systype != '' ">SYSTYPE ,</if>
+            <if test="sysgroup != null  and sysgroup != '' ">SYSGROUP ,</if>
+            <if test="refmoney != null  and refmoney != '' ">REFMONEY ,</if>
+            <if test="serviceTimeType != null  and serviceTimeType != '' ">SERVICE_TIME_TYPE ,</if>
+            <if test="usedMonitorBuild != null  and usedMonitorBuild != '' ">USED_MONITOR_BUILD ,</if>
+            <if test="importantInfoSystem != null  and importantInfoSystem != '' ">IMPORTANT_INFO_SYSTEM ,</if>
+
+        </trim>
+        )
+        VALUES(
+        <trim suffixOverrides=",">
+            <if test="sysNameShort != null  and sysNameShort != '' ">#{sysNameShort} ,</if>
+            <if test="intelnet != null  and intelnet != '' ">#{intelnet} ,</if>
+            <if test="resId != null  and resId != '' ">#{resId} ,</if>
+            <if test="systemId != null  and systemId != '' ">#{systemId} ,</if>
+            <if test="sysName != null  and sysName != '' ">#{sysName} ,</if>
+            <if test="sysBusName != null  and sysBusName != '' ">#{sysBusName} ,</if>
+            <if test="alias != null  and alias != '' ">#{alias} ,</if>
+            <if test="devStrategy != null  and devStrategy != '' ">#{devStrategy} ,</if>
+            <if test="procStatus != null  and procStatus != '' ">#{procStatus} ,</if>
+            <if test="sysStatus != null  and sysStatus != '' ">#{sysStatus} ,</if>
+            <if test="sysFun != null  and sysFun != '' ">#{sysFun} ,</if>
+            <if test="arcRegion != null  and arcRegion != '' ">#{arcRegion} ,</if>
+            <if test="arcLayer != null  and arcLayer != '' ">#{arcLayer} ,</if>
+            <if test="funSort != null  and funSort != '' ">#{funSort} ,</if>
+            <if test="omLevel != null  and omLevel != '' ">#{omLevel} ,</if>
+            <if test="serviceTime != null  and serviceTime != '' ">#{serviceTime} ,</if>
+            <if test="rto != null  and rto != '' ">#{rto} ,</if>
+            <if test="rpo != null  and rpo != '' ">#{rpo} ,</if>
+            <if test="dataIntegrity != null  and dataIntegrity != '' ">#{dataIntegrity} ,</if>
+            <if test="createTime != null ">#{createTime} ,</if>
+            <if test="modifyTime != null ">#{modifyTime} ,</if>
+            <if test="createPerson != null  and createPerson != '' ">#{createPerson} ,</if>
+            <if test="modifyPerson != null  and modifyPerson != '' ">#{modifyPerson} ,</if>
+            <if test="sysBackground != null ">#{sysBackground} ,</if>
+            <if test="sysMaintain != null ">#{sysMaintain} ,</if>
+            <if test="sysSuggest != null ">#{sysSuggest} ,</if>
+            <if test="transport != null  and transport != '' ">#{transport} ,</if>
+            <if test="f5 != null  and f5 != '' ">#{f5} ,</if>
+            <if test="soundcode != null  and soundcode != '' ">#{soundcode} ,</if>
+            <if test="backupDisaster != null  and backupDisaster != '' ">#{backupDisaster} ,</if>
+            <if test="sensitive != null  and sensitive != '' ">#{sensitive} ,</if>
+            <if test="changePlan != null  and changePlan != '' ">#{changePlan} ,</if>
+            <if test="xuqiuquanxian != null  and xuqiuquanxian != '' ">#{xuqiuquanxian} ,</if>
+            <if test="pResId != null  and pResId != '' ">#{pResId} ,</if>
+            <if test="yewushengpi != null  and yewushengpi != '' ">#{yewushengpi} ,</if>
+            <if test="whitetype != null  and whitetype != '' ">#{whitetype} ,</if>
+            <if test="secCondept != null  and secCondept != '' ">#{secCondept} ,</if>
+            <if test="ischild != null  and ischild != '' ">#{ischild} ,</if>
+            <if test="systype != null  and systype != '' ">#{systype} ,</if>
+            <if test="sysgroup != null  and sysgroup != '' ">#{sysgroup} ,</if>
+            <if test="refmoney != null  and refmoney != '' ">#{refmoney} ,</if>
+            <if test="serviceTimeType != null  and serviceTimeType != '' ">#{serviceTimeType} ,</if>
+            <if test="usedMonitorBuild != null  and usedMonitorBuild != '' ">#{usedMonitorBuild} ,</if>
+            <if test="importantInfoSystem != null  and importantInfoSystem != '' ">#{importantInfoSystem} ,</if>
+
+        </trim>
+        )
+    </insert>
+
+    <!--通过id查询  k6991 2020-08-06 -->
+    <select id="queryDetail" parameterType="aapSystem" resultMap="AAPSYSTEM_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM AAP_SYSTEM
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="systemId != null  and systemId != '' ">SYSTEM_ID=#{systemId} AND</if>
+            <if test="sysName != null  and sysName != '' ">SYS_NAME=#{sysName} AND</if>
+        </trim>
+    </select>
+
+    <!--查询集合  k6991 2020-08-06 -->
+    <select id="getList" parameterType="aapSystem" resultMap="AAPSYSTEM_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM AAP_SYSTEM
+        <include refid="sql_select_condition"/>
+    </select>
+    <!-- update sql -->
+    <sql id="update_pojo_sql">
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="sysNameShort != null  and sysNameShort != '' ">SYS_NAME_SHORT=#{sysNameShort} ,</if>
+            <if test="intelnet != null  and intelnet != '' ">INTELNET=#{intelnet} ,</if>
+            <if test="resId != null  and resId != '' ">RES_ID=#{resId} ,</if>
+            <if test="systemId != null  and systemId != '' ">SYSTEM_ID=#{systemId} ,</if>
+            <if test="sysName != null  and sysName != '' ">SYS_NAME=#{sysName} ,</if>
+            <if test="sysBusName != null  and sysBusName != '' ">SYS_BUS_NAME=#{sysBusName} ,</if>
+            <if test="alias != null  and alias != '' ">ALIAS=#{alias} ,</if>
+            <if test="devStrategy != null  and devStrategy != '' ">DEV_STRATEGY=#{devStrategy} ,</if>
+            <if test="procStatus != null  and procStatus != '' ">PROC_STATUS=#{procStatus} ,</if>
+            <if test="sysStatus != null  and sysStatus != '' ">SYS_STATUS=#{sysStatus} ,</if>
+            <if test="sysFun != null  and sysFun != '' ">SYS_FUN=#{sysFun} ,</if>
+            <if test="arcRegion != null  and arcRegion != '' ">ARC_REGION=#{arcRegion} ,</if>
+            <if test="arcLayer != null  and arcLayer != '' ">ARC_LAYER=#{arcLayer} ,</if>
+            <if test="funSort != null  and funSort != '' ">FUN_SORT=#{funSort} ,</if>
+            <if test="omLevel != null  and omLevel != '' ">OM_LEVEL=#{omLevel} ,</if>
+            <if test="serviceTime != null  and serviceTime != '' ">SERVICE_TIME=#{serviceTime} ,</if>
+            <if test="rto != null  and rto != '' ">RTO=#{rto} ,</if>
+            <if test="rpo != null  and rpo != '' ">RPO=#{rpo} ,</if>
+            <if test="dataIntegrity != null  and dataIntegrity != '' ">DATA_INTEGRITY=#{dataIntegrity} ,</if>
+            <if test="createTime != null ">CREATE_TIME=#{createTime} ,</if>
+            <if test="modifyTime != null ">MODIFY_TIME=#{modifyTime} ,</if>
+            <if test="createPerson != null  and createPerson != '' ">CREATE_PERSON=#{createPerson} ,</if>
+            <if test="modifyPerson != null  and modifyPerson != '' ">MODIFY_PERSON=#{modifyPerson} ,</if>
+            <if test="sysBackground != null ">SYS_BACKGROUND=#{sysBackground} ,</if>
+            <if test="sysMaintain != null ">SYS_MAINTAIN=#{sysMaintain} ,</if>
+            <if test="sysSuggest != null ">SYS_SUGGEST=#{sysSuggest} ,</if>
+            <if test="transport != null  and transport != '' ">TRANSPORT=#{transport} ,</if>
+            <if test="f5 != null  and f5 != '' ">F5=#{f5} ,</if>
+            <if test="soundcode != null  and soundcode != '' ">SOUNDCODE=#{soundcode} ,</if>
+            <if test="backupDisaster != null  and backupDisaster != '' ">BACKUP_DISASTER=#{backupDisaster} ,</if>
+            <if test="sensitive != null  and sensitive != '' ">SENSITIVE=#{sensitive} ,</if>
+            <if test="changePlan != null  and changePlan != '' ">CHANGE_PLAN=#{changePlan} ,</if>
+            <if test="xuqiuquanxian != null  and xuqiuquanxian != '' ">XUQIUQUANXIAN=#{xuqiuquanxian} ,</if>
+            <if test="pResId != null  and pResId != '' ">P_RES_ID=#{pResId} ,</if>
+            <if test="yewushengpi != null  and yewushengpi != '' ">YEWUSHENGPI=#{yewushengpi} ,</if>
+            <if test="whitetype != null  and whitetype != '' ">WHITETYPE=#{whitetype} ,</if>
+            <if test="secCondept != null  and secCondept != '' ">SEC_CONDEPT=#{secCondept} ,</if>
+            <if test="ischild != null  and ischild != '' ">ISCHILD=#{ischild} ,</if>
+            <if test="systype != null  and systype != '' ">SYSTYPE=#{systype} ,</if>
+            <if test="sysgroup != null  and sysgroup != '' ">SYSGROUP=#{sysgroup} ,</if>
+            <if test="refmoney != null  and refmoney != '' ">REFMONEY=#{refmoney} ,</if>
+            <if test="serviceTimeType != null  and serviceTimeType != '' ">SERVICE_TIME_TYPE=#{serviceTimeType} ,</if>
+            <if test="usedMonitorBuild != null  and usedMonitorBuild != '' ">USED_MONITOR_BUILD=#{usedMonitorBuild} ,
+            </if>
+            <if test="importantInfoSystem != null  and importantInfoSystem != '' ">
+                IMPORTANT_INFO_SYSTEM=#{importantInfoSystem} ,
+            </if>
+
+        </trim>
+    </sql>
+
+    <!-- 部门系统树 2020-08-06 k6991-->
+    <select id="querySystemTree" parameterType="map" resultType="commTree">
+        select distinct t.*,
+        case
+        when pcode = '9000000000' then
+        'order1'
+        else
+        'order2'
+        end order_by
+        from (
+        select a.*
+        from (
+        select 'org' || t.compid id, t.compcode pcode, t.location text, 'org' || t.adminid pid, 'org' attr, '' textpy
+        from comm_organization t where t.isdisabled = '0'
+        union all
+        select 'dep' || t.depid id, t.depcode pcode, t.location text, 'org' || t.compid pid, 'dep' attr, '' textpy
+        from comm_department t where t.adminid is null and t.isdisabled = '0'
+        union all
+        select 'dep' || t.depid id, t.depcode pcode, t.location text, 'dep' || t.adminid pid, 'dep' attr, '' textpy
+        from comm_department t where t.adminid is not null and t.isdisabled = '0'
+        union all
+        select 'sys' || x.res_id, x.system_id pcode, x.sys_name text,
+        'dep' || x.tec_dep pid,
+        'sys' attr, '' textpy
+        from
+        (
+        select a.res_id, nvl(b.system_id, a.res_id) system_id, b.sys_name, a.tec_dep, c.location,b.p_res_id
+        from aap_system_responsibility a
+        left join comm_department c on a.tec_dep = c.depid
+        right join aap_system b on a.res_id = b.res_id and b.sys_name is not null
+
+        where 1=1
+        <if test="isGetChild != null and isGetChild != ''">
+            and b.p_res_id is null
+        </if>
+
+        <if test="status != null and status != '' ">
+            and b.sys_status not in ('2','3')
+        </if>
+        <if test="busdep != null and busdep != ''">
+            and ','||a.bus_dep||',' like '%,'||#{busdep}||',%'
+        </if>
+        ) x
+        ) a
+        where 1=1
+        <if test="system != null and system != ''">
+            and a.text like '%'||#{system}||'%'
+
+        </if>
+        <if test="objectCode != null and objectCode != ''">
+            start with ','||#{objectCode}||',' like '%,'||a.pcode||',%' or a.pcode='6000000000' connect by prior a.id =
+            a.pid
+        </if>
+        ) t
+        start with t.attr = 'sys' connect by prior t.pid = t.id
+        order by order_by,id
+    </select>
+
+    <resultMap id="aapSystemInfo" type="AapSystemInfo" extends="AAPSYSTEM_ALL">
+        <result property="sysids" column="SYSIDS" />
+        <result property="sysnames" column="SYSNAMES" />
+        <result property="userids" column="USERIDS" />
+        <result property="usernames" column="USERNAMES" />
+        <result property="principala" column="PRINCIPALA" />
+    </resultMap>
+
+    <select id="queryPasBySystems" parameterType="map" resultType="aapSystemInfo">
+        select wm_concat(aap1.system_id) sysids ,wm_concat(aap1.sys_name) sysnames,wm_concat(res1.principala_name)
+        usernames ,
+        wm_concat(res1.principala) userids from aap_system aap1 left join aap_system_responsibility res1 on
+        aap1.res_id=res1.res_id
+        where aap1.system_id in(${systemid})
+    </select>
+    <!-- 根据工号查询负责人系统 -->
+    <select id="getFZRSysno" parameterType="map" resultMap="AAPSYSTEM_ALL">
+        SELECT TO_CHAR(WM_CONCAT(T.SYSTEM_ID)) SYSTEM_ID FROM AAP_SYSTEM T
+        LEFT JOIN AAP_SYSTEM_RESPONSIBILITY B ON B.RES_ID=T.RES_ID
+        WHERE B.PRINCIPALA=#{userId} OR B.PRINCIPALB=#{userId}
+    </select>
+
+    <!-- 查询计划上线系统 -->
+    <select id="queryPlansystem" parameterType="map" resultMap="aapSystemInfo">
+        select r.principala,a.* from aap_system a
+        left join aap_system_responsibility r on r.res_id=a.res_id
+        where a.sys_status='1'
+        and a.system_id = #{sysno}
+    </select>
+
+    <!-- 查询总行系统 -->
+    <select id="querySystemIsZH" parameterType="map" resultMap="AAPSYSTEM_ALL">
+        select r.principala,a.* from aap_system a
+        left join aap_system_responsibility r on r.res_id=a.res_id
+        left join comm_department d on r.tec_dep = d.depid
+        left join Comm_Organization n on n.compid = d.compid
+        where a.sys_status='1'
+        and n.location in ('总行', '永赢金租')
+        and a.system_id = #{sysno}
+    </select>
+</mapper>

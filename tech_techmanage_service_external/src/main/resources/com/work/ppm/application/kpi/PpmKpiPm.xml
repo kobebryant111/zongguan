@@ -1,0 +1,1579 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k1327 2021-06-07 -->
+<mapper namespace="com.work.ppm.application.model.kpi.PpmKpiPm">
+	 <resultMap type="ppmKpiPm" id="PPMKPIPM_ALL">
+        <result property="centerid" column="CENTERID" />
+		<result property="role" column="ROLE" />
+		<result property="id" column="ID" />
+		<result property="tyear" column="TYEAR" />
+		<result property="term" column="TERM" />
+		<result property="eid" column="EID" />
+		<result property="depid" column="DEPID" />
+		<result property="jobid" column="JOBID" />
+		<result property="compid" column="COMPID" />
+		<result property="status" column="STATUS" />
+		<result property="firstcheck" column="FIRSTCHECK" />
+		<result property="secondcheck" column="SECONDCHECK" />
+		<result property="firstchecktime" column="FIRSTCHECKTIME" />
+		<result property="secondchecktime" column="SECONDCHECKTIME" />
+		<result property="firsteval" column="FIRSTEVAL" />
+		<result property="secondeval" column="SECONDEVAL" />
+		<result property="firstevaltime" column="FIRSTEVALTIME" />
+		<result property="secondevaltime" column="SECONDEVALTIME" />
+		<result property="createuser" column="CREATEUSER" />
+		<result property="createtime" column="CREATETIME" />
+		<result property="rollbacksuggest" column="ROLLBACKSUGGEST" />
+		<result property="isedit" column="ISEDIT" />
+		<result property="firstcomment" column="FIRSTCOMMENT" />
+		<result property="secondcomment" column="SECONDCOMMENT" />
+		<result property="firstcommenttime" column="FIRSTCOMMENTTIME" />
+		<result property="secondcommenttime" column="SECONDCOMMENTTIME" />
+		<result property="tscore" column="TSCORE" />
+		<result property="tgrade" column="TGRADE" />
+		<result property="evalby1score" column="EVALBY1SCORE" />
+		<result property="evalby2score" column="EVALBY2SCORE" />
+		<result property="headship" column="HEADSHIP" />
+		<result property="firstorder" column="FIRSTORDER" />
+		<result property="secondorder" column="SECONDORDER" />
+		<result property="kpiscore" column="KPISCORE" />
+		<result property="comprehensivescore" column="COMPREHENSIVESCORE" />
+		<result property="performanceevaluationscore" column="PERFORMANCEEVALUATIONSCORE" />
+		<result property="balancescore" column="BALANCESCORE" />
+		<result property="abilityimporvescore" column="ABILITYIMPORVESCORE" />
+		<result property="adjustlevel" column="ADJUSTLEVEL" />
+		<result property="adjustreason" column="ADJUSTREASON" />
+		<result property="teamorder" column="TEAMORDER" />
+		<result property="teampercentage" column="TEAMPERCENTAGE" />
+		 <result property="deptscore" column="DEPTSCORE" />
+		 <result property="deptlevel" column="DEPTLEVEL" />
+		 <result property="deporder" column="DEPORDER" />
+		 <result property="depremark" column="DEPREMARK" />
+		 <result property="centertlevel" column="CENTERTLEVEL" />
+		 <result property="centerorder" column="CENTERORDER" />
+		 <result property="centerremark" column="CENTERREMARK" />
+		 <result property="initialtscore" column="INITIALTSCORE" />
+		 <result property="initialtlevel" column="INITIALTLEVEL" />
+		 <result property="initialorder" column="INITIALORDER" />
+		 <result property="addscore" column="ADDSCORE" />
+		 <result property="depscore" column="DEPSCORE" />
+     </resultMap>
+	 <resultMap type="ppmKpiPmInfo" id="PPMKPIPM_ALL_EXT" extends="PPMKPIPM_ALL">
+		<result property="firstcheckname" column="FIRSTCHECKNAME" />
+		 <result property="secondcheckname" column="SECONDCHECKNAME" />
+		 <result property="eidname" column="EIDNAME" />
+		 <result property="check" column="CHECK" />
+		 <result property="depname" column="DEPNAME" />
+		 <result property="centername" column="CENTERNAME" />
+		 <result property="firstevalname" column="FIRSTEVALNAME" />
+		 <result property="secondevalname" column="SECONDEVALNAME" />
+		 <result property="statusname" column="STATUSNAME" />
+		 <result property="rolename" column="ROLENAME" />
+		 <result property="evalitems" column="EVALITEMS" />
+		 <result property="itemstatus" column="ITEMSTATUS" />
+         <result property="itemstatusname" column="ITEMSTATUSNAME" />
+
+		 <result property="expectscore" column="EXPECTSCORE" />
+	 </resultMap>
+
+	<resultMap type="ppmKpiPmBalanceSummary" id="PPMKPIPM_ALL_EXT_BALANCE_SUMMARY" extends="PPMKPIPM_ALL">
+		<result property="firstcheckname" column="FIRSTCHECKNAME" />
+		<result property="secondcheckname" column="SECONDCHECKNAME" />
+		<result property="eidname" column="EIDNAME" />
+		<result property="check" column="CHECK" />
+		<result property="depname" column="DEPNAME" />
+		<result property="centername" column="CENTERNAME" />
+		<result property="firstevalname" column="FIRSTEVALNAME" />
+		<result property="secondevalname" column="SECONDEVALNAME" />
+		<result property="statusname" column="STATUSNAME" />
+		<result property="rolename" column="ROLENAME" />
+		<result property="depscore" column="DEPSCORE" />
+		<result property="evalitems" column="EVALITEMS" />
+		<result property="decitems" column="DECITEMS" />
+		<result property="decvalues" column="DECVALUES" />
+	</resultMap>
+     <!-- 所有字段名称 -->
+        <sql id="sql_flied_all">
+        	CENTERID,
+			ROLE,
+			ID,
+			TYEAR,
+			TERM,
+			EID,
+			DEPID,
+			JOBID,
+			COMPID,
+			STATUS,
+			FIRSTCHECK,
+			SECONDCHECK,
+			FIRSTCHECKTIME,
+			SECONDCHECKTIME,
+			FIRSTEVAL,
+			SECONDEVAL,
+			FIRSTEVALTIME,
+			SECONDEVALTIME,
+			CREATEUSER,
+			CREATETIME,
+			ROLLBACKSUGGEST,
+			ISEDIT,
+			FIRSTCOMMENT,
+			SECONDCOMMENT,
+			FIRSTCOMMENTTIME,
+			SECONDCOMMENTTIME,
+			TSCORE,
+			TGRADE,
+			EVALBY1SCORE,
+			EVALBY2SCORE,
+			HEADSHIP,
+			FIRSTORDER,
+			SECONDORDER,
+			KPISCORE,
+			COMPREHENSIVESCORE,
+			PERFORMANCEEVALUATIONSCORE,
+			BALANCESCORE,
+			ABILITYIMPORVESCORE,
+			ADJUSTLEVEL,
+			ADJUSTREASON,
+			TEAMORDER,
+			TEAMPERCENTAGE,
+			DEPTSCORE,
+			DEPTLEVEL,
+			DEPORDER,
+			DEPREMARK,
+			CENTERTLEVEL,
+			CENTERORDER,
+			CENTERREMARK,
+			INITIALTSCORE,
+			INITIALTLEVEL,
+			INITIALORDER,
+			ADDSCORE,
+			DEPSCORE
+        </sql>
+        <sql id="sql_select_condition">
+            <trim prefix="WHERE" suffixOverrides="AND">
+                <if test="centerid != null  and centerid != '' " > CENTERID = #{centerid} AND </if>
+				<if test="role != null  and role != '' " > ROLE = #{role} AND </if>
+				<if test="id != null " > ID = #{id} AND </if>
+				<if test="tyear != null  and tyear != '' " > TYEAR = #{tyear} AND </if>
+				<if test="term != null  and term != '' " >
+					 TERM = #{term} AND
+				</if>
+				<if test="eid != null  and eid != '' " > EID = #{eid} AND </if>
+				<if test="depid != null  and depid != '' " > DEPID = #{depid} AND </if>
+				<if test="jobid != null  and jobid != '' " > JOBID = #{jobid} AND </if>
+				<if test="compid != null  and compid != '' " > COMPID = #{compid} AND </if>
+				<if test="status != null " > STATUS = #{status} AND </if>
+				<if test="firstcheck != null  and firstcheck != '' " > FIRSTCHECK = #{firstcheck} AND </if>
+				<if test="secondcheck != null  and secondcheck != '' " > SECONDCHECK = #{secondcheck} AND </if>
+				<if test="firstchecktime != null " > FIRSTCHECKTIME = #{firstchecktime} AND </if>
+				<if test="secondchecktime != null " > SECONDCHECKTIME = #{secondchecktime} AND </if>
+				<if test="firsteval != null  and firsteval != '' " > FIRSTEVAL = #{firsteval} AND </if>
+				<if test="secondeval != null  and secondeval != '' " > SECONDEVAL = #{secondeval} AND </if>
+				<if test="firstevaltime != null " > FIRSTEVALTIME = #{firstevaltime} AND </if>
+				<if test="secondevaltime != null " > SECONDEVALTIME = #{secondevaltime} AND </if>
+				<if test="createuser != null  and createuser != '' " > CREATEUSER = #{createuser} AND </if>
+				<if test="createtime != null " > CREATETIME = #{createtime} AND </if>
+				<if test="rollbacksuggest != null  and rollbacksuggest != '' " > ROLLBACKSUGGEST = #{rollbacksuggest} AND </if>
+				<if test="isedit != null " > ISEDIT = #{isedit} AND </if>
+				<if test="firstcomment != null  and firstcomment != '' " > FIRSTCOMMENT = #{firstcomment} AND </if>
+				<if test="secondcomment != null  and secondcomment != '' " > SECONDCOMMENT = #{secondcomment} AND </if>
+				<if test="firstcommenttime != null " > FIRSTCOMMENTTIME = #{firstcommenttime} AND </if>
+				<if test="secondcommenttime != null " > SECONDCOMMENTTIME = #{secondcommenttime} AND </if>
+				<if test="tscore != null " > TSCORE = #{tscore} AND </if>
+				<if test="tgrade != null  and tgrade != '' " > TGRADE = #{tgrade} AND </if>
+				<if test="evalby1score != null " > EVALBY1SCORE = #{evalby1score} AND </if>
+				<if test="evalby2score != null " > EVALBY2SCORE = #{evalby2score} AND </if>
+				<if test="headship != null  and headship != '' " > HEADSHIP = #{headship} AND </if>
+				<if test="firstorder != null " > FIRSTORDER = #{firstorder} AND </if>
+				<if test="secondorder != null " > SECONDORDER = #{secondorder} AND </if>
+				<if test="kpiscore != null " > KPISCORE = #{kpiscore} AND </if>
+				<if test="comprehensivescore != null " > COMPREHENSIVESCORE = #{comprehensivescore} AND </if>
+				<if test="performanceevaluationscore != null " > PERFORMANCEEVALUATIONSCORE = #{performanceevaluationscore} AND </if>
+				<if test="balancescore != null " > BALANCESCORE = #{balancescore} AND </if>
+				<if test="abilityimporvescore != null " > ABILITYIMPORVESCORE = #{abilityimporvescore} AND </if>
+				<if test="adjustlevel != null  and adjustlevel != '' " > ADJUSTLEVEL = #{adjustlevel} AND </if>
+				<if test="adjustreason != null  and adjustreason != '' " > ADJUSTREASON = #{adjustreason} AND </if>
+				<if test="teamorder != null " > TEAMORDER = #{teamorder} AND </if>
+				<if test="teampercentage != null  and teampercentage != '' " > TEAMPERCENTAGE = #{teampercentage} AND </if>
+				<if test="deptscore != null " > DEPTSCORE = #{deptscore} AND </if>
+				<if test="deptlevel != null  and deptlevel != '' " > DEPTLEVEL = #{deptlevel} AND </if>
+				<if test="deporder != null " > DEPORDER = #{deporder} AND </if>
+				<if test="depremark != null  and depremark != '' " > DEPREMARK = #{depremark} AND </if>
+				<if test="centertlevel != null  and centertlevel != '' " > CENTERTLEVEL = #{centertlevel} AND </if>
+				<if test="centerorder != null " > CENTERORDER = #{centerorder} AND </if>
+				<if test="centerremark != null  and centerremark != '' " > CENTERREMARK = #{centerremark} AND </if>
+				<if test="initialtscore != null " > INITIALTSCORE = #{initialtscore} AND </if>
+				<if test="initialtlevel != null  and initialtlevel != '' " > INITIALTLEVEL = #{initialtlevel} AND </if>
+				<if test="initialorder != null " > INITIALORDER = #{initialorder} AND </if>
+				<if test="addscore != null " > ADDSCORE = #{addscore} AND </if>
+				<if test="depscore != null " > DEPSCORE = #{depscore} AND </if>
+			</trim>
+        </sql>
+    	<!-- 查询分页  2021-06-07 k1327  -->
+        <select id="queryPagerList" parameterType="map" resultMap="PPMKPIPM_ALL">
+        	SELECT
+            <include refid="sql_flied_all" />
+            FROM PPM_KPI_PM
+            <include refid="sql_select_condition" />
+        </select>
+
+        <!-- 新增  2021-06-07 k1327  -->
+        <insert id="addPojo" parameterType="ppmKpiPm">
+    		INSERT INTO PPM_KPI_PM (
+    		<trim suffixOverrides=",">
+    		 <if test="centerid != null  and centerid != '' " > CENTERID , </if>
+				<if test="role != null  and role != '' " > ROLE , </if>
+				<if test="id != null " > ID , </if>
+				<if test="tyear != null  and tyear != '' " > TYEAR , </if>
+				<if test="term != null  and term != '' " > TERM , </if>
+				<if test="eid != null  and eid != '' " > EID , </if>
+				<if test="depid != null  and depid != '' " > DEPID , </if>
+				<if test="jobid != null  and jobid != '' " > JOBID , </if>
+				<if test="compid != null  and compid != '' " > COMPID , </if>
+				<if test="status != null " > STATUS , </if>
+				<if test="firstcheck != null  and firstcheck != '' " > FIRSTCHECK , </if>
+				<if test="secondcheck != null  and secondcheck != '' " > SECONDCHECK , </if>
+				<if test="firstchecktime != null " > FIRSTCHECKTIME , </if>
+				<if test="secondchecktime != null " > SECONDCHECKTIME , </if>
+				<if test="firsteval != null  and firsteval != '' " > FIRSTEVAL , </if>
+				<if test="secondeval != null  and secondeval != '' " > SECONDEVAL , </if>
+				<if test="firstevaltime != null " > FIRSTEVALTIME , </if>
+				<if test="secondevaltime != null " > SECONDEVALTIME , </if>
+				<if test="createuser != null  and createuser != '' " > CREATEUSER , </if>
+				<if test="createtime != null " > CREATETIME , </if>
+				<if test="rollbacksuggest != null  and rollbacksuggest != '' " > ROLLBACKSUGGEST , </if>
+				<if test="isedit != null " > ISEDIT , </if>
+				<if test="firstcomment != null  and firstcomment != '' " > FIRSTCOMMENT , </if>
+				<if test="secondcomment != null  and secondcomment != '' " > SECONDCOMMENT , </if>
+				<if test="firstcommenttime != null " > FIRSTCOMMENTTIME , </if>
+				<if test="secondcommenttime != null " > SECONDCOMMENTTIME , </if>
+				<if test="tscore != null " > TSCORE , </if>
+				<if test="tgrade != null  and tgrade != '' " > TGRADE , </if>
+				<if test="evalby1score != null " > EVALBY1SCORE , </if>
+				<if test="evalby2score != null " > EVALBY2SCORE , </if>
+				<if test="headship != null  and headship != '' " > HEADSHIP , </if>
+				<if test="firstorder != null " > FIRSTORDER , </if>
+				<if test="secondorder != null " > SECONDORDER , </if>
+				<if test="kpiscore != null " > KPISCORE , </if>
+				<if test="comprehensivescore != null " > COMPREHENSIVESCORE , </if>
+				<if test="performanceevaluationscore != null " > PERFORMANCEEVALUATIONSCORE , </if>
+				<if test="balancescore != null " > BALANCESCORE , </if>
+				<if test="abilityimporvescore != null " > ABILITYIMPORVESCORE , </if>
+				<if test="adjustlevel != null  and adjustlevel != '' " > ADJUSTLEVEL , </if>
+				<if test="adjustreason != null  and adjustreason != '' " > ADJUSTREASON , </if>
+				<if test="teamorder != null " > TEAMORDER , </if>
+				<if test="teampercentage != null  and teampercentage != '' " > TEAMPERCENTAGE , </if>
+
+				<if test="deptscore != null " > DEPTSCORE , </if>
+				<if test="deptlevel != null  and deptlevel != '' " > DEPTLEVEL , </if>
+				<if test="deporder != null " > DEPORDER , </if>
+				<if test="depremark != null  and depremark != '' " > DEPREMARK , </if>
+				<if test="centertlevel != null  and centertlevel != '' " > CENTERTLEVEL , </if>
+				<if test="centerorder != null " > CENTERORDER , </if>
+				<if test="centerremark != null  and centerremark != '' " > CENTERREMARK , </if>
+				<if test="initialtscore != null " > INITIALTSCORE , </if>
+				<if test="initialtlevel != null  and initialtlevel != '' " > INITIALTLEVEL , </if>
+				<if test="initialorder != null " > INITIALORDER , </if>
+				<if test="addscore != null " > ADDSCORE , </if>
+				<if test="depscore != null " > DEPSCORE , </if>
+			</trim>
+    		)
+    		VALUES(
+    		<trim suffixOverrides=",">
+    		 <if test="centerid != null  and centerid != '' " > #{centerid} , </if>
+				<if test="role != null  and role != '' " > #{role} , </if>
+				<if test="id != null " > #{id} , </if>
+				<if test="tyear != null  and tyear != '' " > #{tyear} , </if>
+				<if test="term != null  and term != '' " > #{term} , </if>
+				<if test="eid != null  and eid != '' " > #{eid} , </if>
+				<if test="depid != null  and depid != '' " > #{depid} , </if>
+				<if test="jobid != null  and jobid != '' " > #{jobid} , </if>
+				<if test="compid != null  and compid != '' " > #{compid} , </if>
+				<if test="status != null " > #{status} , </if>
+				<if test="firstcheck != null  and firstcheck != '' " > #{firstcheck} , </if>
+				<if test="secondcheck != null  and secondcheck != '' " > #{secondcheck} , </if>
+				<if test="firstchecktime != null " > #{firstchecktime} , </if>
+				<if test="secondchecktime != null " > #{secondchecktime} , </if>
+				<if test="firsteval != null  and firsteval != '' " > #{firsteval} , </if>
+				<if test="secondeval != null  and secondeval != '' " > #{secondeval} , </if>
+				<if test="firstevaltime != null " > #{firstevaltime} , </if>
+				<if test="secondevaltime != null " > #{secondevaltime} , </if>
+				<if test="createuser != null  and createuser != '' " > #{createuser} , </if>
+				<if test="createtime != null " > #{createtime} , </if>
+				<if test="rollbacksuggest != null  and rollbacksuggest != '' " > #{rollbacksuggest} , </if>
+				<if test="isedit != null " > #{isedit} , </if>
+				<if test="firstcomment != null  and firstcomment != '' " > #{firstcomment} , </if>
+				<if test="secondcomment != null  and secondcomment != '' " > #{secondcomment} , </if>
+				<if test="firstcommenttime != null " > #{firstcommenttime} , </if>
+				<if test="secondcommenttime != null " > #{secondcommenttime} , </if>
+				<if test="tscore != null " > #{tscore} , </if>
+				<if test="tgrade != null  and tgrade != '' " > #{tgrade} , </if>
+				<if test="evalby1score != null " > #{evalby1score} , </if>
+				<if test="evalby2score != null " > #{evalby2score} , </if>
+				<if test="headship != null  and headship != '' " > #{headship} , </if>
+				<if test="firstorder != null " > #{firstorder} , </if>
+				<if test="secondorder != null " > #{secondorder} , </if>
+				<if test="kpiscore != null " > #{kpiscore} , </if>
+				<if test="comprehensivescore != null " > #{comprehensivescore} , </if>
+				<if test="performanceevaluationscore != null " > #{performanceevaluationscore} , </if>
+				<if test="balancescore != null " > #{balancescore} , </if>
+				<if test="abilityimporvescore != null " > #{abilityimporvescore} , </if>
+				<if test="adjustlevel != null  and adjustlevel != '' " > #{adjustlevel} , </if>
+				<if test="adjustreason != null  and adjustreason != '' " > #{adjustreason} , </if>
+				<if test="teamorder != null " > #{teamorder} , </if>
+				<if test="teampercentage != null  and teampercentage != '' " > #{teampercentage} , </if>
+				<if test="deptscore != null " > #{deptscore} , </if>
+				<if test="deptlevel != null  and deptlevel != '' " > #{deptlevel} , </if>
+				<if test="deporder != null " > #{deporder} , </if>
+				<if test="depremark != null  and depremark != '' " > #{depremark} , </if>
+				<if test="centertlevel != null  and centertlevel != '' " > #{centertlevel} , </if>
+				<if test="centerorder != null " > #{centerorder} , </if>
+				<if test="centerremark != null  and centerremark != '' " > #{centerremark} , </if>
+				<if test="initialtscore != null " > #{initialtscore} , </if>
+				<if test="initialtlevel != null  and initialtlevel != '' " > #{initialtlevel} , </if>
+				<if test="initialorder != null " > #{initialorder} , </if>
+				<if test="addscore != null " > #{addscore} , </if>
+				<if test="depscore != null " > #{depscore} , </if>
+            </trim>
+    		)
+        </insert>
+
+        <!--通过id查询  k1327 2021-06-07 -->
+        <select id="queryDetail" parameterType="ppmKpiPm" resultMap="PPMKPIPM_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_KPI_PM  WHERE ID = #{id}
+        </select>
+
+         <!--查询集合  k1327 2021-06-07 -->
+        <select id="getList" parameterType="ppmKpiPm" resultMap="PPMKPIPM_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_KPI_PM
+        	<include refid="sql_select_condition" />
+        </select>
+        <!-- update sql -->
+        <sql id="update_pojo_sql">
+        	<trim prefix="SET" suffixOverrides=",">
+        		<if test="centerid != null  and centerid != '' " > CENTERID=#{centerid} , </if>
+				<if test="role != null  and role != '' " > ROLE=#{role} , </if>
+				<if test="id != null " > ID=#{id} , </if>
+				<if test="tyear != null  and tyear != '' " > TYEAR=#{tyear} , </if>
+				<if test="term != null  and term != '' " > TERM=#{term} , </if>
+				<if test="eid != null  and eid != '' " > EID=#{eid} , </if>
+				<if test="depid != null  and depid != '' " > DEPID=#{depid} , </if>
+				<if test="jobid != null  and jobid != '' " > JOBID=#{jobid} , </if>
+				<if test="compid != null  and compid != '' " > COMPID=#{compid} , </if>
+				<if test="status != null " > STATUS=#{status} , </if>
+				<if test="firstcheck != null  and firstcheck != '' " > FIRSTCHECK=#{firstcheck} , </if>
+				<if test="secondcheck != null  and secondcheck != '' " > SECONDCHECK=#{secondcheck} , </if>
+				<if test="firstchecktime != null " > FIRSTCHECKTIME=#{firstchecktime} , </if>
+				<if test="secondchecktime != null " > SECONDCHECKTIME=#{secondchecktime} , </if>
+				<if test="firsteval != null  and firsteval != '' " > FIRSTEVAL=#{firsteval} , </if>
+				<if test="secondeval != null  and secondeval != '' " > SECONDEVAL=#{secondeval} , </if>
+				<if test="firstevaltime != null " > FIRSTEVALTIME=#{firstevaltime} , </if>
+				<if test="secondevaltime != null " > SECONDEVALTIME=#{secondevaltime} , </if>
+				<if test="createuser != null  and createuser != '' " > CREATEUSER=#{createuser} , </if>
+				<if test="createtime != null " > CREATETIME=#{createtime} , </if>
+				<if test="rollbacksuggest != null  " > ROLLBACKSUGGEST=#{rollbacksuggest} , </if>
+				<if test="isedit != null " > ISEDIT=#{isedit} , </if>
+				<if test="firstcomment != null  and firstcomment != '' " > FIRSTCOMMENT=#{firstcomment} , </if>
+				<if test="secondcomment != null  and secondcomment != '' " > SECONDCOMMENT=#{secondcomment} , </if>
+				<if test="firstcommenttime != null " > FIRSTCOMMENTTIME=#{firstcommenttime} , </if>
+				<if test="secondcommenttime != null " > SECONDCOMMENTTIME=#{secondcommenttime} , </if>
+				<if test="tscore != null " > TSCORE=#{tscore} , </if>
+				<if test="tgrade != null  and tgrade != '' " > TGRADE=#{tgrade} , </if>
+				<if test="evalby1score != null " > EVALBY1SCORE=#{evalby1score} , </if>
+				<if test="evalby2score != null " > EVALBY2SCORE=#{evalby2score} , </if>
+				<if test="headship != null  and headship != '' " > HEADSHIP=#{headship} , </if>
+				<if test="firstorder != null " > FIRSTORDER=#{firstorder} , </if>
+				<if test="secondorder != null " > SECONDORDER=#{secondorder} , </if>
+				<if test="kpiscore != null " > KPISCORE=#{kpiscore} , </if>
+				<if test="comprehensivescore != null " > COMPREHENSIVESCORE=#{comprehensivescore} , </if>
+				<if test="performanceevaluationscore != null " > PERFORMANCEEVALUATIONSCORE=#{performanceevaluationscore} , </if>
+				<if test="balancescore != null " > BALANCESCORE=#{balancescore} , </if>
+				<if test="abilityimporvescore != null " > ABILITYIMPORVESCORE=#{abilityimporvescore} , </if>
+				<if test="adjustlevel != null  and adjustlevel != '' " > ADJUSTLEVEL=#{adjustlevel} , </if>
+				<if test="adjustreason != null  and adjustreason != '' " > ADJUSTREASON=#{adjustreason} , </if>
+				<if test="teamorder != null " > TEAMORDER=#{teamorder} , </if>
+				<if test="teampercentage != null  and teampercentage != '' " > TEAMPERCENTAGE=#{teampercentage} , </if>
+				<if test="deptscore != null " > DEPTSCORE=#{deptscore} , </if>
+				<if test="deptlevel != null  and deptlevel != '' " > DEPTLEVEL=#{deptlevel} , </if>
+				<if test="deporder != null " > DEPORDER=#{deporder} , </if>
+				<if test="depremark != null  and depremark != '' " > DEPREMARK=#{depremark} , </if>
+				<if test="centertlevel != null  and centertlevel != '' " > CENTERTLEVEL=#{centertlevel} , </if>
+				<if test="centerorder != null " > CENTERORDER=#{centerorder} , </if>
+				<if test="centerremark != null  and centerremark != '' " > CENTERREMARK=#{centerremark} , </if>
+				<if test="initialtscore != null " > INITIALTSCORE=#{initialtscore} , </if>
+				<if test="initialtlevel != null  and initialtlevel != '' " > INITIALTLEVEL=#{initialtlevel} , </if>
+				<if test="initialorder != null " > INITIALORDER=#{initialorder} , </if>
+				<if test="addscore != null " > ADDSCORE=#{addscore} , </if>
+				<if test="depscore != null " > DEPSCORE=#{depscore} , </if>
+            </trim>
+        </sql>
+
+        <!--通过id编辑 k1327 2021-06-07 -->
+    	<update id="updatePojo" parameterType="ppmKpiPm">
+        	UPDATE
+        	PPM_KPI_PM
+        	<include refid="update_pojo_sql" />
+        	WHERE ID = #{id}
+        </update>
+
+        <!--通过id批量删除  k1327 2021-06-07 -->
+        <delete id="deleteById" parameterType="ppmKpiPm">
+        	DELETE
+        	FROM
+        	PPM_KPI_PM
+        	WHERE ID = #{id}
+        </delete>
+			<!--通过条件查询数据  k1327 2021-06-07 -->
+		<select id="queryDetailByCondition" parameterType="ppmKpiPm" resultMap="PPMKPIPM_ALL">
+			SELECT
+			<include refid="sql_flied_all" />
+			FROM PPM_KPI_PM
+			<include refid="sql_select_condition" />
+		</select>
+		<!--通过考核权限中心和查询条件查询数据  k1327 2021-06-07 -->
+		<select id="queryKpiPmByRoleAndCondition" parameterType="map"  resultMap="PPMKPIPM_ALL">
+			SELECT
+			<include refid="sql_flied_all" />
+			FROM PPM_KPI_PM p
+			<trim prefix="WHERE" suffixOverrides="AND">
+				<if test="centerid != null  and centerid != '' " > p.CENTERID = #{centerid} AND </if>
+				<if test="role != null  and role != '' " > p.ROLE = #{role} AND </if>
+				<if test="id != null " > p.ID = #{id} AND </if>
+				<if test="tyear != null  and tyear != '' " > p.TYEAR = #{tyear} AND </if>
+				<if test="term != null  and term != '' " > p.TERM = #{term} AND </if>
+				<if test="eid != null  and eid != '' " > p.EID = #{eid} AND </if>
+				<if test="depid != null  and depid != '' " > p.DEPID = #{depid} AND </if>
+				<if test="jobid != null  and jobid != '' " > p.JOBID = #{jobid} AND </if>
+				<if test="compid != null  and compid != '' " > p.COMPID = #{compid} AND </if>
+				<if test="status != null " > p.STATUS = #{status} AND </if>
+				<if test="firstcheck != null  and firstcheck != '' " > p.FIRSTCHECK = #{firstcheck} AND </if>
+				<if test="secondcheck != null  and secondcheck != '' " > p.SECONDCHECK = #{secondcheck} AND </if>
+				<if test="firstchecktime != null " > p.FIRSTCHECKTIME = #{firstchecktime} AND </if>
+				<if test="secondchecktime != null " > p.SECONDCHECKTIME = #{secondchecktime} AND </if>
+				<if test="firsteval != null  and firsteval != '' " > p.FIRSTEVAL = #{firsteval} AND </if>
+				<if test="secondeval != null  and secondeval != '' " > p.SECONDEVAL = #{secondeval} AND </if>
+				<if test="firstevaltime != null " > p.FIRSTEVALTIME = #{firstevaltime} AND </if>
+				<if test="secondevaltime != null " > p.SECONDEVALTIME = #{secondevaltime} AND </if>
+				<if test="createuser != null  and createuser != '' " > p.CREATEUSER = #{createuser} AND </if>
+				<if test="createtime != null " > p.CREATETIME = #{createtime} AND </if>
+				<if test="rollbacksuggest != null  and rollbacksuggest != '' " > p.ROLLBACKSUGGEST = #{rollbacksuggest} AND </if>
+				<if test="isedit != null " > p.ISEDIT = #{isedit} AND </if>
+				<if test="firstcomment != null  and firstcomment != '' " > p.FIRSTCOMMENT = #{firstcomment} AND </if>
+				<if test="secondcomment != null  and secondcomment != '' " > p.SECONDCOMMENT = #{secondcomment} AND </if>
+				<if test="firstcommenttime != null " > p.FIRSTCOMMENTTIME = #{firstcommenttime} AND </if>
+				<if test="secondcommenttime != null " > p.SECONDCOMMENTTIME = #{secondcommenttime} AND </if>
+				<if test="tscore != null " > p.TSCORE = #{tscore} AND </if>
+				<if test="tgrade != null  and tgrade != '' " > p.TGRADE = #{tgrade} AND </if>
+				<if test="evalby1score != null " > p.EVALBY1SCORE = #{evalby1score} AND </if>
+				<if test="evalby2score != null " > p.EVALBY2SCORE = #{evalby2score} AND </if>
+				<if test="headship != null  and headship != '' " > p.HEADSHIP = #{headship} AND </if>
+				<if test="firstorder != null " > p.FIRSTORDER = #{firstorder} AND </if>
+				<if test="secondorder != null " > p.SECONDORDER = #{secondorder} AND </if>
+				<if test="kpiscore != null " > p.KPISCORE = #{kpiscore} AND </if>
+				<if test="comprehensivescore != null " > p.COMPREHENSIVESCORE = #{comprehensivescore} AND </if>
+				<if test="performanceevaluationscore != null " > p.PERFORMANCEEVALUATIONSCORE = #{performanceevaluationscore} AND </if>
+				<if test="balancescore != null " > p.BALANCESCORE = #{balancescore} AND </if>
+				<if test="abilityimporvescore != null " > p.ABILITYIMPORVESCORE = #{abilityimporvescore} AND </if>
+				<if test="adjustlevel != null  and adjustlevel != '' " > p.ADJUSTLEVEL = #{adjustlevel} AND </if>
+				<if test="adjustreason != null  and adjustreason != '' " > p.ADJUSTREASON = #{adjustreason} AND </if>
+				<if test="teamorder != null " > p.TEAMORDER = #{teamorder} AND </if>
+				<if test="teampercentage != null  and teampercentage != '' " > p.TEAMPERCENTAGE = #{teampercentage} AND </if>
+				<if test="check != null  and check != '' " >
+					( (p.eid in(  select r.badge from ppm_kpi_role r where r.firstcheck= #{check} ）and  p.status=1)
+					or
+					(p.eid in(   select r.badge from ppm_kpi_role r where r.secondcheck= #{check} ）and  p.status=2))
+				</if>
+
+			</trim>
+		</select>
+
+		<!--通过条件查询数据  k1327 2021-06-07 -->
+		<select id="queryKpiPmByCondition" parameterType="map" resultMap="PPMKPIPM_ALL_EXT">
+			SELECT p.id,
+			p.tyear,
+			p.term,
+			p.eid,
+			p.depid,
+			p.jobid,
+			p.compid,
+			p.status,
+			p.firstcheck,
+			p.secondcheck,
+			p.firstchecktime,
+			p.secondchecktime,
+			p.firsteval,
+			p.secondeval,
+			p.firstevaltime,
+			p.secondevaltime,
+			p.createuser,
+			p.createtime,
+			p.rollbacksuggest,
+			p.isedit,
+			p.firstcomment,
+			p.secondcomment,
+			p.firstcommenttime,
+			p.secondcommenttime,
+			p.tscore,
+			p.tgrade,
+			p.evalby1score,
+			p.evalby2score,
+			p.headship,
+			p.firstorder,
+			p.secondorder,
+			p.kpiscore,
+			p.comprehensivescore,
+			p.performanceevaluationscore,
+			p.balancescore,
+			p.abilityimporvescore,
+			p.adjustlevel,
+			p.adjustreason,
+			p.teamorder,
+			p.teampercentage,
+			p.DEPTSCORE,
+			p.DEPTLEVEL,
+			p.DEPORDER,
+			p.DEPREMARK,
+			p.CENTERTLEVEL,
+			p.CENTERORDER,
+			p.CENTERREMARK,
+			p.INITIALTSCORE,
+			p.INITIALTLEVEL,
+			p.INITIALORDER,
+			p.ADDSCORE,
+			p.centerid,
+			p.role,
+			e.empname firstcheckname,
+			e1.empname secondcheckname,
+			d.location depname,
+			c.centername,
+			e2.empname firstevalname,
+			e3.empname secondevalname,
+			e4.empname eidname,
+			en1.dictname statusname,
+			en2.dictname rolename,
+			t.itemstatus,
+            en3.dictname itemstatusname
+			FROM PPM_KPI_PM p
+			left join comm_employee e on p.firstcheck=e.badge
+			left join comm_employee e1 on p.secondcheck=e1.badge
+			left join comm_department d on p.depid=d.depid
+			left join ppm_da_center c on p.centerid=c.id
+			left join comm_employee e2 on p.firsteval=e2.badge
+			left join comm_employee e3 on p.secondeval=e3.badge
+			left join comm_employee e4 on p.eid=e4.badge
+			left join eos_dict_entry en1 on en1.dicttypeid='KPI_MAIN_STATUS' and en1.dictid=p.status
+			left join eos_dict_entry en2 on en2.dicttypeid='KPI_ROLE' and en2.dictid=p.role
+			left join (select d.pid,min(d.itemstatus) itemstatus from ppm_kpi_pm_detail d group by d.pid) t on t.pid=p.id
+            left join eos_dict_entry en3 on en3.dicttypeid='KPI_ITEM_STATUS' and en3.dictid=t.itemstatus
+			<trim prefix="WHERE" suffixOverrides="AND">
+				<if test="centerid != null  and centerid != '' " > p.CENTERID = #{centerid} AND </if>
+				<if test="role != null  and role != '' " > p.ROLE = #{role} AND </if>
+				<if test="roles != null  and roles != '' " > p.ROLE in (${roles}) AND </if>
+				<if test="id != null " > p.ID = #{id} AND </if>
+				<if test="tyear != null  and tyear != '' " > p.TYEAR = #{tyear} AND </if>
+				<if test="term != null  and term != '' " > p.TERM = #{term} AND </if>
+				<if test="eid != null  and eid != '' " > p.EID = #{eid} AND </if>
+				<if test="eidname != null  and eidname != '' " > e4.empname like '%'||#{eidname}||'%' AND </if>
+				<if test="depid != null  and depid != '' " > p.DEPID = #{depid} AND </if>
+				<if test="jobid != null  and jobid != '' " > p.JOBID = #{jobid} AND </if>
+				<if test="compid != null  and compid != '' " > p.COMPID = #{compid} AND </if>
+				<if test="status != null " > p.STATUS = #{status} AND </if>
+				<if test="itemstatus != null " > t.ITEMSTATUS = #{itemstatus} AND </if>
+				<if test="firstcheck != null  and firstcheck != '' " > p.FIRSTCHECK = #{firstcheck} AND </if>
+				<if test="secondcheck != null  and secondcheck != '' " > p.SECONDCHECK = #{secondcheck} AND </if>
+				<if test="firstchecktime != null " > p.FIRSTCHECKTIME = #{firstchecktime} AND </if>
+				<if test="secondchecktime != null " > p.SECONDCHECKTIME = #{secondchecktime} AND </if>
+				<if test="firsteval != null  and firsteval != '' " > p.FIRSTEVAL = #{firsteval} AND </if>
+				<if test="secondeval != null  and secondeval != '' " > p.SECONDEVAL = #{secondeval} AND </if>
+				<if test="firstevaltime != null " > p.FIRSTEVALTIME = #{firstevaltime} AND </if>
+				<if test="secondevaltime != null " > p.SECONDEVALTIME = #{secondevaltime} AND </if>
+				<if test="createuser != null  and createuser != '' " > p.CREATEUSER = #{createuser} AND </if>
+				<if test="createtime != null " > p.CREATETIME = #{createtime} AND </if>
+				<if test="rollbacksuggest != null  and rollbacksuggest != '' " > p.ROLLBACKSUGGEST = #{rollbacksuggest} AND </if>
+				<if test="isedit != null " > p.ISEDIT = #{isedit} AND </if>
+				<if test="firstcomment != null  and firstcomment != '' " > p.FIRSTCOMMENT = #{firstcomment} AND </if>
+				<if test="secondcomment != null  and secondcomment != '' " > p.SECONDCOMMENT = #{secondcomment} AND </if>
+				<if test="firstcommenttime != null " > p.FIRSTCOMMENTTIME = #{firstcommenttime} AND </if>
+				<if test="secondcommenttime != null " > p.SECONDCOMMENTTIME = #{secondcommenttime} AND </if>
+				<if test="tscore != null " > p.TSCORE = #{tscore} AND </if>
+				<if test="tgrade != null  and tgrade != '' " > p.TGRADE = #{tgrade} AND </if>
+				<if test="evalby1score != null " > p.EVALBY1SCORE = #{evalby1score} AND </if>
+				<if test="evalby2score != null " > p.EVALBY2SCORE = #{evalby2score} AND </if>
+				<if test="headship != null  and headship != '' " > p.HEADSHIP = #{headship} AND </if>
+				<if test="firstorder != null " > p.FIRSTORDER = #{firstorder} AND </if>
+				<if test="secondorder != null " > p.SECONDORDER = #{secondorder} AND </if>
+				<if test="kpiscore != null " > p.KPISCORE = #{kpiscore} AND </if>
+				<if test="comprehensivescore != null " > p.COMPREHENSIVESCORE = #{comprehensivescore} AND </if>
+				<if test="performanceevaluationscore != null " > p.PERFORMANCEEVALUATIONSCORE = #{performanceevaluationscore} AND </if>
+				<if test="balancescore != null " > p.BALANCESCORE = #{balancescore} AND </if>
+				<if test="abilityimporvescore != null " > p.ABILITYIMPORVESCORE = #{abilityimporvescore} AND </if>
+				<if test="adjustlevel != null  and adjustlevel != '' " > p.ADJUSTLEVEL = #{adjustlevel} AND </if>
+				<if test="adjustreason != null  and adjustreason != '' " > p.ADJUSTREASON = #{adjustreason} AND </if>
+				<if test="teamorder != null " > p.TEAMORDER = #{teamorder} AND </if>
+				<if test="teampercentage != null  and teampercentage != '' " > p.TEAMPERCENTAGE = #{teampercentage} AND </if>
+				<if test="eidname != null  and eidname != '' " > e4.empname like '%'||#{eidname}||'%' AND </if>
+				<if test="check != null  and check != '' " >
+					( (p.eid in(  select r.badge from ppm_kpi_role r where r.firstcheck= #{check} ）and  p.status=1)
+					or
+					(p.eid in(   select r.badge from ppm_kpi_role r where r.secondcheck= #{check} ）and  p.status=2))
+				</if>
+			</trim>
+			order by p.centerid asc,p.depid asc,p.role desc
+	</select>
+	<!--考核查询页面汇总数据查询  k1327 2021-06-07 -->
+	<select id="getPpmKpiPmInfoSummary"  parameterType="map"  resultMap="PPMKPIPM_ALL_EXT">
+		SELECT p.id,
+		p.tyear,
+		p.term,
+		p.eid,
+		p.depid,
+		p.jobid,
+		p.compid,
+		p.status,
+		p.firstcheck,
+		p.secondcheck,
+		p.firstchecktime,
+		p.secondchecktime,
+		p.firsteval,
+		p.secondeval,
+		p.firstevaltime,
+		p.secondevaltime,
+		p.createuser,
+		p.createtime,
+		p.rollbacksuggest,
+		p.isedit,
+		p.firstcomment,
+		p.secondcomment,
+		p.firstcommenttime,
+		p.secondcommenttime,
+		p.tscore,
+		p.tgrade,
+		p.evalby1score,
+		p.evalby2score,
+		p.headship,
+		p.firstorder,
+		p.secondorder,
+		p.kpiscore,
+		p.comprehensivescore,
+		p.performanceevaluationscore,
+		p.balancescore,
+		p.abilityimporvescore,
+		p.adjustlevel,
+		p.adjustreason,
+		p.teamorder,
+		p.teampercentage,
+		p.centerid,
+		p.role,
+		e.empname firstcheckname,
+		e1.empname secondcheckname,
+		d.location depname,
+		c.centername,
+		e2.empname firstevalname,
+		e3.empname secondevalname,
+		e4.empname eidname,
+		en1.dictname statusname,
+		en2.dictname rolename,
+		null depscore
+		FROM PPM_KPI_PM p
+		left join comm_employee e on p.firstcheck=e.badge
+		left join comm_employee e1 on p.secondcheck=e1.badge
+		left join comm_department d on p.depid=d.depid
+		left join ppm_da_center c on p.centerid=c.id
+		left join comm_employee e2 on p.firsteval=e2.badge
+		left join comm_employee e3 on p.secondeval=e3.badge
+		left join comm_employee e4 on p.eid=e4.badge
+		left join eos_dict_entry en1 on en1.dicttypeid='KPI_MAIN_STATUS' and en1.dictid=p.status
+		left join eos_dict_entry en2 on en2.dicttypeid='KPI_ROLE' and en2.dictid=p.role
+		<trim prefix="WHERE" suffixOverrides="AND">
+			<if test="centerid != null  and centerid != '' " > p.CENTERID = #{centerid} AND </if>
+			<if test="role != null  and role != '' " > p.ROLE = #{role} AND </if>
+			<if test="id != null " > p.ID = #{id} AND </if>
+			<if test="tyear != null  and tyear != '' " > p.TYEAR = #{tyear} AND </if>
+			<if test="term != null  and term != '' " > p.TERM = #{term} AND </if>
+			<if test="eid != null  and eid != '' " > p.EID = #{eid} AND </if>
+			<if test="eidname != null  and eidname != '' " > e4.empname like '%'||#{eidname}||'%' AND </if>
+			<if test="depid != null  and depid != '' " > p.DEPID = #{depid} AND </if>
+			<if test="jobid != null  and jobid != '' " > p.JOBID = #{jobid} AND </if>
+			<if test="compid != null  and compid != '' " > p.COMPID = #{compid} AND </if>
+			<if test="status != null " > p.STATUS = #{status} AND </if>
+			<if test="firstcheck != null  and firstcheck != '' " > p.FIRSTCHECK = #{firstcheck} AND </if>
+			<if test="secondcheck != null  and secondcheck != '' " > p.SECONDCHECK = #{secondcheck} AND </if>
+			<if test="firstchecktime != null " > p.FIRSTCHECKTIME = #{firstchecktime} AND </if>
+			<if test="secondchecktime != null " > p.SECONDCHECKTIME = #{secondchecktime} AND </if>
+			<if test="firsteval != null  and firsteval != '' " > p.FIRSTEVAL = #{firsteval} AND </if>
+			<if test="secondeval != null  and secondeval != '' " > p.SECONDEVAL = #{secondeval} AND </if>
+			<if test="firstevaltime != null " > p.FIRSTEVALTIME = #{firstevaltime} AND </if>
+			<if test="secondevaltime != null " > p.SECONDEVALTIME = #{secondevaltime} AND </if>
+			<if test="createuser != null  and createuser != '' " > p.CREATEUSER = #{createuser} AND </if>
+			<if test="createtime != null " > p.CREATETIME = #{createtime} AND </if>
+			<if test="rollbacksuggest != null  and rollbacksuggest != '' " > p.ROLLBACKSUGGEST = #{rollbacksuggest} AND </if>
+			<if test="isedit != null " > p.ISEDIT = #{isedit} AND </if>
+			<if test="firstcomment != null  and firstcomment != '' " > p.FIRSTCOMMENT = #{firstcomment} AND </if>
+			<if test="secondcomment != null  and secondcomment != '' " > p.SECONDCOMMENT = #{secondcomment} AND </if>
+			<if test="firstcommenttime != null " > p.FIRSTCOMMENTTIME = #{firstcommenttime} AND </if>
+			<if test="secondcommenttime != null " > p.SECONDCOMMENTTIME = #{secondcommenttime} AND </if>
+			<if test="tscore != null " > p.TSCORE = #{tscore} AND </if>
+			<if test="tgrade != null  and tgrade != '' " > p.TGRADE = #{tgrade} AND </if>
+			<if test="evalby1score != null " > p.EVALBY1SCORE = #{evalby1score} AND </if>
+			<if test="evalby2score != null " > p.EVALBY2SCORE = #{evalby2score} AND </if>
+			<if test="headship != null  and headship != '' " > p.HEADSHIP = #{headship} AND </if>
+			<if test="firstorder != null " > p.FIRSTORDER = #{firstorder} AND </if>
+			<if test="secondorder != null " > p.SECONDORDER = #{secondorder} AND </if>
+			<if test="kpiscore != null " > p.KPISCORE = #{kpiscore} AND </if>
+			<if test="comprehensivescore != null " > p.COMPREHENSIVESCORE = #{comprehensivescore} AND </if>
+			<if test="performanceevaluationscore != null " > p.PERFORMANCEEVALUATIONSCORE = #{performanceevaluationscore} AND </if>
+			<if test="balancescore != null " > p.BALANCESCORE = #{balancescore} AND </if>
+			<if test="abilityimporvescore != null " > p.ABILITYIMPORVESCORE = #{abilityimporvescore} AND </if>
+			<if test="adjustlevel != null  and adjustlevel != '' " > p.ADJUSTLEVEL = #{adjustlevel} AND </if>
+			<if test="adjustreason != null  and adjustreason != '' " > p.ADJUSTREASON = #{adjustreason} AND </if>
+			<if test="teamorder != null " > p.TEAMORDER = #{teamorder} AND </if>
+			<if test="teampercentage != null  and teampercentage != '' " > p.TEAMPERCENTAGE = #{teampercentage} AND </if>
+			<if test="check != null  and check != '' " >
+				( p.eid in(  select r.badge from ppm_kpi_role r where r.firstcheck= #{check} )
+				or
+				p.eid in(   select r.badge from ppm_kpi_role r where r.secondcheck= #{check} ）)
+			</if>
+		</trim>
+	</select>
+	<!--根据工号查询所考核的年份  k1327 2021-06-07 -->
+	<select id="getPpmKpiPmTyears"  parameterType="ppmKpiPm"  resultMap="PPMKPIPM_ALL">
+		select d.tyear from ppm_kpi_pm_detail d where d.eid=#{eid} group by d.tyear  order by d.tyear desc
+	</select>
+
+	<!--根据评价人查询评价人信息和条数  k1327 2021-06-07 -->
+	<select id="getPpmKpiPmEvalInfo"  parameterType="map"  resultMap="PPMKPIPM_ALL_EXT">
+		select * from (
+		select max(p.id) id ,
+		max(p.tyear) tyear,
+		max(p.term ) term,
+		max(p.eid ) eid,
+		max(p.depid) depid,
+		max(p.jobid ) jobid,
+		max(p.compid) compid,
+		max(p.status) status,
+		max(p.firstcheck) firstcheck,
+		max(p.secondcheck) secondcheck,
+		max(p.firstchecktime) firstchecktime,
+		max(p.secondchecktime) secondchecktime,
+		max(p.firsteval) firsteval,
+		max(p.secondeval) secondeval,
+		max(p.firstevaltime) firstevaltime,
+		max(p.secondevaltime) secondevaltime,
+		max(p.createuser) createuser,
+		max(p.createtime) createtime,
+		max(p.rollbacksuggest) rollbacksuggest,
+		max(p.isedit) isedit,
+		max(p.firstcomment) firstcomment,
+		max(p.secondcomment) secondcomment,
+		max(p.firstcommenttime) firstcommenttime,
+		max(p.secondcommenttime) secondcommenttime,
+		max(p.tscore) tscore,
+		max(p.tgrade) tgrade,
+		max(p.evalby1score) evalby1score,
+		max(p.evalby2score) evalby2score,
+		max(p.headship) headship,
+		max(p.firstorder) firstorder,
+		max(p.secondorder) secondorder,
+		max(p.kpiscore) kpiscore,
+		max(p.comprehensivescore) comprehensivescore,
+		max(p.performanceevaluationscore) performanceevaluationscore,
+		max(p.balancescore) balancescore,
+		max(p.abilityimporvescore) abilityimporvescore,
+		max(p.adjustlevel) adjustlevel,
+		max(p.adjustreason) adjustreason,
+		max(p.teamorder) teamorder,
+		max(p.teampercentage) teampercentage,
+		max(p.centerid) centerid,
+		max(p.role) role,
+		max(p.halfyearfirsteval) halfyearfirsteval,
+		max(p.halfyearsecondeval) halfyearsecondeval,
+		max(p.halfyearfirstevaltime) halfyearfirstevaltime,
+		max(p.halfyearsecondevaltime) halfyearsecondevaltime,
+		max(p.halfyearfirstcomment) halfyearfirstcomment,
+		max(p.halfyearsecondcomment) halfyearsecondcomment ,
+		max(e.empname ) firstcheckname,
+		max(e1.empname ) secondcheckname,
+		max(d1.location) depname,
+		max(c.centername) centername,
+		max(e2.empname) firstevalname,
+		max(e3.empname) secondevalname,
+		max(e4.empname) eidname,
+		max(en1.dictname) statusname,
+		max(e6.empname) halfyearsecondevalname,
+		max(en2.dictname) rolename,
+		max(e5.empname) halfyearfirstevalname,
+		count(*) evalitems,
+		case when max(p.role)='COMM_USER' then round((nvl((select p1.tscore from ppm_kpi_pm p1 where p1.tyear=#{tyear} and p1.term='上半年' and p1.eid=p.eid),0)+
+		nvl((select p2.tscore  from ppm_kpi_pm p2 where p2.tyear=#{tyear} and p2.term='下半年' and p2.eid=p.eid),0)
+		),2)
+		when max(p.role)='DEP_MANAGERS' then round((select nvl(p1.tscore,0)  from ppm_kpi_pm p1 where p1.tyear=#{tyear} and p1.term ='全年度' and p1.eid=p.eid),2)
+		when max(p.role)='DEP_MANAGER' then round((select nvl(p1.tscore,0)  from ppm_kpi_pm p1 where p1.tyear=#{tyear} and p1.term ='全年度' and p1.eid=p.eid),2)
+		else 0 end expectscore
+		from ppm_kpi_pm p
+		left join ppm_kpi_pm_detail d on p.id=d.pid
+		left join comm_employee e on p.firstcheck=e.badge
+		left join comm_employee e1 on p.secondcheck=e1.badge
+		left join comm_department d1 on p.depid=d1.depid
+		left join ppm_da_center c on p.centerid=c.id
+		left join comm_employee e2 on p.firsteval=e2.badge
+		left join comm_employee e3 on p.secondeval=e3.badge
+		left join comm_employee e4 on p.eid=e4.badge
+		left join comm_employee e5 on p.halfyearfirsteval=e5.badge
+		left join comm_employee e6 on p.halfyearsecondeval=e6.badge
+		left join eos_dict_entry en1 on en1.dicttypeid='KPI_MAIN_STATUS' and en1.dictid=p.status
+		left join eos_dict_entry en2 on en2.dicttypeid='KPI_ROLE' and en2.dictid=p.role
+		<trim prefix="WHERE" suffixOverrides="AND">
+			<if test="centerid != null  and centerid != '' " > p.CENTERID = #{centerid} AND </if>
+			<if test="role != null  and role != '' " > p.ROLE = #{role} AND </if>
+			<if test="id != null " > p.ID = #{id} AND </if>
+			<if test="tyear != null  and tyear != '' " > p.TYEAR = #{tyear} AND </if>
+			<if test="term != null  and term != '' " > p.TERM = #{term} AND </if>
+			<if test="eid != null  and eid != '' " > p.EID = #{eid} AND </if>
+			<if test="eidname != null  and eidname != '' " > e4.empname like '%'||#{eidname}||'%' AND </if>
+			<if test="depid != null  and depid != '' " > p.DEPID = #{depid} AND </if>
+			<if test="jobid != null  and jobid != '' " > p.JOBID = #{jobid} AND </if>
+			<if test="compid != null  and compid != '' " > p.COMPID = #{compid} AND </if>
+			<if test="status != null " > p.STATUS = #{status} AND </if>
+			<if test="firstcheck != null  and firstcheck != '' " > p.FIRSTCHECK = #{firstcheck} AND </if>
+			<if test="secondcheck != null  and secondcheck != '' " > p.SECONDCHECK = #{secondcheck} AND </if>
+			<if test="firstchecktime != null " > p.FIRSTCHECKTIME = #{firstchecktime} AND </if>
+			<if test="secondchecktime != null " > p.SECONDCHECKTIME = #{secondchecktime} AND </if>
+			<if test="firsteval != null  and firsteval != '' " > p.FIRSTEVAL = #{firsteval} AND </if>
+			<if test="secondeval != null  and secondeval != '' " > p.SECONDEVAL = #{secondeval} AND </if>
+			<if test="firstevaltime != null " > p.FIRSTEVALTIME = #{firstevaltime} AND </if>
+			<if test="secondevaltime != null " > p.SECONDEVALTIME = #{secondevaltime} AND </if>
+			<if test="createuser != null  and createuser != '' " > p.CREATEUSER = #{createuser} AND </if>
+			<if test="createtime != null " > p.CREATETIME = #{createtime} AND </if>
+			<if test="rollbacksuggest != null  and rollbacksuggest != '' " > p.ROLLBACKSUGGEST = #{rollbacksuggest} AND </if>
+			<if test="isedit != null " > p.ISEDIT = #{isedit} AND </if>
+			<if test="firstcomment != null  and firstcomment != '' " > p.FIRSTCOMMENT = #{firstcomment} AND </if>
+			<if test="secondcomment != null  and secondcomment != '' " > p.SECONDCOMMENT = #{secondcomment} AND </if>
+			<if test="firstcommenttime != null " > p.FIRSTCOMMENTTIME = #{firstcommenttime} AND </if>
+			<if test="secondcommenttime != null " > p.SECONDCOMMENTTIME = #{secondcommenttime} AND </if>
+			<if test="tscore != null " > p.TSCORE = #{tscore} AND </if>
+			<if test="tgrade != null  and tgrade != '' " > p.TGRADE = #{tgrade} AND </if>
+			<if test="evalby1score != null " > p.EVALBY1SCORE = #{evalby1score} AND </if>
+			<if test="evalby2score != null " > p.EVALBY2SCORE = #{evalby2score} AND </if>
+			<if test="headship != null  and headship != '' " > p.HEADSHIP = #{headship} AND </if>
+			<if test="firstorder != null " > p.FIRSTORDER = #{firstorder} AND </if>
+			<if test="secondorder != null " > p.SECONDORDER = #{secondorder} AND </if>
+			<if test="kpiscore != null " > p.KPISCORE = #{kpiscore} AND </if>
+			<if test="comprehensivescore != null " > p.COMPREHENSIVESCORE = #{comprehensivescore} AND </if>
+			<if test="performanceevaluationscore != null " > p.PERFORMANCEEVALUATIONSCORE = #{performanceevaluationscore} AND </if>
+			<if test="balancescore != null " > p.BALANCESCORE = #{balancescore} AND </if>
+			<if test="abilityimporvescore != null " > p.ABILITYIMPORVESCORE = #{abilityimporvescore} AND </if>
+			<if test="adjustlevel != null  and adjustlevel != '' " > p.ADJUSTLEVEL = #{adjustlevel} AND </if>
+			<if test="adjustreason != null  and adjustreason != '' " > p.ADJUSTREASON = #{adjustreason} AND </if>
+			<if test="teamorder != null " > p.TEAMORDER = #{teamorder} AND </if>
+			<if test="teampercentage != null  and teampercentage != '' " > p.TEAMPERCENTAGE = #{teampercentage} AND </if>
+			<if test="eidname != null  and eidname != '' " > e4.empname like '%'||#{eidname}||'%' AND </if>
+			<if test="kpitypes != null  and kpitypes != '' " > d.KPITYPE in (${kpitypes}) AND </if>
+			<if test="itemstatuss != null " >  d.ITEMSTATUS in (${itemstatuss}) AND </if>
+			<if test="roles != null  and roles != '' " > p.ROLE in (${roles}) AND </if>
+			<if test="check != null  and check != '' " >
+				(
+				(p.eid in(select r.badge from ppm_kpi_role r where r.firstcheck= #{check} )and  d.itemstatus=5 and d.kpitype!='3')
+				or
+				(p.eid in(select r.badge from ppm_kpi_role r where r.secondcheck= #{check} )and  d.itemstatus=6 and d.kpitype!='3')
+				or
+				(d.kpitype='3'and d.itemstatus=5 and d.firsteval=#{check})
+				or
+				(d.kpitype='3'and d.itemstatus=6 and d.secondeval=#{check})
+				)
+			</if>
+		</trim>
+		group by p.eid
+		)t  order by t.centerid ,t.depid,t.expectscore desc,t.eid asc
+	</select>
+	<!--根据条件查询平衡计分评价统计数据  k1327 2021-06-07 -->
+	<select id="getBalanceSummaryInfo"  parameterType="map"  resultMap="PPMKPIPM_ALL_EXT_BALANCE_SUMMARY">
+		select d.tyear,d.eid,max(e.empname) eidname,max(c.centername) centername,max(de.location) depname,
+		max(en.dictname)  rolename,
+		(select count(*) from PPM_KPI_BALANCE_DEDUCE d1 where d1.tyear=d.tyear and d1.eid=d.eid ) decitems,
+		(select sum(d1.value) from PPM_KPI_BALANCE_DEDUCE d1 where d1.tyear=d.tyear and d1.eid=d.eid) decvalues
+		from ppm_kpi_pm_detail d
+		left join ppm_kpi_pm p on d.pid=p.id
+		left join comm_employee e on d.eid=e.badge
+		left join ppm_da_center c on p.centerid=c.id
+		left join eos_dict_entry en on en.dictid=p.role and en.dicttypeid='KPI_ROLE'
+		left join comm_department de on p.depid=de.depid
+		<trim prefix="WHERE" suffixOverrides="AND">
+			<if test="tyear != null  and tyear != '' " > p.TYEAR = #{tyear} AND </if>
+			<if test="term != null  and term != '' " > p.TERM = #{term} AND </if>
+			<if test="eid != null  and eid != '' " > p.EID = #{eid} AND </if>
+			<if test="eidname != null  and eidname != '' " > e.empname like '%'||#{eidname}||'%' AND </if>
+			<if test="depid != null  and depid != '' " > p.DEPID = #{depid} AND </if>
+			<if test="true " > d.KPITYPE ='4' AND </if>
+		</trim>
+		group by d.tyear,d.eid order by max(p.centerid) asc,max(p.depid) asc,max(p.role) asc
+	</select>
+
+	<!--根据条件查询员工考核的数据 k1327 2021-06-07 -->
+	<select id="getEmpKpiData"  parameterType="map"  resultMap="PPMKPIPM_ALL_EXT">
+		select max(tyear) tyear ,p.eid,max(e.empname) eidname,max(d.location) depname,max(c.centername) centername,max(en.dictname) rolename,
+		min(p.status) status,max(en1.dictname) statusname,
+		case when max(p.role)='COMM_USER' then round((nvl((select p1.kpiscore*0.7*0.4  from ppm_kpi_pm p1 where p1.tyear=#{tyear} and p1.term='上半年' and p1.eid=p.eid),0)+
+		nvl((select p2.kpiscore*0.7*0.6  from ppm_kpi_pm p2 where p2.tyear=#{tyear} and p2.term='下半年' and p2.eid=p.eid),0)),2)
+		when max(p.role)='DEP_MANAGERS' then (select round(nvl(p1.kpiscore*0.4,0),2)  from ppm_kpi_pm p1 where p1.tyear=#{tyear} and p1.term ='全年度' and p1.eid=p.eid)
+		else 0 end kpiscore,
+
+		case when max(p.role)='COMM_USER' then round((nvl((select p1.comprehensivescore*0.3*0.4  from ppm_kpi_pm p1 where p1.tyear=#{tyear} and p1.term='上半年' and p1.eid=p.eid),0)+
+		nvl((select p2.comprehensivescore*0.3*0.6  from ppm_kpi_pm p2 where p2.tyear=#{tyear} and p2.term='下半年' and p2.eid=p.eid),0)),2)
+		else 0 end comprehensivescore,
+
+		case when max(p.role)='DEP_MANAGER' then round((select nvl(p1.performanceevaluationscore*0.3,0)  from ppm_kpi_pm p1 where p1.tyear=#{tyear} and p1.term ='全年度' and p1.eid=p.eid),2)
+		when max(p.role)='DEP_MANAGERS' then (select round(nvl(p1.performanceevaluationscore*0.3,0),2)  from ppm_kpi_pm p1 where p1.tyear=#{tyear} and p1.term ='全年度' and p1.eid=p.eid)
+		else 0 end performanceevaluationscore,
+
+		max(p.depscore) depscore,
+
+		nvl((select round(sum(d.tscore),2) from ppm_kpi_pm_detail d where d.kpitype='4' and d.tyear=#{tyear} and d.eid=p.eid),0) balancescore,
+
+		case when max(p.role)='COMM_USER' then round((nvl((select p1.tscore from ppm_kpi_pm p1 where p1.tyear=#{tyear} and p1.term='上半年' and p1.eid=p.eid),0)+
+		nvl((select p2.tscore  from ppm_kpi_pm p2 where p2.tyear=#{tyear} and p2.term='下半年' and p2.eid=p.eid),0)
+		),2)
+		when max(p.role)='DEP_MANAGERS' then round((select nvl(p1.tscore,0)  from ppm_kpi_pm p1 where p1.tyear=#{tyear} and p1.term ='全年度' and p1.eid=p.eid),2)
+
+		when max(p.role)='DEP_MANAGER' then round((select nvl(p1.tscore,0)  from ppm_kpi_pm p1 where p1.tyear=#{tyear} and p1.term ='全年度' and p1.eid=p.eid),2)
+		else 0 end tscore,
+
+		(select p1.tgrade from ppm_kpi_pm p1 where p1.tyear=#{tyear} and p1.term='年度' and p1.eid=p.eid) tgrade
+
+		from  ppm_kpi_pm p
+		left join comm_employee e on p.eid=e.badge
+		left join comm_department d on p.depid=d.depid
+		left join ppm_da_center c on p.centerid=c.id
+		left join eos_dict_entry en on p.role=en.dictid and en.dicttypeid='KPI_ROLE'
+		left join eos_dict_entry en1 on p.status=en1.dictid and en1.dicttypeid='KPI_MAIN_STATUS'
+		<trim prefix="WHERE" suffixOverrides="AND">
+			<if test="tyear != null  and tyear != '' " > p.TYEAR = #{tyear} AND </if>
+			<if test="term != null  and term != '' " > p.TERM = #{term} AND </if>
+			<if test="eid != null  and eid != '' " > p.EID = #{eid} AND </if>
+			<if test="eidname != null  and eidname != '' " > e.empname like '%'||#{eidname}||'%' AND </if>
+			<if test="depid != null  and depid != '' " > p.DEPID = #{depid} AND </if>
+			<if test="centerid != null  and centerid != '' " > p.CENTERID = #{centerid} AND </if>
+			<if test="status != null " > p.STATUS = #{status} AND </if>
+			<if test="role != null  and role != '' " > p.ROLE = #{role} AND </if>
+			<if test="check != null  and check != '' " >
+				( p.eid in(  select r.badge from ppm_kpi_role r where r.firstcheck= #{check} )
+				or
+				p.eid in(   select r.badge from ppm_kpi_role r where r.secondcheck= #{check} ）)
+			</if>
+		</trim>
+		group by p.eid order by max(p.tyear),max(p.centerid),max(p.depid),max(p.role),p.eid asc
+	</select>
+	<!--根据评价人查询评价人信息和条数  k1327 2021-06-07 -->
+	<select id="getPostEvalInfo"  parameterType="map"  resultMap="PPMKPIPM_ALL_EXT">
+		select max(p.id) id ,
+		max(p.tyear) tyear,
+		max(p.term ) term,
+		max(p.eid ) eid,
+		max(p.depid) depid,
+		max(p.jobid ) jobid,
+		max(p.compid) compid,
+		max(p.status) status,
+		max(p.firstcheck) firstcheck,
+		max(p.secondcheck) secondcheck,
+		max(p.firstchecktime) firstchecktime,
+		max(p.secondchecktime) secondchecktime,
+		max(p.firsteval) firsteval,
+		max(p.secondeval) secondeval,
+		max(p.firstevaltime) firstevaltime,
+		max(p.secondevaltime) secondevaltime,
+		max(p.createuser) createuser,
+		max(p.createtime) createtime,
+		max(p.rollbacksuggest) rollbacksuggest,
+		max(p.isedit) isedit,
+		max(p.firstcomment) firstcomment,
+		max(p.secondcomment) secondcomment,
+		max(p.firstcommenttime) firstcommenttime,
+		max(p.secondcommenttime) secondcommenttime,
+		max(p.tscore) tscore,
+		max(p.tgrade) tgrade,
+		max(p.evalby1score) evalby1score,
+		max(p.evalby2score) evalby2score,
+		max(p.headship) headship,
+		max(p.firstorder) firstorder,
+		max(p.secondorder) secondorder,
+		max(p.kpiscore) kpiscore,
+		max(p.comprehensivescore) comprehensivescore,
+		max(p.performanceevaluationscore) performanceevaluationscore,
+		max(p.balancescore) balancescore,
+		max(p.abilityimporvescore) abilityimporvescore,
+		max(p.adjustlevel) adjustlevel,
+		max(p.adjustreason) adjustreason,
+		max(p.teamorder) teamorder,
+		max(p.teampercentage) teampercentage,
+		max(p.centerid) centerid,
+		max(p.role) role,
+		max(p.halfyearfirsteval) halfyearfirsteval,
+		max(p.halfyearsecondeval) halfyearsecondeval,
+		max(p.halfyearfirstevaltime) halfyearfirstevaltime,
+		max(p.halfyearsecondevaltime) halfyearsecondevaltime,
+		max(p.halfyearfirstcomment) halfyearfirstcomment,
+		max(p.halfyearsecondcomment) halfyearsecondcomment ,
+		max(e.empname ) firstcheckname,
+		max(e1.empname ) secondcheckname,
+		max(d1.location) depname,
+		max(c.centername) centername,
+		max(e2.empname) firstevalname,
+		max(e3.empname) secondevalname,
+		max(e4.empname) eidname,
+		max(en1.dictname) statusname,
+		max(e6.empname) halfyearsecondevalname,
+		max(en2.dictname) rolename,
+		max(e5.empname) halfyearfirstevalname,
+		count(*) evalitems
+		from ppm_kpi_pm p
+		left join ppm_kpi_pm_detail d on p.id=d.pid
+		left join ppm_kpi_postevaluation n on d.id=n.pid
+
+		left join comm_employee e on p.firstcheck=e.badge
+		left join comm_employee e1 on p.secondcheck=e1.badge
+		left join comm_department d1 on p.depid=d1.depid
+		left join ppm_da_center c on p.centerid=c.id
+		left join comm_employee e2 on p.firsteval=e2.badge
+		left join comm_employee e3 on p.secondeval=e3.badge
+		left join comm_employee e4 on p.eid=e4.badge
+		left join comm_employee e5 on p.halfyearfirsteval=e5.badge
+		left join comm_employee e6 on p.halfyearsecondeval=e6.badge
+		left join eos_dict_entry en1 on en1.dicttypeid='KPI_MAIN_STATUS' and en1.dictid=p.status
+		left join eos_dict_entry en2 on en2.dicttypeid='KPI_ROLE' and en2.dictid=p.role
+		<trim prefix="WHERE" suffixOverrides="AND">
+			<if test="centerid != null  and centerid != '' " > p.CENTERID = #{centerid} AND </if>
+			<if test="role != null  and role != '' " > p.ROLE = #{role} AND </if>
+			<if test="id != null " > p.ID = #{id} AND </if>
+			<if test="tyear != null  and tyear != '' " > p.TYEAR = #{tyear} AND </if>
+			<if test="term != null  and term != '' " > p.TERM = #{term} AND </if>
+			<if test="eid != null  and eid != '' " > p.EID = #{eid} AND </if>
+			<if test="eidname != null  and eidname != '' " > e4.empname like '%'||#{eidname}||'%' AND </if>
+			<if test="depid != null  and depid != '' " > p.DEPID = #{depid} AND </if>
+			<if test="jobid != null  and jobid != '' " > p.JOBID = #{jobid} AND </if>
+			<if test="compid != null  and compid != '' " > p.COMPID = #{compid} AND </if>
+			<if test="status != null " > p.STATUS = #{status} AND </if>
+			<if test="firstcheck != null  and firstcheck != '' " > p.FIRSTCHECK = #{firstcheck} AND </if>
+			<if test="secondcheck != null  and secondcheck != '' " > p.SECONDCHECK = #{secondcheck} AND </if>
+			<if test="firstchecktime != null " > p.FIRSTCHECKTIME = #{firstchecktime} AND </if>
+			<if test="secondchecktime != null " > p.SECONDCHECKTIME = #{secondchecktime} AND </if>
+			<if test="firsteval != null  and firsteval != '' " > p.FIRSTEVAL = #{firsteval} AND </if>
+			<if test="secondeval != null  and secondeval != '' " > p.SECONDEVAL = #{secondeval} AND </if>
+			<if test="firstevaltime != null " > p.FIRSTEVALTIME = #{firstevaltime} AND </if>
+			<if test="secondevaltime != null " > p.SECONDEVALTIME = #{secondevaltime} AND </if>
+			<if test="createuser != null  and createuser != '' " > p.CREATEUSER = #{createuser} AND </if>
+			<if test="createtime != null " > p.CREATETIME = #{createtime} AND </if>
+			<if test="rollbacksuggest != null  and rollbacksuggest != '' " > p.ROLLBACKSUGGEST = #{rollbacksuggest} AND </if>
+			<if test="isedit != null " > p.ISEDIT = #{isedit} AND </if>
+			<if test="firstcomment != null  and firstcomment != '' " > p.FIRSTCOMMENT = #{firstcomment} AND </if>
+			<if test="secondcomment != null  and secondcomment != '' " > p.SECONDCOMMENT = #{secondcomment} AND </if>
+			<if test="firstcommenttime != null " > p.FIRSTCOMMENTTIME = #{firstcommenttime} AND </if>
+			<if test="secondcommenttime != null " > p.SECONDCOMMENTTIME = #{secondcommenttime} AND </if>
+			<if test="tscore != null " > p.TSCORE = #{tscore} AND </if>
+			<if test="tgrade != null  and tgrade != '' " > p.TGRADE = #{tgrade} AND </if>
+			<if test="evalby1score != null " > p.EVALBY1SCORE = #{evalby1score} AND </if>
+			<if test="evalby2score != null " > p.EVALBY2SCORE = #{evalby2score} AND </if>
+			<if test="headship != null  and headship != '' " > p.HEADSHIP = #{headship} AND </if>
+			<if test="firstorder != null " > p.FIRSTORDER = #{firstorder} AND </if>
+			<if test="secondorder != null " > p.SECONDORDER = #{secondorder} AND </if>
+			<if test="kpiscore != null " > p.KPISCORE = #{kpiscore} AND </if>
+			<if test="comprehensivescore != null " > p.COMPREHENSIVESCORE = #{comprehensivescore} AND </if>
+			<if test="performanceevaluationscore != null " > p.PERFORMANCEEVALUATIONSCORE = #{performanceevaluationscore} AND </if>
+			<if test="balancescore != null " > p.BALANCESCORE = #{balancescore} AND </if>
+			<if test="abilityimporvescore != null " > p.ABILITYIMPORVESCORE = #{abilityimporvescore} AND </if>
+			<if test="adjustlevel != null  and adjustlevel != '' " > p.ADJUSTLEVEL = #{adjustlevel} AND </if>
+			<if test="adjustreason != null  and adjustreason != '' " > p.ADJUSTREASON = #{adjustreason} AND </if>
+			<if test="teamorder != null " > p.TEAMORDER = #{teamorder} AND </if>
+			<if test="teampercentage != null  and teampercentage != '' " > p.TEAMPERCENTAGE = #{teampercentage} AND </if>
+			<if test="eidname != null  and eidname != '' " > e4.empname like '%'||#{eidname}||'%' AND </if>
+			<if test="kpitypes != null  and kpitypes != '' " > d.KPITYPE in (${kpitypes}) AND </if>
+			<if test="kpitype != null  and kpitype != '' " > d.KPITYPE =#{KPITYPE} AND </if>
+			<if test="itemstatuss != null " >  d.ITEMSTATUS in (${itemstatuss}) AND </if>
+			<if test="check != null  and check != '' " >
+				(( n.FIRSTEVAL = #{check} and  n.itemstatus=5)
+				or
+				( n.SECONDEVAL = #{check} and  n.itemstatus=6))
+			</if>
+		</trim>
+		group by p.eid order by p.eid asc
+	</select>
+
+	<!--通过年份和工号查询当前人年度总分  k1327 2021-06-07 -->
+	<select id="querySumScore" parameterType="ppmKpiPm" resultMap="PPMKPIPM_ALL">
+		select sum(p.tscore) tscore from ppm_kpi_pm p
+		<trim prefix="WHERE" suffixOverrides="AND">
+			<if test="true" > (p.TERM !='年度' or p.TERM ='全年度') AND </if>
+			<if test="tyear != null  and tyear != '' " > p.TYEAR = #{tyear} AND </if>
+			<if test="eid != null  and eid != '' " > p.EID = #{eid} AND </if>
+		</trim>
+	</select>
+
+
+	<!--通过条件查询数据  k1327 2021-06-07 -->
+	<select id="getPpmKpiPmListByOrder" parameterType="map" resultMap="PPMKPIPM_ALL">
+		SELECT p.*
+		FROM PPM_KPI_PM p
+		<trim prefix="WHERE" suffixOverrides="AND">
+			<if test="centerid != null  and centerid != '' " > p.CENTERID = #{centerid} AND </if>
+			<if test="role != null  and role != '' " > p.ROLE = #{role} AND </if>
+			<if test="roles != null  and roles != '' " > p.ROLE in ( ${roles}) AND </if>
+			<if test="id != null " > p.ID = #{id} AND </if>
+			<if test="tyear != null  and tyear != '' " > p.TYEAR = #{tyear} AND </if>
+			<if test="term != null  and term != '' " > p.TERM = #{term} AND </if>
+			<if test="eid != null  and eid != '' " > p.EID = #{eid} AND </if>
+			<if test="eidname != null  and eidname != '' " > e4.empname like '%'||#{eidname}||'%' AND </if>
+			<if test="depid != null  and depid != '' " > p.DEPID = #{depid} AND </if>
+			<if test="jobid != null  and jobid != '' " > p.JOBID = #{jobid} AND </if>
+			<if test="compid != null  and compid != '' " > p.COMPID = #{compid} AND </if>
+			<if test="status != null " > p.STATUS = #{status} AND </if>
+			<if test="itemstatus != null " > t.ITEMSTATUS = #{itemstatus} AND </if>
+			<if test="firstcheck != null  and firstcheck != '' " > p.FIRSTCHECK = #{firstcheck} AND </if>
+			<if test="secondcheck != null  and secondcheck != '' " > p.SECONDCHECK = #{secondcheck} AND </if>
+			<if test="firstchecktime != null " > p.FIRSTCHECKTIME = #{firstchecktime} AND </if>
+			<if test="secondchecktime != null " > p.SECONDCHECKTIME = #{secondchecktime} AND </if>
+			<if test="firsteval != null  and firsteval != '' " > p.FIRSTEVAL = #{firsteval} AND </if>
+			<if test="secondeval != null  and secondeval != '' " > p.SECONDEVAL = #{secondeval} AND </if>
+			<if test="firstevaltime != null " > p.FIRSTEVALTIME = #{firstevaltime} AND </if>
+			<if test="secondevaltime != null " > p.SECONDEVALTIME = #{secondevaltime} AND </if>
+			<if test="createuser != null  and createuser != '' " > p.CREATEUSER = #{createuser} AND </if>
+			<if test="createtime != null " > p.CREATETIME = #{createtime} AND </if>
+			<if test="rollbacksuggest != null  and rollbacksuggest != '' " > p.ROLLBACKSUGGEST = #{rollbacksuggest} AND </if>
+			<if test="isedit != null " > p.ISEDIT = #{isedit} AND </if>
+			<if test="firstcomment != null  and firstcomment != '' " > p.FIRSTCOMMENT = #{firstcomment} AND </if>
+			<if test="secondcomment != null  and secondcomment != '' " > p.SECONDCOMMENT = #{secondcomment} AND </if>
+			<if test="firstcommenttime != null " > p.FIRSTCOMMENTTIME = #{firstcommenttime} AND </if>
+			<if test="secondcommenttime != null " > p.SECONDCOMMENTTIME = #{secondcommenttime} AND </if>
+			<if test="tscore != null " > p.TSCORE = #{tscore} AND </if>
+			<if test="tgrade != null  and tgrade != '' " > p.TGRADE = #{tgrade} AND </if>
+			<if test="evalby1score != null " > p.EVALBY1SCORE = #{evalby1score} AND </if>
+			<if test="evalby2score != null " > p.EVALBY2SCORE = #{evalby2score} AND </if>
+			<if test="headship != null  and headship != '' " > p.HEADSHIP = #{headship} AND </if>
+			<if test="firstorder != null " > p.FIRSTORDER = #{firstorder} AND </if>
+			<if test="secondorder != null " > p.SECONDORDER = #{secondorder} AND </if>
+			<if test="kpiscore != null " > p.KPISCORE = #{kpiscore} AND </if>
+			<if test="comprehensivescore != null " > p.COMPREHENSIVESCORE = #{comprehensivescore} AND </if>
+			<if test="performanceevaluationscore != null " > p.PERFORMANCEEVALUATIONSCORE = #{performanceevaluationscore} AND </if>
+			<if test="balancescore != null " > p.BALANCESCORE = #{balancescore} AND </if>
+			<if test="abilityimporvescore != null " > p.ABILITYIMPORVESCORE = #{abilityimporvescore} AND </if>
+			<if test="adjustlevel != null  and adjustlevel != '' " > p.ADJUSTLEVEL = #{adjustlevel} AND </if>
+			<if test="adjustreason != null  and adjustreason != '' " > p.ADJUSTREASON = #{adjustreason} AND </if>
+			<if test="teamorder != null " > p.TEAMORDER = #{teamorder} AND </if>
+			<if test="teampercentage != null  and teampercentage != '' " > p.TEAMPERCENTAGE = #{teampercentage} AND </if>
+		</trim>
+		<if test="order != null  and order != '' " >
+			order by ${order}
+		</if>
+	</select>
+
+	<!--年度考核开始-->
+	<!--查询部门年度考核数据  k1327 2021-06-07 -->
+	<select id="getDepYearData"  parameterType="map"  resultMap="PPMKPIPM_ALL_EXT">
+		SELECT p.id,
+		p.tyear,
+		p.term,
+		p.eid,
+		p.depid,
+		p.jobid,
+		p.compid,
+		p.status,
+		p.firstcheck,
+		p.secondcheck,
+		p.firstchecktime,
+		p.secondchecktime,
+		p.firsteval,
+		p.secondeval,
+		p.firstevaltime,
+		p.secondevaltime,
+		p.createuser,
+		p.createtime,
+		p.rollbacksuggest,
+		p.isedit,
+		p.firstcomment,
+		p.secondcomment,
+		p.firstcommenttime,
+		p.secondcommenttime,
+		p.tscore,
+		p.tgrade,
+		p.evalby1score,
+		p.evalby2score,
+		p.headship,
+		p.firstorder,
+		p.secondorder,
+		p.kpiscore,
+		p.comprehensivescore,
+		p.performanceevaluationscore,
+		p.balancescore,
+		p.abilityimporvescore,
+		p.adjustlevel,
+		p.adjustreason,
+		p.teamorder,
+		p.teampercentage,
+		p.centerid,
+		p.role,
+		p.DEPTSCORE,
+		p.DEPTLEVEL,
+		p.DEPORDER,
+		p.DEPREMARK,
+		p.CENTERTLEVEL,
+		p.CENTERORDER,
+		p.CENTERREMARK,
+		p.INITIALTSCORE,
+		p.INITIALTLEVEL,
+		p.INITIALORDER,
+		p.addscore,
+		d.location depname,
+		c.centername,
+		e4.empname eidname,
+		en1.dictname statusname,
+		en2.dictname rolename
+		FROM PPM_KPI_PM p
+		left join comm_employee e on p.firstcheck=e.badge
+		left join comm_employee e1 on p.secondcheck=e1.badge
+		left join comm_department d on p.depid=d.depid
+		left join ppm_da_center c on p.centerid=c.id
+		left join comm_employee e2 on p.firsteval=e2.badge
+		left join comm_employee e3 on p.secondeval=e3.badge
+		left join comm_employee e4 on p.eid=e4.badge
+		left join eos_dict_entry en1 on en1.dicttypeid='KPI_MAIN_STATUS' and en1.dictid=p.status
+		left join eos_dict_entry en2 on en2.dicttypeid='KPI_ROLE' and en2.dictid=p.role
+		<trim prefix="WHERE" suffixOverrides="AND">
+			<if test="centerid != null  and centerid != '' " > p.CENTERID = #{centerid} AND </if>
+			<if test="role != null  and role != '' " > p.ROLE = #{role} AND </if>
+			<if test="id != null " > p.ID = #{id} AND </if>
+			<if test="tyear != null  and tyear != '' " > p.TYEAR = #{tyear} AND </if>
+			<if test="term != null  and term != '' " > p.TERM = #{term} AND </if>
+			<if test="eid != null  and eid != '' " > p.EID = #{eid} AND </if>
+			<if test="eidname != null  and eidname != '' " > e4.empname like '%'||#{eidname}||'%' AND </if>
+			<if test="depid != null  and depid != '' " > p.DEPID = #{depid} AND </if>
+			<if test="jobid != null  and jobid != '' " > p.JOBID = #{jobid} AND </if>
+			<if test="compid != null  and compid != '' " > p.COMPID = #{compid} AND </if>
+			<if test="status != null " > p.STATUS = #{status} AND </if>
+			<if test="firstcheck != null  and firstcheck != '' " > p.FIRSTCHECK = #{firstcheck} AND </if>
+			<if test="secondcheck != null  and secondcheck != '' " > p.SECONDCHECK = #{secondcheck} AND </if>
+			<if test="firstchecktime != null " > p.FIRSTCHECKTIME = #{firstchecktime} AND </if>
+			<if test="secondchecktime != null " > p.SECONDCHECKTIME = #{secondchecktime} AND </if>
+			<if test="firsteval != null  and firsteval != '' " > p.FIRSTEVAL = #{firsteval} AND </if>
+			<if test="secondeval != null  and secondeval != '' " > p.SECONDEVAL = #{secondeval} AND </if>
+			<if test="firstevaltime != null " > p.FIRSTEVALTIME = #{firstevaltime} AND </if>
+			<if test="secondevaltime != null " > p.SECONDEVALTIME = #{secondevaltime} AND </if>
+			<if test="createuser != null  and createuser != '' " > p.CREATEUSER = #{createuser} AND </if>
+			<if test="createtime != null " > p.CREATETIME = #{createtime} AND </if>
+			<if test="rollbacksuggest != null  and rollbacksuggest != '' " > p.ROLLBACKSUGGEST = #{rollbacksuggest} AND </if>
+			<if test="isedit != null " > p.ISEDIT = #{isedit} AND </if>
+			<if test="firstcomment != null  and firstcomment != '' " > p.FIRSTCOMMENT = #{firstcomment} AND </if>
+			<if test="secondcomment != null  and secondcomment != '' " > p.SECONDCOMMENT = #{secondcomment} AND </if>
+			<if test="firstcommenttime != null " > p.FIRSTCOMMENTTIME = #{firstcommenttime} AND </if>
+			<if test="secondcommenttime != null " > p.SECONDCOMMENTTIME = #{secondcommenttime} AND </if>
+			<if test="tscore != null " > p.TSCORE = #{tscore} AND </if>
+			<if test="tgrade != null  and tgrade != '' " > p.TGRADE = #{tgrade} AND </if>
+			<if test="evalby1score != null " > p.EVALBY1SCORE = #{evalby1score} AND </if>
+			<if test="evalby2score != null " > p.EVALBY2SCORE = #{evalby2score} AND </if>
+			<if test="headship != null  and headship != '' " > p.HEADSHIP = #{headship} AND </if>
+			<if test="firstorder != null " > p.FIRSTORDER = #{firstorder} AND </if>
+			<if test="secondorder != null " > p.SECONDORDER = #{secondorder} AND </if>
+			<if test="kpiscore != null " > p.KPISCORE = #{kpiscore} AND </if>
+			<if test="comprehensivescore != null " > p.COMPREHENSIVESCORE = #{comprehensivescore} AND </if>
+			<if test="performanceevaluationscore != null " > p.PERFORMANCEEVALUATIONSCORE = #{performanceevaluationscore} AND </if>
+			<if test="balancescore != null " > p.BALANCESCORE = #{balancescore} AND </if>
+			<if test="abilityimporvescore != null " > p.ABILITYIMPORVESCORE = #{abilityimporvescore} AND </if>
+			<if test="adjustlevel != null  and adjustlevel != '' " > p.ADJUSTLEVEL = #{adjustlevel} AND </if>
+			<if test="adjustreason != null  and adjustreason != '' " > p.ADJUSTREASON = #{adjustreason} AND </if>
+			<if test="teamorder != null " > p.TEAMORDER = #{teamorder} AND </if>
+			<if test="teampercentage != null  and teampercentage != '' " > p.TEAMPERCENTAGE = #{teampercentage} AND </if>
+			<if test="check != null  and check != '' " >
+				p.DEPID in (select r.depid from ppm_kpi_dep_role r where  r.director=#{check} and r.sign=1)
+			</if>
+		</trim>
+		order by p.depid asc,p.tscore desc,p.TEAMORDER asc
+	</select>
+
+	<!--通过id编辑 k1327 2021-06-07 -->
+	<update id="submitDepYearData" parameterType="map">
+		update ppm_kpi_pm p set p.status='6',p.centertlevel=p.deptlevel,p.centerorder=p.deporder
+		where p.tyear=#{tyear} and p.DEPID in
+		(select d.depid from comm_department d left join comm_employee e on d.director=e.eidhr where e.badge=#{check}) and p.term='年度'
+	</update>
+
+
+
+	<!--查询中心年度考核数据  k1327 2021-06-07 -->
+	<select id="getCenterYearData"  parameterType="map"  resultMap="PPMKPIPM_ALL_EXT">
+		SELECT p.id,
+		p.tyear,
+		p.term,
+		p.eid,
+		p.depid,
+		p.jobid,
+		p.compid,
+		p.status,
+		p.firstcheck,
+		p.secondcheck,
+		p.firstchecktime,
+		p.secondchecktime,
+		p.firsteval,
+		p.secondeval,
+		p.firstevaltime,
+		p.secondevaltime,
+		p.createuser,
+		p.createtime,
+		p.rollbacksuggest,
+		p.isedit,
+		p.firstcomment,
+		p.secondcomment,
+		p.firstcommenttime,
+		p.secondcommenttime,
+		p.tscore,
+		p.tgrade,
+		p.evalby1score,
+		p.evalby2score,
+		p.headship,
+		p.firstorder,
+		p.secondorder,
+		p.kpiscore,
+		p.comprehensivescore,
+		p.performanceevaluationscore,
+		p.balancescore,
+		p.abilityimporvescore,
+		p.adjustlevel,
+		p.adjustreason,
+		p.teamorder,
+		p.teampercentage,
+		p.centerid,
+		p.role,
+		p.addscore,
+		p.DEPTSCORE,
+		p.DEPTLEVEL,
+		p.DEPORDER,
+		p.DEPREMARK,
+		p.CENTERTLEVEL,
+		p.CENTERORDER,
+		p.CENTERREMARK,
+		p.INITIALTSCORE,
+		p.INITIALTLEVEL,
+		p.INITIALORDER,
+		d.location depname,
+		c.centername,
+		e4.empname eidname,
+		en1.dictname statusname,
+		en2.dictname rolename
+		FROM PPM_KPI_PM p
+		left join comm_employee e on p.firstcheck=e.badge
+		left join comm_employee e1 on p.secondcheck=e1.badge
+		left join comm_department d on p.depid=d.depid
+		left join ppm_da_center c on p.centerid=c.id
+		left join comm_employee e2 on p.firsteval=e2.badge
+		left join comm_employee e3 on p.secondeval=e3.badge
+		left join comm_employee e4 on p.eid=e4.badge
+		left join eos_dict_entry en1 on en1.dicttypeid='KPI_MAIN_STATUS' and en1.dictid=p.status
+		left join eos_dict_entry en2 on en2.dicttypeid='KPI_ROLE' and en2.dictid=p.role
+		left join eos_dict_entry en3 on en3.dicttypeid='KPI_LEVEL' and en3.dictid=p.tgrade
+		<trim prefix="WHERE" suffixOverrides="AND">
+			<if test="centerid != null  and centerid != '' " > p.CENTERID = #{centerid} AND </if>
+			<if test="role != null  and role != '' " > p.ROLE = #{role} AND </if>
+			<if test="roles != null  and roles != '' " > p.ROLE in (${roles}) AND </if>
+			<if test="id != null " > p.ID = #{id} AND </if>
+			<if test="tyear != null  and tyear != '' " > p.TYEAR = #{tyear} AND </if>
+			<if test="term != null  and term != '' " > p.TERM = #{term} AND </if>
+			<if test="eid != null  and eid != '' " > p.EID = #{eid} AND </if>
+			<if test="eidname != null  and eidname != '' " > e4.empname like '%'||#{eidname}||'%' AND </if>
+			<if test="depid != null  and depid != '' " > p.DEPID = #{depid} AND </if>
+			<if test="jobid != null  and jobid != '' " > p.JOBID = #{jobid} AND </if>
+			<if test="compid != null  and compid != '' " > p.COMPID = #{compid} AND </if>
+			<if test="status != null " > p.STATUS = #{status} AND </if>
+			<if test="firstcheck != null  and firstcheck != '' " > p.FIRSTCHECK = #{firstcheck} AND </if>
+			<if test="secondcheck != null  and secondcheck != '' " > p.SECONDCHECK = #{secondcheck} AND </if>
+			<if test="firstchecktime != null " > p.FIRSTCHECKTIME = #{firstchecktime} AND </if>
+			<if test="secondchecktime != null " > p.SECONDCHECKTIME = #{secondchecktime} AND </if>
+			<if test="firsteval != null  and firsteval != '' " > p.FIRSTEVAL = #{firsteval} AND </if>
+			<if test="secondeval != null  and secondeval != '' " > p.SECONDEVAL = #{secondeval} AND </if>
+			<if test="firstevaltime != null " > p.FIRSTEVALTIME = #{firstevaltime} AND </if>
+			<if test="secondevaltime != null " > p.SECONDEVALTIME = #{secondevaltime} AND </if>
+			<if test="createuser != null  and createuser != '' " > p.CREATEUSER = #{createuser} AND </if>
+			<if test="createtime != null " > p.CREATETIME = #{createtime} AND </if>
+			<if test="rollbacksuggest != null  and rollbacksuggest != '' " > p.ROLLBACKSUGGEST = #{rollbacksuggest} AND </if>
+			<if test="isedit != null " > p.ISEDIT = #{isedit} AND </if>
+			<if test="firstcomment != null  and firstcomment != '' " > p.FIRSTCOMMENT = #{firstcomment} AND </if>
+			<if test="secondcomment != null  and secondcomment != '' " > p.SECONDCOMMENT = #{secondcomment} AND </if>
+			<if test="firstcommenttime != null " > p.FIRSTCOMMENTTIME = #{firstcommenttime} AND </if>
+			<if test="secondcommenttime != null " > p.SECONDCOMMENTTIME = #{secondcommenttime} AND </if>
+			<if test="tscore != null " > p.TSCORE = #{tscore} AND </if>
+			<if test="tgrade != null  and tgrade != '' " > p.TGRADE = #{tgrade} AND </if>
+			<if test="evalby1score != null " > p.EVALBY1SCORE = #{evalby1score} AND </if>
+			<if test="evalby2score != null " > p.EVALBY2SCORE = #{evalby2score} AND </if>
+			<if test="headship != null  and headship != '' " > p.HEADSHIP = #{headship} AND </if>
+			<if test="firstorder != null " > p.FIRSTORDER = #{firstorder} AND </if>
+			<if test="secondorder != null " > p.SECONDORDER = #{secondorder} AND </if>
+			<if test="kpiscore != null " > p.KPISCORE = #{kpiscore} AND </if>
+			<if test="comprehensivescore != null " > p.COMPREHENSIVESCORE = #{comprehensivescore} AND </if>
+			<if test="performanceevaluationscore != null " > p.PERFORMANCEEVALUATIONSCORE = #{performanceevaluationscore} AND </if>
+			<if test="balancescore != null " > p.BALANCESCORE = #{balancescore} AND </if>
+			<if test="abilityimporvescore != null " > p.ABILITYIMPORVESCORE = #{abilityimporvescore} AND </if>
+			<if test="adjustlevel != null  and adjustlevel != '' " > p.ADJUSTLEVEL = #{adjustlevel} AND </if>
+			<if test="adjustreason != null  and adjustreason != '' " > p.ADJUSTREASON = #{adjustreason} AND </if>
+			<if test="teamorder != null " > p.TEAMORDER = #{teamorder} AND </if>
+			<if test="teampercentage != null  and teampercentage != '' " > p.TEAMPERCENTAGE = #{teampercentage} AND </if>
+			<if test="check != null  and check != '' " >
+				p.centerid in (select r.centerid from ppm_kpi_dep_role r where  r.centercharge=#{check} and r.sign=2)
+			</if>
+		</trim>
+		order by p.CENTERID asc,p.depid asc,en3.sortno asc,p.CENTERTLEVEL asc,p.tscore desc,p.TEAMORDER asc
+	</select>
+	<!--查询科技部年度考核数据  k1327 2021-06-07 -->
+	<select id="getTecYearData"  parameterType="map"  resultMap="PPMKPIPM_ALL_EXT">
+		SELECT p.id,
+		p.tyear,
+		p.term,
+		p.eid,
+		p.depid,
+		p.jobid,
+		p.compid,
+		p.status,
+		p.firstcheck,
+		p.secondcheck,
+		p.firstchecktime,
+		p.secondchecktime,
+		p.firsteval,
+		p.secondeval,
+		p.firstevaltime,
+		p.secondevaltime,
+		p.createuser,
+		p.createtime,
+		p.rollbacksuggest,
+		p.isedit,
+		p.firstcomment,
+		p.secondcomment,
+		p.firstcommenttime,
+		p.secondcommenttime,
+		p.tscore,
+		p.tgrade,
+		p.evalby1score,
+		p.evalby2score,
+		p.headship,
+		p.firstorder,
+		p.secondorder,
+		p.kpiscore,
+		p.comprehensivescore,
+		p.performanceevaluationscore,
+		p.balancescore,
+		p.abilityimporvescore,
+		p.adjustlevel,
+		p.adjustreason,
+		p.teamorder,
+		p.teampercentage,
+		p.centerid,
+		p.role,
+		p.addscore,
+		p.DEPTSCORE,
+		p.DEPTLEVEL,
+		p.DEPORDER,
+		p.DEPREMARK,
+		p.CENTERTLEVEL,
+		p.CENTERORDER,
+		p.CENTERREMARK,
+		p.INITIALTSCORE,
+		p.INITIALTLEVEL,
+		p.INITIALORDER,
+		d.location depname,
+		c.centername,
+		e4.empname eidname,
+		en1.dictname statusname,
+		en2.dictname rolename
+		FROM PPM_KPI_PM p
+		left join comm_employee e on p.firstcheck=e.badge
+		left join comm_employee e1 on p.secondcheck=e1.badge
+		left join comm_department d on p.depid=d.depid
+		left join ppm_da_center c on p.centerid=c.id
+		left join comm_employee e2 on p.firsteval=e2.badge
+		left join comm_employee e3 on p.secondeval=e3.badge
+		left join comm_employee e4 on p.eid=e4.badge
+		left join eos_dict_entry en1 on en1.dicttypeid='KPI_MAIN_STATUS' and en1.dictid=p.status
+		left join eos_dict_entry en2 on en2.dicttypeid='KPI_ROLE' and en2.dictid=p.role
+		left join eos_dict_entry en3 on en3.dicttypeid='KPI_LEVEL' and en3.dictid=p.tgrade
+		<trim prefix="WHERE" suffixOverrides="AND">
+			<if test="centerid != null  and centerid != '' " > p.CENTERID = #{centerid} AND </if>
+			<if test="role != null  and role != '' " > p.ROLE = #{role} AND </if>
+			<if test="id != null " > p.ID = #{id} AND </if>
+			<if test="tyear != null  and tyear != '' " > p.TYEAR = #{tyear} AND </if>
+			<if test="term != null  and term != '' " > p.TERM = #{term} AND </if>
+			<if test="eid != null  and eid != '' " > p.EID = #{eid} AND </if>
+			<if test="eidname != null  and eidname != '' " > e4.empname like '%'||#{eidname}||'%' AND </if>
+			<if test="depid != null  and depid != '' " > p.DEPID = #{depid} AND </if>
+			<if test="jobid != null  and jobid != '' " > p.JOBID = #{jobid} AND </if>
+			<if test="compid != null  and compid != '' " > p.COMPID = #{compid} AND </if>
+			<if test="status != null " > p.STATUS = #{status} AND </if>
+			<if test="firstcheck != null  and firstcheck != '' " > p.FIRSTCHECK = #{firstcheck} AND </if>
+			<if test="secondcheck != null  and secondcheck != '' " > p.SECONDCHECK = #{secondcheck} AND </if>
+			<if test="firstchecktime != null " > p.FIRSTCHECKTIME = #{firstchecktime} AND </if>
+			<if test="secondchecktime != null " > p.SECONDCHECKTIME = #{secondchecktime} AND </if>
+			<if test="firsteval != null  and firsteval != '' " > p.FIRSTEVAL = #{firsteval} AND </if>
+			<if test="secondeval != null  and secondeval != '' " > p.SECONDEVAL = #{secondeval} AND </if>
+			<if test="firstevaltime != null " > p.FIRSTEVALTIME = #{firstevaltime} AND </if>
+			<if test="secondevaltime != null " > p.SECONDEVALTIME = #{secondevaltime} AND </if>
+			<if test="createuser != null  and createuser != '' " > p.CREATEUSER = #{createuser} AND </if>
+			<if test="createtime != null " > p.CREATETIME = #{createtime} AND </if>
+			<if test="rollbacksuggest != null  and rollbacksuggest != '' " > p.ROLLBACKSUGGEST = #{rollbacksuggest} AND </if>
+			<if test="isedit != null " > p.ISEDIT = #{isedit} AND </if>
+			<if test="firstcomment != null  and firstcomment != '' " > p.FIRSTCOMMENT = #{firstcomment} AND </if>
+			<if test="secondcomment != null  and secondcomment != '' " > p.SECONDCOMMENT = #{secondcomment} AND </if>
+			<if test="firstcommenttime != null " > p.FIRSTCOMMENTTIME = #{firstcommenttime} AND </if>
+			<if test="secondcommenttime != null " > p.SECONDCOMMENTTIME = #{secondcommenttime} AND </if>
+			<if test="tscore != null " > p.TSCORE = #{tscore} AND </if>
+			<if test="tgrade != null  and tgrade != '' " > p.TGRADE = #{tgrade} AND </if>
+			<if test="evalby1score != null " > p.EVALBY1SCORE = #{evalby1score} AND </if>
+			<if test="evalby2score != null " > p.EVALBY2SCORE = #{evalby2score} AND </if>
+			<if test="headship != null  and headship != '' " > p.HEADSHIP = #{headship} AND </if>
+			<if test="firstorder != null " > p.FIRSTORDER = #{firstorder} AND </if>
+			<if test="secondorder != null " > p.SECONDORDER = #{secondorder} AND </if>
+			<if test="kpiscore != null " > p.KPISCORE = #{kpiscore} AND </if>
+			<if test="comprehensivescore != null " > p.COMPREHENSIVESCORE = #{comprehensivescore} AND </if>
+			<if test="performanceevaluationscore != null " > p.PERFORMANCEEVALUATIONSCORE = #{performanceevaluationscore} AND </if>
+			<if test="balancescore != null " > p.BALANCESCORE = #{balancescore} AND </if>
+			<if test="abilityimporvescore != null " > p.ABILITYIMPORVESCORE = #{abilityimporvescore} AND </if>
+			<if test="adjustlevel != null  and adjustlevel != '' " > p.ADJUSTLEVEL = #{adjustlevel} AND </if>
+			<if test="adjustreason != null  and adjustreason != '' " > p.ADJUSTREASON = #{adjustreason} AND </if>
+			<if test="teamorder != null " > p.TEAMORDER = #{teamorder} AND </if>
+			<if test="teampercentage != null  and teampercentage != '' " > p.TEAMPERCENTAGE = #{teampercentage} AND </if>
+			<if test="centertlevel != null  and centertlevel != '' " > p.CENTERTLEVEL = #{centertlevel} AND </if>
+		</trim>
+		order by p.centerid asc,en3.sortno asc,p.TGRADE asc,p.tscore desc
+	</select>
+
+	<!--部门状态修改  k1327 2021-06-07 -->
+	<select id="getDepStatus"  parameterType="map"  resultMap="PPMKPIPM_ALL_EXT">
+		select max(p.tyear) tyear,max('年度') term,max(p.centerid) centerid,max(c.centername) centername,p.depid,max(d.location) depname,min(p.status) status from ppm_kpi_pm p
+		left join comm_department d on p.depid=d.depid
+		left join ppm_da_center c on p.centerid=c.id
+		<trim prefix="WHERE" suffixOverrides="AND">
+			<if test="tyear != null  and tyear != '' " > p.TYEAR = #{tyear} AND </if>
+			<if test="term != null  and term != '' " > p.TERM = #{term} AND </if>
+			<if test="depid != null  and depid != '' " > p.DEPID = #{depid} AND </if>
+			<if test="status != null " > p.STATUS = #{status} AND </if>
+			<if test="centerid != null  and centerid != '' " > p.CENTERID = #{centerid} AND </if>
+		</trim>
+		group by p.depid order by max(p.centerid) ,p.depid asc
+	</select>
+
+
+	<!--更新部门状态 k1327 2021-06-07 -->
+	<update id="updateDepStatus" parameterType="map">
+		update ppm_kpi_pm p set p.status=#{status} where p.tyear=#{tyear} and p.term=#{term} and p.depid=#{depid}
+	</update>
+
+	<!--查询科技部年度考核未提交的中心 k1327 2021-06-07 -->
+	<select id="getNoSubmitCenters"  parameterType="map"  resultMap="PPMKPIPM_ALL_EXT">
+		select p.centerid,max(c.centername) centername from ppm_kpi_pm p
+		left join ppm_da_center c on p.centerid=c.id
+		where p.status not in (7,8) and p.term='年度' and p.tyear=#{tyear} group by p.centerid
+	</select>
+
+	<!--查询科技部年度考核未提交的部门 k1327 2021-06-07 -->
+	<select id="getNoSubmitDeps"  parameterType="map"  resultMap="PPMKPIPM_ALL_EXT">
+		select p.depid,max(d.location) depname from ppm_kpi_pm p
+		left join comm_department d on p.depid=d.depid
+		where p.status ='5' and p.term='年度' and p.tyear=#{tyear} and
+		d.depid in ( select r.depid from ppm_kpi_dep_role r where r.isdel='0' and r.sign='1' and r.centercharge=#{centercharge})
+		group by p.depid
+	</select>
+</mapper>

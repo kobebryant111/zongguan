@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.work.ppm.application.model.resourceplat.ResReportInfo">
+    <resultMap type="resReportInfo" id="RES_REPORT_INFO">
+        <result property="id" column="ID" />
+        <result property="ownCenter" column="OWNCENTER" />
+        <result property="resType" column="RESTYPE" />
+        <result property="describe" column="DESCRIBE" />
+        <result property="num" column="NUM" />
+        <result property="price" column="PRICE" />
+        <result property="totalPrice" column="TOTALPRICE" />
+        <result property="resAddId" column="RESADDID" />
+        <result property="px" column="PX" />
+        <result property="cpu" column="CPU" />
+        <result property="memory" column="MEMORY" />
+        <result property="disk" column="DISK" />
+    </resultMap>
+    <!-- 新增报表统计信息 -->
+    <insert id="insertResReportInfo" parameterType="resReportInfo">
+        INSERT INTO RES_REPORT_INFO(ID,
+        <if test="ownCenter !=null and ownCenter !=''">OWNCENTER,</if>
+        RESTYPE,DESCRIBE,NUM,PRICE,TOTALPRICE,RESADDID,PX
+        <if test="cpu !=null and cpu !=''">,CPU</if>
+        <if test="memory !=null and memory !=''">,MEMORY</if>
+        <if test="disk !=null and disk !=''">,DISK</if>
+        )
+        VALUES (#{id},
+        <if test="ownCenter !=null and ownCenter !=''">#{ownCenter},</if>
+        #{resType},#{describe},#{num},#{price},#{totalPrice},#{resAddId},#{px}
+        <if test="cpu !=null and cpu !=''">,#{cpu}</if>
+        <if test="memory !=null and memory !=''">,#{memory}</if>
+        <if test="disk !=null and disk !=''">,#{disk}</if>
+        )
+    </insert>
+    <!-- 查询统计信息 -->
+    <select id="queryStatisticReportInfo" parameterType="list" resultMap="RES_REPORT_INFO">
+        SELECT o.*
+        FROM (SELECT T.OWNCENTER,
+        T.RESTYPE,
+        NVL(SUM(T.CPU), '0') || 'C' || NVL(SUM(T.MEMORY), '0') || 'G' ||
+        NVL(SUM(T.DISK), '0') || 'G' DESCRIBE,
+        1 NUM,
+        T.PRICE,
+        SUM(T.TOTALPRICE) TOTALPRICE,
+        T.PX
+        FROM RES_REPORT_INFO T
+        WHERE T.RESTYPE = '虚拟机资源'
+        AND T.RESADDID IN
+        <foreach collection="list" item="item" separator="," open="(" close=")">
+            #{item}
+        </foreach>
+        GROUP BY T.OWNCENTER, T.RESTYPE, T.PRICE, T.PX
+        UNION ALL
+        SELECT R.OWNCENTER,
+        R.RESTYPE,
+        R.DESCRIBE,
+        SUM(R.NUM) NUM,
+        R.PRICE,
+        SUM(R.TOTALPRICE) TOTALPRICE,
+        R.PX
+        FROM RES_REPORT_INFO R
+        WHERE R.RESTYPE != '虚拟机资源'
+        AND R.RESADDID IN
+        <foreach collection="list" item="item" separator="," open="(" close=")">
+            #{item}
+        </foreach>
+        GROUP BY R.OWNCENTER, R.RESTYPE, R.DESCRIBE, R.PRICE, R.PX
+        ) O
+        ORDER BY O.OWNCENTER
+
+    </select>
+
+    <!-- 查询关联部门数据 -->
+    <select id="queryRepDeptTree" resultType="commTree">
+        select distinct  a.*
+        from (
+                 select 'org' || t.compid id, t.compcode pcode, t.location text, 'org' || t.adminid pid, 'org' attr, '' textpy
+                 from comm_organization t where t.isdisabled = '0'
+                 union all
+                 select to_char(t.depid) id, t.depcode pcode, t.location text, 'org' || t.compid pid, 'dep' attr, '' textpy
+                 from comm_department t where t.adminid is null and t.isdisabled = '0'and t.location is not null
+                 union all
+                 select to_char(t.depid) id, t.depcode pcode, t.location text, to_char(t.adminid) pid, 'dep' attr, '' textpy
+                 from comm_department t where t.adminid is not null and t.isdisabled = '0' and t.location is not null
+             ) a left join ppm_dept_ord o on a.id = o.depid
+
+            START WITH a.ATTR = 'dep'
+        CONNECT BY PRIOR a.PID = a.ID
+        order BY pcode DESC
+    </select>
+
+    <select id="getDeptId" parameterType="String" resultType="String">
+        SELECT t.depid FROM comm_employee t WHERE t.badge =#{userId}
+    </select>
+</mapper>
+

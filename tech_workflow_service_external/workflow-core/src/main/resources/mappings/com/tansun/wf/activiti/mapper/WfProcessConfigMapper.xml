@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+  
+<mapper namespace="com.tansun.wf.activiti.mapper.WfProcessConfigMapper">
+
+  <resultMap id="processConfigResultMap" type="com.tansun.wf.activiti.model.ProcessConfig">
+    <id property="id" column="ID" jdbcType="VARCHAR" />
+    <result property="procDefId" column="PROC_DEF_ID" jdbcType="VARCHAR" />
+    <result property="actId" column="ACT_ID" jdbcType="VARCHAR" />
+    <result property="actName" column="ACT_NAME" jdbcType="VARCHAR" />
+    <result property="processStartedClass" column="PROCESS_STARTED_CLASS" jdbcType="VARCHAR" />
+    <result property="processCompletedClass" column="PROCESS_COMPLETED_CLASS" jdbcType="VARCHAR" />
+    <result property="basReceiveClass" column="BAS_RECEIVE_CLASS" jdbcType="VARCHAR" />
+    <result property="basInvokeType" column="BAS_INVOKE_TYPE" jdbcType="VARCHAR" />
+    <result property="basDisposeType" column="BAS_DISPOSE_TYPE" jdbcType="VARCHAR" />
+    <result property="parParticipantMode" column="PAR_PARTICIPANT_MODE" jdbcType="VARCHAR" />
+    <result property="parNode" column="PAR_NODE" jdbcType="VARCHAR" />
+    <result property="parRole" column="PAR_ROLE" jdbcType="VARCHAR" />
+    <result property="parPersonnl" column="PAR_PERSONNL" jdbcType="VARCHAR" />
+    <result property="parRuleProject" column="PAR_RULE_PROJECT" jdbcType="VARCHAR" />
+    <result property="parRuleCode" column="PAR_RULE_CODE" jdbcType="VARCHAR" />
+    <result property="timeType" column="TIME_TYPE" jdbcType="VARCHAR" />
+    
+    <result property="timeCalulation" column="TIME_CALULATION" jdbcType="VARCHAR" />
+    <result property="timeRelative" column="TIME_RELATIVE" jdbcType="VARCHAR" />
+    <result property="timeDisposeType" column="TIME_DISPOSE_TYPE" jdbcType="VARCHAR" />
+    <result property="timeRemindTime" column="TIME_REMIND_TIME" jdbcType="VARCHAR" />
+    <result property="timeRemindFrequency" column="TIME_REMIND_FREQUENCY" jdbcType="VARCHAR" />
+    <result property="timeRemindNum" column="TIME_REMIND_NUM" jdbcType="VARCHAR" />
+    <result property="timeRemindType" column="TIME_REMIND_TYPE" jdbcType="VARCHAR" />
+    <result property="timeRemindText" column="TIME_REMIND_TEXT" jdbcType="VARCHAR" />
+    <result property="userTaskAssignment" column="USER_TASK_ASSIGNMENT" jdbcType="VARCHAR" />
+    <result property="nodeFunction" column="NODE_FUNCTION" jdbcType="VARCHAR" />
+    <result property="processStatus" column="PROCESS_STATUS" jdbcType="VARCHAR" />
+  </resultMap>
+
+
+  <select id="selectWfProcessConfigCountByQueryCriteria" parameterType="com.tansun.wf.activiti.model.ProcessConfig" resultType="long">
+    select count(distinct RES.ID_)
+    <include refid="selectWfProcessConfigByQueryCriteriaSql"/> 
+  </select>
+
+  <select id="selectWfProcessConfigByQueryCriteria" parameterType="com.tansun.wf.activiti.model.ProcessConfig" resultMap="processConfigResultMap">
+    ${limitBefore}
+    select distinct RES.*
+    <if test="databaseType !='db2'">
+      ${limitBetween}
+    </if>
+    <if test="databaseType =='db2'">
+      , row_number() over (ORDER BY RES.ID ) rnk FROM ( select distinct RES.*
+    </if>
+    <include refid="selectWfProcessConfigByQueryCriteriaSql"/>
+
+    ${limitAfter}
+  </select>
+
+  <sql id="selectWfProcessConfigByQueryCriteriaSql">
+    from ${prefix}wf_process_config RES
+    <where>
+    	<if test="procDefId != null and procDefId!=''">
+        	RES.PROC_DEF_ID = #{procDefId}
+        </if>
+        <if test="actId != null and actId!=''">
+        	AND RES.ACT_ID = #{actId}
+        </if>
+        <if test="processStatus != null and processStatus!=''">
+        	AND RES.PROCESS_STATUS = #{processStatus}
+        </if>
+    </where>
+  </sql>
+
+</mapper>

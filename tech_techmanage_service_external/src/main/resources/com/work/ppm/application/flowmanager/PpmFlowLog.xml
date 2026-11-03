@@ -1,0 +1,436 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k6522 2020-04-23 -->
+<mapper namespace="com.work.ppm.application.model.flowmanager.PpmFlowLog">
+	 <resultMap type="ppmFlowLog" id="PPMFLOWLOG_ALL">
+        <result property="id" column="ID" />
+		<result property="flowdraftno" column="FLOWDRAFTNO" />
+		<result property="flowcaseno" column="FLOWCASENO" />
+		<result property="userid" column="USERID" />
+		<result property="examine" column="EXAMINE" />
+		<result property="conclusion" column="CONCLUSION" />
+		<result property="suggest" column="SUGGEST" />
+		<result property="isdel" column="ISDEL" />
+		<result property="createtime" column="CREATETIME" />
+		<result property="creators" column="CREATORS" />
+		<result property="lastmodtime" column="LASTMODTIME" />
+		<result property="lastmoduser" column="LASTMODUSER" />
+		<result property="applydesc" column="APPLYDESC" />
+		<result property="deptno" column="DEPTNO" />
+		<result property="isfalse" column="ISFALSE" />
+		<result property="roleid" column="ROLEID" />
+		
+     </resultMap>
+
+     <!-- 所有字段名称 -->
+        <sql id="sql_flied_all">
+			FG.ID  AS "ID",
+			FG.FLOWDRAFTNO  AS "FLOWDRAFTNO",
+			PF.FLOWID AS "FLOWID",
+			FG.FLOWCASENO  AS "FLOWCASENO",
+			PF.FLOWSTATUS AS "FLOWSTATUS",
+			PF.FLOWTITLE  AS "FLOWTITLE",
+			DT.LOCATION  AS "DEPTNAME",
+			(CASE WHEN FG.ISFALSE='01'
+			THEN EV.EMPNAME || '(' || EV.BADGE || ')' || '('||'处理中' ||')'
+			WHEN EV.BADGE IS NULL  THEN  ''
+			ELSE EV.EMPNAME || '(' || EV.BADGE || ')'
+			END ) AS "USERNAME",
+			TO_CHAR(FG.CREATETIME,'YYYY-MM-DD HH24:MI:SS') AS "CREATETIME",
+			FG.CONCLUSION AS "CONCLUSION",
+			FG.SUGGEST AS "SUGGEST",
+			FG.CREATORS AS "CREATORS",
+			FG.APPLYDESC  AS "APPLYDESC",
+			EV.MOBILETELPHONE AS "TEL"
+        </sql>
+
+		<sql id="sql_flied_alls">
+			fg.ID,
+			fg.FLOWDRAFTNO,
+			fg.FLOWCASENO,
+			fg.USERID,
+			fg.EXAMINE,
+			fg.CONCLUSION,
+			fg.SUGGEST,
+			fg.ISDEL,
+			fg.CREATETIME,
+			fg.CREATORS,
+			fg.LASTMODTIME,
+			fg.LASTMODUSER,
+			fg.APPLYDESC,
+			fg.DEPTNO,
+			fg.ISFALSE,
+			fg.ROLEID,
+
+			de.LOCATION AS DEPTNAME,
+			ep.mobiletelphone as TEL,
+			ep.empname || '('|| fg.USERID ||')' as USERNAME
+		</sql>
+    	<!-- 查询分页  2020-04-23 k6522  -->
+        <select id="queryPagerList" parameterType="map" resultMap="PPMFLOWLOG_ALL">
+        	SELECT
+            <include refid="sql_flied_all" />
+			FROM PPM_NEWFLOW_LOG  FG
+			LEFT JOIN PPM_EMP_VIEWALL EV ON
+			FG.USERID = EV.BADGE
+			LEFT JOIN PPM_PROJECT_FLOW PF ON
+			FG.FLOWCASENO = PF.INSTANCEID
+			LEFT JOIN COMM_DEPARTMENT DT ON
+			DT.DEPID = FG.DEPTNO
+            <trim prefix="WHERE" suffixOverrides="AND">
+                <if test="flowtitle != null and flowtitle != '' " > pf.flowtitle like '%' || #{flowtitle} || '%' </if>
+				<if test="flowcaseno != null  and flowcaseno != '' " > fg.flowcaseno like '%' || #{flowcaseno} || '%'  </if>
+            </trim>
+			order by fg.id desc,fg.flowcaseno desc,fg.createtime asc
+		</select>
+
+        <!-- 新增  2020-04-23 k6522  -->
+        <insert id="addPojo" parameterType="ppmFlowLog">
+    		INSERT INTO PPM_NEWFLOW_LOG (
+    		<trim suffixOverrides=",">
+    		 <if test="id != null " > ID , </if>
+				<if test="flowdraftno != null  and flowdraftno != '' " > FLOWDRAFTNO , </if>
+				<if test="flowcaseno != null  and flowcaseno != '' " > FLOWCASENO , </if>
+				<if test="userid != null  and userid != '' " > USERID , </if>
+				<if test="examine != null " > EXAMINE , </if>
+				<if test="conclusion != null  and conclusion != '' " > CONCLUSION , </if>
+				<if test="suggest != null  and suggest != '' " > SUGGEST , </if>
+				<if test="isdel != null " > ISDEL , </if>
+				<if test="createtime != null " > CREATETIME , </if>
+				<if test="creators != null  and creators != '' " > CREATORS , </if>
+				<if test="lastmodtime != null " > LASTMODTIME , </if>
+				<if test="lastmoduser != null  and lastmoduser != '' " > LASTMODUSER , </if>
+				<if test="applydesc != null  and applydesc != '' " > APPLYDESC , </if>
+				<if test="deptno != null  and deptno != '' " > DEPTNO , </if>
+				<if test="isfalse != null  and isfalse != '' " > ISFALSE , </if>
+				<if test="roleid != null  and roleid != '' " > ROLEID , </if>
+				
+              </trim>
+    		)
+    		VALUES(
+    		<trim suffixOverrides=",">
+    		 <if test="id != null " > #{id} , </if>
+				<if test="flowdraftno != null  and flowdraftno != '' " > #{flowdraftno} , </if>
+				<if test="flowcaseno != null  and flowcaseno != '' " > #{flowcaseno} , </if>
+				<if test="userid != null  and userid != '' " > #{userid} , </if>
+				<if test="examine != null " > #{examine} , </if>
+				<if test="conclusion != null  and conclusion != '' " > #{conclusion} , </if>
+				<if test="suggest != null  and suggest != '' " > #{suggest} , </if>
+				<if test="isdel != null " > #{isdel} , </if>
+				<if test="createtime != null " > #{createtime} , </if>
+				<if test="creators != null  and creators != '' " > #{creators} , </if>
+				<if test="lastmodtime != null " > #{lastmodtime} , </if>
+				<if test="lastmoduser != null  and lastmoduser != '' " > #{lastmoduser} , </if>
+				<if test="applydesc != null  and applydesc != '' " > #{applydesc} , </if>
+				<if test="deptno != null  and deptno != '' " > #{deptno} , </if>
+				<if test="isfalse != null  and isfalse != '' " > #{isfalse} , </if>
+				<if test="roleid != null  and roleid != '' " > #{roleid} , </if>
+				
+            </trim>
+    		)
+        </insert>
+
+        <!--通过id查询  k6522 2020-04-23 -->
+        <select id="queryDetail" parameterType="map" resultMap="PPMFLOWLOG_ALL">
+        	SELECT
+        	<include refid="sql_flied_alls" />
+        	FROM PPM_NEWFLOW_LOG fg
+			left join ppm_emp_view ep on (fg.userid = ep.badge)
+			left join COMM_DEPARTMENT de ON(fg.deptno=de.DEPID)
+			<trim prefix="WHERE" suffixOverrides="AND">
+				<if test="id != null " > ID=#{id} AND </if>
+				<if test="flowcaseno != null  and flowcaseno != '' " > FLOWCASENO=#{flowcaseno} AND </if>
+				<if test="isdel != null " > ISDEL=#{isdel} AND </if>
+				<if test="isfalse != null  and isfalse != '' " > ISFALSE=#{isfalse} AND </if>
+			</trim>
+        </select>
+
+	<!--查询集合  k6522 2020-04-23 -->
+	<select id="selectOneByInstanceId" parameterType="map" resultMap="PPMFLOWLOG_ALL">
+		SELECT * FROM (
+		SELECT
+		ID,
+		FLOWDRAFTNO,
+		FLOWCASENO,
+		USERID,
+		EXAMINE,
+		CONCLUSION,
+		SUGGEST,
+		ISDEL,
+		CREATETIME,
+		CREATORS,
+		LASTMODTIME,
+		LASTMODUSER,
+		APPLYDESC,
+		DEPTNO,
+		ISFALSE,
+		ROLEID
+		FROM PPM_NEWFLOW_LOG
+		<trim prefix="WHERE" suffixOverrides="AND">
+			<if test="true" > suggest is not null AND </if>
+			<if test="flowcaseno != null  and flowcaseno != '' " > FLOWCASENO=#{flowcaseno} AND </if>
+		</trim>
+		ORDER BY createtime desc ) WHERE ROWNUM =1
+	</select>
+
+         <!--查询集合  k6522 2020-04-23 -->
+        <select id="getList" parameterType="map" resultMap="PPMFLOWLOG_ALL">
+        	SELECT
+			ID,
+			FLOWDRAFTNO,
+			FLOWCASENO,
+			USERID,
+			EXAMINE,
+			CONCLUSION,
+			SUGGEST,
+			ISDEL,
+			CREATETIME,
+			CREATORS,
+			LASTMODTIME,
+			LASTMODUSER,
+			APPLYDESC,
+			DEPTNO,
+			ISFALSE,
+			ROLEID
+        	FROM PPM_NEWFLOW_LOG
+        	<trim prefix="WHERE" suffixOverrides="AND">
+        		<if test="id != null " > ID=#{id} AND </if>
+				<if test="flowdraftno != null  and flowdraftno != '' " > FLOWDRAFTNO=#{flowdraftno} AND </if>
+				<if test="flowcaseno != null  and flowcaseno != '' " > FLOWCASENO=#{flowcaseno} AND </if>
+				<if test="userid != null  and userid != '' " > USERID=#{userid} AND </if>
+				<if test="examine != null " > EXAMINE=#{examine} AND </if>
+				<if test="conclusion != null  and conclusion != '' " > CONCLUSION=#{conclusion} AND </if>
+				<if test="suggest != null  and suggest != '' " > SUGGEST=#{suggest} AND </if>
+				<if test="isdel != null " > ISDEL=#{isdel} AND </if>
+				<if test="createtime != null " > CREATETIME=#{createtime} AND </if>
+				<if test="creators != null  and creators != '' " > CREATORS=#{creators} AND </if>
+				<if test="lastmodtime != null " > LASTMODTIME=#{lastmodtime} AND </if>
+				<if test="lastmoduser != null  and lastmoduser != '' " > LASTMODUSER=#{lastmoduser} AND </if>
+				<if test="applydesc != null  and applydesc != '' " > APPLYDESC=#{applydesc} AND </if>
+				<if test="deptno != null  and deptno != '' " > DEPTNO=#{deptno} AND </if>
+				<if test="isfalse != null  and isfalse != '' " > ISFALSE=#{isfalse} AND </if>
+				<if test="roleid != null  and roleid != '' " > ROLEID=#{roleid} AND </if>
+            </trim>
+        </select>
+        <!-- update sql -->
+        <sql id="update_pojo_sql">
+        	<trim prefix="SET" suffixOverrides=",">
+        		<if test="id != null " > ID=#{id} , </if>
+				<if test="flowdraftno != null  and flowdraftno != '' " > FLOWDRAFTNO=#{flowdraftno} , </if>
+				<if test="flowcaseno != null  and flowcaseno != '' " > FLOWCASENO=#{flowcaseno} , </if>
+				<if test="userid != null  and userid != '' " > USERID=#{userid} , </if>
+				<if test="examine != null " > EXAMINE=#{examine} , </if>
+				<if test="conclusion != null  and conclusion != '' " > CONCLUSION=#{conclusion} , </if>
+				<if test="suggest != null  and suggest != '' " > SUGGEST=#{suggest} , </if>
+				<if test="isdel != null " > ISDEL=#{isdel} , </if>
+				<if test="createtime != null " > CREATETIME=#{createtime} , </if>
+				<if test="creators != null  and creators != '' " > CREATORS=#{creators} , </if>
+				<if test="lastmodtime != null " > LASTMODTIME=#{lastmodtime} , </if>
+				<if test="lastmoduser != null  and lastmoduser != '' " > LASTMODUSER=#{lastmoduser} , </if>
+				<if test="applydesc != null  and applydesc != '' " > APPLYDESC=#{applydesc} , </if>
+				<if test="deptno != null  and deptno != '' " > DEPTNO=#{deptno} , </if>
+				<if test="isfalse != null  and isfalse != '' " > ISFALSE=#{isfalse} , </if>
+				<if test="roleid != null  and roleid != '' " > ROLEID=#{roleid} , </if>
+				
+            </trim>
+        </sql>
+
+        <!--通过id编辑 k6522 2020-04-23 -->
+    	<update id="updatePojo" parameterType="ppmFlowLog">
+        	UPDATE
+        	PPM_NEWFLOW_LOG
+        	<include refid="update_pojo_sql" />
+			<trim prefix="WHERE" suffixOverrides="AND">
+				<if test="id != null " > ID=#{id} AND </if>
+				<if test="flowdraftno != null  and flowdraftno != '' " > FLOWDRAFTNO=#{flowdraftno} AND </if>
+				<if test="flowcaseno != null  and flowcaseno != '' " > FLOWCASENO=#{flowcaseno} AND </if>
+				<if test="userid != null  and userid != '' " > USERID=#{userid} AND </if>
+				<if test="isdel != null " > ISDEL=#{isdel} AND </if>
+				<if test="isfalse != null  and isfalse != '' " > ISFALSE=#{isfalse} AND </if>
+			</trim>
+        </update>
+
+        <!--通过id批量删除  k6522 2020-04-23 -->
+        <delete id="deleteById" parameterType="ppmFlowLog">
+        	DELETE
+        	FROM
+        	PPM_NEWFLOW_LOG
+			<trim prefix="WHERE" suffixOverrides="AND">
+				<if test="id != null " > ID=#{id} AND </if>
+				<if test="flowdraftno != null  and flowdraftno != '' " > FLOWDRAFTNO=#{flowdraftno} AND </if>
+				<if test="flowcaseno != null  and flowcaseno != '' " > FLOWCASENO=#{flowcaseno} AND </if>
+				<if test="userid != null  and userid != '' " > USERID=#{userid} AND </if>
+				<if test="isdel != null " > ISDEL=#{isdel} AND </if>
+				<if test="isfalse != null  and isfalse != '' " > ISFALSE=#{isfalse} AND </if>
+			</trim>
+        </delete>
+
+	<!--通过id批量删除  ywwb905 2022-11-16 -->
+	<delete id="deleteByNullLog" parameterType="ppmFlowLog">
+		DELETE
+		FROM
+		PPM_NEWFLOW_LOG
+		WHERE FLOWCASENO = #{flowcaseno} AND CONCLUSION IS NULL
+	</delete>
+
+	<!-- 批量添加 k6991 2020-06-05 -->
+	<insert id="batchAddPojo" parameterType="list">
+		INSERT ALL
+		<foreach collection="list" item="item" index="index">
+			INTO  PPM_NEWFLOW_LOG (
+		<trim suffixOverrides=",">
+			<if test="item.id != null " > ID , </if>
+			<if test="item.flowdraftno != null  and item.flowdraftno != '' " > FLOWDRAFTNO , </if>
+			<if test="item.flowcaseno != null  and item.flowcaseno != '' " > FLOWCASENO , </if>
+			<if test="item.userid != null  and item.userid != '' " > USERID , </if>
+			<if test="item.examine != null " > EXAMINE , </if>
+			<if test="item.conclusion != null  and item.conclusion != '' " > CONCLUSION , </if>
+			<if test="item.suggest != null  and item.suggest != '' " > SUGGEST , </if>
+			<if test="item.isdel != null " > ISDEL , </if>
+			<if test="item.createtime != null " > CREATETIME , </if>
+			<if test="item.creators != null  and item.creators != '' " > CREATORS , </if>
+			<if test="item.lastmodtime != null " > LASTMODTIME , </if>
+			<if test="item.lastmoduser != null  and item.lastmoduser != '' " > LASTMODUSER , </if>
+			<if test="item.applydesc != null  and item.applydesc != '' " > APPLYDESC , </if>
+			<if test="item.deptno != null  and item.deptno != '' " > DEPTNO , </if>
+			<if test="item.isfalse != null  and item.isfalse != '' " > ISFALSE , </if>
+			<if test="item.roleid != null  and item.roleid != '' " > ROLEID , </if>
+
+		</trim>
+		)
+		VALUES(
+		<trim suffixOverrides=",">
+			<if test="item.id != null " > #{item.id} , </if>
+			<if test="item.flowdraftno != null  and item.flowdraftno != '' " > #{item.flowdraftno} , </if>
+			<if test="item.flowcaseno != null  and item.flowcaseno != '' " > #{item.flowcaseno} , </if>
+			<if test="item.userid != null  and item.userid != '' " > #{item.userid} , </if>
+			<if test="item.examine != null " > #{item.examine} , </if>
+			<if test="item.conclusion != null  and item.conclusion != '' " > #{item.conclusion} , </if>
+			<if test="item.suggest != null  and item.suggest != '' " > #{item.suggest} , </if>
+			<if test="item.isdel != null " > #{item.isdel} , </if>
+			<if test="item.createtime != null " > #{item.createtime} , </if>
+			<if test="item.creators != null  and item.creators != '' " > #{item.creators} , </if>
+			<if test="item.lastmodtime != null " > #{item.lastmodtime} , </if>
+			<if test="item.lastmoduser != null  and item.lastmoduser != '' " > #{item.lastmoduser} , </if>
+			<if test="item.applydesc != null  and item.applydesc != '' " > #{item.applydesc} , </if>
+			<if test="item.deptno != null  and item.deptno != '' " > #{item.deptno} , </if>
+			<if test="item.isfalse != null  and item.isfalse != '' " > #{item.isfalse} , </if>
+			<if test="item.roleid != null  and item.roleid != '' " > #{item.roleid} , </if>
+		</trim>
+		)
+		</foreach>
+		select 1 from dual
+	</insert>
+
+	<resultMap id="GETLOGS_MAP" type="ppmFlowLogInfo" extends="PPMFLOWLOG_ALL">
+		<result column="USERNAME" property="userName" />
+	</resultMap>
+	<!-- 查询日志 k6991	2020-06-23 -->
+	<select id="getLogs" parameterType="map" resultMap="GETLOGS_MAP">
+		SELECT CREATETIME,
+		T.CONCLUSION,
+		T.SUGGEST,
+		T.APPLYDESC,
+		T.USERID,
+		T1.EMPNAME || '(' || T.USERID || ')' AS USERNAME,
+		T1.MOBILETELPHONE TEL,
+		(SELECT LOCATION FROM COMM_DEPARTMENT WHERE TO_CHAR(DEPID) = T.DEPTNO) AS DEPTNAME,
+		ISFALSE
+		FROM PPM_NEWFLOW_LOG T
+		LEFT JOIN PPM_EMP_VIEWALL T1 ON T1.BADGE = T.USERID
+		WHERE T.FLOWCASENO = #{flowcaseno}
+		AND T.ISDEL = '0'
+		ORDER BY T.CREATETIME ,T.ID ASC
+	</select>
+	<resultMap id="QUERYCONTAINHISPAGER_MAP" type="ppmFlowLogInfo" extends="PPMFLOWLOG_ALL">
+		<result column="USERNAME" property="userName" />
+		<result column="HIS_TYPE" property="hisType" />
+	</resultMap>
+	<!-- 结合流程日志和历史流程日志分页查询 k6991	2021-04-08 -->
+	<select id="queryContainHisPager" parameterType="map" resultMap="QUERYCONTAINHISPAGER_MAP">
+
+		select *from (
+		SELECT
+		T.id,
+		T.Flowcaseno,
+		T.FLOWDRAFTNO,
+		T.CREATETIME,
+		T.CONCLUSION,
+		T.SUGGEST,
+		T.APPLYDESC,
+		T.USERID,
+		T1.EMPNAME || '(' || T.USERID || ')' AS USERNAME,
+		T1.MOBILETELPHONE TEL,
+		(SELECT LOCATION FROM COMM_DEPARTMENT WHERE TO_CHAR(DEPID) = T.DEPTNO) AS DEPTNAME,
+		ISFALSE,
+		'非历史' as his_type,
+		PF.FLOWSTATUS AS FLOWSTATUS
+		FROM ppm_newflow_log T
+		LEFT JOIN PPM_EMP_VIEWALL T1 ON (T1.BADGE = T.USERID)
+		LEFT JOIN PPM_PROJECT_FLOW PF ON (T.FLOWCASENO = PF.INSTANCEID)
+		<trim prefix="WHERE" suffixOverrides="AND">
+			<if test="flowdraftno != null  and flowdraftno != '' " > T.FLOWDRAFTNO=#{flowdraftno} AND </if>
+			<if test="flowcaseno != null  and flowcaseno != '' " > T.FLOWCASENO=#{flowcaseno} AND </if>
+			<if test=" true " > T.ISDEL=0 AND </if>
+		</trim>
+
+		union all
+		SELECT
+		T.ID,
+		T.Flowcaseno,
+		T.FLOWDRAFTNO,
+		T.CREATETIME,
+		T.CONCLUSION,
+		T.SUGGEST,
+		T.APPLYDESC,
+		T.USERID,
+		T1.EMPNAME || '(' || T.USERID || ')' AS USERNAME,
+		T1.MOBILETELPHONE TEL,
+		(SELECT LOCATION FROM COMM_DEPARTMENT WHERE TO_CHAR(DEPID) = T.DEPTNO) AS DEPTNAME,
+		ISFALSE,
+		'历史' as his_type,
+		PF.FLOWSTATUS AS FLOWSTATUS
+		FROM ppm_newflow_historylog T
+		LEFT JOIN PPM_EMP_VIEWALL T1 ON (T1.BADGE = T.USERID)
+		LEFT JOIN PPM_PROJECT_FLOW PF ON (T.FLOWCASENO = PF.INSTANCEID)
+
+		<trim prefix="WHERE" suffixOverrides="AND">
+			<if test="flowdraftno != null  and flowdraftno != '' " > T.FLOWDRAFTNO=#{flowdraftno} AND </if>
+			<if test="flowcaseno != null  and flowcaseno != '' " > T.FLOWCASENO=#{flowcaseno} AND </if>
+			<if test=" true " > T.ISDEL=0 AND </if>
+		</trim>
+
+		) temp
+		ORDER BY CREATETIME ,ID DESC
+	</select>
+
+	<select id="getPwdFlow" parameterType="ppmFlowLog" resultMap="PPMFLOWLOG_ALL">
+		SELECT
+		*
+		FROM PPM_FLOW_LOG T
+		WHERE T.FLOWDRAFTNO = 'COM.WORK.PPM.BPS.PWD'
+		AND T.FLOWCASENO = #{flowcaseno}
+		AND T.APPLYDESC LIKE '%审批%'
+		AND T.CONCLUSION = '01' AND ROWNUM=1
+		ORDER BY T.CREATETIME DESC
+	</select>
+
+    <select id="queryOnlineSplogs" parameterType="map" resultMap="GETLOGS_MAP">
+        SELECT CREATETIME,
+        T.CONCLUSION,
+        T.SUGGEST,
+        T.APPLYDESC,
+        T.USERID,
+        T1.EMPNAME || '(' || T.USERID || ')' AS USERNAME,
+        T1.MOBILETELPHONE TEL,
+        (SELECT LOCATION FROM COMM_DEPARTMENT WHERE TO_CHAR(DEPID) = T.DEPTNO) AS DEPTNAME,
+        ISFALSE
+        FROM PPM_NEWFLOW_LOG T
+        LEFT JOIN PPM_EMP_VIEWALL T1 ON T1.BADGE = T.USERID
+        WHERE T.FLOWCASENO = #{flowcaseno}
+        AND T.CONCLUSION = #{conclusion}
+        AND T.APPLYDESC = #{applydesc}
+        AND T.ISDEL = '0'
+        ORDER BY T.CREATETIME ,T.ID ASC
+    </select>
+</mapper>

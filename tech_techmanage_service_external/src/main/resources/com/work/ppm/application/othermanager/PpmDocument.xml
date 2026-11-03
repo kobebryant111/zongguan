@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k6991 2020-03-24 -->
+<mapper namespace="com.work.ppm.application.model.othermanager.PpmDocument">
+    <resultMap type="ppmDocument" id="PPMDOCUMENT_ALL">
+        <result property="id" column="ID"/>
+        <result property="catalogno" column="CATALOGNO"/>
+        <result property="docname" column="DOCNAME"/>
+        <result property="objecttype" column="OBJECTTYPE"/>
+        <result property="objectno" column="OBJECTNO"/>
+        <result property="iswrite" column="ISWRITE"/>
+        <result property="isread" column="ISREAD"/>
+        <result property="docdomain" column="DOCDOMAIN"/>
+        <result property="tag1" column="TAG1"/>
+        <result property="tag2" column="TAG2"/>
+        <result property="tag3" column="TAG3"/>
+        <result property="isdel" column="ISDEL"/>
+        <result property="createtime" column="CREATETIME"/>
+        <result property="creators" column="CREATORS"/>
+        <result property="lastmodtime" column="LASTMODTIME"/>
+        <result property="lastmoduser" column="LASTMODUSER"/>
+        <result property="documentno" column="DOCUMENTNO"/>
+        <result property="currentversion" column="CURRENTVERSION"/>
+        <result property="iparea" column="IPAREA"/>
+        <result property="createorid" column="CREATEORID"/>
+        <result property="lastmoduserid" column="LASTMODUSERID"/>
+        <result property="stage" column="STAGE"/>
+
+    </resultMap>
+
+    <!-- 所有字段名称 -->
+    <sql id="sql_flied_all">
+        ID,
+        CATALOGNO,
+        DOCNAME,
+        OBJECTTYPE,
+        OBJECTNO,
+        STOCKPATH,
+        ISWRITE,
+        ISREAD,
+        DOCDOMAIN,
+        TAG1,
+        TAG2,
+        TAG3,
+        ISDEL,
+        CREATETIME,
+        CREATORS,
+        LASTMODTIME,
+        LASTMODUSER,
+        DOCUMENTNO,
+        CURRENTVERSION,
+        IPAREA,
+        CREATEORID,
+        LASTMODUSERID,
+        STAGE
+    </sql>
+    <!-- 查询分页  2020-03-24 k6991  -->
+    <select id="queryPagerList" parameterType="map" resultMap="PPMDOCUMENT_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM PPM_DOCUMENT
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="id != null ">ID = #{id} AND</if>
+            <if test="catalogno != null  and catalogno != '' ">CATALOGNO = #{catalogno} AND</if>
+            <if test="docname != null  and docname != '' ">DOCNAME = #{docname} AND</if>
+            <if test="objecttype != null  and objecttype != '' ">OBJECTTYPE = #{objecttype} AND</if>
+            <if test="objectno != null  and objectno != '' ">OBJECTNO = #{objectno} AND</if>
+            <if test="stockpath != null  and stockpath != '' ">STOCKPATH = #{stockpath} AND</if>
+            <if test="iswrite != null  and iswrite != '' ">ISWRITE = #{iswrite} AND</if>
+            <if test="isread != null  and isread != '' ">ISREAD = #{isread} AND</if>
+            <if test="docdomain != null  and docdomain != '' ">DOCDOMAIN = #{docdomain} AND</if>
+            <if test="tag1 != null  and tag1 != '' ">TAG1 = #{tag1} AND</if>
+            <if test="tag2 != null  and tag2 != '' ">TAG2 = #{tag2} AND</if>
+            <if test="tag3 != null  and tag3 != '' ">TAG3 = #{tag3} AND</if>
+            <if test="isdel != null ">ISDEL = #{isdel} AND</if>
+            <if test="createtime != null ">CREATETIME = #{createtime} AND</if>
+            <if test="creators != null  and creators != '' ">CREATORS = #{creators} AND</if>
+            <if test="lastmodtime != null ">LASTMODTIME = #{lastmodtime} AND</if>
+            <if test="lastmoduser != null  and lastmoduser != '' ">LASTMODUSER = #{lastmoduser} AND</if>
+            <if test="documentno != null  and documentno != '' ">DOCUMENTNO = #{documentno} AND</if>
+            <if test="currentversion != null  and currentversion != '' ">CURRENTVERSION = #{currentversion} AND</if>
+            <if test="iparea != null  and iparea != '' ">IPAREA = #{iparea} AND</if>
+            <if test="createorid != null  and createorid != '' ">CREATEORID = #{createorid} AND</if>
+            <if test="lastmoduserid != null  and lastmoduserid != '' ">LASTMODUSERID = #{lastmoduserid} AND</if>
+            <if test="stage != null  and stage != '' ">STAGE = #{stage} AND</if>
+
+        </trim>
+    </select>
+
+    <!-- 新增  2020-03-24 k6991  -->
+    <insert id="addPojo" parameterType="ppmDocument">
+        INSERT INTO PPM_DOCUMENT (
+        <trim suffixOverrides=",">
+            <if test="id != null ">ID ,</if>
+            <if test="catalogno != null  and catalogno != '' ">CATALOGNO ,</if>
+            <if test="docname != null  and docname != '' ">DOCNAME ,</if>
+            <if test="objecttype != null  and objecttype != '' ">OBJECTTYPE ,</if>
+            <if test="objectno != null  and objectno != '' ">OBJECTNO ,</if>
+            <if test="stockpath != null  and stockpath != '' ">STOCKPATH ,</if>
+            <if test="iswrite != null  and iswrite != '' ">ISWRITE ,</if>
+            <if test="isread != null  and isread != '' ">ISREAD ,</if>
+            <if test="docdomain != null  and docdomain != '' ">DOCDOMAIN ,</if>
+            <if test="tag1 != null  and tag1 != '' ">TAG1 ,</if>
+            <if test="tag2 != null  and tag2 != '' ">TAG2 ,</if>
+            <if test="tag3 != null  and tag3 != '' ">TAG3 ,</if>
+            <if test="isdel != null ">ISDEL ,</if>
+            <if test="createtime != null ">CREATETIME ,</if>
+            <if test="creators != null  and creators != '' ">CREATORS ,</if>
+            <if test="lastmodtime != null ">LASTMODTIME ,</if>
+            <if test="lastmoduser != null  and lastmoduser != '' ">LASTMODUSER ,</if>
+            <if test="documentno != null  and documentno != '' ">DOCUMENTNO ,</if>
+            <if test="currentversion != null  and currentversion != '' ">CURRENTVERSION ,</if>
+            <if test="iparea != null  and iparea != '' ">IPAREA ,</if>
+            <if test="createorid != null  and createorid != '' ">CREATEORID ,</if>
+            <if test="lastmoduserid != null  and lastmoduserid != '' ">LASTMODUSERID ,</if>
+            <if test="stage != null  and stage != '' ">STAGE ,</if>
+        </trim>
+        )
+        VALUES(
+        <trim suffixOverrides=",">
+            <if test="id != null ">#{id} ,</if>
+            <if test="catalogno != null  and catalogno != '' ">#{catalogno} ,</if>
+            <if test="docname != null  and docname != '' ">#{docname} ,</if>
+            <if test="objecttype != null  and objecttype != '' ">#{objecttype} ,</if>
+            <if test="objectno != null  and objectno != '' ">#{objectno} ,</if>
+            <if test="stockpath != null  and stockpath != '' ">#{stockpath} ,</if>
+            <if test="iswrite != null  and iswrite != '' ">#{iswrite} ,</if>
+            <if test="isread != null  and isread != '' ">#{isread} ,</if>
+            <if test="docdomain != null  and docdomain != '' ">#{docdomain} ,</if>
+            <if test="tag1 != null  and tag1 != '' ">#{tag1} ,</if>
+            <if test="tag2 != null  and tag2 != '' ">#{tag2} ,</if>
+            <if test="tag3 != null  and tag3 != '' ">#{tag3} ,</if>
+            <if test="isdel != null ">#{isdel} ,</if>
+            <if test="createtime != null ">#{createtime} ,</if>
+            <if test="creators != null  and creators != '' ">#{creators} ,</if>
+            <if test="lastmodtime != null ">#{lastmodtime} ,</if>
+            <if test="lastmoduser != null  and lastmoduser != '' ">#{lastmoduser} ,</if>
+            <if test="documentno != null  and documentno != '' ">#{documentno} ,</if>
+            <if test="currentversion != null  and currentversion != '' ">#{currentversion} ,</if>
+            <if test="iparea != null  and iparea != '' ">#{iparea} ,</if>
+            <if test="createorid != null  and createorid != '' ">#{createorid} ,</if>
+            <if test="lastmoduserid != null  and lastmoduserid != '' ">#{lastmoduserid} ,</if>
+            <if test="stage != null  and stage != '' ">#{stage} ,</if>
+        </trim>
+        )
+    </insert>
+
+    <!--通过id查询  k6991 2020-03-24 -->
+    <select id="getImageUrl" parameterType="ppmDocument" resultMap="PPMDOCUMENT_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM PPM_DOCUMENT WHERE DOCUMENTNO=#{documentno}
+    </select>
+
+    <!--查询集合  k6991 2020-03-24 -->
+    <select id="getList" parameterType="map" resultMap="PPMDOCUMENT_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM PPM_DOCUMENT
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="id != null ">ID=#{id} AND</if>
+            <if test="catalogno != null  and catalogno != '' ">CATALOGNO=#{catalogno} AND</if>
+            <if test="docname != null  and docname != '' ">DOCNAME=#{docname} AND</if>
+            <if test="objecttype != null  and objecttype != '' ">OBJECTTYPE=#{objecttype} AND</if>
+            <if test="objectno != null  and objectno != '' ">OBJECTNO=#{objectno} AND</if>
+            <if test="stockpath != null  and stockpath != '' ">STOCKPATH=#{stockpath} AND</if>
+            <if test="iswrite != null  and iswrite != '' ">ISWRITE=#{iswrite} AND</if>
+            <if test="isread != null  and isread != '' ">ISREAD=#{isread} AND</if>
+            <if test="docdomain != null  and docdomain != '' ">DOCDOMAIN=#{docdomain} AND</if>
+            <if test="tag1 != null  and tag1 != '' ">TAG1=#{tag1} AND</if>
+            <if test="tag2 != null  and tag2 != '' ">TAG2=#{tag2} AND</if>
+            <if test="tag3 != null  and tag3 != '' ">TAG3=#{tag3} AND</if>
+            <if test="isdel != null ">ISDEL=#{isdel} AND</if>
+            <if test="createtime != null ">CREATETIME=#{createtime} AND</if>
+            <if test="creators != null  and creators != '' ">CREATORS=#{creators} AND</if>
+            <if test="lastmodtime != null ">LASTMODTIME=#{lastmodtime} AND</if>
+            <if test="lastmoduser != null  and lastmoduser != '' ">LASTMODUSER=#{lastmoduser} AND</if>
+            <if test="documentno != null  and documentno != '' ">DOCUMENTNO=#{documentno} AND</if>
+            <if test="currentversion != null  and currentversion != '' ">CURRENTVERSION=#{currentversion} AND</if>
+            <if test="iparea != null  and iparea != '' ">IPAREA=#{iparea} AND</if>
+            <if test="createorid != null  and createorid != '' ">CREATEORID=#{createorid} AND</if>
+            <if test="lastmoduserid != null  and lastmoduserid != '' ">LASTMODUSERID=#{lastmoduserid} AND</if>
+            <if test="stage != null  and stage != '' ">STAGE=#{stage} AND</if>
+
+        </trim>
+    </select>
+    <!-- update sql -->
+    <sql id="update_pojo_sql">
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="id != null ">ID=#{id} ,</if>
+            <if test="catalogno != null  and catalogno != '' ">CATALOGNO=#{catalogno} ,</if>
+            <if test="docname != null  and docname != '' ">DOCNAME=#{docname} ,</if>
+            <if test="objecttype != null  and objecttype != '' ">OBJECTTYPE=#{objecttype} ,</if>
+            <if test="objectno != null  and objectno != '' ">OBJECTNO=#{objectno} ,</if>
+            <if test="stockpath != null  and stockpath != '' ">STOCKPATH=#{stockpath} ,</if>
+            <if test="iswrite != null  and iswrite != '' ">ISWRITE=#{iswrite} ,</if>
+            <if test="isread != null  and isread != '' ">ISREAD=#{isread} ,</if>
+            <if test="docdomain != null  and docdomain != '' ">DOCDOMAIN=#{docdomain} ,</if>
+            <if test="tag1 != null  and tag1 != '' ">TAG1=#{tag1} ,</if>
+            <if test="tag2 != null  and tag2 != '' ">TAG2=#{tag2} ,</if>
+            <if test="tag3 != null  and tag3 != '' ">TAG3=#{tag3} ,</if>
+            <if test="isdel != null ">ISDEL=#{isdel} ,</if>
+            <if test="createtime != null ">CREATETIME=#{createtime} ,</if>
+            <if test="creators != null  and creators != '' ">CREATORS=#{creators} ,</if>
+            <if test="lastmodtime != null ">LASTMODTIME=#{lastmodtime} ,</if>
+            <if test="lastmoduser != null  and lastmoduser != '' ">LASTMODUSER=#{lastmoduser} ,</if>
+            <if test="documentno != null  and documentno != '' ">DOCUMENTNO=#{documentno} ,</if>
+            <if test="currentversion != null  and currentversion != '' ">CURRENTVERSION=#{currentversion} ,</if>
+            <if test="iparea != null  and iparea != '' ">IPAREA=#{iparea} ,</if>
+            <if test="createorid != null  and createorid != '' ">CREATEORID=#{createorid} ,</if>
+            <if test="lastmoduserid != null  and lastmoduserid != '' ">LASTMODUSERID=#{lastmoduserid} ,</if>
+            <if test="stage != null  and stage != '' ">STAGE=#{stage} ,</if>
+
+        </trim>
+    </sql>
+
+    <!--通过id编辑 k6991 2020-03-24 -->
+    <update id="updatePojo" parameterType="ppmDocumentInfo">
+        UPDATE
+        PPM_DOCUMENT
+        <include refid="update_pojo_sql"/>
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="id != null ">ID=#{id} AND</if>
+            <if test="documentnos != null  and documentnos != '' ">
+                DOCUMENTNO IN (${documentnos}) AND</if>
+            <if test="documentno != null  and documentno != '' ">DOCUMENTNO=#{documentno} AND</if>
+        </trim>
+    </update>
+
+
+    <!-- 文档名称 -->
+    <select id="docmentnoSeq" parameterType="map" resultType="string">
+        select 'DOCUMENT'||to_char(sysdate,'yyyyMMdd')||lpad(PPM_DOCMENTNO_SEQ.Nextval,4,'0') from dual
+    </select>
+
+
+    <!--通过objecttype和objectno查询文件信息  k1327 2020-09-29 -->
+    <select id="getDocumentInfos" parameterType="map" resultMap="PPMDOCUMENT_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM PPM_DOCUMENT D WHERE D.DOCUMENTNO=#{documentno}
+    </select>
+
+    <!--通过id查询  k6991 2021-09-03 -->
+    <select id="getDetail" parameterType="ppmDocument" resultMap="PPMDOCUMENT_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM PPM_DOCUMENT WHERE OBJECTNO=#{objectno}
+        AND OBJECTTYPE = 'A9'
+        and ISDEL = '0'
+    </select>
+</mapper>

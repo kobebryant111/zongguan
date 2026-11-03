@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k6991 2021-11-01 -->
+<mapper namespace="com.work.ppm.application.model.projectmanager.PpmFhyyxtbgSystem">
+    <resultMap type="ppmFhyyxtbgSystem" id="PPMFHYYXTBGSYSTEM_ALL">
+        <result property="id" column="ID"/>
+        <result property="refinstanceid" column="REFINSTANCEID"/>
+        <result property="sysno" column="SYSNO"/>
+        <result property="sysname" column="SYSNAME"/>
+        <result property="tecuserid" column="TECUSERID"/>
+        <result property="tecusername" column="TECUSERNAME"/>
+        <result property="changestatus" column="CHANGESTATUS"/>
+        <result property="subprojectno" column="SUBPROJECTNO"/>
+
+    </resultMap>
+
+    <!-- 所有字段名称 -->
+    <sql id="sql_flied_all">
+        ID,
+        REFINSTANCEID,
+        SYSNO,
+        SYSNAME,
+        TECUSERID,
+        TECUSERNAME,
+        CHANGESTATUS,
+        SUBPROJECTNO
+    </sql>
+    <sql id="sql_select_condition">
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="id != null ">ID = #{id} AND</if>
+            <if test="refinstanceid != null  and refinstanceid != '' ">REFINSTANCEID = #{refinstanceid} AND</if>
+            <if test="sysno != null  and sysno != '' ">SYSNO = #{sysno} AND</if>
+            <if test="sysname != null  and sysname != '' ">SYSNAME = #{sysname} AND</if>
+            <if test="tecuserid != null  and tecuserid != '' ">TECUSERID = #{tecuserid} AND</if>
+            <if test="tecusername != null  and tecusername != '' ">TECUSERNAME = #{tecusername} AND</if>
+            <if test="changestatus != null  and changestatus != '' ">CHANGESTATUS = #{changestatus} AND</if>
+            <if test="subprojectno != null  and subprojectno != '' ">SUBPROJECTNO = #{subprojectno} AND</if>
+
+        </trim>
+    </sql>
+
+
+    <!-- 新增  2021-11-01 k6991  -->
+    <insert id="batchAdd" parameterType="list">
+        INSERT ALL
+        <foreach collection="list" item="item">
+            INTO PPM_FHYYXTBG_SYSTEM (
+            <trim suffixOverrides=",">
+                <if test="item.id != null ">ID ,</if>
+                <if test="item.refinstanceid != null  and item.refinstanceid != '' ">REFINSTANCEID ,</if>
+                <if test="item.sysno != null  and item.sysno != '' ">SYSNO ,</if>
+                <if test="item.sysname != null  and item.sysname != '' ">SYSNAME ,</if>
+                <if test="item.tecuserid != null  and item.tecuserid != '' ">TECUSERID ,</if>
+                <if test="item.tecusername != null  and item.tecusername != '' ">TECUSERNAME ,</if>
+                <if test="item.changestatus != null  and item.changestatus != '' ">CHANGESTATUS ,</if>
+                <if test="item.subprojectno != null  and item.subprojectno != '' ">SUBPROJECTNO ,</if>
+
+            </trim>
+            )
+            VALUES(
+            <trim suffixOverrides=",">
+                <if test="item.id != null ">#{item.id} ,</if>
+                <if test="item.refinstanceid != null  and item.refinstanceid != '' ">#{item.refinstanceid} ,</if>
+                <if test="item.sysno != null  and item.sysno != '' ">#{item.sysno} ,</if>
+                <if test="item.sysname != null  and item.sysname != '' ">#{item.sysname} ,</if>
+                <if test="item.tecuserid != null  and item.tecuserid != '' ">#{item.tecuserid} ,</if>
+                <if test="item.tecusername != null  and item.tecusername != '' ">#{item.tecusername} ,</if>
+                <if test="item.changestatus != null  and item.changestatus != '' ">#{item.changestatus} ,</if>
+                <if test="item.subprojectno != null  and item.subprojectno != '' ">#{item.subprojectno} ,</if>
+            </trim>
+            )
+        </foreach>
+        select 1 from dual
+    </insert>
+
+    <!--通过id查询  k6991 2021-11-01 -->
+    <select id="queryDetail" parameterType="ppmFhyyxtbgSystem" resultMap="PPMFHYYXTBGSYSTEM_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM PPM_FHYYXTBG_SYSTEM
+        WHERE refinstanceid=#{refinstanceid}
+    </select>
+
+    <!--查询集合  k6991 2021-11-01 -->
+    <select id="getList" parameterType="ppmFhyyxtbgSystem" resultMap="PPMFHYYXTBGSYSTEM_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM PPM_FHYYXTBG_SYSTEM
+        <include refid="sql_select_condition"/>
+    </select>
+    <!-- update sql -->
+    <sql id="update_pojo_sql">
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="id != null ">ID=#{id} ,</if>
+            <if test="refinstanceid != null  and refinstanceid != '' ">REFINSTANCEID=#{refinstanceid} ,</if>
+            <if test="sysno != null  and sysno != '' ">SYSNO=#{sysno} ,</if>
+            <if test="sysname != null  and sysname != '' ">SYSNAME=#{sysname} ,</if>
+            <if test="tecuserid != null  and tecuserid != '' ">TECUSERID=#{tecuserid} ,</if>
+            <if test="tecusername != null  and tecusername != '' ">TECUSERNAME=#{tecusername} ,</if>
+            <if test="changestatus != null  and changestatus != '' ">CHANGESTATUS=#{changestatus} ,</if>
+            <if test="subprojectno != null  and subprojectno != '' ">SUBPROJECTNO=#{subprojectno} ,</if>
+
+        </trim>
+    </sql>
+
+    <!--通过id编辑 k6991 2021-11-01 -->
+    <update id="updatePojo" parameterType="ppmFhyyxtbgSystem">
+        UPDATE
+        PPM_FHYYXTBG_SYSTEM
+        <include refid="update_pojo_sql"/>
+        WHERE REFINSTANCEID = #{refinstanceid}
+    </update>
+
+    <!--通过id批量删除  k6991 2021-11-01 -->
+    <delete id="deleteById" parameterType="ppmFhyyxtbgSystem">
+        DELETE
+        FROM
+        PPM_FHYYXTBG_SYSTEM
+        WHERE REFINSTANCEID = #{refinstanceid}
+    </delete>
+	<resultMap id="GETLISTSYSINFO_MAP" type="ppmFhyyxtbgSystemInfo" >
+        <result property="sysName" column="SYS_NAME" />
+        <result property="systemId" column="SYSTEM_ID" />
+        <result property="principalaName" column="PRINCIPALA_NAME" />
+        <result property="principala" column="PRINCIPALA" />
+        <result property="ischange" column="ISCHANGE" />
+    </resultMap>
+    <!--查询集合  k6991 2021-11-01 -->
+    <select id="getListSysInfo" parameterType="ppmFhyyxtbgSystem" resultMap="GETLISTSYSINFO_MAP">
+        SELECT
+        SYSNAME SYS_NAME,
+        SYSNO SYSTEM_ID,
+        TECUSERID PRINCIPALA,
+        TECUSERNAME PRINCIPALA_NAME,
+        CHANGESTATUS ISCHANGE
+        FROM PPM_FHYYXTBG_SYSTEM
+        WHERE REFINSTANCEID = #{refinstanceid}
+    </select>
+</mapper>

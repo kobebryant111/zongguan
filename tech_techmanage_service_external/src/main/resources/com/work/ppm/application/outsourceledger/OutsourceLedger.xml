@@ -1,0 +1,345 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.work.ppm.application.model.outsourceledger.OutsourceLedger">
+
+    <resultMap type="outsourceLedger" id="OUTSOURCELEDGER_ALL">
+      <result property="id" column="ID"/>
+      <result property="projectName" column="PROJECT_NAME"/>
+      <result property="descriptions" column="DESCRIPTIONS"/>
+      <result property="deptNo" column="DEPT_NO"/>
+      <result property="vendor" column="VENDOR"/>
+      <result property="deptName" column="DEPT_NAME"/>
+      <result property="vendorName" column="VENDOR_NAME"/>
+      <result property="registerPlace" column="REGISTER_PLACE"/>
+      <result property="startDate" column="START_DATE"/>
+      <result property="endDate" column="END_DATE"/>
+      <result property="amount" column="AMOUNT"/>
+      <result property="nums" column="NUMS"/>
+      <result property="isStation" column="IS_STATION"/>
+      <result property="isSubcontract" column="IS_SUBCONTRACT"/>
+      <result property="isDel" column="IS_DEL"/>
+      <result property="createUser" column="CREATE_USER"/>
+      <result property="updateUser" column="UPDATE_USER"/>
+    </resultMap>
+
+    <resultMap type="com.work.ppm.application.dto.outsourceledger.OutsourceLedgerDto" id="OutsourceLedgerDtoResult">
+        <result property="id" column="ID"/>
+        <result property="projectName" column="PROJECT_NAME"/>
+        <result property="descriptions" column="DESCRIPTIONS"/>
+        <result property="deptNo" column="DEPT_NO"/>
+        <result property="vendor" column="VENDOR"/>
+        <result property="registerPlace" column="REGISTER_PLACE"/>
+        <result property="startDate" column="START_DATE"/>
+        <result property="endDate" column="END_DATE"/>
+        <result property="amount" column="AMOUNT"/>
+        <result property="nums" column="NUMS"/>
+        <result property="isStation" column="IS_STATION"/>
+        <result property="isSubcontract" column="IS_SUBCONTRACT"/>
+        <result property="vendorName" column="VENDOR_NAME"/>
+        <result property="deptName" column="DEPT_NAME"/>
+    </resultMap>
+
+    <!-- 所有字段 -->
+    <sql id="sql_flied_all">
+        ID
+        ,PROJECT_NAME
+        ,DESCRIPTIONS
+        ,DEPT_NO
+        ,VENDOR
+        ,DEPT_NAME
+        ,VENDOR_NAME
+        ,REGISTER_PLACE
+        ,START_DATE
+        ,END_DATE
+        ,AMOUNT
+        ,NUMS
+        ,IS_STATION
+        ,IS_SUBCONTRACT
+        ,CREATE_USER
+        ,UPDATE_USER
+    </sql>
+
+    <sql id="sql_flied_basic">
+        ID
+        ,PROJECT_NAME
+        ,DESCRIPTIONS
+        ,DEPT_NO
+        ,VENDOR
+        ,DEPT_NAME
+        ,VENDOR_NAME
+        ,REGISTER_PLACE
+        ,START_DATE
+        ,END_DATE
+        ,AMOUNT
+        ,NUMS
+        ,IS_STATION
+        ,IS_SUBCONTRACT
+        ,CREATE_USER
+        ,UPDATE_USER
+    </sql>
+
+    <sql id="sql_flied_small">
+          ID
+          ,PROJECT_NAME
+          ,DESCRIPTIONS
+          ,DEPT_NO
+          ,VENDOR
+          ,DEPT_NAME
+          ,VENDOR_NAME
+          ,REGISTER_PLACE
+          ,START_DATE
+          ,END_DATE
+          ,AMOUNT
+          ,NUMS
+          ,IS_STATION
+          ,IS_SUBCONTRACT
+    </sql>
+
+    <!--  查询条件  -->
+    <sql id="sql_select_condition">
+       <trim prefix="WHERE" suffixOverrides="AND">
+           <if test="id != null and id != '' "> ID = #{id} AND </if>
+           <if test="projectName != null and projectName != '' "> PROJECT_NAME like '%'||#{projectName}||'%' AND </if>
+           <if test="descriptions != null and descriptions != '' "> DESCRIPTIONS = #{descriptions} AND </if>
+           <if test="deptNo != null and deptNo != '' "> DEPT_NO = #{deptNo} AND </if>
+           <if test="vendor != null and vendor != '' "> VENDOR = #{vendor} AND </if>
+           <if test="deptName != null and deptName != '' "> DEPT_NAME = #{deptName} AND </if>
+           <if test="vendorName != null and vendorName != '' "> VENDOR_NAME = #{vendorName} AND </if>
+           <if test="registerPlace != null and registerPlace != '' "> REGISTER_PLACE = #{registerPlace} AND </if>
+           <if test="startDate != null"> START_DATE = #{startDate} AND </if>
+           <if test="endDate != null"> END_DATE = #{endDate} AND </if>
+           <if test="amount != null and amount != '' "> AMOUNT = #{amount} AND </if>
+           <if test="nums != null and nums != '' "> NUMS = #{nums} AND </if>
+           <if test="isStation != null and isStation != '' "> IS_STATION = #{isStation} AND </if>
+           <if test="isSubcontract != null and isSubcontract != '' "> IS_SUBCONTRACT = #{isSubcontract} AND </if>
+           <if test="isDel != null and isDel != '' "> IS_DEL = #{isDel} AND </if>
+           <if test="createDate != null and createDate != '' "> CREATE_DATE = #{createDate} AND </if>
+           <if test="createUser != null and createUser != '' "> CREATE_USER = #{createUser} AND </if>
+           <if test="updateDate != null and updateDate != '' "> UPDATE_DATE = #{updateDate} AND </if>
+           <if test="updateUser != null and updateUser != '' "> UPDATE_USER = #{updateUser} AND </if>
+       </trim>
+    </sql>
+
+    <!-- 查询条件 自定义 -->
+    <sql id="sql_select_condition_cus">
+       <trim prefix="WHERE" suffixOverrides="AND">
+           <if test="id != null and id != '' "> ID = #{id} AND </if>
+           <if test="projectName != null and projectName != '' "> PROJECT_NAME = #{projectName} AND </if>
+           <if test="descriptions != null and descriptions != '' "> DESCRIPTIONS = #{descriptions} AND </if>
+           <if test="deptNo != null and deptNo != '' "> DEPT_NO = #{deptNo} AND </if>
+           <if test="vendor != null and vendor != '' "> VENDOR = #{vendor} AND </if>
+           <if test="deptName != null and deptName != '' "> DEPT_NAME = #{deptName} AND </if>
+           <if test="vendorName != null and vendorName != '' "> VENDOR_NAME = #{vendorName} AND </if>
+           <if test="registerPlace != null and registerPlace != '' "> REGISTER_PLACE = #{registerPlace} AND </if>
+           <if test="startDate != null "> START_DATE = #{startDate} AND </if>
+           <if test="endDate != null "> END_DATE = #{endDate} AND </if>
+           <if test="amount != null and amount != '' "> AMOUNT = #{amount} AND </if>
+           <if test="nums != null and nums != '' "> NUMS = #{nums} AND </if>
+           <if test="isStation != null and isStation != '' "> IS_STATION = #{isStation} AND </if>
+           <if test="isSubcontract != null and isSubcontract != '' "> IS_SUBCONTRACT = #{isSubcontract} AND </if>
+           <if test="isDel != null and isDel != '' "> IS_DEL = #{isDel} AND </if>
+           <if test="createUser != null and createUser != '' "> CREATE_USER = #{createUser} AND </if>
+           <if test="updateUser != null and updateUser != '' "> UPDATE_USER = #{updateUser} AND </if>
+       </trim>
+    </sql>
+
+    <!-- 更新字段 -->
+    <sql id="update_pojo_sql">
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="projectName != null and projectName != '' " > PROJECT_NAME = #{projectName},</if>
+            <if test="descriptions != null and descriptions != '' " > DESCRIPTIONS = #{descriptions},</if>
+            <if test="deptNo != null and deptNo != '' " > DEPT_NO = #{deptNo},</if>
+            <if test="vendor != null and vendor != '' " > VENDOR = #{vendor},</if>
+            <if test="deptName != null and deptName != '' " > DEPT_NAME = #{deptName},</if>
+            <if test="vendorName != null and vendorName != '' " > VENDOR_NAME = #{vendorName},</if>
+            <if test="registerPlace != null and registerPlace != '' " > REGISTER_PLACE = #{registerPlace},</if>
+            <if test="startDate != null " > START_DATE = #{startDate},</if>
+            <if test="endDate != null " > END_DATE = #{endDate},</if>
+            <if test="amount != null and amount != '' " > AMOUNT = #{amount},</if>
+            <if test="nums != null and nums != '' " > NUMS = #{nums},</if>
+            <if test="isStation != null and isStation != '' " > IS_STATION = #{isStation},</if>
+            <if test="isSubcontract != null and isSubcontract != '' " > IS_SUBCONTRACT = #{isSubcontract},</if>
+            <if test="isDel != null and isDel != '' " > IS_DEL = #{isDel},</if>
+            <if test="createUser != null and createUser != '' " > CREATE_USER = #{createUser},</if>
+            <if test="updateUser != null and updateUser != '' " > UPDATE_USER = #{updateUser},</if>
+        </trim>
+    </sql>
+
+    <!--  查询  -->
+    <!-- pager query 2022-11-22 ywwb903  -->
+    <select id="queryPagerList" parameterType="map" resultMap="OutsourceLedgerDtoResult">
+        SELECT
+            <include refid="sql_flied_basic"/>
+        FROM PPM_OUTSOURCE_LEDGER
+            <include refid="sql_select_condition"/>
+        ORDER BY ID DESC
+    </select>
+
+    <!-- list query 2022-11-22 ywwb903  -->
+    <select id="getList" parameterType="outsourceLedger" resultMap="OUTSOURCELEDGER_ALL">
+        SELECT
+        <include refid="sql_flied_basic"/>
+        FROM PPM_OUTSOURCE_LEDGER
+        <include refid="sql_select_condition"/>
+    </select>
+
+    <!-- query details by map, conditions: id  2022-11-22 ywwb903  -->
+    <select id="queryDetailsById" parameterType="map" resultMap="OUTSOURCELEDGER_ALL">
+        SELECT
+        <include refid="sql_flied_all" />
+        FROM PPM_OUTSOURCE_LEDGER WHERE ID=#{id}
+    </select>
+
+    <!-- query details by obj  2022-11-22 ywwb903  -->
+    <select id="queryDetails" parameterType="outsourceLedger" resultMap="OUTSOURCELEDGER_ALL">
+        SELECT
+        <include refid="sql_flied_all" />
+        FROM PPM_OUTSOURCE_LEDGER WHERE ID=#{id}
+    </select>
+
+    <!-- selectListByIds  2022-11-22 ywwb903 -->
+    <select id="selectListByIds" resultMap="OUTSOURCELEDGER_ALL">
+        SELECT
+        <include refid="sql_flied_small" />
+        FROM PPM_OUTSOURCE_LEDGER WHERE ID IN
+        <foreach collection="list" item="ids" open="(" separator=", " close=")">
+            #{ids}
+        </foreach>
+    </select>
+
+   <!-- select by map  2022-11-22 ywwb903  -->
+    <select id="selectByMapBasic" parameterType="map" resultMap="OUTSOURCELEDGER_ALL">
+        SELECT
+        <include refid="sql_flied_basic" />
+        FROM PPM_OUTSOURCE_LEDGER
+        <include refid="sql_select_condition_cus"/>
+    </select>
+
+    <select id="selectByMapSmall" parameterType="map" resultMap="OUTSOURCELEDGER_ALL">
+        SELECT
+        <include refid="sql_flied_small" />
+        FROM PPM_OUTSOURCE_LEDGER
+        <include refid="sql_select_condition_cus"/>
+    </select>
+
+    <select id="selectByMap" parameterType="map" resultMap="OUTSOURCELEDGER_ALL">
+        SELECT
+        <include refid="sql_flied_all" />
+        FROM PPM_OUTSOURCE_LEDGER
+        <include refid="sql_select_condition"/>
+    </select>
+
+   <!-- selectCount  2022-11-22 ywwb903  -->
+    <select id="selectCount" parameterType="map" resultType="Long">
+        SELECT COUNT(1)
+        FROM PPM_OUTSOURCE_LEDGER
+        <include refid="sql_select_condition_cus"/>
+    </select>
+
+
+    <!--  新增  -->
+    <!-- insert 2022-11-22 ywwb903  -->
+    <insert id="addPojo" parameterType="outsourceLedger">
+    	INSERT INTO PPM_OUTSOURCE_LEDGER (
+    	<trim suffixOverrides=",">
+    	    <if test="projectName != null and projectName != '' ">  PROJECT_NAME ,</if>
+    	    <if test="descriptions != null and descriptions != '' ">  DESCRIPTIONS ,</if>
+    	    <if test="deptNo != null and deptNo != '' ">  DEPT_NO ,</if>
+    	    <if test="vendor != null and vendor != '' ">  VENDOR ,</if>
+            <if test="deptName != null and deptName != '' ">  DEPT_NAME ,</if>
+            <if test="vendorName != null and vendorName != '' ">  VENDOR_NAME ,</if>
+    	    <if test="registerPlace != null and registerPlace != '' ">  REGISTER_PLACE ,</if>
+            <if test="startDate != null ">  START_DATE ,</if>
+            <if test="endDate != null ">  END_DATE ,</if>
+    	    <if test="amount != null and amount != '' ">  AMOUNT ,</if>
+    	    <if test="nums != null and nums != '' ">  NUMS ,</if>
+    	    <if test="isStation != null and isStation != '' ">  IS_STATION ,</if>
+    	    <if test="isSubcontract != null and isSubcontract != '' ">  IS_SUBCONTRACT ,</if>
+    	    <if test="isDel != null and isDel != '' ">  IS_DEL ,</if>
+    	    <if test="createUser != null and createUser != '' ">  CREATE_USER ,</if>
+    	    <if test="updateUser != null and updateUser != '' ">  UPDATE_USER ,</if>
+    	</trim>
+    	)
+    	VALUES(
+    	<trim suffixOverrides=",">
+            <if test="projectName != null and projectName != '' "> #{projectName} ,</if>
+            <if test="descriptions != null and descriptions != '' "> #{descriptions} ,</if>
+            <if test="deptNo != null and deptNo != '' "> #{deptNo} ,</if>
+            <if test="vendor != null and vendor != '' "> #{vendor} ,</if>
+            <if test="deptName != null and deptName != '' "> #{deptName} ,</if>
+            <if test="vendorName != null and vendorName != '' "> #{vendorName} ,</if>
+            <if test="registerPlace != null and registerPlace != '' "> #{registerPlace} ,</if>
+            <if test="startDate != null"> #{startDate} ,</if>
+            <if test="endDate != null"> #{endDate} ,</if>
+            <if test="amount != null and amount != '' "> #{amount} ,</if>
+            <if test="nums != null and nums != '' "> #{nums} ,</if>
+            <if test="isStation != null and isStation != '' "> #{isStation} ,</if>
+            <if test="isSubcontract != null and isSubcontract != '' "> #{isSubcontract} ,</if>
+            <if test="isDel != null and isDel != '' "> #{isDel} ,</if>
+            <if test="createUser != null and createUser != '' "> #{createUser} ,</if>
+            <if test="updateUser != null and updateUser != '' "> #{updateUser} ,</if>
+    	</trim>
+    	)
+    </insert>
+
+    <!-- batch insert 2022-11-22 ywwb903  -->
+    <insert id="batchAdd" parameterType="list">
+        INSERT ALL
+        <foreach collection="list" item="item" index="index">
+            INTO PPM_OUTSOURCE_LEDGER (
+            <trim suffixOverrides=",">
+                <if test="item.projectName != null and item.projectName != '' ">  PROJECT_NAME ,</if>
+                <if test="item.descriptions != null and item.descriptions != '' ">  DESCRIPTIONS ,</if>
+                <if test="item.deptNo != null and item.deptNo != '' ">  DEPT_NO ,</if>
+                <if test="item.vendor != null and item.vendor != '' ">  VENDOR ,</if>
+                <if test="item.deptName != null and item.deptName != '' ">  DEPT_NAME ,</if>
+                <if test="item.vendorName != null and item.vendorName != '' ">  VENDOR_NAME ,</if>
+                <if test="item.registerPlace != null and item.registerPlace != '' ">  REGISTER_PLACE ,</if>
+                <if test="item.startDate != null ">  START_DATE ,</if>
+                <if test="item.endDate != null ">  END_DATE ,</if>
+                <if test="item.amount != null and item.amount != '' ">  AMOUNT ,</if>
+                <if test="item.nums != null and item.nums != '' ">  NUMS ,</if>
+                <if test="item.isStation != null and item.isStation != '' ">  IS_STATION ,</if>
+                <if test="item.isSubcontract != null and item.isSubcontract != '' ">  IS_SUBCONTRACT ,</if>
+                <if test="item.createUser != null and item.createUser != '' ">  CREATE_USER ,</if>
+                <if test="item.updateUser != null and item.updateUser != '' ">  UPDATE_USER ,</if>
+            </trim>
+            )
+            VALUES(
+            <trim suffixOverrides=",">
+                <if test="item.projectName != null and item.projectName != '' " > #{item.projectName} ,</if>
+                <if test="item.descriptions != null and item.descriptions != '' " > #{item.descriptions} ,</if>
+                <if test="item.deptNo != null and item.deptNo != '' " > #{item.deptNo} ,</if>
+                <if test="item.vendor != null and item.vendor != '' " > #{item.vendor} ,</if>
+                <if test="item.deptName != null and item.deptName != '' " > #{item.deptName} ,</if>
+                <if test="item.vendorName != null and item.vendorName != '' " > #{item.vendorName} ,</if>
+                <if test="item.registerPlace != null and item.registerPlace != '' " > #{item.registerPlace} ,</if>
+                <if test="item.startDate != null " > #{item.startDate} ,</if>
+                <if test="item.endDate != null " > #{item.endDate} ,</if>
+                <if test="item.amount != null and item.amount != '' " > #{item.amount} ,</if>
+                <if test="item.nums != null and item.nums != '' " > #{item.nums} ,</if>
+                <if test="item.isStation != null and item.isStation != '' " > #{item.isStation} ,</if>
+                <if test="item.isSubcontract != null and item.isSubcontract != '' " > #{item.isSubcontract} ,</if>
+                <if test="item.createUser != null and item.createUser != '' " > #{item.createUser} ,</if>
+                <if test="item.updateUser != null and item.updateUser != '' " > #{item.updateUser} ,</if>
+            </trim>
+            )
+        </foreach>
+        select 1 from dual
+    </insert>
+
+    <!--  更新  -->
+	<!-- update by id 2022-11-22 ywwb903  -->
+	<update id="updatePojo" parameterType="outsourceLedger">
+		UPDATE
+		PPM_OUTSOURCE_LEDGER
+		<include refid="update_pojo_sql" />
+		WHERE ID = #{id}
+	</update>
+
+	<!--  删除  -->
+	<!-- delete by pojo 2022-11-22 ywwb903  -->
+    <delete id="deletePojo" parameterType="outsourceLedger">
+        DELETE FROM PPM_OUTSOURCE_LEDGER WHERE ID = #{id}
+    </delete>
+</mapper>

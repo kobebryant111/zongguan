@@ -1,0 +1,17 @@
+<assembly>
+    <id>sql</id>
+    <formats>
+        <format>zip</format>
+    </formats>
+    <includeBaseDirectory>false</includeBaseDirectory>
+    <fileSets>
+        <fileSet>
+            <directory>${basedir}</directory>
+            <includes>
+                <include>sql/**/*.sql</include>
+                <include>sql/**/*.txt</include>
+                <include>sql/**/*.md</include>
+            </includes>
+        </fileSet>
+    </fileSets>
+</assembly>

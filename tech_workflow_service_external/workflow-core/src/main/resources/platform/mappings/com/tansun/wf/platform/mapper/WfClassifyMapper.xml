@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tansun.wf.platform.mapper.WfClassifyMapper">
+
+    <sql id="classifyColumns">
+		a.id,
+		a.parent_id,
+		a.parent_ids,
+		a.name,
+		a.sort,
+		a.code,
+		a.type,
+		a.is_default,
+		a.useable,
+		a.create_by,
+		a.create_date,
+		a.update_by,
+		a.update_date,
+		a.remarks,
+		a.del_flag
+	</sql>
+
+	<insert id="insert" parameterType="com.tansun.wf.platform.model.WfClassifyEntity">
+		INSERT INTO wf_process_classify
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			id,
+			parent_id,
+			parent_ids,
+			code,
+			<if test="_databaseId == 'oracle'">
+				NAME,
+			</if>
+			<if test="_databaseId == 'mysql'">
+				`NAME`,
+			</if>
+			sort,
+			<if test ="_databaseId == 'oracle'">
+				TYPE,
+			</if>
+			<if test="_databaseId == 'mysql'">
+				`TYPE`,
+			</if>
+			is_default,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag,
+			useable,
+			tenant_id
+		</trim>
+		 VALUES (
+			#{id,jdbcType=VARCHAR},
+			#{parentId,jdbcType=VARCHAR},
+			#{parentIds,jdbcType=VARCHAR},
+			#{code,jdbcType=VARCHAR},
+			#{name,jdbcType=VARCHAR},
+			#{sort,jdbcType=VARCHAR},
+			#{type,jdbcType=VARCHAR},
+			#{isDefault,jdbcType=VARCHAR},
+			#{createBy,jdbcType=VARCHAR},
+			#{createDate,jdbcType=DATE},
+			#{updateBy,jdbcType=VARCHAR},
+			#{updateDate,jdbcType=DATE},
+			#{remarks,jdbcType=VARCHAR},
+			#{delFlag,jdbcType=VARCHAR},
+			#{useable,jdbcType=VARCHAR},
+			#{tenantId,jdbcType=VARCHAR}
+		)
+	</insert>
+
+	<update id="update" parameterType="com.tansun.wf.platform.model.WfClassifyEntity">
+		UPDATE wf_process_classify a
+		<trim prefix="SET" suffixOverrides=",">
+			a.name = #{name},
+			a.code = #{code},
+			a.update_by = #{updateBy},
+			a.update_date = #{updateDate},
+			a.remarks = #{remarks},
+			a.useable = #{useable}
+		</trim>
+		WHERE a.id = #{id}
+	</update>
+
+	<select id="findList" resultType="com.tansun.wf.platform.model.WfClassifyEntity">
+		SELECT
+		<include refid="classifyColumns"/>
+		FROM wf_process_classify a
+		WHERE a.del_flag = '0'
+		<if test="parentId!= null and parentId!=''">
+			and a.parent_id = #{parentId}
+		</if>
+		<if test="tenantId!= null and tenantId!=''">
+		    and  a.TENANT_ID =#{tenantId}
+		</if>
+		
+		<if test="code!= null and code!=''">
+			and a.code = #{code}
+		</if>
+		<if test="id!= null and id!=''">
+			and a.id = #{id}
+		</if>
+	</select>
+
+	<select id="findClassifyById" parameterType="java.lang.String"
+			resultType="com.tansun.wf.platform.model.WfClassifyEntity">
+		SELECT
+		<include refid="classifyColumns"/>
+		FROM wf_process_classify a
+		WHERE a.del_flag = '0'
+		and a.id = #{id}
+	</select>
+
+	<select id="findClassifyByCode" parameterType="java.lang.String"
+			resultType="com.tansun.wf.platform.model.WfClassifyEntity">
+		SELECT
+		<include refid="classifyColumns"/>
+		FROM wf_process_classify a
+		WHERE a.del_flag = '0'
+		and a.code = #{code}
+	</select>
+
+
+	<select id="findByParentIds" resultType="com.tansun.wf.platform.model.WfClassifyEntity"
+			parameterType="java.lang.String">
+		SELECT
+		<include refid="classifyColumns"/>
+		FROM wf_process_classify a
+		WHERE a.del_flag = '0'
+		<if test="parentIds != null and parentIds != ''">
+			<bind name="likeParentIds" value="_parameter.parentIds + '%'"/>
+			and a.parent_ids like #{likeParentIds}
+		</if>
+	</select>
+
+	<delete id="deleteClassifyList" parameterType="java.util.List">
+		delete from wf_process_classify where
+		<if test="ids != null and ids.size() >0">
+			id in
+			<foreach collection="ids" item="id" open="(" close=")" separator=",">
+				#{id}
+			</foreach>
+		</if>
+		<if test="ids == null || ids.size() ==0">
+			id in ('')
+		</if>
+	</delete>
+
+	<select id="selectClassfyCodeById" resultType="hashMap">
+      select
+        w.parent_id "parentId",
+        w.parent_ids "parentIds",
+        w.name "name",
+        w.code "code",
+        w.sort "sort"
+      from
+      wf_process_classify w
+      where w.id = #{id}
+  </select>
+
+</mapper>

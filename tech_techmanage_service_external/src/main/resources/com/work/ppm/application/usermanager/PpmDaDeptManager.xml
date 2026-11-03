@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k6991 2020-12-23 -->
+<mapper namespace="com.work.ppm.application.model.usermanager.PpmDaDeptManager">
+	 <resultMap type="ppmDaDeptManager" id="PPMDADEPTMANAGER_ALL">
+        <result property="id" column="ID" />
+		<result property="userid" column="USERID" />
+		<result property="deptid" column="DEPTID" />
+		<result property="status" column="STATUS" />
+		<result property="centerid" column="CENTERID" />
+		
+     </resultMap>
+
+     <!-- 所有字段名称 -->
+        <sql id="sql_flied_all">
+        	ID,
+			USERID,
+			DEPTID,
+			STATUS,
+			CENTERID
+        </sql>
+        <sql id="sql_select_condition">
+            <trim prefix="WHERE" suffixOverrides="AND">
+                <if test="id != null  and id != '' " > ID = #{id} AND </if>
+				<if test="userid != null  and userid != '' " > USERID = #{userid} AND </if>
+				<if test="deptid != null  and deptid != '' " > DEPTID = #{deptid} AND </if>
+				<if test="status != null  and status != '' " > STATUS = #{status} AND </if>
+				<if test="centerid != null  and centerid != '' " > CENTERID = #{centerid} AND </if>
+				
+            </trim>
+        </sql>
+
+
+        <!--通过id查询  k6991 2020-12-23 -->
+        <select id="queryBadgeForDetpId" parameterType="ppmDaDeptManager" resultMap="PPMDADEPTMANAGER_ALL">
+        	SELECT
+			USERID
+        	FROM PPM_DA_DEPT_MANAGER  WHERE DEPTID = #{deptid}
+        </select>
+
+	<!--通过id查询  k6991 2020-12-23 -->
+	<select id="queryDetail" parameterType="ppmDaDeptManager" resultMap="PPMDADEPTMANAGER_ALL">
+		SELECT
+		<include refid="sql_flied_all"/>
+		FROM PPM_DA_DEPT_MANAGER
+		<include refid="sql_select_condition" />
+	</select>
+
+
+</mapper>

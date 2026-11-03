@@ -1,0 +1,348 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.work.ppm.application.model.vendormanager.ExpenseSettlement">
+
+    <resultMap type="expenseSettlement" id="EXPENSESETTLEMENT_ALL">
+      <result property="id" column="ID"/>
+      <result property="instanceId" column="INSTANCEID"/>
+      <result property="flowId" column="FLOWID"/>
+      <result property="approvalStatus" column="APPROVALSTATUS"/>
+      <result property="vendorName" column="VENDORNAME"/>
+      <result property="vendorCode" column="VENDORCODE"/>
+      <result property="taxRate" column="TAXRATE"/>
+      <result property="amount" column="AMOUNT"/>
+      <result property="amountTax" column="AMOUNTTAX"/>
+      <result property="isDel" column="IS_DEL"/>
+      <result property="payConfirmId" column="PAYCONFIRMID"/>
+      <result property="remark" column="remark"/>
+      <result property="proManager" column="PROMANAGER"/>
+      <result property="createDate" column="CREATE_DATE"/>
+      <result property="createUser" column="CREATE_USER"/>
+      <result property="updateDate" column="UPDATE_DATE"/>
+      <result property="updateUser" column="UPDATE_USER"/>
+    </resultMap>
+
+    <resultMap type="com.work.ppm.application.dto.vendorcontract.ExpenseSettlementDto" id="EXPENSESETTLEMENT_ALL_EXT" extends="EXPENSESETTLEMENT_ALL">
+        <result property="proManagerName" column="proManagerName"/>
+    </resultMap>
+
+    <!-- 所有字段 -->
+    <sql id="sql_flied_all">
+        ID
+        ,INSTANCE_ID  as instanceId
+        ,FLOW_ID as flowId
+        ,APPROVAL_STATUS as approvalStatus
+        ,VENDOR_NAME as vendorName
+        ,VENDOR_CODE as vendorCode
+        ,TAX_RATE as taxRate
+        ,AMOUNT
+        ,AMOUNT_TAX as amountTax
+        ,IS_DEL
+        ,PRO_MANAGER as proManager
+        ,PAY_CONFIRM_ID as payConfirmId
+        ,REMARK
+    </sql>
+
+    <sql id="sql_flied_basic">
+        ID
+        ,INSTANCE_ID as instanceId
+        ,FLOW_ID as flowId
+        ,APPROVAL_STATUS as approvalStatus
+        ,VENDOR_NAME as vendorName
+        ,VENDOR_CODE as vendorCode
+        ,TAX_RATE as taxRate
+        ,AMOUNT
+        ,AMOUNT_TAX as amountTax
+        ,PRO_MANAGER as proManager
+<!--        ,(select empname from comm_employee where badge = pro_manager and ISDISABLED = '0' and rownum =1) as proManagerName-->
+        ,(SELECT WMSYS.WM_CONCAT(EMPNAME) FROM comm_employee WHERE ISDISABLED = '0' AND BADGE IN (
+        SELECT PRO_MANAGER FROM PPM_PAYMENT_CONFIRM WHERE id  IN (
+        SELECT REGEXP_substr(PAY_CONFIRM_ID,'[^,]+',1,level) tt FROM DUAL connect by level &lt;= regexp_count(PAY_CONFIRM_ID,',') + 1
+        ))) as proManagerName
+        ,PAY_CONFIRM_ID as payConfirmId
+        ,REMARK
+    </sql>
+
+    <sql id="sql_flied_small">
+          ID
+          ,INSTANCE_ID as instanceId
+          ,FLOW_ID as flowId
+          ,APPROVAL_STATUS  as approvalStatus
+          ,VENDOR_NAME as vendorName
+          ,VENDOR_CODE as vendorCode
+          ,TAX_RATE as taxRate
+          ,AMOUNT
+          ,AMOUNT_TAX as amountTax
+          ,PRO_MANAGER as proManager
+          ,PAY_CONFIRM_ID as payConfirmId
+          ,REMARK
+    </sql>
+
+    <!--  查询条件  -->
+    <sql id="sql_select_condition">
+       <trim prefix="WHERE" suffixOverrides="AND">
+           <if test="id != null and id != '' "> ID = #{id} AND </if>
+           <if test="instanceId != null and instanceId != '' "> INSTANCE_ID = #{instanceId} AND </if>
+           <if test="flowId != null and flowId != '' "> FLOW_ID = #{flowId} AND </if>
+           <if test="approvalStatus != null and approvalStatus != '' "> APPROVAL_STATUS = #{approvalStatus} AND </if>
+           <if test="vendorName != null and vendorName != '' "> VENDOR_NAME = #{vendorName} AND </if>
+           <if test="vendorCode != null and vendorCode != '' "> VENDOR_CODE = #{vendorCode} AND </if>
+           <if test="taxRate != null"> TAX_RATE = #{taxRate} AND </if>
+           <if test="amount != null"> AMOUNT = #{amount} AND </if>
+           <if test="amountTax != null"> AMOUNT_TAX = #{amountTax} AND </if>
+           <if test="isDel != null and isDel != '' "> IS_DEL = #{isDel} AND </if>
+           <if test="remark != null and remark != '' "> REMARK = #{remark} AND </if>
+           <if test="proManager != null and proManager != '' "> PRO_MANAGER = #{proManager} AND </if>
+           <if test="createUser != null and createUser != '' "> CREATE_USER = #{createUser} AND </if>
+           <if test="updateUser != null and updateUser != '' "> UPDATE_USER = #{updateUser} AND </if>
+       </trim>
+    </sql>
+
+    <!-- 查询条件 自定义 -->
+    <sql id="sql_select_condition_cus">
+       <trim prefix="WHERE" suffixOverrides="AND">
+           <if test="id != null and id != '' "> ID = #{id} AND </if>
+           <if test="instanceId != null and instanceId != '' "> INSTANCE_ID = #{instanceId} AND </if>
+           <if test="flowId != null and flowId != '' "> FLOW_ID = #{flowId} AND </if>
+           <if test="approvalStatus != null and approvalStatus != '' "> APPROVAL_STATUS = #{approvalStatus} AND </if>
+           <if test="vendorName != null and vendorName != '' "> VENDOR_NAME = #{vendorName} AND </if>
+           <if test="vendorCode != null and vendorCode != '' "> VENDOR_CODE = #{vendorCode} AND </if>
+           <if test="taxRate != null"> TAX_RATE = #{taxRate} AND </if>
+           <if test="amount != null"> AMOUNT = #{amount} AND </if>
+           <if test="amountTax != null"> AMOUNT_TAX = #{amountTax} AND </if>
+           <if test="remark != null and remark != '' "> REMARK = #{remark} AND </if>
+           <if test="isDel != null and isDel != '' "> IS_DEL = #{isDel} AND </if>
+           <if test="proManager != null and proManager != '' "> PRO_MANAGER = #{proManager} AND </if>
+           <if test="createUser != null and createUser != '' "> CREATE_USER = #{createUser} AND </if>
+           <if test="updateUser != null and updateUser != '' "> UPDATE_USER = #{updateUser} AND </if>
+       </trim>
+    </sql>
+
+    <!-- 更新字段 -->
+    <sql id="update_pojo_sql">
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="instanceId != null and instanceId != '' " > INSTANCE_ID = #{instanceId},</if>
+            <if test="flowId != null and flowId != '' " > FLOW_ID = #{flowId},</if>
+            <if test="approvalStatus != null and approvalStatus != '' " > APPROVAL_STATUS = #{approvalStatus},</if>
+            <if test="vendorName != null and vendorName != '' " > VENDOR_NAME = #{vendorName},</if>
+            <if test="vendorCode != null and vendorCode != '' " > VENDOR_CODE = #{vendorCode},</if>
+            <if test="taxRate != null " > TAX_RATE = #{taxRate},</if>
+            <if test="amount != null " > AMOUNT = #{amount},</if>
+            <if test="amountTax != null" > AMOUNT_TAX = #{amountTax},</if>
+            <if test="isDel != null and isDel != '' " > IS_DEL = #{isDel},</if>
+            <if test="proManager != null and proManager != '' " > PRO_MANAGER = #{proManager},</if>
+            <if test="payConfirmId != null and payConfirmId != '' " > PAY_CONFIRM_ID = #{payConfirmId},</if>
+            <if test="remark != null and remark != '' " > REMARK = #{remark},</if>
+            <if test="createUser != null and createUser != '' " > CREATE_USER = #{createUser},</if>
+            <if test="updateUser != null and updateUser != '' " > UPDATE_USER = #{updateUser},</if>
+        </trim>
+    </sql>
+
+    <!--  查询  -->
+    <!-- pager query 2022-11-13 ywwb903  -->
+    <select id="queryPagerList" parameterType="map" resultType="com.work.ppm.application.dto.vendorcontract.ExpenseSettlementDto">
+        SELECT
+            <include refid="sql_flied_basic"/>
+            FROM PPM_EXPENSE_SETTLEMENT
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="id != null and id != '' "> ID = #{id} AND </if>
+            <if test="instanceId != null and instanceId != '' "> INSTANCE_ID = #{instanceId} AND </if>
+            <if test="flowId != null and flowId != '' "> FLOW_ID = #{flowId} AND </if>
+            <if test="approvalStatus != null and approvalStatus != '' "> APPROVAL_STATUS = #{approvalStatus} AND </if>
+            <if test="vendorName != null and vendorName != '' "> VENDOR_NAME = #{vendorName} AND </if>
+            <if test="vendorCode != null and vendorCode != '' "> VENDOR_CODE = #{vendorCode} AND </if>
+            <if test="taxRate != null"> TAX_RATE = #{taxRate} AND </if>
+            <if test="amount != null"> AMOUNT = #{amount} AND </if>
+            <if test="amountTax != null"> AMOUNT_TAX = #{amountTax} AND </if>
+            <if test="isDel != null and isDel != '' "> IS_DEL = #{isDel} AND </if>
+            <if test="createUser != null and createUser != '' "> CREATE_USER = #{createUser} AND </if>
+            <if test="updateUser != null and updateUser != '' "> UPDATE_USER = #{updateUser} AND </if>
+            <if test='perm == "common"'> PRO_MANAGER = #{proManager} AND</if>
+            <if test='perm=="managers"'>
+                PRO_MANAGER in (select badge from comm_employee where depid in (
+                select depid from comm_employee where badge = #{proManager} )) AND
+            </if>
+        </trim>
+    </select>
+
+    <!-- list query 2022-11-13 ywwb903  -->
+    <select id="getList" parameterType="expenseSettlement" resultMap="EXPENSESETTLEMENT_ALL">
+        SELECT
+        <include refid="sql_flied_basic"/>
+        FROM PPM_EXPENSE_SETTLEMENT
+        <include refid="sql_select_condition"/>
+    </select>
+
+    <!-- query details by map, conditions: id  2022-11-13 ywwb903  -->
+    <select id="queryDetailsById" parameterType="map" resultMap="EXPENSESETTLEMENT_ALL">
+        SELECT
+        <include refid="sql_flied_all" />
+        FROM PPM_EXPENSE_SETTLEMENT WHERE ID=#{id}
+    </select>
+
+    <!-- query details by obj  2022-11-13 ywwb903  -->
+    <select id="queryDetails" parameterType="expenseSettlement" resultMap="EXPENSESETTLEMENT_ALL_EXT">
+        SELECT
+        <include refid="sql_flied_all" />
+        ,(select empname from comm_employee where badge = pro_manager and ISDISABLED = '0' and rownum =1) as proManagerName
+        FROM PPM_EXPENSE_SETTLEMENT WHERE ID=#{id}
+    </select>
+
+   <!-- select by map  2022-11-13 ywwb903  -->
+    <select id="selectByMapBasic" parameterType="map" resultType="com.work.ppm.application.dto.vendorcontract.ExpenseSettlementDto">
+        SELECT
+        <include refid="sql_flied_basic" />
+        FROM PPM_EXPENSE_SETTLEMENT
+        <include refid="sql_select_condition_cus"/>
+    </select>
+
+    <select id="selectByMapSmall" parameterType="map" resultMap="EXPENSESETTLEMENT_ALL">
+        SELECT
+        <include refid="sql_flied_small" />
+        FROM PPM_EXPENSE_SETTLEMENT
+        <include refid="sql_select_condition_cus"/>
+    </select>
+
+    <select id="selectByMap" parameterType="map" resultMap="EXPENSESETTLEMENT_ALL">
+        SELECT
+        <include refid="sql_flied_all" />
+        FROM PPM_EXPENSE_SETTLEMENT
+        <include refid="sql_select_condition"/>
+    </select>
+
+   <!-- selectCount  2022-11-13 ywwb903  -->
+    <select id="selectCount" parameterType="map" resultType="Long">
+        SELECT COUNT(1)
+        FROM PPM_EXPENSE_SETTLEMENT
+        <include refid="sql_select_condition_cus"/>
+    </select>
+
+
+    <!--  新增  -->
+    <!-- insert 2022-11-13 ywwb903  -->
+    <insert id="addPojo" parameterType="expenseSettlement">
+    	INSERT INTO PPM_EXPENSE_SETTLEMENT (
+    	<trim suffixOverrides=",">
+    	    <if test="id != null and id != '' ">  ID ,</if>
+    	    <if test="instanceId != null and instanceId != '' ">  INSTANCE_ID ,</if>
+    	    <if test="flowId != null and flowId != '' ">  FLOW_ID ,</if>
+    	    <if test="approvalStatus != null and approvalStatus != '' ">  APPROVAL_STATUS ,</if>
+    	    <if test="vendorName != null and vendorName != '' ">  VENDOR_NAME ,</if>
+    	    <if test="vendorCode != null and vendorCode != '' ">  VENDOR_CODE ,</if>
+    	    <if test="taxRate != null and taxRate != '' ">  TAX_RATE ,</if>
+    	    <if test="amount != null and amount != '' ">  AMOUNT ,</if>
+    	    <if test="amountTax != null and amountTax != '' ">  AMOUNT_TAX ,</if>
+    	    <if test="isDel != null and isDel != '' ">  IS_DEL ,</if>
+    	    <if test="proManager != null and proManager != '' ">  PRO_MANAGER ,</if>
+            <if test="payConfirmId != null and payConfirmId != '' ">  PAY_CONFIRM_ID ,</if>
+            <if test="remark != null and remark != '' ">  REMARK ,</if>
+    	    <if test="createUser != null and createUser != '' ">  CREATE_USER ,</if>
+    	    <if test="updateUser != null and updateUser != '' ">  UPDATE_USER ,</if>
+    	</trim>
+    	)
+    	VALUES(
+    	<trim suffixOverrides=",">
+            <if test="id != null and id != '' "> #{id} ,</if>
+            <if test="instanceId != null and instanceId != '' "> #{instanceId} ,</if>
+            <if test="flowId != null and flowId != '' "> #{flowId} ,</if>
+            <if test="approvalStatus != null and approvalStatus != '' "> #{approvalStatus} ,</if>
+            <if test="vendorName != null and vendorName != '' "> #{vendorName} ,</if>
+            <if test="vendorCode != null and vendorCode != '' "> #{vendorCode} ,</if>
+            <if test="taxRate != null and taxRate != '' "> #{taxRate} ,</if>
+            <if test="amount != null and amount != '' "> #{amount} ,</if>
+            <if test="amountTax != null and amountTax != '' "> #{amountTax} ,</if>
+            <if test="isDel != null and isDel != '' "> #{isDel} ,</if>
+            <if test="proManager != null and proManager != '' "> #{proManager} ,</if>
+            <if test="payConfirmId != null and payConfirmId != '' "> #{payConfirmId} ,</if>
+            <if test="remark != null and remark != '' "> #{remark} ,</if>
+            <if test="createUser != null and createUser != '' "> #{createUser} ,</if>
+            <if test="updateUser != null and updateUser != '' "> #{updateUser} ,</if>
+    	</trim>
+    	)
+    </insert>
+
+    <!-- batch insert 2022-11-13 ywwb903  -->
+    <insert id="batchAdd" parameterType="list">
+        INSERT ALL
+        <foreach collection="list" item="item" index="index">
+            INTO PPM_EXPENSE_SETTLEMENT (
+            <trim suffixOverrides=",">
+                <if test="item.id != null" > ID ,</if>
+                <if test="item.instanceId != null and item.instanceId != '' ">  INSTANCE_ID ,</if>
+                <if test="item.flowId != null and item.flowId != '' ">  FLOW_ID ,</if>
+                <if test="item.approvalStatus != null and item.approvalStatus != '' ">  APPROVAL_STATUS ,</if>
+                <if test="item.vendorName != null and item.vendorName != '' ">  VENDOR_NAME ,</if>
+                <if test="item.vendorCode != null and item.vendorCode != '' ">  VENDOR_CODE ,</if>
+                <if test="item.taxRate != null and item.taxRate != '' ">  TAX_RATE ,</if>
+                <if test="item.amount != null and item.amount != '' ">  AMOUNT ,</if>
+                <if test="item.amountTax != null and item.amountTax != '' ">  AMOUNT_TAX ,</if>
+                <if test="item.isDel != null and item.isDel != '' ">  IS_DEL ,</if>
+                <if test="item.proManager != null and item.proManager != '' ">  PRO_MANAGER ,</if>
+                <if test="item.payConfirmId != null and item.payConfirmId != '' ">  PAY_CONFIRM_ID ,</if>
+                <if test="item.remark != null and item.remark != '' ">  remark ,</if>
+                <if test="item.createDate != null and item.createDate != '' ">  CREATE_DATE ,</if>
+                <if test="item.createUser != null and item.createUser != '' ">  CREATE_USER ,</if>
+                <if test="item.updateDate != null and item.updateDate != '' ">  UPDATE_DATE ,</if>
+                <if test="item.updateUser != null and item.updateUser != '' ">  UPDATE_USER ,</if>
+            </trim>
+            )
+            VALUES(
+            <trim suffixOverrides=",">
+                <if test="item.id != null" > #{item.id} ,</if>
+                <if test="item.instanceId != null and item.instanceId != '' " > #{item.instanceId} ,</if>
+                <if test="item.flowId != null and item.flowId != '' " > #{item.flowId} ,</if>
+                <if test="item.approvalStatus != null and item.approvalStatus != '' " > #{item.approvalStatus} ,</if>
+                <if test="item.vendorName != null and item.vendorName != '' " > #{item.vendorName} ,</if>
+                <if test="item.vendorCode != null and item.vendorCode != '' " > #{item.vendorCode} ,</if>
+                <if test="item.taxRate != null and item.taxRate != '' " > #{item.taxRate} ,</if>
+                <if test="item.amount != null and item.amount != '' " > #{item.amount} ,</if>
+                <if test="item.amountTax != null and item.amountTax != '' " > #{item.amountTax} ,</if>
+                <if test="item.isDel != null and item.isDel != '' " > #{item.isDel} ,</if>
+                <if test="item.proManager != null and item.proManager != '' " > #{item.proManager} ,</if>
+                <if test="item.payConfirmId != null and item.payConfirmId != '' " > #{item.payConfirmId} ,</if>
+                <if test="item.remark != null and item.remark != '' " > #{item.remark} ,</if>
+                <if test="item.createDate != null and item.createDate != '' " > #{item.createDate} ,</if>
+                <if test="item.createUser != null and item.createUser != '' " > #{item.createUser} ,</if>
+                <if test="item.updateDate != null and item.updateDate != '' " > #{item.updateDate} ,</if>
+                <if test="item.updateUser != null and item.updateUser != '' " > #{item.updateUser} ,</if>
+            </trim>
+            )
+        </foreach>
+        select 1 from dual
+    </insert>
+
+
+    <!--  更新  -->
+	<!-- update by id 2022-11-13 ywwb903  -->
+	<update id="updatePojo" parameterType="expenseSettlement">
+		UPDATE
+		PPM_EXPENSE_SETTLEMENT
+		<include refid="update_pojo_sql" />
+		WHERE ID = #{id}
+	</update>
+
+    <!-- update by instanceId 2022-11-06 ywwb903  -->
+    <update id="updateByInstanceId" parameterType="expenseSettlement">
+        UPDATE
+        PPM_EXPENSE_SETTLEMENT
+        <include refid="update_pojo_sql" />
+        WHERE  is_del = '0' and instance_id = #{instanceId}
+    </update>
+
+
+	<!--  删除  -->
+	<!-- delete by pojo 2022-11-13 ywwb903  -->
+    <delete id="deletePojo" parameterType="expenseSettlement">
+        DELETE FROM PPM_EXPENSE_SETTLEMENT WHERE ID = #{id}
+    </delete>
+	
+	<!-- 提交记录是否重复  2022-12-09 ywwb905  -->
+    <select id="getNotFinishList" parameterType="expenseSettlement" resultMap="EXPENSESETTLEMENT_ALL">
+        SELECT
+        <include refid="sql_flied_basic"/>
+        FROM PPM_EXPENSE_SETTLEMENT
+        WHERE APPROVAL_STATUS != #{approvalStatus}
+        AND IS_DEL = #{isDel}
+        AND PRO_MANAGER = #{proManager}
+    </select>
+</mapper>

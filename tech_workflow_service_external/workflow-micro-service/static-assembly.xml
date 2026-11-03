@@ -1,0 +1,33 @@
+<!-- 如何将前段静态文件部署nginx
+1. 将static文件夹下的内容复制到nginx的html目录进行部署
+   html
+     - static
+     - favicon.ico
+     - index.html
+2. 修改nginx的 conf/nginx.conf 配置文件
+   添加后台服务代理
+    location ^~ /workflow-micro-service/ {
+       proxy_pass http://127.0.0.1:8081;
+    }
+3.部署无需关心下面标签。
+-->
+
+<assembly>
+    <id>static-html</id>
+    <formats>
+        <format>zip</format>
+    </formats>
+    <includeBaseDirectory>false</includeBaseDirectory>
+
+    <fileSets>
+        <fileSet>
+            <directory>${basedir}</directory>
+            <includes>
+                <include>static/**</include>
+                <include>static-assembly.xml</include>
+            </includes>
+        </fileSet>
+
+    </fileSets>
+
+</assembly>

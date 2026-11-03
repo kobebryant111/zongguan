@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k1327 2020-10-12 -->
+<mapper namespace="com.work.ppm.application.model.integratedmanager.PpmOutsourcingLzsq">
+    <resultMap type="ppmOutsourcingLzsq" id="PPMOUTSOURCINGLZSQ_ALL">
+        <result property="id" column="ID"/>
+        <result property="instanceid" column="INSTANCEID"/>
+        <result property="createid" column="CREATEID"/>
+        <result property="createdate" column="CREATEDATE"/>
+        <result property="title" column="TITLE"/>
+        <result property="flowid" column="FLOWID"/>
+        <result property="jobid" column="JOBID"/>
+        <result property="username" column="USERNAME"/>
+        <result property="flag" column="FLAG"/>
+        <result property="remark" column="REMARK"/>
+        <result property="lzyy" column="LZYY"/>
+        <result property="lgsj" column="LGSJ"/>
+        <result property="gzjj" column="GZJJ"/>
+        <result property="gzjjRy" column="GZJJ_RY"/>
+        <result property="bgsbjj" column="BGSBJJ"/>
+        <result property="bgsbjjRy" column="BGSBJJ_RY"/>
+        <result property="vpnjj" column="VPNJJ"/>
+        <result property="vpnjjRy" column="VPNJJ_RY"/>
+        <result property="gpjj" column="GPJJ"/>
+        <result property="gpjjRy" column="GPJJ_RY"/>
+        <result property="svnjj" column="SVNJJ"/>
+        <result property="svnjjRy" column="SVNJJ_RY"/>
+        <result property="xljjj" column="XLJJJ"/>
+        <result property="xljjjRy" column="XLJJJ_RY"/>
+        <result property="jfqxjj" column="JFQXJJ"/>
+        <result property="jfqxjjRy" column="JFQXJJ_RY"/>
+        <result property="xtqxjj" column="XTQXJJ"/>
+        <result property="xtqxjjRy" column="XTQXJJ_RY"/>
+        <result property="conclusion" column="CONCLUSION"/>
+        <result property="leavingApproveTime" column="LEAVING_APPROVE_TIME"/>
+    </resultMap>
+
+    <!-- 所有字段名称 -->
+    <sql id="sql_flied_all">
+        ID,
+        INSTANCEID,
+        CREATEID,
+        CREATEDATE,
+        TITLE,
+        FLOWID,
+        JOBID,
+        USERNAME,
+        FLAG,
+        REMARK,
+        LZYY,
+        LGSJ,
+        GZJJ,
+        GZJJ_RY,
+        BGSBJJ,
+        BGSBJJ_RY,
+        VPNJJ,
+        VPNJJ_RY,
+        GPJJ,
+        GPJJ_RY,
+        SVNJJ,
+        SVNJJ_RY,
+        XLJJJ,
+        XLJJJ_RY,
+        JFQXJJ,
+        JFQXJJ_RY,
+        XTQXJJ,
+        XTQXJJ_RY,
+        CONCLUSION,
+		LEAVING_APPROVE_TIME
+    </sql>
+    <sql id="sql_select_condition">
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="id != null ">ID = #{id} AND</if>
+            <if test="instanceid != null  and instanceid != '' ">INSTANCEID = #{instanceid} AND</if>
+            <if test="createid != null  and createid != '' ">CREATEID = #{createid} AND</if>
+            <if test="createdate != null  and createdate != '' ">CREATEDATE = #{createdate} AND</if>
+            <if test="title != null  and title != '' ">TITLE = #{title} AND</if>
+            <if test="flowid != null  and flowid != '' ">FLOWID = #{flowid} AND</if>
+            <if test="jobid != null  and jobid != '' ">JOBID = #{jobid} AND</if>
+            <if test="username != null  and username != '' ">USERNAME = #{username} AND</if>
+            <if test="flag != null ">FLAG = #{flag} AND</if>
+            <if test="remark != null  and remark != '' ">REMARK = #{remark} AND</if>
+            <if test="lzyy != null  and lzyy != '' ">LZYY = #{lzyy} AND</if>
+            <if test="lgsj != null  and lgsj != '' ">LGSJ = #{lgsj} AND</if>
+            <if test="gzjj != null ">GZJJ = #{gzjj} AND</if>
+            <if test="gzjjRy != null  and gzjjRy != '' ">GZJJ_RY = #{gzjjRy} AND</if>
+            <if test="bgsbjj != null ">BGSBJJ = #{bgsbjj} AND</if>
+            <if test="bgsbjjRy != null  and bgsbjjRy != '' ">BGSBJJ_RY = #{bgsbjjRy} AND</if>
+            <if test="vpnjj != null ">VPNJJ = #{vpnjj} AND</if>
+            <if test="vpnjjRy != null  and vpnjjRy != '' ">VPNJJ_RY = #{vpnjjRy} AND</if>
+            <if test="gpjj != null ">GPJJ = #{gpjj} AND</if>
+            <if test="gpjjRy != null  and gpjjRy != '' ">GPJJ_RY = #{gpjjRy} AND</if>
+            <if test="svnjj != null ">SVNJJ = #{svnjj} AND</if>
+            <if test="svnjjRy != null  and svnjjRy != '' ">SVNJJ_RY = #{svnjjRy} AND</if>
+            <if test="xljjj != null ">XLJJJ = #{xljjj} AND</if>
+            <if test="xljjjRy != null  and xljjjRy != '' ">XLJJJ_RY = #{xljjjRy} AND</if>
+            <if test="jfqxjj != null ">JFQXJJ = #{jfqxjj} AND</if>
+            <if test="jfqxjjRy != null  and jfqxjjRy != '' ">JFQXJJ_RY = #{jfqxjjRy} AND</if>
+            <if test="xtqxjj != null ">XTQXJJ = #{xtqxjj} AND</if>
+            <if test="xtqxjjRy != null  and xtqxjjRy != '' ">XTQXJJ_RY = #{xtqxjjRy} AND</if>
+            <if test="conclusion != null ">CONCLUSION = #{conclusion} AND</if>
+            <if test="leavingApproveTime != null ">LEAVING_APPROVE_TIME = #{leavingApproveTime} AND</if>
+        </trim>
+    </sql>
+    <!-- 查询分页  2020-10-12 k1327  -->
+    <select id="queryPagerList" parameterType="map" resultMap="PPMOUTSOURCINGLZSQ_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM PPM_OUTSOURCING_LZSQ
+        <include refid="sql_select_condition"/>
+    </select>
+
+    <!-- 新增  2022-06-24 ywwb436  -->
+    <insert id="addPojo" parameterType="ppmOutsourcingLzsq">
+        INSERT INTO PPM_OUTSOURCING_LZSQ (
+        <trim suffixOverrides=",">
+            <if test="id != null ">ID ,</if>
+            <if test="instanceid != null  and instanceid != '' ">INSTANCEID ,</if>
+            <if test="createid != null  and createid != '' ">CREATEID ,</if>
+            <if test="createdate != null  and createdate != '' ">CREATEDATE ,</if>
+            <if test="title != null  and title != '' ">TITLE ,</if>
+            <if test="flowid != null  and flowid != '' ">FLOWID ,</if>
+            <if test="jobid != null  and jobid != '' ">JOBID ,</if>
+            <if test="username != null  and username != '' ">USERNAME ,</if>
+            <if test="flag != null ">FLAG ,</if>
+            <if test="remark != null  and remark != '' ">REMARK ,</if>
+            <if test="lzyy != null  and lzyy != '' ">LZYY ,</if>
+            <if test="lgsj != null  and lgsj != '' ">LGSJ ,</if>
+            <if test="gzjj != null ">GZJJ ,</if>
+            <if test="gzjjRy != null  and gzjjRy != '' ">GZJJ_RY ,</if>
+            <if test="bgsbjj != null ">BGSBJJ ,</if>
+            <if test="bgsbjjRy != null  and bgsbjjRy != '' ">BGSBJJ_RY ,</if>
+            <if test="vpnjj != null ">VPNJJ ,</if>
+            <if test="vpnjjRy != null  and vpnjjRy != '' ">VPNJJ_RY ,</if>
+            <if test="gpjj != null ">GPJJ ,</if>
+            <if test="gpjjRy != null  and gpjjRy != '' ">GPJJ_RY ,</if>
+            <if test="svnjj != null ">SVNJJ ,</if>
+            <if test="svnjjRy != null  and svnjjRy != '' ">SVNJJ_RY ,</if>
+            <if test="xljjj != null ">XLJJJ ,</if>
+            <if test="xljjjRy != null  and xljjjRy != '' ">XLJJJ_RY ,</if>
+            <if test="jfqxjj != null ">JFQXJJ ,</if>
+            <if test="jfqxjjRy != null  and jfqxjjRy != '' ">JFQXJJ_RY ,</if>
+            <if test="xtqxjj != null ">XTQXJJ ,</if>
+            <if test="xtqxjjRy != null  and xtqxjjRy != '' ">XTQXJJ_RY ,</if>
+            <if test="conclusion != null ">CONCLUSION ,</if>
+            <if test="leavingApproveTime != null ">LEAVING_APPROVE_TIME ,</if>
+        </trim>
+        )
+        VALUES(
+        <trim suffixOverrides=",">
+            <if test="id != null ">#{id} ,</if>
+            <if test="instanceid != null  and instanceid != '' ">#{instanceid} ,</if>
+            <if test="createid != null  and createid != '' ">#{createid} ,</if>
+            <if test="createdate != null  and createdate != '' ">#{createdate} ,</if>
+            <if test="title != null  and title != '' ">#{title} ,</if>
+            <if test="flowid != null  and flowid != '' ">#{flowid} ,</if>
+            <if test="jobid != null  and jobid != '' ">#{jobid} ,</if>
+            <if test="username != null  and username != '' ">#{username} ,</if>
+            <if test="flag != null ">#{flag} ,</if>
+            <if test="remark != null  and remark != '' ">#{remark} ,</if>
+            <if test="lzyy != null  and lzyy != '' ">#{lzyy} ,</if>
+            <if test="lgsj != null  and lgsj != '' ">#{lgsj} ,</if>
+            <if test="gzjj != null ">#{gzjj} ,</if>
+            <if test="gzjjRy != null  and gzjjRy != '' ">#{gzjjRy} ,</if>
+            <if test="bgsbjj != null ">#{bgsbjj} ,</if>
+            <if test="bgsbjjRy != null  and bgsbjjRy != '' ">#{bgsbjjRy} ,</if>
+            <if test="vpnjj != null ">#{vpnjj} ,</if>
+            <if test="vpnjjRy != null  and vpnjjRy != '' ">#{vpnjjRy} ,</if>
+            <if test="gpjj != null ">#{gpjj} ,</if>
+            <if test="gpjjRy != null  and gpjjRy != '' ">#{gpjjRy} ,</if>
+            <if test="svnjj != null ">#{svnjj} ,</if>
+            <if test="svnjjRy != null  and svnjjRy != '' ">#{svnjjRy} ,</if>
+            <if test="xljjj != null ">#{xljjj} ,</if>
+            <if test="xljjjRy != null  and xljjjRy != '' ">#{xljjjRy} ,</if>
+            <if test="jfqxjj != null ">#{jfqxjj} ,</if>
+            <if test="jfqxjjRy != null  and jfqxjjRy != '' ">#{jfqxjjRy} ,</if>
+            <if test="xtqxjj != null ">#{xtqxjj} ,</if>
+            <if test="xtqxjjRy != null  and xtqxjjRy != '' ">#{xtqxjjRy} ,</if>
+            <if test="conclusion != null ">#{conclusion} ,</if>
+            <if test="leavingApproveTime != null ">#{leavingApproveTime} ,</if>
+        </trim>
+        )
+    </insert>
+
+    <!--通过id查询  k1327 2020-10-12 -->
+    <select id="queryDetail" parameterType="ppmOutsourcingLzsq" resultMap="PPMOUTSOURCINGLZSQ_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM PPM_OUTSOURCING_LZSQ WHERE INSTANCEID=#{instanceid}
+    </select>
+
+    <!--查询集合  k1327 2020-10-12 -->
+    <select id="getList" parameterType="ppmOutsourcingLzsq" resultMap="PPMOUTSOURCINGLZSQ_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM PPM_OUTSOURCING_LZSQ
+        <include refid="sql_select_condition"/>
+    </select>
+
+    <!-- update sql -->
+    <sql id="update_pojo_sql">
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="id != null " > ID=#{id} , </if>
+            <if test="instanceid != null  and instanceid != '' " > INSTANCEID=#{instanceid} , </if>
+            <if test="createid != null  and createid != '' " > CREATEID=#{createid} , </if>
+            <if test="createdate != null  and createdate != '' " > CREATEDATE=#{createdate} , </if>
+            <if test="title != null  and title != '' " > TITLE=#{title} , </if>
+            <if test="flowid != null  and flowid != '' " > FLOWID=#{flowid} , </if>
+            <if test="jobid != null  and jobid != '' " > JOBID=#{jobid} , </if>
+            <if test="username != null  and username != '' " > USERNAME=#{username} , </if>
+            <if test="flag != null " > FLAG=#{flag} , </if>
+            <if test="remark != null  and remark != '' " > REMARK=#{remark} , </if>
+            <if test="lzyy != null  and lzyy != '' " > LZYY=#{lzyy} , </if>
+            <if test="lgsj != null  and lgsj != '' " > LGSJ=#{lgsj} , </if>
+            <if test="gzjj != null " > GZJJ=#{gzjj} , </if>
+            <if test="gzjjRy != null  and gzjjRy != '' " > GZJJ_RY=#{gzjjRy} , </if>
+            <if test="bgsbjj != null " > BGSBJJ=#{bgsbjj} , </if>
+            <if test="bgsbjjRy != null  and bgsbjjRy != '' " > BGSBJJ_RY=#{bgsbjjRy} , </if>
+            <if test="vpnjj != null " > VPNJJ=#{vpnjj} , </if>
+            <if test="vpnjjRy != null  and vpnjjRy != '' " > VPNJJ_RY=#{vpnjjRy} , </if>
+            <if test="gpjj != null " > GPJJ=#{gpjj} , </if>
+            <if test="gpjjRy != null  and gpjjRy != '' " > GPJJ_RY=#{gpjjRy} , </if>
+            <if test="svnjj != null " > SVNJJ=#{svnjj} , </if>
+            <if test="svnjjRy != null  and svnjjRy != '' " > SVNJJ_RY=#{svnjjRy} , </if>
+            <if test="xljjj != null " > XLJJJ=#{xljjj} , </if>
+            <if test="xljjjRy != null  and xljjjRy != '' " > XLJJJ_RY=#{xljjjRy} , </if>
+            <if test="jfqxjj != null " > JFQXJJ=#{jfqxjj} , </if>
+            <if test="jfqxjjRy != null  and jfqxjjRy != '' " > JFQXJJ_RY=#{jfqxjjRy} , </if>
+            <if test="xtqxjj != null " > XTQXJJ=#{xtqxjj} , </if>
+            <if test="xtqxjjRy != null  and xtqxjjRy != '' " > XTQXJJ_RY=#{xtqxjjRy} , </if>
+            <if test="conclusion != null " > CONCLUSION=#{conclusion} , </if>
+            <if test="leavingApproveTime != null " > LEAVING_APPROVE_TIME=#{leavingApproveTime} , </if>
+        </trim>
+    </sql>
+
+    <!--通过id编辑 k1327 2020-10-12 -->
+    <update id="updatePojo" parameterType="ppmOutsourcingLzsq">
+        UPDATE
+        PPM_OUTSOURCING_LZSQ
+        <include refid="update_pojo_sql"/>
+        WHERE ID=#{id}
+    </update>
+    <update id="updatePojoOther"  parameterType="ppmOutsourcingLzsq">
+        UPDATE
+        PPM_OUTSOURCING_LZSQ
+        set JOBID = 'l' ||
+        CASE
+        WHEN #{jobId} LIKE 'ywwb%' THEN substr(#{jobId}, 5)
+        ELSE substr(#{jobId}, 2)
+        END
+        WHERE JOBID=#{jobId}
+    </update>
+    <!--通过id批量删除  k1327 2020-10-12 -->
+    <delete id="deleteById" parameterType="ppmOutsourcingLzsq">
+        DELETE  FROM PPM_OUTSOURCING_LZSQ WHERE ID = #{id}
+    </delete>
+    <!--查询到期的离场流程-->
+    <select id="queryOutQuitInfo" parameterType="map" resultMap="PPMOUTSOURCINGLZSQ_ALL">
+        select * from ppm_outsourcing_lzsq where flag='2' and to_date(lgsj,'yyyy-MM-dd') &lt; =to_date(#{sysdate},'yyyy-MM-dd')
+    </select>
+	<!--查询到期的离场流程-->
+    <select id="queryLeavingDetailList" parameterType="ppmOutsourcingLzsq" resultMap="PPMOUTSOURCINGLZSQ_ALL">
+        select * from ppm_outsourcing_lzsq where LEAVING_APPROVE_TIME = #{leavingApproveTime}
+    </select>
+    <!--通过id批量删除  k1327 2020-10-12 -->
+    <delete id="deleteByInstanceid" parameterType="ppmOutsourcingLzsq">
+        DELETE FROM  PPM_OUTSOURCING_LZSQ WHERE instanceid = #{instanceid}
+    </delete>
+
+    <!--查询集合  k1327 2020-10-12 -->
+    <select id="getOutQuitFlows" parameterType="map" resultMap="PPMOUTSOURCINGLZSQ_ALL">
+        select l.* from ppm_outsourcing_lzsq l left join ppm_project_flow f on l.instanceid=f.instanceid and f.isdel=0
+        where f.flowstatus in ('已结束','进行中') and l.jobid=#{jobid}
+    </select>
+</mapper>

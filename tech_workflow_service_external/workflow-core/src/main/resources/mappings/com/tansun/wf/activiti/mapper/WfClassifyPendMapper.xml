@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+  
+<mapper namespace="com.tansun.wf.activiti.mapper.WfClassifyMapper">
+
+  <resultMap id="classifyPendResultMap" type="com.tansun.wf.activiti.model.ClassifyEntity">
+    <id property="id" column="ID" jdbcType="VARCHAR" />
+    <result property="parent_id" column="PARENT_ID" jdbcType="VARCHAR" />
+    <result property="parent_ids" column="PARENT_IDS" jdbcType="VARCHAR" />
+    <result property="name" column="NAME" jdbcType="VARCHAR" />
+    <result property="sort" column="SORT" jdbcType="DECIMAL" />
+    <result property="code" column="CODE" jdbcType="VARCHAR" />
+    <result property="type" column="TYPE" jdbcType="CHAR" />
+    <result property="USEABLE" column="USEABLE" jdbcType="VARCHAR" />
+    <result property="create_by" column="CREATE_BY" jdbcType="VARCHAR" />
+    <result property="create_date" column="CREAT_DATE" jdbcType="DATE" />
+    <result property="update_by" column="UPDATE_BY" jdbcType="VARCHAR" />
+    <result property="update_date" column="UPDATE_DATE" jdbcType="DATE" />
+    <result property="remarks" column="REMARKS" jdbcType="VARCHAR" />
+    <result property="del_flag" column="DEL_FLAG" jdbcType="CHAR" />
+    <result property="count" column="count" jdbcType="CHAR" />
+  </resultMap>
+
+
+  <select id="selectWfClassifyPendCountByQueryCriteria" parameterType="com.tansun.wf.activiti.model.ClassifyEntity" resultType="long">
+    select count( RES.id)
+    <include refid="selectWfClassifyPendByQueryCriteriaSql"/>
+  </select>
+
+  <select id="selectWfClassifyPendByQueryCriteria" parameterType="com.tansun.wf.activiti.model.ClassifyEntity" resultType="com.tansun.wf.activiti.model.ClassifyEntity">
+    ${limitBefore}
+    select 
+    	RES.id AS id,
+    	RES.parent_id AS parent_id,
+    	RES.name AS name,
+    	RES.sort AS sort,
+    	RES.code AS code,
+    	RES.type AS type,
+    	RES.USEABLE AS USEABLE,
+    	RES.create_by AS create_by,
+    	RES.create_date AS create_date ,
+    	RES.update_by AS update_by ,
+    	RES.update_date AS update_date,
+    	RES.remarks AS remarks,
+    	RES.del_flag AS del_flag,
+    	COUNT(*) AS total
+    	${limitBetween}
+    <include refid="selectWfClassifyPendByQueryCriteriaSql"/>
+
+    ${limitAfter}
+  </select>
+
+  <sql id="selectWfClassifyPendByQueryCriteriaSql">
+    FROM (
+			SELECT a.*
+			FROM
+			WF_PROCESS_CLASSIFY a 
+			INNER JOIN ACT_RE_PROCDEF b ON a.id = b.CATEGORY_ 
+			<!-- <if test="databaseType == 'mysql' and code != null">
+			AND a.code = #{code}
+			</if> -->
+			<if test="taskPoolStatus == 0 and userId != null and userId != ''">
+				INNER JOIN (
+						SELECT DISTINCT
+							c.PROC_DEF_ID_,
+							c.ID_
+						FROM
+							ACT_RU_TASK c,
+							ACT_RU_IDENTITYLINK i
+						WHERE
+							c.ASSIGNEE_ IS NULL
+						AND 
+							i.TASK_ID_ = c.ID_
+						AND 
+							i.USER_ID_ = #{userId}
+							<include refid="createTimeSql"/>
+						UNION
+						SELECT DISTINCT
+							c.PROC_DEF_ID_,
+							c.ID_
+						FROM
+							ACT_RU_TASK c
+						WHERE
+							c.ASSIGNEE_ = #{userId}
+							<include refid="createTimeSql"/>
+						)h ON b.ID_ = h.PROC_DEF_ID_
+				
+			</if>
+			<if test="taskPoolStatus == 0 and code != null and code != ''">
+      			AND a.code = #{code}
+      		</if>
+      		<!-- 已分配待办任务 -->
+			<if test="taskPoolStatus == 1 and userId != null and userId != ''">
+				INNER JOIN (
+						SELECT DISTINCT
+							c.PROC_DEF_ID_,
+							c.ID_
+						FROM
+							ACT_RU_TASK c
+						WHERE c.ASSIGNEE_ = #{userId}
+						<include refid="createTimeSql"/>
+						) h ON b.ID_ = h.PROC_DEF_ID_
+			</if>
+			<if test="taskPoolStatus == 1 and code != null and code != ''">
+      			AND a.code = #{code}
+      		</if>
+      		<!--  -->
+     	 	<if test="taskPoolStatus == 2 and userId != null and userId!=''">
+     	 		INNER JOIN (
+      					SELECT DISTINCT
+							c.PROC_DEF_ID_,
+							c.ID_
+						FROM
+							ACT_RU_TASK c,
+							ACT_RU_IDENTITYLINK i
+						WHERE 
+							i.TASK_ID_ = c.ID_
+						AND 
+							I.USER_ID_ = #{userId}
+						AND 
+							c.ASSIGNEE_ IS NULL
+							<include refid="createTimeSql"/>
+						) h ON b.ID_ = h.PROC_DEF_ID_
+      		</if>
+      		<if test="taskPoolStatus == 2 and code != null and code!=''">
+      			AND a.code = #{code}
+      		</if>
+	  		<!-- 管理员分配的待办任务 -->
+     	 	<if test="taskPoolStatus == 3 and userId != null and userId!=''">
+     	 		INNER JOIN (
+      					SELECT DISTINCT
+							c.PROC_DEF_ID_,
+							c.ID_
+						FROM
+							ACT_RU_TASK c
+							INNER JOIN WF_HI_TASK_POOL_EXECUTE_DATA hp on c.id_ = hp.TASK_ID_ and c.ASSIGNEE_ = hp.user_id_ and hp.sys_id_ = #{userId}
+						WHERE
+							1=1
+							<include refid="createTimeSql"/>
+						) h ON b.ID_ = h.PROC_DEF_ID_
+      		</if>
+      		<if test="taskPoolStatus == 3 and code != null and code!=''">
+      			AND a.code = #{code}
+      		</if>
+
+	) RES
+	GROUP BY 
+		RES.id,
+    	RES.parent_id,
+    	RES.name,
+    	RES.sort,
+    	RES.code,
+    	RES.type,
+    	RES.USEABLE,
+    	RES.create_by,
+    	RES.create_date,
+    	RES.update_by,
+    	RES.update_date,
+    	RES.remarks,
+    	RES.del_flag
+    
+    <!-- from 
+    (SELECT a.* FROM WF_PROCESS_CLASSIFY a , ACT_RE_PROCDEF b ,ACT_RU_TASK c ,ACT_RU_IDENTITYLINK i
+    <where>
+    	a.id = b.CATEGORY_ AND b.ID_ = c.PROC_DEF_ID_ 
+      <if test="userId != null">
+      	AND ( 
+      			c.ASSIGNEE_ = #{userId}
+      			OR (
+              		c.ASSIGNEE_ IS NULL
+                	AND (
+                  		i.USER_ID_ = #{userId} AND i.TASK_ID_ = c.ID_
+                	)
+            	)
+        	)
+      </if>
+    </where>
+    ) RES -->
+  </sql>
+
+	<sql id="createTimeSql">
+		<if test="databaseType =='oracle'">
+			<if test="createTimeBefore != null and createTimeBefore!=''">
+				AND c.CREATE_TIME_ &lt;= to_timestamp(#{createTimeBefore}||'.999','YYYY-MM-DD HH24:MI:ss.ff3')
+			</if>
+			<if test="createTimeAfter != null and createTimeAfter!=''">
+				AND c.CREATE_TIME_ &gt;= to_timestamp(#{createTimeAfter}||'.999','YYYY-MM-DD HH24:MI:ss.ff3')
+			</if>
+		</if>
+		<if test="databaseType !='oracle'">
+			<if test="createTimeBefore != null and createTimeBefore!=''">
+				AND c.CREATE_TIME_ &lt;= #{createTimeBefore}
+			</if>
+			<if test="createTimeAfter != null and createTimeAfter!=''">
+				AND c.CREATE_TIME_ &gt;= #{createTimeAfter}
+			</if>
+		</if>
+	</sql>
+</mapper>

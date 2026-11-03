@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tansun.wf.platform.mapper.WfUserMapper">
+
+    <resultMap  id="sysUserOrgDeptRelMap" type="java.util.Map" >
+        <result column="USER_NUM" property="userNum" javaType="java.lang.String" />
+        <result column="REALNAME" property="userRealname" javaType="java.lang.String" />
+        <result column="LOGIN_NAME" property="userLoginName" javaType="java.lang.String" />
+        <result column="ORG_CODE" property="orgCode" javaType="java.lang.String" />
+        <result column="ORG_NAME" property="orgName" javaType="java.lang.String" />
+        <result column="DEPT_NAME" property="deptName" javaType="java.lang.String" />
+        <result column="DEPT_CODE" property="deptCode" javaType="java.lang.String" />
+        <result column="ROLE_CODE" property="roleCode" javaType="java.lang.String" />
+        <result column="ROLE_NAME" property="roleName" javaType="java.lang.String" />
+    </resultMap>
+
+    <resultMap id="sysUserOrgRoleMap" type="com.tansun.workflow.model.UserOrgRoleInfo" >
+        <result column="id" property="id" javaType="java.lang.String" />
+        <result column="name" property="name" javaType="java.lang.String" />
+        <result column="pid" property="pid" javaType="java.lang.String" />
+        <result column="type" property="type" javaType="java.lang.String" />
+    </resultMap>
+
+    <resultMap  id="sysUserPostMap" type="java.util.Map" >
+        <result column="ORG_CODE" property="orgCode" javaType="java.lang.String" />
+        <result column="ROLE_CODE" property="roleCode" javaType="java.lang.String" />
+        <result column="DEPT_CODE" property="deptCode" javaType="java.lang.String" />
+    </resultMap>
+
+    <select id="findOrgList" parameterType="map" resultMap="sysUserOrgRoleMap">
+        SELECT
+        ORG_CODE "id",
+        ORG_NAME "name",
+        <if test="_databaseId == 'oracle'">
+            DECODE(PARENT_ORG_CODE,null,'#org',PARENT_ORG_CODE) "pid",
+        </if>
+        <if test="_databaseId == 'mysql'">
+            (case PARENT_ORG_CODE when null then '#org' else PARENT_ORG_CODE end) "pid",
+        </if>
+        'org' as "type"
+        FROM SYS_ORGANIZATION
+        <where>
+            DEL_IND = '0'
+            <if test="tenantId!=null and tenantId!=''">
+                AND TENANT_ID = #{tenantId}
+            </if>
+        </where>
+    </select>
+
+    <select id="findRoleList" parameterType="map" resultMap="sysUserOrgRoleMap">
+        select ROLE_CODE "id",
+        ROLE_NAME "name",
+        <if test="_databaseId == 'oracle'">
+            DECODE(PARENT_ROLE_CODE,null,'#role',PARENT_ROLE_CODE) "pid",
+        </if>
+        <if test="_databaseId == 'mysql'">
+            (case PARENT_ROLE_CODE when null then '#role' else PARENT_ROLE_CODE end) "pid",
+        </if>
+        'role' as "type"
+        from sys_role
+        <where>
+            DEL_IND = '0'
+            <if test="tenantId!=null and tenantId!=''">
+                AND TENANT_ID = #{tenantId}
+            </if>
+        </where>
+    </select>
+
+    <select id="findOrgUserList" parameterType="map" resultMap="sysUserOrgRoleMap">
+        select u.LOGIN_NAME "id",
+        u.REALNAME "name",
+        uor.ORG_CODE "pid",
+        'user' as "type"
+        from sys_user u left join SYS_USER_ORG_REL uor on u.USER_NUM = uor.USER_NUM
+        <where>
+            u.DEL_IND = '0' and uor.DEL_IND = '0'
+            <if test="tenantId!=null and tenantId!=''">
+                AND u.TENANT_ID = #{tenantId}
+            </if>
+        </where>
+    </select>
+
+    <select id="findRoleUserList" parameterType="map" resultMap="sysUserOrgRoleMap">
+        select u.LOGIN_NAME "id",
+        u.REALNAME "name",
+        urr.ROLE_CODE "pid",
+        'user' as "type"
+        from sys_user u left join SYS_USER_ROLE_REL urr on u.USER_NUM = urr.USER_NUM
+        <where>
+            u.DEL_IND = '0' and urr.DEL_IND = '0'
+            <if test="tenantId!=null and tenantId!=''">
+                AND u.TENANT_ID = #{tenantId}
+            </if>
+        </where>
+    </select>
+
+    <select id="findUserOrgDeptRelList" parameterType="map" resultMap="sysUserOrgDeptRelMap">
+        SELECT DISTINCT
+        su.USER_NUM,
+        su.REALNAME,
+        su.LOGIN_NAME,
+        sd.DEPT_NAME,
+        sd.DEPT_CODE,
+        so.ORG_CODE,
+        so.ORG_NAME,
+        sr.ROLE_CODE,
+        sr.ROLE_NAME
+        FROM
+        sys_user su
+        left join sys_user_dept_rel sud on su.USER_NUM = sud.USER_NUM and sud.DEL_IND = '0'
+        left join sys_user_org_rel suo on su.USER_NUM = suo.USER_NUM and suo.DEL_IND = '0'
+        left join sys_user_role_rel sur on su.USER_NUM = sur.USER_NUM and sur.DEL_IND = '0'
+        left join sys_department sd on sd.DEPT_CODE = sud.DEPT_CODE
+        left join sys_organization so on so.ORG_CODE = suo.ORG_CODE
+        left join sys_role sr on sr.ROLE_CODE = sur.ROLE_CODE
+        <where>
+            <if test="delInd != null and delInd != ''">
+                AND su.DEL_IND = #{delInd}
+            </if>
+            <if test="loginName!=null and loginName!=''">
+                AND su.LOGIN_NAME = #{loginName}
+            </if>
+            <if test="realname!=null and realname!=''">
+                AND su.REALNAME = #{realname}
+            </if>
+            <if test="userNum!=null and userNum!=''">
+                AND su.USER_NUM = #{userNum}
+            </if>
+            <if test="userLoginNames != null and userLoginNames.size() > 0">
+                AND su.LOGIN_NAME IN
+                <foreach collection="userLoginNames" item="userLoginName" open="(" separator="," close=")">
+                    #{userLoginName}
+                </foreach>
+            </if>
+            <if test="loginNameLike != null and loginNameLike != ''">
+                <bind name="likeLoginNameLike"  value="'%' + _parameter.loginNameLike + '%'"/>
+                AND su.LOGIN_NAME LIKE #{likeLoginNameLike}
+            </if>
+            <if test="realnameLike != null and realnameLike != ''">
+                <bind name="LikeRealNameLike"  value="'%' + _parameter.realnameLike + '%'"/>
+                AND su.realname LIKE #{LikeRealNameLike}
+            </if>
+            <if test="deptCodes != null and deptCodes.size() > 0">
+                AND sd.dept_code IN
+                <foreach collection="deptCodes" item="deptCode" open="(" separator="," close=")">
+                    #{deptCode}
+                </foreach>
+            </if>
+            <if test="orgCodes != null and orgCodes.size() > 0">
+                AND so.ORG_CODE IN
+                <foreach collection="orgCodes" item="orgCode" open="(" separator="," close=")">
+                    #{orgCode}
+                </foreach>
+            </if>
+            <if test="roleCodes != null and roleCodes.size() > 0">
+                AND sr.ROLE_CODE IN
+                <foreach collection="roleCodes" item="roleCode" open="(" separator="," close=")">
+                    #{roleCode}
+                </foreach>
+            </if>
+            <if test="tenantId != null and tenantId!=''">
+                AND su.TENANT_ID = #{tenantId}
+            </if>
+        </where>
+    </select>
+
+    <select id="findAllPostInfo" parameterType="map" resultMap="sysUserPostMap">
+        SELECT DISTINCT
+        so.ORG_CODE,
+        sr.ROLE_CODE,
+        NULL "DEPT_CODE"
+        FROM
+        sys_user su left join sys_user_org_rel suo ON su.USER_NUM = suo.USER_NUM
+        AND suo.DEL_IND = '0' left join sys_user_role_rel sur ON su.USER_NUM = sur.USER_NUM
+        AND sur.DEL_IND = '0' left join sys_organization so ON so.ORG_CODE = suo.ORG_CODE left join sys_role sr ON sr.ROLE_CODE = sur.ROLE_CODE
+        WHERE
+        su.LOGIN_NAME = #{userId}
+        AND so.ORG_CODE IS NOT NULL
+        <if test="tenantId != null and tenantId!=''">
+            AND su.TENANT_ID = #{tenantId}
+        </if>
+        UNION ALL
+        SELECT DISTINCT NULL
+        "ORG_CODE",
+        sr.ROLE_CODE,
+        sd.DEPT_CODE
+        FROM
+        sys_user su left join sys_user_dept_rel sud ON su.USER_NUM = sud.USER_NUM
+        AND sud.DEL_IND = '0' left join sys_user_role_rel sur ON su.USER_NUM = sur.USER_NUM
+        AND sur.DEL_IND = '0' left join sys_department sd ON sd.DEPT_CODE = sud.DEPT_CODE left join sys_role sr ON sr.ROLE_CODE = sur.ROLE_CODE
+        WHERE
+        su.LOGIN_NAME = #{userId}
+        AND sd.DEPT_CODE IS NOT NULL
+        <if test="tenantId != null and tenantId!=''">
+            AND su.TENANT_ID = #{tenantId}
+        </if>
+        UNION ALL
+        SELECT DISTINCT
+        so.ORG_CODE,
+        NULL "ROLE_CODE",
+        NULL "DEPT_CODE"
+        FROM
+        sys_user su left join sys_user_org_rel suo ON su.USER_NUM = suo.USER_NUM
+        AND suo.DEL_IND = '0' left join sys_organization so ON so.ORG_CODE = suo.ORG_CODE
+        WHERE
+        su.LOGIN_NAME = #{userId}
+        AND so.ORG_CODE IS NOT NULL
+        <if test="tenantId != null and tenantId!=''">
+            AND su.TENANT_ID = #{tenantId}
+        </if>
+        UNION ALL
+        SELECT DISTINCT NULL
+        "ORG_CODE",
+        NULL "ROLE_CODE",
+        sd.DEPT_CODE
+        FROM
+        sys_user su left join sys_user_dept_rel sud ON su.USER_NUM = sud.USER_NUM
+        AND sud.DEL_IND = '0' left join sys_department sd ON sd.DEPT_CODE = sud.DEPT_CODE
+        WHERE
+        su.LOGIN_NAME = #{userId}
+        AND sd.DEPT_CODE IS NOT NULL
+        <if test="tenantId != null and tenantId!=''">
+            AND su.TENANT_ID = #{tenantId}
+        </if>
+        UNION ALL
+        SELECT DISTINCT NULL
+        "ORG_CODE",
+        sr.ROLE_CODE,
+        NULL "DEPT_CODE"
+        FROM
+        sys_user su left join sys_user_role_rel sur ON su.USER_NUM = sur.USER_NUM
+        AND sur.DEL_IND = '0' left join sys_role sr ON sr.ROLE_CODE = sur.ROLE_CODE
+        WHERE
+        su.LOGIN_NAME = #{userId}
+        AND sr.ROLE_CODE IS NOT NULL
+        <if test="tenantId != null and tenantId!=''">
+            AND su.TENANT_ID = #{tenantId}
+        </if>
+        UNION ALL
+        SELECT DISTINCT
+        so.ORG_CODE,
+        sr.ROLE_CODE,
+        sd.DEPT_CODE
+        FROM
+        sys_user su left join sys_user_org_rel suo ON su.USER_NUM = suo.USER_NUM
+        AND suo.DEL_IND = '0' left join sys_user_role_rel sur ON su.USER_NUM = sur.USER_NUM
+        AND sur.DEL_IND = '0' left join sys_user_dept_rel sud ON su.USER_NUM = sud.USER_NUM
+        AND sud.DEL_IND = '0' left join sys_organization so ON so.ORG_CODE = suo.ORG_CODE left join sys_role sr ON sr.ROLE_CODE = sur.ROLE_CODE left join sys_department sd ON sd.DEPT_CODE = sud.DEPT_CODE
+        WHERE
+        su.LOGIN_NAME = #{userId}
+        AND so.ORG_CODE IS NOT NULL
+        AND sr.ROLE_CODE IS NOT NULL
+        AND sd.DEPT_CODE IS NOT NULL
+        <if test="tenantId != null and tenantId!=''">
+            AND su.TENANT_ID = #{tenantId}
+        </if>
+    </select>
+
+    <select id="findDeptList" parameterType="map" resultMap="sysUserOrgRoleMap">
+        select dept.DEPT_CODE "id",
+        dept.DEPT_NAME "name",
+        <if test="_databaseId == 'oracle'">
+            DECODE(dept.PARENT_DEPT_CODE,null,rel.ORG_CODE,dept.PARENT_DEPT_CODE) "pid",
+        </if>
+        <if test="_databaseId == 'mysql'">
+            (case dept.PARENT_DEPT_CODE when null then rel.ORG_CODE else dept.PARENT_DEPT_CODE end) "pid",
+        </if>
+        'dept' as "type"
+        from SYS_DEPARTMENT dept
+        left join SYS_ORG_DEPT_REL rel on dept.DEPT_CODE = rel.DEPT_CODE
+        <where>
+            dept.DEL_IND = '0' AND rel.DEL_IND ='0'
+            <if test="tenantId!=null and tenantId!=''">
+                AND dept.TENANT_ID = #{tenantId}
+            </if>
+        </where>
+    </select>
+
+    <select id="findDeptUserList" parameterType="map" resultMap="sysUserOrgRoleMap">
+        select u.LOGIN_NAME "id",
+        u.REALNAME "name",
+        udr.DEPT_CODE "pid",
+        'user' as "type"
+        from sys_user u inner join SYS_USER_DEPT_REL udr on u.USER_NUM = udr.USER_NUM
+        <where>
+            u.DEL_IND = '0' AND udr.DEL_IND ='0'
+            <if test="tenantId!=null and tenantId!=''">
+                AND u.TENANT_ID = #{tenantId}
+            </if>
+        </where>
+    </select>
+</mapper>

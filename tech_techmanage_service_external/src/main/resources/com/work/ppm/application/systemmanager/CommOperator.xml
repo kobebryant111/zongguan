@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k6991 2020-01-15 -->
+<mapper namespace="com.work.ppm.application.model.systemmanager.CommOperator">
+    <resultMap type="commOperator" id="COMMOPERATOR_ALL">
+        <result property="unlocktime" column="UNLOCKTIME"/>
+        <result property="lastlogin" column="LASTLOGIN"/>
+        <result property="invaldate" column="INVALDATE"/>
+        <result property="email" column="EMAIL"/>
+        <result property="userType" column="USER_TYPE"/>
+        <result property="menutype" column="MENUTYPE"/>
+        <result property="errcount" column="ERRCOUNT"/>
+        <result property="maccode" column="MACCODE"/>
+        <result property="userid" column="USERID"/>
+        <result property="authmode" column="AUTHMODE"/>
+        <result property="status" column="STATUS"/>
+        <result property="validtime" column="VALIDTIME"/>
+        <result property="ipaddress" column="IPADDRESS"/>
+        <result property="operatorid" column="OPERATORID"/>
+        <result property="startdate" column="STARTDATE"/>
+        <result property="enddate" column="ENDDATE"/>
+        <result property="partid" column="PARTID"/>
+        <result property="operatorname" column="OPERATORNAME"/>
+        <result property="password" column="PASSWORD"/>
+        <result property="oldPassword" column="OLD_PASSWORD"/>
+
+    </resultMap>
+
+    <!-- 所有字段名称 -->
+    <sql id="sql_flied_all">
+        UNLOCKTIME,
+        LASTLOGIN,
+        INVALDATE,
+        EMAIL,
+        USER_TYPE,
+        MENUTYPE,
+        ERRCOUNT,
+        MACCODE,
+        USERID,
+        AUTHMODE,
+        STATUS,
+        VALIDTIME,
+        IPADDRESS,
+        OPERATORID,
+        STARTDATE,
+        ENDDATE,
+        PARTID,
+        OPERATORNAME,
+        PASSWORD,
+        OLD_PASSWORD
+    </sql>
+    <resultMap id="QUERYPAGERLIST_MAP" type="commOperatorInfo" extends="COMMOPERATOR_ALL">
+        <result column="DICTNAME" property="dictname"/>
+        <result column="ROLEID" property="roleid"/>
+        <result column="ROLENAME" property="rolename"/>
+        <result column="OPERATORNAME" property="operatorname"/>
+        <result column="USERID" property="userid"/>
+    </resultMap>
+    <!-- 查询分页  2020-01-15 k6991  -->
+    <select id="queryPagerList" parameterType="map" resultMap="QUERYPAGERLIST_MAP">
+        SELECT T.*, E.DICTNAME
+        FROM (SELECT DISTINCT A.OPERATORNAME,A.USERID, B.operatorid, B.ROLEID, C.ROLENAME, B.ISLOSE,B.PARTID
+        FROM COMM_OPERATOR A, COMM_OPERATORROLE B, COMM_ROLE C
+
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="1==1">
+                B.operatorid = A.operatorid
+                AND B.ROLEID = C.ROLEID AND
+            </if>
+            <if test="userid != null  and userid != '' ">A.USERID = #{userid} AND</if>
+            <if test="operatorname != null  and operatorname != '' ">A.OPERATORNAME = #{operatorname} AND</if>
+        </trim>
+        ) T
+        LEFT JOIN EOS_DICT_ENTRY E
+        ON E.DICTTYPEID = 'COMM_ISLOSE'
+        AND T.ISLOSE = E.DICTID
+        ORDER BY T.USERID DESC
+
+    </select>
+
+    <!-- 新增  2020-01-15 k6991  -->
+    <insert id="addPojo" parameterType="commOperator">
+        <selectKey keyProperty="operatorid" keyColumn="OPERATORID" order="BEFORE" resultType="long">
+            sELECT SEQ_COMM_OPERATOR.NEXTVAL FROM DUAL
+        </selectKey>
+        INSERT INTO COMM_OPERATOR (
+        <trim suffixOverrides=",">
+            <if test="operatorid != null ">OPERATORID ,</if>
+            <if test="userid != null  and userid != '' ">USERID ,</if>
+            <if test="operatorname != null  and operatorname != '' ">OPERATORNAME ,</if>
+            <if test="password != null  and password != '' ">PASSWORD ,</if>
+            <if test="authmode != null  and authmode != '' ">AUTHMODE ,</if>
+            <if test="status != null  and status != '' ">STATUS ,</if>
+            <if test="unlocktime != null ">UNLOCKTIME ,</if>
+            <if test="menutype != null  and menutype != '' ">MENUTYPE ,</if>
+            <if test="lastlogin != null ">LASTLOGIN ,</if>
+            <if test="errcount != null ">ERRCOUNT ,</if>
+            <if test="startdate != null ">STARTDATE ,</if>
+            <if test="enddate != null ">ENDDATE ,</if>
+            <if test="validtime != null ">VALIDTIME ,</if>
+            <if test="invaldate != null ">INVALDATE ,</if>
+            <if test="maccode != null  and maccode != '' ">MACCODE ,</if>
+            <if test="ipaddress != null  and ipaddress != '' ">IPADDRESS ,</if>
+            <if test="email != null  and email != '' ">EMAIL ,</if>
+            <if test="partid != null ">PARTID ,</if>
+            <if test="userType != null  and userType != '' ">USER_TYPE ,</if>
+        </trim>
+        )
+        VALUES(
+        <trim suffixOverrides=",">
+            <if test="operatorid != null ">#{operatorid} ,</if>
+            <if test="userid != null  and userid != '' ">#{userid} ,</if>
+            <if test="operatorname != null  and operatorname != '' ">#{operatorname} ,</if>
+            <if test="password != null  and password != '' ">#{password} ,</if>
+            <if test="authmode != null  and authmode != '' ">#{authmode} ,</if>
+            <if test="status != null  and status != '' ">#{status} ,</if>
+            <if test="unlocktime != null ">#{unlocktime} ,</if>
+            <if test="menutype != null  and menutype != '' ">#{menutype} ,</if>
+            <if test="lastlogin != null ">#{lastlogin} ,</if>
+            <if test="errcount != null ">#{errcount} ,</if>
+            <if test="startdate != null ">#{startdate} ,</if>
+            <if test="enddate != null ">#{enddate} ,</if>
+            <if test="validtime != null ">#{validtime} ,</if>
+            <if test="invaldate != null ">#{invaldate} ,</if>
+            <if test="maccode != null  and maccode != '' ">#{maccode} ,</if>
+            <if test="ipaddress != null  and ipaddress != '' ">#{ipaddress} ,</if>
+            <if test="email != null  and email != '' ">#{email} ,</if>
+            <if test="partid != null ">#{partid} ,</if>
+            <if test="userType != null  and userType != '' ">#{userType} ,</if>
+        </trim>
+        )
+    </insert>
+
+    <!--通过id查询  k6991 2020-01-15 -->
+    <select id="queryById" parameterType="map" resultMap="COMMOPERATOR_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM COMM_OPERATOR WHERE UNLOCKTIME=#{unlocktime}
+    </select>
+
+    <!--查询集合  k6991 2020-01-15 -->
+    <select id="getList" parameterType="map" resultMap="COMMOPERATOR_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM COMM_OPERATOR
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="unlocktime != null ">UNLOCKTIME=#{unlocktime} AND</if>
+            <if test="lastlogin != null ">LASTLOGIN=#{lastlogin} AND</if>
+            <if test="invaldate != null ">INVALDATE=#{invaldate} AND</if>
+            <if test="email != null  and email != '' ">EMAIL=#{email} AND</if>
+            <if test="userType != null  and userType != '' ">USER_TYPE=#{userType} AND</if>
+            <if test="menutype != null  and menutype != '' ">MENUTYPE=#{menutype} AND</if>
+            <if test="errcount != null ">ERRCOUNT=#{errcount} AND</if>
+            <if test="maccode != null  and maccode != '' ">MACCODE=#{maccode} AND</if>
+            <if test="userid != null  and userid != '' ">USERID=#{userid} AND</if>
+            <if test="authmode != null  and authmode != '' ">AUTHMODE=#{authmode} AND</if>
+            <if test="status != null  and status != '' ">STATUS=#{status} AND</if>
+            <if test="validtime != null ">VALIDTIME=#{validtime} AND</if>
+            <if test="ipaddress != null  and ipaddress != '' ">IPADDRESS=#{ipaddress} AND</if>
+            <if test="operatorid != null ">OPERATORID=#{operatorid} AND</if>
+            <if test="startdate != null ">STARTDATE=#{startdate} AND</if>
+            <if test="enddate != null ">ENDDATE=#{enddate} AND</if>
+            <if test="partid != null ">PARTID=#{partid} AND</if>
+            <if test="operatorname != null  and operatorname != '' ">OPERATORNAME=#{operatorname} AND</if>
+            <if test="password != null  and password != '' ">PASSWORD=#{password} AND</if>
+
+        </trim>
+    </select>
+    <!-- update sql -->
+    <sql id="update_pojo_sql">
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="unlocktime != null ">UNLOCKTIME=#{unlocktime} ,</if>
+            <if test="lastlogin != null ">LASTLOGIN=#{lastlogin} ,</if>
+            <if test="invaldate != null ">INVALDATE=#{invaldate} ,</if>
+            <if test="email != null  and email != '' ">EMAIL=#{email} ,</if>
+            <if test="userType != null  and userType != '' ">USER_TYPE=#{userType} ,</if>
+            <if test="menutype != null  and menutype != '' ">MENUTYPE=#{menutype} ,</if>
+            <if test="errcount != null ">ERRCOUNT=#{errcount} ,</if>
+            <if test="maccode != null  and maccode != '' ">MACCODE=#{maccode} ,</if>
+            <if test="userid != null  and userid != '' ">USERID=#{userid} ,</if>
+            <if test="authmode != null  and authmode != '' ">AUTHMODE=#{authmode} ,</if>
+            <if test="status != null  and status != '' ">STATUS=#{status} ,</if>
+            <if test="validtime != null ">VALIDTIME=#{validtime} ,</if>
+            <if test="ipaddress != null  and ipaddress != '' ">IPADDRESS=#{ipaddress} ,</if>
+            <if test="operatorid != null ">OPERATORID=#{operatorid} ,</if>
+            <if test="startdate != null ">STARTDATE=#{startdate} ,</if>
+            <if test="enddate != null ">ENDDATE=#{enddate} ,</if>
+            <if test="partid != null ">PARTID=#{partid} ,</if>
+            <if test="operatorname != null  and operatorname != '' ">OPERATORNAME=#{operatorname} ,</if>
+            <if test="password != null  and password != '' ">PASSWORD=#{password} ,</if>
+            <if test="oldPassword != null  and oldPassword != '' ">OLD_PASSWORD=#{oldPassword} ,</if>
+        </trim>
+    </sql>
+
+    <!--通过id编辑 k6991 2020-01-15 -->
+    <update id="updatePojo" parameterType="commOperator">
+        UPDATE
+        COMM_OPERATOR
+        <include refid="update_pojo_sql"/>
+        WHERE UNLOCKTIME=#{unlocktime}
+    </update>
+    <!-- 通过userid更新密码 ywwb903 2023-01-28 -->
+    <update id="updatePojoCus" parameterType="commOperator">
+        UPDATE
+        COMM_OPERATOR
+        <include refid="update_pojo_sql"/>
+        WHERE userid=#{userid}
+    </update>
+    <update id="updateLastlogin" parameterType="commOperator">
+        UPDATE
+        COMM_OPERATOR
+        SET LASTLOGIN=#{lastlogin}
+        WHERE userid=#{userid}
+    </update>
+    <resultMap id="DOLOGIN_MAP" type="commOperatorInfo" extends="COMMOPERATOR_ALL">
+        <result property="deptId" column="DEPID"/>
+        <result property="location" column="LOCATION"/>
+        <result property="stockpath" column="STOCKPATH"/>
+        <result property="docname" column="DOCNAME"/>
+        <result property="docdomain" column="DOCDOMAIN"/>
+        <result property="certificateType" column="CERTIFICATE_TYPE"/>
+        <result property="certificateNumber" column="CERTIFICATE_NUMBER"/>
+    </resultMap>
+    <!-- 登录  2020-02-20 k6991 -->
+    <select id="doLogin" parameterType="commOperator" resultMap="DOLOGIN_MAP">
+        SELECT O.*,E.DEPID,E.LOCATION,D.STOCKPATH,D.DOCNAME,D.DOCDOMAIN FROM (
+            SELECT
+            UNLOCKTIME, LASTLOGIN, INVALDATE, EMAIL, USER_TYPE, CERTIFICATE_TYPE, CERTIFICATE_NUMBER,
+            MENUTYPE, ERRCOUNT, MACCODE, USERID, AUTHMODE, STATUS, VALIDTIME,
+            IPADDRESS, OPERATORID, STARTDATE, ENDDATE, PARTID, OPERATORNAME, PASSWORD
+            FROM COMM_OPERATOR co,COMM_EMPLOYEE ce where ce.badge = co.userid
+            AND co.USERID = #{userid} ORDER BY PARTID DESC
+        ) O LEFT JOIN
+        COMM_EMPLOYEE_VIEW E ON(O.USERID=E.BADGE)
+        LEFT JOIN PPM_STAFF_FILE S ON(O.USERID = S.BADGE)
+        LEFT JOIN PPM_DOCUMENT D ON(S.IMAGE=D.DOCUMENTNO)
+    </select>
+
+    <!-- 下一个操作用户id -->
+    <select id="getNextRoleUser" parameterType="map" resultMap="COMMOPERATOR_ALL">
+        SELECT USERID,OPERATORNAME FROM COMM_OPERATOR WHERE OPERATORID IN (
+        SELECT OPERATORID FROM COMM_OPERATORROLE WHERE ROLEID IN (${roleid})
+        )
+    </select>
+
+    <!-- 根据用户id 查询用户名称  k6991 2020-06-10 -->
+    <select id="getUserNameByUserId" parameterType="map" resultMap="COMMOPERATOR_ALL">
+        SELECT USERID,OPERATORNAME FROM COMM_OPERATOR WHERE userid=#{userId}
+    </select>
+    <!-- 获取最大id -->
+    <select id="getPrimaryKey" parameterType="map" resultType="long">
+        SELECT MAX(OPERATORID) FROM COMM_OPERATOR
+    </select>
+</mapper>

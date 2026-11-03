@@ -1,0 +1,632 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.work.ppm.application.model.resourceplat.ResExpandItem">
+    <resultMap type="resExpandItem" id="RES_EXTEND_ITEM">
+        <result property="id" column="ID" />
+        <result property="extendId" column="EXTENDID" />
+        <result property="ip" column="IP" />
+        <result property="ownCenter" column="OWNCENTER" />
+        <result property="resType" column="RESTYPE" />
+        <result property="price" column="PRICE" />
+        <result property="createTime" column="CREATETIME" />
+        <result property="ciName" column="CINAME" />
+        <result property="ciId" column="CIID" />
+        <result property="cpuNum" column="CPUNUM" />
+        <result property="cpuCore" column="CPUCORE" />
+        <result property="actCpuNum" column="ACTCPUNUM" />
+        <result property="actCpuCore" column="ACTCPUCORE" />
+    </resultMap>
+    <!-- 新增资源扩容项服务信息 -->
+    <insert id="insertResourceExpandItem" parameterType="resExpandItem">
+        INSERT INTO RES_EXTEND_ITEM(ID,EXTENDID,IP,<if test="ownCenter !=null and ownCenter !=''">OWNCENTER,</if> RESTYPE,PRICE,CREATETIME,CINAME,CIID,CPUNUM,CPUCORE,ACTCPUNUM,ACTCPUCORE)
+        VALUES (#{id},#{extendId},#{ip},<if test="ownCenter !=null and ownCenter !=''">#{ownCenter},</if>#{resType},#{price},TO_DATE(#{createTime},'YYYY-MM-DD'),#{ciName},#{ciId},#{cpuNum},#{cpuCore},#{actCpuNum},#{actCpuCore})
+    </insert>
+    <!-- 根据资源申请ID，删除资源配置项数据 -->
+    <delete id="deleteResourceExpandItem" parameterType="String">
+        DELETE FROM RES_EXTEND_ITEM WHERE EXTENDID=#{extendId}
+    </delete>
+    <!-- 根据资源申请ID，查询资源配置项数据 -->
+    <select id="queryResourceExpandItem" parameterType="String" resultMap="RES_EXTEND_ITEM">
+        SELECT ID,EXTENDID,IP,OWNCENTER,RESTYPE,PRICE,TO_CHAR(CREATETIME,'YYYY-MM-DD') CREATETIME,CINAME,CIID,CPUNUM,CPUCORE,ACTCPUNUM,ACTCPUCORE FROM RES_EXTEND_ITEM WHERE EXTENDID=#{extendId}
+    </select>
+
+    <!-- 物理机配套资源 -->
+    <select id="queryConfigItemActrual" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT
+            ISCANCEL, ID, CATEGORY, SUBCATEGORY, APPLYSCENE, DESCRIBE,PRICE,BILLINGMODE,RATIO,ISSPECIAL,MEMPRICE
+        FROM (
+            SELECT
+                ISCANCEL, ID, CATEGORY, SUBCATEGORY, APPLYSCENE, DESCRIBE,
+                CASE SUBCATEGORY WHEN '61' THEN DISKCAPACITY
+                ELSE PRICE END AS PRICE,'' BILLINGMODE,RATIO,ISSPECIAL,to_char(DISKCAPACITY) MEMPRICE
+            FROM res_config_combo
+            WHERE STATUS = '2' <![CDATA[ AND PRICE <> 0 ]]>
+            AND (CATEGORY = '2' OR SUBCATEGORY ='61')
+            UNION ALL
+            SELECT
+                ISCANCEL, ID, CATEGORY, SUBCATEGORY, APPLYSCENE, DESCRIBE,PRICE,'' BILLINGMODE,RATIO,ISSPECIAL,to_char(DISKCAPACITY) MEMPRICE
+            FROM res_config_combo
+            WHERE STATUS = '2'
+            AND CATEGORY IN ('5')
+            AND ((SUBCATEGORY='51' and DEVOPSLEVEL=#{sysOperLevel}
+            AND ISRELATEFUND=#{isFundTrans}) or SUBCATEGORY='52' or (SUBCATEGORY='51' and ISSPECIAL='1'))
+            UNION ALL
+            SELECT
+                ISCANCEL, ID,
+                CASE WHEN TYPE IN ('9','10') THEN '11' ELSE TYPE END AS CATEGORY,
+                SUBTYPE AS SUBCATEGORY,
+                '' AS APPLYSCENE,
+                SOFTNAME || ' ' || SOFTVERSION AS DESCRIBE,PRICE,BILLINGMODE,'' RATIO,'' ISSPECIAL,'' MEMPRICE
+            FROM RES_CONFIG_SOFT
+            WHERE status = '2'
+            AND TYPE IN ('7', '8', '9', '10')  <![CDATA[ AND PRICE <> 0 ]]>
+        )
+        <if test="ids !=null and ids !=''">
+            WHERE  ID NOT IN
+            <foreach item="item" index="index" collection="ids" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        ORDER BY TO_NUMBER(CATEGORY), TO_NUMBER(SUBCATEGORY)
+    </select>
+    <!-- 虚拟机配套资源 -->
+    <select id="queryConfigItemVircual" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT
+            ISCANCEL, ID, CATEGORY, SUBCATEGORY, APPLYSCENE, DESCRIBE,PRICE,BILLINGMODE,RATIO,ISSPECIAL,MEMPRICE
+        FROM (
+            SELECT
+                ISCANCEL, ID, '4' CATEGORY, TO_CHAR(TYPE) as SUBCATEGORY, '' APPLYSCENE, DESCRIBE,PRICE,'' BILLINGMODE,'' RATIO,'' ISSPECIAL,'' MEMPRICE
+            FROM RES_CONFIG_VM
+            WHERE STATUS = '2'
+            UNION ALL
+            SELECT
+                ISCANCEL, ID, CATEGORY, SUBCATEGORY, APPLYSCENE, DESCRIBE,PRICE,'' BILLINGMODE,RATIO,ISSPECIAL,to_char(DISKCAPACITY) MEMPRICE
+            FROM RES_CONFIG_COMBO
+            WHERE STATUS = '2'
+            AND CATEGORY in ('5')  <![CDATA[ AND SUBCATEGORY <> '51' AND PRICE <> 0 ]]>
+            AND ((SUBCATEGORY='51' and DEVOPSLEVEL=#{sysOperLevel}
+            AND ISRELATEFUND=#{isFundTrans}) OR SUBCATEGORY='52' OR (SUBCATEGORY='51' AND ISSPECIAL='1'))
+            UNION ALL
+            SELECT
+                ISCANCEL, ID, CATEGORY, SUBCATEGORY, APPLYSCENE, DESCRIBE,DISKCAPACITY AS PRICE,'' BILLINGMODE,RATIO,ISSPECIAL,to_char(DISKCAPACITY) MEMPRICE
+            FROM RES_CONFIG_COMBO
+            WHERE STATUS = '2'
+            AND SUBCATEGORY = '61'
+            UNION ALL
+            SELECT
+                ISCANCEL, ID,
+                CASE WHEN TYPE IN ('9','10') THEN '11' ELSE TYPE END AS CATEGORY,
+                SUBTYPE AS SUBCATEGORY,
+                '' as APPLYSCENE,
+                SOFTNAME || ' ' || SOFTVERSION AS DESCRIBE,PRICE,BILLINGMODE,'' RATIO,'' ISSPECIAL,'' MEMPRICE
+            FROM RES_CONFIG_SOFT
+            WHERE STATUS = '2'
+            AND TYPE IN ('7', '8', '9', '10')  <![CDATA[ AND PRICE <> 0 ]]>
+        )
+        <if test="ids !=null and ids !=''">
+            WHERE ID NOT IN
+            <foreach item="item" index="index" collection="ids" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        ORDER BY TO_NUMBER(CATEGORY), TO_NUMBER(SUBCATEGORY)
+    </select>
+
+    <!-- 数据库实例配套资源 -->
+    <select id="queryConfigItemPaas" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT
+            ISCANCEL,ID, CATEGORY, SUBCATEGORY, APPLYSCENE, DESCRIBE,DISKCAPACITY AS PRICE,'' BILLINGMODE,RATIO,ISSPECIAL,to_char(DISKCAPACITY) MEMPRICE
+        FROM RES_CONFIG_COMBO
+        WHERE STATUS = '2'
+        AND SUBCATEGORY = '61'
+        <if test="ids !=null and ids !=''">
+            AND ID NOT IN
+            <foreach item="item" index="index" collection="ids" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        ORDER BY TO_NUMBER(CATEGORY), TO_NUMBER(SUBCATEGORY)
+    </select>
+
+    <!-- 根据配置项ID，获取单价【扩容用】 -->
+    <select id="queryConfigItemPrice" parameterType="String" resultType="java.util.Map">
+        SELECT
+            CASE SUBCATEGORY WHEN '61' THEN DISKCAPACITY
+            ELSE PRICE END AS PRICE
+        FROM RES_CONFIG_COMBO WHERE ID=#{id}
+        union all
+         SELECT price from res_config_soft where id=#{id}
+          union all
+         SELECT price from res_config_vm where id=#{id}
+    </select>
+
+    <!-- 根据配置项ID，获取单价【新增用】 -->
+    <select id="queryConfigItemPrice_added" parameterType="String" resultType="java.util.Map">
+        SELECT PRICE FROM RES_CONFIG_COMBO WHERE ID=#{id}
+        union all
+        SELECT price from res_config_soft where id=#{id}
+        union all
+        SELECT price from res_config_vm where id=#{id}
+    </select>
+
+    <!-- 获取DB云的容器单价 -->
+    <select id="queryDbMemPrice" parameterType="String" resultType="java.util.Map">
+        SELECT DISKCAPACITY from res_config_combo where id=#{id}
+    </select>
+
+    <!-- 根据申请单，获取资源类型列表-技评统计维度 -->
+    <select id="queryResourceListForJP" parameterType="String" resultType="java.util.Map">
+        with M(extenditemid,num) as
+ (select extenditemid, TO_CHAR(WM_CONCAT(subcategory ||':'|| num))
+    from (select t.extenditemid,
+                 n.dictname as subcategory,
+                 sum(case
+                       when t.subcategory = '61' then
+                        1
+                       else
+                        t.num
+                     end) as num
+            from RES_EXTEND_ITEM_PARTS t
+            left join (select *
+                        from eos_dict_entry t
+                       where t.dicttypeid like 'RES_SUBCATEGORY%') n
+              on t.subcategory = n.dictid
+           where t.category = '6'
+             and t.extendid = #{id}
+           group by t.extenditemid, n.dictname
+           union all
+           select t.extenditemid,
+                 n.dictname as subcategory,
+                 sum(t.num) as num
+            from RES_EXTEND_ITEM_PARTS t
+            left join (select *
+                        from eos_dict_entry t
+                       where t.dicttypeid like 'RES_SUBCATEGORY%') n
+              on t.subcategory = n.dictid
+           where t.category ='2'
+             and t.extendid = #{id}
+           group by t.extenditemid, n.dictname
+           union all
+           select t.extenditemid,
+                 n.dictname as subcategory,
+                 sum(t.num) as num
+            from RES_EXTEND_ITEM_PARTS t
+            left join (select *
+                        from eos_dict_entry t
+                       where t.dicttypeid like 'RES_VM_TYPE%') n
+              on t.subcategory = n.dictid
+           where t.category ='4'
+             and t.extendid = #{id}
+           group by t.extenditemid, n.dictname)
+   group by extenditemid),
+   N(extenditemid,describe) as (select t.extenditemid,TO_CHAR(WM_CONCAT(t.describe)) describe
+                 from RES_EXTEND_ITEM_PARTS t
+                 where  t.category in ('7','8','9') and t.PRICE>0
+                   and t.EXTENDID = #{id}
+         group by extenditemid)
+
+select a.Owncenter,
+       a.restype,
+       a.ciname,
+       t.num as PZ,
+       k.describe DESCRIBE
+  from RES_EXTEND_ITEM a
+  left join M t on t.extenditemid = a.id
+  left join N k on k.extenditemid = a.id
+  where a.extendid=#{id}
+ order by a.Owncenter
+    </select>
+
+    <!--20211030 k4886 根据业务需求修改技评导出报表  -->
+    <select id="queryResourceListForJP_New" parameterType="String" resultType="java.util.Map">
+        WITH M AS
+        (
+            SELECT
+                t.EXTENDITEMID,
+                n.DICTNAME as SUBCATEGORY,
+                SUM(t.NUM) as NUM
+            FROM RES_EXTEND_ITEM_PARTS t
+            LEFT JOIN (SELECT * FROM EOS_DICT_ENTRY t WHERE t.DICTTYPEID = 'RES_SUBCATEGORY') n
+            ON t.SUBCATEGORY = n.DICTID
+            WHERE t.CATEGORY = '2'
+            AND t.EXTENDID = #{id}
+            GROUP BY t.EXTENDITEMID, n.DICTNAME
+            UNION ALL
+            SELECT
+                t.EXTENDITEMID,
+                n.DICTNAME as SUBCATEGORY,
+                SUM(t.NUM) as NUM
+            FROM RES_EXTEND_ITEM_PARTS t
+            LEFT JOIN (SELECT * FROM EOS_DICT_ENTRY t WHERE t.DICTTYPEID = 'RES_VM_TYPE') n
+            ON t.SUBCATEGORY = n.DICTID
+            WHERE t.CATEGORY = '4'
+            AND t.EXTENDID = #{id}
+            GROUP BY t.EXTENDITEMID, n.DICTNAME
+        )
+
+        SELECT
+            a.OWNCENTER,
+            a.CINAME,
+            a.RESTYPE,
+            t.SUBCATEGORY AS MODELTYPE,
+            t.NUM AS PZ,
+            '/' AS DESCRIBE
+        FROM RES_EXTEND_ITEM a
+        LEFT JOIN M t
+        ON t.EXTENDITEMID = a.ID
+        WHERE a.EXTENDID = #{id}
+        ORDER BY a.OWNCENTER
+    </select>
+
+    <!-- 根据申请单，获取存储资源成本-技评统计维度 -->
+    <select id="queryResourceListMenoryForJP" parameterType="String" resultType="java.util.Map">
+      with M(extenditemid,num) as
+ (select extenditemid, TO_CHAR(WM_CONCAT(subcategory ||':'|| num))
+    from (select t.extenditemid,
+                 n.dictname as subcategory,
+                 sum(case
+                       when t.subcategory = '61' then
+                        1
+                       else
+                        t.num
+                     end) as num
+            from RES_EXTEND_ITEM_PARTS t
+            left join (select *
+                        from eos_dict_entry t
+                       where t.dicttypeid like 'RES_SUBCATEGORY%') n
+              on t.subcategory = n.dictid
+           where t.category = '6'
+             and t.extendid = #{id}
+           group by t.extenditemid, n.dictname
+            union all
+           select t.extenditemid,
+                 n.dictname as subcategory,
+                 sum(t.num) as num
+            from RES_EXTEND_ITEM_PARTS t
+            left join (select *
+                        from eos_dict_entry t
+                       where t.dicttypeid like 'RES_SUBCATEGORY%') n
+              on t.subcategory = n.dictid
+           where t.category ='2'
+             and t.extendid = #{id}
+           group by t.extenditemid, n.dictname
+           union all
+           select t.extenditemid,
+                 n.dictname as subcategory,
+                 sum(t.num) as num
+            from RES_EXTEND_ITEM_PARTS t
+            left join (select *
+                        from eos_dict_entry t
+                       where t.dicttypeid like 'RES_VM_TYPE%') n
+              on t.subcategory = n.dictid
+           where t.category ='4'
+             and t.extendid = #{id}
+           group by t.extenditemid, n.dictname)
+   group by extenditemid),
+   N(extenditemid,DES) as (select extenditemid,TO_CHAR(WM_CONCAT(DES)) from (select
+               extenditemid,
+               subcategory || ':' || to_char(sum(num),'fm999999999999990.99') || 'G' AS DES
+          from (select t.extenditemid,n.dictname as category,
+                       case
+                         when t.isspecial = '1' then
+                          '归档数据'
+                         else
+                          m.dictname
+                       end as subcategory,
+                       t.num
+                  from RES_EXTEND_ITEM_PARTS t
+                  left join (select *
+                              from eos_dict_entry t
+                             where t.dicttypeid like 'RES_SUBCATEGORY%') m
+                    on t.subcategory = m.dictid
+                  left join (select *
+                              from eos_dict_entry t
+                             where t.dicttypeid like 'RES_CATEGORY%') n
+                    on t.category = n.dictid
+                 where t.category in ('5')
+                   and t.EXTENDID = #{id}
+                union all
+                select t.extenditemid,
+                       n.dictname as category,
+                       '归档数据' as subcategory,
+                       t.sanrelatenum
+                  from RES_EXTEND_ITEM_PARTS t
+                  left join (select *
+                              from eos_dict_entry t
+                             where t.dicttypeid like 'RES_SUBCATEGORY%') m
+                    on t.subcategory = m.dictid
+                  left join (select *
+                              from eos_dict_entry t
+                             where t.dicttypeid like 'RES_CATEGORY%') n
+                    on t.category = n.dictid
+                 where t.category in ('5')
+                   and t.isspecial = '0'
+                   and t.subcategory = '51'
+                   and t.EXTENDID = #{id}
+                union all
+                select  t.extenditemid,
+                       n.dictname as category,
+                       'ORACLE云存储' as subcategory,
+                       t.num
+                  from RES_EXTEND_ITEM_PARTS t
+                  left join (select *
+                              from eos_dict_entry t
+                             where t.dicttypeid like 'RES_SUBCATEGORY%') m
+                    on t.subcategory = m.dictid
+                  left join (select *
+                              from eos_dict_entry t
+                             where t.dicttypeid like 'RES_CATEGORY%') n
+                    on t.category = n.dictid
+                 where t.category in ('6')
+                   and t.subcategory = '61'
+                   and t.EXTENDID = #{id})
+         group by extenditemid, subcategory)
+         group by extenditemid)
+
+select a.Owncenter,
+       a.restype,
+       a.ciname,
+       t.num as PZ,
+       k.DES DESCRIBE
+  from RES_EXTEND_ITEM a
+  left join M t on t.extenditemid = a.id
+  left join N k on k.extenditemid = a.id
+  where a.extendid=#{id}
+ order by a.Owncenter
+    </select>
+
+    <!--20211030 k4886 根据业务需求修改技评导出报表  -->
+    <select id="queryResourceListMenoryForJP_New" parameterType="String" resultType="java.util.Map">
+        WITH N AS
+        (
+            SELECT
+                t.EXTENDITEMID,
+                t.describe,
+                CASE WHEN t.ISSPECIAL = '1' THEN '归档数据'
+                ELSE m.DICTNAME END AS SUBCATEGORY,
+                t.NUM
+            FROM RES_EXTEND_ITEM_PARTS t
+            LEFT JOIN (SELECT * FROM EOS_DICT_ENTRY t WHERE t.DICTTYPEID = 'RES_SUBCATEGORY') m
+            ON t.SUBCATEGORY = m.DICTID
+            WHERE t.CATEGORY IN ('5')
+            AND t.EXTENDID = #{id}
+            UNION ALL
+            SELECT
+                t.EXTENDITEMID,
+                t.DESCRIBE,
+                '归档数据' as SUBCATEGORY,
+                t.SANRELATENUM
+            FROM RES_EXTEND_ITEM_PARTS t
+            LEFT JOIN (SELECT * FROM EOS_DICT_ENTRY t WHERE t.DICTTYPEID = 'RES_SUBCATEGORY') m
+            ON t.SUBCATEGORY = m.DICTID
+            WHERE t.CATEGORY in ('5')
+            AND t.ISSPECIAL = '0'
+            AND t.SUBCATEGORY = '51'
+            AND t.EXTENDID = #{id}
+            UNION ALL
+            SELECT
+                t.EXTENDITEMID,
+                t.DESCRIBE,
+                'ORACLE云存储' AS SUBCATEGORY,
+                t.NUM
+            FROM RES_EXTEND_ITEM_PARTS t
+            LEFT JOIN (SELECT * FROM EOS_DICT_ENTRY t WHERE t.DICTTYPEID = 'RES_SUBCATEGORY') m
+            ON t.SUBCATEGORY = m.DICTID
+            WHERE t.CATEGORY IN ('6')
+            AND t.SUBCATEGORY = '61'
+            AND t.EXTENDID = #{id}
+        )
+
+        SELECT
+            a.OWNCENTER,
+            a.RESTYPE,
+            a.CINAME,
+            k.SUBCATEGORY AS MODELTYPE,
+            k.DESCRIBE AS PZ,
+            K.NUM AS DESCRIBE
+        FROM RES_EXTEND_ITEM a
+        LEFT JOIN N k ON k.EXTENDITEMID = a.ID
+        WHERE a.EXTENDID = #{id}
+        ORDER BY a.OWNCENTER
+    </select>
+
+    <!-- 根据申请单，获取硬件资源成本-总办统计维度 -->
+    <select id="queryResourceListResourceForZb" parameterType="String" resultType="java.util.Map">
+select *  from (
+        select A.Owncenter,n.dictname as category,m.dictname as subcategory, t.describe, t.price,sum(t.num) as num,sum(t.totalprice) as totalprice
+  from RES_EXTEND_ITEM_PARTS  t
+  left join (select *
+               from eos_dict_entry t
+              where t.dicttypeid like 'RES_SUBCATEGORY%') m
+    on t.subcategory = m.dictid
+     left join (select * from eos_dict_entry t where t.dicttypeid like'RES_CATEGORY%') n on t.category=n.dictid
+     left join RES_EXTEND_ITEM a on  a.id = t.extenditemid
+ where t.category in ('2') and t.EXTENDID = #{id}
+ group by A.Owncenter,n.dictname,m.dictname,t.describe,t.price
+ union
+ select A.Owncenter,n.dictname as category,m.dictname as subcategory, t.describe, t.price,sum(t.num) as num,sum(t.totalprice) as totalprice
+  from RES_EXTEND_ITEM_PARTS  t
+  left join (select *
+               from eos_dict_entry t
+              where t.dicttypeid like 'RES_VM_TYPE%') m
+    on t.subcategory = m.dictid
+     left join (select * from eos_dict_entry t where t.dicttypeid like'RES_CATEGORY%') n on t.category=n.dictid
+      left join RES_EXTEND_ITEM a on  a.id = t.extenditemid
+ where t.category in ('4') and t.EXTENDID = #{id}
+ group by A.Owncenter,n.dictname,m.dictname,t.describe,t.price
+        <!-- 20211029 k4886根据需求paas套餐导出时不统计单租户的价格，只统计db云中的数据库容量
+        union all
+  select A.Owncenter,n.dictname as category,m.dictname as subcategory, t.describe, t.price,sum(t.num) as num,sum(t.totalprice) as totalprice
+  from RES_EXTEND_ITEM_PARTS  t
+  left join (select *
+               from eos_dict_entry t
+              where t.dicttypeid like 'RES_SUBCATEGORY%') m
+    on t.subcategory = m.dictid
+     left join (select * from eos_dict_entry t where t.dicttypeid like'RES_CATEGORY%') n on t.category=n.dictid
+      left join RES_EXTEND_ITEM a on  a.id = t.extenditemid
+ where t.category in ('6') and t.EXTENDID = #{id}
+ group by A.Owncenter,n.dictname,m.dictname,t.describe,t.price-->
+) order by Owncenter,category
+    </select>
+    <!-- 根据申请单，获取存储资源成本-总办统计维度 -->
+    <select id="queryResourceListMemoryForZb" parameterType="String" resultType="java.util.Map">
+  select * from (
+      select A.Owncenter,
+               n.dictname as category,
+               m.dictname as subcategory,
+               t.describe,
+               t.price,
+               sum(t.num) as num,
+       sum(t.totalprice-(case when t.sanrelatetotalprice is null then 0 else t.sanrelatetotalprice end )) as totalprice
+          from RES_EXTEND_ITEM_PARTS t
+          left join (select *
+                      from eos_dict_entry t
+                     where t.dicttypeid like 'RES_SUBCATEGORY%') m
+            on t.subcategory = m.dictid
+          left join (select *
+                      from eos_dict_entry t
+                     where t.dicttypeid like 'RES_CATEGORY%') n
+            on t.category = n.dictid
+          left join RES_EXTEND_ITEM a
+            on a.id = t.extenditemid
+         where t.category in ('5')
+           and t.isspecial = '0'
+           and t.EXTENDID = #{id}
+ group by a.Owncenter, n.dictname,  m.dictname, t.describe, t.price
+union all
+select t.Owncenter,
+       t.category,
+       t.subcategory,
+       t.describe,
+       t.price,
+       sum(t.num) as num,
+       sum(t.totalprice) as totalprice
+  from (select A.Owncenter,
+               n.dictname as category,
+               m.dictname as subcategory,
+               '归档数据' as describe,
+               t.sanrelateprice as price,
+               t.sanrelatenum as num,
+               t.sanrelatetotalprice as totalprice
+          from RES_EXTEND_ITEM_PARTS t
+          left join (select *
+                      from eos_dict_entry t
+                     where t.dicttypeid like 'RES_SUBCATEGORY%') m
+            on t.subcategory = m.dictid
+          left join (select *
+                      from eos_dict_entry t
+                     where t.dicttypeid like 'RES_CATEGORY%') n
+            on t.category = n.dictid
+          left join RES_EXTEND_ITEM a
+            on a.id = t.extenditemid
+         where t.category in ('5')
+           and t.subcategory='51'
+           and t.isspecial = '0'
+           and t.EXTENDID = #{id}
+        union all
+        select A.Owncenter,
+               n.dictname as category,
+               m.dictname as subcategory,
+               '归档数据' as describe,
+               t.price as price,
+               t.num as num,
+               t.totalprice as totalprice
+          from RES_EXTEND_ITEM_PARTS t
+          left join (select *
+                      from eos_dict_entry t
+                     where t.dicttypeid like 'RES_SUBCATEGORY%') m
+            on t.subcategory = m.dictid
+          left join (select *
+                      from eos_dict_entry t
+                     where t.dicttypeid like 'RES_CATEGORY%') n
+            on t.category = n.dictid
+          left join RES_EXTEND_ITEM a
+            on a.id = t.extenditemid
+         where t.category in ('5')
+         and t.subcategory='51'
+           and t.isspecial = '1'
+           and t.EXTENDID = #{id}) t
+ group by t.Owncenter, t.category, t.subcategory, t.describe, t.price
+
+  union all
+  select A.Owncenter,'ORACLE云存储' as category,m.dictname as subcategory, t.describe, t.memprice as price ,sum(t.num) as num,sum(t.memtotalprice) as totalprice
+  from RES_EXTEND_ITEM_PARTS  t
+  left join (select *
+               from eos_dict_entry t
+              where t.dicttypeid like 'RES_SUBCATEGORY%') m
+    on t.subcategory = m.dictid
+     left join (select * from eos_dict_entry t where t.dicttypeid like'RES_CATEGORY%') n on t.category=n.dictid
+     left join RES_EXTEND_ITEM a on  a.id = t.extenditemid
+ where t.category in ('6') and t.subcategory='61' and t.EXTENDID = #{id}
+ group by A.Owncenter,n.dictname,m.dictname,t.describe,t.memprice
+) order by Owncenter
+    </select>
+    <!-- 根据申请单，获取软件资源成本-总办统计维度 -->
+    <select id="queryResourceListSoftForZb" parameterType="String" resultType="java.util.Map">
+        SELECT
+            A.Owncenter,
+            n.DICTNAME as CATEGORY,
+            m.DICTNAME as SUBCATEGORY,
+            t.DESCRIBE,
+            t.PRICE,
+            SUM(t.NUM) AS NUM,
+            SUM(t.TOTALPRICE) AS TOTALPRICE
+        FROM(
+            SELECT
+                CASE WHEN t.CATEGORY IN ('9','10') THEN '11'
+                    ELSE t.category END AS CATEGORY,
+                t.SUBCATEGORY,
+                t.DESCRIBE,
+                t.PRICE,
+                t.NUM,
+                t.TOTALPRICE,
+                t.EXTENDITEMID,
+                t.EXTENDID
+            FROM  RES_EXTEND_ITEM_PARTS t
+            WHERE t.CATEGORY in ('7', '8', '9', '10')
+            AND t.EXTENDID = #{id}
+            AND t.PRICE > 0
+        ) t
+        LEFT JOIN
+        (
+            SELECT * FROM EOS_DICT_ENTRY t
+            WHERE t.dicttypeid = 'RES_SUBCATEGORY'
+        ) m
+        ON t.SUBCATEGORY = m.DICTID
+        LEFT JOIN
+        (
+            SELECT * FROM EOS_DICT_ENTRY t
+            WHERE t.DICTTYPEID = 'RES_CATEGORY'
+        ) n
+        ON t.CATEGORY = n.DICTID
+        LEFT JOIN res_extend_item a ON a.ID = t.EXTENDITEMID
+        GROUP BY a.OWNCENTER, n.DICTNAME, m.DICTNAME, t.DESCRIBE, t.PRICE
+        ORDER BY a.owncenter
+    </select>
+
+    <!-- 资源扩容校验作废数据 -->
+    <select id="vaildOutofDateData" parameterType="String" resultType="Map">
+        SELECT * FROM (
+            SELECT
+                ID, APPLYSCENE AS DESCRIPTION
+            FROM RES_CONFIG_COMBO
+            WHERE ISCANCEL = '1'
+            AND ID = #{id}
+            UNION
+            SELECT
+                ID, SOFTNAME || ' ' || SOFTVERSION AS DESCRIPTION
+            FROM RES_CONFIG_SOFT
+            WHERE ISCANCEL = '1'
+            AND ID = #{id}
+            UNION
+            SELECT
+                ID, n.DICTNAME || '(' || m.DESCRIBE || ')' AS DESCRIPTION
+            FROM RES_CONFIG_VM m
+            LEFT JOIN EOS_DICT_ENTRY n ON m.TYPE = n.DICTID
+            WHERE n.DICTTYPEID = 'RES_VM_TYPE'
+            AND m.ISCANCEL = '1'
+            AND m.ID = #{id}
+        ) a
+    </select>
+</mapper>
+

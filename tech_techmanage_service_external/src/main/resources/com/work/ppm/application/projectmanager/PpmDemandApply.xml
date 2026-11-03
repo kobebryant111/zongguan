@@ -1,0 +1,435 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k6991 2021-09-03 -->
+<mapper namespace="com.work.ppm.application.model.projectmanager.PpmDemandApply">
+	 <resultMap type="ppmDemandApply" id="PPMDEMANDAPPLY_ALL">
+        <result property="id" column="ID" />
+		<result property="applyno" column="APPLYNO" />
+		<result property="demandno" column="DEMANDNO" />
+		<result property="demandname" column="DEMANDNAME" />
+		<result property="demanduserid" column="DEMANDUSERID" />
+		<result property="demanddeptno" column="DEMANDDEPTNO" />
+		<result property="planningno" column="PLANNINGNO" />
+		<result property="source" column="SOURCE" />
+		<result property="priority" column="PRIORITY" />
+		<result property="emergency" column="EMERGENCY" />
+		<result property="reason" column="REASON" />
+		<result property="busiuserid" column="BUSIUSERID" />
+		<result property="mSysno" column="M_SYSNO" />
+		<result property="sSysno" column="S_SYSNO" />
+		<result property="operagrade" column="OPERAGRADE" />
+		<result property="busideptno" column="BUSIDEPTNO" />
+		<result property="tectdeptno" column="TECTDEPTNO" />
+		<result property="teamno" column="TEAMNO" />
+		<result property="teamrespid" column="TEAMRESPID" />
+		<result property="manageruserid" column="MANAGERUSERID" />
+		<result property="tbudget" column="TBUDGET" />
+		<result property="cbudget" column="CBUDGET" />
+		<result property="bbudget" column="BBUDGET" />
+		<result property="busiexpect" column="BUSIEXPECT" />
+		<result property="target" column="TARGET" />
+		<result property="demanddesc" column="DEMANDDESC" />
+		<result property="isresearch" column="ISRESEARCH" />
+		<result property="tecexpect" column="TECEXPECT" />
+		<result property="flowid" column="FLOWID" />
+		<result property="instanceid" column="INSTANCEID" />
+		<result property="isdel" column="ISDEL" />
+		<result property="createtime" column="CREATETIME" />
+		<result property="creators" column="CREATORS" />
+		<result property="lastmodtime" column="LASTMODTIME" />
+		<result property="lastmoduser" column="LASTMODUSER" />
+		<result property="operaresid" column="OPERARESID" />
+		<result property="bringupdate" column="BRINGUPDATE" />
+		<result property="isnew" column="ISNEW" />
+		<result property="sworkunit" column="SWORKUNIT" />
+		<result property="tworkunit" column="TWORKUNIT" />
+		<result property="tecworkload" column="TECWORKLOAD" />
+		<result property="busiworkload" column="BUSIWORKLOAD" />
+		<result property="obudget" column="OBUDGET" />
+		<result property="profit" column="PROFIT" />
+		<result property="researchuserid" column="RESEARCHUSERID" />
+		<result property="sumbudget" column="SUMBUDGET" />
+		<result property="sumworkload" column="SUMWORKLOAD" />
+		<result property="sumworkunit" column="SUMWORKUNIT" />
+		<result property="proscale" column="PROSCALE" />
+		<result property="managercheckuserid" column="MANAGERCHECKUSERID" />
+		<result property="otherbudgetdesc" column="OTHERBUDGETDESC" />
+		<result property="domain" column="DOMAIN" />
+		<result property="satisficing" column="SATISFICING" />
+		<result property="dremark" column="DREMARK" />
+		<result property="demandsource" column="DEMANDSOURCE" />
+		<result property="wyType" column="WY_TYPE" />
+		<result property="istecbus" column="ISTECBUS" />
+		<result property="newdemand" column="NEWDEMAND" />
+		<result property="istobank" column="ISTOBANK" />
+		<result property="banktime" column="BANKTIME" />
+		<result property="islarge" column="ISLARGE" />
+		<result property="isftywjl" column="ISFTYWJL" />
+		<result property="isfgn" column="ISFGN" />
+		<result property="majorproject" column="MAJORPROJECT" />
+		<result property="pdl" column="PDL" />
+		<result property="updown" column="UPDOWN" />
+		<result property="ywzjl" column="YWZJL" />
+		<result property="isywkjfzjl" column="ISYWKJFZJL" />
+		<result property="fileworkitemids" column="FILEWORKITEMIDS" />
+		<result property="bmfzr" column="BMFZR" />
+		<result property="issjwbcgxq" column="ISSJWBCGXQ" />
+		<result property="qtywbfghz" column="QTYWBFGHZ" />
+		<result property="qtywbfghzname" column="QTYWBFGHZNAME" />
+		<result property="iskjhzsp" column="ISKJHZSP" />
+		<result property="issjbhdzyz" column="ISSJBHDZYZ" />
+		<result property="antimoneySelfdesc" column="ANTIMONEY_SELFDESC" />
+		<result property="demandname1" column="DEMANDNAME1" />
+		<result property="isjxkh" column="ISJXKH" />
+		
+     </resultMap>
+
+     <!-- 所有字段名称 -->
+        <sql id="sql_flied_all">
+        	ID,
+			APPLYNO,
+			DEMANDNO,
+			DEMANDNAME,
+			DEMANDUSERID,
+			DEMANDDEPTNO,
+			PLANNINGNO,
+			SOURCE,
+			PRIORITY,
+			EMERGENCY,
+			REASON,
+			BUSIUSERID,
+			M_SYSNO,
+			S_SYSNO,
+			OPERAGRADE,
+			BUSIDEPTNO,
+			TECTDEPTNO,
+			TEAMNO,
+			TEAMRESPID,
+			MANAGERUSERID,
+			TBUDGET,
+			CBUDGET,
+			BBUDGET,
+			BUSIEXPECT,
+			TARGET,
+			DEMANDDESC,
+			ISRESEARCH,
+			TECEXPECT,
+			FLOWID,
+			INSTANCEID,
+			ISDEL,
+			CREATETIME,
+			CREATORS,
+			LASTMODTIME,
+			LASTMODUSER,
+			OPERARESID,
+			BRINGUPDATE,
+			ISNEW,
+			SWORKUNIT,
+			TWORKUNIT,
+			TECWORKLOAD,
+			BUSIWORKLOAD,
+			OBUDGET,
+			PROFIT,
+			RESEARCHUSERID,
+			SUMBUDGET,
+			SUMWORKLOAD,
+			SUMWORKUNIT,
+			PROSCALE,
+			MANAGERCHECKUSERID,
+			OTHERBUDGETDESC,
+			DOMAIN,
+			SATISFICING,
+			DREMARK,
+			DEMANDSOURCE,
+			WY_TYPE,
+			ISTECBUS,
+			NEWDEMAND,
+			ISTOBANK,
+			BANKTIME,
+			ISLARGE,
+			ISFTYWJL,
+			ISFGN,
+			MAJORPROJECT,
+			PDL,
+			UPDOWN,
+			YWZJL,
+			ISYWKJFZJL,
+			FILEWORKITEMIDS,
+			BMFZR,
+			ISSJWBCGXQ,
+			QTYWBFGHZ,
+			QTYWBFGHZNAME,
+			ISKJHZSP,
+			ISSJBHDZYZ,
+			ANTIMONEY_SELFDESC,
+			DEMANDNAME1,
+			ISJXKH
+        </sql>
+        <sql id="sql_select_condition">
+            <trim prefix="WHERE" suffixOverrides="AND">
+                <if test="id != null " > ID = #{id} AND </if>
+				<if test="applyno != null  and applyno != '' " > APPLYNO = #{applyno} AND </if>
+				<if test="demandno != null  and demandno != '' " > DEMANDNO = #{demandno} AND </if>
+				<if test="demandname != null  and demandname != '' " > DEMANDNAME = #{demandname} AND </if>
+				<if test="demanduserid != null  and demanduserid != '' " > DEMANDUSERID = #{demanduserid} AND </if>
+				<if test="demanddeptno != null  and demanddeptno != '' " > DEMANDDEPTNO = #{demanddeptno} AND </if>
+				<if test="planningno != null  and planningno != '' " > PLANNINGNO = #{planningno} AND </if>
+				<if test="source != null  and source != '' " > SOURCE = #{source} AND </if>
+				<if test="priority != null  and priority != '' " > PRIORITY = #{priority} AND </if>
+				<if test="emergency != null  and emergency != '' " > EMERGENCY = #{emergency} AND </if>
+				<if test="reason != null  and reason != '' " > REASON = #{reason} AND </if>
+				<if test="busiuserid != null  and busiuserid != '' " > BUSIUSERID = #{busiuserid} AND </if>
+				<if test="mSysno != null  and mSysno != '' " > M_SYSNO = #{mSysno} AND </if>
+				<if test="sSysno != null  and sSysno != '' " > S_SYSNO = #{sSysno} AND </if>
+				<if test="operagrade != null  and operagrade != '' " > OPERAGRADE = #{operagrade} AND </if>
+				<if test="busideptno != null  and busideptno != '' " > BUSIDEPTNO = #{busideptno} AND </if>
+				<if test="tectdeptno != null  and tectdeptno != '' " > TECTDEPTNO = #{tectdeptno} AND </if>
+				<if test="teamno != null  and teamno != '' " > TEAMNO = #{teamno} AND </if>
+				<if test="teamrespid != null  and teamrespid != '' " > TEAMRESPID = #{teamrespid} AND </if>
+				<if test="manageruserid != null  and manageruserid != '' " > MANAGERUSERID = #{manageruserid} AND </if>
+				<if test="tbudget != null " > TBUDGET = #{tbudget} AND </if>
+				<if test="cbudget != null " > CBUDGET = #{cbudget} AND </if>
+				<if test="bbudget != null " > BBUDGET = #{bbudget} AND </if>
+				<if test="busiexpect != null " > BUSIEXPECT = #{busiexpect} AND </if>
+				<if test="target != null  and target != '' " > TARGET = #{target} AND </if>
+				<if test="demanddesc != null  and demanddesc != '' " > DEMANDDESC = #{demanddesc} AND </if>
+				<if test="isresearch != null  and isresearch != '' " > ISRESEARCH = #{isresearch} AND </if>
+				<if test="tecexpect != null " > TECEXPECT = #{tecexpect} AND </if>
+				<if test="flowid != null  and flowid != '' " > FLOWID = #{flowid} AND </if>
+				<if test="instanceid != null  and instanceid != '' " > INSTANCEID = #{instanceid} AND </if>
+				<if test="isdel != null " > ISDEL = #{isdel} AND </if>
+				<if test="createtime != null " > CREATETIME = #{createtime} AND </if>
+				<if test="creators != null  and creators != '' " > CREATORS = #{creators} AND </if>
+				<if test="lastmodtime != null " > LASTMODTIME = #{lastmodtime} AND </if>
+				<if test="lastmoduser != null  and lastmoduser != '' " > LASTMODUSER = #{lastmoduser} AND </if>
+				<if test="operaresid != null  and operaresid != '' " > OPERARESID = #{operaresid} AND </if>
+				<if test="bringupdate != null " > BRINGUPDATE = #{bringupdate} AND </if>
+				<if test="isnew != null  and isnew != '' " > ISNEW = #{isnew} AND </if>
+				<if test="sworkunit != null  and sworkunit != '' " > SWORKUNIT = #{sworkunit} AND </if>
+				<if test="tworkunit != null  and tworkunit != '' " > TWORKUNIT = #{tworkunit} AND </if>
+				<if test="tecworkload != null " > TECWORKLOAD = #{tecworkload} AND </if>
+				<if test="busiworkload != null " > BUSIWORKLOAD = #{busiworkload} AND </if>
+				<if test="obudget != null " > OBUDGET = #{obudget} AND </if>
+				<if test="profit != null  and profit != '' " > PROFIT = #{profit} AND </if>
+				<if test="researchuserid != null  and researchuserid != '' " > RESEARCHUSERID = #{researchuserid} AND </if>
+				<if test="sumbudget != null " > SUMBUDGET = #{sumbudget} AND </if>
+				<if test="sumworkload != null " > SUMWORKLOAD = #{sumworkload} AND </if>
+				<if test="sumworkunit != null  and sumworkunit != '' " > SUMWORKUNIT = #{sumworkunit} AND </if>
+				<if test="proscale != null  and proscale != '' " > PROSCALE = #{proscale} AND </if>
+				<if test="managercheckuserid != null  and managercheckuserid != '' " > MANAGERCHECKUSERID = #{managercheckuserid} AND </if>
+				<if test="otherbudgetdesc != null  and otherbudgetdesc != '' " > OTHERBUDGETDESC = #{otherbudgetdesc} AND </if>
+				<if test="domain != null  and domain != '' " > DOMAIN = #{domain} AND </if>
+				<if test="satisficing != null  and satisficing != '' " > SATISFICING = #{satisficing} AND </if>
+				<if test="dremark != null  and dremark != '' " > DREMARK = #{dremark} AND </if>
+				<if test="demandsource != null  and demandsource != '' " > DEMANDSOURCE = #{demandsource} AND </if>
+				<if test="wyType != null  and wyType != '' " > WY_TYPE = #{wyType} AND </if>
+				<if test="istecbus != null  and istecbus != '' " > ISTECBUS = #{istecbus} AND </if>
+				<if test="newdemand != null  and newdemand != '' " > NEWDEMAND = #{newdemand} AND </if>
+				<if test="istobank != null  and istobank != '' " > ISTOBANK = #{istobank} AND </if>
+				<if test="banktime != null " > BANKTIME = #{banktime} AND </if>
+				<if test="islarge != null  and islarge != '' " > ISLARGE = #{islarge} AND </if>
+				<if test="isftywjl != null  and isftywjl != '' " > ISFTYWJL = #{isftywjl} AND </if>
+				<if test="isfgn != null  and isfgn != '' " > ISFGN = #{isfgn} AND </if>
+				<if test="majorproject != null  and majorproject != '' " > MAJORPROJECT = #{majorproject} AND </if>
+				<if test="pdl != null  and pdl != '' " > PDL = #{pdl} AND </if>
+				<if test="updown != null  and updown != '' " > UPDOWN = #{updown} AND </if>
+				<if test="ywzjl != null  and ywzjl != '' " > YWZJL = #{ywzjl} AND </if>
+				<if test="isywkjfzjl != null  and isywkjfzjl != '' " > ISYWKJFZJL = #{isywkjfzjl} AND </if>
+				<if test="fileworkitemids != null  and fileworkitemids != '' " > FILEWORKITEMIDS = #{fileworkitemids} AND </if>
+				<if test="bmfzr != null  and bmfzr != '' " > BMFZR = #{bmfzr} AND </if>
+				<if test="issjwbcgxq != null  and issjwbcgxq != '' " > ISSJWBCGXQ = #{issjwbcgxq} AND </if>
+				<if test="qtywbfghz != null  and qtywbfghz != '' " > QTYWBFGHZ = #{qtywbfghz} AND </if>
+				<if test="qtywbfghzname != null  and qtywbfghzname != '' " > QTYWBFGHZNAME = #{qtywbfghzname} AND </if>
+				<if test="iskjhzsp != null  and iskjhzsp != '' " > ISKJHZSP = #{iskjhzsp} AND </if>
+				<if test="issjbhdzyz != null  and issjbhdzyz != '' " > ISSJBHDZYZ = #{issjbhdzyz} AND </if>
+				<if test="antimoneySelfdesc != null  and antimoneySelfdesc != '' " > ANTIMONEY_SELFDESC = #{antimoneySelfdesc} AND </if>
+				<if test="demandname1 != null  and demandname1 != '' " > DEMANDNAME1 = #{demandname1} AND </if>
+				<if test="isjxkh != null  and isjxkh != '' " > ISJXKH = #{isjxkh} AND </if>
+				
+            </trim>
+        </sql>
+
+
+        <!-- 新增  2021-09-03 k6991  -->
+        <insert id="addPojo" parameterType="ppmDemandApply">
+    		INSERT INTO PPM_DEMAND_APPLY (
+    		<trim suffixOverrides=",">
+    		 <if test="id != null " > ID , </if>
+				<if test="applyno != null  and applyno != '' " > APPLYNO , </if>
+				<if test="demandno != null  and demandno != '' " > DEMANDNO , </if>
+				<if test="demandname != null  and demandname != '' " > DEMANDNAME , </if>
+				<if test="demanduserid != null  and demanduserid != '' " > DEMANDUSERID , </if>
+				<if test="demanddeptno != null  and demanddeptno != '' " > DEMANDDEPTNO , </if>
+				<if test="planningno != null  and planningno != '' " > PLANNINGNO , </if>
+				<if test="source != null  and source != '' " > SOURCE , </if>
+				<if test="priority != null  and priority != '' " > PRIORITY , </if>
+				<if test="emergency != null  and emergency != '' " > EMERGENCY , </if>
+				<if test="reason != null  and reason != '' " > REASON , </if>
+				<if test="busiuserid != null  and busiuserid != '' " > BUSIUSERID , </if>
+				<if test="mSysno != null  and mSysno != '' " > M_SYSNO , </if>
+				<if test="sSysno != null  and sSysno != '' " > S_SYSNO , </if>
+				<if test="operagrade != null  and operagrade != '' " > OPERAGRADE , </if>
+				<if test="busideptno != null  and busideptno != '' " > BUSIDEPTNO , </if>
+				<if test="tectdeptno != null  and tectdeptno != '' " > TECTDEPTNO , </if>
+				<if test="teamno != null  and teamno != '' " > TEAMNO , </if>
+				<if test="teamrespid != null  and teamrespid != '' " > TEAMRESPID , </if>
+				<if test="manageruserid != null  and manageruserid != '' " > MANAGERUSERID , </if>
+				<if test="tbudget != null " > TBUDGET , </if>
+				<if test="cbudget != null " > CBUDGET , </if>
+				<if test="bbudget != null " > BBUDGET , </if>
+				<if test="busiexpect != null " > BUSIEXPECT , </if>
+				<if test="target != null  and target != '' " > TARGET , </if>
+				<if test="demanddesc != null  and demanddesc != '' " > DEMANDDESC , </if>
+				<if test="isresearch != null  and isresearch != '' " > ISRESEARCH , </if>
+				<if test="tecexpect != null " > TECEXPECT , </if>
+				<if test="flowid != null  and flowid != '' " > FLOWID , </if>
+				<if test="instanceid != null  and instanceid != '' " > INSTANCEID , </if>
+				<if test="isdel != null " > ISDEL , </if>
+				<if test="createtime != null " > CREATETIME , </if>
+				<if test="creators != null  and creators != '' " > CREATORS , </if>
+				<if test="lastmodtime != null " > LASTMODTIME , </if>
+				<if test="lastmoduser != null  and lastmoduser != '' " > LASTMODUSER , </if>
+				<if test="operaresid != null  and operaresid != '' " > OPERARESID , </if>
+				<if test="bringupdate != null " > BRINGUPDATE , </if>
+				<if test="isnew != null  and isnew != '' " > ISNEW , </if>
+				<if test="sworkunit != null  and sworkunit != '' " > SWORKUNIT , </if>
+				<if test="tworkunit != null  and tworkunit != '' " > TWORKUNIT , </if>
+				<if test="tecworkload != null " > TECWORKLOAD , </if>
+				<if test="busiworkload != null " > BUSIWORKLOAD , </if>
+				<if test="obudget != null " > OBUDGET , </if>
+				<if test="profit != null  and profit != '' " > PROFIT , </if>
+				<if test="researchuserid != null  and researchuserid != '' " > RESEARCHUSERID , </if>
+				<if test="sumbudget != null " > SUMBUDGET , </if>
+				<if test="sumworkload != null " > SUMWORKLOAD , </if>
+				<if test="sumworkunit != null  and sumworkunit != '' " > SUMWORKUNIT , </if>
+				<if test="proscale != null  and proscale != '' " > PROSCALE , </if>
+				<if test="managercheckuserid != null  and managercheckuserid != '' " > MANAGERCHECKUSERID , </if>
+				<if test="otherbudgetdesc != null  and otherbudgetdesc != '' " > OTHERBUDGETDESC , </if>
+				<if test="domain != null  and domain != '' " > DOMAIN , </if>
+				<if test="satisficing != null  and satisficing != '' " > SATISFICING , </if>
+				<if test="dremark != null  and dremark != '' " > DREMARK , </if>
+				<if test="demandsource != null  and demandsource != '' " > DEMANDSOURCE , </if>
+				<if test="wyType != null  and wyType != '' " > WY_TYPE , </if>
+				<if test="istecbus != null  and istecbus != '' " > ISTECBUS , </if>
+				<if test="newdemand != null  and newdemand != '' " > NEWDEMAND , </if>
+				<if test="istobank != null  and istobank != '' " > ISTOBANK , </if>
+				<if test="banktime != null " > BANKTIME , </if>
+				<if test="islarge != null  and islarge != '' " > ISLARGE , </if>
+				<if test="isftywjl != null  and isftywjl != '' " > ISFTYWJL , </if>
+				<if test="isfgn != null  and isfgn != '' " > ISFGN , </if>
+				<if test="majorproject != null  and majorproject != '' " > MAJORPROJECT , </if>
+				<if test="pdl != null  and pdl != '' " > PDL , </if>
+				<if test="updown != null  and updown != '' " > UPDOWN , </if>
+				<if test="ywzjl != null  and ywzjl != '' " > YWZJL , </if>
+				<if test="isywkjfzjl != null  and isywkjfzjl != '' " > ISYWKJFZJL , </if>
+				<if test="fileworkitemids != null  and fileworkitemids != '' " > FILEWORKITEMIDS , </if>
+				<if test="bmfzr != null  and bmfzr != '' " > BMFZR , </if>
+				<if test="issjwbcgxq != null  and issjwbcgxq != '' " > ISSJWBCGXQ , </if>
+				<if test="qtywbfghz != null  and qtywbfghz != '' " > QTYWBFGHZ , </if>
+				<if test="qtywbfghzname != null  and qtywbfghzname != '' " > QTYWBFGHZNAME , </if>
+				<if test="iskjhzsp != null  and iskjhzsp != '' " > ISKJHZSP , </if>
+				<if test="issjbhdzyz != null  and issjbhdzyz != '' " > ISSJBHDZYZ , </if>
+				<if test="antimoneySelfdesc != null  and antimoneySelfdesc != '' " > ANTIMONEY_SELFDESC , </if>
+				<if test="demandname1 != null  and demandname1 != '' " > DEMANDNAME1 , </if>
+				<if test="isjxkh != null  and isjxkh != '' " > ISJXKH , </if>
+				
+              </trim>
+    		)
+    		VALUES(
+    		<trim suffixOverrides=",">
+    		 <if test="id != null " > #{id} , </if>
+				<if test="applyno != null  and applyno != '' " > #{applyno} , </if>
+				<if test="demandno != null  and demandno != '' " > #{demandno} , </if>
+				<if test="demandname != null  and demandname != '' " > #{demandname} , </if>
+				<if test="demanduserid != null  and demanduserid != '' " > #{demanduserid} , </if>
+				<if test="demanddeptno != null  and demanddeptno != '' " > #{demanddeptno} , </if>
+				<if test="planningno != null  and planningno != '' " > #{planningno} , </if>
+				<if test="source != null  and source != '' " > #{source} , </if>
+				<if test="priority != null  and priority != '' " > #{priority} , </if>
+				<if test="emergency != null  and emergency != '' " > #{emergency} , </if>
+				<if test="reason != null  and reason != '' " > #{reason} , </if>
+				<if test="busiuserid != null  and busiuserid != '' " > #{busiuserid} , </if>
+				<if test="mSysno != null  and mSysno != '' " > #{mSysno} , </if>
+				<if test="sSysno != null  and sSysno != '' " > #{sSysno} , </if>
+				<if test="operagrade != null  and operagrade != '' " > #{operagrade} , </if>
+				<if test="busideptno != null  and busideptno != '' " > #{busideptno} , </if>
+				<if test="tectdeptno != null  and tectdeptno != '' " > #{tectdeptno} , </if>
+				<if test="teamno != null  and teamno != '' " > #{teamno} , </if>
+				<if test="teamrespid != null  and teamrespid != '' " > #{teamrespid} , </if>
+				<if test="manageruserid != null  and manageruserid != '' " > #{manageruserid} , </if>
+				<if test="tbudget != null " > #{tbudget} , </if>
+				<if test="cbudget != null " > #{cbudget} , </if>
+				<if test="bbudget != null " > #{bbudget} , </if>
+				<if test="busiexpect != null " > #{busiexpect} , </if>
+				<if test="target != null  and target != '' " > #{target} , </if>
+				<if test="demanddesc != null  and demanddesc != '' " > #{demanddesc} , </if>
+				<if test="isresearch != null  and isresearch != '' " > #{isresearch} , </if>
+				<if test="tecexpect != null " > #{tecexpect} , </if>
+				<if test="flowid != null  and flowid != '' " > #{flowid} , </if>
+				<if test="instanceid != null  and instanceid != '' " > #{instanceid} , </if>
+				<if test="isdel != null " > #{isdel} , </if>
+				<if test="createtime != null " > #{createtime} , </if>
+				<if test="creators != null  and creators != '' " > #{creators} , </if>
+				<if test="lastmodtime != null " > #{lastmodtime} , </if>
+				<if test="lastmoduser != null  and lastmoduser != '' " > #{lastmoduser} , </if>
+				<if test="operaresid != null  and operaresid != '' " > #{operaresid} , </if>
+				<if test="bringupdate != null " > #{bringupdate} , </if>
+				<if test="isnew != null  and isnew != '' " > #{isnew} , </if>
+				<if test="sworkunit != null  and sworkunit != '' " > #{sworkunit} , </if>
+				<if test="tworkunit != null  and tworkunit != '' " > #{tworkunit} , </if>
+				<if test="tecworkload != null " > #{tecworkload} , </if>
+				<if test="busiworkload != null " > #{busiworkload} , </if>
+				<if test="obudget != null " > #{obudget} , </if>
+				<if test="profit != null  and profit != '' " > #{profit} , </if>
+				<if test="researchuserid != null  and researchuserid != '' " > #{researchuserid} , </if>
+				<if test="sumbudget != null " > #{sumbudget} , </if>
+				<if test="sumworkload != null " > #{sumworkload} , </if>
+				<if test="sumworkunit != null  and sumworkunit != '' " > #{sumworkunit} , </if>
+				<if test="proscale != null  and proscale != '' " > #{proscale} , </if>
+				<if test="managercheckuserid != null  and managercheckuserid != '' " > #{managercheckuserid} , </if>
+				<if test="otherbudgetdesc != null  and otherbudgetdesc != '' " > #{otherbudgetdesc} , </if>
+				<if test="domain != null  and domain != '' " > #{domain} , </if>
+				<if test="satisficing != null  and satisficing != '' " > #{satisficing} , </if>
+				<if test="dremark != null  and dremark != '' " > #{dremark} , </if>
+				<if test="demandsource != null  and demandsource != '' " > #{demandsource} , </if>
+				<if test="wyType != null  and wyType != '' " > #{wyType} , </if>
+				<if test="istecbus != null  and istecbus != '' " > #{istecbus} , </if>
+				<if test="newdemand != null  and newdemand != '' " > #{newdemand} , </if>
+				<if test="istobank != null  and istobank != '' " > #{istobank} , </if>
+				<if test="banktime != null " > #{banktime} , </if>
+				<if test="islarge != null  and islarge != '' " > #{islarge} , </if>
+				<if test="isftywjl != null  and isftywjl != '' " > #{isftywjl} , </if>
+				<if test="isfgn != null  and isfgn != '' " > #{isfgn} , </if>
+				<if test="majorproject != null  and majorproject != '' " > #{majorproject} , </if>
+				<if test="pdl != null  and pdl != '' " > #{pdl} , </if>
+				<if test="updown != null  and updown != '' " > #{updown} , </if>
+				<if test="ywzjl != null  and ywzjl != '' " > #{ywzjl} , </if>
+				<if test="isywkjfzjl != null  and isywkjfzjl != '' " > #{isywkjfzjl} , </if>
+				<if test="fileworkitemids != null  and fileworkitemids != '' " > #{fileworkitemids} , </if>
+				<if test="bmfzr != null  and bmfzr != '' " > #{bmfzr} , </if>
+				<if test="issjwbcgxq != null  and issjwbcgxq != '' " > #{issjwbcgxq} , </if>
+				<if test="qtywbfghz != null  and qtywbfghz != '' " > #{qtywbfghz} , </if>
+				<if test="qtywbfghzname != null  and qtywbfghzname != '' " > #{qtywbfghzname} , </if>
+				<if test="iskjhzsp != null  and iskjhzsp != '' " > #{iskjhzsp} , </if>
+				<if test="issjbhdzyz != null  and issjbhdzyz != '' " > #{issjbhdzyz} , </if>
+				<if test="antimoneySelfdesc != null  and antimoneySelfdesc != '' " > #{antimoneySelfdesc} , </if>
+				<if test="demandname1 != null  and demandname1 != '' " > #{demandname1} , </if>
+				<if test="isjxkh != null  and isjxkh != '' " > #{isjxkh} , </if>
+				
+            </trim>
+    		)
+        </insert>
+
+	<!--通过id查询  k4038 2021-10-08 -->
+	<select id="getdemandByProjectno" parameterType="ppmDemandApply" resultMap="PPMDEMANDAPPLY_ALL">
+		select a.* from ppm_demand_apply   a
+		left join ppm_project_build_soft b on b.demandno=a.demandno
+		where  b.projectno=#{projectno}
+	</select>
+
+	<!--通过id查询  k4038 2021-10-08 -->
+	<select id="getdemandByDemandno" parameterType="ppmDemandApply" resultMap="PPMDEMANDAPPLY_ALL">
+		select a.* from ppm_demand_apply a
+		where  a.demandno=#{demandno}
+	</select>
+</mapper>

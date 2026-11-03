@@ -1,0 +1,83 @@
+{
+  "groups": [
+    {
+      "name": "workflow",
+      "type": "com.tansun.property.WorkflowProperty",
+      "sourceType": "com.tansun.property.WorkflowProperty"
+    }
+  ],
+  "properties": [
+    {
+      "name": "rule.address",
+      "type": "java.lang.String",
+      "defaultValue": "null",
+      "description": "规则引擎接口地址"
+    },{
+      "name": "rule.invoke.type",
+      "type": "java.lang.String",
+      "defaultValue": "http",
+      "description": "调用规则方式 1.http,2.webservice"
+    },{
+      "name": "urged.cron",
+      "type": "java.lang.String",
+      "defaultValue": "1 1 1/60 * * ?",
+      "description": "催办定时器设置"
+    },{
+      "name": "async.executor.enabled",
+      "type": "java.lang.Boolean",
+      "defaultValue": false,
+      "description": "异步执行器开关"
+    },{
+      "name": "async.executor.activate",
+      "type": "java.lang.Boolean",
+      "defaultValue": false,
+      "description": "异步执行器开关"
+    },{
+      "name": "id.generator",
+      "type": "java.lang.String",
+      "defaultValue": "db",
+      "description": "activiti主键生成器，数据库方式：db，uuid全球唯一主键：uuid"
+    },{
+      "name": "idempotent",
+      "type": "java.lang.Boolean",
+      "defaultValue": false,
+      "description": "接口是否支持幂等"
+    },{
+      "name": "editor.service.beanid",
+      "type": "java.lang.String",
+      "defaultValue": "platformEditorService",
+      "description": "组织机构IWorkflowEditorService 实现类beanId"
+    },{
+      "name": "editor.service.address",
+      "type": "java.lang.String",
+      "defaultValue": "null",
+      "description": "组织机构远程接口地址"
+    },{
+      "name": "java.service.address",
+      "type": "java.lang.String",
+      "defaultValue": "null",
+      "description": "服务任务的远程接口地址"
+    },{
+      "name": "workflow.controller.address",
+      "type": "java.lang.String",
+      "defaultValue": "null",
+      "description": "工作流模板接口远程地址"
+    },{
+      "name": "workflow.controller.address",
+      "type": "java.lang.String",
+      "defaultValue": "null",
+      "description": "指定远程方法名，用逗号分隔，不指定将不会调用"
+    },{
+      "name": "user.check",
+      "type": "java.lang.Boolean",
+      "defaultValue": "false",
+      "description": "提交任务是否校验用户存不存在，默认不校验"
+    },{
+      "name": "use.365.tasklist.query",
+      "type": "java.lang.Boolean",
+      "defaultValue": false,
+      "description": "是否使用3.6.5以上版本的待办已办查询逻辑"
+    }
+  ],
+  "hints": []
+}

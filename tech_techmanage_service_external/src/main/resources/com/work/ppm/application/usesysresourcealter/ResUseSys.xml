@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k9597 2021-10-28 -->
+<mapper namespace="com.work.ppm.application.model.usesysresourcealter.ResUseSys">
+    <resultMap type="resUseSys" id="RESUSESYS_ALL" extends="RESUSESYSFLOWLOG">
+        <result property="id" column="ID" />
+        <result property="appsysno" column="APPSYSNO" />
+        <result property="appsysname" column="APPSYSNAME" />
+        <result property="depid" column="DEPID" />
+        <result property="sysuser" column="SYSUSER" />
+        <result property="flowno" column="FLOWNO" />
+        <result property="altercontent" column="ALTERCONTENT" />
+        <result property="processInstID" column="PROCESSINSTID" />
+        <result property="status" column="STATUS" />
+        <result property="statustime" column="STATUSTIME" />
+        <result property="creator" column="CREATOR" />
+        <result property="createtime" column="CREATETIME" />
+        <result property="creatorname" column="CREATORNAME" />
+
+    </resultMap>
+
+    <resultMap type="resUseSysOther" id="RESUSESYSOTHER_ALL" extends="RESUSESYS_ALL">
+        <result property="logicalresourcestats" column="LOGICALRESOURCESTATS" />
+        <result property="physicalresourcestats" column="PHYSICALRESOURCESTATS" />
+        <result property="usertype" column="USERTYPE" />
+        <result property="explain" column="EXPLAIN" />
+        <result property="serialno" column="SERIALNO" />
+        <result property="id" column="ID" />
+        <result property="deloradd" column="DELORADD" />
+        <result property="ciname" column="CINAME" />
+        <result property="localip" column="LOCALIP" />
+        <result property="resusesysid" column="RESUSESYSID" />
+        <result property="ciclassifykey" column="CICLASSIFYKEY" />
+        <result property="osversion" column="OSVERSION" />
+        <result property="isdelete" column="ISDELETE" />
+        <result property="activitydefid" column="ACTIVITYDEFID" />
+        <result property="ciid" column="CIID" />
+        <result property="ciinstcondition" column="CIINSTCONDITION" />
+
+    </resultMap>
+
+    <resultMap id="RESUSESYSFLOWLOG" type="ResProjectFlow">
+        <result column="ACTIVITYNAME" property="activityname" />
+    </resultMap>
+
+    <!-- 新增  2021-10-28 k9597  -->
+    <insert id="saveResUseSysData" parameterType="resUseSys">
+        INSERT INTO RES_USE_SYS (
+        <trim suffixOverrides=",">
+            <if test="id != null  and id != '' " > ID , </if>
+            <if test="appsysno != null  and appsysno != '' " > APPSYSNO , </if>
+            <if test="appsysname != null  and appsysname != '' " > APPSYSNAME , </if>
+            <if test="depid != null  and depid != '' " > DEPID , </if>
+            <if test="sysuser != null  and sysuser != '' " > SYSUSER , </if>
+            <if test="flowno != null  and flowno != '' " > FLOWNO , </if>
+            <if test="altercontent != null  and altercontent != '' " > ALTERCONTENT , </if>
+            <if test="processInstID != null  and processInstID != '' " > PROCESSINSTID , </if>
+            <if test="status != null  and status != '' " > STATUS , </if>
+            <if test="statustime != null " > STATUSTIME , </if>
+            <if test="creator != null  and creator != '' " > CREATOR , </if>
+            <if test="createtime != null " > CREATETIME , </if>
+            <if test="creatorname != null  and creatorname != '' " > CREATORNAME , </if>
+
+        </trim>
+        )
+        VALUES(
+        <trim suffixOverrides=",">
+            <if test="id != null  and id != '' " > #{id} , </if>
+            <if test="appsysno != null  and appsysno != '' " > #{appsysno} , </if>
+            <if test="appsysname != null  and appsysname != '' " > #{appsysname} , </if>
+            <if test="depid != null  and depid != '' " > #{depid} , </if>
+            <if test="sysuser != null  and sysuser != '' " > #{sysuser} , </if>
+            <if test="flowno != null  and flowno != '' " > #{flowno} , </if>
+            <if test="altercontent != null  and altercontent != '' " > #{altercontent} , </if>
+            <if test="processInstID != null  and processInstID != '' " > #{processInstID} , </if>
+            <if test="status != null  and status != '' " > #{status} , </if>
+            <if test="statustime != null " > #{statustime} , </if>
+            <if test="creator != null  and creator != '' " > #{creator} , </if>
+            <if test="createtime != null " > #{createtime} , </if>
+            <if test="creatorname != null  and creatorname != '' " > #{creatorname} , </if>
+
+        </trim>
+        )
+    </insert>
+
+
+    <!-- 新增  2021-10-28 k9597  -->
+    <insert id="saveResUseSysOtherData" parameterType="resUseSysOther">
+        INSERT INTO RES_USE_SYS_OTHER (
+        <trim suffixOverrides=",">
+            <if test="logicalresourcestats != null  and logicalresourcestats != '' " > LOGICALRESOURCESTATS , </if>
+            <if test="physicalresourcestats != null  and physicalresourcestats != '' " > PHYSICALRESOURCESTATS , </if>
+            <if test="usertype != null  and usertype != '' " > USERTYPE , </if>
+            <if test="explain != null  and explain != '' " > EXPLAIN , </if>
+            <if test="serialno != null  and serialno != '' " > SERIALNO , </if>
+            <if test="id != null  and id != '' " > ID , </if>
+            <if test="deloradd != null  and deloradd != '' " > DELORADD , </if>
+            <if test="ciname != null  and ciname != '' " > CINAME , </if>
+            <if test="localip != null  and localip != '' " > LOCALIP , </if>
+            <if test="resusesysid != null  and resusesysid != '' " > RESUSESYSID , </if>
+            <if test="ciclassifykey != null  and ciclassifykey != '' " > CICLASSIFYKEY , </if>
+            <if test="osversion != null  and osversion != '' " > OSVERSION , </if>
+            <if test="isdelete != null  and isdelete != '' " > ISDELETE , </if>
+            <if test="activitydefid != null  and activitydefid != '' " > ACTIVITYDEFID , </if>
+            <if test="ciid != null  and ciid != '' " > CIID , </if>
+            <if test="ciinstcondition != null  and ciinstcondition != '' " > CIINSTCONDITION , </if>
+
+        </trim>
+        )
+        VALUES(
+        <trim suffixOverrides=",">
+            <if test="logicalresourcestats != null  and logicalresourcestats != '' " > #{logicalresourcestats} , </if>
+            <if test="physicalresourcestats != null  and physicalresourcestats != '' " > #{physicalresourcestats} , </if>
+            <if test="usertype != null  and usertype != '' " > #{usertype} , </if>
+            <if test="explain != null  and explain != '' " > #{explain} , </if>
+            <if test="serialno != null  and serialno != '' " > #{serialno} , </if>
+            <if test="id != null  and id != '' " > #{id} , </if>
+            <if test="deloradd != null  and deloradd != '' " > #{deloradd} , </if>
+            <if test="ciname != null  and ciname != '' " > #{ciname} , </if>
+            <if test="localip != null  and localip != '' " > #{localip} , </if>
+            <if test="resusesysid != null  and resusesysid != '' " > #{resusesysid} , </if>
+            <if test="ciclassifykey != null  and ciclassifykey != '' " > #{ciclassifykey} , </if>
+            <if test="osversion != null  and osversion != '' " > #{osversion} , </if>
+            <if test="isdelete != null  and isdelete != '' " > #{isdelete} , </if>
+            <if test="activitydefid != null  and activitydefid != '' " > #{activitydefid} , </if>
+            <if test="ciid != null  and ciid != '' " > #{ciid} , </if>
+            <if test="ciinstcondition != null  and ciinstcondition != '' " > #{ciinstcondition} , </if>
+
+        </trim>
+        )
+    </insert>
+
+    <!-- 查询流程中应用系统资源变更数据 -->
+    <select id="queryResUseSysAlterData" parameterType="resUseSys" resultMap="RESUSESYSOTHER_ALL">
+        SELECT
+            t.APPSYSNO,
+            t.APPSYSNAME,
+            t.DEPID,
+            t.FLOWNO,
+            t.ALTERCONTENT,
+            t.PROCESSINSTID,
+            t.STATUS,
+            t.STATUSTIME,
+            t.CREATOR,
+            t.CREATETIME,
+            t.CREATORNAME,
+            a.LOGICALRESOURCESTATS,
+            a.PHYSICALRESOURCESTATS,
+            a.USERTYPE,
+            a.EXPLAIN,
+            a.SERIALNO,
+            a.ID,
+            a.DELORADD,
+            a.CINAME,
+            a.LOCALIP,
+            a.RESUSESYSID,
+            a.CICLASSIFYKEY,
+            a.OSVERSION,
+            a.activitydefid,
+            a.ciid,
+            a.ciinstcondition
+        FROM RES_USE_SYS t
+        LEFT JOIN RES_USE_SYS_OTHER a ON t.ID =a.RESUSESYSID
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="id !=null and id !=''">t.ID =#{id} AND</if>
+            <if test="processInstID != null and processInstID != ''">t.PROCESSINSTID = #{processInstID} AND</if>
+              a.isdelete ='0'
+        </trim>
+
+    </select>
+
+    <!-- 清除流程中数据 -->
+    <update id="delUseSysAlterData" parameterType="resUseSysOther">
+        UPDATE RES_USE_SYS_OTHER T
+        SET t.ISDELETE ='1',
+            t.ACTIVITYDEFID =#{activitydefid}
+        WHERE t.ID = #{id}
+    </update>
+
+    <update id="updateWorkFlowRelateInfo" parameterType="Map">
+        UPDATE RES_USE_SYS SET STATUS=#{status}
+        WHERE ID=#{id}
+    </update>
+
+    <delete id="delResOther" parameterType="map">
+        delete from RES_USE_SYS_OTHER
+        where RESUSESYSID =#{id}
+    </delete>
+
+    <delete id="delResUseSys" parameterType="map">
+        delete from RES_USE_SYS
+        where ID =#{id}
+    </delete>
+
+    <update id="updateUseSysFlowData" parameterType="resUseSysOther">
+        UPDATE RES_USE_SYS_OTHER SET ISDELETE='0'
+        WHERE ACTIVITYDEFID=#{activitydefid}
+          AND RESUSESYSID =#{resusesysid}
+
+    </update>
+
+    <!-- 查询流程中应用系统资源变更数据 -->
+    <select id="queryResUseSysAlterList" parameterType="map" resultMap="RESUSESYS_ALL">
+        SELECT A.ID,
+               A.FLOWNO,
+               A.APPSYSNAME,
+               A.DEPID,
+               A.PROCESSINSTID,
+               A.CREATETIME,
+               A.STATUS,
+               L.ACTIVITYNAME
+        FROM RES_USE_SYS A
+                 LEFT JOIN PPM_PROJECT_FLOW L
+                           ON A.PROCESSINSTID = L.INSTANCEID
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="flowno !=null and flowno !=''">a.FLOWNO LIKE '%'||#{flowno}||'%' AND</if>
+            <if test="appsysname != null and appsysname != ''">a.APPSYSNAME LIKE '%'||#{appsysname}||'%' AND</if>
+            <if test="status != null and status != ''">a.STATUS = #{status} AND</if>
+            <if test="startTime != null and startTime !=''">
+                <![CDATA[ a.CREATETIME >=  TO_DATE(#{startTime},'YYYY-MM-DD HH24:MI:SS') AND ]]>
+            </if>
+            <if test="endTime != null and endTime!=''">
+                <![CDATA[ a.CREATETIME <  TO_DATE(#{endTime},'YYYY-MM-DD HH24:MI:SS') AND ]]>
+            </if>
+        </trim>
+        ORDER BY a.CREATETIME DESC
+
+    </select>
+
+    <select id="getUseSysCnt"  parameterType="map" resultType="long">
+        SELECT COUNT(1)
+        FROM RES_USE_SYS
+        WHERE ID = #{id}
+    </select>
+
+    <!-- 更新配置信息 -->
+    <update id="upResUseSys" parameterType="resUseSys">
+        UPDATE RES_USE_SYS
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="appsysno != null  and appsysno != '' " >APPSYSNO = #{appsysno} , </if>
+            <if test="appsysname != null  and appsysname != '' " >APPSYSNAME = #{appsysname} , </if>
+            <if test="depid != null  and depid != '' " >DEPID = #{depid} , </if>
+            <if test="sysuser != null  and sysuser != '' " >SYSUSER = #{sysuser} , </if>
+            <if test="status != null  and status != '' " >STATUS = #{status} , </if>
+            <if test="processInstID != null  and processInstID != '' " >PROCESSINSTID = #{processInstID} , </if>
+        </trim>
+        WHERE ID =#{id}
+    </update>
+
+    <!-- 技评维度根据附表获取硬件资源 -->
+    <select id="resConfigPart" parameterType="String" resultType="String">
+        SELECT
+        SYSUSER
+        FROM RES_USE_SYS
+        WHERE PROCESSINSTID =#{processinstid}
+    </select>
+
+</mapper>

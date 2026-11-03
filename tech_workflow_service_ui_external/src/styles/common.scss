@@ -1,0 +1,36 @@
+#app {
+  .g6-tooltip{
+    background-color: #ffffff;
+  }
+  .el-dialog__body {
+    .process-dialog {
+      position: relative;
+      .wf-designer {
+        height: auto !important;
+        .canvasPanel {
+          z-index: 0 !important;
+        }
+      }
+    }
+  }
+}
+
+.ts-pane-box .handle-bar .iconfont-x {
+  margin-left: 15px;
+  font-size: 18px;
+  cursor: pointer
+}
+
+.partic-dialog{
+  ::-webkit-scrollbar { //滚动条的宽度
+    width: 6px;
+    height: 6px;
+  }
+
+  ::-webkit-scrollbar-thumb { //滚动条的设置
+    background-color: #bfbfbf;
+    background-clip: padding-box;
+    border-radius: 10px;
+  }
+}
+

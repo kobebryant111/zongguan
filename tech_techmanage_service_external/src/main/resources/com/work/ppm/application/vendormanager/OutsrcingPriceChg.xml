@@ -1,0 +1,411 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.work.ppm.application.model.vendormanager.OutsrcingPriceChg">
+
+    <resultMap type="outsrcingPriceChg" id="OUTSRCINGPRICECHG_ALL">
+      <result property="id" column="ID"/>
+      <result property="instanceId" column="INSTANCE_ID"/>
+      <result property="flowId" column="FLOW_ID"/>
+      <result property="userCode" column="USER_CODE"/>
+      <result property="userName" column="USER_NAME"/>
+      <result property="deptId" column="DEPT_ID"/>
+      <result property="position" column="POSITION"/>
+      <result property="serviceYear" column="SERVICE_YEAR"/>
+      <result property="price" column="PRICE"/>
+      <result property="postPrice" column="POST_PRICE"/>
+      <result property="vendorCode" column="VENDOR_CODE"/>
+      <result property="vendorName" column="VENDOR_NAME"/>
+      <result property="prjMgrCode" column="PRJ_MGR_CODE"/>
+      <result property="prjMgrName" column="PRJ_MGR_NAME"/>
+      <result property="chgDate" column="CHG_DATE"/>
+      <result property="remarks" column="REMARKS"/>
+      <result property="isDel" column="IS_DEL"/>
+      <result property="createDate" column="CREATE_DATE"/>
+      <result property="createUser" column="CREATE_USER"/>
+      <result property="updateDate" column="UPDATE_DATE"/>
+      <result property="updateUser" column="UPDATE_USER"/>
+      <result property="approvalStatus" column="APPROVAL_STATUS"/>
+    </resultMap>
+
+    <resultMap type="com.work.ppm.application.dto.vendormanager.OutsrcingPriceChgDto" id="OUTSRCINGPRICECHG_ALL_EXT" extends="OUTSRCINGPRICECHG_ALL">
+       <result property="deptName" column="DEPT_NAME"/>
+<!--       <result property="vendorName" column="VENDOR_NAME"/>-->
+    </resultMap>
+
+    <!-- 所有字段 -->
+    <sql id="sql_flied_all">
+        ID
+        ,INSTANCE_ID
+        ,FLOW_ID
+        ,USER_CODE
+        ,USER_NAME
+        ,DEPT_ID
+        ,(select location from comm_department where depid = dept_id and isdisabled = '0' and rownum =1) dept_name
+        ,POSITION
+        ,SERVICE_YEAR
+        ,PRICE
+        ,POST_PRICE
+        ,VENDOR_CODE
+        ,(select outsourcname from PPM_OUTSOURCING_INFO where orgcode = vendor_Code and rownum=1) vendor_name
+        ,PRJ_MGR_CODE
+        ,PRJ_MGR_NAME
+        ,CHG_DATE
+        ,REMARKS
+        ,IS_DEL
+        ,CREATE_USER
+        ,UPDATE_USER
+        ,APPROVAL_STATUS
+    </sql>
+
+    <sql id="sql_flied_basic">
+        ID
+        ,INSTANCE_ID
+        ,FLOW_ID
+        ,USER_CODE
+        ,USER_NAME
+        ,DEPT_ID
+        ,(select location from comm_department where depid = dept_id and isdisabled = '0' and rownum =1) dept_name
+        ,POSITION
+        ,SERVICE_YEAR
+        ,PRICE
+        ,POST_PRICE
+        ,VENDOR_CODE
+        ,(select outsourcname from PPM_OUTSOURCING_INFO where orgcode = vendor_Code and rownum=1) vendor_name
+        ,PRJ_MGR_CODE
+        ,PRJ_MGR_NAME
+        ,CHG_DATE
+        ,REMARKS
+        ,IS_DEL
+        ,CREATE_USER
+        ,UPDATE_USER
+        ,APPROVAL_STATUS
+    </sql>
+
+    <sql id="sql_flied_small">
+          ID
+          ,INSTANCE_ID
+          ,FLOW_ID
+          ,USER_CODE
+          ,USER_NAME
+          ,DEPT_ID
+          ,POSITION
+          ,SERVICE_YEAR
+          ,PRICE
+          ,POST_PRICE
+          ,VENDOR_CODE
+          ,VENDOR_NAME
+          ,PRJ_MGR_CODE
+          ,PRJ_MGR_NAME
+          ,CHG_DATE
+          ,REMARKS
+          ,IS_DEL
+          ,CREATE_USER
+          ,UPDATE_USER
+          ,APPROVAL_STATUS
+    </sql>
+
+    <!--  查询条件  -->
+    <sql id="sql_select_condition">
+       <trim prefix="WHERE" suffixOverrides="AND">
+           <if test="id != null and id != '' "> ID = #{id} AND </if>
+           <if test="instanceId != null and instanceId != '' "> INSTANCE_ID = #{instanceId} AND </if>
+           <if test="flowId != null and flowId != '' "> FLOW_ID = #{flowId} AND </if>
+           <if test="userCode != null and userCode != '' "> USER_CODE = #{userCode} AND </if>
+           <if test="userName != null and userName != '' "> USER_NAME = #{userName} AND </if>
+           <if test="deptId != null and deptId != '' "> DEPT_ID = #{deptId} AND </if>
+           <if test="position != null and position != '' "> POSITION = #{position} AND </if>
+           <if test="serviceYear != null and serviceYear != '' "> SERVICE_YEAR = #{serviceYear} AND </if>
+           <if test="price != null and price != '' "> PRICE = #{price} AND </if>
+           <if test="postPrice != null and postPrice != '' "> POST_PRICE = #{postPrice} AND </if>
+           <if test="vendorCode != null and vendorCode != '' "> VENDOR_CODE = #{vendorCode} AND </if>
+           <if test="vendorName != null and vendorName != '' "> VENDOR_NAME = #{vendorName} AND </if>
+           <if test="prjMgrCode != null and prjMgrCode != '' "> PRJ_MGR_CODE = #{prjMgrCode} AND </if>
+           <if test="prjMgrName != null and prjMgrName != '' "> (PRJ_MGR_NAME = #{prjMgrName} or PRJ_MGR_CODE = #{prjMgrName}) AND </if>
+           <if test='perm == "common"'> PRJ_MGR_CODE = #{permMgr} AND</if>
+           <if test='perm == "managers"'>
+               PRJ_MGR_CODE in (select badge from comm_employee where depid in (
+               select depid from comm_employee where badge = #{permMgr} )) AND
+           </if>
+           <if test="chgDate != null and chgDate != '' "> CHG_DATE &gt;= #{chgDate} AND </if>
+<!--           <if test="chgDateE != null and chgDateE != '' "> CHG_DATE &lt;= #{chgDate} AND </if>-->
+           <if test="remarks != null and remarks != '' "> REMARKS = #{remarks} AND </if>
+           <if test="isDel != null and isDel != '' "> IS_DEL = #{isDel} AND </if>
+           <if test="dispatched != null and dispatched != '' "> DISPATCHED = #{dispatched} AND </if>
+           <if test="createUser != null and createUser != '' "> CREATE_USER = #{createUser} AND </if>
+           <if test="updateUser != null and updateUser != '' "> UPDATE_USER = #{updateUser} AND </if>
+           <if test="approvalStatus != null and approvalStatus != '' "> APPROVAL_STATUS = #{approvalStatus} AND </if>
+       </trim>
+    </sql>
+
+    <!-- 查询条件 自定义 -->
+    <sql id="sql_select_condition_cus">
+       <trim prefix="WHERE" suffixOverrides="AND">
+           <if test="id != null and id != '' "> ID = #{id} AND </if>
+           <if test="instanceId != null and instanceId != '' "> INSTANCE_ID = #{instanceId} AND </if>
+           <if test="flowId != null and flowId != '' "> FLOW_ID = #{flowId} AND </if>
+           <if test="userCode != null and userCode != '' "> USER_CODE = #{userCode} AND </if>
+           <if test="userName != null and userName != '' "> USER_NAME = #{userName} AND </if>
+           <if test="deptId != null and deptId != '' "> DEPT_ID = #{deptId} AND </if>
+           <if test="position != null and position != '' "> POSITION = #{position} AND </if>
+           <if test="serviceYear != null and serviceYear != '' "> SERVICE_YEAR = #{serviceYear} AND </if>
+           <if test="price != null and price != '' "> PRICE = #{price} AND </if>
+           <if test="postPrice != null and postPrice != '' "> POST_PRICE = #{postPrice} AND </if>
+           <if test="vendorCode != null and vendorCode != '' "> VENDOR_CODE = #{vendorCode} AND </if>
+           <if test="vendorName != null and vendorName != '' "> VENDOR_NAME = #{vendorName} AND </if>
+           <if test="prjMgrCode != null and prjMgrCode != '' "> PRJ_MGR_CODE = #{prjMgrCode} AND </if>
+           <if test="prjMgrName != null and prjMgrName != '' "> PRJ_MGR_NAME = #{prjMgrName} AND </if>
+           <if test="chgDate != null and chgDate != '' "> CHG_DATE &gt;= #{chgDate} AND </if>
+<!--           <if test="chgDateE != null and chgDateE != '' "> CHG_DATE &lt;= #{chgDate} AND </if>-->
+           <if test="remarks != null and remarks != '' "> REMARKS = #{remarks} AND </if>
+           <if test="isDel != null and isDel != '' "> IS_DEL = #{isDel} AND </if>
+           <if test="dispatched != null and dispatched != '' "> DISPATCHED = #{dispatched} AND </if>
+           <if test="createUser != null and createUser != '' "> CREATE_USER = #{createUser} AND </if>
+           <if test="updateUser != null and updateUser != '' "> UPDATE_USER = #{updateUser} AND </if>
+           <if test="approvalStatus != null and approvalStatus != '' "> APPROVAL_STATUS = #{approvalStatus} AND </if>
+       </trim>
+    </sql>
+
+    <!-- 更新字段 -->
+    <sql id="update_pojo_sql">
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="instanceId != null and instanceId != '' " > INSTANCE_ID = #{instanceId},</if>
+            <if test="flowId != null and flowId != '' " > FLOW_ID = #{flowId},</if>
+            <if test="userCode != null and userCode != '' " > USER_CODE = #{userCode},</if>
+            <if test="userName != null and userName != '' " > USER_NAME = #{userName},</if>
+            <if test="deptId != null and deptId != '' " > DEPT_ID = #{deptId},</if>
+            <if test="position != null and position != '' " > POSITION = #{position},</if>
+            <if test="serviceYear != null and serviceYear != '' " > SERVICE_YEAR = #{serviceYear},</if>
+            <if test="price != null and price != '' " > PRICE = #{price},</if>
+            <if test="postPrice != null and postPrice != '' " > POST_PRICE = #{postPrice},</if>
+            <if test="vendorCode != null and vendorCode != '' " > VENDOR_CODE = #{vendorCode},</if>
+            <if test="vendorName != null and vendorName != '' " > VENDOR_NAME = #{vendorName},</if>
+            <if test="prjMgrCode != null and prjMgrCode != '' " > PRJ_MGR_CODE = #{prjMgrCode},</if>
+            <if test="prjMgrName != null and prjMgrName != '' " > PRJ_MGR_NAME = #{prjMgrName},</if>
+            <if test="chgDate != null and chgDate != '' " > CHG_DATE = #{chgDate},</if>
+            <if test="remarks != null and remarks != '' " > REMARKS = #{remarks},</if>
+            <if test="dispatched != null and dispatched != '' " > DISPATCHED = #{dispatched},</if>
+            <if test="isDel != null and isDel != '' " > IS_DEL = #{isDel},</if>
+            <if test="createUser != null and createUser != '' " > CREATE_USER = #{createUser},</if>
+            <if test="updateUser != null and updateUser != '' " > UPDATE_USER = #{updateUser},</if>
+            <if test="approvalStatus != null and approvalStatus != '' " > APPROVAL_STATUS = #{approvalStatus},</if>
+        </trim>
+    </sql>
+
+    <!--  查询  -->
+    <!-- pager query 2022-12-18 ywwb903  -->
+    <select id="queryPagerList" parameterType="map" resultMap="OUTSRCINGPRICECHG_ALL_EXT">
+        SELECT
+            <include refid="sql_flied_basic"/>
+            FROM PPM_OUTSRCING_PRICE_CHG
+            <include refid="sql_select_condition"/>
+            ORDER BY chg_date desc,id desc
+    </select>
+
+    <!-- list query 2022-12-18 ywwb903  -->
+    <select id="getList" parameterType="outsrcingPriceChg" resultMap="OUTSRCINGPRICECHG_ALL">
+        SELECT
+        <include refid="sql_flied_basic"/>
+        FROM PPM_OUTSRCING_PRICE_CHG
+        <include refid="sql_select_condition"/>
+    </select>
+
+    <!-- select one by instanceId  2022-12-18 ywwb903  -->
+    <select id="selectOneByInstanceId" parameterType="map" resultMap="OUTSRCINGPRICECHG_ALL">
+        SELECT
+        <include refid="sql_flied_all" />
+        FROM PPM_OUTSRCING_PRICE_CHG
+        WHERE instance_id = #{instanceId}
+          AND is_del = '0'
+          AND rownum = 1
+    </select>
+
+    <!-- select List by instanceId  2022-12-18 ywwb903  -->
+    <select id="selectListByInstanceId" parameterType="map" resultMap="OUTSRCINGPRICECHG_ALL_EXT">
+        SELECT
+        <include refid="sql_flied_all" />
+        FROM PPM_OUTSRCING_PRICE_CHG
+        WHERE instance_id = #{instanceId}
+          AND is_del = '0'
+    </select>
+
+    <!-- select one by id  2022-12-18 ywwb903  -->
+    <select id="selectOneById" resultMap="OUTSRCINGPRICECHG_ALL_EXT">
+        SELECT
+        <include refid="sql_flied_all" />
+        FROM PPM_OUTSRCING_PRICE_CHG WHERE id = #{id}
+    </select>
+
+    <!-- select many By ids  2022-12-18 ywwb903 -->
+    <select id="selectListByIds" resultMap="OUTSRCINGPRICECHG_ALL">
+        SELECT
+        <include refid="sql_flied_small" />
+        FROM PPM_OUTSRCING_PRICE_CHG WHERE ID IN
+        <foreach collection="list" item="ids" open="(" separator=", " close=")">
+            #{ids}
+        </foreach>
+    </select>
+
+   <!-- select by map  2022-12-18 ywwb903  -->
+    <select id="selectByMapBasic" parameterType="map" resultMap="OUTSRCINGPRICECHG_ALL">
+        SELECT
+        <include refid="sql_flied_basic" />
+        FROM PPM_OUTSRCING_PRICE_CHG
+        <include refid="sql_select_condition_cus"/>
+    </select>
+
+    <select id="selectByMapSmall" parameterType="map" resultMap="OUTSRCINGPRICECHG_ALL">
+        SELECT
+        <include refid="sql_flied_small" />
+        FROM PPM_OUTSRCING_PRICE_CHG
+        <include refid="sql_select_condition_cus"/>
+    </select>
+
+    <select id="selectByMap" parameterType="map" resultMap="OUTSRCINGPRICECHG_ALL">
+        SELECT
+        <include refid="sql_flied_all" />
+        FROM PPM_OUTSRCING_PRICE_CHG
+        <include refid="sql_select_condition"/>
+    </select>
+
+   <!-- selectCount  2022-12-18 ywwb903  -->
+    <select id="selectCount" parameterType="map" resultType="Long">
+        SELECT COUNT(1)
+        FROM PPM_OUTSRCING_PRICE_CHG
+        <include refid="sql_select_condition_cus"/>
+    </select>
+
+
+    <!--  新增  -->
+    <!-- insert 2022-12-18 ywwb903  -->
+    <insert id="addPojo" parameterType="outsrcingPriceChg">
+    	INSERT INTO PPM_OUTSRCING_PRICE_CHG (
+    	<trim suffixOverrides=",">
+    	    <if test="id != null and id != '' ">  ID ,</if>
+    	    <if test="instanceId != null and instanceId != '' ">  INSTANCE_ID ,</if>
+    	    <if test="flowId != null and flowId != '' ">  FLOW_ID ,</if>
+    	    <if test="userCode != null and userCode != '' ">  USER_CODE ,</if>
+    	    <if test="userName != null and userName != '' ">  USER_NAME ,</if>
+    	    <if test="deptId != null and deptId != '' ">  DEPT_ID ,</if>
+    	    <if test="position != null and position != '' ">  POSITION ,</if>
+    	    <if test="serviceYear != null and serviceYear != '' ">  SERVICE_YEAR ,</if>
+    	    <if test="price != null and price != '' ">  PRICE ,</if>
+    	    <if test="postPrice != null and postPrice != '' ">  POST_PRICE ,</if>
+    	    <if test="vendorCode != null and vendorCode != '' ">  VENDOR_CODE ,</if>
+    	    <if test="vendorName != null and vendorName != '' ">  VENDOR_NAME ,</if>
+    	    <if test="prjMgrCode != null and prjMgrCode != '' ">  PRJ_MGR_CODE ,</if>
+    	    <if test="prjMgrName != null and prjMgrName != '' ">  PRJ_MGR_NAME ,</if>
+    	    <if test="chgDate != null and chgDate != '' ">  CHG_DATE ,</if>
+    	    <if test="remarks != null and remarks != '' ">  REMARKS ,</if>
+    	    <if test="isDel != null and isDel != '' ">  IS_DEL ,</if>
+            <if test="dispatched != null and dispatched != '' ">  DISPATCHED ,</if>
+    	    <if test="createUser != null and createUser != '' ">  CREATE_USER ,</if>
+    	    <if test="updateUser != null and updateUser != '' ">  UPDATE_USER ,</if>
+    	</trim>
+    	)
+    	VALUES(
+    	<trim suffixOverrides=",">
+            <if test="id != null and id != '' "> #{id} ,</if>
+            <if test="instanceId != null and instanceId != '' "> #{instanceId} ,</if>
+            <if test="flowId != null and flowId != '' "> #{flowId} ,</if>
+            <if test="userCode != null and userCode != '' "> #{userCode} ,</if>
+            <if test="userName != null and userName != '' "> #{userName} ,</if>
+            <if test="deptId != null and deptId != '' "> #{deptId} ,</if>
+            <if test="position != null and position != '' "> #{position} ,</if>
+            <if test="serviceYear != null and serviceYear != '' "> #{serviceYear} ,</if>
+            <if test="price != null and price != '' "> #{price} ,</if>
+            <if test="postPrice != null and postPrice != '' "> #{postPrice} ,</if>
+            <if test="vendorCode != null and vendorCode != '' "> #{vendorCode} ,</if>
+            <if test="vendorName != null and vendorName != '' "> #{vendorName} ,</if>
+            <if test="prjMgrCode != null and prjMgrCode != '' "> #{prjMgrCode} ,</if>
+            <if test="prjMgrName != null and prjMgrName != '' "> #{prjMgrName} ,</if>
+            <if test="chgDate != null and chgDate != '' "> #{chgDate} ,</if>
+            <if test="remarks != null and remarks != '' "> #{remarks} ,</if>
+            <if test="isDel != null and isDel != '' "> #{isDel} ,</if>
+            <if test="dispatched != null and dispatched != '' "> #{dispatched} ,</if>
+            <if test="createUser != null and createUser != '' "> #{createUser} ,</if>
+            <if test="updateUser != null and updateUser != '' "> #{updateUser} ,</if>
+    	</trim>
+    	)
+    </insert>
+
+    <!-- batch insert 2022-12-18 ywwb903  -->
+    <insert id="batchAdd" parameterType="list">
+        INSERT ALL
+        <foreach collection="list" item="item" index="index">
+            INTO PPM_OUTSRCING_PRICE_CHG (
+            <trim suffixOverrides=",">
+                <if test="item.id != null" > ID ,</if>
+                <if test="item.instanceId != null and item.instanceId != '' ">  INSTANCE_ID ,</if>
+                <if test="item.flowId != null and item.flowId != '' ">  FLOW_ID ,</if>
+                <if test="item.userCode != null and item.userCode != '' ">  USER_CODE ,</if>
+                <if test="item.userName != null and item.userName != '' ">  USER_NAME ,</if>
+                <if test="item.deptId != null and item.deptId != '' ">  DEPT_ID ,</if>
+                <if test="item.position != null and item.position != '' ">  POSITION ,</if>
+                <if test="item.serviceYear != null and item.serviceYear != '' ">  SERVICE_YEAR ,</if>
+                <if test="item.price != null and item.price != '' ">  PRICE ,</if>
+                <if test="item.postPrice != null and item.postPrice != '' ">  POST_PRICE ,</if>
+                <if test="item.vendorCode != null and item.vendorCode != '' ">  VENDOR_CODE ,</if>
+                <if test="item.vendorName != null and item.vendorName != '' ">  VENDOR_NAME ,</if>
+                <if test="item.prjMgrCode != null and item.prjMgrCode != '' ">  PRJ_MGR_CODE ,</if>
+                <if test="item.prjMgrName != null and item.prjMgrName != '' ">  PRJ_MGR_NAME ,</if>
+                <if test="item.chgDate != null and item.chgDate != '' ">  CHG_DATE ,</if>
+                <if test="item.remarks != null and item.remarks != '' ">  REMARKS ,</if>
+                <if test="item.isDel != null and item.isDel != '' ">  IS_DEL ,</if>
+                <if test="item.createDate != null and item.createDate != '' ">  CREATE_DATE ,</if>
+                <if test="item.createUser != null and item.createUser != '' ">  CREATE_USER ,</if>
+                <if test="item.updateDate != null and item.updateDate != '' ">  UPDATE_DATE ,</if>
+                <if test="item.updateUser != null and item.updateUser != '' ">  UPDATE_USER ,</if>
+            </trim>
+            )
+            VALUES(
+            <trim suffixOverrides=",">
+                <if test="item.id != null" > #{item.id} ,</if>
+                <if test="item.instanceId != null and item.instanceId != '' " > #{item.instanceId} ,</if>
+                <if test="item.flowId != null and item.flowId != '' " > #{item.flowId} ,</if>
+                <if test="item.userCode != null and item.userCode != '' " > #{item.userCode} ,</if>
+                <if test="item.userName != null and item.userName != '' " > #{item.userName} ,</if>
+                <if test="item.deptId != null and item.deptId != '' " > #{item.deptId} ,</if>
+                <if test="item.position != null and item.position != '' " > #{item.position} ,</if>
+                <if test="item.serviceYear != null and item.serviceYear != '' " > #{item.serviceYear} ,</if>
+                <if test="item.price != null and item.price != '' " > #{item.price} ,</if>
+                <if test="item.postPrice != null and item.postPrice != '' " > #{item.postPrice} ,</if>
+                <if test="item.vendorCode != null and item.vendorCode != '' " > #{item.vendorCode} ,</if>
+                <if test="item.vendorName != null and item.vendorName != '' " > #{item.vendorName} ,</if>
+                <if test="item.prjMgrCode != null and item.prjMgrCode != '' " > #{item.prjMgrCode} ,</if>
+                <if test="item.prjMgrName != null and item.prjMgrName != '' " > #{item.prjMgrName} ,</if>
+                <if test="item.chgDate != null and item.chgDate != '' " > #{item.chgDate} ,</if>
+                <if test="item.remarks != null and item.remarks != '' " > #{item.remarks} ,</if>
+                <if test="item.isDel != null and item.isDel != '' " > #{item.isDel} ,</if>
+                <if test="item.createDate != null and item.createDate != '' " > #{item.createDate} ,</if>
+                <if test="item.createUser != null and item.createUser != '' " > #{item.createUser} ,</if>
+                <if test="item.updateDate != null and item.updateDate != '' " > #{item.updateDate} ,</if>
+                <if test="item.updateUser != null and item.updateUser != '' " > #{item.updateUser} ,</if>
+            </trim>
+            )
+        </foreach>
+        select 1 from dual
+    </insert>
+
+    <!--  更新  -->
+	<!-- update by id 2022-12-18 ywwb903  -->
+	<update id="updatePojo" parameterType="outsrcingPriceChg">
+		UPDATE
+		PPM_OUTSRCING_PRICE_CHG
+		<include refid="update_pojo_sql" />
+		WHERE is_del = '0' and id = #{id}
+	</update>
+
+    <!-- update by instanceId 2022-11-06 ywwb903  -->
+    <update id="updateByInstanceId" parameterType="outsrcingPriceChg">
+        UPDATE
+		PPM_OUTSRCING_PRICE_CHG
+        <include refid="update_pojo_sql" />
+        WHERE is_del = '0' and instance_id = #{instanceId}
+    </update>
+
+	<!--  删除  -->
+	<!-- delete by pojo 2022-12-18 ywwb903  -->
+    <delete id="deletePojo" parameterType="outsrcingPriceChg">
+        DELETE FROM PPM_OUTSRCING_PRICE_CHG WHERE ID = #{id}
+    </delete>
+</mapper>

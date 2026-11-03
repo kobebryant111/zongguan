@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+  
+<mapper namespace="com.tansun.wf.activiti.mapper.WfTimerConfigMapper">
+
+  <insert id="insertTimerConfig" parameterType="com.tansun.wf.activiti.model.TimerConfigEntity">
+    INSERT INTO ${prefix}WF_TIMER_CONFIG (id, proc_def_id, task_def_key, proc_inst_id, execution_id, cron_expression, time_type, begin_time, end_time, cfrequency, remind_num, send_type, create_time,note,status,template, tenant_id)
+    VALUES (
+      #{id,jdbcType=VARCHAR},
+      #{procDefId,jdbcType=VARCHAR},
+      #{taskDefKey,jdbcType=VARCHAR},
+      #{procInstId,jdbcType=VARCHAR},
+      #{executionId,jdbcType=VARCHAR},
+      #{cronExpression,jdbcType=VARCHAR},
+      #{timeType,jdbcType=VARCHAR},
+      #{beginTime,jdbcType=VARCHAR},
+      #{endTime,jdbcType=VARCHAR},
+      #{cfrequency,jdbcType=VARCHAR},
+      #{remindNum,jdbcType=VARCHAR},
+      #{sendType,jdbcType=VARCHAR},
+      #{createTime,jdbcType=VARCHAR},
+      #{note,jdbcType=VARCHAR},
+      #{status,jdbcType=VARCHAR},
+      #{template,jdbcType=VARCHAR},
+      #{tenantId,jdbcType=VARCHAR}
+    )
+  </insert>
+  
+  <delete id="deleteTimerConfig" parameterType="com.tansun.wf.activiti.model.TimerConfigEntity">
+    delete from ${prefix}WF_TIMER_CONFIG
+    where ID = #{id}
+  </delete>
+  <delete id="deleteTimerConfigByCondition" parameterType="com.tansun.wf.activiti.model.TimerConfigEntity">
+    delete from ${prefix}WF_TIMER_CONFIG
+    where proc_def_id = #{procDefId}
+          AND proc_inst_id = #{procInstId}
+          AND task_def_key = #{taskDefKey}
+          AND execution_id = #{executionId}
+      <if test="tenantId != null  and tenantId!=''">
+        AND tc.tenant_id = #{tenantId}
+      </if>
+  </delete>
+
+ <select id="selectWfTimerConfigCount" parameterType="com.tansun.wf.activiti.query.WfTimerConfigQuery" resultType="long">
+    select count(distinct tc.id)
+    <include refid="timerConfigFromSql"/>
+  </select>
+
+  <select id="selectWfTimerConfig" parameterType="com.tansun.wf.activiti.query.WfTimerConfigQuery" resultType="hashMap">
+    ${limitBefore}
+    select distinct
+      tc.id,
+      tc.proc_def_id procDefId,
+      tc.task_def_key taskDefKey,
+      tc.proc_inst_id procInstId,
+      tc.execution_id executionId,
+      tc.cron_expression cronExpression,
+      tc.time_type timeType,
+      tc.begin_time beginTime,
+      tc.end_time endTime,
+      tc.cfrequency cfrequency,
+      tc.remind_num remindNum,
+      tc.send_type sendType,
+      tc.create_time createTime,
+      tc.note note,
+      tc.status status,
+      tc.template,
+      tc.tenant_id tenantId
+    <if test="fieldMapping!=null and fieldMapping.size() > 0">
+      ,
+      <foreach collection="fieldMapping" item="field"  open="" separator="," close="">
+        ${field}
+      </foreach>
+    </if>
+
+      <if test="databaseType !='db2'">
+          ${limitBetween}
+      </if>
+      <if test="databaseType =='db2'">
+          , row_number() over (ORDER BY RES.ID ) rnk FROM ( select distinct RES.*
+      </if>
+    <include refid="timerConfigFromSql"/>
+    ${limitAfter}
+  </select>
+
+  <sql id="timerConfigFromSql">
+    FROM ${prefix}wf_timer_config tc
+    <where>
+      <if test="processInstanceId != null  and processInstanceId!=''">
+        AND tc.proc_inst_id = #{processInstanceId}
+      </if>
+      <if test="processDefinitionId != null  and processDefinitionId!=''">
+        AND tc.proc_def_id = #{processDefinitionId}
+      </if>
+      <if test="taskDefinitionKey != null  and taskDefinitionKey!=''">
+        AND tc.task_def_key = #{taskDefinitionKey}
+      </if>
+      <if test="tenantId != null  and tenantId!=''">
+        AND tc.tenant_id = #{tenantId}
+      </if>
+      <if test="tenantId != null  and tenantId!=''">
+        AND tc.status = #{status}
+      </if>
+      
+    </where>
+     ORDER BY tc.proc_inst_id DESC 
+  </sql>
+  <!-- 该方法为定时器使用，不允许再关联其它表 --> 
+  <select id="findTimerConfig" resultType="hashMap">
+     select
+      tc.id,
+      tc.proc_def_id procDefId,
+      tc.task_def_key taskDefKey,
+      tc.proc_inst_id procInstId,
+      tc.execution_id executionId,
+      tc.cron_expression cronExpression,
+      tc.time_type timeType,
+      tc.begin_time beginTime,
+      tc.end_time endTime,
+      tc.cfrequency,
+      tc.remind_num remindNum,
+      tc.send_type sendType,
+      tc.create_time createTime,
+      tc.note,
+      tc.status,
+      tc.template,
+      tc.tenant_id tenantId
+      FROM wf_timer_config tc
+      where tc.status = #{status}
+  </select>
+   
+   <update id="updateTimerConfigNumber" parameterType="com.tansun.wf.activiti.model.TimerConfigEntity">
+    update ${prefix}WF_TIMER_CONFIG 
+    set remind_num=#{remindNum}
+    where ID = #{id}
+  </update>  
+  
+</mapper>

@@ -1,0 +1,965 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k6991 2020-01-15 -->
+<mapper namespace="com.work.ppm.application.model.systemmanager.CommEmployee">
+    <resultMap type="commEmployee" id="COMMEMPLOYEE_ALL">
+        <result property="gender" column="GENDER"/>
+        <result property="updateflg" column="UPDATEFLG"/>
+        <result property="lastupdatedate" column="LASTUPDATEDATE"/>
+        <result property="reportto" column="REPORTTO"/>
+        <result property="isdisabled" column="ISDISABLED"/>
+        <result property="shortphone" column="SHORTPHONE"/>
+        <result property="empname" column="EMPNAME"/>
+        <result property="empauth" column="EMPAUTH"/>
+        <result property="birthday" column="BIRTHDAY"/>
+        <result property="authproperty" column="AUTHPROPERTY"/>
+        <result property="remark" column="REMARK"/>
+        <result property="fullname" column="FULLNAME"/>
+        <result property="jobid" column="JOBID"/>
+        <result property="eid" column="EID"/>
+        <result property="badge" column="BADGE"/>
+        <result property="compid" column="COMPID"/>
+        <result property="empstatus" column="EMPSTATUS"/>
+        <result property="officephone" column="OFFICEPHONE"/>
+        <result property="eidhr" column="EIDHR"/>
+        <result property="boardline" column="BOARDLINE"/>
+        <result property="spellname" column="SPELLNAME"/>
+        <result property="depid" column="DEPID"/>
+        <result property="headship" column="HEADSHIP"/>
+        <result property="mobiletelphone" column="MOBILETELPHONE"/>
+        <result property="certificateType" column="CERTIFICATE_TYPE"/>
+        <result property="certificateNumber" column="CERTIFICATE_NUMBER"/>
+        <result property="adminid" column="ADMINID"/>
+        <result property="depcode" column="DEPCODE"/>
+        <result property="location" column="LOCATION"/>
+    </resultMap>
+
+    <!-- 所有字段名称 -->
+    <sql id="sql_flied_all">
+        GENDER,
+        UPDATEFLG,
+        LASTUPDATEDATE,
+        REPORTTO,
+        ISDISABLED,
+        SHORTPHONE,
+        EMPNAME,
+        EMPAUTH,
+        BIRTHDAY,
+        CERTIFICATE_TYPE,
+        CERTIFICATE_NUMBER,
+        AUTHPROPERTY,
+        REMARK,
+        FULLNAME,
+        JOBID,
+        EID,
+        BADGE,
+        COMPID,
+        EMPSTATUS,
+        OFFICEPHONE,
+        EIDHR,
+        BOARDLINE,
+        SPELLNAME,
+        DEPID,
+        HEADSHIP,
+        MOBILETELPHONE
+    </sql>
+    <resultMap id="QUERYPAGERLIST_MAP" type="commEmployeeInfo" extends="COMMEMPLOYEE_ALL">
+        <result column="COMP_NAME" property="compName"/>
+        <result column="CHARGE_NAME" property="chargeName"/>
+        <result column="COMORG_NAME" property="comorgName"/>
+    </resultMap>
+    <!-- 查询分页  2020-01-15 k6991  -->
+    <select id="queryPagerList" parameterType="map" resultMap="QUERYPAGERLIST_MAP">
+        SELECT
+        E.*,
+        O.LOCATION COMP_NAME,D.LOCATION CHARGE_NAME,J.LOCATION COMORG_NAME,D.ADMINID
+        FROM COMM_EMPLOYEE E
+        LEFT JOIN COMM_ORGANIZATION O ON(E.COMPID=O.COMPID)
+        LEFT JOIN COMM_DEPARTMENT D ON(E.DEPID=D.DEPID)
+        LEFT JOIN COMM_JOB J ON(E.JOBID=J.JOBID)
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="gender != null  and gender != '' ">GENDER = #{gender} AND</if>
+            <if test="updateflg != null  and updateflg != '' ">UPDATEFLG = #{updateflg} AND</if>
+            <if test="lastupdatedate != null ">LASTUPDATEDATE = #{lastupdatedate} AND</if>
+            <if test="reportto != null ">REPORTTO = #{reportto} AND</if>
+            <if test="isdisabled != null  and isdisabled != '' ">ISDISABLED = #{isdisabled} AND</if>
+            <if test="shortphone != null  and shortphone != '' ">SHORTPHONE = #{shortphone} AND</if>
+            <if test="empname != null  and empname != '' ">INSTR(EMPNAME,#{empname} ) > 0 AND</if>
+            <if test="empauth != null  and empauth != '' ">EMPAUTH = #{empauth} AND</if>
+            <if test="birthday != null ">BIRTHDAY = #{birthday} AND</if>
+            <if test="authproperty != null  and authproperty != '' ">AUTHPROPERTY = #{authproperty} AND</if>
+            <if test="certificateType != null  and certificateType != '' ">CERTIFICATE_TYPE = #{certificateType} AND
+            </if>
+            <if test="certificateNumber != null  and certificateNumber != '' ">CERTIFICATE_NUMBER = #{certificateNumber}
+                AND
+            </if>
+            <if test="remark != null  and remark != '' ">REMARK = #{remark} AND</if>
+            <if test="fullname != null  and fullname != '' ">FULLNAME = #{fullname} AND</if>
+            <if test="jobid != null ">E.JOBID = #{jobid} AND</if>
+            <if test="eid != null ">EID = #{eid} AND</if>
+            <if test="badge != null  and badge != '' ">E.BADGE = #{badge} AND</if>
+            <if test="compid != null ">E.COMPID = #{compid} AND</if>
+            <if test="empstatus != null  and empstatus != '' ">EMPSTATUS = #{empstatus} AND</if>
+            <if test="officephone != null  and officephone != '' ">OFFICEPHONE = #{officephone} AND</if>
+            <if test="eidhr != null ">EIDHR = #{eidhr} AND</if>
+            <if test="boardline != null  and boardline != '' ">E.BOARDLINE = #{boardline} AND</if>
+            <if test="spellname != null  and spellname != '' ">SPELLNAME = #{spellname} AND</if>
+            <if test="depid != null ">E.DEPID = #{depid} AND</if>
+            <if test="headship != null  and headship != '' ">HEADSHIP = #{headship} AND</if>
+            <if test="mobiletelphone != null  and mobiletelphone != '' ">MOBILETELPHONE = #{mobiletelphone} AND</if>
+            <if test="adminid != null and adminid != '' ">D.ADMINID = #{adminid} AND</if>
+            <if test="chargeName != null and chargeName != '' ">D.LOCATION LIKE '%'||#{chargeName}||'%' AND</if>
+        </trim>
+    </select>
+
+    <select id="getEmployeeAndDepInfo" parameterType="map" resultMap="COMMEMPLOYEE_ALL">
+        SELECT
+        E.* , D.DEPCODE , D.LOCATION
+        FROM COMM_EMPLOYEE E
+        LEFT JOIN COMM_DEPARTMENT D ON ( E.DEPID = D.DEPID )
+    </select>
+
+    <select id="queryEmployeePagerList" parameterType="map" resultMap="QUERYPAGERLIST_MAP">
+        SELECT E.* FROM
+        COMM_EMPLOYEE E
+        LEFT JOIN COMM_ORGANIZATION O ON
+        (E.COMPID = O.COMPID)
+        where e.EMPSTATUS in ('Norm', 'Prac')
+        <if test="empname != null  and empname != '' ">AND E.EMPNAME LIKE '%'||#{empname}||'%'</if>
+        <if test="mobiletelphone != null  and mobiletelphone != '' ">AND E.MOBILETELPHONE LIKE
+            '%'||#{mobiletelphone}||'%'
+        </if>
+        <if test="badge != null  and badge != '' ">AND E.BADGE LIKE '%'||#{badge}||'%'</if>
+        <if test="depcode != null  and depcode != '' ">
+            AND
+            E.DEPID IN (
+            SELECT
+            D.DEPID
+            FROM
+            COMM_DEPARTMENT D
+            START WITH
+            D.DEPCODE = #{depcode}
+            CONNECT BY PRIOR D.DEPID = D.ADMINID)
+        </if>
+
+    </select>
+
+    <!-- 查询分页  2022-01-15 k6991  -->
+    <select id="queryPagerList2" parameterType="map" resultMap="QUERYPAGERLIST_MAP">
+        SELECT E.*, O.LOCATION COMP_NAME,D.LOCATION CHARGE_NAME,J.LOCATION COMORG_NAME
+        FROM COMM_EMPLOYEE E
+        LEFT JOIN COMM_ORGANIZATION O ON(E.COMPID=O.COMPID)
+        LEFT JOIN COMM_DEPARTMENT D ON(E.DEPID=D.DEPID)
+        LEFT JOIN COMM_JOB J ON(E.JOBID=J.JOBID) WHERE EMPSTATUS != 'Loff'
+        <if test="gender != null  and gender != '' ">AND GENDER = #{gender}</if>
+        <if test="isdisabled != null  and isdisabled != '' ">AND ISDISABLED = #{isdisabled}</if>
+        <if test="empname != null  and empname != '' ">AND INSTR(EMPNAME,#{empname} ) > 0</if>
+        <if test="certificateType != null  and certificateType != '' ">AND CERTIFICATE_TYPE = #{certificateType}</if>
+        <if test="certificateNumber != null  and certificateNumber != '' ">AND CERTIFICATE_NUMBER =
+            #{certificateNumber}
+        </if>
+        <if test="badge != null  and badge != '' ">AND E.BADGE = #{badge}</if>
+        <if test="compid != null ">AND E.COMPID = #{compid}</if>
+        <if test="officephone != null  and officephone != '' ">AND OFFICEPHONE = #{officephone}</if>
+        <if test="depid != null ">AND E.DEPID = #{depid}</if>
+        <if test="mobiletelphone != null  and mobiletelphone != '' ">AND MOBILETELPHONE = #{mobiletelphone}</if>
+    </select>
+
+    <!-- 新增  2020-01-15 k6991  -->
+
+    <!-- 新增  2020-01-15 k6991  -->
+    <insert id="addPojo" parameterType="commEmployee">
+        INSERT INTO COMM_EMPLOYEE (
+        <trim suffixOverrides=",">
+            <if test="eid != null ">EID ,</if>
+            <if test="badge != null  and badge != '' ">BADGE ,</if>
+            <if test="empname != null  and empname != '' ">EMPNAME ,</if>
+            <if test="compid != null ">COMPID ,</if>
+            <if test="depid != null ">DEPID ,</if>
+            <if test="jobid != null ">JOBID ,</if>
+            <if test="headship != null  and headship != '' ">HEADSHIP ,</if>
+            <if test="empstatus != null  and empstatus != '' ">EMPSTATUS ,</if>
+            <if test="empauth != null  and empauth != '' ">EMPAUTH ,</if>
+            <if test="authproperty != null  and authproperty != '' ">AUTHPROPERTY ,</if>
+            <if test="gender != null  and gender != '' ">GENDER ,</if>
+            <if test="birthday != null ">BIRTHDAY ,</if>
+            <if test="certificateType != null  and certificateType != '' ">CERTIFICATE_TYPE,</if>
+            <if test="certificateNumber != null  and certificateNumber != '' ">CERTIFICATE_NUMBER,</if>
+            <if test="officephone != null  and officephone != '' ">OFFICEPHONE ,</if>
+            <if test="mobiletelphone != null  and mobiletelphone != '' ">MOBILETELPHONE ,</if>
+            <if test="remark != null  and remark != '' ">REMARK ,</if>
+            <if test="isdisabled != null  and isdisabled != '' ">ISDISABLED ,</if>
+            <if test="updateflg != null  and updateflg != '' ">UPDATEFLG ,</if>
+            <if test="lastupdatedate != null ">LASTUPDATEDATE ,</if>
+            <if test="eidhr != null ">EIDHR ,</if>
+            <if test="boardline != null  and boardline != '' ">BOARDLINE ,</if>
+            <if test="reportto != null ">REPORTTO ,</if>
+            <if test="fullname != null  and fullname != '' ">FULLNAME ,</if>
+            <if test="spellname != null  and spellname != '' ">SPELLNAME ,</if>
+            <if test="shortphone != null  and shortphone != '' ">SHORTPHONE ,</if>
+        </trim>
+        )
+        SELECT
+        <trim suffixOverrides=",">
+            <if test="eid != null ">#{eid} ,</if>
+            <if test="badge != null  and badge != '' ">#{badge} ,</if>
+            <if test="empname != null  and empname != '' ">#{empname} ,</if>
+            <if test="compid != null ">#{compid} ,</if>
+            <if test="depid != null ">#{depid} ,</if>
+            <if test="jobid != null ">#{jobid} ,</if>
+            <if test="headship != null  and headship != '' ">#{headship} ,</if>
+            <if test="empstatus != null  and empstatus != '' ">#{empstatus} ,</if>
+            <if test="empauth != null  and empauth != '' ">#{empauth} ,</if>
+            <if test="authproperty != null  and authproperty != '' ">#{authproperty} ,</if>
+            <if test="gender != null  and gender != '' ">#{gender} ,</if>
+            <if test="birthday != null ">#{birthday} ,</if>
+            <if test="certificateType != null  and certificateType != '' ">#{certificateType},</if>
+            <if test="certificateNumber != null  and certificateNumber != '' ">#{certificateNumber},</if>
+            <if test="officephone != null  and officephone != '' ">#{officephone} ,</if>
+            <if test="mobiletelphone != null  and mobiletelphone != '' ">#{mobiletelphone} ,</if>
+            <if test="remark != null  and remark != '' ">#{remark} ,</if>
+            <if test="isdisabled != null  and isdisabled != '' ">#{isdisabled} ,</if>
+            <if test="updateflg != null  and updateflg != '' ">#{updateflg} ,</if>
+            <if test="lastupdatedate != null ">#{lastupdatedate} ,</if>
+            <if test="eidhr != null ">#{eidhr} ,</if>
+            <if test="boardline != null  and boardline != '' ">#{boardline} ,</if>
+            <if test="reportto != null ">#{reportto} ,</if>
+            <if test="fullname != null  and fullname != '' ">#{fullname} ,</if>
+            <if test="spellname != null  and spellname != '' ">#{spellname} ,</if>
+            <if test="shortphone != null  and shortphone != '' ">#{shortphone} ,</if>
+        </trim>
+        FROM dual
+        WHERE NOT EXISTS(
+        SELECT 1
+        FROM COMM_EMPLOYEE
+        WHERE
+        <trim suffixOverrides="AND">
+            <if test="eid != null ">EID = #{eid} AND</if>
+            <if test="badge != null  and badge != '' ">BADGE = #{badge} AND</if>
+            <if test="certificateNumber != null  and certificateNumber != '' ">CERTIFICATE_NUMBER = #{certificateNumber}
+                AND
+            </if>
+        </trim>
+        )
+    </insert>
+
+
+    <!--通过id查询  k6991 2020-01-15 -->
+    <select id="queryById" parameterType="map" resultMap="COMMEMPLOYEE_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM COMM_EMPLOYEE WHERE GENDER=#{gender}
+    </select>
+
+    <!--查询集合  k6991 2020-01-15 -->
+    <select id="getList" parameterType="map" resultMap="COMMEMPLOYEE_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM COMM_EMPLOYEE
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="gender != null  and gender != '' ">GENDER=#{gender} AND</if>
+            <if test="updateflg != null  and updateflg != '' ">UPDATEFLG=#{updateflg} AND</if>
+            <if test="lastupdatedate != null ">LASTUPDATEDATE=#{lastupdatedate} AND</if>
+            <if test="reportto != null ">REPORTTO=#{reportto} AND</if>
+            <if test="isdisabled != null  and isdisabled != '' ">ISDISABLED=#{isdisabled} AND</if>
+            <if test="shortphone != null  and shortphone != '' ">SHORTPHONE=#{shortphone} AND</if>
+            <if test="empname != null  and empname != '' ">EMPNAME=#{empname} AND</if>
+            <if test="empauth != null  and empauth != '' ">EMPAUTH=#{empauth} AND</if>
+            <if test="birthday != null ">BIRTHDAY=#{birthday} AND</if>
+            <if test="certificateType != null  and certificateType != '' ">CERTIFICATE_TYPE = #{certificateType} AND
+            </if>
+            <if test="certificateNumber != null  and certificateNumber != '' ">CERTIFICATE_NUMBER = #{certificateNumber}
+                AND
+            </if>
+            <if test="authproperty != null  and authproperty != '' ">AUTHPROPERTY=#{authproperty} AND</if>
+            <if test="remark != null  and remark != '' ">REMARK=#{remark} AND</if>
+            <if test="fullname != null  and fullname != '' ">FULLNAME=#{fullname} AND</if>
+            <if test="jobid != null ">JOBID=#{jobid} AND</if>
+            <if test="eid != null ">EID=#{eid} AND</if>
+            <if test="badge != null  and badge != '' ">BADGE=#{badge} AND</if>
+            <if test="compid != null ">COMPID=#{compid} AND</if>
+            <if test="empstatus != null  and empstatus != '' ">EMPSTATUS=#{empstatus} AND</if>
+            <if test="officephone != null  and officephone != '' ">OFFICEPHONE=#{officephone} AND</if>
+            <if test="eidhr != null ">EIDHR=#{eidhr} AND</if>
+            <if test="boardline != null  and boardline != '' ">BOARDLINE=#{boardline} AND</if>
+            <if test="spellname != null  and spellname != '' ">SPELLNAME=#{spellname} AND</if>
+            <if test="depid != null ">DEPID=#{depid} AND</if>
+            <if test="headship != null  and headship != '' ">HEADSHIP=#{headship} AND</if>
+            <if test="mobiletelphone != null  and mobiletelphone != '' ">MOBILETELPHONE=#{mobiletelphone} AND</if>
+            <if test="deps != null and deps != '' ">DEPID in (${deps}) AND</if>
+        </trim>
+    </select>
+    <!-- update sql -->
+    <sql id="update_pojo_sql">
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="gender != null  and gender != '' ">GENDER=#{gender} ,</if>
+            <if test="updateflg != null  and updateflg != '' ">UPDATEFLG=#{updateflg} ,</if>
+            <if test="lastupdatedate != null ">LASTUPDATEDATE=#{lastupdatedate} ,</if>
+            <if test="reportto != null ">REPORTTO=#{reportto} ,</if>
+            <if test="isdisabled != null  and isdisabled != '' ">ISDISABLED=#{isdisabled} ,</if>
+            <if test="shortphone != null  and shortphone != '' ">SHORTPHONE=#{shortphone} ,</if>
+            <if test="empname != null  and empname != '' ">EMPNAME=#{empname} ,</if>
+            <if test="empauth != null  and empauth != '' ">EMPAUTH=#{empauth} ,</if>
+            <if test="birthday != null ">BIRTHDAY=#{birthday} ,</if>
+            <if test="certificateType != null  and certificateType != '' ">CERTIFICATE_TYPE = #{certificateType},</if>
+            <if test="certificateNumber != null  and certificateNumber != '' ">CERTIFICATE_NUMBER =
+                #{certificateNumber},
+            </if>
+            <if test="authproperty != null  and authproperty != '' ">AUTHPROPERTY=#{authproperty} ,</if>
+            <if test="remark != null  and remark != '' ">REMARK=#{remark} ,</if>
+            <if test="fullname != null  and fullname != '' ">FULLNAME=#{fullname} ,</if>
+            <if test="jobid != null ">JOBID=#{jobid} ,</if>
+            <if test="eid != null ">EID=#{eid} ,</if>
+            <if test="badge != null  and badge != '' ">BADGE=#{badge} ,</if>
+            <if test="compid != null ">COMPID=#{compid} ,</if>
+            <if test="empstatus != null  and empstatus != '' ">EMPSTATUS=#{empstatus} ,</if>
+            <if test="officephone != null  and officephone != '' ">OFFICEPHONE=#{officephone} ,</if>
+            <if test="eidhr != null ">EIDHR=#{eidhr} ,</if>
+            <if test="boardline != null  and boardline != '' ">BOARDLINE=#{boardline} ,</if>
+            <if test="spellname != null  and spellname != '' ">SPELLNAME=#{spellname} ,</if>
+            <if test="depid != null ">DEPID=#{depid} ,</if>
+            <if test="headship != null  and headship != '' ">HEADSHIP=#{headship} ,</if>
+            <if test="mobiletelphone != null  and mobiletelphone != '' ">MOBILETELPHONE=#{mobiletelphone} ,</if>
+
+        </trim>
+    </sql>
+
+    <!--通过id编辑 k6991 2020-01-15 -->
+    <update id="updatePojo" parameterType="commEmployee">
+        UPDATE
+        COMM_EMPLOYEE E
+        <include refid="update_pojo_sql"/>
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="eid != null ">E.EID = #{eid} AND</if>
+            <if test="certificateNumber != null ">E.CERTIFICATE_NUMBER = #{certificateNumber} AND</if>
+        </trim>
+    </update>
+
+    <insert id="syncOperator" parameterType="commEmployee">
+        INSERT INTO COMM_OPERATOR
+        SELECT SEQ_COMM_OPERATOR.NEXTVAL OPERATORID,
+        T.BADGE USERID,
+        T.EMPNAME USERNAME,
+        'e7FW0ncXp/iWn5in5utZ4w==' PASSWORD,
+        '' AUTHMODE,
+        'running' STATUS,
+        '' UNLOCKTIME,
+        'default' MENUTYPE,
+        '' LASTLOGIN,
+        '0' ERRCOUNT,
+        '' STARTDATE,
+        '' ENDDATE,
+        '' VALIDTIME,
+        SYSDATE INVALDATE,
+        '' MACCODE,
+        '' IPADDRESS,
+        T.BADGE || '@work.cn' EMAIL,
+        '' PARTID,
+        '' USER_TYPE,
+        '' OLD_PASSWORD
+        FROM COMM_EMPLOYEE T
+        WHERE NOT EXISTS
+        (SELECT 1 FROM COMM_OPERATOR CO WHERE CO.USERID = T.BADGE)
+    </insert>
+    <update id="updateOperator" parameterType="commEmployee">
+        UPDATE COMM_OPERATOR SET STATUS = 'stop' WHERE USERID IN
+        (SELECT BADGE FROM COMM_EMPLOYEE  WHERE EMPSTATUS NOT IN ('Norm','Prac'))
+    </update>
+    <!--通过id批量删除  k6991 2020-01-15 -->
+    <delete id="deletePojo" parameterType="commEmployee">
+        DELETE
+        FROM
+        COMM_EMPLOYEE where badge != 'sysadmin'
+        <if test="eid != null ">AND EID = #{eid}</if>
+        <if test="badge != null  and badge != '' ">AND E.BADGE = #{badge}</if>
+        <if test="compid != null ">AND E.COMPID = #{compid}</if>
+    </delete>
+    <!-- 角色用户关联查询 k6991 2020-03-09 -->
+    <select id="queryRoleUserRel" parameterType="map" resultMap="QUERYPAGERLIST_MAP">
+        SELECT
+        E.*,
+        O.LOCATION COMP_NAME,D.LOCATION CHARGE_NAME,J.LOCATION COMORG_NAME
+        FROM IM_USER_ROLE_REL T
+        LEFT JOIN COMM_EMPLOYEE E ON(T.URR_USERID = E.BADGE)
+        LEFT JOIN COMM_OPERATOR P ON(P.USERID = E.BADGE)
+        LEFT JOIN COMM_ORGANIZATION O ON(E.COMPID=O.COMPID)
+        LEFT JOIN COMM_DEPARTMENT D ON(E.DEPID=D.DEPID)
+        LEFT JOIN COMM_JOB J ON(E.JOBID=J.JOBID)
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="rolId != null  and rolId != '' ">T.URR_ROLEID=#{rolId} AND E.BADGE IS NOT NULL AND</if>
+            <if test="badge != null  and badge != '' ">E.BADGE = #{badge} AND</if>
+            <if test="compid != null ">E.COMPID = #{compid} AND</if>
+            <if test="depid != null ">E.DEPID = #{depid} AND</if>
+            <if test="empname != null  and empname != '' ">INSTR(EMPNAME,#{empname} ) > 0 AND</if>
+        </trim>
+    </select>
+
+    <resultMap id="CREWPAGELIST_MAP" type="commEmployeeInfo">
+        <result column="JOB_ID" property="badge"/>
+        <result column="USER_NAME" property="username"/>
+        <result column="GROUPNAME" property="groupname"/>
+        <result column="OUTSOURCE_TYPE_NAME" property="outsourceTypeName"/>
+        <result column="LOCATION" property="chargeName"/>
+        <result column="DICTNAME" property="comorgName"/>
+        <result column="GROUPNAME" property="groupname"/>
+        <result column="EMPNAME" property="empName"/>
+        <result column="DEPID" property="depid"/>
+        <result column="ID" property="groupId"/>
+        <result column="MOBILE" property="mobiletelphone"/>
+        <result column="PERSON_IN_CHARGE" property="personInCharge"/>
+        <result column="STATE" property="state"/>
+
+    </resultMap>
+    <!-- 行员花名册分页 -1  k6991 2020-05-26 -->
+    <select id="queryCrewPageList" parameterType="map" resultMap="CREWPAGELIST_MAP">
+        SELECT
+        E.JOB_ID ,E.USER_NAME ,E.MOBILE,WB.OUTSOURCE_TYPE_NAME,
+        D.LOCATION ,Y.DICTNAME ,G.GROUPNAME ,
+        M.EMPNAME,E.PERSON_IN_CHARGE,D.DEPID,G.ID, E.STATE
+        FROM PPM_OUTSOURCING_BASIC E
+        LEFT JOIN COMM_DEPARTMENT D ON(E.Dept_Id=to_char(D.DEPID))
+        LEFT JOIN (
+        SELECT S.DICTNAME OUTSOURCE_TYPE_NAME ,S.DICTID OUTSOURCE_TYPE FROM EOS_DICT_ENTRY S WHERE
+        S.DICTTYPEID='BUSI_OUTSOURCE_OUTSOURCETYPE'
+        )WB ON(E.OUTSOURCE_TYPE=WB.OUTSOURCE_TYPE)
+        LEFT JOIN COMM_EMPLOYEE M ON (E.PERSON_IN_CHARGE=M.BADGE)
+        LEFT JOIN COMM_ORGANIZATION O ON(D.COMPID=O.COMPID)
+        LEFT JOIN PPM_DA_TEAM_USER T ON(E.JOB_ID=T.USERID)
+        LEFT JOIN (
+        SELECT S.DICTNAME,S.DICTID FROM EOS_DICT_ENTRY S WHERE S.DICTTYPEID='BUSI_OUTSOURCE_POSITION'
+        )Y ON(Y.DICTID = T.GW)
+        LEFT JOIN PPM_DA_TEAM_GROUP G ON(E.GROUP_ID=G.ID)
+
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="true">D.ADMINID='7004' AND</if>
+            <if test="badge != null  and badge != '' ">E.JOB_ID = #{badge} AND</if>
+            <if test="empname != null  and empname != '' ">(INSTR(M.EMPNAME, #{empname}) > 0 OR
+                INSTR(E.PERSON_IN_CHARGE,
+                #{empname}) > 0 ) AND
+            </if>
+            <if test="username != null  and username != '' ">INSTR(E.USER_NAME,#{username} ) > 0 AND</if>
+            <if test="depid != null and depid!= '' ">D.DEPID = #{depid} AND</if>
+            <if test="gro != null and gro != '' ">G.ID = #{gro} AND</if>
+            <if test="state != null and state != '' ">E.STATE = #{state} AND</if>
+        </trim>
+    </select>
+
+    <!-- 获取部门编号 k6991 2020-06-04 -->
+    <select id="getDeptNo" parameterType="map" resultType="string">
+        SELECT TO_CHAR(DEPID) DEPID FROM PPM_EMP_VIEWALL WHERE BADGE = #{userId}
+    </select>
+    <!-- 根据部门id查询工号 k6991 2020-06-24 -->
+    <select id="queryUseridByDepgrade" parameterType="map" resultMap="COMMEMPLOYEE_ALL">
+        SELECT E.BADGE FROM PPM_EMP_VIEW E WHERE E.HEADSHIP IS NOT NULL AND E.DEPID = (
+        SELECT T.DEPID FROM PPM_EMP_VIEW T WHERE T.BADGE = #{userId}
+        )
+    </select>
+    <!-- 根据部门id查询工号 k6991 2020-06-24 -->
+    <select id="queryUseridByDepgrade1" parameterType="map" resultMap="COMMEMPLOYEE_ALL">
+        SELECT X.BADGE FROM PPM_EMP_VIEW X WHERE X.EIDHR = (
+        SELECT A.DIRECTOR FROM COMM_DEPARTMENT A WHERE A.DEPID = (
+        SELECT T.DEPID FROM PPM_EMP_VIEW T WHERE T.BADGE = #{userId}
+        )
+        )
+    </select>
+    <resultMap id="QUERYUSERIDBYROLE_MAP" type="commEmployee">
+        <result property="badge" column="USERID"/>
+    </resultMap>
+    <!-- 根据指定角色的查找对应人员信息 k6991 2020-06-29 -->
+    <select id="queryUserIdByRole" parameterType="map" resultMap="QUERYUSERIDBYROLE_MAP">
+        SELECT A.USERID
+        FROM COMM_OPERATOR A
+        WHERE A.OPERATORID IN
+        (SELECT T.OPERATORID
+        FROM COMM_OPERATORROLE T
+        WHERE T.ROLEID = #{roleId})
+        AND EXISTS
+        (SELECT 1 FROM PPM_EMP_VIEW WHERE A.USERID = BADGE)
+    </select>
+    <!-- 获取行员列表-组件 k6991 2020-08-18 -->
+    <select id="getEmployeeComponent" parameterType="map" resultMap="COMMEMPLOYEE_ALL">
+        SELECT T.BADGE,T.EMPNAME,T.EID FROM COMM_EMPLOYEE T
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="badge != null  and badge != '' ">T.BADGE = #{badge} AND</if>
+            <if test="empname != null  and empname != '' ">INSTR(T.EMPNAME,#{empname} ) > 0 AND</if>
+            <if test="spellname != null and spellname != '' ">INSTR(T.SPELLNAME,#{spellname}) > 0 AND</if>
+            <if test="fullname != null and fullname!= '' ">INSTR(T.fullname , #{dep}) > 0 AND</if>
+            <if test="proLoadNumber != null ">
+                <![CDATA[
+				ROWNUM <= ${proLoadNumber}
+				]]>
+            </if>
+        </trim>
+    </select>
+    <!-- 获取用户集合 k6991 2020-08-20 -->
+    <select id="queryEmployeeList" parameterType="map" resultType="commTree">
+        <choose>
+            <when test="next == 'dep,emp'">
+                select * from (
+                select o.badge id , to_char(o.depid) pid , o.empname||'('||o.badge||')' text , 'emp' attr ,
+                case when (select director from comm_department where depid = 1053)=o.eidhr then '1' else '0' end
+                order_by
+                from ppm_emp_view o where o.depid = #{id}
+                union
+                select p.badge id , to_char(p.depid) pid , p.empname||'('||p.badge||')' text , 'emp' attr ,
+                case when (select director from comm_department where depid = #{id})=(select eidhr from ppm_emp_view
+                where badge = p.badge) then '1' else '0' end order_by
+                from comm_parttimejob p where p.depid =#{id} and p.isdisable = '0'
+                union
+                select to_char(o.depid) id , to_char(o.adminid) pid , o.location text , 'dep' attr ,'B'||o.depid
+                order_by
+                from comm_department o where adminid = #{id} and isdisabled = '0'
+                ) order by order_by asc
+            </when>
+            <when test="next == 'emp'">
+                select * from (
+                select o.badge id , to_char(o.depid) pid , o.empname||'('||o.badge||')' text , 'emp' attr ,
+                case when (select director from comm_department where depid = #{id})=o.eidhr then '1' else '0' end
+                order_by
+                from ppm_emp_view o where o.depid = #{id}
+                union
+                select p.badge id , to_char(p.depid) pid , p.empname||'('||p.badge||')' text , 'emp' attr ,
+                case when (select director from comm_department where depid = #{id})=(select eidhr from ppm_emp_view
+                where badge = p.badge) then '1' else '0' end order_by
+                from comm_parttimejob p where p.depid = #{id} and p.isdisable = '0'
+                ) order by order_by desc
+            </when>
+            <otherwise>
+                select * from (
+                select o.compid id , o.adminid pid , o.location text , 'org' attr , 'B' order_by
+                from comm_organization o where adminid = #{id} and isdisabled = '0'
+                union
+                select o.depid id , o.adminid pid , o.location text , 'dep' attr ,'A'||o.depid order_by
+                from comm_department o where compid = #{id} and isdisabled = '0' and adminid is null
+                ) order by order_by asc
+            </otherwise>
+        </choose>
+    </select>
+    <!-- 根据depid返回count 数 k6991 2020-08-20 -->
+    <select id="hasEmp" parameterType="map" resultType="long">
+        select sum(c) from (
+        select count(depid) c from ppm_emp_view where depid = #{id}
+        union
+        select count(depid) c from comm_parttimejob where depid = #{id} and isdisable = '0'
+        )
+    </select>
+    <resultMap id="GETTWODEPTWORKMANAGER_MAP" type="commEmployeeInfo">
+        <result column="LOCATION" property="chargeName"/>
+        <result column="EMPNAME" property="empname"/>
+        <result column="BADGE" property="badge"/>
+        <result column="DEPID" property="depid"/>
+        <result column="USERNAME" property="username"/>
+        <result column="USERID" property="userid"/>
+    </resultMap>
+
+    <!-- 根据部门编号 查询部门工作住持经理 2020-08-27 k6991 -->
+    <select id="getDeptWorkManager" parameterType="map" resultMap="GETTWODEPTWORKMANAGER_MAP">
+        SELECT T.LOCATION ,E.EMPNAME,E.BADGE,(SELECT EMPNAME FROM COMM_EMPLOYEE WHERE BADGE = M.USERID)
+        USERNAME,M.USERID , E.DEPID FROM COMM_DEPARTMENT T
+        LEFT JOIN COMM_EMPLOYEE E ON E.EID = T.DIRECTOR
+        LEFT JOIN COMM_OPERATOR M ON M.USERID = E.Badge
+        WHERE T.DEPID = #{deptId}
+    </select>
+
+
+    <!--通过badge查询  k1327 2020-09-08 -->
+    <select id="queryCommemployeeInfoByBadge" parameterType="map" resultMap="COMMEMPLOYEE_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM COMM_EMPLOYEE WHERE BADGE=#{badge}
+    </select>
+
+    <!-- 科技部行员 2020-10-22 -->
+    <select id="queryOnTheJobUsers" resultMap="COMMEMPLOYEE_ALL">
+        SELECT E.BADGE BADGE FROM COMM_EMPLOYEE E
+        LEFT JOIN COMM_DEPARTMENT D ON E.DEPID=D.DEPID
+        WHERE E.EMPSTATUS IN ('Norm','Prac','Prob') AND D.ADMINID='10684'
+    </select>
+    <!-- 业务部门员工 2020-10-22 -->
+    <select id="queryBusDepUsers" resultMap="COMMEMPLOYEE_ALL">
+        SELECT E.BADGE BADGE FROM COMM_EMPLOYEE E
+        LEFT JOIN COMM_DEPARTMENT D ON E.DEPID=D.DEPID
+        WHERE E.EMPSTATUS IN ('Norm','Prac','Prob') AND D.ADMINID != '7004'
+    </select>
+    <!-- 离职行员 2020-10-23 k6991 -->
+    <select id="queryResignUser" resultMap="COMMEMPLOYEE_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM COMM_EMPLOYEE WHERE EMPSTATUS NOT IN ('Norm','Prac','Prob' )
+    </select>
+    <!-- 根据模糊条件匹配用户信息 k6991 2020-10-29-->
+    <select id="queryEmployUser" parameterType="map" resultMap="GETTWODEPTWORKMANAGER_MAP">
+        SELECT * FROM (
+        SELECT E.BADGE,E.EMPNAME,E.DEPID,D.LOCATION
+        FROM COMM_EMPLOYEE E
+        LEFT JOIN EEMPLOYEE_BASEINFOR B ON(E.BADGE=B.BADGE)
+        LEFT JOIN COMM_DEPARTMENT D ON(D.DEPID=E.DEPID)
+        WHERE E.BADGE=#{userName} OR INSTR(E.EMPNAME, #{userName}) > 0 OR INSTR(LOWER(B.FULLNAME) ,#{userName}) > 0
+        OR INSTR(LOWER(B.SPELLNAME), #{userName}) > 0 and D.ADMINID=7004
+        )
+        <![CDATA[
+			WHERE ROWNUM<=50
+		]]>
+
+    </select>
+    <!-- 导出excel k6991 2021-01-02 -->
+    <select id="exportExcel" parameterType="map" resultMap="CREWPAGELIST_MAP">
+        SELECT * FROM (
+        SELECT O.JOB_ID,O.USER_NAME,'入场中' AS STATE,WB.OUTSOURCE_TYPE_NAME,
+        D.LOCATION,Y.DICTNAME,G.GROUPNAME ,O.ORGANIZERS AS PERSON_IN_CHARGE,M.EMPNAME,
+        G.ID,O.DEPTNO DEPID,O.MOBILE
+        FROM PPM_OUTSOURCING_ACCESSAPPLY O
+        LEFT JOIN (
+        SELECT S.DICTNAME OUTSOURCE_TYPE_NAME ,S.DICTID OUTSOURCE_TYPE FROM EOS_DICT_ENTRY S WHERE
+        S.DICTTYPEID='BUSI_OUTSOURCE_OUTSOURCETYPE'
+        )WB ON(O.OUTSOURCE_TYPE=WB.OUTSOURCE_TYPE)
+        LEFT JOIN COMM_DEPARTMENT D ON(O.DEPTNO=TO_CHAR(D.DEPID))
+        LEFT JOIN COMM_EMPLOYEE M ON (O.ORGANIZERS=M.BADGE)
+        LEFT JOIN PPM_DA_TEAM_USER T ON(O.JOB_ID=T.USERID)
+        LEFT JOIN (
+        SELECT S.DICTNAME,S.DICTID FROM EOS_DICT_ENTRY S WHERE S.DICTTYPEID='BUSI_OUTSOURCE_POSITION'
+        )Y ON(Y.DICTID = T.GW)
+        LEFT JOIN PPM_DA_TEAM_GROUP G ON(O.GROUP_ID=G.ID)
+        WHERE EXISTS(SELECT 1 FROM PPM_PROJECT_FLOW F
+        WHERE F.INSTANCEID=O.INSTANCE_ID AND F.FLOWID='COM.WORK.PPM.BPS.NEWWBRYZRLC' AND F.ISDEL=0 AND
+        F.FLOWSTATUS='进行中')
+        AND NOT EXISTS(SELECT 1 FROM PPM_OUTSOURCING_BASIC B WHERE B.JOB_ID=O.JOB_ID) AND D.ADMINID='7004'
+
+        UNION ALL
+
+        SELECT B.JOB_ID,B.USER_NAME,
+        B.STATE
+        ,WB.OUTSOURCE_TYPE_NAME,
+        D.LOCATION,Y.DICTNAME,G.GROUPNAME ,
+        B.PERSON_IN_CHARGE AS PERSON_IN_CHARGE,M.EMPNAME,
+        G.ID,B.DEPT_ID DEPID ,B.MOBILE
+        FROM PPM_OUTSOURCING_BASIC B
+        LEFT JOIN (
+        SELECT S.DICTNAME OUTSOURCE_TYPE_NAME ,S.DICTID OUTSOURCE_TYPE FROM EOS_DICT_ENTRY S WHERE
+        S.DICTTYPEID='BUSI_OUTSOURCE_OUTSOURCETYPE'
+        )WB ON(B.OUTSOURCE_TYPE=WB.OUTSOURCE_TYPE)
+        LEFT JOIN COMM_DEPARTMENT D ON(B.DEPT_ID=TO_CHAR(D.DEPID))
+        LEFT JOIN COMM_EMPLOYEE M ON (B.PERSON_IN_CHARGE=M.BADGE)
+        LEFT JOIN PPM_DA_TEAM_USER T ON(B.JOB_ID=T.USERID)
+        LEFT JOIN (
+        SELECT S.DICTNAME,S.DICTID FROM EOS_DICT_ENTRY S WHERE S.DICTTYPEID='BUSI_OUTSOURCE_POSITION'
+        )Y ON(Y.DICTID = T.GW)
+        LEFT JOIN PPM_DA_TEAM_GROUP G ON(B.GROUP_ID=G.ID)
+        WHERE B.STATE=0 OR B.STATE=1 AND D.ADMINID='7004'
+        UNION ALL
+
+        SELECT Z.JOBID JOB_ID, Z.USERNAME USER_NAME, '离场中' AS STATE,
+        WB.OUTSOURCE_TYPE_NAME,D.LOCATION,Y.DICTNAME,G.GROUPNAME ,B.PERSON_IN_CHARGE AS PERSON_IN_CHARGE,
+        M.EMPNAME,G.ID, B.DEPT_ID DEPID,B.MOBILE
+        FROM PPM_OUTSOURCING_LZSQ Z
+        LEFT JOIN PPM_OUTSOURCING_BASIC B ON(Z.JOBID=B.JOB_ID)
+        LEFT JOIN (
+        SELECT S.DICTNAME OUTSOURCE_TYPE_NAME ,S.DICTID OUTSOURCE_TYPE FROM EOS_DICT_ENTRY S WHERE
+        S.DICTTYPEID='BUSI_OUTSOURCE_OUTSOURCETYPE'
+        )WB ON(B.OUTSOURCE_TYPE=WB.OUTSOURCE_TYPE)
+        LEFT JOIN COMM_DEPARTMENT D ON(B.DEPT_ID=TO_CHAR(D.DEPID))
+        LEFT JOIN COMM_EMPLOYEE M ON (B.PERSON_IN_CHARGE=M.BADGE)
+        LEFT JOIN PPM_DA_TEAM_USER T ON(B.JOB_ID=T.USERID)
+        LEFT JOIN (
+        SELECT S.DICTNAME,S.DICTID FROM EOS_DICT_ENTRY S WHERE S.DICTTYPEID='BUSI_OUTSOURCE_POSITION'
+        )Y ON(Y.DICTID = T.GW)
+        LEFT JOIN PPM_DA_TEAM_GROUP G ON(B.GROUP_ID=G.ID)
+        WHERE
+        EXISTS( SELECT 1 FROM PPM_PROJECT_FLOW F
+        WHERE Z.INSTANCEID=F.INSTANCEID AND F.FLOWID='COM.WORK.PPM.BPS.WBRYLZSQ'
+        AND F.ISDEL=0 AND F.FLOWSTATUS='进行中' )
+        AND EXISTS(SELECT 1 FROM PPM_OUTSOURCING_BASIC T WHERE T.JOB_ID=Z.JOBID)
+        AND D.ADMINID='7004'
+        )TEMP
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="true">TEMP.DEPID IS NOT NULL AND</if>
+            <if test="badge != null  and badge != '' ">TEMP.JOB_ID = #{badge} AND</if>
+            <if test="empname != null  and empname != '' ">(INSTR(TEMP.EMPNAME, #{empname}) > 0 OR
+                INSTR(TEMP.PERSON_IN_CHARGE,
+                #{empname}) > 0 ) AND
+            </if>
+            <if test="username != null  and username != '' ">INSTR(TEMP.USER_NAME,#{username} ) > 0 AND</if>
+            <if test="depid != null and depid!= '' ">TEMP.DEPID = #{depid} AND</if>
+            <if test="gro != null and gro != '' ">TEMP.ID = #{gro} AND</if>
+            <if test="state != null and state != ''">TEMP.STATE = #{state} AND</if>
+        </trim>
+    </select>
+    <!-- 根据员工号/名称/拼音 查询用户树信息 k6991 2021-04-01 -->
+    <select id="queryBankUser" parameterType="map" resultType="commTree">
+        with temp(b1,e1,d1,loc1,b2,e2,d2,loc2) as (
+        select e.badge b1,e.empname e1,to_char(e.depid) d1,d1.location loc1,p.badge b2,p.empname e2,p.depid
+        d2,d2.location loc2
+        from ppm_emp_view e left join (select * from comm_parttimejob p1 where p1.isdisable !='1') p on e.badge=p.badge
+        left join comm_department d1 on e.depid=d1.depid and d1.isdisabled!='1'
+        left join comm_department d2 on p.depid=d2.depid and d2.isdisabled!='1'
+        where
+        instr(e.badge, #{searchUser}) > 0 or instr(e.empname,#{searchUser}) > 0 or
+        instr(upper(e.fullname),upper(#{searchUser})) > 0
+
+        )
+        select * from (
+        select t.b1 id,t.e1||'('||t.b1||')['||t.loc1||']' text,to_char(t.d1) pid ,'emp' attr from temp t
+        union
+        select t.b2 id,t.e2||'('||t.b2||')['||t.loc2||']' text,to_char(t.d2) pid,'emp' attr from temp t
+        )
+        where id is not null
+    </select>
+    <!-- 二级部经理层数据 2020-10-22 -->
+    <select id="getDepManagers" resultMap="COMMEMPLOYEE_ALL">
+        select e.* from comm_employee e
+        left join comm_department d on e.depid=d.depid
+        where d.adminid='7004' and e.headship in ('009','010','030','037') and e.empstatus in ('Norm','Prac','Prob')
+    </select>
+
+    <!-- 主持工作经理数据 2020-10-22 -->
+    <select id="getDepManager" resultMap="COMMEMPLOYEE_ALL">
+        select distinct(e.badge) badge from comm_department d1 left join comm_employee e on d1.director=e.eidhr where
+        d1.isdisabled='0' and d1.adminid='7004'
+        and d1.depid!=-6666
+    </select>
+
+    <!-- 总经理室数据 2020-10-22 -->
+    <select id="getManagers" resultMap="COMMEMPLOYEE_ALL">
+        select e.* from comm_employee e
+        left join comm_department d on e.depid=d.depid
+        where d.depid='131' and e.empstatus in ('Norm','Prac','Prob')
+    </select>
+    <!-- 判断是否经理层 k6991 2021-06-07 -->
+    <select id="whetherManagers" parameterType="commEmployee" resultMap="COMMEMPLOYEE_ALL">
+        SELECT
+        BADGE
+        FROM COMM_EMPLOYEE
+        where BADGE=#{badge} AND HEADSHIP IS NOT NULL
+    </select>
+    <!-- 根据id查询用户信息 名称(工号) 2021-07-05-->
+    <select id="getBadgeAndName" parameterType="commEmployee" resultMap="COMMEMPLOYEE_ALL">
+        SELECT E.BADGE BADGE,E.EMPNAME EMPNAME FROM COMM_EMPLOYEE E WHERE E.BADGE IN (${badge})
+        UNION ALL
+        SELECT B.JOB_ID BADGE,B.USER_NAME EMPNAME FROM PPM_OUTSOURCING_BASIC B WHERE B.JOB_ID IN (${badge})
+    </select>
+
+    <!-- 二级部经理层 k6991 2021-07-09 -->
+    <select id="queryMinistryManagers" parameterType="commEmployee" resultMap="GETTWODEPTWORKMANAGER_MAP">
+        SELECT
+        D.LOCATION,E.EMPNAME,E.BADGE
+        FROM COMM_EMPLOYEE E
+        LEFT JOIN COMM_DEPARTMENT D ON(E.DEPID=D.DEPID)
+        WHERE D.DEPID=#{depid} AND E.HEADSHIP IN ('009','010','030','037')
+    </select>
+    <!--  -->
+    <select id="getFhTechManager" parameterType="commEmployeeInfo" resultMap="COMMEMPLOYEE_ALL">
+        SELECT BADGE FROM COMM_EMPLOYEE E WHERE E.DEPID IN (
+        SELECT D.DEPID FROM COMM_DEPARTMENT D WHERE D.ADMINID =#{adminid} AND INSTR(D.LOCATION , '总经理室') > 0)
+    </select>
+    <!-- 架构部副总 2021-09-06 k6991 -->
+    <select id="getAreDeptManager" parameterType="commEmployee" resultMap="COMMEMPLOYEE_ALL">
+        SELECT M.USERID BADGE FROM COMM_DEPARTMENT T
+        LEFT JOIN PPM_DA_DEPT_MANAGER M ON M.DEPTID = T.DEPID
+        LEFT JOIN COMM_EMPLOYEE E ON E.EIDHR = T.DIRECTOR
+        WHERE T.DEPID='1800'
+    </select>
+
+    <select id="getFgManageByDepid" parameterType="map" resultMap="COMMEMPLOYEE_ALL">
+        SELECT
+        BADGE,EMPNAME
+        FROM PPM_EMP_VIEW E WHERE E.EIDHR=
+        (SELECT
+        <choose>
+            <when test="state == 1">
+                D.DIRECTOR
+            </when>
+            <otherwise>
+                D.DEPCHARGE
+            </otherwise>
+        </choose>
+
+        FROM COMM_DEPARTMENT D WHERE D.DEPID=#{depid})
+    </select>
+    <!-- 分行科技人员 k6991 2021-11-18 -->
+    <select id="queryFhKjUsers" resultMap="COMMEMPLOYEE_ALL">
+        SELECT E.BADGE FROM COMM_EMPLOYEE_VIEW E
+        WHERE EXISTS(SELECT 1 FROM PPM_FHKJ_DEPT_RECORD D WHERE D.DEPID=E.DEPID AND D.STATUS='0')
+    </select>
+
+    <!--操作权限角色用户关联查询 k6991 2020-03-09 -->
+    <select id="queryOperaRoleUserRel" parameterType="map" resultMap="QUERYPAGERLIST_MAP">
+        SELECT
+        E.*,
+        O.LOCATION COMP_NAME,D.LOCATION CHARGE_NAME,J.LOCATION COMORG_NAME
+        FROM OPERA_USER_ROLE_REL T
+        LEFT JOIN COMM_EMPLOYEE E ON(T.URR_USERID = E.BADGE)
+        LEFT JOIN COMM_OPERATOR P ON(P.USERID = E.BADGE)
+        LEFT JOIN COMM_ORGANIZATION O ON(E.COMPID=O.COMPID)
+        LEFT JOIN COMM_DEPARTMENT D ON(E.DEPID=D.DEPID)
+        LEFT JOIN COMM_JOB J ON(E.JOBID=J.JOBID)
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="rolId != null  and rolId != '' ">T.URR_ROLEID=#{rolId} AND E.BADGE IS NOT NULL AND</if>
+            <if test="badge != null  and badge != '' ">E.BADGE = #{badge} AND</if>
+            <if test="compid != null ">E.COMPID = #{compid} AND</if>
+            <if test="depid != null ">E.DEPID = #{depid} AND</if>
+            <if test="empname != null  and empname != '' ">INSTR(EMPNAME,#{empname} ) > 0 AND</if>
+        </trim>
+    </select>
+
+    <select id="queryOperaAuthEncoding" parameterType="map" resultType="java.lang.String">
+        SELECT oai.AUTH_ENCODING FROM OPERA_USER_ROLE_REL ourr
+        LEFT JOIN OPERA_AUTH_INFO oai ON ourr.URR_ROLEID = oai.ROL_ID
+        WHERE ourr.URR_USERID = #{userId}
+    </select>
+
+    <select id="queryRoleId" parameterType="map" resultType="java.lang.String">
+        SELECT URR_ROLEID
+        FROM OPERA_USER_ROLE_REL
+        WHERE URR_USERID = #{userId}
+        AND URR_ROLEID IN ('HR_ATTACHE','ADMIN')
+    </select>
+
+
+    <select id="getUserOperaAuthEncoding" parameterType="map" resultType="java.lang.String">
+        SELECT oai.AUTH_ENCODING
+        FROM OPERA_USER_ROLE_REL ourr
+        LEFT JOIN OPERA_AUTH_INFO oai ON ourr.URR_ROLEID = oai.ROL_ID
+        WHERE ourr.URR_USERID = #{userid}
+        GROUP BY oai.AUTH_ENCODING
+    </select>
+
+    <select id="queryResearchManagerEmployeeList" parameterType="map" resultMap="QUERYPAGERLIST_MAP">
+        SELECT
+        E.*,
+        O.LOCATION COMP_NAME,D.LOCATION CHARGE_NAME,J.LOCATION COMORG_NAME,D.ADMINID
+        FROM COMM_EMPLOYEE E
+        LEFT JOIN COMM_ORGANIZATION O ON(E.COMPID=O.COMPID)
+        LEFT JOIN COMM_DEPARTMENT D ON(E.DEPID=D.DEPID)
+        LEFT JOIN COMM_JOB J ON(E.JOBID=J.JOBID)
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="rolId != null  and rolId != '' ">T.URR_ROLEID=#{rolId} AND E.BADGE IS NOT NULL AND</if>
+            <if test="badges != null  and badges != '' ">E.BADGE IN ${badges} AND</if>
+            <if test="compid != null ">E.COMPID = #{compid} AND</if>
+            <if test="depid != null ">E.DEPID = #{depid} AND</if>
+            <if test="empname != null  and empname != '' ">INSTR(EMPNAME,#{empname} ) > 0 AND</if>
+        </trim>
+    </select>
+
+    <select id="queryByBadge" parameterType="map" resultMap="COMMEMPLOYEE_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM COMM_EMPLOYEE WHERE BADGE=#{badge}
+    </select>
+
+    <insert id="addResearchManagerEmployee" parameterType="commEmployee">
+        INSERT INTO RESEARCH_MANAGER_EMPLOYEE (
+        <trim suffixOverrides=",">
+            <if test="eid != null ">EID ,</if>
+            <if test="badge != null  and badge != '' ">BADGE ,</if>
+            <if test="empname != null  and empname != '' ">EMPNAME ,</if>
+            <if test="compid != null ">COMPID ,</if>
+            <if test="depid != null ">DEPID ,</if>
+            <if test="jobid != null ">JOBID ,</if>
+            <if test="headship != null  and headship != '' ">HEADSHIP ,</if>
+            <if test="empstatus != null  and empstatus != '' ">EMPSTATUS ,</if>
+            <if test="empauth != null  and empauth != '' ">EMPAUTH ,</if>
+            <if test="authproperty != null  and authproperty != '' ">AUTHPROPERTY ,</if>
+            <if test="gender != null  and gender != '' ">GENDER ,</if>
+            <if test="birthday != null ">BIRTHDAY ,</if>
+            <if test="certificateType != null  and certificateType != '' ">CERTIFICATE_TYPE,</if>
+            <if test="certificateNumber != null  and certificateNumber != '' ">CERTIFICATE_NUMBER,</if>
+            <if test="officephone != null  and officephone != '' ">OFFICEPHONE ,</if>
+            <if test="mobiletelphone != null  and mobiletelphone != '' ">MOBILETELPHONE ,</if>
+            <if test="remark != null  and remark != '' ">REMARK ,</if>
+            <if test="isdisabled != null  and isdisabled != '' ">ISDISABLED ,</if>
+            <if test="updateflg != null  and updateflg != '' ">UPDATEFLG ,</if>
+            <if test="lastupdatedate != null ">LASTUPDATEDATE ,</if>
+            <if test="eidhr != null ">EIDHR ,</if>
+            <if test="boardline != null  and boardline != '' ">BOARDLINE ,</if>
+            <if test="reportto != null ">REPORTTO ,</if>
+            <if test="fullname != null  and fullname != '' ">FULLNAME ,</if>
+            <if test="spellname != null  and spellname != '' ">SPELLNAME ,</if>
+            <if test="shortphone != null  and shortphone != '' ">SHORTPHONE ,</if>
+
+        </trim>
+        )
+        VALUES(
+        <trim suffixOverrides=",">
+            <if test="eid != null ">#{eid} ,</if>
+            <if test="badge != null  and badge != '' ">#{badge} ,</if>
+            <if test="empname != null  and empname != '' ">#{empname} ,</if>
+            <if test="compid != null ">#{compid} ,</if>
+            <if test="depid != null ">#{depid} ,</if>
+            <if test="jobid != null ">#{jobid} ,</if>
+            <if test="headship != null  and headship != '' ">#{headship} ,</if>
+            <if test="empstatus != null  and empstatus != '' ">#{empstatus} ,</if>
+            <if test="empauth != null  and empauth != '' ">#{empauth} ,</if>
+            <if test="authproperty != null  and authproperty != '' ">#{authproperty} ,</if>
+            <if test="gender != null  and gender != '' ">#{gender} ,</if>
+            <if test="birthday != null ">#{birthday} ,</if>
+            <if test="certificateType != null  and certificateType != '' ">#{certificateType},</if>
+            <if test="certificateNumber != null  and certificateNumber != '' ">#{certificateNumber},</if>
+            <if test="officephone != null  and officephone != '' ">#{officephone} ,</if>
+            <if test="mobiletelphone != null  and mobiletelphone != '' ">#{mobiletelphone} ,</if>
+            <if test="remark != null  and remark != '' ">#{remark} ,</if>
+            <if test="isdisabled != null  and isdisabled != '' ">#{isdisabled} ,</if>
+            <if test="updateflg != null  and updateflg != '' ">#{updateflg} ,</if>
+            <if test="lastupdatedate != null ">#{lastupdatedate} ,</if>
+            <if test="eidhr != null ">#{eidhr} ,</if>
+            <if test="boardline != null  and boardline != '' ">#{boardline} ,</if>
+            <if test="reportto != null ">#{reportto} ,</if>
+            <if test="fullname != null  and fullname != '' ">#{fullname} ,</if>
+            <if test="spellname != null  and spellname != '' ">#{spellname} ,</if>
+            <if test="shortphone != null  and shortphone != '' ">#{shortphone} ,</if>
+        </trim>
+        )
+    </insert>
+
+    <select id="getReportto" parameterType="map" resultMap="COMMEMPLOYEE_ALL">
+        SELECT
+        ce.BADGE ,
+        ce.EMPNAME
+        FROM
+        COMM_EMPLOYEE ce
+        WHERE
+        ce.EID IN (
+        SELECT
+        come.REPORTTO
+        FROM
+        COMM_EMPLOYEE come
+        LEFT JOIN PPM.INTEG_INFO i ON
+        come.BADGE = i.BADGE
+        WHERE
+        i.DETAIL_ID = #{detailId}
+        )
+    </select>
+
+    <select id="getHeadOfCompanyList" parameterType="map" resultMap="COMMEMPLOYEE_ALL">
+        SELECT
+        ce.GENDER,
+        ce.UPDATEFLG,
+        ce.LASTUPDATEDATE,
+        ce.REPORTTO,
+        ce.ISDISABLED,
+        ce.SHORTPHONE,
+        ce.EMPNAME,
+        ce.EMPAUTH,
+        ce.BIRTHDAY,
+        ce.CERTIFICATE_TYPE,
+        ce.CERTIFICATE_NUMBER,
+        ce.AUTHPROPERTY,
+        ce.REMARK,
+        ce.FULLNAME,
+        ce.JOBID,
+        ce.EID,
+        ce.BADGE,
+        ce.COMPID,
+        ce.EMPSTATUS,
+        ce.OFFICEPHONE,
+        ce.EIDHR,
+        ce.BOARDLINE,
+        ce.SPELLNAME,
+        ce.DEPID,
+        ce.HEADSHIP,
+        ce.MOBILETELPHONE
+        FROM COMM_EMPLOYEE ce
+        LEFT JOIN COMM_DEPARTMENT cd ON ce.DEPID = cd.DEPID
+        WHERE cd.LOCATION LIKE '%科技部%'
+    </select>
+
+</mapper>

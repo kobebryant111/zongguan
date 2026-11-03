@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k9597 2021-08-12 -->
+<mapper namespace="com.work.ppm.application.model.resourceplat.ResConfigVm">
+    <resultMap type="ResConfigVm" id="RESCONFIGVM_ALL">
+        <result property="id" column="ID"/>
+        <result property="vmtype" column="TYPE"/>
+        <result property="describe" column="DESCRIBE"/>
+        <result property="price" column="PRICE"/>
+        <result property="status" column="STATUS"/>
+        <result property="creator" column="CREATOR"/>
+        <result property="createtime" column="CREATETIME"/>
+
+    </resultMap>
+
+    <!-- 获取虚拟机配件列表数据 -->
+    <select id="queryVMPartsList" parameterType="ResConfigVm" resultMap="RESCONFIGVM_ALL">
+        SELECT T.*
+        FROM RES_CONFIG_VM T
+        WHERE T.STATUS IN ('1', '2')
+        ORDER BY T.ISCANCEL,T.STATUS,T.TYPE,T.CREATETIME DESC
+    </select>
+
+    <!-- 获取虚拟机配件列表数据 -->
+    <select id="queryVMPartsViewList" parameterType="ResConfigVm" resultMap="RESCONFIGVM_ALL">
+        SELECT T.*
+        FROM RES_CONFIG_VM T
+        WHERE T.STATUS ='2'
+          AND T.PRICE > 0
+          AND T.ISCANCEL ='0'
+        ORDER BY T.STATUS,T.TYPE,T.CREATETIME DESC
+    </select>
+
+    <!-- 新增虚拟机配件配置信息 -->
+    <insert id="addVMPartsData" parameterType="ResConfigVm">
+        INSERT INTO RES_CONFIG_VM
+        (ID,
+        <trim suffixOverrides=",">
+            <if test="vmtype != null  and vmtype != '' " > TYPE , </if>
+            <if test="describe != null  and describe != '' " > DESCRIBE , </if>
+            <if test="price != null  and price != '' " > PRICE, </if>
+            <if test="status != null  and status != '' " > STATUS, </if>
+            <if test="creator != null  and creator != '' " > CREATOR, </if>
+            <if test="createtime != null " > CREATETIME, </if>
+        </trim>)
+        VALUES
+        (#{id},
+        <trim suffixOverrides=",">
+            <if test="vmtype != null  and vmtype != '' " > #{vmtype} , </if>
+            <if test="describe != null  and describe != '' " > #{describe} , </if>
+            <if test="price != null  and price != '' " > #{price}, </if>
+            <if test="status != null  and status != '' " > #{status}, </if>
+            <if test="creator != null  and creator != '' " > #{creator}, </if>
+            <if test="createtime != null " > #{createtime}, </if>
+        </trim>
+         )
+
+    </insert>
+
+
+
+    <!-- 更新虚拟机配件信息 -->
+    <update id="upVMPartsData" parameterType="ResConfigVm">
+        UPDATE RES_CONFIG_VM
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="describe != null  and describe != '' " > DESCRIBE =#{describe} , </if>
+            <if test="price != null  and price != '' " > PRICE=#{price}, </if>
+            <if test="status != null  and status != '' " > STATUS=#{status}, </if>
+        </trim>
+        WHERE ID =#{id}
+    </update>
+
+
+
+    <!-- 更新虚拟机配件状态 -->
+    <update id ="upVMPartsStatus" parameterType="map">
+        UPDATE RES_CONFIG_VM
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="status != null  and status != '' " > STATUS=#{status} , </if>
+            <if test="iscancel != null  and iscancel != '' " > ISCANCEL=#{iscancel} , </if>
+        </trim>
+        WHERE ID in
+              <foreach collection="ids" index="index" item="id" open="(" close=")" separator=",">
+                #{id}
+              </foreach>
+
+    </update>
+
+    <!-- 获取某软件类型是否已发布 -->
+    <select id ="querVmPartsCount" parameterType="map" resultType="long">
+        SELECT
+            COUNT(1) AS CNT
+        FROM
+            RES_CONFIG_VM
+        WHERE STATUS = '2'
+          AND ISCANCEL ='0'
+          AND TYPE = #{type}
+    </select>
+
+</mapper>

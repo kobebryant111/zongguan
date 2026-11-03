@@ -1,0 +1,16 @@
+/*
+@Author: chenhuocan
+@Date: 2020-03-10 17:04:41
+ * @LastEditors: amberself
+ * @LastEditTime: 2020-07-17 17:53:19
+@Description: 通用样式的总入口
+*/
+@import 'mixins/mixin';
+@import 'common/reset'; // 全局样式--重置浏览器样式
+@import 'common/variables'; // 全局样式--变量
+@import 'common/transition'; // 全局样式--过渡动画
+@import 'common'; // 项目全局页面样式
+@import 'sidebar';
+
+
+

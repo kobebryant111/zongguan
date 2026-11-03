@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k6991 2020-04-09 -->
+<mapper namespace="com.work.ppm.application.model.othermanager.PpmQuestionOption">
+	 <resultMap type="ppmQuestionOption" id="PPMQUESTIONOPTION_ALL">
+        <result property="id" column="ID" />
+		<result property="questionno" column="QUESTIONNO" />
+		<result property="optioncode" column="OPTIONCODE" />
+		<result property="optioncontent" column="OPTIONCONTENT" />
+		<result property="isdel" column="ISDEL" />
+		
+     </resultMap>
+
+     <!-- 所有字段名称 -->
+        <sql id="sql_flied_all">
+        	ID,
+			QUESTIONNO,
+			OPTIONCODE,
+			OPTIONCONTENT,
+			ISDEL
+        </sql>
+    	<!-- 查询分页  2020-04-09 k6991  -->
+        <select id="queryPagerList" parameterType="map" resultMap="PPMQUESTIONOPTION_ALL">
+        	SELECT
+            <include refid="sql_flied_all" />
+            FROM PPM_QUESTION_OPTION
+            <trim prefix="WHERE" suffixOverrides="AND">
+                <if test="id != null " > ID = #{id} AND </if>
+				<if test="questionno != null  and questionno != '' " > QUESTIONNO = #{questionno} AND </if>
+				<if test="optioncode != null  and optioncode != '' " > OPTIONCODE = #{optioncode} AND </if>
+				<if test="optioncontent != null  and optioncontent != '' " > OPTIONCONTENT = #{optioncontent} AND </if>
+				<if test="isdel != null  and isdel != '' " > ISDEL = #{isdel} AND </if>
+				
+            </trim>
+        </select>
+
+        <!-- 新增  2020-04-09 k6991  -->
+        <insert id="addPojo" parameterType="ppmQuestionOption">
+    		INSERT INTO PPM_QUESTION_OPTION (
+    		<trim suffixOverrides=",">
+    		 <if test="id != null " > ID , </if>
+				<if test="questionno != null  and questionno != '' " > QUESTIONNO , </if>
+				<if test="optioncode != null  and optioncode != '' " > OPTIONCODE , </if>
+				<if test="optioncontent != null  and optioncontent != '' " > OPTIONCONTENT , </if>
+				<if test="isdel != null  and isdel != '' " > ISDEL , </if>
+				
+              </trim>
+    		)
+    		VALUES(
+    		<trim suffixOverrides=",">
+    		 <if test="id != null " > #{id} , </if>
+				<if test="questionno != null  and questionno != '' " > #{questionno} , </if>
+				<if test="optioncode != null  and optioncode != '' " > #{optioncode} , </if>
+				<if test="optioncontent != null  and optioncontent != '' " > #{optioncontent} , </if>
+				<if test="isdel != null  and isdel != '' " > #{isdel} , </if>
+				
+            </trim>
+    		)
+        </insert>
+
+        <!--通过id查询  k6991 2020-04-09 -->
+        <select id="queryDetail" parameterType="map" resultMap="PPMQUESTIONOPTION_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_QUESTION_OPTION  WHERE ID=#{id}
+        </select>
+
+         <!--查询集合  k6991 2020-04-09 -->
+        <select id="getList" parameterType="map" resultType="ppmQuestionOption">
+        	SELECT
+			<include refid="sql_flied_all" />
+        	FROM PPM_QUESTION_OPTION
+        	<trim prefix="WHERE" suffixOverrides="AND">
+        		<if test="id != null " > ID=#{id} AND </if>
+				<if test="questionno != null  and questionno != '' " > QUESTIONNO=#{questionno} AND </if>
+				<if test="optioncode != null  and optioncode != '' " > OPTIONCODE=#{optioncode} AND </if>
+				<if test="optioncontent != null  and optioncontent != '' " > OPTIONCONTENT=#{optioncontent} AND </if>
+				<if test="true" > ISDEL= '0' AND </if>
+				
+            </trim>
+			ORDER BY ID ASC
+        </select>
+        <!-- update sql -->
+        <sql id="update_pojo_sql">
+        	<trim prefix="SET" suffixOverrides=",">
+        		<if test="id != null " > ID=#{id} , </if>
+				<if test="questionno != null  and questionno != '' " > QUESTIONNO=#{questionno} , </if>
+				<if test="optioncode != null  and optioncode != '' " > OPTIONCODE=#{optioncode} , </if>
+				<if test="optioncontent != null  and optioncontent != '' " > OPTIONCONTENT=#{optioncontent} , </if>
+				<if test="isdel != null  and isdel != '' " > ISDEL=#{isdel} , </if>
+				
+            </trim>
+        </sql>
+
+        <!--通过id编辑 k6991 2020-04-09 -->
+    	<update id="updatePojo" parameterType="ppmQuestionOption">
+        	UPDATE
+        	PPM_QUESTION_OPTION
+        	<include refid="update_pojo_sql" />
+        	WHERE ID=#{id} AND QUESTIONNO=#{questionno}
+        </update>
+
+        <!-- 获取主键id -->
+        <select id="getPrimaryKey" parameterType="map" resultType="long">
+            SELECT MAX(ID) FROM PPM_QUESTION_OPTION
+        </select>
+		<!-- 批量添加 k6991 2020-04-17 -->
+		<insert id="batchAdd" parameterType="list" >
+			insert ALL
+			<foreach collection="list" item="item">
+			INTO PPM_QUESTION_OPTION (
+			<trim suffixOverrides=",">
+				<if test="item.id != null " > ID , </if>
+				<if test="item.questionno != null  and item.questionno != '' " > QUESTIONNO , </if>
+				<if test="item.optioncode != null  and item.optioncode != '' " > OPTIONCODE , </if>
+				<if test="item.optioncontent != null  and item.optioncontent != '' " > OPTIONCONTENT , </if>
+				<if test="item.isdel != null  and item.isdel != '' " > ISDEL , </if>
+			</trim>
+			)
+			VALUES(
+			<trim suffixOverrides=",">
+				<if test="item.id != null " > #{item.id} , </if>
+				<if test="item.questionno != null  and item.questionno != '' " > #{item.questionno} , </if>
+				<if test="item.optioncode != null  and item.optioncode != '' " > #{item.optioncode} , </if>
+				<if test="item.optioncontent != null  and item.optioncontent != '' " > #{item.optioncontent} , </if>
+				<if test="item.isdel != null  and item.isdel != '' " > #{item.isdel} , </if>
+			</trim>
+			)
+			</foreach>
+			select 1 from dual
+		</insert>
+	<!--通过QUESTIONNO批量删除  k6991 2020-04-09 -->
+	<delete id="deletePojo" parameterType="ppmQuestionOption">
+		DELETE
+		FROM
+		PPM_QUESTION_OPTION
+		WHERE QUESTIONNO = #{questionno}
+	</delete>
+	<!-- 批量删除 k6991 2020-04-28 -->
+	<update id="bacthDeletes" parameterType="map">
+		UPDATE
+		PPM_QUESTION_OPTION
+		SET
+		ISDEL=#{isdel}
+		WHERE QUESTIONNO IN (${questionnos})
+	</update>
+</mapper>

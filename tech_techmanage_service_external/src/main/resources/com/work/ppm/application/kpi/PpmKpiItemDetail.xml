@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k1327 2021-05-31 -->
+<mapper namespace="com.work.ppm.application.model.kpi.PpmKpiItemDetail">
+	 <resultMap type="ppmKpiItemDetail" id="PPMKPIITEMDETAIL_ALL">
+        <result property="id" column="ID" />
+		<result property="rid" column="RID" />
+		<result property="isdel" column="ISDEL" />
+		<result property="value" column="VALUE" />
+		<result property="finishdate" column="FINISHDATE" />
+		<result property="standard" column="STANDARD" />
+		<result property="workcontent" column="WORKCONTENT" />
+		<result property="uptuserid" column="UPTUSERID" />
+		<result property="uptdate" column="UPTDATE" />
+		
+     </resultMap>
+	<resultMap type="ppmKpiItemDetailInfo" id="PPMKPIITEMDETAIL_ALL_EXT" extends="PPMKPIITEMDETAIL_ALL">
+		<result property="uptusername" column="UPTUSERNAME" />
+	</resultMap>
+     <!-- 所有字段名称 -->
+        <sql id="sql_flied_all">
+        	ID,
+			RID,
+			ISDEL,
+			VALUE,
+			FINISHDATE,
+			STANDARD,
+			WORKCONTENT,
+			UPTUSERID,
+			UPTDATE
+        </sql>
+        <sql id="sql_select_condition">
+            <trim prefix="WHERE" suffixOverrides="AND">
+                <if test="id != null " > ID = #{id} AND </if>
+				<if test="rid != null " > RID = #{rid} AND </if>
+				<if test="isdel != null " > ISDEL = #{isdel} AND </if>
+				<if test="value != null " > VALUE = #{value} AND </if>
+				<if test="finishdate != null " > FINISHDATE = #{finishdate} AND </if>
+				<if test="standard != null  and standard != '' " > STANDARD = #{standard} AND </if>
+				<if test="workcontent != null  and workcontent != '' " > WORKCONTENT = #{workcontent} AND </if>
+				<if test="uptuserid != null  and uptuserid != '' " > UPTUSERID = #{uptuserid} AND </if>
+				<if test="uptdate != null " > UPTDATE = #{uptdate} AND </if>
+				
+            </trim>
+        </sql>
+    	<!-- 查询分页  2021-05-31 k1327  -->
+        <select id="queryPagerList" parameterType="map" resultMap="PPMKPIITEMDETAIL_ALL">
+        	SELECT
+            <include refid="sql_flied_all" />
+            FROM PPM_KPI_ITEM_DETAIL
+            <include refid="sql_select_condition" />
+        </select>
+
+        <!-- 新增  2021-05-31 k1327  -->
+        <insert id="addPojo" parameterType="ppmKpiItemDetail">
+    		INSERT INTO PPM_KPI_ITEM_DETAIL (
+    		<trim suffixOverrides=",">
+    		 <if test="id != null " > ID , </if>
+				<if test="rid != null " > RID , </if>
+				<if test="isdel != null " > ISDEL , </if>
+				<if test="value != null " > VALUE , </if>
+				<if test="finishdate != null " > FINISHDATE , </if>
+				<if test="standard != null  and standard != '' " > STANDARD , </if>
+				<if test="workcontent != null  and workcontent != '' " > WORKCONTENT , </if>
+				<if test="uptuserid != null  and uptuserid != '' " > UPTUSERID , </if>
+				<if test="uptdate != null " > UPTDATE , </if>
+				
+              </trim>
+    		)
+    		VALUES(
+    		<trim suffixOverrides=",">
+    		 <if test="id != null " > #{id} , </if>
+				<if test="rid != null " > #{rid} , </if>
+				<if test="isdel != null " > #{isdel} , </if>
+				<if test="value != null " > #{value} , </if>
+				<if test="finishdate != null " > #{finishdate} , </if>
+				<if test="standard != null  and standard != '' " > #{standard} , </if>
+				<if test="workcontent != null  and workcontent != '' " > #{workcontent} , </if>
+				<if test="uptuserid != null  and uptuserid != '' " > #{uptuserid} , </if>
+				<if test="uptdate != null " > #{uptdate} , </if>
+				
+            </trim>
+    		)
+        </insert>
+
+        <!--通过id查询  k1327 2021-05-31 -->
+        <select id="queryDetail" parameterType="ppmKpiItemDetail" resultMap="PPMKPIITEMDETAIL_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_KPI_ITEM_DETAIL  WHERE ID=#{id}
+        </select>
+
+		<!--通过id查询  k1327 2021-05-31 -->
+		<select id="queryKpiDetailByStandard" parameterType="ppmKpiItemDetail" resultMap="PPMKPIITEMDETAIL_ALL">
+			SELECT
+			<include refid="sql_flied_all" />
+			FROM PPM_KPI_ITEM_DETAIL  WHERE standard=#{standard}
+		</select>
+
+         <!--查询集合  k1327 2021-05-31 -->
+        <select id="getList" parameterType="ppmKpiItemDetail" resultMap="PPMKPIITEMDETAIL_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_KPI_ITEM_DETAIL
+        	<include refid="sql_select_condition" />
+        </select>
+        <!-- update sql -->
+        <sql id="update_pojo_sql">
+        	<trim prefix="SET" suffixOverrides=",">
+        		<if test="id != null " > ID=#{id} , </if>
+				<if test="rid != null " > RID=#{rid} , </if>
+				<if test="isdel != null " > ISDEL=#{isdel} , </if>
+				<if test="value != null " > VALUE=#{value} , </if>
+				<if test="finishdate != null " > FINISHDATE=#{finishdate} , </if>
+				<if test="standard != null  and standard != '' " > STANDARD=#{standard} , </if>
+				<if test="workcontent != null  and workcontent != '' " > WORKCONTENT=#{workcontent} , </if>
+				<if test="uptuserid != null  and uptuserid != '' " > UPTUSERID=#{uptuserid} , </if>
+				<if test="uptdate != null " > UPTDATE=#{uptdate} , </if>
+				
+            </trim>
+        </sql>
+
+        <!--通过id编辑 k1327 2021-05-31 -->
+    	<update id="updatePojo" parameterType="ppmKpiItemDetail">
+        	UPDATE
+        	PPM_KPI_ITEM_DETAIL
+        	<include refid="update_pojo_sql" />
+        	WHERE ID=#{id}
+        </update>
+
+        <!--通过id批量删除  k1327 2021-05-31 -->
+        <delete id="deleteById" parameterType="ppmKpiItemDetail">
+        	DELETE
+        	FROM
+        	PPM_KPI_ITEM_DETAIL
+        	WHERE ID = #{id}
+        </delete>
+		<!--通过id批量删除  k1327 2021-05-31 -->
+		<delete id="deleteByRid" parameterType="ppmKpiItemDetail">
+			DELETE
+			FROM
+			PPM_KPI_ITEM_DETAIL
+			WHERE RID = #{rid}
+		</delete>
+
+		<!--查询集合  k1327 2021-05-31 -->
+		<select id="getPpmKpiItemDetailInfo" parameterType="ppmKpiItemDetailInfo" resultMap="PPMKPIITEMDETAIL_ALL_EXT">
+			select d.id,
+			d.rid,
+			d.isdel,
+			d.value,
+			d.finishdate,
+			d.standard,
+			d.workcontent,
+			d.uptuserid,
+			d.uptdate,
+			e.empname uptusername
+			from ppm_kpi_item_detail d
+			left join comm_employee e on d.uptuserid=e.badge
+			<trim prefix="WHERE" suffixOverrides="AND">
+				<if test="id != null " > d.ID = #{id} AND </if>
+				<if test="rid != null " > d.RID = #{rid} AND </if>
+				<if test="isdel != null " > d.ISDEL = #{isdel} AND </if>
+				<if test="value != null " > d.VALUE = #{value} AND </if>
+				<if test="finishdate != null " > d.FINISHDATE = #{finishdate} AND </if>
+				<if test="standard != null  and standard != '' " > d.STANDARD = #{standard} AND </if>
+				<if test="workcontent != null  and workcontent != '' " > d.WORKCONTENT = #{workcontent} AND </if>
+				<if test="uptuserid != null  and uptuserid != '' " > d.UPTUSERID = #{uptuserid} AND </if>
+				<if test="uptdate != null " > d.UPTDATE = #{uptdate} AND </if>
+			</trim>
+			order by d.id asc
+		</select>
+</mapper>

@@ -1,0 +1,42 @@
+package com.tansun.wf.activiti.model;
+
+import java.io.Serializable;
+
+public class ValueType implements Serializable {
+
+
+	private static final long serialVersionUID = -4078375963225381041L;
+	
+	private   String   key;
+	
+	private   Object    value;
+	
+	private   Class     clazz;
+
+	public Object getValue() {
+		return value;
+	}
+
+	public void setValue(Object value) {
+		this.value = value;
+	}
+
+	public Class getClazz() {
+		return clazz;
+	}
+
+	public void setClazz(Class clazz) {
+		this.clazz = clazz;
+	}
+
+	public String getKey() {
+		return key;
+	}
+
+	public void setKey(String key) {
+		this.key = key;
+	}
+	
+	
+
+}

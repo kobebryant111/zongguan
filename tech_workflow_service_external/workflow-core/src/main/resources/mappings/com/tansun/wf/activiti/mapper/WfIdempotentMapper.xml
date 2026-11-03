@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tansun.wf.activiti.mapper.WfIdempotentMapper">
+
+    <resultMap type="com.tansun.wf.activiti.model.WfIdempotentEntity" id="wfIdempotentMap">
+        <result property="id" column="ID" jdbcType="VARCHAR"/>
+        <result property="transactionId" column="TRANSACTION_ID" jdbcType="VARCHAR"/>
+        <result property="reqeustParams" column="REQEUST_PARAMS" jdbcType="VARCHAR"/>
+        <result property="methodName" column="METHOD_NAME" jdbcType="VARCHAR"/>
+        <result property="responseResult" column="RESPONSE_RESULT" jdbcType="VARCHAR"/>
+        <result property="state" column="STATUS" jdbcType="VARCHAR"/>
+        <result property="startTime" column="START_TIME" jdbcType="TIMESTAMP"/>
+        <result property="endTime" column="END_TIME" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="findByTransactionId" resultMap="wfIdempotentMap">
+        select
+          ID, TRANSACTION_ID, METHOD_NAME,REQEUST_PARAMS, RESPONSE_RESULT, STATE, START_TIME, END_TIME
+        from WF_IDEMPOTENT
+        where  TRANSACTION_ID = #{transactionId}
+    </select>
+
+
+
+    <!--新增所有列-->
+    <insert id="insertWfIdempotent" parameterType="com.tansun.wf.activiti.model.WfIdempotentEntity">
+        insert into WF_IDEMPOTENT(ID, TRANSACTION_ID, METHOD_NAME, REQEUST_PARAMS, RESPONSE_RESULT, STATE, START_TIME, END_TIME)
+        values (#{id}, #{transactionId},#{methodName}, #{reqeustParams}, #{responseResult}, #{state}, #{startTime}, #{endTime})
+    </insert>
+
+</mapper>

@@ -1,0 +1,436 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.work.ppm.application.model.vendormanager.VendorContract">
+
+    <resultMap type="vendorContract" id="VENDORCONTRACT_ALL">
+      <result property="id" column="ID"/>
+      <result property="contractNo" column="CONTRACT_NO"/>
+      <result property="contractName" column="CONTRACT_NAME"/>
+      <result property="outsourceType"  column="OUTSOURCE_TYPE"/>
+      <result property="vendor" column="VENDOR"/>
+      <result property="vendorName" column="VENDOR_NAME"/>
+      <result property="attachInfo" column="ATTACH_INFO"/>
+      <result property="startDate" column="START_DATE"/>
+      <result property="endDate" column="END_DATE"/>
+      <result property="status" column="STATUS"/>
+      <result property="taxRate" column="TAX_RATE"/>
+      <result property="isDel" column="IS_DEL"/>
+      <result property="progress" column="PROGRESS"/>
+      <result property="proContent" column="PRO_CONTENT"/>
+      <result property="settlementFrequency" column="SETTLEMENT_FREQUENCY"/>
+      <result property="contractDoc" column="CONTRACT_DOC"/>
+      <result property="payee" column="PAYEE"/>
+      <result property="bankDeposit" column="BANK_DEPOSIT"/>
+      <result property="account" column="ACCOUNT"/>
+      <result property="transactionType" column="TRANSACTION_TYPE"/>
+      <result property="bankCode" column="BANK_CODE"/>
+      <result property="createDate" column="CREATE_DATE"/>
+      <result property="createUser" column="CREATE_USER"/>
+      <result property="updateDate" column="UPDATE_DATE"/>
+      <result property="updateUser" column="UPDATE_USER"/>
+    </resultMap>
+
+    <resultMap type="com.work.ppm.application.dto.vendorcontract.VendorContractDto" id="VENDORCONTRACT_ALL_EXT" extends="VENDORCONTRACT_ALL">
+        <result property="proManager" column="PRO_MANAGER"/>
+    </resultMap>
+
+    <!-- 所有字段 -->
+    <sql id="sql_flied_all">
+        ID
+        ,CONTRACT_NO
+        ,CONTRACT_NAME
+        ,VENDOR
+        ,START_DATE
+        ,END_DATE
+        ,CASE
+         when  sysdate &lt; to_date(start_date,'yyyy-MM-dd') then '未生效'
+         when  sysdate &gt; to_date(end_date,'yyyy-MM-dd') then '已失效'
+         else '生效中'  end  as STATUS
+        ,TAX_RATE
+        ,IS_DEL
+        ,PROGRESS
+        ,PRO_CONTENT
+        ,SETTLEMENT_FREQUENCY
+        ,CONTRACT_DOC
+        ,ATTACH_INFO
+        ,OUTSOURCE_TYPE
+        ,PAYEE
+        ,BANK_DEPOSIT
+        ,ACCOUNT
+        ,TRANSACTION_TYPE
+        ,BANK_CODE
+        ,CREATE_USER
+        ,UPDATE_USER
+    </sql>
+
+    <sql id="sql_flied_basic">
+        ID
+        ,CONTRACT_NO
+        ,CONTRACT_NAME
+        ,VENDOR
+        ,PROGRESS
+        ,START_DATE
+        ,END_DATE
+        ,ATTACH_INFO
+        ,OUTSOURCE_TYPE
+        ,CASE
+         when  sysdate &lt; to_date(start_date,'yyyy-MM-dd') then '未生效'
+         when  sysdate &gt; to_date(end_date,'yyyy-MM-dd') then '已失效'
+         else '生效中'  end  as STATUS
+        ,TAX_RATE
+        ,PRO_CONTENT
+        ,SETTLEMENT_FREQUENCY
+        ,CONTRACT_DOC
+    </sql>
+
+    <sql id="sql_flied_small">
+        ID
+        ,CONTRACT_NO
+        ,CONTRACT_NAME
+        ,VENDOR
+        ,CONTRACT_DOC
+        ,ATTACH_INFO
+        ,OUTSOURCE_TYPE
+        ,CASE
+         when  sysdate &lt; to_date(start_date,'yyyy-MM-dd') then '未生效'
+         when  sysdate &gt; to_date(end_date,'yyyy-MM-dd') then '已失效'
+         else '生效中'  end  as STATUS
+    </sql>
+
+    <!--  查询条件  -->
+    <sql id="sql_select_condition">
+       <trim prefix="WHERE" suffixOverrides="AND">
+           <if test="progress != null and progress != '' " > PROGRESS = #{progress} AND</if>
+           <if test="id != null and id != '' "> ID = #{id} AND </if>
+           <if test="contractNo != null and contractNo != '' "> CONTRACT_NO = #{contractNo} AND </if>
+           <if test="contractName != null and contractName != '' "> CONTRACT_NAME = #{contractName} AND </if>
+           <if test="vendor != null and vendor != '' "> VENDOR = #{vendor} AND </if>
+           <if test="startDate != null and startDate != '' "> START_DATE &gt;= #{startDate} AND </if>
+           <if test="endDate != null and endDate != '' "> END_DATE &lt;= #{endDate} AND </if>
+           <if test="status != null and status != '' "> STATUS = #{status} AND </if>
+           <if test="taxRate != null and taxRate != '' "> TAX_RATE = #{taxRate} AND </if>
+           <if test="isDel != null and isDel != '' "> IS_DEL = #{isDel} AND </if>
+           <if test="outsourceType != null and outsourceType != '' "> outsource_type = #{outsourceType} AND </if>
+           <if test="proContent != null and proContent != '' "> PRO_CONTENT = #{proContent} AND </if>
+           <if test="settlementFrequency != null and settlementFrequency != '' "> SETTLEMENT_FREQUENCY = #{settlementFrequency} AND </if>
+           <if test="contractDoc != null and contractDoc != '' "> CONTRACT_DOC = #{contractDoc} AND </if>
+           <if test="payee != null and payee != '' "> PAYEE = #{payee} AND </if>
+           <if test="bankDeposit != null and bankDeposit != '' "> BANK_DEPOSIT = #{bankDeposit} AND </if>
+           <if test="account != null and account != '' "> ACCOUNT = #{account} AND </if>
+           <if test="transactionType != null and transactionType != '' "> TRANSACTION_TYPE = #{transactionType} AND </if>
+           <if test="bankCode != null and bankCode != '' "> BANK_CODE = #{bankCode} AND </if>
+           <if test="createUser != null and createUser != '' "> CREATE_USER = #{createUser} AND </if>
+           <if test="updateUser != null and updateUser != '' "> UPDATE_USER = #{updateUser} AND </if>
+       </trim>
+    </sql>
+
+    <!-- 查询条件 自定义 -->
+    <sql id="sql_select_condition_cus">
+       <trim prefix="WHERE" suffixOverrides="AND">
+           <if test="id != null and id != '' "> ID = #{id} AND </if>
+           <if test="outsourceType != null and outsourceType != '' "> outsource_type = #{outsourceType} AND </if>
+           <if test="isDel != null and isDel != '' "> IS_DEL = #{isDel} AND </if>
+           <if test="contractNo != null and contractNo != '' "> CONTRACT_NO = #{contractNo} AND </if>
+           <if test="contractName != null and contractName != '' "> CONTRACT_NAME = #{contractName} AND </if>
+           <if test="settlementFrequency != null and settlementFrequency != '' "> SETTLEMENT_FREQUENCY = #{settlementFrequency} AND </if>
+           <if test="attachInfo != null and attachInfo != '' "> ATTACH_INFO = #{attachInfo} AND </if>
+       </trim>
+    </sql>
+
+    <!-- 查询条件 自定义 -->
+    <sql id="sql_select_condition_pager">
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="id != null and id != '' "> ID = #{id} AND </if>
+            <if test="outsourceType != null and outsourceType != '' "> outsource_type = #{outsourceType} AND </if>
+            <if test="isDel != null and isDel != '' "> IS_DEL = #{isDel} AND </if>
+            <if test="vendor != null and vendor != '' "> VENDOR = #{vendor} AND </if>
+            <if test="contractNo != null and contractNo != '' "> CONTRACT_NO = #{contractNo} AND </if>
+            <if test="contractName != null and contractName != '' "> CONTRACT_NAME like '%'||#{contractName}||'%' AND </if>
+            <if test="settlementFrequency != null and settlementFrequency != '' "> SETTLEMENT_FREQUENCY = #{settlementFrequency} AND </if>
+        </trim>
+    </sql>
+
+    <!-- 更新字段 -->
+    <sql id="update_pojo_sql">
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="contractNo != null and contractNo != '' " > CONTRACT_NO = #{contractNo},</if>
+            <if test="contractName != null and contractName != '' " > CONTRACT_NAME = #{contractName},</if>
+            <if test="vendor != null and vendor != '' " > VENDOR = #{vendor},</if>
+            <if test="startDate != null and startDate != '' " > START_DATE = #{startDate},</if>
+            <if test="endDate != null and endDate != '' " > END_DATE = #{endDate},</if>
+            <if test="status != null and status != '' " > STATUS = #{status},</if>
+            <if test="progress != null and progress != '' " > PROGRESS = #{progress},</if>
+            <if test="attachInfo != null and attachInfo != '' " > ATTACH_INFO = #{attachInfo},</if>
+            <if test="taxRate != null and taxRate != '' " > TAX_RATE = #{taxRate},</if>
+            <if test="isDel != null and isDel != '' " > IS_DEL = #{isDel},</if>
+            <if test="outsourceType != null and outsourceType != '' "> outsource_type = #{outsourceType},</if>
+            <if test="proContent != null and proContent != '' " > PRO_CONTENT = #{proContent},</if>
+            <if test="settlementFrequency != null and settlementFrequency != '' " > SETTLEMENT_FREQUENCY = #{settlementFrequency},</if>
+            <if test="contractDoc != null and contractDoc != '' " > CONTRACT_DOC = #{contractDoc},</if>
+            <if test="payee != null and payee != '' " > PAYEE = #{payee},</if>
+            <if test="bankDeposit != null and bankDeposit != '' " > BANK_DEPOSIT = #{bankDeposit},</if>
+            <if test="account != null and account != '' " > ACCOUNT = #{account},</if>
+            <if test="transactionType != null and transactionType != '' " > TRANSACTION_TYPE = #{transactionType},</if>
+            <if test="bankCode != null and bankCode != '' " > BANK_CODE = #{bankCode},</if>
+            <if test="createUser != null and createUser != '' " > CREATE_USER = #{createUser},</if>
+            <if test="updateUser != null and updateUser != '' " > UPDATE_USER = #{updateUser},</if>
+        </trim>
+    </sql>
+
+    <!--  查询  -->
+    <!-- pager query 2022-10-26 ywwb903  -->
+    <select id="queryPagerList" parameterType="map" resultMap="VENDORCONTRACT_ALL">
+        SELECT  a.*,b.outsourcname vendor_name  FROM (
+        SELECT
+        ID
+        ,CONTRACT_NO
+        ,CONTRACT_NAME
+        ,VENDOR
+        ,PROGRESS
+        ,START_DATE
+        ,END_DATE
+        ,ATTACH_INFO
+        ,CASE
+        when  sysdate &lt; to_date(start_date,'yyyy-MM-dd') then '未生效'
+        when  sysdate &gt; to_date(end_date,'yyyy-MM-dd') then '已失效'
+        else '生效中'  end  as STATUS
+        ,TAX_RATE
+        ,PRO_CONTENT
+        ,SETTLEMENT_FREQUENCY
+        ,CONTRACT_DOC
+        ,IS_DEL
+        FROM PPM_VENDOR_CONTRACT ) a
+        LEFT JOIN
+        (SELECT outsourcname , orgcode as vendor_id FROM PPM_OUTSOURCING_INFO) b
+        ON a.vendor = b.vendor_id
+        <include refid="sql_select_condition_pager"/>
+        ORDER BY start_Date DESC
+    </select>
+
+    <!-- list query 2022-10-26 ywwb903  -->
+    <select id="getList" parameterType="vendorContract" resultMap="VENDORCONTRACT_ALL">
+        SELECT
+        <include refid="sql_flied_basic"/>
+        FROM PPM_VENDOR_CONTRACT
+        <include refid="sql_select_condition"/>
+    </select>
+
+    <!-- query details by id 2022-10-26 ywwb903  -->
+    <select id="queryDetailsById" parameterType="map" resultMap="VENDORCONTRACT_ALL">
+        SELECT
+        <include refid="sql_flied_all" />
+        FROM PPM_VENDOR_CONTRACT WHERE ID=#{id}
+    </select>
+
+   <!-- select by map  2022-10-26 ywwb903  -->
+    <select id="selectByMapBasic" parameterType="map" resultMap="VENDORCONTRACT_ALL">
+        SELECT
+        <include refid="sql_flied_basic" />
+        FROM PPM_VENDOR_CONTRACT
+        <include refid="sql_select_condition_cus"/>
+    </select>
+
+    <select id="selectByMapSmall" parameterType="map" resultMap="VENDORCONTRACT_ALL">
+        SELECT
+        <include refid="sql_flied_small" />
+        FROM PPM_VENDOR_CONTRACT
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="id != null and id != '' "> ID = #{id} AND </if>
+            <if test="outsourceType != null and outsourceType != '' "> outsource_type = #{outsourceType} AND </if>
+            <if test="isDel != null and isDel != '' "> IS_DEL = #{isDel} AND </if>
+            <if test="contractNo != null and contractNo != '' "> CONTRACT_NO = #{contractNo} AND </if>
+            <if test="contractName != null and contractName != '' "> CONTRACT_NAME LIKE '%'|| #{contractName} ||'%' AND </if>
+            <if test="settlementFrequency != null and settlementFrequency != '' "> SETTLEMENT_FREQUENCY = #{settlementFrequency} AND </if>
+            <if test="attachInfo != null and attachInfo != '' "> ATTACH_INFO = #{attachInfo} AND </if>
+        </trim>
+    </select>
+
+   <!-- selectCount  2022-10-26 ywwb903  -->
+    <select id="selectCount" parameterType="map" resultType="Long">
+        SELECT COUNT(1)
+        FROM PPM_VENDOR_CONTRACT
+        <include refid="sql_select_condition_cus"/>
+    </select>
+
+    <!-- countByOutSource  2022-10-26 ywwb903  -->
+    <select id="countByOutSource" resultType="Long">
+        SELECT count(1)
+          FROM PPM_VENDOR_CONTRACT a
+        INNER JOIN (SELECT AAA AS CONTRACT_NO FROM PPM_OUTSOURCING_BASIC) b
+        on a.CONTRACT_NO = b.CONTRACT_NO
+        WHERE a.is_del = '0' and a.id = #{id};
+    </select>
+
+    <!-- selectExpireDays  2022-11-12 ywwb903 合同失效天数 -->
+    <select id="selectExpireDays" parameterType="String" resultType="Double">
+        SELECT (sysdate - to_date(end_date, 'YY-MM-DD')) days
+        FROM PPM_VENDOR_CONTRACT WHERE contract_no = #{contractNo}
+    </select>
+
+    <!-- query details 2022-10-26 ywwb903  -->
+    <select id="queryDetails" parameterType="vendorContract" resultMap="VENDORCONTRACT_ALL">
+        SELECT
+        <include refid="sql_flied_all" />
+        FROM PPM_VENDOR_CONTRACT WHERE ID=#{id}
+    </select>
+
+    <!-- query list ext 2022-12-13 ywwb903  -->
+    <select id="queryListExt" resultMap="VENDORCONTRACT_ALL_EXT">
+        SELECT
+        id,contract_no, contract_name, vendor,tax_rate,person_in_charge as pro_manager
+        ,case
+        TO_CHAR(sysdate, 'Q')
+        when '1' then to_char(add_months(sysdate,-12), 'yyyy')||'-10-01'
+        when '2' then to_char(sysdate, 'yyyy')||'-01-01'
+        when '3' then to_char(sysdate, 'yyyy')||'-04-01'
+        when '4' then to_char(sysdate, 'yyyy')||'-07-01'
+        end as start_date
+        ,case
+        TO_CHAR(sysdate, 'Q')
+        when '1' then to_char(add_months(sysdate,-12), 'yyyy')||'-12-31'
+        when '2' then to_char(sysdate, 'yyyy')||'-03-31'
+        when '3' then to_char(sysdate, 'yyyy')||'-06-30'
+        when '4' then to_char(sysdate, 'yyyy')||'-09-30'
+        end as end_date
+        FROM (
+        SELECT id,contract_no, contract_name, vendor,tax_rate FROM PPM_VENDOR_CONTRACT WHERE is_del = '0' and settlement_frequency = '1' and outsource_type = '1') a
+        left join
+        (SELECT PERSON_IN_CHARGE, NEW_CONTRACT_ID FROM PPM_OUTSOURCING_BASIC) b
+        on a.id = b.new_contract_id
+        where person_in_charge is not null
+        group by id,contract_no, contract_name, vendor,tax_rate,person_in_charge
+
+    </select>
+
+    <!--  新增  -->
+    <!-- insert 2022-10-26 ywwb903  -->
+    <insert id="addPojo" parameterType="vendorContract">
+    	INSERT INTO PPM_VENDOR_CONTRACT (
+    	<trim suffixOverrides=",">
+    	    <if test="id != null and id != '' ">  ID ,</if>
+    	    <if test="contractNo != null and contractNo != '' ">  CONTRACT_NO ,</if>
+    	    <if test="contractName != null and contractName != '' ">  CONTRACT_NAME ,</if>
+    	    <if test="vendor != null and vendor != '' ">  VENDOR ,</if>
+    	    <if test="startDate != null and startDate != '' ">  START_DATE ,</if>
+    	    <if test="endDate != null and endDate != '' ">  END_DATE ,</if>
+            <if test="attachInfo != null and attachInfo != '' ">  ATTACH_INFO ,</if>
+    	    <if test="status != null and status != '' ">  STATUS ,</if>
+            <if test="progress != null and progress != '' ">  PROGRESS ,</if>
+    	    <if test="taxRate != null and taxRate != '' ">  TAX_RATE ,</if>
+    	    <if test="isDel != null and isDel != '' ">  IS_DEL ,</if>
+    	    <if test="proContent != null and proContent != '' ">  PRO_CONTENT ,</if>
+    	    <if test="settlementFrequency != null and settlementFrequency != '' ">  SETTLEMENT_FREQUENCY ,</if>
+    	    <if test="contractDoc != null and contractDoc != '' ">  CONTRACT_DOC ,</if>
+            <if test="outsourceType != null and outsourceType != '' "> outsource_type,</if>
+    	    <if test="payee != null and payee != '' ">  PAYEE ,</if>
+    	    <if test="bankDeposit != null and bankDeposit != '' ">  BANK_DEPOSIT ,</if>
+    	    <if test="account != null and account != '' ">  ACCOUNT ,</if>
+    	    <if test="transactionType != null and transactionType != '' ">  TRANSACTION_TYPE ,</if>
+    	    <if test="bankCode != null and bankCode != '' ">  BANK_CODE ,</if>
+    	    <if test="createUser != null and createUser != '' ">  CREATE_USER ,</if>
+    	    <if test="updateUser != null and updateUser != '' ">  UPDATE_USER ,</if>
+    	</trim>
+    	)
+    	VALUES(
+    	<trim suffixOverrides=",">
+            <if test="id != null and id != '' "> #{id} ,</if>
+            <if test="contractNo != null and contractNo != '' "> #{contractNo} ,</if>
+            <if test="contractName != null and contractName != '' "> #{contractName} ,</if>
+            <if test="vendor != null and vendor != '' "> #{vendor} ,</if>
+            <if test="startDate != null and startDate != '' "> #{startDate} ,</if>
+            <if test="endDate != null and endDate != '' "> #{endDate} ,</if>
+            <if test="attachInfo != null and attachInfo != '' "> #{attachInfo} ,</if>
+            <if test="status != null and status != '' "> #{status} ,</if>
+            <if test="progress != null and progress != '' "> #{progress} ,</if>
+            <if test="taxRate != null and taxRate != '' "> #{taxRate} ,</if>
+            <if test="isDel != null and isDel != '' "> #{isDel} ,</if>
+            <if test="proContent != null and proContent != '' "> #{proContent} ,</if>
+            <if test="settlementFrequency != null and settlementFrequency != '' "> #{settlementFrequency} ,</if>
+            <if test="contractDoc != null and contractDoc != '' "> #{contractDoc} ,</if>
+            <if test="outsourceType != null and outsourceType != '' "> #{outsourceType} ,</if>
+            <if test="payee != null and payee != '' "> #{payee} ,</if>
+            <if test="bankDeposit != null and bankDeposit != '' "> #{bankDeposit} ,</if>
+            <if test="account != null and account != '' "> #{account} ,</if>
+            <if test="transactionType != null and transactionType != '' "> #{transactionType} ,</if>
+            <if test="bankCode != null and bankCode != '' "> #{bankCode} ,</if>
+            <if test="createUser != null and createUser != '' "> #{createUser} ,</if>
+            <if test="updateUser != null and updateUser != '' "> #{updateUser} ,</if>
+    	</trim>
+    	)
+    </insert>
+
+    <!-- batch insert 2022-10-26 ywwb903  -->
+    <insert id="batchAdd" parameterType="list">
+        INSERT ALL
+        <foreach collection="list" item="item" index="index">
+            INTO PPM_VENDOR_CONTRACT (
+            <trim suffixOverrides=",">
+                <if test="item.id != null" > ID ,</if>
+                <if test="item.contractNo != null and item.contractNo != '' ">  CONTRACT_NO ,</if>
+                <if test="item.contractName != null and item.contractName != '' ">  CONTRACT_NAME ,</if>
+                <if test="item.vendor != null and item.vendor != '' ">  VENDOR ,</if>
+                <if test="item.startDate != null and item.startDate != '' ">  START_DATE ,</if>
+                <if test="item.endDate != null and item.endDate != '' ">  END_DATE ,</if>
+                <if test="item.status != null and item.status != '' ">  STATUS ,</if>
+                <if test="item.taxRate != null and item.taxRate != '' ">  TAX_RATE ,</if>
+                <if test="item.isDel != null and item.isDel != '' ">  IS_DEL ,</if>
+                <if test="item.proContent != null and item.proContent != '' ">  PRO_CONTENT ,</if>
+                <if test="item.settlementFrequency != null and item.settlementFrequency != '' ">  SETTLEMENT_FREQUENCY ,</if>
+                <if test="item.contractDoc != null and item.contractDoc != '' ">  CONTRACT_DOC ,</if>
+                <if test="outsourceType != null and outsourceType != '' "> OUTSOURCE_TYPE ,</if>
+                <if test="item.payee != null and item.payee != '' ">  PAYEE ,</if>
+                <if test="item.bankDeposit != null and item.bankDeposit != '' ">  BANK_DEPOSIT ,</if>
+                <if test="item.account != null and item.account != '' ">  ACCOUNT ,</if>
+                <if test="item.transactionType != null and item.transactionType != '' ">  TRANSACTION_TYPE ,</if>
+                <if test="item.bankCode != null and item.bankCode != '' ">  BANK_CODE ,</if>
+                <if test="item.createDate != null and item.createDate != '' ">  CREATE_DATE ,</if>
+                <if test="item.createUser != null and item.createUser != '' ">  CREATE_USER ,</if>
+                <if test="item.updateDate != null and item.updateDate != '' ">  UPDATE_DATE ,</if>
+                <if test="item.updateUser != null and item.updateUser != '' ">  UPDATE_USER ,</if>
+            </trim>
+            )
+            VALUES(
+            <trim suffixOverrides=",">
+                <if test="item.id != null" > #{item.id} ,</if>
+                <if test="item.contractNo != null and item.contractNo != '' " > #{item.contractNo} ,</if>
+                <if test="item.contractName != null and item.contractName != '' " > #{item.contractName} ,</if>
+                <if test="item.vendor != null and item.vendor != '' " > #{item.vendor} ,</if>
+                <if test="item.startDate != null and item.startDate != '' " > #{item.startDate} ,</if>
+                <if test="item.endDate != null and item.endDate != '' " > #{item.endDate} ,</if>
+                <if test="item.status != null and item.status != '' " > #{item.status} ,</if>
+                <if test="item.taxRate != null and item.taxRate != '' " > #{item.taxRate} ,</if>
+                <if test="item.isDel != null and item.isDel != '' " > #{item.isDel} ,</if>
+                <if test="item.proContent != null and item.proContent != '' " > #{item.proContent} ,</if>
+                <if test="item.settlementFrequency != null and item.settlementFrequency != '' " > #{item.settlementFrequency} ,</if>
+                <if test="item.contractDoc != null and item.contractDoc != '' " > #{item.contractDoc} ,</if>
+                <if test="item.outsourceType != null and item.outsourceType != '' "> #{item.outsourceType} ,</if>
+                <if test="item.payee != null and item.payee != '' " > #{item.payee} ,</if>
+                <if test="item.bankDeposit != null and item.bankDeposit != '' " > #{item.bankDeposit} ,</if>
+                <if test="item.account != null and item.account != '' " > #{item.account} ,</if>
+                <if test="item.transactionType != null and item.transactionType != '' " > #{item.transactionType} ,</if>
+                <if test="item.bankCode != null and item.bankCode != '' " > #{item.bankCode} ,</if>
+                <if test="item.createDate != null and item.createDate != '' " > #{item.createDate} ,</if>
+                <if test="item.createUser != null and item.createUser != '' " > #{item.createUser} ,</if>
+                <if test="item.updateDate != null and item.updateDate != '' " > #{item.updateDate} ,</if>
+                <if test="item.updateUser != null and item.updateUser != '' " > #{item.updateUser} ,</if>
+            </trim>
+            )
+        </foreach>
+        select 1 from dual
+    </insert>
+
+    <!--  更新  -->
+	<!-- update by id 2022-10-26 ywwb903  -->
+	<update id="updatePojo" parameterType="vendorContract">
+		UPDATE
+		PPM_VENDOR_CONTRACT
+		<include refid="update_pojo_sql" />
+		WHERE ID = #{id}
+	</update>
+
+	<!--  删除  -->
+	<!-- delete by pojo 2022-10-26 ywwb903  -->
+    <delete id="deletePojo" parameterType="vendorContract">
+        DELETE FROM PPM_VENDOR_CONTRACT WHERE ID = #{id}
+    </delete>
+</mapper>

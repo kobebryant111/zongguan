@@ -1,0 +1,432 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.work.ppm.application.model.resourceplat.ResAddedExt">
+    <resultMap type="ResAddedExt" id="modelResult">
+        <result property="id" column="ID"/>
+        <result property="addedItemId" column="ADDEDITEMID"/>
+        <result property="machineRoom" column="MACHINEROOM"/>
+        <result property="cabinet" column="CABINET"/>
+        <result property="cabinetPos" column="CABINETPOS"/>
+        <result property="sn" column="SN"/>
+        <result property="f5ip" column="F5IP"/>
+        <result property="ip" column="IP"/>
+        <result property="serverIp" column="SERVERIP"/>
+        <result property="scanIp" column="SCANIP"/>
+        <result property="vcsIp" column="VCSIP"/>
+        <result property="vip" column="VIP"/>
+        <result property="vlan" column="VLAN"/>
+        <result property="gateway" column="GATEWAY"/>
+        <result property="mask" column="MASK"/>
+        <result property="createTime" column="CREATETIME"/>
+        <result property="updateTime" column="UPDATETIME"/>
+    </resultMap>
+
+    <resultMap type="ResAdded" id="RESADDED">
+        <result property="id" column="ID"/>
+        <result property="priceReqNo" column="PRICEREQNO"/>
+        <result property="appNo" column="APPNO"/>
+        <result property="appName" column="APPNAME"/>
+        <result property="projectNo" column="PROJECTNO"/>
+        <result property="projectName" column="PROJECTNAME"/>
+        <result property="reNewProcessNo" column="RENEWPROCESSNO"/>
+        <result property="expectedOnlineTime" column="EXPECTEDONLINETIME"/>
+        <result property="isCmdbUsed" column="ISCMDBUSED"/>
+        <result property="amount" column="AMOUNT"/>
+        <result property="status" column="STATUS"/>
+        <result property="statusTime" column="STATUSTIME"/>
+        <result property="creator" column="CREATOR"/>
+        <result property="createTime" column="CREATETIME"/>
+        <result property="sourceType" column="SOURCETYPE"/>
+        <result property="busiDeptId" column="BUSIDEPTID"/>
+        <result property="techDeptId" column="TECHDEPTID"/>
+        <result property="busiDeptName" column="BUSIDEPTNAME"/>
+        <result property="techDeptName" column="TECHDEPTNAME"/>
+        <result property="sysOperLevel" column="SYSOPERLEVEL"/>
+        <result property="isFundTrans" column="ISFUNDTRANS"/>
+        <result property="budgetNo" column="BUDGETNO"/>
+        <result property="processInstID" column="PROCESSINSTID"/>
+        <result property="ciid" column="CIID"/>
+    </resultMap>
+
+    <resultMap type="AddedItemExtVo" id="iaasResourceResult"  extends="modelResult">
+        <result column="ADDEDITEMID" property="addedItemId"/>
+        <result column="NODETYPE" property="nodeType"/>
+        <result column="NODENAME" property="nodeName"/>
+        <result column="MODELTYPE" property="modelType"/>
+        <result column="MODELCONFIGNAME" property="modelConfigName"/>
+        <result column="NETWORKAREANAME" property="netWorkAreaName"/>
+        <result column="OS" property="os"/>
+        <result column="ISSTORAGE" property="isStorage"/>
+        <result column="DBSIZE" property="dbSize"/>
+        <result column="ISNAS" property="isNas"/>
+        <result column="NASSIZE" property="nasSize"/>
+        <result column="STORAGESIZE" property="storageSize"/>
+        <result column="OWNCENTER" property="owncenter"/>
+        <result column="EXTID" property="id"/>
+        <result property="addedItemId" column="ADDEDITEMID"/>
+        <result property="addedid" column="ADDEDID"/>
+        <result property="machineRoom" column="MACHINEROOM"/>
+        <result property="cabinet" column="CABINET"/>
+        <result property="cabinetPos" column="CABINETPOS"/>
+        <result property="sn" column="SN"/>
+        <result property="f5ip" column="F5IP"/>
+        <result property="ip" column="IP"/>
+        <result property="serverIp" column="SERVERIP"/>
+        <result property="scanIp" column="SCANIP"/>
+        <result property="vcsIp" column="VCSIP"/>
+        <result property="vip" column="VIP"/>
+        <result property="vlan" column="VLAN"/>
+        <result property="gateway" column="GATEWAY"/>
+        <result property="mask" column="MASK"/>
+        <result property="createTime" column="EXTCREATETIME"/>
+        <result property="updateTime" column="EXTUPDATETIME"/>
+    </resultMap>
+
+    <!-- 所有字段名称 -->
+    <sql id="sql_flied_all_added">
+        a.ID,
+        a.PRICEREQNO,
+        a.APPNO,
+        a.APPNAME,
+        a.PROJECTNAME,
+        a.RENEWPROCESSNO,
+        TO_CHAR(a.EXPECTEDONLINETIME,'YYYY-MM-DD') AS EXPECTEDONLINETIME,
+        a.ISCMDBUSED,
+        a.AMOUNT,
+        a.STATUS,
+        a.STATUSTIME,
+        a.CREATORNAME || '(' || a.CREATOR || ')' AS CREATOR,
+        TO_CHAR(a.CREATETIME,'YYYY-MM-DD') AS CREATETIME,
+        a.SOURCETYPE,
+        a.BUSIDEPTID,
+        a.TECHDEPTID,
+        a.BUSIDEPTNAME,
+        a.TECHDEPTNAME,
+        a.SYSOPERLEVEL,
+        a.ISFUNDTRANS,
+        a.PROJECTNO,
+        a.BUDGETNO,
+        a.PROCESSINSTID
+    </sql>
+
+
+
+    <sql id="iaasResource_filed">
+        ,
+        b.ID AS ADDEDITEMID,
+        b.NODENAME,
+        b.MODELTYPE,
+        b.MODELCONFIGNAME,
+        b.NETWORKAREANAME,
+        b.OS,
+        b.ISSTORAGE,
+        b.ISNAS,
+        b.NASSIZE,
+        b.STORAGESIZE,
+        b.OWNCENTER,
+        c.ID AS EXTID,
+        c.MACHINEROOM,
+        c.CABINET,
+        c.CABINETPOS,
+        c.SN,
+        c.F5IP,
+        c.IP,
+        c.SERVERIP,
+        c.SCANIP,
+        c.VCSIP,
+        c.VIP,
+        c.VLAN,
+        c.GATEWAY,
+        c.MASK,
+        c.CREATETIME AS EXTCREATETIME,
+        c.UPDATETIME AS EXTUPDATETIME
+    </sql>
+
+    <!-- 所有字段名称 -->
+    <sql id="sql_flied_all">
+        a.ID,
+        a.ADDEDITEMID,
+        a.MACHINEROOM,
+        a.CABINET,
+        a.CABINETPOS,
+        a.SN,
+        a.F5IP,
+        a.IP,
+        a.SERVERIP,
+        a.SCANIP,
+        a.VCSIP,
+        a.VIP,
+        a.VLAN,
+        a.GATEWAY,
+        a.MASK,
+        a.CREATETIME,
+        a.UPDATETIME
+    </sql>
+
+    <!-- 分页查询 -->
+    <select id="queryList" parameterType="map" resultMap="modelResult">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM IAAS_RESOURCE_EXT a
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="id !=null and id !=''"> a.ID = #{id} AND </if>
+            <if test="addedItemId !=null and addedItemId !=''"> a.ADDEDITEMID = #{addedItemId} AND </if>
+        </trim>
+        order by a.CREATETIME DESC
+    </select>
+
+    <!-- 查询Iaas资源列表 -->
+    <select id="queryIaasResourceList" parameterType="map" resultMap="RESADDED">
+        SELECT
+        DISTINCT a.*
+        FROM IAAS_RESOURCE_INFO a
+        left join IAAS_RESOURCE_ITEM b on b.addedid = a.id
+        left join IAAS_RESOURCE_EXT c on c.addeditemid = b.id
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="priceReqNo !=null and priceReqNo !=''">a.PRICEREQNO LIKE '%'||#{priceReqNo}||'%' AND</if>
+            <if test="appName != null and appName != ''">a.APPNAME LIKE '%'||#{appName}||'%' AND</if>
+            <if test="projectName != null and projectName != ''">a.PROJECTNAME LIKE '%'|| #{projectName}||'%' AND</if>
+            <if test="creator != null  and creator != '' ">a.CREATORNAME || '(' || a.CREATOR || ')' LIKE
+                '%'||#{creator}||'%' AND
+            </if>
+            <if test="expectedOnlineStartTime != null and expectedOnlineStartTime !=''">
+                <![CDATA[ a.EXPECTEDONLINETIME >=  TO_DATE(#{expectedOnlineStartTime},'YYYY-MM-DD') AND ]]>
+            </if>
+            <if test="expectedOnlineEndTime != null and expectedOnlineEndTime!=''">
+                <![CDATA[ a.EXPECTEDONLINETIME <  TO_DATE(#{expectedOnlineEndTime},'YYYY-MM-DD')+1 AND ]]>
+            </if>
+            <if test="sn !=null and sn !=''">c.SN like '%' || #{sn} || '%' AND</if>
+            <if test="ip !=null and ip !=''">c.IP like '%' || #{ip} || '%' AND</if>
+        </trim>
+    </select>
+
+    <!-- 查询Iaas资源列表 -->
+    <select id="queryIaasResourceListOther" parameterType="map" resultMap="iaasResourceResult">
+        SELECT
+        a.id AS addedid,
+        b.ID AS ADDEDITEMID,
+        b.NODETYPE,
+        b.NODENAME,
+        b.MODELTYPE,
+        b.MODELCONFIGNAME,
+        b.NETWORKAREANAME,
+        b.OS,
+        b.ISSTORAGE,
+        b.ISNAS,
+        b.NASSIZE,
+        b.STORAGESIZE,
+        b.DBSIZE,
+        b.OWNCENTER,
+        c.ID AS EXTID,
+        c.MACHINEROOM,
+        c.CABINET,
+        c.CABINETPOS,
+        c.SN,
+        c.F5IP,
+        c.IP,
+        c.SERVERIP,
+        c.SCANIP,
+        c.VCSIP,
+        c.VIP,
+        c.VLAN,
+        c.GATEWAY,
+        c.MASK,
+        c.CREATETIME AS EXTCREATETIME,
+        c.UPDATETIME AS EXTUPDATETIME
+        FROM IAAS_RESOURCE_INFO a
+        left join IAAS_RESOURCE_ITEM b on b.addedid = a.id
+        left join IAAS_RESOURCE_EXT c on c.addeditemid = b.id
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="priceReqNo !=null and priceReqNo !=''">a.PRICEREQNO LIKE '%'||#{priceReqNo}||'%' AND</if>
+            <if test="appName != null and appName != ''">a.APPNAME LIKE '%'||#{appName}||'%' AND</if>
+            <if test="projectName != null and projectName != ''">a.PROJECTNAME LIKE '%'|| #{projectName}||'%' AND</if>
+            <if test="creator != null  and creator != '' ">a.CREATORNAME || '(' || a.CREATOR || ')' LIKE
+                '%'||#{creator}||'%' AND
+            </if>
+            <if test="expectedOnlineStartTime != null and expectedOnlineStartTime !=''">
+                <![CDATA[ a.EXPECTEDONLINETIME >=  TO_DATE(#{expectedOnlineStartTime},'YYYY-MM-DD') AND ]]>
+            </if>
+            <if test="expectedOnlineEndTime != null and expectedOnlineEndTime!=''">
+                <![CDATA[ a.EXPECTEDONLINETIME <  TO_DATE(#{expectedOnlineEndTime},'YYYY-MM-DD')+1 AND ]]>
+            </if>
+            <if test="sn !=null and sn !=''">c.SN like '%' || #{sn} || '%' AND</if>
+            <if test="ip !=null and ip !=''">c.IP like '%' || #{ip} || '%' AND</if>
+        </trim>
+    </select>
+
+    <!-- 新增 -->
+    <insert id="add" parameterType="ResAddedExt">
+        INSERT INTO IAAS_RESOURCE_EXT
+        (
+        <trim suffixOverrides=",">
+            <if test="id != null  and id != '' ">ID,</if>
+            <if test="addedItemId != null  and addedItemId != '' ">ADDEDITEMID,</if>
+            <if test="machineRoom != null  and machineRoom != '' ">MACHINEROOM,</if>
+            <if test="cabinet != null  and cabinet != '' ">CABINET,</if>
+            <if test="cabinetPos != null  and cabinetPos != '' ">CABINETPOS,</if>
+            <if test="sn != null  and sn != '' ">SN,</if>
+            <if test="f5ip != null  and f5ip != '' ">F5IP,</if>
+            <if test="ip != null  and ip != '' ">IP,</if>
+            <if test="serverIp != null  and serverIp != '' ">SERVERIP,</if>
+            <if test="scanIp != null  and scanIp != '' ">SCANIP,</if>
+            <if test="vcsIp != null  and vcsIp != '' ">VCSIP,</if>
+            <if test="vip != null  and vip != '' ">VIP,</if>
+            <if test="vlan != null  and vlan != '' ">VLAN,</if>
+            <if test="gateway != null  and gateway != '' ">GATEWAY,</if>
+            <if test="mask != null  and mask != '' ">MASK,</if>
+            <if test="createTime != null">CREATETIME,</if>
+            <if test="updateTime != null">UPDATETIME,</if>
+        </trim>
+        )
+        values
+        (
+        <trim suffixOverrides=",">
+            <if test="id != null  and id != '' ">#{id},</if>
+            <if test="addedItemId != null  and addedItemId != '' "> #{addedItemId},</if>
+            <if test="machineRoom != null  and machineRoom != '' ">#{machineRoom},</if>
+            <if test="cabinet != null  and cabinet != '' ">#{cabinet},</if>
+            <if test="cabinetPos != null  and cabinetPos != '' ">#{cabinetPos},</if>
+            <if test="sn != null  and sn != '' ">#{sn},</if>
+            <if test="f5ip != null  and f5ip != '' ">#{f5ip},</if>
+            <if test="ip != null  and ip != '' ">#{ip},</if>
+            <if test="serverIp != null  and serverIp != '' ">#{serverIp},</if>
+            <if test="scanIp != null  and scanIp != '' ">#{scanIp},</if>
+            <if test="vcsIp != null  and vcsIp != '' ">#{vcsIp},</if>
+            <if test="vip != null  and vip != '' ">#{vip},</if>
+            <if test="vlan != null  and vlan != '' ">#{vlan},</if>
+            <if test="gateway != null  and gateway != '' ">#{gateway},</if>
+            <if test="mask != null  and mask != '' ">#{mask},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+        </trim>
+        )
+    </insert>
+
+    <!-- 更新 -->
+    <update id="update" parameterType="ResAddedExt">
+        UPDATE IAAS_RESOURCE_EXT SET
+        <trim suffixOverrides=",">
+            <if test="id != null">ID = #{id},</if>
+            <if test="addedItemId != null">ADDEDITEMID = #{addedItemId},</if>
+            <if test="machineRoom != null ">MACHINEROOM = #{machineRoom},</if>
+            <if test="cabinet != null">CABINET = #{cabinet},</if>
+            <if test="cabinetPos != null">CABINETPOS = #{cabinetPos},</if>
+            <if test="sn != null">SN = #{sn},</if>
+            <if test="f5ip != null">F5IP = #{f5ip},</if>
+            <if test="ip != null">IP = #{ip},</if>
+            <if test="serverIp != null">SERVERIP = #{serverIp},</if>
+            <if test="scanIp != null">SCANIP = #{scanIp},</if>
+            <if test="vcsIp != null">VCSIP = #{vcsIp},</if>
+            <if test="vip != null">VIP = #{vip},</if>
+            <if test="vlan != null">VLAN = #{vlan},</if>
+            <if test="gateway != null">GATEWAY = #{gateway},</if>
+            <if test="mask != null">MASK = #{mask},</if>
+            <if test="createTime != null">CREATETIME = #{createTime},</if>
+            <if test="updateTime != null">UPDATETIME = #{updateTime},</if>
+        </trim>
+        WHERE ID = #{id}
+    </update>
+
+    <!-- 删除 -->
+    <delete id="delete" parameterType="string">
+        DELETE FROM IAAS_RESOURCE_EXT WHERE ID = #{id}
+    </delete>
+
+    <select id="queryResource" parameterType="String" resultMap="RESADDED">
+        SELECT
+        <include refid="sql_flied_all_added"/>
+        FROM IAAS_RESOURCE_INFO a
+        WHERE a.ID =#{id}
+    </select>
+
+    <select id="queryResItem" parameterType="String" resultType="ResAddedItem">
+        SELECT *
+        FROM IAAS_RESOURCE_ITEM
+        WHERE ADDEDID= #{addedId}
+    </select>
+
+    <select id="queryResItemParts" parameterType="String" resultType="ResAddedItemParts">
+        SELECT * FROM IAAS_RESOURCE_ITEM_PARTS
+        WHERE ADDEDITEMID =#{addedItemId}
+    </select>
+
+    <select id="queryResItemVersion" parameterType="String" resultType="ResAddedItemVersion">
+        SELECT * FROM IAAS_RESOURCE_ITEM_VERSION
+        WHERE ADDEDITEMID =#{addedItemId}
+    </select>
+
+    <!-- 转移主表内容到iaas库 -->
+    <insert id="setIaasRsource" parameterType="String">
+        INSERT INTO IAAS_RESOURCE_INFO  select t.* from RES_ADDED t
+        where  t.ID = #{id}
+    </insert>
+
+    <!-- 转移副表内容到iaas库 -->
+    <insert id="setIaasAddedItem"  parameterType="String">
+        INSERT INTO IAAS_RESOURCE_ITEM SELECT * FROM RES_ADDED_ITEM T WHERE T.ADDEDID = #{id}
+
+    </insert>
+
+    <!-- 转移配件表内容到iaas库 -->
+    <insert id="setIaasItemParts"  parameterType="String">
+        INSERT INTO IAAS_RESOURCE_ITEM_PARTS select t.*
+        FROM RES_ADDED_ITEM_PARTS t
+        where T.ADDEDID = #{id}
+    </insert>
+
+    <!-- 转移软件表内容到iaas库 -->
+    <insert id="setIaasItemVersion"  parameterType="String">
+        INSERT INTO IAAS_RESOURCE_ITEM_VERSION select t.*
+        from RES_ADDED_ITEM_VERSION t
+        where  t.ADDEDID = #{id}
+    </insert>
+
+    <delete id="delIaasResource" parameterType="String">
+        DELETE FROM IAAS_RESOURCE_INFO  WHERE ID =#{id}
+    </delete>
+
+    <delete id="delIaasResItem" parameterType="String">
+        DELETE FROM IAAS_RESOURCE_ITEM  WHERE ADDEDID = #{id}
+    </delete>
+
+    <delete id="delIaaasResItemParts" parameterType="String">
+        DELETE FROM  IAAS_RESOURCE_ITEM_PARTS WHERE ADDEDID = #{id}
+    </delete>
+
+    <delete id="delIaasResItemVersion" parameterType="String">
+        DELETE FROM  IAAS_RESOURCE_ITEM_VERSION WHERE ADDEDID = #{id}
+    </delete>
+
+    <!-- 通过接口更新相应的苏剧 -->
+    <update id="updateByInterface" parameterType="ResAddedExt">
+        UPDATE
+            IAAS_RESOURCE_EXT
+        SET
+            <if test="ip !=null"> IP = #{ip},</if>
+            <if test="vlan !=null">VLAN = #{vlan},</if>
+            <if test="gateway !=null">GETEWAY = #{gateway},</if>
+            <if test="mask !=null">MASK = #{mask},</if>
+            <if test="sn !=null">SN = #{sn}</if>
+        WHERE ID = #{id}
+    </update>
+
+    <!-- 根据系统查询未使用的资源新增的子表配置  -->
+    <select id="queryConfigListBySystem" parameterType="String" resultType="ResAddedItem">
+        SELECT
+            b.ID,
+            c.DICTNAME AS NODETYPE,
+            d.DICTNAME AS MODELTYPE,
+            b.NODENAME,
+            b.MODELCONFIGNAME,
+            a.APPNO
+        FROM RES_ADDED a
+        LEFT JOIN RES_ADDED_ITEM b ON a.ID = b.ADDEDID
+        LEFT JOIN EOS_DICT_ENTRY c ON b.NODETYPE = c.DICTID
+        LEFT JOIN EOS_DICT_ENTRY d ON b.MODELTYPE = d.DICTID
+        WHERE c.DICTTYPEID='RES_NODETYPE'
+        AND d.DICTTYPEID='RES_MODELTYPE'
+        AND a.ISCMDBUSED = 0
+        AND d.APPNO = #{id}
+    </select>
+</mapper>
+

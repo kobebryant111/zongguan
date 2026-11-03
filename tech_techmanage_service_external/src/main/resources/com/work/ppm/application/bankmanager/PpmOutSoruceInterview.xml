@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:ywwb905 2022-10-14 -->
+<!--  面试官数据新增 -->
+<mapper namespace="com.work.ppm.application.model.bankmanager.PpmOutSourceInterview">
+	 <resultMap type="PpmOutSourceInterview" id="PpmOutSourceInterview_ALL">
+         <result property="id" column="ID" />
+         <result property="certifNumber" column="CERTIF_NUMBER" />
+         <result property="msgId" column="MSG_ID" />
+         <result property="flowPathId" column="FLOW_PATH_ID" />
+         <result property="interCode" column="INTER_CODE" />
+         <result property="interdepCode" column="INTER_DEP_CODE" />
+         <result property="technoLogy" column="TECHNO_LOGY" />
+         <result property="comPrehenSive" column="COM_PREHEN_SIVE" />
+         <result property="experIence" column="EXPERIENCE" />
+         <result property="education" column="EDUCATION" />
+         <result property="remark" column="REMARK" />
+         <result property="msemployRole" column="MSEMPLOY_ROLE" />
+         <result property="universalToolUse" column="UNIVERSAL_TOOL_USE" />
+         <result property="projectManageKnowledge" column="PROJECT_MANAGE_KNOWLEDGE" />
+         <result property="commExpression" column="COMM_EXPRESSION" />
+         <result property="projectExperience" column="PROJECT_EXPERIENCE" />
+         <result property="projectScaleXmjl" column="PROJECT_SCALE_XMJL" />
+         <result property="projectScaleJcjl" column="PROJECT_SCALE_JCJL" />
+         <result property="projectScale" column="PROJECT_SCALE" />
+         <result property="scoreResult" column="SCORE_RESULT" />
+         <result property="codeDevelopment" column="CODE_DEVELOPMENT" />
+         <result property="architectureDesign" column="ARCHITECTURE_DESIGN" />
+         <result property="profesKnowledge" column="PROFES_KNOWLEDGE" />
+         <result property="standCondition" column="STAND_CONDITION" />
+         <result property="productAbility" column="PRODUCT_ABILITY" />
+     </resultMap>
+
+     <!-- 所有字段名称 -->
+    <sql id="sql_flied_all">
+        ID,
+        CERTIF_NUMBER,
+        MSG_ID,
+        FLOW_PATH_ID,
+        INTER_CODE,
+        INTER_DEP_CODE,
+        TECHNO_LOGY,
+        COM_PREHEN_SIVE,
+        EXPERIENCE,
+        EDUCATION,
+        REMARK,
+        MSEMPLOY_ROLE,
+        UNIVERSAL_TOOL_USE,
+        PROJECT_MANAGE_KNOWLEDGE,
+        COMM_EXPRESSION,
+        PROJECT_EXPERIENCE,
+        PROJECT_SCALE_XMJL,
+        PROJECT_SCALE_JCJL,
+        PROJECT_SCALE,
+        SCORE_RESULT,
+        CODE_DEVELOPMENT,
+        ARCHITECTURE_DESIGN,
+        PROFES_KNOWLEDGE,
+        STAND_CONDITION,
+        PRODUCT_ABILITY
+    </sql>
+
+    <!-- update sql -->
+    <sql id="update_pojo_sql">
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="certifNumber != null " > CERTIF_NUMBER = #{certifNumber} , </if>
+            <if test="msgId != null " > MSG_ID = #{msgId} , </if>
+            <if test="flowPathId != null " > FLOW_PATH_ID = #{flowPathId} , </if>
+            <if test="interCode != null " > INTER_CODE = #{interCode} , </if>
+            <if test="interdepCode != null " > INTER_DEP_CODE = #{interdepCode} , </if>
+            <if test="technoLogy != null " > TECHNO_LOGY = #{technoLogy} , </if>
+            <if test="comPrehenSive != null " > COM_PREHEN_SIVE = #{comPrehenSive} , </if>
+            <if test="experIence != null " > EXPERIENCE = #{experIence} , </if>
+            <if test="education != null " > EDUCATION = #{education} , </if>
+            <if test="remark != null " > REMARK = #{remark} , </if>
+            <if test="msemployRole != null " > MSEMPLOY_ROLE = #{msemployRole} , </if>
+            <if test="universalToolUse != null " > UNIVERSAL_TOOL_USE = #{universalToolUse} , </if>
+            <if test="projectManageKnowledge != null " > PROJECT_MANAGE_KNOWLEDGE = #{projectManageKnowledge} , </if>
+            <if test="commExpression != null " > COMM_EXPRESSION = #{commExpression} , </if>
+            <if test="projectExperience != null " > PROJECT_EXPERIENCE = #{projectExperience} , </if>
+            <if test="projectScaleXmjl != null " > PROJECT_SCALE_XMJL = #{projectScaleXmjl} , </if>
+            <if test="projectScaleJcjl != null " > PROJECT_SCALE_JCJL = #{projectScaleJcjl} , </if>
+            <if test="projectScale != null " > PROJECT_SCALE = #{projectScale} , </if>
+            <if test="scoreResult != null " > SCORE_RESULT = #{scoreResult} , </if>
+            <if test="codeDevelopment != null " > CODE_DEVELOPMENT = #{codeDevelopment} , </if>
+            <if test="architectureDesign != null " > ARCHITECTURE_DESIGN = #{architectureDesign} , </if>
+            <if test="profesKnowledge != null " > PROFES_KNOWLEDGE = #{profesKnowledge} , </if>
+            <if test="standCondition != null " > STAND_CONDITION = #{standCondition} , </if>
+            <if test="productAbility != null " > PRODUCT_ABILITY = #{productAbility} , </if>
+        </trim>
+    </sql>
+    <!-- 新增  2022-10-08 ywwb905  -->
+    <insert id="addInterInfo" parameterType="PpmOutSourceInterview">
+        INSERT INTO PPM.PPM_OUTSOURCE_INTERVIEW (
+        <trim suffixOverrides=",">
+            <if test="id != null " > ID , </if>
+            <if test="certifNumber != null " > CERTIF_NUMBER , </if>
+            <if test="msgRole != null " > MSG_ROLE , </if>
+            <if test="msemployRole != null " > MSEMPLOY_ROLE , </if>
+            <if test="msgId != null " > MSG_ID , </if>
+            <if test="flowPathId != null " > FLOW_PATH_ID , </if>
+            <if test="interCode != null " > INTER_CODE , </if>
+            <if test="interdepCode != null " > INTER_DEP_CODE , </if>
+            <if test="technoLogy != null " > TECHNO_LOGY , </if>
+            <if test="comPrehenSive != null " > COM_PREHEN_SIVE , </if>
+            <if test="experIence != null " > EXPERIENCE , </if>
+            <if test="education != null " > EDUCATION , </if>
+            <if test="remark != null " > REMARK , </if>
+            <if test="universalToolUse != null " > UNIVERSAL_TOOL_USE , </if>
+            <if test="projectManageKnowledge != null " > PROJECT_MANAGE_KNOWLEDGE , </if>
+            <if test="commExpression != null " > COMM_EXPRESSION , </if>
+            <if test="projectExperience != null " > PROJECT_EXPERIENCE , </if>
+            <if test="projectScaleXmjl != null " > PROJECT_SCALE_XMJL , </if>
+            <if test="projectScaleJcjl != null " > PROJECT_SCALE_JCJL , </if>
+            <if test="projectScale != null " > PROJECT_SCALE , </if>
+            <if test="scoreResult != null " > SCORE_RESULT , </if>
+            <if test="codeDevelopment != null " > CODE_DEVELOPMENT , </if>
+            <if test="architectureDesign != null " > ARCHITECTURE_DESIGN , </if>
+            <if test="profesKnowledge != null " > PROFES_KNOWLEDGE , </if>
+            <if test="standCondition != null " > STAND_CONDITION , </if>
+            <if test="productAbility != null " > PRODUCT_ABILITY , </if>
+          </trim>
+        )
+        VALUES(
+        <trim suffixOverrides=",">
+            <if test="id != null " > #{id} , </if>
+            <if test="certifNumber != null " > #{certifNumber} , </if>
+            <if test="msgRole != null " > #{msgRole} , </if>
+            <if test="msemployRole != null " > #{msemployRole} , </if>
+            <if test="msgId != null " > #{msgId} , </if>
+            <if test="flowPathId != null " > #{flowPathId} , </if>
+            <if test="interCode != null " > #{interCode} , </if>
+            <if test="interdepCode != null " > #{interdepCode} , </if>
+            <if test="technoLogy != null " > #{technoLogy} , </if>
+            <if test="comPrehenSive != null " > #{comPrehenSive} , </if>
+            <if test="experIence != null " > #{experIence} , </if>
+            <if test="education != null " > #{education} , </if>
+            <if test="remark != null " > #{remark} , </if>
+            <if test="universalToolUse != null " > #{universalToolUse} , </if>
+            <if test="projectManageKnowledge != null " > #{projectManageKnowledge} , </if>
+            <if test="commExpression != null " > #{commExpression} , </if>
+            <if test="projectExperience != null " > #{projectExperience} , </if>
+            <if test="projectScaleXmjl != null " > #{projectScaleXmjl} , </if>
+            <if test="projectScaleJcjl != null " > #{projectScaleJcjl} , </if>
+            <if test="projectScale != null " > #{projectScale} , </if>
+            <if test="scoreResult != null " > #{scoreResult} , </if>
+            <if test="codeDevelopment != null " > #{codeDevelopment} , </if>
+            <if test="architectureDesign != null " > #{architectureDesign} , </if>
+            <if test="profesKnowledge != null " > #{profesKnowledge} , </if>
+            <if test="standCondition != null " > #{standCondition} , </if>
+            <if test="productAbility != null " > #{productAbility} , </if>
+        </trim>
+        )
+    </insert>
+
+    <!--通过id查询  ywwb905 2022-10-08 -->
+    <select id="selListInfo" parameterType="PpmOutSourceInterview" resultMap="PpmOutSourceInterview_ALL">
+        SELECT
+        <include refid="sql_flied_all" />
+        FROM PPM.PPM_OUTSOURCE_INTERVIEW
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="id != null " > ID = #{id} AND </if>
+            <if test="msgId != null " > MSG_ID = #{msgId} AND </if>
+        </trim>
+    </select>
+
+    <select id="selInterviewData" parameterType="PpmOutSourceInterview" resultType="com.work.ppm.application.dto.bankmamager.PpmOutSorceInterviewDto">
+        select
+        oi.id AS id,
+        oi.CERTIF_NUMBER AS certifNumber,
+        oi.msg_id AS msgId,
+        oi.flow_path_id AS instanceId,
+        oi.inter_code AS msgno,
+        em.empname AS msgname,
+        oi.inter_dep_code AS deptno,
+        dep.location AS deptname,
+        oi.techno_logy AS technology,
+        oi.COM_PREHEN_SIVE AS comPrehenSive,
+        oi.experience AS experience,
+        oi.education AS education,
+        oi.MSG_ROLE AS msgRole,
+        oi.MSEMPLOY_ROLE AS msemployRole,
+        oi.UNIVERSAL_TOOL_USE AS universalToolUse,
+        oi.PROJECT_MANAGE_KNOWLEDGE AS projectManageKnowledge,
+        oi.COMM_EXPRESSION AS commExpression,
+        oi.PROJECT_EXPERIENCE AS projectExperience,
+        oi.PROJECT_SCALE_XMJL AS projectScaleXmjl,
+        oi.PROJECT_SCALE_JCJL AS projectScaleJcjl,
+        oi.PROJECT_SCALE AS projectScale,
+        oi.SCORE_RESULT AS scoreResult,
+        oi.CODE_DEVELOPMENT AS codeDevelopment,
+        oi.ARCHITECTURE_DESIGN AS architectureDesign,
+        oi.PROFES_KNOWLEDGE AS profesKnowledge,
+        oi.STAND_CONDITION AS standCondition,
+        oi.PRODUCT_ABILITY AS productAbility
+        from PPM_OUTSOURCE_INTERVIEW oi
+        left join COMM_DEPARTMENT dep on oi.inter_dep_code = dep.depid
+        left join COMM_EMPLOYEE em on oi.inter_code = em.badge
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="id != null " > ID = #{id} AND </if>
+            <if test="certifNumber != null " > CERTIF_NUMBER = #{certifNumber} AND </if>
+            <if test="msgId != null " > MSG_ID = #{msgId} AND </if>
+        </trim>
+    </select>
+    <!--通过id编辑 ywwb1103 2023-11-02 -->
+    <update id="updInterData" parameterType="PpmOutSourceInterview">
+        UPDATE
+        PPM_OUTSOURCE_INTERVIEW
+        <include refid="update_pojo_sql" />
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="id != null " > ID = #{id} AND </if>
+            <if test="msgId != null " > MSG_ID = #{msgId} AND </if>
+        </trim>
+    </update>
+
+    <delete id="delInter" parameterType="map">
+        DELETE FROM PPM_OUTSOURCE_INTERVIEW
+        WHERE ID = #{id} and MSG_ID = #{msgId}
+    </delete>
+</mapper>

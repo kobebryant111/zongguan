@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:ywwb436 2022-06-30 -->
+<!--  考勤日历表 查询脚本 -->
+<mapper namespace="com.work.ppm.application.model.integratedmanager.PpmKqCalendar">
+	 <resultMap type="ppmKqCalendar" id="PPMKQCALENDAR_ALL">
+        <result property="dayOfMonth" column="DAY_OF_MONTH" />
+		<result property="dayOfCalendar" column="DAY_OF_CALENDAR" />
+		<result property="monthOfYear" column="MONTH_OF_YEAR" />
+		<result property="yearOfCalendar" column="YEAR_OF_CALENDAR" />
+		<result property="isHoliday" column="IS_HOLIDAY" />
+		<result property="calendarDate" column="CALENDAR_DATE" />
+		<result property="dayOfWeek" column="DAY_OF_WEEK" />
+		
+     </resultMap>
+
+     <!-- 所有字段名称 -->
+    <sql id="sql_flied_all">
+        DAY_OF_MONTH,
+			DAY_OF_CALENDAR,
+			MONTH_OF_YEAR,
+			YEAR_OF_CALENDAR,
+			IS_HOLIDAY,
+			CALENDAR_DATE,
+			DAY_OF_WEEK
+    </sql>
+    <sql id="sql_select_condition">
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="dayOfMonth != null " > DAY_OF_MONTH = #{dayOfMonth} AND </if>
+				<if test="dayOfCalendar != null " > DAY_OF_CALENDAR = #{dayOfCalendar} AND </if>
+				<if test="monthOfYear != null " > MONTH_OF_YEAR = #{monthOfYear} AND </if>
+				<if test="yearOfCalendar != null " > YEAR_OF_CALENDAR = #{yearOfCalendar} AND </if>
+				<if test="isHoliday != null  and isHoliday != '' " > IS_HOLIDAY = #{isHoliday} AND </if>
+				<if test="calendarDate != null " > CALENDAR_DATE = #{calendarDate} AND </if>
+				<if test="dayOfWeek != null " > DAY_OF_WEEK = #{dayOfWeek} AND </if>
+               <if test="entryStartDate != null and entryEndDate != null">CALENDAR_DATE between #{entryStartDate} and #{entryEndDate} AND</if>
+        </trim>
+    </sql>
+    <!-- 查询分页  2022-06-30 ywwb436  -->
+    <select id="queryPagerList" parameterType="map" resultMap="PPMKQCALENDAR_ALL">
+        SELECT
+        <include refid="sql_flied_all" />
+        FROM PPM_KQ_CALENDAR
+        <include refid="sql_select_condition" />
+        order by DAY_OF_CALENDAR desc
+    </select>
+
+    <!-- 新增  2022-06-30 ywwb436  -->
+    <insert id="addPojo" parameterType="ppmKqCalendar">
+        INSERT INTO PPM_KQ_CALENDAR (
+        <trim suffixOverrides=",">
+         <if test="dayOfMonth != null " > DAY_OF_MONTH , </if>
+				<if test="dayOfCalendar != null " > DAY_OF_CALENDAR , </if>
+				<if test="monthOfYear != null " > MONTH_OF_YEAR , </if>
+				<if test="yearOfCalendar != null " > YEAR_OF_CALENDAR , </if>
+				<if test="isHoliday != null  and isHoliday != '' " > IS_HOLIDAY , </if>
+				<if test="calendarDate != null " > CALENDAR_DATE , </if>
+				<if test="dayOfWeek != null " > DAY_OF_WEEK , </if>
+          </trim>
+        )
+        VALUES(
+        <trim suffixOverrides=",">
+         <if test="dayOfMonth != null " > #{dayOfMonth} , </if>
+				<if test="dayOfCalendar != null " > #{dayOfCalendar} , </if>
+				<if test="monthOfYear != null " > #{monthOfYear} , </if>
+				<if test="yearOfCalendar != null " > #{yearOfCalendar} , </if>
+				<if test="isHoliday != null  and isHoliday != '' " > #{isHoliday} , </if>
+				<if test="calendarDate != null " > #{calendarDate} , </if>
+				<if test="dayOfWeek != null " > #{dayOfWeek} , </if>
+        </trim>
+        )
+    </insert>
+
+    <!--通过id查询  ywwb436 2022-06-30 -->
+    <select id="queryDetail" parameterType="ppmKqCalendar" resultMap="PPMKQCALENDAR_ALL">
+        SELECT
+        <include refid="sql_flied_all" />
+        FROM PPM_KQ_CALENDAR
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="dayOfCalendar != null " > DAY_OF_CALENDAR = #{dayOfCalendar} AND </if>
+            <if test="calendarDate != null " > CALENDAR_DATE = #{calendarDate} AND </if>
+			<if test="yearOfCalendar != null and monthOfYear != null and dayOfMonth != null" > YEAR_OF_CALENDAR = #{yearOfCalendar} AND MONTH_OF_YEAR = #{monthOfYear} AND DAY_OF_MONTH = #{dayOfMonth}</if>
+        </trim>
+    </select>
+
+     <!--查询集合  ywwb436 2022-06-30 -->
+    <select id="getList" parameterType="ppmKqCalendar" resultMap="PPMKQCALENDAR_ALL">
+        SELECT
+        <include refid="sql_flied_all" />
+        FROM PPM_KQ_CALENDAR
+        <include refid="sql_select_condition" />
+    </select>
+    <!-- update sql -->
+    <sql id="update_pojo_sql">
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="dayOfMonth != null " > DAY_OF_MONTH=#{dayOfMonth} , </if>
+				<if test="dayOfCalendar != null " > DAY_OF_CALENDAR=#{dayOfCalendar} , </if>
+				<if test="monthOfYear != null " > MONTH_OF_YEAR=#{monthOfYear} , </if>
+				<if test="yearOfCalendar != null " > YEAR_OF_CALENDAR=#{yearOfCalendar} , </if>
+				<if test="isHoliday != null  and isHoliday != '' " > IS_HOLIDAY=#{isHoliday} , </if>
+				<if test="calendarDate != null " > CALENDAR_DATE=#{calendarDate} , </if>
+				<if test="dayOfWeek != null " > DAY_OF_WEEK=#{dayOfWeek} , </if>
+        </trim>
+    </sql>
+
+    <!--通过id编辑 ywwb436 2022-06-30 -->
+    <update id="updatePojo" parameterType="ppmKqCalendar">
+        UPDATE
+        PPM_KQ_CALENDAR
+        <include refid="update_pojo_sql" />
+        WHERE DAY_OF_CALENDAR=#{dayOfCalendar}
+    </update>
+
+    <!--通过id批量删除  ywwb436 2022-06-30 -->
+    <delete id="deleteById" parameterType="ppmKqCalendar">
+        DELETE
+        FROM
+        PPM_KQ_CALENDAR
+        WHERE DAY_OF_CALENDAR = #{dayOfCalendar}
+    </delete>
+	
+	<select id="getCompareList" parameterType="ppmKqCalendar" resultMap="PPMKQCALENDAR_ALL">
+        SELECT
+        <include refid="sql_flied_all" />
+        FROM PPM_KQ_CALENDAR
+        <include refid="sql_select_condition" />
+		ORDER BY DAY_OF_MONTH ASC
+    </select>
+
+    <select id="queryIsHoliday" parameterType="map" resultMap="PPMKQCALENDAR_ALL">
+        SELECT
+          IS_HOLIDAY
+        FROM PPM_KQ_CALENDAR
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="yearOfCalendar != null and monthOfYear != null and dayOfMonth != null" >
+                YEAR_OF_CALENDAR = #{yearOfCalendar}
+                AND MONTH_OF_YEAR = #{monthOfYear}
+                AND DAY_OF_MONTH = #{dayOfMonth}</if>
+        </trim>
+    </select>
+
+    <!--查询集合-->
+    <select id="getCalendarList" parameterType="ppmKqCalendar" resultMap="PPMKQCALENDAR_ALL">
+        SELECT
+        <include refid="sql_flied_all" />
+        FROM PPM_KQ_CALENDAR
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="isHoliday != null  and isHoliday != '' " > IS_HOLIDAY = #{isHoliday} AND </if>
+            <if test="entryStartDate != null and entryEndDate != null">CALENDAR_DATE >= #{entryStartDate} AND CALENDAR_DATE &lt; #{entryEndDate} AND</if>
+        </trim>
+    </select>
+</mapper>

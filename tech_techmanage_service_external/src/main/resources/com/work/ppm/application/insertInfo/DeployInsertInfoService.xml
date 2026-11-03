@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k6991 2020-01-15 -->
+<mapper namespace="com.work.ppm.application.model.interpoints.CommInterPointsDto">
+    <resultMap type="CommInterPointsDto" id="COMMINTERPOINTS_ALL">
+        <result property="pkId" column="PK_ID"/>
+        <result property="projectScale" column="PROJECT_SCALE"/>
+        <result property="projectScaleName" column="PROJECT_SCALE_NAME"/>
+        <result property="viewRole" column="VIEW_ROLE"/>
+        <result property="viewRoleName" column="VIEW_ROLE_NAME"/>
+        <result property="researchNape" column="RESEARCH_NAPE"/>
+        <result property="researchNapeName" column="RESEARCH_NAPE_NAME"/>
+        <result property="scoreA" column="SCORE_A"/>
+        <result property="scoreB" column="SCORE_B"/>
+        <result property="scoreC" column="SCORE_C"/>
+        <result property="scoreD" column="SCORE_D"/>
+    </resultMap>
+    <select id="insertInfo" parameterType="map" resultMap="COMMINTERPOINTS_ALL">
+        SELECT PK_ID,
+        PROJECT_SCALE,
+        PROJECT_SCALE_NAME,
+        VIEW_ROLE,
+        VIEW_ROLE_NAME,
+        RESEARCH_NAPE,
+        RESEARCH_NAPE_NAME,
+        SCORE_A,
+        SCORE_B,
+        SCORE_C,
+        SCORE_D
+        FROM PPM.COMM_INTERVIEW_ASSESSMENT
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="projectScale != null and projectScale != '' ">PROJECT_SCALE =#{projectScale} and</if>
+            <if test="viewRole != null and viewRole != '' ">VIEW_ROLE =#{viewRole} and</if>
+        </trim>
+        ORDER BY PK_ID
+    </select>
+    <update id="keepIhfo" parameterType="map">
+        UPDATE PPM.COMM_INTERVIEW_ASSESSMENT
+        <trim prefix="set" suffixOverrides=",">
+            <if test="scoreA != null ">SCORE_A=#{scoreA} ,</if>
+            <if test="scoreB != null ">SCORE_B=#{scoreB} ,</if>
+            <if test="scoreC != null ">SCORE_C=#{scoreC} ,</if>
+            <if test="scoreD != null ">SCORE_D=#{scoreD} ,</if>
+        </trim>
+        WHERE PK_ID =#{pkId}
+    </update>
+
+    <delete id="deleteIhfo" parameterType="map">
+        DELETE FROM PPM.COMM_INTERVIEW_ASSESSMENT WHERE PK_ID =#{pkId}
+    </delete>
+</mapper>

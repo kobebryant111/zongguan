@@ -1,0 +1,20 @@
+{
+    "api": [
+        {
+          "appKey": "2a8cfdc8_b152_45d3_ae17_d6b0abce4df9",
+          "publicUrl": "http://nginx-jt.openbank.nb:8000/work/api",
+          "platfromPublicKeyPath": "MFkwEwYHKoZIzj0CAQYIKoEcz1UBgi0DQgAEJIJr2E8RnscztfNbECAz+05ONKhchfbLH+xJpYiCd803HSXyEPUDyaWQJ5Q9nQVUB+vEoYQo0G17jqEEuygMew==",
+          "merchantPrivateKeyPath":"MIGTAgEAMBMGByqGSM49AgEGCCqBHM9VAYItBHkwdwIBAQQgK3MDiEqI8w2C3AwZd46IeCTFndJR9baOAsytv0X35BagCgYIKoEcz1UBgi2hRANCAATTxmDGAmSqA6OOf1KOlYbVrZW2De4rncMkviyNhdoAmslRirPLLhx82lsVQM3t2ZhFjQO/pYN15h+ZzA3S9D54",
+          "certed": false,
+          "merchantPrivateKeyPwd":"cfca",
+          "connectTimeout": 10000,
+          "readTimeout": 30000,
+          "merchantName":"",
+          "subMerchantName":"",
+          "subMerchantId":"",
+          "isProxy":false,
+          "proxyIp":"",
+          "proxyPort":80
+        }
+    ]
+}

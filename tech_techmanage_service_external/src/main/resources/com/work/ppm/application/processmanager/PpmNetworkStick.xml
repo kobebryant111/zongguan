@@ -1,0 +1,269 @@
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k6991 2021-06-24 -->
+<mapper namespace="com.work.ppm.application.model.processmanager.PpmNetworkStick">
+    <resultMap type="ppmNetworkStick" id="PPMNETWORKSTICK_ALL">
+        <result property="deptId" column="DEPT_ID"/>
+        <result property="contact" column="CONTACT"/>
+        <result property="createDate" column="CREATE_DATE"/>
+        <result property="processType" column="PROCESS_TYPE"/>
+        <result property="processTitle" column="PROCESS_TITLE"/>
+        <result property="changeDevice" column="CHANGE_DEVICE"/>
+        <result property="changeType" column="CHANGE_TYPE"/>
+        <result property="describe" column="DESCRIBE"/>
+        <result property="dataIfNormal" column="DATA_IF_NORMAL"/>
+        <result property="monitoringConfirm" column="MONITORING_CONFIRM"/>
+        <result property="forConfirm" column="FOR_CONFIRM"/>
+        <result property="cmdbConfirm" column="CMDB_CONFIRM"/>
+        <result property="changeDeviceData" column="CHANGE_DEVICE_DATA"/>
+        <result property="id" column="ID"/>
+        <result property="instanceId" column="INSTANCE_ID"/>
+        <result property="badge" column="BADGE"/>
+        <result property="state" column="STATE"/>
+        <result property="lastMofiyDate" column="LAST_MOFIY_DATE"/>
+        <result property="currentToId" column="CURRENT_TO_ID"/>
+        <result property="userName" column="USER_NAME"/>
+        <result property="exceDesc" column="EXCE_DESC"/>
+
+    </resultMap>
+
+    <!-- 所有字段名称 -->
+    <sql id="sql_flied_all">
+        DEPT_ID,
+        CONTACT,
+        CREATE_DATE,
+        PROCESS_TYPE,
+        PROCESS_TITLE,
+        CHANGE_DEVICE,
+        CHANGE_TYPE,
+        DESCRIBE,
+        DATA_IF_NORMAL,
+        MONITORING_CONFIRM,
+        FOR_CONFIRM,
+        CMDB_CONFIRM,
+        CHANGE_DEVICE_DATA,
+        ID,
+        INSTANCE_ID,
+        BADGE,
+        STATE,
+        LAST_MOFIY_DATE,
+        CURRENT_TO_ID,
+        USER_NAME,
+        EXCE_DESC
+    </sql>
+    <sql id="sql_select_condition">
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="deptId != null  and deptId != '' ">DEPT_ID = #{deptId} AND</if>
+            <if test="contact != null  and contact != '' ">CONTACT = #{contact} AND</if>
+            <if test="startDate != null and startDate != ''">CREATE_DATE BETWEEN  to_date(#{startDate},'YYYY-MM-DD
+                hh24:mi:ss') AND
+                to_date(#{endDate},'YYYY-MM-DD hh24:mi:ss')
+                AND</if>
+            <if test="processType != null ">PROCESS_TYPE = #{processType} AND</if>
+            <if test="processTitle != null  and processTitle != '' "> INSTR(PROCESS_TITLE , #{processTitle}) > 0
+                AND</if>
+            <if test="changeDevice != null ">CHANGE_DEVICE = #{changeDevice} AND</if>
+            <if test="changeType != null ">CHANGE_TYPE = #{changeType} AND</if>
+            <if test="describe != null  and describe != '' ">DESCRIBE = #{describe} AND</if>
+            <if test="dataIfNormal != null ">DATA_IF_NORMAL = #{dataIfNormal} AND</if>
+            <if test="monitoringConfirm != null  and monitoringConfirm != '' ">MONITORING_CONFIRM = #{monitoringConfirm}
+                AND
+            </if>
+            <if test="forConfirm != null  and forConfirm != '' ">FOR_CONFIRM = #{forConfirm} AND</if>
+            <if test="cmdbConfirm != null  and cmdbConfirm != '' ">CMDB_CONFIRM = #{cmdbConfirm} AND</if>
+            <if test="changeDeviceData != null  and changeDeviceData != '' ">CHANGE_DEVICE_DATA = #{changeDeviceData}
+                AND
+            </if>
+            <if test="id != null ">ID = #{id} AND</if>
+            <if test="instanceId != null  and instanceId != '' ">INSTANCE_ID = #{instanceId} AND</if>
+            <if test="badge != null  and badge != '' ">BADGE = #{badge} AND</if>
+            <if test="state != null ">STATE = #{state} AND</if>
+            <if test="currentToId != null and currentToId != ''  ">CURRENT_TO_ID = #{currentToId} AND</if>
+            <if test="lastMofiyDate != null ">LAST_MOFIY_DATE = #{lastMofiyDate} AND</if>
+            <if test="userName != null and userName != '' "> instr(USER_NAME , #{userName}) > 0 AND</if>
+            <if test="exceDesc != null and exceDesc != '' "> EXCE_DESC = #{exceDesc} AND</if>
+
+        </trim>
+    </sql>
+    <resultMap id="QUERYPAGERLIST_MAP" type="ppmNetworkStickInfo" extends="PPMNETWORKSTICK_ALL">
+        <result property="stateName" column="STATE_NAME" />
+        <result property="processName" column="PROCESS_NAME" />
+        <result property="changeTypeStr" column="CHANGE_TYPE_NAME" />
+        <result property="changeDeviceStr" column="CHANGE_DEVICE_NAME" />
+    </resultMap>
+    <!-- 查询分页  2021-06-24 k6991  -->
+    <select id="queryPagerList" parameterType="map" resultMap="QUERYPAGERLIST_MAP">
+        SELECT
+        <include refid="sql_flied_all"/>,
+        E.DICTNAME PROCESS_NAME,D.DICTNAME STATE_NAME,C.DICTNAME CHANGE_TYPE_NAME,
+        (SELECT DEVICES FROM PPM_CHAGEDEVICE_MASTER M WHERE M.ID=N.CHANGE_DEVICE AND ROWNUM=1) CHANGE_DEVICE_NAME
+        FROM PPM_NETWORK_STICK N
+        LEFT JOIN EOS_DICT_ENTRY E ON(E.DICTTYPEID='NEW_DEVICE_CHANGE' AND N.PROCESS_TYPE=E.DICTID)
+        LEFT JOIN EOS_DICT_ENTRY D ON(D.DICTTYPEID='NEW_DEVICE_CHAGE_STATE' AND N.STATE=D.DICTID)
+        LEFT JOIN EOS_DICT_ENTRY C ON(C.DICTTYPEID='NEW_CHANGE_TYPE' AND N.CHANGE_TYPE=C.DICTID)
+        <include refid="sql_select_condition"/>
+        ORDER BY CREATE_DATE DESC
+    </select>
+
+    <!-- 新增  2021-06-24 k6991  -->
+    <insert id="addPojo" parameterType="ppmNetworkStick">
+        INSERT INTO PPM_NETWORK_STICK (
+        <trim suffixOverrides=",">
+            <if test="deptId != null  and deptId != '' ">DEPT_ID ,</if>
+            <if test="contact != null  and contact != '' ">CONTACT ,</if>
+            <if test="createDate != null ">CREATE_DATE ,</if>
+            <if test="processType != null ">PROCESS_TYPE ,</if>
+            <if test="processTitle != null  and processTitle != '' ">PROCESS_TITLE ,</if>
+            <if test="changeDevice != null ">CHANGE_DEVICE ,</if>
+            <if test="changeType != null ">CHANGE_TYPE ,</if>
+            <if test="describe != null  and describe != '' ">DESCRIBE ,</if>
+            <if test="dataIfNormal != null ">DATA_IF_NORMAL ,</if>
+            <if test="monitoringConfirm != null  and monitoringConfirm != '' ">MONITORING_CONFIRM ,</if>
+            <if test="forConfirm != null  and forConfirm != '' ">FOR_CONFIRM ,</if>
+            <if test="cmdbConfirm != null  and cmdbConfirm != '' ">CMDB_CONFIRM ,</if>
+            <if test="changeDeviceData != null  and changeDeviceData != '' ">CHANGE_DEVICE_DATA ,</if>
+            <if test="id != null ">ID ,</if>
+            <if test="instanceId != null  and instanceId != '' ">INSTANCE_ID ,</if>
+            <if test="badge != null  and badge != '' ">BADGE ,</if>
+            <if test="state != null">STATE ,</if>
+            <if test="currentToId != null and currentToId != ''  ">CURRENT_TO_ID ,</if>
+            <if test="lastMofiyDate != null ">LAST_MOFIY_DATE,</if>
+            <if test="userName != null and userName != '' ">USER_NAME ,</if>
+            <if test="exceDesc != null and exceDesc != '' "> EXCE_DESC ,</if>
+        </trim>
+        )
+        VALUES(
+        <trim suffixOverrides=",">
+            <if test="deptId != null  and deptId != '' ">#{deptId} ,</if>
+            <if test="contact != null  and contact != '' ">#{contact} ,</if>
+            <if test="createDate != null ">#{createDate} ,</if>
+            <if test="processType != null ">#{processType} ,</if>
+            <if test="processTitle != null  and processTitle != '' ">#{processTitle} ,</if>
+            <if test="changeDevice != null ">#{changeDevice} ,</if>
+            <if test="changeType != null ">#{changeType} ,</if>
+            <if test="describe != null  and describe != '' ">#{describe} ,</if>
+            <if test="dataIfNormal != null ">#{dataIfNormal} ,</if>
+            <if test="monitoringConfirm != null  and monitoringConfirm != '' ">#{monitoringConfirm} ,</if>
+            <if test="forConfirm != null  and forConfirm != '' ">#{forConfirm} ,</if>
+            <if test="cmdbConfirm != null  and cmdbConfirm != '' ">#{cmdbConfirm} ,</if>
+            <if test="changeDeviceData != null  and changeDeviceData != '' ">#{changeDeviceData} ,</if>
+            <if test="id != null ">#{id} ,</if>
+            <if test="instanceId != null  and instanceId != '' ">#{instanceId} ,</if>
+            <if test="badge != null  and badge != '' ">#{badge} ,</if>
+            <if test="state != null">#{state} ,</if>
+            <if test="currentToId != null and currentToId != ''  ">#{currentToId} ,</if>
+            <if test="lastMofiyDate != null ">#{lastMofiyDate} ,</if>
+            <if test="userName != null and userName != '' "> #{userName} ,</if>
+            <if test="exceDesc != null and exceDesc != '' "> #{exceDesc} ,</if>
+        </trim>
+        )
+    </insert>
+    <resultMap id="QUERYDETAIL_MAP" type="ppmNetworkStickInfo" extends="PPMNETWORKSTICK_ALL">
+        <result column="DEPT_NAME" property="deptName" />
+        <result column="CHANGE_TYPE_NAME" property="changeTypeStr" />
+        <result column="DEVICES" property="changeDeviceStr" />
+    </resultMap>
+    <!--通过id查询  k6991 2021-06-24 -->
+    <select id="queryDetail" parameterType="ppmNetworkStick" resultMap="QUERYDETAIL_MAP">
+        SELECT
+        N.DEPT_ID,
+        N.CONTACT,
+        N.CREATE_DATE,
+        N.PROCESS_TYPE,
+        N.PROCESS_TITLE,
+        N.CHANGE_DEVICE,
+        N.CHANGE_TYPE,
+        N.DESCRIBE,
+        N.DATA_IF_NORMAL,
+        N.MONITORING_CONFIRM,
+        N.FOR_CONFIRM,
+        N.CMDB_CONFIRM,
+        N.CHANGE_DEVICE_DATA,
+        N.ID,
+        N.INSTANCE_ID,
+        N.BADGE,
+        N.STATE,
+        N.LAST_MOFIY_DATE,
+        N.CURRENT_TO_ID,
+        N.USER_NAME,
+        N.EXCE_DESC
+        ,M.DEVICES DEVICES,
+        (SELECT D.LOCATION FROM COMM_DEPARTMENT D WHERE D.DEPID=N.DEPT_ID AND ROWNUM=1) DEPT_NAME,
+        C.DICTNAME CHANGE_TYPE_NAME
+        FROM PPM_NETWORK_STICK N
+        LEFT JOIN EOS_DICT_ENTRY C ON(C.DICTTYPEID='NEW_CHANGE_TYPE' AND N.CHANGE_TYPE=C.DICTID)
+        LEFT JOIN PPM_CHAGEDEVICE_MASTER M ON(N.CHANGE_DEVICE = M.ID)
+        WHERE INSTANCE_ID=#{instanceId} AND ROWNUM=1
+    </select>
+
+    <!--查询集合  k6991 2021-06-24 -->
+    <select id="getList" parameterType="ppmNetworkStick" resultMap="PPMNETWORKSTICK_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM PPM_NETWORK_STICK
+        <include refid="sql_select_condition"/>
+    </select>
+    <!-- update sql -->
+    <sql id="update_pojo_sql">
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="deptId != null  and deptId != '' ">DEPT_ID=#{deptId} ,</if>
+            <if test="contact != null  and contact != '' ">CONTACT=#{contact} ,</if>
+            <if test="createDate != null ">CREATE_DATE=#{createDate} ,</if>
+            <if test="processType != null ">PROCESS_TYPE=#{processType} ,</if>
+            <if test="processTitle != null  and processTitle != '' ">PROCESS_TITLE=#{processTitle} ,</if>
+            <if test="changeDevice != null ">CHANGE_DEVICE=#{changeDevice} ,</if>
+            <if test="changeType != null ">CHANGE_TYPE=#{changeType} ,</if>
+            <if test="describe != null  and describe != '' ">DESCRIBE=#{describe} ,</if>
+            <if test="dataIfNormal != null ">DATA_IF_NORMAL=#{dataIfNormal} ,</if>
+            <if test="monitoringConfirm != null  and monitoringConfirm != '' ">MONITORING_CONFIRM=#{monitoringConfirm}
+                ,
+            </if>
+            <if test="forConfirm != null  and forConfirm != '' ">FOR_CONFIRM=#{forConfirm} ,</if>
+            <if test="cmdbConfirm != null  and cmdbConfirm != '' ">CMDB_CONFIRM=#{cmdbConfirm} ,</if>
+            <if test="changeDeviceData != null  and changeDeviceData != '' ">CHANGE_DEVICE_DATA=#{changeDeviceData} ,
+            </if>
+            <if test="id != null ">ID=#{id} ,</if>
+            <if test="instanceId != null  and instanceId != '' ">INSTANCE_ID=#{instanceId} ,</if>
+            <if test="badge != null  and badge != '' ">BADGE=#{badge} ,</if>
+            <if test="state != null ">STATE=#{state} ,</if>
+            <if test="currentToId != null and currentToId != ''  ">CURRENT_TO_ID = #{currentToId} ,</if>
+            <if test="lastMofiyDate != null ">LAST_MOFIY_DATE = #{lastMofiyDate} ,</if>
+            <if test="userName != null and userName != '' ">USER_NAME = #{userName} ,</if>
+            <if test="exceDesc != null and exceDesc != '' "> EXCE_DESC = #{exceDesc} ,</if>
+        </trim>
+    </sql>
+
+    <!--通过id编辑 k6991 2021-06-24 -->
+    <update id="updatePojo" parameterType="ppmNetworkStick">
+        UPDATE
+        PPM_NETWORK_STICK
+        <include refid="update_pojo_sql"/>
+        WHERE INSTANCE_ID=#{instanceId}
+    </update>
+	<resultMap id="GETCURRENTINFO_MAP" type="ppmNetworkStickInfo" extends="PPMNETWORKSTICK_ALL">
+        <result property="userName" column="USER_NAME" />
+        <result property="mobile" column="MOBILE" />
+        <result property="deptName" column="DEPT_NAME" />
+    </resultMap>
+    <!-- 获取个人信息 -->
+    <select id="getCurrentInfo" parameterType="ppmNetworkStick" resultMap="GETCURRENTINFO_MAP">
+        SELECT * FROM (
+        SELECT
+        E.BADGE BADGE,
+        E.EMPNAME USER_NAME,
+        TO_CHAR(E.DEPID) DEPT_ID,
+        E.MOBILETELPHONE MOBILE,
+        D.LOCATION DEPT_NAME
+        FROM COMM_EMPLOYEE E
+        LEFT JOIN COMM_DEPARTMENT D ON(E.DEPID=D.DEPID)
+        UNION ALL
+        SELECT
+        B.JOB_ID BADGE,
+        B.USER_NAME USER_NAME,
+        B.DEPT_ID DEPT_ID,
+        B.MOBILE MOBILE,
+        D.LOCATION DEPT_NAME
+        FROM PPM_OUTSOURCING_BASIC B
+        LEFT JOIN COMM_DEPARTMENT D ON(B.DEPT_ID=D.DEPID)
+        ) TEMP WHERE TEMP.BADGE=#{badge}
+    </select>
+</mapper>

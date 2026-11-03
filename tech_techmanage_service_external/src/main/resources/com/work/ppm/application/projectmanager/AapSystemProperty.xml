@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k6991 2021-10-22 -->
+<mapper namespace="com.work.ppm.application.model.projectmanager.AapSystemProperty">
+    <resultMap type="aapSystemProperty" id="AAPSYSTEMPROPERTY_ALL">
+        <result property="id" column="ID"/>
+        <result property="systemid" column="SYSTEMID"/>
+        <result property="tecFzzgUser" column="TEC_FZZG_USER"/>
+        <result property="tecdep" column="TECDEP"/>
+        <result property="admina" column="ADMINA"/>
+        <result property="adminb" column="ADMINB"/>
+        <result property="configuser" column="CONFIGUSER"/>
+        <result property="jgywuser" column="JGYWUSER"/>
+        <result property="yfmanagera" column="YFMANAGERA"/>
+        <result property="yfmanagerb" column="YFMANAGERB"/>
+        <result property="ywywuser" column="YWYWUSER"/>
+        <result property="ywmanagera" column="YWMANAGERA"/>
+        <result property="ywmanagerb" column="YWMANAGERB"/>
+        <result property="zmanager" column="ZMANAGER"/>
+        <result property="ywlinkman" column="YWLINKMAN"/>
+        <result property="busdep" column="BUSDEP"/>
+        <result property="ywfzruser" column="YWFZRUSER"/>
+        <result property="collectdep" column="COLLECTDEP"/>
+
+    </resultMap>
+
+    <!-- 所有字段名称 -->
+    <sql id="sql_flied_all">
+        ID,
+        SYSTEMID,
+        TEC_FZZG_USER,
+        TECDEP,
+        ADMINA,
+        ADMINB,
+        CONFIGUSER,
+        JGYWUSER,
+        YFMANAGERA,
+        YFMANAGERB,
+        YWYWUSER,
+        YWMANAGERA,
+        YWMANAGERB,
+        ZMANAGER,
+        YWLINKMAN,
+        BUSDEP,
+        YWFZRUSER,
+        COLLECTDEP
+    </sql>
+    <sql id="sql_select_condition">
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="id != null  and id != '' ">ID = #{id} AND</if>
+            <if test="systemid != null  and systemid != '' ">SYSTEMID = #{systemid} AND</if>
+            <if test="tecFzzgUser != null  and tecFzzgUser != '' ">TEC_FZZG_USER = #{tecFzzgUser} AND</if>
+            <if test="tecdep != null  and tecdep != '' ">TECDEP = #{tecdep} AND</if>
+            <if test="admina != null  and admina != '' ">ADMINA = #{admina} AND</if>
+            <if test="adminb != null  and adminb != '' ">ADMINB = #{adminb} AND</if>
+            <if test="configuser != null  and configuser != '' ">CONFIGUSER = #{configuser} AND</if>
+            <if test="jgywuser != null  and jgywuser != '' ">JGYWUSER = #{jgywuser} AND</if>
+            <if test="yfmanagera != null  and yfmanagera != '' ">YFMANAGERA = #{yfmanagera} AND</if>
+            <if test="yfmanagerb != null  and yfmanagerb != '' ">YFMANAGERB = #{yfmanagerb} AND</if>
+            <if test="ywywuser != null  and ywywuser != '' ">YWYWUSER = #{ywywuser} AND</if>
+            <if test="ywmanagera != null  and ywmanagera != '' ">YWMANAGERA = #{ywmanagera} AND</if>
+            <if test="ywmanagerb != null  and ywmanagerb != '' ">YWMANAGERB = #{ywmanagerb} AND</if>
+            <if test="zmanager != null  and zmanager != '' ">ZMANAGER = #{zmanager} AND</if>
+            <if test="ywlinkman != null  and ywlinkman != '' ">YWLINKMAN = #{ywlinkman} AND</if>
+            <if test="busdep != null  and busdep != '' ">BUSDEP = #{busdep} AND</if>
+            <if test="ywfzruser != null  and ywfzruser != '' ">YWFZRUSER = #{ywfzruser} AND</if>
+            <if test="collectdep != null  and collectdep != '' ">COLLECTDEP = #{collectdep} AND</if>
+
+        </trim>
+    </sql>
+    <resultMap id="GETSYSTEMSFORUSERID_MAP" type="aapSystemPropertyInfo" extends="AAPSYSTEMPROPERTY_ALL">
+        <result property="sysName" column="sysname" />
+    </resultMap>
+    <!--查询集合  k6991 2021-10-22 -->
+    <select id="getSystemsForUserId" parameterType="map" resultMap="GETSYSTEMSFORUSERID_MAP">
+        select t1.sys_name sysname,t.*
+        from aap_system_property t
+        left join aap_system t1 on t1.system_id=t.systemid
+        where t.collectdep is null and
+        (
+            ( 1 != 1
+        <!--当系统的上收部门为空时，筛选条件为业务字典PPM_PWD_HQQX配置的属性中含有该用户-->
+                <if test="A_20170120_000108 != null" >
+                    or ','||t.tec_fzzg_user||',' like '%,'||#{userId}||',%'
+                </if>
+                <if test="A_20160426_000086" >
+                    or ','||t.admina||',' like '%,'||#{userId}||',%'
+                </if>
+                <if test="A_20160426_000087" >
+                    or ','||t.adminb||',' like '%,'||#{userId}||',%'
+                </if>
+                <if test="A_20210128_000661" >
+                    or ','||t.configuser||',' like '%,'||#{userId}||',%'
+                </if>
+                <if test="A_20210119_000651" >
+                    or ','||t.jgywuser||',' like '%,'||#{userId}||',%'
+                </if>
+                <if test="A_20200507_000391" >
+                    or ','||t.yfmanagera||',' like '%,'||#{userId}||',%'
+                </if>
+                <if test="A_20200507_000392" >
+                    or ','||t.yfmanagerb||',' like '%,'||#{userId}||',%'
+                </if>
+                <if test="A_20210204_000671" >
+                    or ','||t.ywywuser||',' like '%,'||#{userId}||',%'
+                </if>
+                <if test="A_20160331_000051" >
+                    or ','||t.ywmanagera||',' like '%,'||#{userId}||',%'
+                </if>
+                <if test="A_20160426_000085" >
+                    or ','||t.ywmanagerb||',' like '%,'||#{userId}||',%'
+                </if>
+                <if test="A_20210118_000641" >
+                    or ','||t.zmanager||',' like '%,'||#{userId}||',%'
+                </if>
+                <if test="A_20160426_000088" >
+                    or ','||t.ywlinkman||',' like '%,'||#{userId}||',%'
+                </if>
+                <if test="A_20210302_000711" >
+                    or ','||t.ywfzruser||',' like '%,'||#{userId}||',%'
+                </if>
+            )
+            or(
+            <!--当系统的上收部门不为空时，筛选条件为上收部门是该用户所在部门-->
+            t.collectdep is not null and t.collectdep=#{deptId}
+            )
+        )
+        order by t1.sys_name asc
+    </select>
+    <!-- update sql -->
+    <sql id="update_pojo_sql">
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="id != null  and id != '' ">ID=#{id} ,</if>
+            <if test="systemid != null  and systemid != '' ">SYSTEMID=#{systemid} ,</if>
+            <if test="tecFzzgUser != null  and tecFzzgUser != '' ">TEC_FZZG_USER=#{tecFzzgUser} ,</if>
+            <if test="tecdep != null  and tecdep != '' ">TECDEP=#{tecdep} ,</if>
+            <if test="admina != null  and admina != '' ">ADMINA=#{admina} ,</if>
+            <if test="adminb != null  and adminb != '' ">ADMINB=#{adminb} ,</if>
+            <if test="configuser != null  and configuser != '' ">CONFIGUSER=#{configuser} ,</if>
+            <if test="jgywuser != null  and jgywuser != '' ">JGYWUSER=#{jgywuser} ,</if>
+            <if test="yfmanagera != null  and yfmanagera != '' ">YFMANAGERA=#{yfmanagera} ,</if>
+            <if test="yfmanagerb != null  and yfmanagerb != '' ">YFMANAGERB=#{yfmanagerb} ,</if>
+            <if test="ywywuser != null  and ywywuser != '' ">YWYWUSER=#{ywywuser} ,</if>
+            <if test="ywmanagera != null  and ywmanagera != '' ">YWMANAGERA=#{ywmanagera} ,</if>
+            <if test="ywmanagerb != null  and ywmanagerb != '' ">YWMANAGERB=#{ywmanagerb} ,</if>
+            <if test="zmanager != null  and zmanager != '' ">ZMANAGER=#{zmanager} ,</if>
+            <if test="ywlinkman != null  and ywlinkman != '' ">YWLINKMAN=#{ywlinkman} ,</if>
+            <if test="busdep != null  and busdep != '' ">BUSDEP=#{busdep} ,</if>
+            <if test="ywfzruser != null  and ywfzruser != '' ">YWFZRUSER=#{ywfzruser} ,</if>
+            <if test="collectdep != null  and collectdep != '' ">COLLECTDEP=#{collectdep} ,</if>
+
+        </trim>
+    </sql>
+
+    <!--通过id编辑 k6991 2021-10-22 -->
+    <update id="updatePojo" parameterType="aapSystemProperty">
+        UPDATE
+        AAP_SYSTEM_PROPERTY
+        <include refid="update_pojo_sql"/>
+        WHERE ID=#{id}
+    </update>
+</mapper>

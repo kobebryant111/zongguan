@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k1327 2021-01-29 -->
+<mapper namespace="com.work.ppm.application.model.integratedmanager.PpmRlwbhtInfo">
+	 <resultMap type="ppmRlwbhtInfo" id="PPMRLWBHTINFO_ALL">
+        <result property="year" column="YEAR" />
+		<result property="orgcode" column="ORGCODE" />
+		<result property="htmc" column="HTMC" />
+		<result property="htid" column="HTID" />
+		
+     </resultMap>
+
+     <!-- 所有字段名称 -->
+        <sql id="sql_flied_all">
+        	YEAR,
+			ORGCODE,
+			HTMC,
+			HTID
+        </sql>
+        <sql id="sql_select_condition">
+            <trim prefix="WHERE" suffixOverrides="AND">
+                <if test="year != null  and year != '' " > YEAR = #{year} AND </if>
+				<if test="orgcode != null  and orgcode != '' " > ORGCODE = #{orgcode} AND </if>
+				<if test="htmc != null  and htmc != '' " > HTMC = #{htmc} AND </if>
+				<if test="htid != null  and htid != '' " > HTID = #{htid} AND </if>
+				
+            </trim>
+        </sql>
+    	<!-- 查询分页  2021-01-29 k1327  -->
+        <select id="queryPagerList" parameterType="map" resultMap="PPMRLWBHTINFO_ALL">
+        	SELECT
+            <include refid="sql_flied_all" />
+            FROM PPM_RLWBHT_INFO
+            <include refid="sql_select_condition" />
+        </select>
+
+        <!-- 新增  2021-01-29 k1327  -->
+        <insert id="addPojo" parameterType="ppmRlwbhtInfo">
+    		INSERT INTO PPM_RLWBHT_INFO (
+    		<trim suffixOverrides=",">
+    		 <if test="year != null  and year != '' " > YEAR , </if>
+				<if test="orgcode != null  and orgcode != '' " > ORGCODE , </if>
+				<if test="htmc != null  and htmc != '' " > HTMC , </if>
+				<if test="htid != null  and htid != '' " > HTID , </if>
+				
+              </trim>
+    		)
+    		VALUES(
+    		<trim suffixOverrides=",">
+    		 <if test="year != null  and year != '' " > #{year} , </if>
+				<if test="orgcode != null  and orgcode != '' " > #{orgcode} , </if>
+				<if test="htmc != null  and htmc != '' " > #{htmc} , </if>
+				<if test="htid != null  and htid != '' " > #{htid} , </if>
+				
+            </trim>
+    		)
+        </insert>
+
+        <!--通过id查询  k1327 2021-01-29 -->
+        <select id="queryDetail" parameterType="ppmRlwbhtInfo" resultMap="PPMRLWBHTINFO_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_RLWBHT_INFO  WHERE YEAR=#{year}
+        </select>
+
+         <!--查询集合  k1327 2021-01-29 -->
+        <select id="getList" parameterType="ppmRlwbhtInfo" resultMap="PPMRLWBHTINFO_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_RLWBHT_INFO
+        	<include refid="sql_select_condition" />
+        </select>
+        <!-- update sql -->
+        <sql id="update_pojo_sql">
+        	<trim prefix="SET" suffixOverrides=",">
+        		<if test="year != null  and year != '' " > YEAR=#{year} , </if>
+				<if test="orgcode != null  and orgcode != '' " > ORGCODE=#{orgcode} , </if>
+				<if test="htmc != null  and htmc != '' " > HTMC=#{htmc} , </if>
+				<if test="htid != null  and htid != '' " > HTID=#{htid} , </if>
+				
+            </trim>
+        </sql>
+
+        <!--通过id编辑 k1327 2021-01-29 -->
+    	<update id="updatePojo" parameterType="ppmRlwbhtInfo">
+        	UPDATE
+        	PPM_RLWBHT_INFO
+        	<include refid="update_pojo_sql" />
+        	WHERE HTID=#{htid} and
+        </update>
+
+        <!--通过id批量删除  k1327 2021-01-29 -->
+        <delete id="deleteById" parameterType="ppmRlwbhtInfo">
+        	DELETE
+        	FROM
+        	PPM_RLWBHT_INFO
+        	WHERE YEAR = #{year}
+        </delete>
+
+	<!--通过id查询  k1327 2021-01-29 -->
+	<select id="queryDetailByParam" parameterType="ppmRlwbhtInfo" resultMap="PPMRLWBHTINFO_ALL">
+		SELECT
+		<include refid="sql_flied_all" />
+		FROM PPM_RLWBHT_INFO
+		<include refid="sql_select_condition" />
+	</select>
+
+</mapper>

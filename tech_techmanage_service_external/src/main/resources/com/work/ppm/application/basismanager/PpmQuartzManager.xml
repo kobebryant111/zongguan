@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k6991 2020-10-09 -->
+<mapper namespace="com.work.ppm.application.model.basismanager.PpmQuartzManager">
+	 <resultMap type="ppmQuartzManager" id="PPMQUARTZMANAGER_ALL">
+        <result property="id" column="ID" />
+		<result property="triggerName" column="TRIGGER_NAME" />
+		<result property="expresstion" column="EXPRESSTION" />
+		<result property="className" column="CLASS_NAME" />
+		<result property="state" column="STATE" />
+		<result property="createTime" column="CREATE_TIME" />
+		<result property="des" column="DES" />
+		<result property="createName" column="CREATE_NAME" />
+		 <result property="jobName" column="JOB_NAME" />
+		 <result property="sysType" column="SYS_TYPE" />
+     </resultMap>
+
+     <!-- 所有字段名称 -->
+        <sql id="sql_flied_all">
+        	ID,
+			TRIGGER_NAME,
+			EXPRESSTION,
+			CLASS_NAME,
+			STATE,
+			CREATE_TIME,
+			DES,
+			CREATE_NAME,
+			JOB_NAME,
+			SYS_TYPE
+        </sql>
+        <sql id="sql_select_condition">
+            <trim prefix="WHERE" suffixOverrides="AND">
+                <if test="id != null " > ID = #{id} AND </if>
+				<if test="triggerName != null  and triggerName != '' " > TRIGGER_NAME = #{triggerName} AND </if>
+				<if test="expresstion != null  and expresstion != '' " > EXPRESSTION = #{expresstion} AND </if>
+				<if test="className != null  and className != '' " > CLASS_NAME = #{className} AND </if>
+				<if test="state != null  and state != '' " > STATE = #{state} AND </if>
+				<if test="createTime != null " > CREATE_TIME = #{createTime} AND </if>
+				<if test="des != null  and des != '' " > DES = #{des} AND </if>
+				<if test="createName != null  and createName != '' " > CREATE_NAME = #{createName} AND </if>
+				<if test="jobName != null  and jobName != '' " > JOB_NAME = #{jobName} AND </if>
+				<if test="sysType != null " > SYS_TYPE = #{sysType} AND </if>
+            </trim>
+        </sql>
+		
+		<sql id="sql_select_like_condition">
+            <trim prefix="WHERE" suffixOverrides="AND">
+                <if test="id != null " > ID = #{id} AND </if>
+				<if test="triggerName != null  and triggerName != '' " > TRIGGER_NAME like '%${triggerName}%' AND </if>
+				<if test="expresstion != null  and expresstion != '' " > EXPRESSTION like '%${expresstion}%' AND </if>
+				<if test="className != null  and className != '' " > CLASS_NAME like '%${className}%' AND </if>
+				<if test="state != null  and state != '' " > STATE = #{state} AND </if>
+				<if test="createTime != null " > CREATE_TIME = #{createTime} AND </if>
+				<if test="des != null  and des != '' " > DES like '%${des}%' AND </if>
+				<if test="createName != null  and createName != '' " > CREATE_NAME = #{createName} AND </if>
+				<if test="jobName != null  and jobName != '' " > JOB_NAME like '%${jobName}%' AND </if>
+				<if test="sysType != null " > SYS_TYPE = #{sysType} AND </if>
+            </trim>
+        </sql>
+    	<!-- 查询分页  2020-10-09 k6991  -->
+        <select id="queryPagerList" parameterType="map" resultMap="PPMQUARTZMANAGER_ALL">
+        	SELECT
+            <include refid="sql_flied_all" />
+            FROM PPM_QUARTZ_MANAGER
+            <include refid="sql_select_condition" />
+        </select>
+		
+		<select id="queryLikePagerList" parameterType="map" resultMap="PPMQUARTZMANAGER_ALL">
+        	SELECT
+            <include refid="sql_flied_all" />
+            FROM PPM_QUARTZ_MANAGER
+            <include refid="sql_select_like_condition" />
+        </select>
+
+        <!-- 新增  2020-10-09 k6991  -->
+        <insert id="addPojo" parameterType="ppmQuartzManager">
+    		INSERT INTO PPM_QUARTZ_MANAGER (
+    		<trim suffixOverrides=",">
+    		 <if test="id != null " > ID , </if>
+				<if test="triggerName != null  and triggerName != '' " > TRIGGER_NAME , </if>
+				<if test="expresstion != null  and expresstion != '' " > EXPRESSTION , </if>
+				<if test="className != null  and className != '' " > CLASS_NAME , </if>
+				<if test="state != null  and state != '' " > STATE , </if>
+				<if test="createTime != null " > CREATE_TIME , </if>
+				<if test="des != null  and des != '' " > DES , </if>
+				<if test="createName != null  and createName != '' " > CREATE_NAME , </if>
+				<if test="jobName != null  and jobName != '' " > JOB_NAME, </if>
+				<if test="sysType != null" > SYS_TYPE, </if>
+
+              </trim>
+    		)
+    		VALUES(
+    		<trim suffixOverrides=",">
+    		 <if test="id != null " > #{id} , </if>
+				<if test="triggerName != null  and triggerName != '' " > #{triggerName} , </if>
+				<if test="expresstion != null  and expresstion != '' " > #{expresstion} , </if>
+				<if test="className != null  and className != '' " > #{className} , </if>
+				<if test="state != null  and state != '' " > #{state} , </if>
+				<if test="createTime != null " > #{createTime} , </if>
+				<if test="des != null  and des != '' " > #{des} , </if>
+				<if test="createName != null  and createName != '' " > #{createName} , </if>
+				<if test="jobName != null  and jobName != '' " > #{jobName} , </if>
+				<if test="sysType != null" > #{sysType}, </if>
+            </trim>
+    		)
+        </insert>
+
+        <!--通过id查询  k6991 2020-10-09 -->
+        <select id="queryDetail" parameterType="ppmQuartzManager" resultMap="PPMQUARTZMANAGER_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_QUARTZ_MANAGER  WHERE ID=#{id}
+        </select>
+
+         <!--查询集合  k6991 2020-10-09 -->
+        <select id="getList" parameterType="ppmQuartzManager" resultMap="PPMQUARTZMANAGER_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_QUARTZ_MANAGER
+        	<include refid="sql_select_condition" />
+        </select>
+        <!-- update sql -->
+        <sql id="update_pojo_sql">
+        	<trim prefix="SET" suffixOverrides=",">
+        		<if test="id != null " > ID=#{id} , </if>
+				<if test="triggerName != null  and triggerName != '' " > TRIGGER_NAME=#{triggerName} , </if>
+				<if test="expresstion != null  and expresstion != '' " > EXPRESSTION=#{expresstion} , </if>
+				<if test="className != null  and className != '' " > CLASS_NAME=#{className} , </if>
+				<if test="state != null  and state != '' " > STATE=#{state} , </if>
+				<if test="createTime != null " > CREATE_TIME=#{createTime} , </if>
+				<if test="des != null  and des != '' " > DES=#{des} , </if>
+				<if test="createName != null  and createName != '' " > CREATE_NAME=#{createName} , </if>
+				<if test="jobName != null  and jobName != '' " > JOB_NAME = #{jobName} , </if>
+				<if test="sysType != null " > SYS_TYPE = #{sysType} , </if>
+            </trim>
+        </sql>
+
+        <!--通过id编辑 k6991 2020-10-09 -->
+    	<update id="updatePojo" parameterType="ppmQuartzManager">
+        	UPDATE
+        	PPM_QUARTZ_MANAGER
+        	<include refid="update_pojo_sql" />
+        	WHERE ID=#{id}
+        </update>
+
+        <!--通过id批量删除  k6991 2020-10-09 -->
+        <delete id="deleteById" parameterType="ppmQuartzManager">
+        	DELETE
+        	FROM
+        	PPM_QUARTZ_MANAGER
+        	WHERE ID = #{id}
+        </delete>
+
+</mapper>

@@ -1,0 +1,434 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k4038 2021-09-28 -->
+<mapper namespace="com.work.ppm.application.model.projectmanager.PpmProject">
+	 <resultMap type="ppmProject" id="PPMPROJECT_ALL">
+        <result property="id" column="ID" />
+		<result property="projectno" column="PROJECTNO" />
+		<result property="projectname" column="PROJECTNAME" />
+		<result property="subprojectno" column="SUBPROJECTNO" />
+		<result property="subtype" column="SUBTYPE" />
+		<result property="sysno" column="SYSNO" />
+		<result property="subprojectname" column="SUBPROJECTNAME" />
+		<result property="projectscale" column="PROJECTSCALE" />
+		<result property="deptno" column="DEPTNO" />
+		<result property="busideptno" column="BUSIDEPTNO" />
+		<result property="manauserid" column="MANAUSERID" />
+		<result property="busiuserid" column="BUSIUSERID" />
+		<result property="planTWorkload" column="PLAN_T_WORKLOAD" />
+		<result property="actualTWorkload" column="ACTUAL_T_WORKLOAD" />
+		<result property="planOWorkload" column="PLAN_O_WORKLOAD" />
+		<result property="actualOWorkload" column="ACTUAL_O_WORKLOAD" />
+		<result property="planBWorkload" column="PLAN_B_WORKLOAD" />
+		<result property="actualBWorkload" column="ACTUAL_B_WORKLOAD" />
+		<result property="builddate" column="BUILDDATE" />
+		<result property="startdate" column="STARTDATE" />
+		<result property="status" column="STATUS" />
+		<result property="isdelay" column="ISDELAY" />
+		<result property="expectdate" column="EXPECTDATE" />
+		<result property="actualdate" column="ACTUALDATE" />
+		<result property="closedate" column="CLOSEDATE" />
+		<result property="isdel" column="ISDEL" />
+		<result property="createtime" column="CREATETIME" />
+		<result property="creators" column="CREATORS" />
+		<result property="lastmodtime" column="LASTMODTIME" />
+		<result property="lastmoduser" column="LASTMODUSER" />
+		<result property="orgarea" column="ORGAREA" />
+		<result property="isproduction" column="ISPRODUCTION" />
+		<result property="isonline" column="ISONLINE" />
+		<result property="coupledsys" column="COUPLEDSYS" />
+		<result property="gnd" column="GND" />
+		<result property="healthscore" column="HEALTHSCORE" />
+		<result property="fjhid" column="FJHID" />
+		<result property="issueworkload" column="ISSUEWORKLOAD" />
+		<result property="testdeptno" column="TESTDEPTNO" />
+		
+     </resultMap>
+
+     <!-- 所有字段名称 -->
+        <sql id="sql_flied_all">
+        	ID,
+			PROJECTNO,
+			PROJECTNAME,
+			SUBPROJECTNO,
+			SUBTYPE,
+			SYSNO,
+			SUBPROJECTNAME,
+			PROJECTSCALE,
+			DEPTNO,
+			BUSIDEPTNO,
+			MANAUSERID,
+			BUSIUSERID,
+			PLAN_T_WORKLOAD,
+			ACTUAL_T_WORKLOAD,
+			PLAN_O_WORKLOAD,
+			ACTUAL_O_WORKLOAD,
+			PLAN_B_WORKLOAD,
+			ACTUAL_B_WORKLOAD,
+			BUILDDATE,
+			STARTDATE,
+			STATUS,
+			ISDELAY,
+			EXPECTDATE,
+			ACTUALDATE,
+			CLOSEDATE,
+			ISDEL,
+			CREATETIME,
+			CREATORS,
+			LASTMODTIME,
+			LASTMODUSER,
+			ORGAREA,
+			ISPRODUCTION,
+			ISONLINE,
+			COUPLEDSYS,
+			GND,
+			HEALTHSCORE,
+			FJHID,
+			ISSUEWORKLOAD,
+			TESTDEPTNO
+        </sql>
+        <sql id="sql_select_condition">
+            <trim prefix="WHERE" suffixOverrides="AND">
+                <if test="id != null " > ID = #{id} AND </if>
+				<if test="projectno != null  and projectno != '' " > PROJECTNO = #{projectno} AND </if>
+				<if test="projectname != null  and projectname != '' " > PROJECTNAME = #{projectname} AND </if>
+				<if test="subprojectno != null  and subprojectno != '' " > SUBPROJECTNO = #{subprojectno} AND </if>
+				<if test="subtype != null  and subtype != '' " > SUBTYPE = #{subtype} AND </if>
+				<if test="sysno != null  and sysno != '' " > SYSNO = #{sysno} AND </if>
+				<if test="subprojectname != null  and subprojectname != '' " > SUBPROJECTNAME = #{subprojectname} AND </if>
+				<if test="projectscale != null  and projectscale != '' " > PROJECTSCALE = #{projectscale} AND </if>
+				<if test="deptno != null  and deptno != '' " > DEPTNO = #{deptno} AND </if>
+				<if test="busideptno != null  and busideptno != '' " > BUSIDEPTNO = #{busideptno} AND </if>
+				<if test="manauserid != null  and manauserid != '' " > MANAUSERID = #{manauserid} AND </if>
+				<if test="busiuserid != null  and busiuserid != '' " > BUSIUSERID = #{busiuserid} AND </if>
+				<if test="planTWorkload != null " > PLAN_T_WORKLOAD = #{planTWorkload} AND </if>
+				<if test="actualTWorkload != null " > ACTUAL_T_WORKLOAD = #{actualTWorkload} AND </if>
+				<if test="planOWorkload != null " > PLAN_O_WORKLOAD = #{planOWorkload} AND </if>
+				<if test="actualOWorkload != null " > ACTUAL_O_WORKLOAD = #{actualOWorkload} AND </if>
+				<if test="planBWorkload != null " > PLAN_B_WORKLOAD = #{planBWorkload} AND </if>
+				<if test="actualBWorkload != null " > ACTUAL_B_WORKLOAD = #{actualBWorkload} AND </if>
+				<if test="builddate != null " > BUILDDATE = #{builddate} AND </if>
+				<if test="startdate != null " > STARTDATE = #{startdate} AND </if>
+				<if test="status != null  and status != '' " > STATUS = #{status} AND </if>
+				<if test="isdelay != null  and isdelay != '' " > ISDELAY = #{isdelay} AND </if>
+				<if test="expectdate != null " > EXPECTDATE = #{expectdate} AND </if>
+				<if test="actualdate != null " > ACTUALDATE = #{actualdate} AND </if>
+				<if test="closedate != null " > CLOSEDATE = #{closedate} AND </if>
+				<if test="isdel != null " > ISDEL = #{isdel} AND </if>
+				<if test="createtime != null " > CREATETIME = #{createtime} AND </if>
+				<if test="creators != null  and creators != '' " > CREATORS = #{creators} AND </if>
+				<if test="lastmodtime != null " > LASTMODTIME = #{lastmodtime} AND </if>
+				<if test="lastmoduser != null  and lastmoduser != '' " > LASTMODUSER = #{lastmoduser} AND </if>
+				<if test="orgarea != null  and orgarea != '' " > ORGAREA = #{orgarea} AND </if>
+				<if test="isproduction != null  and isproduction != '' " > ISPRODUCTION = #{isproduction} AND </if>
+				<if test="isonline != null  and isonline != '' " > ISONLINE = #{isonline} AND </if>
+				<if test="coupledsys != null  and coupledsys != '' " > COUPLEDSYS = #{coupledsys} AND </if>
+				<if test="gnd != null " > GND = #{gnd} AND </if>
+				<if test="healthscore != null " > HEALTHSCORE = #{healthscore} AND </if>
+				<if test="fjhid != null  and fjhid != '' " > FJHID = #{fjhid} AND </if>
+				<if test="issueworkload != null  and issueworkload != '' " > ISSUEWORKLOAD = #{issueworkload} AND </if>
+				<if test="testdeptno != null  and testdeptno != '' " > TESTDEPTNO = #{testdeptno} AND </if>
+				
+            </trim>
+        </sql>
+    	<!-- 查询分页  2021-09-28 k4038  -->
+        <select id="queryPagerList" parameterType="map" resultMap="PPMPROJECT_ALL">
+        	SELECT
+            <include refid="sql_flied_all" />
+            FROM PPM_PROJECT
+            <include refid="sql_select_condition" />
+        </select>
+
+        <!-- 新增  2021-09-28 k4038  -->
+        <insert id="addPojo" parameterType="ppmProject">
+    		INSERT INTO PPM_PROJECT (
+    		<trim suffixOverrides=",">
+    		 <if test="id != null " > ID , </if>
+				<if test="projectno != null  and projectno != '' " > PROJECTNO , </if>
+				<if test="projectname != null  and projectname != '' " > PROJECTNAME , </if>
+				<if test="subprojectno != null  and subprojectno != '' " > SUBPROJECTNO , </if>
+				<if test="subtype != null  and subtype != '' " > SUBTYPE , </if>
+				<if test="sysno != null  and sysno != '' " > SYSNO , </if>
+				<if test="subprojectname != null  and subprojectname != '' " > SUBPROJECTNAME , </if>
+				<if test="projectscale != null  and projectscale != '' " > PROJECTSCALE , </if>
+				<if test="deptno != null  and deptno != '' " > DEPTNO , </if>
+				<if test="busideptno != null  and busideptno != '' " > BUSIDEPTNO , </if>
+				<if test="manauserid != null  and manauserid != '' " > MANAUSERID , </if>
+				<if test="busiuserid != null  and busiuserid != '' " > BUSIUSERID , </if>
+				<if test="planTWorkload != null " > PLAN_T_WORKLOAD , </if>
+				<if test="actualTWorkload != null " > ACTUAL_T_WORKLOAD , </if>
+				<if test="planOWorkload != null " > PLAN_O_WORKLOAD , </if>
+				<if test="actualOWorkload != null " > ACTUAL_O_WORKLOAD , </if>
+				<if test="planBWorkload != null " > PLAN_B_WORKLOAD , </if>
+				<if test="actualBWorkload != null " > ACTUAL_B_WORKLOAD , </if>
+				<if test="builddate != null " > BUILDDATE , </if>
+				<if test="startdate != null " > STARTDATE , </if>
+				<if test="status != null  and status != '' " > STATUS , </if>
+				<if test="isdelay != null  and isdelay != '' " > ISDELAY , </if>
+				<if test="expectdate != null " > EXPECTDATE , </if>
+				<if test="actualdate != null " > ACTUALDATE , </if>
+				<if test="closedate != null " > CLOSEDATE , </if>
+				<if test="isdel != null " > ISDEL , </if>
+				<if test="createtime != null " > CREATETIME , </if>
+				<if test="creators != null  and creators != '' " > CREATORS , </if>
+				<if test="lastmodtime != null " > LASTMODTIME , </if>
+				<if test="lastmoduser != null  and lastmoduser != '' " > LASTMODUSER , </if>
+				<if test="orgarea != null  and orgarea != '' " > ORGAREA , </if>
+				<if test="isproduction != null  and isproduction != '' " > ISPRODUCTION , </if>
+				<if test="isonline != null  and isonline != '' " > ISONLINE , </if>
+				<if test="coupledsys != null  and coupledsys != '' " > COUPLEDSYS , </if>
+				<if test="gnd != null " > GND , </if>
+				<if test="healthscore != null " > HEALTHSCORE , </if>
+				<if test="fjhid != null  and fjhid != '' " > FJHID , </if>
+				<if test="issueworkload != null  and issueworkload != '' " > ISSUEWORKLOAD , </if>
+				<if test="testdeptno != null  and testdeptno != '' " > TESTDEPTNO , </if>
+				
+              </trim>
+    		)
+    		VALUES(
+    		<trim suffixOverrides=",">
+    		 <if test="id != null " > #{id} , </if>
+				<if test="projectno != null  and projectno != '' " > #{projectno} , </if>
+				<if test="projectname != null  and projectname != '' " > #{projectname} , </if>
+				<if test="subprojectno != null  and subprojectno != '' " > #{subprojectno} , </if>
+				<if test="subtype != null  and subtype != '' " > #{subtype} , </if>
+				<if test="sysno != null  and sysno != '' " > #{sysno} , </if>
+				<if test="subprojectname != null  and subprojectname != '' " > #{subprojectname} , </if>
+				<if test="projectscale != null  and projectscale != '' " > #{projectscale} , </if>
+				<if test="deptno != null  and deptno != '' " > #{deptno} , </if>
+				<if test="busideptno != null  and busideptno != '' " > #{busideptno} , </if>
+				<if test="manauserid != null  and manauserid != '' " > #{manauserid} , </if>
+				<if test="busiuserid != null  and busiuserid != '' " > #{busiuserid} , </if>
+				<if test="planTWorkload != null " > #{planTWorkload} , </if>
+				<if test="actualTWorkload != null " > #{actualTWorkload} , </if>
+				<if test="planOWorkload != null " > #{planOWorkload} , </if>
+				<if test="actualOWorkload != null " > #{actualOWorkload} , </if>
+				<if test="planBWorkload != null " > #{planBWorkload} , </if>
+				<if test="actualBWorkload != null " > #{actualBWorkload} , </if>
+				<if test="builddate != null " > #{builddate} , </if>
+				<if test="startdate != null " > #{startdate} , </if>
+				<if test="status != null  and status != '' " > #{status} , </if>
+				<if test="isdelay != null  and isdelay != '' " > #{isdelay} , </if>
+				<if test="expectdate != null " > #{expectdate} , </if>
+				<if test="actualdate != null " > #{actualdate} , </if>
+				<if test="closedate != null " > #{closedate} , </if>
+				<if test="isdel != null " > #{isdel} , </if>
+				<if test="createtime != null " > #{createtime} , </if>
+				<if test="creators != null  and creators != '' " > #{creators} , </if>
+				<if test="lastmodtime != null " > #{lastmodtime} , </if>
+				<if test="lastmoduser != null  and lastmoduser != '' " > #{lastmoduser} , </if>
+				<if test="orgarea != null  and orgarea != '' " > #{orgarea} , </if>
+				<if test="isproduction != null  and isproduction != '' " > #{isproduction} , </if>
+				<if test="isonline != null  and isonline != '' " > #{isonline} , </if>
+				<if test="coupledsys != null  and coupledsys != '' " > #{coupledsys} , </if>
+				<if test="gnd != null " > #{gnd} , </if>
+				<if test="healthscore != null " > #{healthscore} , </if>
+				<if test="fjhid != null  and fjhid != '' " > #{fjhid} , </if>
+				<if test="issueworkload != null  and issueworkload != '' " > #{issueworkload} , </if>
+				<if test="testdeptno != null  and testdeptno != '' " > #{testdeptno} , </if>
+				
+            </trim>
+    		)
+        </insert>
+
+        <!--通过id查询  k4038 2021-09-28 -->
+        <select id="queryDetail" parameterType="ppmProject" resultMap="PPMPROJECT_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_PROJECT  WHERE ID=#{id}
+        </select>
+
+         <!--查询集合  k4038 2021-09-28 -->
+        <select id="getList" parameterType="ppmProject" resultMap="PPMPROJECT_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_PROJECT
+        	<include refid="sql_select_condition" />
+        </select>
+        <!-- update sql -->
+        <sql id="update_pojo_sql">
+        	<trim prefix="SET" suffixOverrides=",">
+        		<if test="id != null " > ID=#{id} , </if>
+				<if test="projectno != null  and projectno != '' " > PROJECTNO=#{projectno} , </if>
+				<if test="projectname != null  and projectname != '' " > PROJECTNAME=#{projectname} , </if>
+				<if test="subprojectno != null  and subprojectno != '' " > SUBPROJECTNO=#{subprojectno} , </if>
+				<if test="subtype != null  and subtype != '' " > SUBTYPE=#{subtype} , </if>
+				<if test="sysno != null  and sysno != '' " > SYSNO=#{sysno} , </if>
+				<if test="subprojectname != null  and subprojectname != '' " > SUBPROJECTNAME=#{subprojectname} , </if>
+				<if test="projectscale != null  and projectscale != '' " > PROJECTSCALE=#{projectscale} , </if>
+				<if test="deptno != null  and deptno != '' " > DEPTNO=#{deptno} , </if>
+				<if test="busideptno != null  and busideptno != '' " > BUSIDEPTNO=#{busideptno} , </if>
+				<if test="manauserid != null  and manauserid != '' " > MANAUSERID=#{manauserid} , </if>
+				<if test="busiuserid != null  and busiuserid != '' " > BUSIUSERID=#{busiuserid} , </if>
+				<if test="planTWorkload != null " > PLAN_T_WORKLOAD=#{planTWorkload} , </if>
+				<if test="actualTWorkload != null " > ACTUAL_T_WORKLOAD=#{actualTWorkload} , </if>
+				<if test="planOWorkload != null " > PLAN_O_WORKLOAD=#{planOWorkload} , </if>
+				<if test="actualOWorkload != null " > ACTUAL_O_WORKLOAD=#{actualOWorkload} , </if>
+				<if test="planBWorkload != null " > PLAN_B_WORKLOAD=#{planBWorkload} , </if>
+				<if test="actualBWorkload != null " > ACTUAL_B_WORKLOAD=#{actualBWorkload} , </if>
+				<if test="builddate != null " > BUILDDATE=#{builddate} , </if>
+				<if test="startdate != null " > STARTDATE=#{startdate} , </if>
+				<if test="status != null  and status != '' " > STATUS=#{status} , </if>
+				<if test="isdelay != null  and isdelay != '' " > ISDELAY=#{isdelay} , </if>
+				<if test="expectdate != null " > EXPECTDATE=#{expectdate} , </if>
+				<if test="actualdate != null " > ACTUALDATE=#{actualdate} , </if>
+				<if test="closedate != null " > CLOSEDATE=#{closedate} , </if>
+				<if test="isdel != null " > ISDEL=#{isdel} , </if>
+				<if test="createtime != null " > CREATETIME=#{createtime} , </if>
+				<if test="creators != null  and creators != '' " > CREATORS=#{creators} , </if>
+				<if test="lastmodtime != null " > LASTMODTIME=#{lastmodtime} , </if>
+				<if test="lastmoduser != null  and lastmoduser != '' " > LASTMODUSER=#{lastmoduser} , </if>
+				<if test="orgarea != null  and orgarea != '' " > ORGAREA=#{orgarea} , </if>
+				<if test="isproduction != null  and isproduction != '' " > ISPRODUCTION=#{isproduction} , </if>
+				<if test="isonline != null  and isonline != '' " > ISONLINE=#{isonline} , </if>
+				<if test="coupledsys != null  and coupledsys != '' " > COUPLEDSYS=#{coupledsys} , </if>
+				<if test="gnd != null " > GND=#{gnd} , </if>
+				<if test="healthscore != null " > HEALTHSCORE=#{healthscore} , </if>
+				<if test="fjhid != null  and fjhid != '' " > FJHID=#{fjhid} , </if>
+				<if test="issueworkload != null  and issueworkload != '' " > ISSUEWORKLOAD=#{issueworkload} , </if>
+				<if test="testdeptno != null  and testdeptno != '' " > TESTDEPTNO=#{testdeptno} , </if>
+				
+            </trim>
+        </sql>
+
+        <!--通过id编辑 k4038 2021-09-28 -->
+    	<update id="updatePojo" parameterType="ppmProject">
+        	UPDATE
+        	PPM_PROJECT
+        	<include refid="update_pojo_sql" />
+        	WHERE ID=#{id}
+        </update>
+
+        <!--通过id批量删除  k4038 2021-09-28 -->
+        <delete id="deleteById" parameterType="ppmProject">
+        	DELETE
+        	FROM
+        	PPM_PROJECT
+        	WHERE ID = #{id}
+        </delete>
+
+	<!--通过id查询  k4038 2021-09-28 -->
+	<select id="queryDetailBySubprojectno" parameterType="ppmProject" resultMap="PPMPROJECT_ALL">
+		SELECT
+		<include refid="sql_flied_all" />
+		FROM PPM_PROJECT  WHERE subprojectno=#{subprojectno}
+	</select>
+
+	<resultMap type="ppmProjectExtInfo" id="PPMPROJECTINFO_ALL" extends="PPMPROJECT_ALL">
+		<result property="sysname" column="SYSNAME" />
+		<result property="empname" column="EMPNAME" />
+		<result property="sysuserid" column="SYSUSERID" />
+		<result property="sysusername" column="SYSUSERNAME" />
+		<result property="planonline" column="PLANONLINE" />
+		<result property="org" column="ORG" />
+		<result property="vel" column="VEL" />
+		<result property="busdep" column="BUSDEP" />
+		<result property="coupledsysname" column="COUPLEDSYSNAME" />
+		<result property="safetytestname" column="SAFETYTESTNAME" />
+
+	</resultMap>
+
+	<select id="getPpmSubProjectView" parameterType="ppmProjectExtInfo" resultMap="PPMPROJECTINFO_ALL">
+		select aa.* from (select distinct p.*,
+		s.sys_name sysname,
+		e.empname,
+		r.principala sysuserid,
+		r.principala_name sysusername,
+		o.planonline,
+		oo.orgarea org,s.om_level vel,
+		r.bus_dep busdep,
+		case
+		when r.bus_dep='7004' then  （select distinct  m.userid from ppm_da_dept_manager  m where m.deptid=p.deptno)
+		else ''
+		end  as linkman ,
+
+		case
+		when r.bus_dep='7004' then  （select distinct ee.empname||'('|| m.userid||')' from ppm_da_dept_manager  m left join ppm_emp_view ee on ee.badge=m.userid where m.deptid=p.deptno)
+		else ''
+		end  as linkname
+		from ppm_project p
+		left join (select planonline,projectno from  ppm_project_online
+		union
+		select planonline,projectno from  ppm_project_newonline) o on o.projectno = p.projectno
+		left join aap_system s on p.sysno = s.system_id
+		left join comm_employee e on p.Manauserid = e.badge
+		left join aap_system_responsibility r on s.res_id = r.res_id
+		left join PPM_ONLINE_ORGAREA oo on oo.projectno = p.subprojectno and oo.planonline = o.planonline
+		where p.status is not null) aa
+
+		<trim prefix="WHERE" suffixOverrides="AND">
+			<if test="projectno != null  and projectno != '' " > aa.PROJECTNO = #{projectno} AND </if>
+			<if test="planonline != null  and planonline != '' " > aa.PLANONLINE = #{planonline} AND </if>
+		</trim>
+
+		order by aa.subprojectno
+	</select>
+
+	<select id="queryPpmProjectList" parameterType="ppmProjectExtInfo" resultMap="PPMPROJECTINFO_ALL">
+		select distinct p.id,
+		p.projectno,
+		p.projectname,
+		p.subprojectno,
+		p.subtype,
+		p.sysno,
+		substr(p.subprojectname, instr(p.subprojectname,'-') + 1) subprojectname,
+		p.projectscale,
+		p.deptno,
+		p.busideptno,
+		p.manauserid,
+		p.busiuserid,
+		p.plan_t_workload,
+		p.actual_t_workload,
+		p.plan_o_workload,
+		p.actual_o_workload,
+		p.plan_b_workload,
+		p.actual_b_workload,
+		p.builddate,
+		p.startdate,
+		p.status,
+		p.isdelay,
+		p.expectdate,
+		p.actualdate,
+		p.closedate,
+		p.isdel,
+		p.createtime,
+		p.creators,
+		p.lastmodtime,
+		p.lastmoduser,
+		p.orgarea,
+		p.isproduction,
+		p.isonline,
+		p.coupledsys,
+		p.gnd,
+		p.healthscore,
+		p.fjhid,
+		p.issueworkload,
+		p.testdeptno,
+		s.sys_name sysname,
+		e.empname,
+		r.principala sysuserid,
+		r.principala_name sysusername,
+		oo.planonline,
+		oo.orgarea org,
+		s.om_level vel,
+		w.safetytesttype,
+		oo.safetytestname,
+		oo.coupledsys coupledsysname
+		from ppm_project p
+		left join PPM_PROJECT_ONLINEFJH o on o.projectno = p.projectno
+		left join aap_system s on p.sysno = s.system_id
+		left join comm_employee e on p.Manauserid = e.badge
+		left join aap_system_responsibility r on s.res_id = r.res_id
+		left join PPM_ONLINE_ORGAREA oo on oo.onlineno=o.onlineno  and oo.projectno=p.subprojectno
+		left join ppm_project_soft_workload w on w.projectno=p.projectno and w.sysno=p.sysno
+		<trim prefix="WHERE" suffixOverrides="AND">
+			<if test="true" > p.status is not null AND </if>
+			<if test="projectno != null  and projectno != '' " > p.projectno=#{projectno} AND </if>
+			<if test="planonline != null  and planonline != '' " > to_char(oo.planonline,'yyyy-mm-dd')=#{planonline} AND </if>
+			<if test="onlineno != null  and onlineno != '' " > o.onlineno=#{onlineno} AND </if>
+		</trim>
+
+		order by p.subprojectno
+	</select>
+
+</mapper>

@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k76239 2021-11-20 -->
+<mapper namespace="com.work.ppm.application.model.depkpi.PpmDepkpiModel">
+    <resultMap type="ppmDepkpiModel" id="PPMDEPKPIMODEL_ALL">
+        <result property="id" column="ID"/>
+        <result property="sign" column="SIGN"/>
+        <result property="name" column="NAME"/>
+        <result property="remark" column="REMARK"/>
+        <result property="isdel" column="ISDEL"/>
+        <result property="lastmoduserid" column="LASTMODUSERID"/>
+        <result property="lastmodtime" column="LASTMODTIME"/>
+        <result property="commitflag" column="COMMITFLAG"/>
+
+    </resultMap>
+
+    <resultMap type="ppmDepkpiModelInfo" id="PPMDEPKPIDEPMODEL_ALL_EXT" extends="PPMDEPKPIMODEL_ALL">
+        <result property="basepoint" column="BASEPOINT"/>
+    </resultMap>
+    <!-- 所有字段名称 -->
+    <sql id="sql_flied_all">
+        ID,
+        SIGN,
+        NAME,
+        REMARK,
+        ISDEL,
+        LASTMODUSERID,
+        LASTMODTIME,
+        COMMITFLAG
+    </sql>
+    <sql id="sql_select_condition">
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="id != null ">ID = #{id} AND</if>
+            <if test="sign != null ">SIGNNAME =LIKE CONCAT{'%', #{sign} AND</if>
+            <if test="name != null  and name != '' ">NAME =LIKE CONCAT{'%', #{name} AND</if>
+            <if test="remark != null  and remark != '' ">REMARK = #{remark} AND</if>
+            <if test="isdel != null ">ISDEL = #{isdel} AND</if>
+            <if test="lastmoduserid != null  and lastmoduserid != '' ">LASTMODUSERID = #{lastmoduserid} AND</if>
+            <if test="lastmodtime != null ">LASTMODTIME = #{lastmodtime} AND</if>
+            <if test="commitflag != null ">COMMITFLAG = #{commitflag} AND</if>
+
+        </trim>
+    </sql>
+    <!-- 查询分页  2021-11-20 k76239  -->
+    <select id="queryPagerList" parameterType="map" resultMap="PPMDEPKPIDEPMODEL_ALL_EXT">
+        SELECT PDM.NAME,
+        PDM.REMARK,
+        PDM.SIGN,
+        PDM.LASTMODTIME,
+        PDM.ID,
+        PDM.COMMITFLAG,
+        (SELECT NVL(SUM(PDMD.BASEPOINT), 0)
+        FROM PPM_DEPKPI_MODEL_DETAIL_TMP PDMD
+        WHERE PDM.ID=PDMD.MODELID AND PDMD.HASSON=#{hasson}) BASEPOINT
+        FROM PPM_DEPKPI_MODEL PDM
+        WHERE PDM.ISDEL= #{isdel}
+        <if test="sign != null ">AND PDM.SIGN=#{sign}</if>
+        <if test="name != null ">AND PDM.NAME LIKE '%'||#{name}||'%'</if>
+    </select>
+
+    <!-- 新增  2021-11-20 k76239  -->
+    <insert id="addPojo" parameterType="ppmDepkpiModel">
+        INSERT INTO PPM_DEPKPI_MODEL (
+        <trim suffixOverrides=",">
+            <if test="id != null ">ID ,</if>
+            <if test="sign != null ">SIGN ,</if>
+            <if test="name != null  and name != '' ">NAME ,</if>
+            <if test="remark != null  and remark != '' ">REMARK ,</if>
+            <if test="isdel != null ">ISDEL ,</if>
+            <if test="lastmoduserid != null  and lastmoduserid != '' ">LASTMODUSERID ,</if>
+            <if test="lastmodtime != null ">LASTMODTIME ,</if>
+            <if test="commitflag != null ">COMMITFLAG ,</if>
+
+        </trim>
+        )
+        VALUES(
+        <trim suffixOverrides=",">
+            <if test="id != null ">#{id} ,</if>
+            <if test="sign != null ">#{sign} ,</if>
+            <if test="name != null  and name != '' ">#{name} ,</if>
+            <if test="remark != null  and remark != '' ">#{remark} ,</if>
+            <if test="isdel != null ">#{isdel} ,</if>
+            <if test="lastmoduserid != null  and lastmoduserid != '' ">#{lastmoduserid} ,</if>
+            <if test="lastmodtime != null ">#{lastmodtime} ,</if>
+            <if test="commitflag != null ">#{commitflag} ,</if>
+
+        </trim>
+        )
+    </insert>
+
+    <!--通过id查询  k76239 2021-11-20 -->
+    <select id="queryDetail" parameterType="ppmDepkpiModel" resultMap="PPMDEPKPIMODEL_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM PPM_DEPKPI_MODEL WHERE ID=#{id}
+    </select>
+
+    <!--查询集合  k76239 2021-11-20 -->
+    <select id="getList" parameterType="ppmDepkpiModel" resultMap="PPMDEPKPIMODEL_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM PPM_DEPKPI_MODEL
+        <include refid="sql_select_condition"/>
+    </select>
+    <!-- update sql -->
+    <sql id="update_pojo_sql">
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="id != null ">ID=#{id} ,</if>
+            <if test="sign != null ">SIGN=#{sign} ,</if>
+            <if test="name != null  and name != '' ">NAME=#{name} ,</if>
+            <if test="remark != null  and remark != '' ">REMARK=#{remark} ,</if>
+            <if test="isdel != null ">ISDEL=#{isdel} ,</if>
+            <if test="lastmoduserid != null  and lastmoduserid != '' ">LASTMODUSERID=#{lastmoduserid} ,</if>
+            <if test="lastmodtime != null ">LASTMODTIME=#{lastmodtime} ,</if>
+            <if test="commitflag != null ">COMMITFLAG=#{commitflag} ,</if>
+
+        </trim>
+    </sql>
+
+    <!--通过id编辑 k76239 2021-11-20 queryModelSize -->
+    <update id="updatePojo" parameterType="ppmDepkpiModel">
+        UPDATE
+        PPM_DEPKPI_MODEL
+        <include refid="update_pojo_sql"/>
+        WHERE ID=#{id}
+    </update>
+
+    <!--逻辑删除 k76179 2021-11-25  -->
+    <update id="updateDelById" parameterType="ppmDepkpiModel">
+        UPDATE
+        PPM_DEPKPI_MODEL
+        SET ISDEL=#{isdel}
+        WHERE ID=#{id}
+    </update>
+
+    <!--通过id批量删除  k76239 2021-11-20  -->
+    <delete id="deleteById" parameterType="ppmDepkpiModel">
+        DELETE
+        FROM
+        PPM_DEPKPI_MODEL
+        WHERE ID = #{id}
+    </delete>
+
+    <!--查询模板条数 k76239 2021-11-20 queryModouAndRelList -->
+    <select id="queryModelSize" resultType="java.lang.Long">
+        SELECT
+        count(0)
+        FROM PPM_DEPKPI_MODEL
+        <include refid="sql_select_condition"/>
+    </select>
+
+    <!--模板列表查询  k76179 2021-11-24 -->
+    <select id="queryModelList" resultMap="PPMDEPKPIDEPMODEL_ALL_EXT">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM PPM_DEPKPI_MODEL
+        WHERE SIGN=#{sign}
+        AND ISDEL= #{isdel}
+    </select>
+</mapper>

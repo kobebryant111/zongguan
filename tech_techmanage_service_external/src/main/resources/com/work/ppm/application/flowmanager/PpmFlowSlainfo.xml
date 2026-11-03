@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k6991 2021-01-12 -->
+<mapper namespace="com.work.ppm.application.model.flowmanager.PpmFlowSlainfo">
+    <resultMap type="ppmFlowSlainfo" id="PPMFLOWSLAINFO_ALL">
+        <result property="id" column="ID"/>
+        <result property="flowcaseno" column="FLOWCASENO"/>
+        <result property="instanceid" column="INSTANCEID"/>
+        <result property="activityid" column="ACTIVITYID"/>
+        <result property="planfinishtime" column="PLANFINISHTIME"/>
+        <result property="status" column="STATUS"/>
+        <result property="isdel" column="ISDEL"/>
+        <result property="flowstatus" column="FLOWSTATUS"/>
+        <result property="usersno" column="USERSNO"/>
+        <result property="usersname" column="USERSNAME"/>
+        <result property="createtime" column="CREATETIME"/>
+        <result property="counts" column="COUNTS"/>
+        <result property="updatecountdate" column="UPDATECOUNTDATE"/>
+
+    </resultMap>
+
+    <!-- 所有字段名称 -->
+    <sql id="sql_flied_all">
+        ID,
+        FLOWCASENO,
+        INSTANCEID,
+        ACTIVITYID,
+        PLANFINISHTIME,
+        STATUS,
+        ISDEL,
+        FLOWSTATUS,
+        USERSNO,
+        USERSNAME,
+        CREATETIME,
+        COUNTS,
+        UPDATECOUNTDATE
+    </sql>
+    <sql id="sql_select_condition">
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="id != null  and id != '' ">ID = #{id} AND</if>
+            <if test="flowcaseno != null  and flowcaseno != '' ">FLOWCASENO = #{flowcaseno} AND</if>
+            <if test="instanceid != null  and instanceid != '' ">INSTANCEID = #{instanceid} AND</if>
+            <if test="activityid != null  and activityid != '' ">ACTIVITYID = #{activityid} AND</if>
+            <if test="planfinishtime != null ">PLANFINISHTIME = #{planfinishtime} AND</if>
+            <if test="status != null  and status != '' ">STATUS = #{status} AND</if>
+            <if test="isdel != null  and isdel != '' ">ISDEL = #{isdel} AND</if>
+            <if test="flowstatus != null  and flowstatus != '' ">FLOWSTATUS = #{flowstatus} AND</if>
+            <if test="usersno != null  and usersno != '' ">USERSNO = #{usersno} AND</if>
+            <if test="usersname != null  and usersname != '' ">USERSNAME = #{usersname} AND</if>
+            <if test="createtime != null ">CREATETIME = #{createtime} AND</if>
+            <if test="counts != null  and counts != '' ">COUNTS = #{counts} AND</if>
+            <if test="updatecountdate != null ">UPDATECOUNTDATE = #{updatecountdate} AND</if>
+
+        </trim>
+    </sql>
+    <!-- 查询分页  2021-01-12 k6991  -->
+    <select id="queryPagerList" parameterType="map" resultMap="PPMFLOWSLAINFO_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM PPM_FLOW_SLAINFO
+        <include refid="sql_select_condition"/>
+    </select>
+
+    <!-- 新增  2021-01-12 k6991  -->
+    <insert id="addPojo" parameterType="ppmFlowSlainfo">
+        INSERT INTO PPM_FLOW_SLAINFO (
+        <trim suffixOverrides=",">
+            <if test="id != null  and id != '' ">ID ,</if>
+            <if test="flowcaseno != null  and flowcaseno != '' ">FLOWCASENO ,</if>
+            <if test="instanceid != null  and instanceid != '' ">INSTANCEID ,</if>
+            <if test="activityid != null  and activityid != '' ">ACTIVITYID ,</if>
+            <if test="planfinishtime != null ">PLANFINISHTIME ,</if>
+            <if test="status != null  and status != '' ">STATUS ,</if>
+            <if test="isdel != null  and isdel != '' ">ISDEL ,</if>
+            <if test="flowstatus != null  and flowstatus != '' ">FLOWSTATUS ,</if>
+            <if test="usersno != null  and usersno != '' ">USERSNO ,</if>
+            <if test="usersname != null  and usersname != '' ">USERSNAME ,</if>
+            <if test="createtime != null ">CREATETIME ,</if>
+            <if test="counts != null  and counts != '' ">COUNTS ,</if>
+            <if test="updatecountdate != null ">UPDATECOUNTDATE ,</if>
+
+        </trim>
+        )
+        VALUES(
+        <trim suffixOverrides=",">
+            <if test="id != null  and id != '' ">#{id} ,</if>
+            <if test="flowcaseno != null  and flowcaseno != '' ">#{flowcaseno} ,</if>
+            <if test="instanceid != null  and instanceid != '' ">#{instanceid} ,</if>
+            <if test="activityid != null  and activityid != '' ">#{activityid} ,</if>
+            <if test="planfinishtime != null ">#{planfinishtime} ,</if>
+            <if test="status != null  and status != '' ">#{status} ,</if>
+            <if test="isdel != null  and isdel != '' ">#{isdel} ,</if>
+            <if test="flowstatus != null  and flowstatus != '' ">#{flowstatus} ,</if>
+            <if test="usersno != null  and usersno != '' ">#{usersno} ,</if>
+            <if test="usersname != null  and usersname != '' ">#{usersname} ,</if>
+            <if test="createtime != null ">#{createtime} ,</if>
+            <if test="counts != null  and counts != '' ">#{counts} ,</if>
+            <if test="updatecountdate != null ">#{updatecountdate} ,</if>
+
+        </trim>
+        )
+    </insert>
+
+    <!--通过id查询  k6991 2021-01-12 -->
+    <select id="queryDetail" parameterType="ppmFlowSlainfo" resultMap="PPMFLOWSLAINFO_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM PPM_FLOW_SLAINFO
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="id != null  and id != '' ">ID = #{id} AND</if>
+            <if test="instanceid != null  and instanceid != '' ">INSTANCEID = #{instanceid} AND</if>
+            <if test="activityid != null  and activityid != '' ">ACTIVITYID = #{activityid} AND</if>
+            <if test="true">ROWNUM=1 AND</if>
+        </trim>
+    </select>
+
+    <!--查询集合  k6991 2021-01-12 -->
+    <select id="getList" parameterType="ppmFlowSlainfo" resultMap="PPMFLOWSLAINFO_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM PPM_FLOW_SLAINFO
+        <include refid="sql_select_condition"/>
+    </select>
+    <!-- update sql -->
+    <sql id="update_pojo_sql">
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="id != null  and id != '' ">ID=#{id} ,</if>
+            <if test="flowcaseno != null  and flowcaseno != '' ">FLOWCASENO=#{flowcaseno} ,</if>
+            <if test="instanceid != null  and instanceid != '' ">INSTANCEID=#{instanceid} ,</if>
+            <if test="activityid != null  and activityid != '' ">ACTIVITYID=#{activityid} ,</if>
+            <if test="planfinishtime != null ">PLANFINISHTIME=#{planfinishtime} ,</if>
+            <if test="status != null  and status != '' ">STATUS=#{status} ,</if>
+            <if test="isdel != null  and isdel != '' ">ISDEL=#{isdel} ,</if>
+            <if test="flowstatus != null  and flowstatus != '' ">FLOWSTATUS=#{flowstatus} ,</if>
+            <if test="usersno != null  and usersno != '' ">USERSNO=#{usersno} ,</if>
+            <if test="usersname != null  and usersname != '' ">USERSNAME=#{usersname} ,</if>
+            <if test="createtime != null ">CREATETIME=#{createtime} ,</if>
+            <if test="counts != null  and counts != '' ">COUNTS=#{counts} ,</if>
+            <if test="updatecountdate != null ">UPDATECOUNTDATE=#{updatecountdate} ,</if>
+
+        </trim>
+    </sql>
+
+    <!--通过id编辑 k6991 2021-01-12 -->
+    <update id="updatePojo" parameterType="ppmFlowSlainfo">
+        UPDATE
+        PPM_FLOW_SLAINFO
+        <include refid="update_pojo_sql"/>
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="id != null  and id != '' ">ID = #{id} AND</if>
+            <if test="instanceid != null  and instanceid != '' ">INSTANCEID = #{instanceid} AND</if>
+        </trim>
+    </update>
+
+    <!--通过id批量删除  k6991 2021-01-12 -->
+    <delete id="deleteById" parameterType="ppmFlowSlainfo">
+        DELETE
+        FROM
+        PPM_FLOW_SLAINFO
+        WHERE ID = #{id}
+    </delete>
+
+    <!-- 预计完成时间 k6991 2021-01-13 -->
+    <select id="queryExpectedCompletionTime" parameterType="ppmFlowSlainfo" resultMap="PPMFLOWSLAINFO_ALL">
+        SELECT S.FLOWCASENO,S.ACTIVITYID,
+        TO_CHAR(S.PLANFINISHTIME,'YYYY-MM-DD HH24:MI:SS') AS PLANFINISHTIME,
+        F.FLOWDRAFTNO,F.FLOWNODECODE ,
+        S.INSTANCEID FROM PPM_FLOW_SLAINFO S
+        RIGHT JOIN PPM_SLA_SETINFO F ON (S.FLOWCASENO = F.FLOWDRAFTNO AND S.ACTIVITYID = F.FLOWNODECODE)
+        WHERE S.FLOWSTATUS = '00' AND S.INSTANCEID = #{flowcaseno}
+    </select>
+</mapper>

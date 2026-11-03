@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k6522 2020-05-07 -->
+<mapper namespace="com.work.ppm.application.model.flowmanager.PpmFlowType">
+	 <resultMap type="ppmFlowType" id="PPMFLOWTYPE_ALL">
+        <result property="id" column="ID" />
+		<result property="flowname" column="FLOWNAME" />
+		<result property="flowdraftno" column="FLOWDRAFTNO" />
+		<result property="parentid" column="PARENTID" />
+		<result property="isdel" column="ISDEL" />
+		<result property="createtime" column="CREATETIME" />
+		<result property="creators" column="CREATORS" />
+		<result property="lastmodtime" column="LASTMODTIME" />
+		<result property="lastmoduser" column="LASTMODUSER" />
+		<result property="userid" column="USERID" />
+		<result property="username" column="USERNAME" />
+		
+     </resultMap>
+
+     <!-- 所有字段名称 -->
+        <sql id="sql_flied_all">
+        	ID,
+			FLOWNAME,
+			FLOWDRAFTNO,
+			PARENTID,
+			ISDEL,
+			CREATETIME,
+			CREATORS,
+			LASTMODTIME,
+			LASTMODUSER,
+			USERID,
+			USERNAME
+        </sql>
+
+        <!-- 新增  2020-05-07 k6522  -->
+        <insert id="addPojo" parameterType="ppmFlowType">
+    		INSERT INTO PPM_FLOW_TYPE (
+    		<trim suffixOverrides=",">
+    		 <if test="id != null " > ID , </if>
+				<if test="flowname != null  and flowname != '' " > FLOWNAME , </if>
+				<if test="flowdraftno != null  and flowdraftno != '' " > FLOWDRAFTNO , </if>
+				<if test="parentid != null  and parentid != '' " > PARENTID , </if>
+				<if test="isdel != null " > ISDEL , </if>
+				<if test="createtime != null " > CREATETIME , </if>
+				<if test="creators != null  and creators != '' " > CREATORS , </if>
+				<if test="lastmodtime != null " > LASTMODTIME , </if>
+				<if test="lastmoduser != null  and lastmoduser != '' " > LASTMODUSER , </if>
+				<if test="userid != null  and userid != '' " > USERID , </if>
+				<if test="username != null  and username != '' " > USERNAME , </if>
+				
+              </trim>
+    		)
+    		VALUES(
+    		<trim suffixOverrides=",">
+    		 <if test="id != null " > #{id} , </if>
+				<if test="flowname != null  and flowname != '' " > #{flowname} , </if>
+				<if test="flowdraftno != null  and flowdraftno != '' " > #{flowdraftno} , </if>
+				<if test="parentid != null  and parentid != '' " > #{parentid} , </if>
+				<if test="isdel != null " > #{isdel} , </if>
+				<if test="createtime != null " > #{createtime} , </if>
+				<if test="creators != null  and creators != '' " > #{creators} , </if>
+				<if test="lastmodtime != null " > #{lastmodtime} , </if>
+				<if test="lastmoduser != null  and lastmoduser != '' " > #{lastmoduser} , </if>
+				<if test="userid != null  and userid != '' " > #{userid} , </if>
+				<if test="username != null  and username != '' " > #{username} , </if>
+				
+            </trim>
+    		)
+        </insert>
+
+        <!--通过id查询  k6522 2020-05-07 -->
+        <select id="queryDetail" parameterType="map" resultMap="PPMFLOWTYPE_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_FLOW_TYPE
+			<trim prefix="WHERE" suffixOverrides="AND">
+				<if test="id != null "> ID=#{id} AND </if>
+				<if test="flowdraftno != null  and flowdraftno != '' " > FLOWDRAFTNO=#{flowdraftno} AND </if>
+				<if test="true"> ROWNUM=1 AND</if>
+			</trim>
+
+
+        </select>
+
+         <!--查询集合  k6522 2020-05-07 -->
+        <select id="getList" parameterType="ppmFlowType" resultMap="PPMFLOWTYPE_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_FLOW_TYPE
+        	<trim prefix="WHERE" suffixOverrides="AND">
+        		<if test="id != null " > ID=#{id} AND </if>
+				<if test="flowname != null  and flowname != '' " > FLOWNAME=#{flowname} AND </if>
+				<if test="flowdraftno != null  and flowdraftno != '' " > FLOWDRAFTNO=#{flowdraftno} AND </if>
+				<if test="parentid != null  and parentid != '' " > PARENTID=#{parentid} AND </if>
+				ISDEL='0' AND
+				<if test="createtime != null " > CREATETIME=#{createtime} AND </if>
+				<if test="creators != null  and creators != '' " > CREATORS=#{creators} AND </if>
+				<if test="lastmodtime != null " > LASTMODTIME=#{lastmodtime} AND </if>
+				<if test="lastmoduser != null  and lastmoduser != '' " > LASTMODUSER=#{lastmoduser} AND </if>
+				<if test="userid != null  and userid != '' " > USERID=#{userid} AND </if>
+				<if test="username != null  and username != '' " > USERNAME=#{username} AND </if>
+				
+            </trim>
+
+			union
+			select 99999 as id,'流程列表' as flowname ,'0' as flowdraftno,'1' as parentid ,0 as isdel ,
+			null as createtime ,null as createtime ,null as createtime ,null as createtime , null as createtime, null as createtime  from dual
+
+		</select>
+        <!-- update sql -->
+        <sql id="update_pojo_sql">
+        	<trim prefix="SET" suffixOverrides=",">
+        		<if test="id != null " > ID=#{id} , </if>
+				<if test="flowname != null  and flowname != '' " > FLOWNAME=#{flowname} , </if>
+				<if test="flowdraftno != null  and flowdraftno != '' " > FLOWDRAFTNO=#{flowdraftno} , </if>
+				<if test="parentid != null  and parentid != '' " > PARENTID=#{parentid} , </if>
+				<if test="isdel != null " > ISDEL=#{isdel} , </if>
+				<if test="createtime != null " > CREATETIME=#{createtime} , </if>
+				<if test="creators != null  and creators != '' " > CREATORS=#{creators} , </if>
+				<if test="lastmodtime != null " > LASTMODTIME=#{lastmodtime} , </if>
+				<if test="lastmoduser != null  and lastmoduser != '' " > LASTMODUSER=#{lastmoduser} , </if>
+				<if test="userid != null  and userid != '' " > USERID=#{userid} , </if>
+				<if test="username != null  and username != '' " > USERNAME=#{username} , </if>
+				
+            </trim>
+        </sql>
+
+        <!--通过id编辑 k6522 2020-05-07 -->
+    	<update id="updatePojo" parameterType="ppmFlowType">
+        	UPDATE
+        	PPM_FLOW_TYPE
+        	<include refid="update_pojo_sql" />
+        	WHERE ID=#{id}
+        </update>
+
+        <!--通过id批量删除  k6522 2020-05-07 -->
+        <delete id="deleteById" parameterType="ppmFlowType">
+        	UPDATE PPM_FLOW_TYPE SET ISDEL = 1 WHERE ID = #{id}
+        </delete>
+
+		<!--通过id批量删除  k6522 2020-05-07 -->
+		<delete id="deleteByParentid" parameterType="ppmFlowType">
+			UPDATE PPM_FLOW_TYPE SET ISDEL = 1 WHERE PARENTID = #{parentid}
+		</delete>
+
+        <!-- 获取主键id -->
+        <select id="getPrimaryKey" parameterType="map" resultType="long">
+            SELECT MAX(ID) FROM PPM_FLOW_TYPE
+        </select>
+
+	<!--查询集合  k6522 2020-05-07 -->
+	<select id="getTwoLevelList" parameterType="ppmFlowType" resultMap="PPMFLOWTYPE_ALL">
+		SELECT
+		<include refid="sql_flied_all" />
+		FROM PPM_FLOW_TYPE
+		<trim prefix="WHERE" suffixOverrides="AND">
+			<if test="id != null " > ID=#{id} AND </if>
+			<if test="flowname != null  and flowname != '' " > FLOWNAME=#{flowname} AND </if>
+			<if test="flowdraftno != null  and flowdraftno != '' " > FLOWDRAFTNO=#{flowdraftno} AND </if>
+			<if test="parentid != null  and parentid != '' " > PARENTID=#{parentid} AND </if>
+			ISDEL='0' AND
+			<if test="createtime != null " > CREATETIME=#{createtime} AND </if>
+			<if test="creators != null  and creators != '' " > CREATORS=#{creators} AND </if>
+			<if test="lastmodtime != null " > LASTMODTIME=#{lastmodtime} AND </if>
+			<if test="lastmoduser != null  and lastmoduser != '' " > LASTMODUSER=#{lastmoduser} AND </if>
+			<if test="userid != null  and userid != '' " > USERID=#{userid} AND </if>
+			<if test="username != null  and username != '' " > USERNAME=#{username} AND </if>
+
+		</trim>
+	</select>
+</mapper>

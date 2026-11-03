@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+  
+<mapper namespace="com.tansun.wf.mocktest.mapper.WfTestInsMapper">
+
+    <insert id="insert" parameterType="com.tansun.wf.mocktest.model.WfTestInsEntity">
+        INSERT INTO WF_TEST_INS (
+            ID,
+            PARENT_ID,
+            PLAN_CODE,
+            PROCESS_INSTANCE_ID,
+            PROCESS_DEF_KEY,
+            PROCESS_INFO,
+            CREATE_TIME
+        )
+        VALUES (
+          #{id,jdbcType=VARCHAR},
+          #{parentId,jdbcType=VARCHAR},
+          #{planCode,jdbcType=VARCHAR},
+          #{processInstanceId,jdbcType=VARCHAR},
+          #{processDefKey,jdbcType=VARCHAR},
+          #{processInfo,jdbcType=CLOB},
+          #{createTime,jdbcType=TIMESTAMP}
+        )
+    </insert>
+
+    <insert id="bulkInsert" parameterType="com.tansun.wf.mocktest.model.WfTestInsEntity">
+        INSERT INTO WF_TEST_INS (
+        ID,
+        PARENT_ID,
+        PLAN_CODE,
+        PROCESS_INSTANCE_ID,
+        PROCESS_DEF_KEY,
+        PROCESS_INFO,
+        CREATE_TIME
+        )
+        VALUES
+        <foreach collection="list" item="copy" index="index" separator=",">
+          (#{id,jdbcType=VARCHAR},
+            #{parentId,jdbcType=VARCHAR},
+            #{planCode,jdbcType=VARCHAR},
+            #{processInstanceId,jdbcType=VARCHAR},
+            #{processDefKey,jdbcType=VARCHAR},
+            #{processInfo,jdbcType=CLOB},
+            #{createTime,jdbcType=TIMESTAMP})
+        </foreach>
+    </insert>
+
+    <resultMap id="baseResultMap" type="com.tansun.wf.mocktest.model.WfTestInsEntity" >
+        <id column="ID" property="id" jdbcType="VARCHAR" />
+        <result column="PARENT_ID" property="parentId" jdbcType="VARCHAR" />
+        <result column="PLAN_CODE" property="planCode" jdbcType="VARCHAR" />
+        <result column="PROCESS_INSTANCE_ID" property="processInstanceId" jdbcType="VARCHAR" />
+        <result column="PROCESS_DEF_KEY" property="processDefKey" jdbcType="VARCHAR" />
+        <result column="PROCESS_INFO" property="processInfo" jdbcType="CLOB" />
+        <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    </resultMap>
+
+    <select id="findList" parameterType="com.tansun.wf.mocktest.query.WfTestInsQuery" resultMap="baseResultMap">
+        select
+        ID,
+        PARENT_ID,
+        PLAN_CODE,
+        PROCESS_INSTANCE_ID,
+        PROCESS_DEF_KEY,
+        PROCESS_INFO,
+        CREATE_TIME
+        <include refid="selectWfHiCarbonCopyByQueryCriteriaSql"/>
+
+    </select>
+
+    <sql id="selectWfHiCarbonCopyByQueryCriteriaSql">
+        FROM WF_TEST_INS RES
+        <where>
+            <if test="planCode != null and planCode!=''">
+                AND RES.PLAN_CODE =  #{planCode}
+            </if>
+            <if test="processDefkey != null and processDefkey!=''">
+                AND RES.PROCESS_DEF_KEY = #{processDefkey}
+            </if>
+        </where>
+         ORDER BY RES.CREATE_TIME DESC
+    </sql>
+
+    <select id="selectById" resultMap="baseResultMap" parameterType="java.lang.String" >
+        select
+        ID,
+        PARENT_ID,
+        PLAN_CODE,
+        PROCESS_INSTANCE_ID,
+        PROCESS_DEF_KEY,
+        PROCESS_INFO,
+        CREATE_TIME
+        from WF_TEST_INS
+        where ID = #{id,jdbcType=VARCHAR}
+    </select>
+
+    <delete id="delete" parameterType="com.tansun.wf.mocktest.model.WfTestInsEntity">
+        delete from WF_TEST_INS where PLAN_CODE = #{planCode}
+    </delete>
+
+
+    <update id="update" parameterType="com.tansun.wf.mocktest.model.WfTestInsEntity">
+        update WF_TEST_INS set
+          ID = #{id,jdbcType=VARCHAR},
+          PARENT_ID = #{parentId,jdbcType=VARCHAR},
+          PLAN_CODE = #{planCode,jdbcType=VARCHAR},
+          PROCESS_INSTANCE_ID = #{processInstanceId,jdbcType=VARCHAR},
+          PROCESS_DEF_KEY = #{processDefKey,jdbcType=VARCHAR},
+          PROCESS_INFO = #{processInfo,jdbcType=CLOB},
+          CREATE_TIME = #{createTime,jdbcType=TIMESTAMP}
+         where id = #{id}
+    </update>
+
+</mapper>

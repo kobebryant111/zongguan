@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k6991 2020-01-20 -->
+<mapper namespace="com.work.ppm.application.model.systemmanager.CommJob">
+    <resultMap type="commJob" id="COMMJOB_ALL">
+        <result property="location" column="LOCATION"/>
+        <result property="depid" column="DEPID"/>
+        <result property="updateflg" column="UPDATEFLG"/>
+        <result property="jobid" column="JOBID"/>
+        <result property="isdisabled" column="ISDISABLED"/>
+        <result property="compid" column="COMPID"/>
+        <result property="lastupdatedate" column="LASTUPDATEDATE"/>
+        <result property="boardline" column="BOARDLINE"/>
+        <result property="jobidhr" column="JOBIDHR"/>
+        <result property="isprework" column="ISPREWORK"/>
+        <result property="jobcode" column="JOBCODE"/>
+        <result property="remark" column="REMARK"/>
+        <result property="disableddate" column="DISABLEDDATE"/>
+        <result property="effectdate" column="EFFECTDATE"/>
+
+    </resultMap>
+
+    <!-- 所有字段名称 -->
+    <sql id="sql_flied_all">
+        LOCATION,
+        DEPID,
+        UPDATEFLG,
+        JOBID,
+        ISDISABLED,
+        COMPID,
+        LASTUPDATEDATE,
+        BOARDLINE,
+        JOBIDHR,
+        ISPREWORK,
+        JOBCODE,
+        REMARK,
+        DISABLEDDATE,
+        EFFECTDATE
+    </sql>
+    <resultMap id="QUERYPAGERLIST_MAP" type="commJobInfo" extends="COMMJOB_ALL">
+        <result column="ORG_NAME" property="orgName"/>
+        <result column="DEPT_NAME" property="deptName"/>
+    </resultMap>
+    <!-- 查询分页  2020-01-20 k6991  -->
+    <select id="queryPagerList" parameterType="map" resultMap="QUERYPAGERLIST_MAP">
+        SELECT
+        J.LOCATION,
+        J.DEPID,
+        J.JOBID,
+        J.COMPID,
+        JOBCODE,
+        O.LOCATION ORG_NAME,D.LOCATION DEPT_NAME FROM COMM_JOB J
+        LEFT JOIN COMM_ORGANIZATION O ON(J.COMPID = O.COMPID)
+        LEFT JOIN COMM_DEPARTMENT D ON(J.COMPID=D.COMPID)
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="1==1">
+                J.COMPID = O.COMPID
+                AND J.DEPID = D.DEPID
+                AND J.ISDISABLED = '0' AND
+            </if>
+            <if test="location != null  and location != '' ">J.LOCATION = #{location} AND</if>
+            <if test="depid != null ">J.DEPID = #{depid} AND</if>
+            <if test="updateflg != null  and updateflg != '' ">UPDATEFLG = #{updateflg} AND</if>
+            <if test="jobid != null ">J.JOBID = #{jobid} AND</if>
+            <if test="isdisabled != null  and isdisabled != '' ">ISDISABLED = #{isdisabled} AND</if>
+            <if test="compid != null ">J.COMPID = #{compid} AND</if>
+            <if test="lastupdatedate != null ">LASTUPDATEDATE = #{lastupdatedate} AND</if>
+            <if test="boardline != null ">BOARDLINE = #{boardline} AND</if>
+            <if test="jobidhr != null ">JOBIDHR = #{jobidhr} AND</if>
+            <if test="isprework != null  and isprework != '' ">ISPREWORK = #{isprework} AND</if>
+            <if test="jobcode != null  and jobcode != '' ">JOBCODE = #{jobcode} AND</if>
+            <if test="remark != null  and remark != '' ">REMARK = #{remark} AND</if>
+            <if test="disableddate != null ">DISABLEDDATE = #{disableddate} AND</if>
+            <if test="effectdate != null ">EFFECTDATE = #{effectdate} AND</if>
+        </trim>
+    </select>
+
+    <!-- 新增  2022-07-20 ywwb436  -->
+    <insert id="addPojo" parameterType="commJob">
+        INSERT INTO COMM_JOB (
+        <trim suffixOverrides=",">
+            <if test="jobid != null " > JOBID , </if>
+            <if test="jobcode != null  and jobcode != '' " > JOBCODE , </if>
+            <if test="location != null  and location != '' " > LOCATION , </if>
+            <if test="compid != null " > COMPID , </if>
+            <if test="depid != null " > DEPID , </if>
+            <if test="remark != null  and remark != '' " > REMARK , </if>
+            <if test="effectdate != null " > EFFECTDATE , </if>
+            <if test="isdisabled != null  and isdisabled != '' " > ISDISABLED , </if>
+            <if test="disableddate != null " > DISABLEDDATE , </if>
+            <if test="updateflg != null  and updateflg != '' " > UPDATEFLG , </if>
+            <if test="lastupdatedate != null " > LASTUPDATEDATE , </if>
+            <if test="jobidhr != null " > JOBIDHR , </if>
+            <if test="isprework != null  and isprework != '' " > ISPREWORK , </if>
+            <if test="boardline != null  and boardline != '' " > BOARDLINE , </if>
+
+        </trim>
+        )
+        VALUES(
+        <trim suffixOverrides=",">
+            <if test="jobid != null " > #{jobid} , </if>
+            <if test="jobcode != null  and jobcode != '' " > #{jobcode} , </if>
+            <if test="location != null  and location != '' " > #{location} , </if>
+            <if test="compid != null " > #{compid} , </if>
+            <if test="depid != null " > #{depid} , </if>
+            <if test="remark != null  and remark != '' " > #{remark} , </if>
+            <if test="effectdate != null " > #{effectdate} , </if>
+            <if test="isdisabled != null  and isdisabled != '' " > #{isdisabled} , </if>
+            <if test="disableddate != null " > #{disableddate} , </if>
+            <if test="updateflg != null  and updateflg != '' " > #{updateflg} , </if>
+            <if test="lastupdatedate != null " > #{lastupdatedate} , </if>
+            <if test="jobidhr != null " > #{jobidhr} , </if>
+            <if test="isprework != null  and isprework != '' " > #{isprework} , </if>
+            <if test="boardline != null  and boardline != '' " > #{boardline} , </if>
+
+        </trim>
+        )
+    </insert>
+
+    <!--通过id查询  k6991 2020-01-20 -->
+    <select id="queryById" parameterType="map" resultMap="COMMJOB_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM COMM_JOB WHERE JOBID=#{jobid}
+    </select>
+
+    <!--查询集合  k6991 2020-01-20 -->
+    <select id="getList" parameterType="map" resultMap="COMMJOB_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM COMM_JOB
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="location != null  and location != '' ">LOCATION=#{location} AND</if>
+            <if test="depid != null ">DEPID=#{depid} AND</if>
+            <if test="updateflg != null  and updateflg != '' ">UPDATEFLG=#{updateflg} AND</if>
+            <if test="jobid != null ">JOBID=#{jobid} AND</if>
+            <if test="isdisabled != null  and isdisabled != '' ">ISDISABLED=#{isdisabled} AND</if>
+            <if test="compid != null ">COMPID=#{compid} AND</if>
+            <if test="lastupdatedate != null ">LASTUPDATEDATE=#{lastupdatedate} AND</if>
+            <if test="boardline != null ">BOARDLINE=#{boardline} AND</if>
+            <if test="jobidhr != null ">JOBIDHR=#{jobidhr} AND</if>
+            <if test="isprework != null  and isprework != '' ">ISPREWORK=#{isprework} AND</if>
+            <if test="jobcode != null  and jobcode != '' ">JOBCODE=#{jobcode} AND</if>
+            <if test="remark != null  and remark != '' ">REMARK=#{remark} AND</if>
+            <if test="disableddate != null ">DISABLEDDATE=#{disableddate} AND</if>
+            <if test="effectdate != null ">EFFECTDATE=#{effectdate} AND</if>
+
+        </trim>
+    </select>
+    <!-- update sql -->
+    <sql id="update_pojo_sql">
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="location != null  and location != '' ">LOCATION=#{location} ,</if>
+            <if test="depid != null ">DEPID=#{depid} ,</if>
+            <if test="updateflg != null  and updateflg != '' ">UPDATEFLG=#{updateflg} ,</if>
+            <if test="jobid != null ">JOBID=#{jobid} ,</if>
+            <if test="isdisabled != null  and isdisabled != '' ">ISDISABLED=#{isdisabled} ,</if>
+            <if test="compid != null ">COMPID=#{compid} ,</if>
+            <if test="lastupdatedate != null ">LASTUPDATEDATE=#{lastupdatedate} ,</if>
+            <if test="boardline != null ">BOARDLINE=#{boardline} ,</if>
+            <if test="jobidhr != null ">JOBIDHR=#{jobidhr} ,</if>
+            <if test="isprework != null  and isprework != '' ">ISPREWORK=#{isprework} ,</if>
+            <if test="jobcode != null  and jobcode != '' ">JOBCODE=#{jobcode} ,</if>
+            <if test="remark != null  and remark != '' ">REMARK=#{remark} ,</if>
+            <if test="disableddate != null ">DISABLEDDATE=#{disableddate} ,</if>
+            <if test="effectdate != null ">EFFECTDATE=#{effectdate} ,</if>
+        </trim>
+    </sql>
+
+    <!--通过id编辑 k6991 2020-01-20 -->
+    <update id="updatePojo" parameterType="commJob">
+        UPDATE
+        COMM_JOB
+        <include refid="update_pojo_sql"/>
+        WHERE JOBID=#{jobid}
+    </update>
+
+    <!--通过id批量删除  k6991 2020-01-20 -->
+    <delete id="deletePojo" parameterType="commJob">
+        DELETE FROM COMM_JOB
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="jobid != null ">JOBID=#{jobid} AND</if>
+            <if test="compid != null ">COMPID=#{compid} AND</if>
+        </trim>
+    </delete>
+</mapper>

@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k1327 2021-01-27 -->
+<mapper namespace="com.work.ppm.application.model.integratedmanager.PpmWorkKjlCghtDetail">
+	 <resultMap type="ppmWorkKjlCghtDetail" id="PPMWORKKJLCGHTDETAIL_ALL">
+        <result property="htbh" column="HTBH" />
+		<result property="htmc" column="HTMC" />
+		<result property="htje" column="HTJE" />
+		<result property="wbq" column="WBQ" />
+		<result property="wbfy" column="WBFY" />
+		<result property="wbksrq" column="WBKSRQ" />
+		<result property="wbjsrq" column="WBJSRQ" />
+		<result property="ksrq" column="KSRQ" />
+		<result property="jsrq" column="JSRQ" />
+		<result property="cgnr" column="CGNR" />
+		<result property="gysmc" column="GYSMC" />
+		<result property="htwb" column="HTWB" />
+		<result property="rlzylxbh" column="RLZYLXBH" />
+		<result property="id" column="ID" />
+		<result property="dealstatus" column="DEALSTATUS" />
+		<result property="dealdept" column="DEALDEPT" />
+		<result property="instanceid" column="INSTANCEID" />
+		<result property="dealdeptid" column="DEALDEPTID" />
+		<result property="htlb" column="HTLB" />
+		<result property="isrlht" column="ISRLHT" />
+		<result property="xmyjrs" column="XMYJRS" />
+		
+     </resultMap>
+
+     <!-- 所有字段名称 -->
+        <sql id="sql_flied_all">
+        	HTBH,
+			HTMC,
+			HTJE,
+			WBQ,
+			WBFY,
+			WBKSRQ,
+			WBJSRQ,
+			KSRQ,
+			JSRQ,
+			CGNR,
+			GYSMC,
+			HTWB,
+			RLZYLXBH,
+			ID,
+			DEALSTATUS,
+			DEALDEPT,
+			INSTANCEID,
+			DEALDEPTID,
+			HTLB,
+			ISRLHT,
+			XMYJRS
+        </sql>
+        <sql id="sql_select_condition">
+            <trim prefix="WHERE" suffixOverrides="AND">
+                <if test="htbh != null  and htbh != '' " > HTBH = #{htbh} AND </if>
+				<if test="htmc != null  and htmc != '' " > HTMC = #{htmc} AND </if>
+				<if test="htje != null " > HTJE = #{htje} AND </if>
+				<if test="wbq != null " > WBQ = #{wbq} AND </if>
+				<if test="wbfy != null  and wbfy != '' " > WBFY = #{wbfy} AND </if>
+				<if test="wbksrq != null " > WBKSRQ = #{wbksrq} AND </if>
+				<if test="wbjsrq != null " > WBJSRQ = #{wbjsrq} AND </if>
+				<if test="ksrq != null " > KSRQ = #{ksrq} AND </if>
+				<if test="jsrq != null " > JSRQ = #{jsrq} AND </if>
+				<if test="cgnr != null  and cgnr != '' " > CGNR = #{cgnr} AND </if>
+				<if test="gysmc != null  and gysmc != '' " > GYSMC = #{gysmc} AND </if>
+				<if test="htwb != null  and htwb != '' " > HTWB = #{htwb} AND </if>
+				<if test="rlzylxbh != null  and rlzylxbh != '' " > RLZYLXBH = #{rlzylxbh} AND </if>
+				<if test="id != null " > ID = #{id} AND </if>
+				<if test="dealstatus != null " > DEALSTATUS = #{dealstatus} AND </if>
+				<if test="dealdept != null  and dealdept != '' " > DEALDEPT = #{dealdept} AND </if>
+				<if test="instanceid != null  and instanceid != '' " > INSTANCEID = #{instanceid} AND </if>
+				<if test="dealdeptid != null  and dealdeptid != '' " > DEALDEPTID = #{dealdeptid} AND </if>
+				<if test="htlb != null " > HTLB = #{htlb} AND </if>
+				<if test="isrlht != null  and isrlht != '' " > ISRLHT = #{isrlht} AND </if>
+				<if test="xmyjrs != null " > XMYJRS = #{xmyjrs} AND </if>
+				
+            </trim>
+        </sql>
+    	<!-- 查询分页  2021-01-27 k1327  -->
+        <select id="queryPagerList" parameterType="map" resultMap="PPMWORKKJLCGHTDETAIL_ALL">
+        	SELECT
+            <include refid="sql_flied_all" />
+            FROM PPM_WORK_KJL_CGHT_DETAIL
+            <include refid="sql_select_condition" />
+        </select>
+
+        <!-- 新增  2021-01-27 k1327  -->
+        <insert id="addPojo" parameterType="ppmWorkKjlCghtDetail">
+    		INSERT INTO PPM_WORK_KJL_CGHT_DETAIL (
+    		<trim suffixOverrides=",">
+    		 <if test="htbh != null  and htbh != '' " > HTBH , </if>
+				<if test="htmc != null  and htmc != '' " > HTMC , </if>
+				<if test="htje != null " > HTJE , </if>
+				<if test="wbq != null " > WBQ , </if>
+				<if test="wbfy != null  and wbfy != '' " > WBFY , </if>
+				<if test="wbksrq != null " > WBKSRQ , </if>
+				<if test="wbjsrq != null " > WBJSRQ , </if>
+				<if test="ksrq != null " > KSRQ , </if>
+				<if test="jsrq != null " > JSRQ , </if>
+				<if test="cgnr != null  and cgnr != '' " > CGNR , </if>
+				<if test="gysmc != null  and gysmc != '' " > GYSMC , </if>
+				<if test="htwb != null  and htwb != '' " > HTWB , </if>
+				<if test="rlzylxbh != null  and rlzylxbh != '' " > RLZYLXBH , </if>
+				<if test="id != null " > ID , </if>
+				<if test="dealstatus != null " > DEALSTATUS , </if>
+				<if test="dealdept != null  and dealdept != '' " > DEALDEPT , </if>
+				<if test="instanceid != null  and instanceid != '' " > INSTANCEID , </if>
+				<if test="dealdeptid != null  and dealdeptid != '' " > DEALDEPTID , </if>
+				<if test="htlb != null " > HTLB , </if>
+				<if test="isrlht != null  and isrlht != '' " > ISRLHT , </if>
+				<if test="xmyjrs != null " > XMYJRS , </if>
+				
+              </trim>
+    		)
+    		VALUES(
+    		<trim suffixOverrides=",">
+    		 <if test="htbh != null  and htbh != '' " > #{htbh} , </if>
+				<if test="htmc != null  and htmc != '' " > #{htmc} , </if>
+				<if test="htje != null " > #{htje} , </if>
+				<if test="wbq != null " > #{wbq} , </if>
+				<if test="wbfy != null  and wbfy != '' " > #{wbfy} , </if>
+				<if test="wbksrq != null " > #{wbksrq} , </if>
+				<if test="wbjsrq != null " > #{wbjsrq} , </if>
+				<if test="ksrq != null " > #{ksrq} , </if>
+				<if test="jsrq != null " > #{jsrq} , </if>
+				<if test="cgnr != null  and cgnr != '' " > #{cgnr} , </if>
+				<if test="gysmc != null  and gysmc != '' " > #{gysmc} , </if>
+				<if test="htwb != null  and htwb != '' " > #{htwb} , </if>
+				<if test="rlzylxbh != null  and rlzylxbh != '' " > #{rlzylxbh} , </if>
+				<if test="id != null " > #{id} , </if>
+				<if test="dealstatus != null " > #{dealstatus} , </if>
+				<if test="dealdept != null  and dealdept != '' " > #{dealdept} , </if>
+				<if test="instanceid != null  and instanceid != '' " > #{instanceid} , </if>
+				<if test="dealdeptid != null  and dealdeptid != '' " > #{dealdeptid} , </if>
+				<if test="htlb != null " > #{htlb} , </if>
+				<if test="isrlht != null  and isrlht != '' " > #{isrlht} , </if>
+				<if test="xmyjrs != null " > #{xmyjrs} , </if>
+				
+            </trim>
+    		)
+        </insert>
+
+        <!--通过id查询  k1327 2021-01-27 -->
+        <select id="queryDetail" parameterType="ppmWorkKjlCghtDetail" resultMap="PPMWORKKJLCGHTDETAIL_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_WORK_KJL_CGHT_DETAIL  WHERE HTBH=#{htbh}
+        </select>
+
+         <!--查询集合  k1327 2021-01-27 -->
+        <select id="getList" parameterType="ppmWorkKjlCghtDetail" resultMap="PPMWORKKJLCGHTDETAIL_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_WORK_KJL_CGHT_DETAIL
+        	<include refid="sql_select_condition" />
+        </select>
+        <!-- update sql -->
+        <sql id="update_pojo_sql">
+        	<trim prefix="SET" suffixOverrides=",">
+        		<if test="htbh != null  and htbh != '' " > HTBH=#{htbh} , </if>
+				<if test="htmc != null  and htmc != '' " > HTMC=#{htmc} , </if>
+				<if test="htje != null " > HTJE=#{htje} , </if>
+				<if test="wbq != null " > WBQ=#{wbq} , </if>
+				<if test="wbfy != null  and wbfy != '' " > WBFY=#{wbfy} , </if>
+				<if test="wbksrq != null " > WBKSRQ=#{wbksrq} , </if>
+				<if test="wbjsrq != null " > WBJSRQ=#{wbjsrq} , </if>
+				<if test="ksrq != null " > KSRQ=#{ksrq} , </if>
+				<if test="jsrq != null " > JSRQ=#{jsrq} , </if>
+				<if test="cgnr != null  and cgnr != '' " > CGNR=#{cgnr} , </if>
+				<if test="gysmc != null  and gysmc != '' " > GYSMC=#{gysmc} , </if>
+				<if test="htwb != null  and htwb != '' " > HTWB=#{htwb} , </if>
+				<if test="rlzylxbh != null  and rlzylxbh != '' " > RLZYLXBH=#{rlzylxbh} , </if>
+				<if test="id != null " > ID=#{id} , </if>
+				<if test="dealstatus != null " > DEALSTATUS=#{dealstatus} , </if>
+				<if test="dealdept != null  and dealdept != '' " > DEALDEPT=#{dealdept} , </if>
+				<if test="instanceid != null  and instanceid != '' " > INSTANCEID=#{instanceid} , </if>
+				<if test="dealdeptid != null  and dealdeptid != '' " > DEALDEPTID=#{dealdeptid} , </if>
+				<if test="htlb != null " > HTLB=#{htlb} , </if>
+				<if test="isrlht != null  and isrlht != '' " > ISRLHT=#{isrlht} , </if>
+				<if test="xmyjrs != null " > XMYJRS=#{xmyjrs} , </if>
+				
+            </trim>
+        </sql>
+
+        <!--通过id编辑 k1327 2021-01-27 -->
+    	<update id="updatePojo" parameterType="ppmWorkKjlCghtDetail">
+        	UPDATE
+        	PPM_WORK_KJL_CGHT_DETAIL
+        	<include refid="update_pojo_sql" />
+        	WHERE HTBH=#{htbh}
+        </update>
+
+        <!--通过id批量删除  k1327 2021-01-27 -->
+        <delete id="deleteById" parameterType="ppmWorkKjlCghtDetail">
+        	DELETE
+        	FROM
+        	PPM_WORK_KJL_CGHT_DETAIL
+        	WHERE HTBH = #{htbh}
+        </delete>
+
+</mapper>

@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:ywwb905 2022-12-13 -->
+<!--  人员移交详情信息 查询脚本 -->
+<mapper namespace="com.work.ppm.application.model.integratedmanager.PpmStaffTransferInfo">
+	 <resultMap type="ppmStaffTransferInfo" id="PPMSTAFFTRANSFERINFO_ALL">
+        <result property="id" column="ID" />
+		<result property="instanceid" column="INSTANCEID" />
+		<result property="jobId" column="JOB_ID" />
+		<result property="outsourceType" column="OUTSOURCE_TYPE" />
+		<result property="transferTime" column="TRANSFER_TIME" />
+		<result property="transferState" column="TRANSFER_STATE" />
+		<result property="supplierId" column="SUPPLIER_ID" />
+		<result property="deptIdBefore" column="DEPT_ID_BEFORE" />
+		<result property="pmIdBefore" column="PM_ID_BEFORE" />
+		<result property="deptIdAfter" column="DEPT_ID_AFTER" />
+		<result property="pmIdAfter" column="PM_ID_AFTER" />
+		<result property="systemId" column="SYSTEM_ID" />
+		<result property="projectId" column="PROJECT_ID" />
+		<result property="createdTime" column="CREATED_TIME" />
+		<result property="createdBy" column="CREATED_BY" />
+		<result property="modifiedTime" column="MODIFIED_TIME" />
+		<result property="modifiedBy" column="MODIFIED_BY" />
+		
+     </resultMap>
+	 <resultMap id="PPMSTAFFTRANSFERINFO_ALL_EXT" type="ppmStaffTransferInfoExt" extends="PPMSTAFFTRANSFERINFO_ALL">
+		<result property="state" column="STATE" />
+		<result property="stateName" column="STATE_NAME" />
+		<result property="applyerId" column="APPLYER" />
+		<result property="applyerName" column="APPLYER_NAME" />
+		<result property="applyerDeptId" column="APPLYER_DEPT_ID" />
+		<result property="applyerDeptName" column="APPLYER_DEPT_NAME" />
+		<result property="userName" column="USER_NAME" />
+		<result property="supplierName" column="SUPPLIER_NAME" />
+		<result property="deptIdBeforeName" column="DEPT_ID_BEFORE_NAME" />
+		<result property="pmIdBeforeName" column="PM_ID_BEFORE_NAME" />
+		<result property="deptIdAfterName" column="DEPT_ID_AFTER_NAME" />
+		<result property="pmIdAfterName" column="PM_ID_AFTER_NAME" />
+		<result property="systemName" column="SYSTEM_NAME" />
+		<result property="transferStateName" column="TRANSFER_STATE_NAME" />
+		<result property="delVal" column="DEL_VAL" />
+		<result property="projectName" column="PROJECT_NAME" />
+		<result property="outsourceTypeName" column="OUTSOURCE_TYPE_NAME" />
+     </resultMap>
+
+     <!-- 所有字段名称 -->
+    <sql id="sql_flied_all">
+        ID,
+			INSTANCEID,
+			JOB_ID,
+			OUTSOURCE_TYPE,
+			TRANSFER_TIME,
+			TRANSFER_STATE,
+			SUPPLIER_ID,
+			DEPT_ID_BEFORE,
+			PM_ID_BEFORE,
+			DEPT_ID_AFTER,
+			PM_ID_AFTER,
+			SYSTEM_ID,
+			PROJECT_ID,
+			CREATED_TIME,
+			CREATED_BY,
+			MODIFIED_TIME,
+			MODIFIED_BY
+    </sql>
+    <sql id="sql_select_condition">
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="id != null " > ID = #{id} AND </if>
+				<if test="instanceid != null  and instanceid != '' " > INSTANCEID = #{instanceid} AND </if>
+				<if test="jobId != null  and jobId != '' " > JOB_ID = #{jobId} AND </if>
+				<if test="outsourceType != null  and outsourceType != '' " > OUTSOURCE_TYPE = #{outsourceType} AND </if>
+				<if test="transferTime != null " > TRANSFER_TIME = #{transferTime} AND </if>
+				<if test="transferState != null  and transferState != '' " > TRANSFER_STATE = #{transferState} AND </if>
+				<if test="supplierId != null  and supplierId != '' " > SUPPLIER_ID = #{supplierId} AND </if>
+				<if test="deptIdBefore != null  and deptIdBefore != '' " > DEPT_ID_BEFORE = #{deptIdBefore} AND </if>
+				<if test="pmIdBefore != null  and pmIdBefore != '' " > PM_ID_BEFORE = #{pmIdBefore} AND </if>
+				<if test="deptIdAfter != null  and deptIdAfter != '' " > DEPT_ID_AFTER = #{deptIdAfter} AND </if>
+				<if test="pmIdAfter != null  and pmIdAfter != '' " > PM_ID_AFTER = #{pmIdAfter} AND </if>
+				<if test="systemId != null  and systemId != '' " > SYSTEM_ID = #{systemId} AND </if>
+				<if test="projectId != null  and projectId != '' " > PROJECT_ID = #{projectId} AND </if>
+				<if test="createdTime != null " > CREATED_TIME = #{createdTime} AND </if>
+				<if test="createdBy != null  and createdBy != '' " > CREATED_BY = #{createdBy} AND </if>
+				<if test="modifiedTime != null " > MODIFIED_TIME = #{modifiedTime} AND </if>
+				<if test="modifiedBy != null  and modifiedBy != '' " > MODIFIED_BY = #{modifiedBy} AND </if>
+				
+        </trim>
+    </sql>
+    <!-- 查询分页  2022-12-13 ywwb905  -->
+    <select id="queryPagerList" parameterType="map" resultMap="PPMSTAFFTRANSFERINFO_ALL">
+        SELECT
+        <include refid="sql_flied_all" />
+        FROM PPM_STAFF_TRANSFER_INFO
+        <include refid="sql_select_condition" />
+    </select>
+
+    <!-- 新增  2022-12-13 ywwb905  -->
+    <insert id="addPojo" parameterType="ppmStaffTransferInfo">
+        INSERT INTO PPM_STAFF_TRANSFER_INFO (
+        <trim suffixOverrides=",">
+         <if test="id != null " > ID , </if>
+				<if test="instanceid != null  and instanceid != '' " > INSTANCEID , </if>
+				<if test="jobId != null  and jobId != '' " > JOB_ID , </if>
+				<if test="outsourceType != null  and outsourceType != '' " > OUTSOURCE_TYPE , </if>
+				<if test="transferTime != null " > TRANSFER_TIME , </if>
+				<if test="transferState != null  and transferState != '' " > TRANSFER_STATE , </if>
+				<if test="supplierId != null  and supplierId != '' " > SUPPLIER_ID , </if>
+				<if test="deptIdBefore != null  and deptIdBefore != '' " > DEPT_ID_BEFORE , </if>
+				<if test="pmIdBefore != null  and pmIdBefore != '' " > PM_ID_BEFORE , </if>
+				<if test="deptIdAfter != null  and deptIdAfter != '' " > DEPT_ID_AFTER , </if>
+				<if test="pmIdAfter != null  and pmIdAfter != '' " > PM_ID_AFTER , </if>
+				<if test="systemId != null  and systemId != '' " > SYSTEM_ID , </if>
+				<if test="projectId != null  and projectId != '' " > PROJECT_ID , </if>
+				<if test="createdTime != null " > CREATED_TIME , </if>
+				<if test="createdBy != null  and createdBy != '' " > CREATED_BY , </if>
+				<if test="modifiedTime != null " > MODIFIED_TIME , </if>
+				<if test="modifiedBy != null  and modifiedBy != '' " > MODIFIED_BY , </if>
+				
+          </trim>
+        )
+        VALUES(
+        <trim suffixOverrides=",">
+         <if test="id != null " > #{id} , </if>
+				<if test="instanceid != null  and instanceid != '' " > #{instanceid} , </if>
+				<if test="jobId != null  and jobId != '' " > #{jobId} , </if>
+				<if test="outsourceType != null  and outsourceType != '' " > #{outsourceType} , </if>
+				<if test="transferTime != null " > #{transferTime} , </if>
+				<if test="transferState != null  and transferState != '' " > #{transferState} , </if>
+				<if test="supplierId != null  and supplierId != '' " > #{supplierId} , </if>
+				<if test="deptIdBefore != null  and deptIdBefore != '' " > #{deptIdBefore} , </if>
+				<if test="pmIdBefore != null  and pmIdBefore != '' " > #{pmIdBefore} , </if>
+				<if test="deptIdAfter != null  and deptIdAfter != '' " > #{deptIdAfter} , </if>
+				<if test="pmIdAfter != null  and pmIdAfter != '' " > #{pmIdAfter} , </if>
+				<if test="systemId != null  and systemId != '' " > #{systemId} , </if>
+				<if test="projectId != null  and projectId != '' " > #{projectId} , </if>
+				<if test="createdTime != null " > #{createdTime} , </if>
+				<if test="createdBy != null  and createdBy != '' " > #{createdBy} , </if>
+				<if test="modifiedTime != null " > #{modifiedTime} , </if>
+				<if test="modifiedBy != null  and modifiedBy != '' " > #{modifiedBy} , </if>
+				
+        </trim>
+        )
+    </insert>
+
+    <!--通过id查询  ywwb905 2022-12-13 -->
+    <select id="queryDetail" parameterType="ppmStaffTransferInfo" resultMap="PPMSTAFFTRANSFERINFO_ALL">
+        SELECT
+        <include refid="sql_flied_all" />
+        FROM PPM_STAFF_TRANSFER_INFO  WHERE ID=#{id}
+    </select>
+
+     <!--查询集合  ywwb905 2022-12-13 -->
+    <select id="getList" parameterType="ppmStaffTransferInfo" resultMap="PPMSTAFFTRANSFERINFO_ALL">
+        SELECT
+        <include refid="sql_flied_all" />
+        FROM PPM_STAFF_TRANSFER_INFO
+        <include refid="sql_select_condition" />
+    </select>
+    <!-- update sql -->
+    <sql id="update_pojo_sql">
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="id != null " > ID=#{id} , </if>
+				<if test="instanceid != null  and instanceid != '' " > INSTANCEID=#{instanceid} , </if>
+				<if test="jobId != null  and jobId != '' " > JOB_ID=#{jobId} , </if>
+				<if test="outsourceType != null  and outsourceType != '' " > OUTSOURCE_TYPE=#{outsourceType} , </if>
+				<if test="transferTime != null " > TRANSFER_TIME=#{transferTime} , </if>
+				<if test="transferState != null  and transferState != '' " > TRANSFER_STATE=#{transferState} , </if>
+				<if test="supplierId != null  and supplierId != '' " > SUPPLIER_ID=#{supplierId} , </if>
+				<if test="deptIdBefore != null  and deptIdBefore != '' " > DEPT_ID_BEFORE=#{deptIdBefore} , </if>
+				<if test="pmIdBefore != null  and pmIdBefore != '' " > PM_ID_BEFORE=#{pmIdBefore} , </if>
+				<if test="deptIdAfter != null  and deptIdAfter != '' " > DEPT_ID_AFTER=#{deptIdAfter} , </if>
+				<if test="pmIdAfter != null  and pmIdAfter != '' " > PM_ID_AFTER=#{pmIdAfter} , </if>
+				<if test="systemId != null  and systemId != '' " > SYSTEM_ID=#{systemId} , PROJECT_ID='' ,</if>
+				<if test="projectId != null  and projectId != '' " > PROJECT_ID=#{projectId} ,SYSTEM_ID='' , </if>
+				<if test="createdTime != null " > CREATED_TIME=#{createdTime} , </if>
+				<if test="createdBy != null  and createdBy != '' " > CREATED_BY=#{createdBy} , </if>
+				<if test="modifiedTime != null " > MODIFIED_TIME=#{modifiedTime} , </if>
+				<if test="modifiedBy != null  and modifiedBy != '' " > MODIFIED_BY=#{modifiedBy} , </if>
+				
+        </trim>
+    </sql>
+
+    <!--通过id编辑 ywwb905 2022-12-13 -->
+    <update id="updatePojo" parameterType="ppmStaffTransferInfo">
+        UPDATE
+        PPM_STAFF_TRANSFER_INFO
+        <include refid="update_pojo_sql" />
+        WHERE ID=#{id}
+    </update>
+
+    <!--通过id批量删除  ywwb905 2022-12-13 -->
+    <delete id="deleteById" parameterType="ppmStaffTransferInfo">
+        DELETE
+        FROM
+        PPM_STAFF_TRANSFER_INFO
+        WHERE ID = #{id}
+    </delete>
+	
+	<delete id="deleteByInstanceId" parameterType="ppmStaffTransferInfo">
+        DELETE
+        FROM
+        PPM_STAFF_TRANSFER_INFO
+        WHERE INSTANCEID=#{instanceid}
+    </delete>
+	
+	<delete id="deleteInJobId" parameterType="ppmStaffTransferInfo">
+        DELETE
+        FROM
+        PPM_STAFF_TRANSFER_INFO
+		<trim prefix="WHERE" suffixOverrides="AND">
+			<if test="true">INSTANCEID=#{instanceid} AND</if>
+			<if test="delVal != null and delVal != '' ">ID NOT IN (${delVal}) AND</if>
+		</trim>
+    </delete>
+	
+	
+	<select id="queryBaseInfo" parameterType="ppmStaffTransferInfoExt" resultMap="PPMSTAFFTRANSFERINFO_ALL_EXT">
+		SELECT 
+		  TI.ID,
+		  TI.INSTANCEID,
+		  TI.JOB_ID,
+		  TI.OUTSOURCE_TYPE,
+		  TI.TRANSFER_TIME,
+		  TI.TRANSFER_STATE,
+		  TI.SUPPLIER_ID,
+		  TI.DEPT_ID_BEFORE,
+		  TI.PM_ID_BEFORE,
+		  TI.DEPT_ID_AFTER,
+		  TI.PM_ID_AFTER,
+		  TI.SYSTEM_ID,
+		  TI.PROJECT_ID,
+		  TI.CREATED_TIME,
+		  TI.CREATED_BY,
+		  TI.MODIFIED_TIME,
+		  TI.MODIFIED_BY,
+		  ST.APPLYER_ID,
+		  ST.APPLYER_DEPT_ID,
+		  ST.STATE,
+		  ST.STATE_NAME,
+		  OB.USER_NAME,
+		  CE.EMPNAME APPLYER_NAME,
+		  CEB.EMPNAME PM_ID_BEFORE_NAME,
+		  CEA.EMPNAME PM_ID_AFTER_NAME,
+		  CD.LOCATION APPLYER_DEPT_NAME,
+		  CDB.LOCATION DEPT_ID_BEFORE_NAME,
+		  CDA.LOCATION DEPT_ID_AFTER_NAME,
+		  OI.OUTSOURCNAME SUPPLIER_NAME,
+		  SI.NAME SYSTEM_NAME,
+		  E1.DICTNAME TRANSFER_STATE_NAME,
+		  E2.DICTNAME OUTSOURCE_TYPE_NAME,
+		  PI.NAME PROJECT_NAME
+    FROM PPM_STAFF_TRANSFER_INFO TI
+		  LEFT JOIN PPM_STAFF_TRANSFER ST ON ST.INSTANCEID = TI.INSTANCEID
+		  LEFT JOIN PPM_OUTSOURCING_BASIC OB ON OB.JOB_ID = TI.JOB_ID
+		  LEFT JOIN COMM_EMPLOYEE CE ON ST.APPLYER_ID = CE.BADGE
+		  LEFT JOIN COMM_EMPLOYEE CEB ON TI.PM_ID_BEFORE = CEB.BADGE
+		  LEFT JOIN COMM_EMPLOYEE CEA ON TI.PM_ID_AFTER = CEA.BADGE
+		  LEFT JOIN COMM_DEPARTMENT CD ON ST.APPLYER_DEPT_ID = CD.DEPID
+		  LEFT JOIN COMM_DEPARTMENT CDB ON TI.DEPT_ID_BEFORE = CDB.DEPID
+		  LEFT JOIN COMM_DEPARTMENT CDA ON TI.DEPT_ID_AFTER = CDA.DEPID
+		  LEFT JOIN PPM_OUTSOURCING_INFO OI ON TI.SUPPLIER_ID = OI.ORGCODE
+		  LEFT JOIN PPM_SYSTEM_INFO SI ON SI.ID = TI.SYSTEM_ID
+		  LEFT JOIN PPM_PROJECT_INFO PI ON PI.ID = TI.PROJECT_ID
+		  LEFT JOIN EOS_DICT_ENTRY E1 ON ( TI.TRANSFER_STATE = E1.DICTID AND E1.DICTTYPEID = 'STAFF_TRANSFER_STATE')
+		  LEFT JOIN EOS_DICT_ENTRY E2 ON ( TI.OUTSOURCE_TYPE = E2.DICTID AND E2.DICTTYPEID = 'NEWKG_WBFS')
+		<trim prefix="WHERE" suffixOverrides="AND">
+            <if test="id != null and id != '' ">TI.ID = #{id} AND</if>
+            <if test="jobId != null and jobId != '' ">TI.JOB_ID = #{jobId} AND</if>
+            <if test="id == null and instanceid == '' ">TI.ID = ''</if>
+        </trim>
+		ORDER BY TI.ID DESC
+	</select>
+	
+	<select id="queryBaseInfoList" parameterType="ppmStaffTransferInfoExt" resultMap="PPMSTAFFTRANSFERINFO_ALL_EXT">
+		SELECT 
+		  TI.ID,
+		  TI.INSTANCEID,
+		  TI.JOB_ID,
+		  TI.OUTSOURCE_TYPE,
+		  TI.TRANSFER_TIME,
+		  TI.TRANSFER_STATE,
+		  TI.SUPPLIER_ID,
+		  TI.DEPT_ID_BEFORE,
+		  TI.PM_ID_BEFORE,
+		  TI.DEPT_ID_AFTER,
+		  TI.PM_ID_AFTER,
+		  TI.SYSTEM_ID,
+		  TI.PROJECT_ID,
+		  TI.CREATED_TIME,
+		  TI.CREATED_BY,
+		  TI.MODIFIED_TIME,
+		  TI.MODIFIED_BY,
+		  ST.APPLYER_ID,
+		  ST.APPLYER_DEPT_ID,
+		  ST.STATE,
+		  ST.STATE_NAME,
+		  OB.USER_NAME,
+		  CE.EMPNAME APPLYER_NAME,
+		  CEB.EMPNAME PM_ID_BEFORE_NAME,
+		  CEA.EMPNAME PM_ID_AFTER_NAME,
+		  CD.LOCATION APPLYER_DEPT_NAME,
+		  CDB.LOCATION DEPT_ID_BEFORE_NAME,
+		  CDA.LOCATION DEPT_ID_AFTER_NAME,
+		  OI.OUTSOURCNAME SUPPLIER_NAME,
+		  SI.NAME SYSTEM_NAME,
+		  E1.DICTNAME TRANSFER_STATE_NAME,
+		  E2.DICTNAME OUTSOURCE_TYPE_NAME,
+		  PI.NAME PROJECT_NAME
+    FROM PPM_STAFF_TRANSFER_INFO TI
+		  LEFT JOIN PPM_STAFF_TRANSFER ST ON ST.INSTANCEID = TI.INSTANCEID
+		  LEFT JOIN PPM_OUTSOURCING_BASIC OB ON OB.JOB_ID = TI.JOB_ID
+		  LEFT JOIN COMM_EMPLOYEE CE ON ST.APPLYER_ID = CE.BADGE
+		  LEFT JOIN COMM_EMPLOYEE CEB ON TI.PM_ID_BEFORE = CEB.BADGE
+		  LEFT JOIN COMM_EMPLOYEE CEA ON TI.PM_ID_AFTER = CEA.BADGE
+		  LEFT JOIN COMM_DEPARTMENT CD ON ST.APPLYER_DEPT_ID = CD.DEPID
+		  LEFT JOIN COMM_DEPARTMENT CDB ON TI.DEPT_ID_BEFORE = CDB.DEPID
+		  LEFT JOIN COMM_DEPARTMENT CDA ON TI.DEPT_ID_AFTER = CDA.DEPID
+		  LEFT JOIN PPM_OUTSOURCING_INFO OI ON TI.SUPPLIER_ID = OI.ORGCODE
+		  LEFT JOIN PPM_SYSTEM_INFO SI ON SI.ID = TI.SYSTEM_ID
+		  LEFT JOIN PPM_PROJECT_INFO PI ON PI.ID = TI.PROJECT_ID
+		  LEFT JOIN EOS_DICT_ENTRY E1 ON ( TI.TRANSFER_STATE = E1.DICTID AND E1.DICTTYPEID = 'STAFF_TRANSFER_STATE')
+		  LEFT JOIN EOS_DICT_ENTRY E2 ON ( TI.OUTSOURCE_TYPE = E2.DICTID AND E2.DICTTYPEID = 'NEWKG_WBFS')
+		<trim prefix="WHERE" suffixOverrides="AND">
+            <if test="instanceid != null and instanceid != '' ">ST.INSTANCEID = #{instanceid} AND</if>
+            <if test="jobId != null and jobId != '' ">TI.JOB_ID = #{jobId} AND</if>
+            <if test="transferState != null and transferState != '' ">TI.TRANSFER_STATE = #{transferState} AND</if>	
+        </trim>
+		ORDER BY TI.ID DESC
+	</select>
+
+</mapper>

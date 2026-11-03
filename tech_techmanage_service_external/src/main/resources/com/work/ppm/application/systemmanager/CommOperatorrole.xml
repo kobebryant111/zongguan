@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k6991 2020-01-15 -->
+<mapper namespace="com.work.ppm.application.model.systemmanager.CommOperatorrole">
+	 <resultMap type="commOperatorrole" id="COMMOPERATORROLE_ALL">
+        <result property="remark" column="REMARK" />
+		<result property="operatorid" column="OPERATORID" />
+		<result property="islose" column="ISLOSE" />
+		<result property="partid" column="PARTID" />
+		<result property="roleid" column="ROLEID" />
+		
+     </resultMap>
+
+     <!-- 所有字段名称 -->
+        <sql id="sql_flied_all">
+        	REMARK,
+			OPERATORID,
+			ISLOSE,
+			PARTID,
+			ROLEID
+        </sql>
+    	<!-- 查询分页  2020-01-15 k6991  -->
+        <select id="queryPagerList" parameterType="map" resultMap="COMMOPERATORROLE_ALL">
+        	SELECT
+            <include refid="sql_flied_all" />
+            FROM COMM_OPERATORROLE
+            <trim prefix="WHERE" suffixOverrides="AND">
+                <if test="remark != null  and remark != '' " > REMARK = #{remark} AND </if>
+				<if test="operatorid != null " > OPERATORID = #{operatorid} AND </if>
+				<if test="islose != null  and islose != '' " > ISLOSE = #{islose} AND </if>
+				<if test="partid != null " > PARTID = #{partid} AND </if>
+				<if test="roleid != null  and roleid != '' " > ROLEID = #{roleid} AND </if>
+				
+                <if test="size != null " > <![CDATA[ ROWNUM <= #{size} AND ]]> </if>
+            </trim>
+        </select>
+
+        <!-- 新增  2020-01-15 k6991  -->
+        <insert id="addPojo" parameterType="commOperatorrole">
+			INSERT INTO COMM_OPERATORROLE (
+			<trim suffixOverrides=",">
+				<if test="operatorid != null " > OPERATORID , </if>
+				<if test="roleid != null  and roleid != '' " > ROLEID , </if>
+				<if test="remark != null  and remark != '' " > REMARK , </if>
+				<if test="islose != null  and islose != '' " > ISLOSE , </if>
+				<if test="partid != null " > PARTID , </if>
+
+			</trim>
+			)
+			VALUES(
+			<trim suffixOverrides=",">
+				<if test="operatorid != null " > #{operatorid} , </if>
+				<if test="roleid != null  and roleid != '' " > #{roleid} , </if>
+				<if test="remark != null  and remark != '' " > #{remark} , </if>
+				<if test="islose != null  and islose != '' " > #{islose} , </if>
+				<if test="partid != null " > #{partid} , </if>
+
+			</trim>
+			)
+        </insert>
+
+        <!--通过id查询  k6991 2020-01-15 -->
+        <select id="queryById" parameterType="map" resultMap="COMMOPERATORROLE_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM COMM_OPERATORROLE  WHERE REMARK=#{remark}
+        </select>
+
+         <!--查询集合  k6991 2020-01-15 -->
+        <select id="getList" parameterType="map" resultMap="COMMOPERATORROLE_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM COMM_OPERATORROLE
+        	<trim prefix="WHERE" suffixOverrides="AND">
+        		<if test="remark != null  and remark != '' " > REMARK=#{remark} AND </if>
+				<if test="operatorid != null " > OPERATORID=#{operatorid} AND </if>
+				<if test="islose != null  and islose != '' " > ISLOSE=#{islose} AND </if>
+				<if test="partid != null " > PARTID=#{partid} AND </if>
+				<if test="roleid != null  and roleid != '' " > ROLEID=#{roleid} AND </if>
+				
+            </trim>
+        </select>
+        <!-- update sql -->
+        <sql id="update_pojo_sql">
+        	<trim prefix="SET" suffixOverrides=",">
+        		<if test="remark != null  and remark != '' " > REMARK=#{remark} , </if>
+				<if test="operatorid != null " > OPERATORID=#{operatorid} , </if>
+				<if test="islose != null  and islose != '' " > ISLOSE=#{islose} , </if>
+				<if test="partid != null " > PARTID=#{partid} , </if>
+				<if test="roleid != null  and roleid != '' " > ROLEID=#{roleid} , </if>
+				
+            </trim>
+        </sql>
+
+        <!--通过id编辑 k6991 2020-01-15 -->
+    	<update id="updatePojo" parameterType="commOperatorrole">
+        	UPDATE
+        	COMM_OPERATORROLE
+        	<include refid="update_pojo_sql" />
+        	WHERE REMARK=#{remark}
+        </update>
+
+        <!--通过id批量删除  k6991 2020-01-15 -->
+        <delete id="deleteById" parameterType="commOperatorrole">
+        	DELETE
+        	FROM
+        	COMM_OPERATORROLE
+        	WHERE REMARK = #{remark}
+        </delete>
+</mapper>

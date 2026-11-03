@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k1327 2021-03-17 -->
+<mapper namespace="com.work.ppm.application.model.integratedmanager.PpmOutsourcingTrain">
+	 <resultMap type="ppmOutsourcingTrain" id="PPMOUTSOURCINGTRAIN_ALL">
+        <result property="id" column="ID" />
+		<result property="jobid" column="JOBID" />
+		<result property="empname" column="EMPNAME" />
+		<result property="traintime" column="TRAINTIME" />
+		<result property="project" column="PROJECT" />
+		<result property="score" column="SCORE" />
+		<result property="createuserid" column="CREATEUSERID" />
+		<result property="createdate" column="CREATEDATE" />
+		<result property="traintec" column="TRAINTEC" />
+		
+     </resultMap>
+
+     <!-- 所有字段名称 -->
+        <sql id="sql_flied_all">
+        	ID,
+			JOBID,
+			EMPNAME,
+			TRAINTIME,
+			PROJECT,
+			SCORE,
+			CREATEUSERID,
+			CREATEDATE,
+			TRAINTEC
+        </sql>
+        <sql id="sql_select_condition">
+            <trim prefix="WHERE" suffixOverrides="AND">
+                <if test="id != null " > ID = #{id} AND </if>
+				<if test="jobid != null  and jobid != '' " > JOBID = #{jobid} AND </if>
+				<if test="empname != null  and empname != '' " > EMPNAME = #{empname} AND </if>
+				<if test="traintime != null " > TRAINTIME = #{traintime} AND </if>
+				<if test="project != null  and project != '' " > PROJECT = #{project} AND </if>
+				<if test="score != null " > SCORE = #{score} AND </if>
+				<if test="createuserid != null  and createuserid != '' " > CREATEUSERID = #{createuserid} AND </if>
+				<if test="createdate != null " > CREATEDATE = #{createdate} AND </if>
+				<if test="traintec != null  and traintec != '' " > TRAINTEC = #{traintec} AND </if>
+				
+            </trim>
+        </sql>
+    	<!-- 查询分页  2021-03-17 k1327  -->
+        <select id="queryPagerList" parameterType="map" resultMap="PPMOUTSOURCINGTRAIN_ALL">
+        	SELECT
+            <include refid="sql_flied_all" />
+            FROM PPM_OUTSOURCING_TRAIN
+            <include refid="sql_select_condition" />
+        </select>
+
+        <!-- 新增  2021-03-17 k1327  -->
+        <insert id="addPojo" parameterType="ppmOutsourcingTrain">
+    		INSERT INTO PPM_OUTSOURCING_TRAIN (
+    		<trim suffixOverrides=",">
+    		 <if test="id != null " > ID , </if>
+				<if test="jobid != null  and jobid != '' " > JOBID , </if>
+				<if test="empname != null  and empname != '' " > EMPNAME , </if>
+				<if test="traintime != null " > TRAINTIME , </if>
+				<if test="project != null  and project != '' " > PROJECT , </if>
+				<if test="score != null " > SCORE , </if>
+				<if test="createuserid != null  and createuserid != '' " > CREATEUSERID , </if>
+				<if test="createdate != null " > CREATEDATE , </if>
+				<if test="traintec != null  and traintec != '' " > TRAINTEC , </if>
+				
+              </trim>
+    		)
+    		VALUES(
+    		<trim suffixOverrides=",">
+    		 <if test="id != null " > #{id} , </if>
+				<if test="jobid != null  and jobid != '' " > #{jobid} , </if>
+				<if test="empname != null  and empname != '' " > #{empname} , </if>
+				<if test="traintime != null " > #{traintime} , </if>
+				<if test="project != null  and project != '' " > #{project} , </if>
+				<if test="score != null " > #{score} , </if>
+				<if test="createuserid != null  and createuserid != '' " > #{createuserid} , </if>
+				<if test="createdate != null " > #{createdate} , </if>
+				<if test="traintec != null  and traintec != '' " > #{traintec} , </if>
+				
+            </trim>
+    		)
+        </insert>
+
+        <!--通过id查询  k1327 2021-03-17 -->
+        <select id="queryDetail" parameterType="ppmOutsourcingTrain" resultMap="PPMOUTSOURCINGTRAIN_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_OUTSOURCING_TRAIN  WHERE ID=#{id}
+        </select>
+
+         <!--查询集合  k1327 2021-03-17 -->
+        <select id="getList" parameterType="ppmOutsourcingTrain" resultMap="PPMOUTSOURCINGTRAIN_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_OUTSOURCING_TRAIN
+        	<include refid="sql_select_condition" />
+        </select>
+        <!-- update sql -->
+        <sql id="update_pojo_sql">
+        	<trim prefix="SET" suffixOverrides=",">
+        		<if test="id != null " > ID=#{id} , </if>
+				<if test="jobid != null  and jobid != '' " > JOBID=#{jobid} , </if>
+				<if test="empname != null  and empname != '' " > EMPNAME=#{empname} , </if>
+				<if test="traintime != null " > TRAINTIME=#{traintime} , </if>
+				<if test="project != null  and project != '' " > PROJECT=#{project} , </if>
+				<if test="score != null " > SCORE=#{score} , </if>
+				<if test="createuserid != null  and createuserid != '' " > CREATEUSERID=#{createuserid} , </if>
+				<if test="createdate != null " > CREATEDATE=#{createdate} , </if>
+				<if test="traintec != null  and traintec != '' " > TRAINTEC=#{traintec} , </if>
+				
+            </trim>
+        </sql>
+
+        <!--通过id编辑 k1327 2021-03-17 -->
+    	<update id="updatePojo" parameterType="ppmOutsourcingTrain">
+        	UPDATE
+        	PPM_OUTSOURCING_TRAIN
+        	<include refid="update_pojo_sql" />
+        	WHERE ID=#{id}
+        </update>
+
+        <!--通过id批量删除  k1327 2021-03-17 -->
+        <delete id="deleteById" parameterType="ppmOutsourcingTrain">
+        	DELETE
+        	FROM
+        	PPM_OUTSOURCING_TRAIN
+        	WHERE ID = #{id}
+        </delete>
+		<!--查询集合  k1327 2021-03-17 -->
+		<select id="getOutTrainList" parameterType="map" resultType="outTrainData">
+			select * from (
+				select a.job_id jobid,to_char(a.EITQUETTE_TIME,'yyyy-MM-dd') traintime,'礼仪考试' project,a.EITQUETTE_ACHIEVEMENT score
+					from ppm_outsourcing_accessapply a  where a.EITQUETTE_ACHIEVEMENT > 0
+				union
+				select b.job_id jobid,to_char(b.QUALITY_TIME,'yyyy-MM-dd') traintime,'资质考试' project,b.QUALITY_ACHIEVEMENT score
+					from ppm_outsourcing_accessapply b where b.QUALITY_ACHIEVEMENT > 0
+			) tab where tab.jobid=#{jobid}	order by tab.traintime asc
+		</select>
+</mapper>

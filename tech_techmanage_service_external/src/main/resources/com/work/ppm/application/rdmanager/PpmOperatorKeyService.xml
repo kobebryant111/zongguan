@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k6991 2020-01-15 -->
+<mapper namespace="com.work.ppm.application.model.rdmanager.SystemListDto">
+    <resultMap type="com.work.ppm.application.model.rdmanager.SystemListDto" id="SYSTEMLISTDTO_ALL">
+        <result property="id" column="ID"/>
+        <result property="systemName" column="SYSTEM_NAME"/>
+        <result property="systemNo" column="SYSTEM_NO"/>
+    </resultMap>
+
+    <sql id="sql_flied_all">
+        OPERATORID,
+        USERID,
+        OPERATORNAME,
+        PASSWORD,
+        AUTHMODE,
+        STATUS,
+        UNLOCKTIME,
+        MENUTYPE,
+        LASTLOGIN,
+        ERRCOUNT,
+        STARTDATE,
+        ENDDATE,
+        VALIDTIME,
+        INVALDATE,
+        MACCODE,
+        IPADDRESS,
+        EMAIL,
+        PARTID,
+        USER_TYPE,
+        OLD_PASSWORD
+    </sql>
+
+    <sql id="sql_flied">
+        OPERATORID,
+        USERID,
+        OPERATORNAME,
+        AUTHMODE,
+        STATUS,
+        UNLOCKTIME,
+        MENUTYPE,
+        LASTLOGIN,
+        ERRCOUNT,
+        STARTDATE,
+        ENDDATE,
+        VALIDTIME,
+        INVALDATE,
+        MACCODE,
+        IPADDRESS,
+        EMAIL,
+        PARTID,
+        USER_TYPE
+    </sql>
+    <!-- update sql -->
+    <sql id="update_pojo_sql">
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="unlocktime != null ">UNLOCKTIME=#{unlocktime} ,</if>
+            <if test="lastlogin != null ">LASTLOGIN=#{lastlogin} ,</if>
+            <if test="invaldate != null ">INVALDATE=#{invaldate} ,</if>
+            <if test="email != null  and email != '' ">EMAIL=#{email} ,</if>
+            <if test="userType != null  and userType != '' ">USER_TYPE=#{userType} ,</if>
+            <if test="menutype != null  and menutype != '' ">MENUTYPE=#{menutype} ,</if>
+            <if test="errcount != null ">ERRCOUNT=#{errcount} ,</if>
+            <if test="maccode != null  and maccode != '' ">MACCODE=#{maccode} ,</if>
+            <if test="userid != null  and userid != '' ">USERID=#{userid} ,</if>
+            <if test="authmode != null  and authmode != '' ">AUTHMODE=#{authmode} ,</if>
+            <if test="status != null  and status != '' ">STATUS=#{status} ,</if>
+            <if test="validtime != null ">VALIDTIME=#{validtime} ,</if>
+            <if test="ipaddress != null  and ipaddress != '' ">IPADDRESS=#{ipaddress} ,</if>
+            <if test="operatorid != null ">OPERATORID=#{operatorid} ,</if>
+            <if test="startdate != null ">STARTDATE=#{startdate} ,</if>
+            <if test="enddate != null ">ENDDATE=#{enddate} ,</if>
+            <if test="partid != null ">PARTID=#{partid} ,</if>
+            <if test="operatorname != null  and operatorname != '' ">OPERATORNAME=#{operatorname} ,</if>
+            <if test="password != null  and password != '' ">PASSWORD=#{password} ,</if>
+            <if test="oldPassword != null  and oldPassword != '' ">OLD_PASSWORD=#{oldPassword} ,</if>
+        </trim>
+    </sql>
+    <select id="queryPager" parameterType="map" resultMap="SYSTEMLISTDTO_ALL">
+        SELECT
+        S.ID ,
+        S.SYSTEM_NAME,
+        S.SYSTEM_NO
+        FROM
+        COMM_SYSTEM_LIST S
+        LEFT JOIN COMM_SYSPIC_LIST K ON
+        (S.SYSTEM_NO = K.SYSTEM_NO)
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="userid != null and userid != '' ">k.JOBID_RESPONSIBLE = #{userid} AND</if>
+        </trim>
+    </select>
+    <select id="queryAllPager" parameterType="map" resultMap="SYSTEMLISTDTO_ALL">
+        SELECT
+        OPERATORID id,
+        OPERATORNAME NAME_RESPONSIBLE,
+        USERID JOBID_RESPONSIBLE
+        FROM
+        COMM_SECOND_OPERATOR
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="jobidResponsible != null and jobidResponsible != '' ">USERID = #{jobidResponsible} AND</if>
+            <if test="nameResponsible != null and nameResponsible != '' ">OPERATORNAME = #{nameResponsible} AND</if>
+        </trim>
+    </select>
+    <update id="resetUserScodPwd" parameterType="map">
+        UPDATE
+        COMM_SECOND_OPERATOR
+        SET PASSWORD = '77e2cf2ace99b9868208726ea06a01f6790ff3e4a07bf1b506fad4490d1522bb'
+        WHERE OPERATORID = #{id}
+    </update>
+
+    <select id="selectverifyCode" parameterType="map" resultType="string">
+        SELECT VERIFY_CODE from COMM_SECOND_OPERATOR WHERE USERID = 'sysadmin'
+    </select>
+
+    <update id="clossverifyCode" parameterType="map" >
+        UPDATE COMM_SECOND_OPERATOR
+        SET VERIFY_CODE = CASE
+        WHEN VERIFY_CODE IS NULL THEN 'Y'
+        WHEN VERIFY_CODE = 'N' THEN 'Y'
+        WHEN VERIFY_CODE = 'Y' THEN 'N'
+        ELSE VERIFY_CODE
+        END
+        where USERID = #{userid}
+    </update>
+
+    <select id="firstEnter" parameterType="map" resultType="com.work.ppm.application.model.systemmanager.CommOperator">
+        SELECT
+        <include refid="sql_flied"/>
+        FROM COMM_SECOND_OPERATOR
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="userid != null and userid != '' ">USERID = #{userid} and</if>
+        </trim>
+    </select>
+
+    <insert id="setPassword" parameterType="map">
+        INSERT INTO COMM_SECOND_OPERATOR(
+        <trim suffixOverrides=",">
+            OPERATORID,
+            <if test="userid != null  and userid != '' ">USERID ,</if>
+            <if test="operatorname != null  and operatorname != '' ">OPERATORNAME ,</if>
+            <if test="password != null  and password != '' ">PASSWORD ,</if>
+            STATUS,
+            EMAIL,
+            <if test="lastlogin != null  ">LASTLOGIN ,</if>
+            <if test="invaldate != null  ">INVALDATE ,</if>
+
+        </trim>
+        )
+        VALUES(
+        <trim suffixOverrides=",">
+            SEQ_COMM_OPERATOR.NEXTVAL,
+            <if test="userid != null  and userid != '' ">#{userid} ,</if>
+            <if test="operatorname != null  and operatorname != '' ">#{operatorname} ,</if>
+            <if test="password != null  and password != '' ">#{password} ,</if>
+            'running',
+            #{userid} || '@work.cn' ,
+            <if test="lastlogin != null  ">#{lastlogin} ,</if>
+            <if test="invaldate != null  ">#{invaldate} ,</if>
+        </trim>
+        )
+    </insert>
+
+    <select id="verifyCodeAndPassword" parameterType="String"
+            resultType="com.work.ppm.application.model.systemmanager.CommOperator">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM COMM_SECOND_OPERATOR
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="userid != null and userid != '' ">USERID = #{userid} and</if>
+        </trim>
+    </select>
+
+    <update id="changePassword" parameterType="map">
+        update COMM_SECOND_OPERATOR
+        <include refid="update_pojo_sql"/>
+        WHERE userid=#{userid}
+    </update>
+
+    <sql id="ecdhe_pojo_sql">
+        S.id,
+        S.SYS_NAME,
+        S.PSD,
+        S.RULES_TORF,
+        S.INVALDATE,
+        S.VALIDTIME,
+        S.RESPONSIBLE_NAME,
+        S.RESPONSIBLE_JOBID,
+        S.SYSTEM_NO,
+        K.PSD_KEY
+    </sql>
+    <select id="ecdhefirst" parameterType="map" resultType="com.work.ppm.application.model.rdmanager.CommSysPwDto">
+        SELECT
+        <include refid="ecdhe_pojo_sql"/>
+        FROM COMM_SYS_PWD S LEFT JOIN COMM_SYTPSD_KEY K ON (S.ID = K.ID)
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="userid != null and userid != '' ">RESPONSIBLE_JOBID = #{userid} and</if>
+            <if test="systemNo != null and systemNo != '' ">SYSTEM_NO = #{systemNo} and</if>
+        </trim>
+    </select>
+
+    <select id="sm4SysPsd" parameterType="map" resultType="com.work.ppm.application.model.rdmanager.CommSysPwDto">
+        SELECT
+        t.id, t.PSD , t.VALIDTIME , k.PSD_KEY
+        FROM
+        COMM_SYS_PWD t
+        LEFT JOIN COMM_SYTPSD_KEY k ON
+        (t.id = k.id)
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="id != null and id != '' ">T.ID = #{id} and</if>
+        </trim>
+    </select>
+
+    <delete id="deleteSysList" parameterType="list">
+        DELETE
+        FROM
+        COMM_SYS_PWD
+        WHERE ID IN
+        <foreach collection="list" item="item" open="(" close=")" separator="," index="index">
+            #{item}
+        </foreach>
+    </delete>
+
+    <delete id="deleteSytpsdKey" parameterType="list">
+        DELETE
+        FROM
+        COMM_SYTPSD_KEY
+        WHERE ID IN
+        <foreach collection="list" item="item" open="(" close=")" separator="," index="index">
+            #{item}
+        </foreach>
+    </delete>
+
+    <insert id="addSysPsd" parameterType="map">
+        INSERT INTO COMM_SYS_PWD(
+        <trim suffixOverrides=",">
+            <if test="id != null  and id != '' ">ID ,</if>
+            <if test="sysName != null  and sysName != '' ">SYS_NAME ,</if>
+            <if test="psd != null  and psd != '' ">PSD ,</if>
+            <if test="rulesTorf != null  and rulesTorf != '' ">RULES_TORF ,</if>
+            <if test="invaldate != null  ">INVALDATE ,</if>
+            <if test="validtime != null  ">VALIDTIME ,</if>
+            <if test="responsibleName != null  and responsibleName != '' ">
+                RESPONSIBLE_NAME ,
+            </if>
+            <if test="responsibleJobid != null and responsibleJobid != ''  ">
+                RESPONSIBLE_JOBID ,
+            </if>
+            <if test="systemNo != null  and systemNo != '' ">SYSTEM_NO ,</if>
+
+        </trim>
+        )
+        VALUES(
+        <trim suffixOverrides=",">
+            <if test="id != null  and id != '' ">#{id} ,</if>
+            <if test="sysName != null  and sysName != '' ">#{sysName} ,</if>
+            <if test="psd != null  and psd != '' ">#{psd} ,</if>
+            <if test="rulesTorf != null  and rulesTorf != '' ">#{rulesTorf} ,</if>
+            <if test="invaldate != null  ">#{invaldate} ,</if>
+            <if test="validtime != null  ">#{validtime} ,</if>
+            <if test="responsibleName != null  and responsibleName != '' ">
+                #{responsibleName} ,
+            </if>
+            <if test="responsibleJobid != null and responsibleJobid != ''  ">
+                #{responsibleJobid} ,
+            </if>
+            <if test="systemNo != null  and systemNo != '' ">#{systemNo} ,</if>
+
+        </trim>
+        )
+    </insert>
+
+    <insert id="addPsdKey" parameterType="map">
+        INSERT INTO COMM_SYTPSD_KEY(
+        <trim suffixOverrides=",">
+            <if test="id != null  and id != '' ">ID ,</if>
+            <if test="psdKey != null  and psdKey != '' ">PSD_KEY ,</if>
+        </trim>
+        )
+        VALUES(
+        <trim suffixOverrides=",">
+            <if test="id != null  and id != '' ">#{id} ,</if>
+            <if test="psdKey != null  and psdKey != '' ">#{psdKey} ,</if>
+        </trim>
+        )
+    </insert>
+
+    <update id="updataSysPsd" parameterType="map">
+        update COMM_SYS_PWD
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="id != null ">ID=#{id} ,</if>
+            <if test="sysName != null  and sysName != '' ">SYS_NAME =#{sysName} ,</if>
+            <if test="psd != null  and psd != '' ">PSD =#{psd} ,</if>
+            <if test="rulesTorf != null  and rulesTorf != '' ">RULES_TORF = #{rulesTorf} ,</if>
+            <if test="invaldate != null  ">INVALDATE=#{invaldate} ,</if>
+        </trim>
+        where ID = #{id}
+    </update>
+
+</mapper>

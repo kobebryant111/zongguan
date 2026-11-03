@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:ywwb905 2022-10-8 -->
+<!--  加班开始时间配置 查询脚本 -->
+<mapper namespace="com.work.ppm.application.model.integratedmanager.FaceDeviceName">
+	 <resultMap type="faceDeviceName" id="FACEDEVICENAME_ALL">
+        <result property="id" column="ID" />
+		<result property="name" column="NAME" />
+		<result property="type" column="TYPE" />
+		<result property="deviceip" column="DEVICEIP" />
+     </resultMap>
+
+     <!-- 所有字段名称 -->
+    <sql id="sql_flied_all">
+        ID,
+		DEVICEIP,
+			NAME,
+			TYPE
+    </sql>
+    <sql id="sql_select_condition">
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="id != null " > ID = #{id} AND </if>
+				<if test="deviceip != null " > DEVICEIP = #{deviceip} AND </if>
+				<if test="name != null " > NAME = #{name} AND </if>
+				<if test="type != null " > TYPE = #{type} AND </if>
+        </trim>
+    </sql>
+
+    <!-- 新增  2022-10-08 ywwb905  -->
+    <insert id="addPojo" parameterType="faceDeviceName">
+        INSERT INTO FACE_DEVICE_NAME (
+        <trim suffixOverrides=",">
+         <if test="id != null " > ID , </if>
+				<if test="deviceip != null " > DEVICEIP , </if>
+				<if test="name != null " > NAME , </if>
+				<if test="type != null " > TYPE , </if>
+          </trim>
+        )
+        VALUES(
+        <trim suffixOverrides=",">
+         <if test="id != null " > #{id} , </if>
+				<if test="deviceip != null " > #{deviceip} , </if>
+				<if test="name != null " > #{name} , </if>
+				<if test="type != null " > #{type} , </if>
+        </trim>
+        )
+    </insert>
+
+    <!--通过id查询  ywwb905 2022-10-08 -->
+    <select id="queryDetail" parameterType="faceDeviceName" resultMap="FACEDEVICENAME_ALL">
+        SELECT
+        <include refid="sql_flied_all" />
+        FROM FACE_DEVICE_NAME
+        WHERE ID = #{id}
+    </select>
+
+     <!--查询集合  ywwb905 2022-10-08 -->
+    <select id="getList" parameterType="faceDeviceName" resultMap="FACEDEVICENAME_ALL">
+        SELECT
+        <include refid="sql_flied_all" />
+        FROM FACE_DEVICE_NAME
+        <include refid="sql_select_condition" />
+    </select>
+    <!-- update sql -->
+    <sql id="update_pojo_sql">
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="id != null " > ID=#{id} , </if>
+			<if test="name != null " > NAME=#{name} , </if>
+			<if test="deviceip != null " > DEVICEIP=#{deviceip} , </if>
+			<if test="type != null " > TYPE=#{type} , </if>
+        </trim>
+    </sql>
+
+    <!--通过id编辑 ywwb905 2022-10-08 -->
+    <update id="updatePojo" parameterType="faceDeviceName">
+        UPDATE
+        FACE_DEVICE_NAME
+        <include refid="update_pojo_sql" />
+        WHERE ID = #{id}
+    </update>
+
+
+    <!--通过id批量删除  ywwb905 2022-10-8 -->
+    <delete id="deleteById" parameterType="faceDeviceName">
+        DELETE
+        FROM
+        FACE_DEVICE_NAME
+        WHERE ID = #{id}
+    </delete>
+
+</mapper>

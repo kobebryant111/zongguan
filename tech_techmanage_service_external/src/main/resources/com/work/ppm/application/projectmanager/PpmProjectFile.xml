@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k4038 2021-11-03 -->
+<mapper namespace="com.work.ppm.application.model.projectmanager.PpmProjectFile">
+	 <resultMap type="ppmProjectFile" id="PPMPROJECTFILE_ALL">
+        <result property="id" column="ID" />
+		<result property="projectno" column="PROJECTNO" />
+		<result property="userid" column="USERID" />
+		<result property="apply" column="APPLY" />
+		<result property="deptno" column="DEPTNO" />
+		<result property="reviewtime" column="REVIEWTIME" />
+		<result property="operatetype" column="OPERATETYPE" />
+		<result property="planonline" column="PLANONLINE" />
+		<result property="projectname" column="PROJECTNAME" />
+		<result property="onlineno" column="ONLINENO" />
+		<result property="sysno" column="SYSNO" />
+		<result property="busiuserid" column="BUSIUSERID" />
+		<result property="busideptno" column="BUSIDEPTNO" />
+		<result property="tectdeptno" column="TECTDEPTNO" />
+		<result property="tecuserid" column="TECUSERID" />
+		<result property="isdel" column="ISDEL" />
+		<result property="createtime" column="CREATETIME" />
+		<result property="creators" column="CREATORS" />
+		<result property="lastmodtime" column="LASTMODTIME" />
+		<result property="lastmoduser" column="LASTMODUSER" />
+		
+     </resultMap>
+
+     <!-- 所有字段名称 -->
+        <sql id="sql_flied_all">
+        	ID,
+			PROJECTNO,
+			USERID,
+			APPLY,
+			DEPTNO,
+			REVIEWTIME,
+			OPERATETYPE,
+			PLANONLINE,
+			PROJECTNAME,
+			ONLINENO,
+			SYSNO,
+			BUSIUSERID,
+			BUSIDEPTNO,
+			TECTDEPTNO,
+			TECUSERID,
+			ISDEL,
+			CREATETIME,
+			CREATORS,
+			LASTMODTIME,
+			LASTMODUSER
+        </sql>
+        <sql id="sql_select_condition">
+            <trim prefix="WHERE" suffixOverrides="AND">
+                <if test="id != null " > ID = #{id} AND </if>
+				<if test="projectno != null  and projectno != '' " > PROJECTNO = #{projectno} AND </if>
+				<if test="userid != null  and userid != '' " > USERID = #{userid} AND </if>
+				<if test="apply != null " > APPLY = #{apply} AND </if>
+				<if test="deptno != null  and deptno != '' " > DEPTNO = #{deptno} AND </if>
+				<if test="reviewtime != null " > REVIEWTIME = #{reviewtime} AND </if>
+				<if test="operatetype != null  and operatetype != '' " > OPERATETYPE = #{operatetype} AND </if>
+				<if test="planonline != null " > PLANONLINE = #{planonline} AND </if>
+				<if test="projectname != null  and projectname != '' " > PROJECTNAME = #{projectname} AND </if>
+				<if test="onlineno != null  and onlineno != '' " > ONLINENO = #{onlineno} AND </if>
+				<if test="sysno != null  and sysno != '' " > SYSNO = #{sysno} AND </if>
+				<if test="busiuserid != null  and busiuserid != '' " > BUSIUSERID = #{busiuserid} AND </if>
+				<if test="busideptno != null  and busideptno != '' " > BUSIDEPTNO = #{busideptno} AND </if>
+				<if test="tectdeptno != null  and tectdeptno != '' " > TECTDEPTNO = #{tectdeptno} AND </if>
+				<if test="tecuserid != null  and tecuserid != '' " > TECUSERID = #{tecuserid} AND </if>
+				<if test="isdel != null " > ISDEL = #{isdel} AND </if>
+				<if test="createtime != null " > CREATETIME = #{createtime} AND </if>
+				<if test="creators != null  and creators != '' " > CREATORS = #{creators} AND </if>
+				<if test="lastmodtime != null " > LASTMODTIME = #{lastmodtime} AND </if>
+				<if test="lastmoduser != null  and lastmoduser != '' " > LASTMODUSER = #{lastmoduser} AND </if>
+				
+            </trim>
+        </sql>
+    	<!-- 查询分页  2021-11-03 k4038  -->
+        <select id="queryPagerList" parameterType="map" resultMap="PPMPROJECTFILE_ALL">
+        	SELECT
+            <include refid="sql_flied_all" />
+            FROM PPM_PROJECT_FILE
+            <include refid="sql_select_condition" />
+        </select>
+
+        <!-- 新增  2021-11-03 k4038  -->
+        <insert id="addPojo" parameterType="ppmProjectFile">
+    		INSERT INTO PPM_PROJECT_FILE (
+    		<trim suffixOverrides=",">
+    		 <if test="id != null " > ID , </if>
+				<if test="projectno != null  and projectno != '' " > PROJECTNO , </if>
+				<if test="userid != null  and userid != '' " > USERID , </if>
+				<if test="apply != null " > APPLY , </if>
+				<if test="deptno != null  and deptno != '' " > DEPTNO , </if>
+				<if test="reviewtime != null " > REVIEWTIME , </if>
+				<if test="operatetype != null  and operatetype != '' " > OPERATETYPE , </if>
+				<if test="planonline != null " > PLANONLINE , </if>
+				<if test="projectname != null  and projectname != '' " > PROJECTNAME , </if>
+				<if test="onlineno != null  and onlineno != '' " > ONLINENO , </if>
+				<if test="sysno != null  and sysno != '' " > SYSNO , </if>
+				<if test="busiuserid != null  and busiuserid != '' " > BUSIUSERID , </if>
+				<if test="busideptno != null  and busideptno != '' " > BUSIDEPTNO , </if>
+				<if test="tectdeptno != null  and tectdeptno != '' " > TECTDEPTNO , </if>
+				<if test="tecuserid != null  and tecuserid != '' " > TECUSERID , </if>
+				<if test="isdel != null " > ISDEL , </if>
+				<if test="createtime != null " > CREATETIME , </if>
+				<if test="creators != null  and creators != '' " > CREATORS , </if>
+				<if test="lastmodtime != null " > LASTMODTIME , </if>
+				<if test="lastmoduser != null  and lastmoduser != '' " > LASTMODUSER , </if>
+				
+              </trim>
+    		)
+    		VALUES(
+    		<trim suffixOverrides=",">
+    		 <if test="id != null " > #{id} , </if>
+				<if test="projectno != null  and projectno != '' " > #{projectno} , </if>
+				<if test="userid != null  and userid != '' " > #{userid} , </if>
+				<if test="apply != null " > #{apply} , </if>
+				<if test="deptno != null  and deptno != '' " > #{deptno} , </if>
+				<if test="reviewtime != null " > #{reviewtime} , </if>
+				<if test="operatetype != null  and operatetype != '' " > #{operatetype} , </if>
+				<if test="planonline != null " > #{planonline} , </if>
+				<if test="projectname != null  and projectname != '' " > #{projectname} , </if>
+				<if test="onlineno != null  and onlineno != '' " > #{onlineno} , </if>
+				<if test="sysno != null  and sysno != '' " > #{sysno} , </if>
+				<if test="busiuserid != null  and busiuserid != '' " > #{busiuserid} , </if>
+				<if test="busideptno != null  and busideptno != '' " > #{busideptno} , </if>
+				<if test="tectdeptno != null  and tectdeptno != '' " > #{tectdeptno} , </if>
+				<if test="tecuserid != null  and tecuserid != '' " > #{tecuserid} , </if>
+				<if test="isdel != null " > #{isdel} , </if>
+				<if test="createtime != null " > #{createtime} , </if>
+				<if test="creators != null  and creators != '' " > #{creators} , </if>
+				<if test="lastmodtime != null " > #{lastmodtime} , </if>
+				<if test="lastmoduser != null  and lastmoduser != '' " > #{lastmoduser} , </if>
+				
+            </trim>
+    		)
+        </insert>
+
+        <!--通过id查询  k4038 2021-11-03 -->
+        <select id="queryDetail" parameterType="ppmProjectFile" resultMap="PPMPROJECTFILE_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_PROJECT_FILE  WHERE ID=#{id}
+        </select>
+
+         <!--查询集合  k4038 2021-11-03 -->
+        <select id="getList" parameterType="ppmProjectFile" resultMap="PPMPROJECTFILE_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_PROJECT_FILE
+        	<include refid="sql_select_condition" />
+        </select>
+        <!-- update sql -->
+        <sql id="update_pojo_sql">
+        	<trim prefix="SET" suffixOverrides=",">
+        		<if test="id != null " > ID=#{id} , </if>
+				<if test="projectno != null  and projectno != '' " > PROJECTNO=#{projectno} , </if>
+				<if test="userid != null  and userid != '' " > USERID=#{userid} , </if>
+				<if test="apply != null " > APPLY=#{apply} , </if>
+				<if test="deptno != null  and deptno != '' " > DEPTNO=#{deptno} , </if>
+				<if test="reviewtime != null " > REVIEWTIME=#{reviewtime} , </if>
+				<if test="operatetype != null  and operatetype != '' " > OPERATETYPE=#{operatetype} , </if>
+				<if test="planonline != null " > PLANONLINE=#{planonline} , </if>
+				<if test="projectname != null  and projectname != '' " > PROJECTNAME=#{projectname} , </if>
+				<if test="onlineno != null  and onlineno != '' " > ONLINENO=#{onlineno} , </if>
+				<if test="sysno != null  and sysno != '' " > SYSNO=#{sysno} , </if>
+				<if test="busiuserid != null  and busiuserid != '' " > BUSIUSERID=#{busiuserid} , </if>
+				<if test="busideptno != null  and busideptno != '' " > BUSIDEPTNO=#{busideptno} , </if>
+				<if test="tectdeptno != null  and tectdeptno != '' " > TECTDEPTNO=#{tectdeptno} , </if>
+				<if test="tecuserid != null  and tecuserid != '' " > TECUSERID=#{tecuserid} , </if>
+				<if test="isdel != null " > ISDEL=#{isdel} , </if>
+				<if test="createtime != null " > CREATETIME=#{createtime} , </if>
+				<if test="creators != null  and creators != '' " > CREATORS=#{creators} , </if>
+				<if test="lastmodtime != null " > LASTMODTIME=#{lastmodtime} , </if>
+				<if test="lastmoduser != null  and lastmoduser != '' " > LASTMODUSER=#{lastmoduser} , </if>
+				
+            </trim>
+        </sql>
+
+        <!--通过id编辑 k4038 2021-11-03 -->
+    	<update id="updatePojo" parameterType="ppmProjectFile">
+        	UPDATE
+        	PPM_PROJECT_FILE
+        	<include refid="update_pojo_sql" />
+        	WHERE ID=#{id}
+        </update>
+
+        <!--通过id批量删除  k4038 2021-11-03 -->
+        <delete id="deleteById" parameterType="ppmProjectFile">
+        	DELETE
+        	FROM
+        	PPM_PROJECT_FILE
+        	WHERE ID = #{id}
+        </delete>
+
+</mapper>

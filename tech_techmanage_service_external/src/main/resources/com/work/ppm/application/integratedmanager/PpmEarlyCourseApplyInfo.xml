@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:ywwb905 2022-10-8 -->
+<!--  提前入场申请查询脚本 -->
+<mapper namespace="com.work.ppm.application.model.integratedmanager.PpmEarlyCourseApplyInfo">
+	 <resultMap type="ppmEarlyCourseApplyInfo" id="PPMEARLYCOURSEAPPLYINFO_ALL">
+        <result property="id" column="ID" />
+        <result property="pid" column="PID" />
+		<result property="instanceid" column="INSTANCEID" />
+		<result property="interviewId" column="INTERVIEW_ID" />
+		<result property="userName" column="USER_NAME" />
+		<result property="cardNo" column="CARD_NO" />
+		<result property="earlyEntryTime" column="EARLY_ENTRY_TIME" />
+		<result property="isComplement" column="IS_COMPLEMENT" />
+		<result property="campaignTime" column="CAMPAIGN_TIME" />
+		<result property="createdTime" column="CREATED_TIME" />
+		<result property="createdBy" column="CREATED_BY" />
+		<result property="modifiedTime" column="MODIFIED_TIME" />
+		<result property="modifiedBy" column="MODIFIED_BY" />
+     </resultMap>
+	<resultMap id="PPMEARLYCOURSEAPPLYINFO_ALL_EXT" type="ppmEarlyCourseApplyInfoView" extends="PPMEARLYCOURSEAPPLYINFO_ALL">
+		<result property="applyer" column="APPLYER" />
+		<result property="applyerName" column="APPLYER_NAME" />
+		<result property="deptNo" column="DEPT_NO" />
+		<result property="deptNoQue" column="DEPT_NO_QUE" />
+		<result property="deptName" column="DEPT_NAME" />
+		<result property="position" column="POSITION" />
+		<result property="wbsId" column="WBS_ID" />
+		<result property="outSourceName" column="OUT_SOURCE_NAME" />
+		<result property="workyears" column="WORK_YEARS" />
+		<result property="suggestprice" column="SUGGEST_PRICE" />
+		<result property="deptId" column="DEPT_ID" />
+		<result property="campaignTimeVal" column="CAMPAIGN_TIME_VAL" />
+		<result property="applyerValue" column="APPLYER_VALUE" />
+		<result property="cardNoDel" column="CARD_NO_DEL" />
+     </resultMap>
+	 
+     <!-- 所有字段名称 -->
+    <sql id="sql_flied_all">
+        ID,
+        PID,
+		INSTANCEID,
+        INTERVIEW_ID,
+        USER_NAME,
+        CARD_NO,
+        EARLY_ENTRY_TIME,
+        IS_COMPLEMENT,
+        CAMPAIGN_TIME,
+        CREATED_TIME,
+        CREATED_BY,
+        MODIFIED_TIME,
+        MODIFIED_BY
+    </sql>
+    <sql id="sql_select_condition">
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="id != null " > ID = #{id} AND </if>
+            <if test="pid != null " > PID = #{pid} AND </if>
+			<if test="instanceid != null " > INSTANCEID = #{instanceid} AND </if>
+            <if test="interviewId != null " > INTERVIEW_ID = #{interviewId} AND </if>
+            <if test="userName != null " > USER_NAME = #{userName} AND </if>
+            <if test="cardNo != null " > CARD_NO = #{cardNo} AND </if>
+            <if test="earlyEntryTime != null " > EARLY_ENTRY_TIME = #{earlyEntryTime} AND </if>
+            <if test="isComplement != null " > IS_COMPLEMENT = #{isComplement} AND </if>
+            <if test="campaignTime != null " > CAMPAIGN_TIME = #{campaignTime} AND </if>
+            <if test="createdTime != null " > CREATED_TIME = #{createdTime} AND </if>
+            <if test="createdBy != null " > CREATED_BY = #{createdBy} AND </if>
+            <if test="modifiedTime != null " > MODIFIED_TIME = #{modifiedTime} AND </if>
+            <if test="modifiedBy != null " > MODIFIED_BY = #{modifiedBy} AND </if>
+        </trim>
+    </sql>
+
+    <!-- 新增  2022-10-08 ywwb905  -->
+    <insert id="addPojo" parameterType="ppmEarlyCourseApplyInfo">
+        INSERT INTO PPM_EARLY_COURSE_APPLY_INFO (
+        <trim suffixOverrides=",">
+			<if test="id != null " > ID , </if>
+			<if test="pid != null " > PID , </if>
+			<if test="instanceid != null " > INSTANCEID , </if>
+			<if test="interviewId != null " > INTERVIEW_ID , </if>
+			<if test="userName != null " > USER_NAME , </if>
+			<if test="cardNo != null " > CARD_NO , </if>
+			<if test="earlyEntryTime != null " > EARLY_ENTRY_TIME , </if>
+			<if test="isComplement != null " > IS_COMPLEMENT , </if>
+			<if test="campaignTime != null " > CAMPAIGN_TIME , </if>
+			<if test="createdTime != null " > CREATED_TIME , </if>
+			<if test="createdBy != null " > CREATED_BY , </if>
+			<if test="modifiedTime != null " > MODIFIED_TIME , </if>
+			<if test="modifiedBy != null " > MODIFIED_BY , </if>
+        </trim>
+        )
+        VALUES(
+        <trim suffixOverrides=",">
+			<if test="id != null " > #{id} , </if>
+			<if test="pid != null " > #{pid} , </if>
+			<if test="instanceid != null " > #{instanceid} , </if>
+			<if test="interviewId != null " > #{interviewId} , </if>
+			<if test="userName != null " > #{userName} , </if>
+			<if test="cardNo != null " > #{cardNo} , </if>
+			<if test="earlyEntryTime != null " > #{earlyEntryTime} , </if>
+			<if test="isComplement != null " > #{isComplement} , </if>
+			<if test="campaignTime != null " > #{campaignTime} , </if>
+			<if test="createdTime != null " > #{createdTime} , </if>
+			<if test="createdBy != null " > #{createdBy} , </if>
+			<if test="modifiedTime != null " > #{modifiedTime} , </if>
+			<if test="modifiedBy != null " > #{modifiedBy} , </if>
+        </trim>
+        )
+    </insert>
+
+    <!--通过id查询  ywwb905 2022-10-08 -->
+    <select id="queryDetail" parameterType="ppmEarlyCourseApplyInfo" resultMap="PPMEARLYCOURSEAPPLYINFO_ALL">
+        SELECT
+        <include refid="sql_flied_all" />
+        FROM PPM_EARLY_COURSE_APPLY_INFO
+        WHERE ID = #{id}
+    </select>
+	
+	<!--通过id查询  ywwb905 2022-10-08 -->
+    <select id="queryDetailCert" parameterType="ppmEarlyCourseApplyInfo" resultMap="PPMEARLYCOURSEAPPLYINFO_ALL">
+        SELECT
+        <include refid="sql_flied_all" />
+        FROM PPM_EARLY_COURSE_APPLY_INFO
+        WHERE CARD_NO = #{cardNo}
+    </select>
+
+     <!--查询集合  ywwb905 2022-10-08 -->
+    <select id="getList" parameterType="ppmEarlyCourseApplyInfo" resultMap="PPMEARLYCOURSEAPPLYINFO_ALL">
+        SELECT
+        <include refid="sql_flied_all" />
+        FROM PPM_EARLY_COURSE_APPLY_INFO
+        <include refid="sql_select_condition" />
+    </select>
+    <!-- update sql -->
+    <sql id="update_pojo_sql">
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="pid != null " > PID = #{pid} , </if>
+			<if test="instanceid != null " > INSTANCEID = #{instanceid} , </if>
+            <if test="interviewId != null " > INTERVIEW_ID = #{interviewId} , </if>
+            <if test="userName != null " > USER_NAME = #{userName} , </if>
+            <if test="cardNo != null " > CARD_NO = #{cardNo} , </if>
+            <if test="earlyEntryTime != null " > EARLY_ENTRY_TIME = #{earlyEntryTime} , </if>
+            <if test="isComplement != null " > IS_COMPLEMENT = #{isComplement} , </if>
+            <if test="campaignTime != null " > CAMPAIGN_TIME = #{campaignTime} , </if>
+            <if test="createdTime != null " > CREATED_TIME = #{createdTime} , </if>
+            <if test="createdBy != null " > CREATED_BY = #{createdBy} , </if>
+            <if test="modifiedTime != null " > MODIFIED_TIME = #{modifiedTime} , </if>
+            <if test="modifiedBy != null " > MODIFIED_BY = #{modifiedBy} , </if>
+        </trim>
+    </sql>
+
+    <!--通过id编辑 ywwb905 2022-10-08 -->
+    <update id="updatePojo" parameterType="ppmEarlyCourseApplyInfo">
+        UPDATE
+        PPM_EARLY_COURSE_APPLY_INFO
+        <include refid="update_pojo_sql" />
+        WHERE ID = #{id}
+    </update>
+
+
+    <!--通过id批量删除  ywwb905 2022-10-8 -->
+    <delete id="deleteById" parameterType="ppmEarlyCourseApplyInfo">
+        DELETE
+        FROM
+        PPM_EARLY_COURSE_APPLY_INFO
+        WHERE ID = #{id}
+    </delete>
+	
+	<delete id="deleteByInstanceId" parameterType="ppmEarlyCourseApplyInfo">
+        DELETE
+        FROM
+        PPM_EARLY_COURSE_APPLY_INFO
+        WHERE INSTANCEID=#{instanceid}
+    </delete>
+	
+	<delete id="deleteInCardNo" parameterType="ppmEarlyCourseApplyInfo">
+        DELETE
+        FROM
+        PPM_EARLY_COURSE_APPLY_INFO
+        WHERE CARD_NO NOT IN (${cardNoDel}) AND INSTANCEID=#{instanceid}
+    </delete>
+	
+	<!--通过id查询  ywwb905 2022-10-10 -->
+	<select id="queryBaseInfo" parameterType="ppmEarlyCourseApplyInfoView" resultMap="PPMEARLYCOURSEAPPLYINFO_ALL_EXT">
+        SELECT 
+			AI.ID,
+			AI.PID,
+			AI.INSTANCEID,
+			AI.INTERVIEW_ID,
+			AI.USER_NAME,
+			AI.EARLY_ENTRY_TIME,
+			AI.IS_COMPLEMENT,
+			AI.CAMPAIGN_TIME,
+			AI.CREATED_TIME,
+			AI.CREATED_BY,
+			AI.MODIFIED_TIME,
+			AI.MODIFIED_BY,
+			CA.APPLYER,
+			CE.EMPNAME APPLYER_NAME,
+			CA.DEPT_NO,
+			CD.LOCATION DEPT_NAME,
+			II.WBSID WBS_ID,
+			OI.OUTSOURCNAME OUT_SOURCE_NAME,
+			II.WORKYEARS WORK_YEARS,
+			II.SUGGESTPRICE SUGGEST_PRICE,
+			DE.DICTNAME POSITION
+		FROM PPM_EARLY_COURSE_APPLY_INFO AI
+			LEFT JOIN PPM_EARLY_COURSE_APPLY CA ON CA.ID = AI.PID
+			LEFT JOIN PPM_INTERVIEWEE_OVERINFO II ON II.ID = AI.INTERVIEW_ID
+			LEFT JOIN COMM_EMPLOYEE CE ON CA.APPLYER = CE.BADGE
+			LEFT JOIN COMM_DEPARTMENT CD ON CA.DEPT_NO = CD.DEPID
+			LEFT JOIN PPM_OUTSOURCING_INFO OI ON II.WBSID = OI.ID
+			LEFT JOIN EOS_DICT_ENTRY DE ON (II.POSITION = DE.DICTID AND DE.DICTTYPEID = 'RLWBXQLX')
+		WHERE AI.ID = #{id}
+    </select>
+	
+	<select id="queryBaseInfoList" parameterType="ppmEarlyCourseApplyInfoView" resultMap="PPMEARLYCOURSEAPPLYINFO_ALL_EXT">
+		SELECT 
+			AI.ID,
+			AI.PID,
+			AI.INSTANCEID,
+			AI.INTERVIEW_ID,
+			AI.USER_NAME,
+			AI.EARLY_ENTRY_TIME,
+			AI.IS_COMPLEMENT,
+			AI.CAMPAIGN_TIME,
+			AI.CREATED_TIME,
+			AI.CREATED_BY,
+			AI.MODIFIED_TIME,
+			AI.MODIFIED_BY,
+			AI.CARD_NO,
+			CA.APPLYER,
+			CE.EMPNAME APPLYER_NAME,
+			CA.DEPT_NO,
+			CD.LOCATION DEPT_NAME,
+			II.WBSID WBS_ID,
+			OI.OUTSOURCNAME OUT_SOURCE_NAME,
+			II.WORKYEARS WORK_YEARS,
+			II.SUGGESTPRICE SUGGEST_PRICE,
+			DE.DICTNAME POSITION
+		FROM PPM_EARLY_COURSE_APPLY_INFO AI
+			LEFT JOIN PPM_EARLY_COURSE_APPLY CA ON CA.ID = AI.PID
+			LEFT JOIN PPM_INTERVIEWEE_OVERINFO II ON II.ID = AI.INTERVIEW_ID
+			LEFT JOIN COMM_EMPLOYEE CE ON CA.APPLYER = CE.BADGE
+			LEFT JOIN COMM_DEPARTMENT CD ON CA.DEPT_NO = CD.DEPID
+			LEFT JOIN PPM_OUTSOURCING_INFO OI ON II.WBSID = OI.ID
+			LEFT JOIN EOS_DICT_ENTRY DE ON (II.POSITION = DE.DICTID AND DE.DICTTYPEID = 'RLWBXQLX')
+		<trim prefix="WHERE" suffixOverrides="AND">
+            <if test="userName != null and userName != '' ">AI.USER_NAME = #{userName} AND</if>
+            <if test="cardNo != null and cardNo != '' ">AI.CARD_NO = #{cardNo} AND</if>
+            <if test="isComplement != null and isComplement != '' ">AI.IS_COMPLEMENT = #{isComplement} AND</if>
+            <if test="deptNo != null and deptNo != '' ">CA.DEPT_NO = #{deptNo} AND</if>
+            <if test="deptNoQue != null and deptNoQue != '' ">CA.DEPT_NO = #{deptNoQue} AND</if>
+            <if test="wbsId != null and wbsId != '' ">II.WBSID = #{wbsId} AND</if>
+            <if test="instanceid != null and instanceid != '' ">AI.INSTANCEID = #{instanceid} AND</if>
+            <if test="pid != null and pid != '' ">AI.PID = #{pid} AND</if>
+			<if test="deptId != null  and deptId != '' " >CA.DEPTNO in (${deptId}) AND </if>
+			<if test="applyer != null and applyer != '' " > CA.APPLYER = #{applyer} AND </if>
+			<if test="applyerName != null and applyerName != '' " > CE.EMPNAME = #{applyerName} AND </if>
+			<if test="applyerValue != null and applyerValue != '' " > ( CE.EMPNAME = #{applyerValue} OR CA.APPLYER = #{applyerValue} ) AND</if>
+			<if test="campaignTimeVal != null and campaignTimeVal != '' " > TO_CHAR(AI.CAMPAIGN_TIME,'yyyy-MM-dd') &lt;= #{campaignTimeVal} AND </if>
+        </trim>
+		ORDER BY AI.ID DESC
+	</select>
+
+</mapper>

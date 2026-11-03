@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:task="http://www.springframework.org/schema/task"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.1.xsd
+       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+       http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-4.1.xsd">
+
+    <!--包扫描-->
+    <context:component-scan base-package="com.tansun">
+        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+    </context:component-scan>
+
+    <!--流程引擎配置 camunda begin-->
+    <bean id="processEngineConfiguration" class="com.tansun.wf.extend.config.MySpringProcessEngineConfiguration">
+        <!--反洗钱项目组使用ref="dataSource"会报找不到dataSource，所以改成jdbc连接-->
+        <property name="transactionManager" ref="transactionManager" />
+        <property name="databaseSchemaUpdate" value="false" />
+        <property name="jobExecutorActivate" value="${workflow.jobExecutorActivate:false}" />
+        <property name="tenantCheckEnabled" value="false" />
+        <property name="jobExecutorDeploymentAware" value="${workflow.jobExecutorDeploymentAware:true}" />
+        <!-- turn off metrics reporter -->
+        <property name="dbMetricsReporterActivate" value="false" />
+        <property name="idGenerator">
+            <bean class="org.camunda.bpm.engine.impl.persistence.StrongUuidGenerator" />
+        </property>
+        <property name="jdbcBatchProcessing" value="false"/>
+        <!--全局流程应用程序的事件监听器的插件-->
+        <property name="processEnginePlugins">
+            <list>
+                <ref bean="myParseListenerPlugin"></ref>
+            </list>
+        </property>
+        <property name="customSessionFactories">
+            <list>
+<!--                <bean class="com.tansun.wf.activiti.factory.ActHiTaskinstFactory"/>-->
+<!--                <bean class="com.tansun.wf.activiti.factory.ActRuTaskFactory"/>-->
+                <bean class="com.tansun.wf.activiti.factory.WfProcessConfigFactory"/>
+<!--                <bean class="com.tansun.wf.activiti.factory.WfClassifyFactory"/>-->
+                <bean class="com.tansun.wf.activiti.factory.WfClassifyPendFactory"/>
+<!--                <bean class="com.tansun.wf.activiti.factory.WfClassifyCompletedFactory"/>-->
+                <bean class="com.tansun.wf.activiti.factory.WfTaskExpandDataFactory"/>
+                <bean class="com.tansun.wf.activiti.factory.WfTaskExpandPlanFactory"/>
+                <bean class="com.tansun.wf.activiti.factory.WfHiTaskExpandDataFactory"/>
+                <bean class="com.tansun.wf.activiti.factory.WfLeaveTransferFactory"/>
+                <bean class="com.tansun.wf.activiti.factory.WfHiCarbonCopyFactory"/>
+                <bean class="com.tansun.wf.activiti.factory.WfTimerConfigFactory"/>
+                <bean class="com.tansun.wf.activiti.factory.WfIdempotentFactory"/>
+                <bean class="com.tansun.wf.activiti.factory.WfHiTaskPoolExecuteDataFactory"/>
+                <bean class="com.tansun.wf.extend.manager.factory.MyTaskEntityManagerSessionFactory"/>
+<!--                <bean class="com.tansun.wf.extend.manager.factory.MyDefaultHistoryManagerSessionFactory"/>-->
+<!--                <bean class="com.tansun.wf.extend.manager.factory.MyJobEntityManagerSessionFactory"/>-->
+<!--                <bean class="com.tansun.wf.extend.manager.factory.MyIdentityLinkEntityManagerSessionFactory"/>-->
+<!--                <bean class="com.tansun.wf.activiti.factory.HiIdentityLinkFactory"/>-->
+            </list>
+        </property>
+        <property name="bpmnParseFactory" ref="myBpmnParseFactory"></property>
+    </bean>
+
+    <bean id="myParseListenerPlugin" class="com.tansun.wf.activiti.listener.MyParseListenerPlugin"></bean>
+
+    <bean id="myParseListener" class="com.tansun.wf.activiti.listener.MyParseListener"></bean>
+
+    <bean id="globalTaskEventListener" class="com.tansun.wf.activiti.listener.GlobalTaskEventListener"></bean>
+    
+    <bean id="globalTaskCompletedListener" class="com.tansun.wf.activiti.listener.GlobalTaskCompletedListener"></bean>
+
+    <bean id="globalTaskDeleteListener" class="com.tansun.wf.activiti.listener.GlobalTaskDeleteListener"></bean>
+
+    <bean id="processEndListener" class="com.tansun.wf.activiti.listener.ProcessEndListener"></bean>
+
+    <bean id="excutionEndListener" class="com.tansun.wf.activiti.listener.ExcutionEndListener"></bean>
+    
+    <bean id="excutionStartListener" class="com.tansun.wf.activiti.listener.ExcutionStartListener"></bean>
+
+    <bean id="myBpmnParseFactory" class="com.tansun.wf.extend.behavior.factory.MyBpmnParseFactory"></bean>
+
+    <!--流程引擎-->
+    <bean id="processEngine"
+          class="org.camunda.bpm.engine.spring.container.ManagedProcessEngineFactoryBean">
+        <property name="processEngineConfiguration" ref="processEngineConfiguration" />
+    </bean>
+
+    <!--事务管理器，Activiti版本中，在WorkflowStarterAutoConfigure中有定义transactionManager-->
+<!--    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">-->
+<!--        <property name="dataSource" ref="dataSource" />-->
+<!--    </bean>-->
+
+    <!--注入camunda提供的服务-->
+    <bean id="repositoryService" factory-bean="processEngine" factory-method="getRepositoryService" />
+    <bean id="runtimeService" factory-bean="processEngine" factory-method="getRuntimeService" />
+    <bean id="taskService" factory-bean="processEngine" factory-method="getTaskService" />
+    <bean id="historyService" factory-bean="processEngine" factory-method="getHistoryService" />
+    <bean id="managementService" factory-bean="processEngine" factory-method="getManagementService" />
+    <bean id="identityService" factory-bean="processEngine" factory-method="getIdentityService" />
+    <!-- camunda-TODO -->
+    <bean id="formService" factory-bean="processEngine" factory-method="getFormService" />
+
+    <!--事务：定义在WorkflowStarterAutoConfigure中的EnableTransactionManagement-->
+<!--    <tx:annotation-driven transaction-manager="transactionManager"/>-->
+
+    <!-- camunda-TODO 暂时写死uuid，后续看怎么调整为动态的-->
+    <bean id="idGenerator" class="org.camunda.bpm.engine.impl.persistence.StrongUuidGenerator" />
+
+    <!-- camunda-TODO 暂时写死uuid，后续看怎么调整为动态的-->
+    <bean id="idGeneratorService" class="com.tansun.wf.extend.db.WfIdGeneratorService">
+        <!-- 主键生成器 数据库方式：db，uuid全球唯一主键：uuid -->
+        <property name="type" value="${id.generator:db}"/>
+    </bean>
+
+    <!-- 注入 WorkFlowClientService -->
+    <bean id="workFlowClientService" class="com.tansun.workflow.service.WorkFlowClientService">
+        <property name="workflowService" ref="workflowService"/>
+    </bean>
+
+    <bean id="editorServiceProxyService" class="com.tansun.wf.activiti.service.EditorServiceProxyService">
+        <property name="editorServiceBeanId" value="${editor.service.beanid:platformEditorService}"/>
+    </bean>
+
+    <!-- 注入规则引擎webservice 调用类 -->
+    <bean class="com.tansun.wf.decision.service.RuleService">
+        <property name="ruleOpen" value="${rule.open:false}"/>
+        <property name="ruleAddress" value="${rule.address:null}"/>
+        <property name="invokeType" value="${rule.invoke.type:http}"/>
+    </bean>
+
+    <bean class="com.tansun.wf.decision.service.InterfaceConfigParserService">
+        <property name="defaultUrl" value="${interface.address:null}"/>
+    </bean>
+
+    <bean id="httpEditorService" class="com.tansun.wf.activiti.service.HttpEditorService">
+        <property name="address" value="${editor.service.address:null}"/>
+        <property name="userAddress" value="${editor.service.user.address:null}"/>
+        <property name="roleAddress" value="${editor.service.role.address:null}"/>
+        <property name="orgAddress" value="${editor.service.org.address:null}"/>
+        <property name="deptAddress" value="${editor.service.dept.address:null}"/>
+        <property name="userOrgRoleAddress" value="${editor.service.userOrgRole.address:null}"/>
+    </bean>
+    
+    
+    <aop:aspectj-autoproxy />
+    <tx:advice id="txAdvice" transaction-manager="transactionManager">
+        <tx:attributes>
+            <tx:method name="*" propagation="REQUIRED"  rollback-for="java.lang.Throwable" />
+        </tx:attributes>
+    </tx:advice>
+    <aop:config>
+        <aop:advisor pointcut="execution(* com.tansun.workflow.api.IWorkflowService.*(..)) or execution(* com.tansun..service..*+.*(..)) " advice-ref="txAdvice" />
+    </aop:config>
+
+    
+    
+    <!-- platform 平台管理mybatis配置 -->
+<!--    <bean id="wfPlatformSqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">-->
+<!--        <property name="dataSource" ref="dataSource" />-->
+<!--        <property name="mapperLocations">-->
+<!--            <list>-->
+<!--                <value>classpath*:/platform/mappings/com/tansun/wf/platform/mapper/*Mapper.xml</value>-->
+<!--            </list>-->
+<!--        </property>-->
+<!--        <property name="databaseIdProvider" >-->
+<!--            <bean class="org.apache.ibatis.mapping.VendorDatabaseIdProvider">-->
+<!--                <property name="properties" >-->
+<!--                    <bean  class="org.springframework.beans.factory.config.PropertiesFactoryBean">-->
+<!--                        <property name="properties">-->
+<!--                            <props>-->
+<!--                                <prop key="SQL Server">mssql</prop>-->
+<!--                                <prop key="DB2">db2</prop>-->
+<!--                                <prop key="Oracle">oracle</prop>-->
+<!--                                <prop key="MySQL">mysql</prop>-->
+<!--                                <prop key="PostgreSQL">postgre</prop>-->
+<!--                            </props>-->
+<!--                        </property>-->
+<!--                    </bean>-->
+<!--                </property>-->
+<!--            </bean>-->
+<!--        </property>-->
+<!--        <property name="configLocation" value="classpath:spring/workflow-mybatis-config.xml"/>-->
+<!--    </bean>-->
+
+<!--    <bean name="wfPlatformMapperScannerConfigurer" class="org.mybatis.spring.mapper.MapperScannerConfigurer">-->
+<!--        <property name="basePackage" value="com.tansun.wf.platform.mapper" />-->
+<!--        <property name="sqlSessionFactoryBeanName" value="wfPlatformSqlSessionFactory" />-->
+<!--    </bean>-->
+
+    <bean class="com.tansun.wf.activiti.service.SendMailService">
+        <property name="emailHost" value="${mail.emailHost:null}"/>
+        <property name="emailPort" value="${mail.emailPort:null}"/>
+        <property name="emailUserName" value="${mail.emailUserName:null}"/>
+        <property name="emailPassword" value="${mail.emailPassword:null}"/>
+    </bean>
+
+    <bean id="httpServiceTaskDelegate" class="com.tansun.wf.decision.service.HttpServiceTaskDelegate">
+        <property name="address" value="${java.service.address:null}"/>
+    </bean>
+</beans>

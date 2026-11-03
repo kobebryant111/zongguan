@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.work.ppm.application.model.resourceplat.ResExpandItemParts">
+    <resultMap type="resExpandItemParts" id="RES_EXTEND_ITEM_PARTS">
+        <result property="id" column="ID" />
+        <result property="extendId" column="EXTENDID" />
+        <result property="extendItemId" column="EXTENDITEMID" />
+        <result property="category" column="CATEGORY" />
+        <result property="subCategory" column="SUBCATEGORY" />
+        <result property="resConfigId" column="RESCONFIGID" />
+        <result property="remark" column="REMARK" />
+        <result property="num" column="NUM" />
+        <result property="price" column="PRICE" />
+        <result property="totalPrice" column="TOTALPRICE" />
+        <result property="createTime" column="CREATETIME" />
+        <result property="describe" column="DESCRIBE" />
+        <result property="billingMode" column="BILLINGMODE" />
+        <result property="sanRelateId" column="SANRELATEID" />
+        <result property="sanRelateNum" column="SANRELATENUM" />
+        <result property="sanRelatePrice" column="SANRELATEPRICE" />
+        <result property="ratio" column="RATIO" />
+        <result property="sanRelateRatio" column="SANRELATERATIO" />
+        <result property="isSpecial" column="ISSPECIAL" />
+        <result property="memPrice" column="MEMPRICE" />
+        <result property="sanRelateTotalPrice" column="SANRELATETOTALPRICE" />
+        <result property="memTotalPrice" column="MEMTOTALPRICE" />
+    </resultMap>
+
+    <!-- 新增资源扩容项配置信息 -->
+    <insert id="insertResourceExpandItemParts" parameterType="resExpandItemParts">
+        INSERT INTO RES_EXTEND_ITEM_PARTS(ID,EXTENDID,EXTENDITEMID,CATEGORY,SUBCATEGORY,RESCONFIGID,REMARK,NUM,PRICE,TOTALPRICE,CREATETIME,
+        DESCRIBE
+        <if test="billingMode !=null and billingMode !=''">,BILLINGMODE</if>
+        <if test="sanRelateId !=null and sanRelateId !=''">,SANRELATEID</if>
+        <if test="sanRelateNum !=null and sanRelateNum !=''">,SANRELATENUM</if>
+        <if test="sanRelatePrice !=null and sanRelatePrice !=''">,SANRELATEPRICE</if>
+        <if test="ratio !=null and ratio !=''">,RATIO</if>
+        <if test="sanRelateRatio !=null and sanRelateRatio !=''">,SANRELATERATIO</if>
+        <if test="isSpecial !=null and isSpecial !=''">,ISSPECIAL</if>
+        <if test="memPrice !=null and memPrice !=''">,MEMPRICE</if>
+        <if test="sanRelateTotalPrice !=null and sanRelateTotalPrice !=''">,SANRELATETOTALPRICE</if>
+        <if test="memTotalPrice !=null and memTotalPrice !=''">,MEMTOTALPRICE</if>
+        )
+        VALUES (#{id},#{extendId},#{extendItemId},#{category},#{subCategory},#{resConfigId},#{remark},#{num},#{price},#{totalPrice},TO_DATE(#{createTime},'YYYY-MM-DD'),#{describe}
+        <if test="billingMode !=null and billingMode !=''">,#{billingMode}</if>
+        <if test="sanRelateId !=null and sanRelateId !=''">,#{sanRelateId}</if>
+        <if test="sanRelateNum !=null and sanRelateNum !=''">,#{sanRelateNum}</if>
+        <if test="sanRelatePrice !=null and sanRelatePrice !=''">,#{sanRelatePrice}</if>
+        <if test="ratio !=null and ratio !=''">,#{ratio}</if>
+        <if test="sanRelateRatio !=null and sanRelateRatio !=''">,#{sanRelateRatio}</if>
+        <if test="isSpecial !=null and isSpecial !=''">,#{isSpecial}</if>
+        <if test="memPrice !=null and memPrice !=''">,#{memPrice}</if>
+        <if test="sanRelateTotalPrice !=null and sanRelateTotalPrice !=''">,#{sanRelateTotalPrice}</if>
+        <if test="memTotalPrice !=null and memTotalPrice !=''">,#{memTotalPrice}</if>
+        )
+    </insert>
+    <!-- 根据资源申请ID，删除资源配置项配置数据 -->
+    <delete id="deleteResourceExpandParts" parameterType="String">
+        DELETE FROM RES_EXTEND_ITEM_PARTS WHERE EXTENDID=#{extendId}
+    </delete>
+    <!-- 根据资源配置项ID，查询资源配置项配置数据 -->
+    <select id="queryResourceExpandItemParts" parameterType="String" resultMap="RES_EXTEND_ITEM_PARTS">
+        SELECT ID,EXTENDID,EXTENDITEMID,CATEGORY,SUBCATEGORY,RESCONFIGID,REMARK,NUM,PRICE,TOTALPRICE,TO_CHAR(CREATETIME,'YYYY-MM-DD') CREATETIME,DESCRIBE,BILLINGMODE,SANRELATEID,SANRELATENUM,SANRELATEPRICE,RATIO,SANRELATERATIO,ISSPECIAL,MEMPRICE,SANRELATETOTALPRICE,MEMTOTALPRICE FROM RES_EXTEND_ITEM_PARTS WHERE EXTENDITEMID=#{extendId}
+    </select>
+
+</mapper>
+

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tansun.wf.platform.mapper.WfJobMapper">
+
+    <resultMap  id="BaseMap" type="com.tansun.wf.platform.model.WfJobEntity" >
+        <result column="ID_" property="id" javaType="java.lang.String" />
+        <result column="TYPE_" property="type" javaType="java.lang.String" />
+        <result column="EXECUTION_ID_" property="executionId" javaType="java.lang.String" />
+        <result column="PROCESS_INSTANCE_ID_" property="processInstanceId" javaType="java.lang.String" />
+        <result column="PROCESS_DEF_ID_" property="processDefId" javaType="java.lang.String" />
+        <result column="PROCESS_DEF_KEY_" property="processDefKey" javaType="java.lang.String" />
+        <result column="EXCEPTION_MSG_" property="exceptionMsg" javaType="java.lang.String" />
+        <result column="FAILED_ACT_ID_" property="failedActId" javaType="java.lang.String" />
+        <result column="HANDLER_TYPE_" property="handlerType" javaType="java.lang.String" />
+        <result column="JOB_DEF_ID_" property="jobDefId" javaType="java.lang.String" />
+        <result column="HANDLER_CFG_" property="handlerCfg" javaType="java.lang.String" />
+        <result column="DEPLOYMENT_ID_" property="deploymentId" javaType="java.lang.String" />
+        <result column="SUSPENSION_STATE_" property="suspensionState" javaType="java.lang.Integer" />
+        <result column="PRIORITY_" property="priority" javaType="java.lang.Integer" />
+        <result column="TENANT_ID_" property="tenantId" javaType="java.lang.String" />
+        <result column="REV_" property="rev" javaType="java.lang.Integer" />
+        <result column="CREATE_TIME_" property="createTime" javaType="java.util.Date" />
+    </resultMap>
+    <select id="findErrorServiceTask" resultMap="BaseMap">
+        select ID_,TYPE_,EXECUTION_ID_,PROCESS_INSTANCE_ID_,PROCESS_DEF_ID_,PROCESS_DEF_KEY_,EXCEPTION_MSG_,FAILED_ACT_ID_,HANDLER_TYPE_,JOB_DEF_ID_,HANDLER_CFG_,DEPLOYMENT_ID_,
+        SUSPENSION_STATE_,PRIORITY_,TENANT_ID_,CREATE_TIME_,REV_
+        from ACT_RU_JOB
+        <where>
+            <if test="wfJobEntity.handlerType!=null and wfJobEntity.handlerType!=''">
+                and HANDLER_TYPE_=#{wfJobEntity.handlerType}
+            </if>
+            <if test="wfJobEntity.handlerType!=null">
+                and TENANT_ID_=#{wfJobEntity.tenantId}
+            </if>
+            <if test="wfJobEntity.processInstanceId!=null and wfJobEntity.processInstanceId!=''">
+                and PROCESS_INSTANCE_ID_=#{wfJobEntity.processInstanceId}
+            </if>
+            <if test="wfJobEntity.executionId!=null and wfJobEntity.executionId!=''">
+                and EXECUTION_ID_=#{wfJobEntity.executionId}
+            </if>
+            <if test="wfJobEntity.processDefKey!=null and wfJobEntity.processDefKey!=''">
+                and PROCESS_DEF_KEY_=#{wfJobEntity.processDefKey}
+            </if>
+            <if test="wfJobEntity.executionId!=null and wfJobEntity.executionId!=''">
+                and FAILED_ACT_ID_=#{wfJobEntity.failedActId}
+            </if>
+        </where>
+    </select>
+</mapper>

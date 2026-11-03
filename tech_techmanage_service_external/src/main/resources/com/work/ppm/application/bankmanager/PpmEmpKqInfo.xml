@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:ywwb905 2022-09-22 -->
+<!--  考勤信息表 查询脚本 -->
+<mapper namespace="com.work.ppm.application.model.bankmanager.PpmEmpKqInfo">
+	 <resultMap type="ppmEmpKqInfo" id="PPMEMPKQINFO_ALL">
+        <result property="id" column="ID" />
+		<result property="jobId" column="JOB_ID" />
+		<result property="userName" column="USER_NAME" />
+		<result property="attendanceMonth" column="ATTENDANCE_MONTH" />
+		<result property="overtimeHours" column="OVERTIME_HOURS" />
+		<result property="worktimeHours" column="WORKTIME_HOURS" />
+		<result property="forgetClockInNumber" column="FORGET_CLOCK_IN_NUMBER" />
+		<result property="belateNumber" column="BELATE_NUMBER" />
+		<result property="leaveEarlyNumber" column="LEAVE_EARLY_NUMBER" />
+		<result property="absentNumber" column="ABSENT_NUMBER" />
+		<result property="leaveNumber" column="LEAVE_NUMBER" />
+		<result property="requiredAttendanceDays" column="REQUIRED_ATTENDANCE_DAYS" />
+		<result property="actualAttendanceDays" column="ACTUAL_ATTENDANCE_DAYS" />
+		<result property="whetherUpdate" column="WHETHER_UPDATE" />
+		<result property="createdTime" column="CREATED_TIME" />
+		<result property="createdBy" column="CREATED_BY" />
+     </resultMap>
+	 <resultMap id="PPMEMPKQINFO_ALL_EXT" type="ppmEmpKqInfoView" extends="PPMEMPKQINFO_ALL">
+		<result property="certificateNumber" column="CERTIFICATE_NUMBER" />
+		<result property="deptId" column="DEPT_ID" />
+		<result property="deptName" column="DEPT_NAME" />
+		<result property="supplierId" column="SUPPLIER_ID" />
+		<result property="supplierName" column="SUPPLIER_NAME" />
+		<result property="outsourceType" column="OUTSOURCE_TYPE" />
+		<result property="outsourceTypeName" column="OUTSOURCE_TYPE_NAME" />
+		<result property="pmId" column="PM_ID" />
+		<result property="pmName" column="PM_NAME" />
+		<result property="state" column="STATE" />
+		<result property="statename" column="STATENAME" />
+		<result property="entryTime" column="ENTRY_TIME" />
+		<result property="leavingTime" column="LEAVING_TIME" />
+		<result property="projectName" column="PROJECTNAME" />
+		<result property="systemName" column="SYSTEMNAMES" />
+		<result property="systemProjectName" column="SYSTEMPROJECTNAME" />
+		<result property="pmValue" column="PM_VALUE" />
+		<result property="deptValue" column="DEPT_VALUE" />
+		<result property="annualVacationSurplus" column="ANNUAL_VACATION_SURPLUS" />
+		<result property="annualVacationDate" column="ANNUAL_VACATION_DATE" />
+		<result property="annualVacationDays" column="ANNUAL_VACATION_DAYS" />
+		<result property="attendanceDate" column="ATTENDANCE_DATE" />
+		<result property="workingTime" column="WORKING_TIME" />
+		<result property="closingTime" column="CLOSING_TIME" />
+		<result property="overtimeStartTime" column="OVERTIME_START_TIME" />
+		<result property="isHoliday" column="IS_HOLIDAY" />
+		<result property="overtimeMinute" column="OVERTIME_MINUTE" />
+		<result property="amWhetherAbnormal" column="AM_WHETHER_ABNORMAL" />
+		<result property="amAbnormalReason" column="AM_ABNORMAL_REASON" />
+		<result property="amRemark" column="AM_REMARK" />
+		<result property="pmWhetherAbnormal" column="PM_WHETHER_ABNORMAL" />
+		<result property="pmAbnormalReason" column="PM_ABNORMAL_REASON" />
+		<result property="pmRemark" column="PM_REMARK" />
+		<result property="whetherOvernight" column="WHETHER_OVERNIGHT" />
+		<result property="attendanceDateSt" column="ATTENDANCE_DATE_ST" />
+		<result property="attendanceDateEnd" column="ATTENDANCE_DATE_END" />
+		<result property="dataType" column="DATA_TYPE" />
+		<result property="whetherHandle" column="WHETHER_HANDLE" />
+     </resultMap>
+	 
+
+     <!-- 所有字段名称 -->
+    <sql id="sql_flied_all">
+        ID,
+		JOB_ID,
+		USER_NAME,
+		ATTENDANCE_MONTH,
+		OVERTIME_HOURS,
+		WORKTIME_HOURS,
+		FORGET_CLOCK_IN_NUMBER,
+		BELATE_NUMBER,
+		LEAVE_EARLY_NUMBER,
+		ABSENT_NUMBER,
+		LEAVE_NUMBER,
+		REQUIRED_ATTENDANCE_DAYS,
+		ACTUAL_ATTENDANCE_DAYS,
+		WHETHER_UPDATE,
+		CREATED_TIME,
+		CREATED_BY
+    </sql>
+    <sql id="sql_select_condition">
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="id != null and id != ''" > ID = #{id} AND </if>
+			<if test="jobId != null and jobId != ''" > JOB_ID = #{jobId} AND </if>
+			<if test="userName != null and userName != ''" > USER_NAME = #{userName} AND </if>
+			<if test="attendanceMonth != null and attendanceMonth != ''" > ATTENDANCE_MONTH = #{attendanceMonth} AND </if>
+			<if test="overtimeHours != null and overtimeHours != ''" > OVERTIME_HOURS = #{overtimeHours} AND </if>
+			<if test="worktimeHours != null and worktimeHours != ''" > WORKTIME_HOURS = #{worktimeHours} AND </if>
+			<if test="forgetClockInNumber != null and forgetClockInNumber != ''" > FORGET_CLOCK_IN_NUMBER = #{forgetClockInNumber} AND </if>
+			<if test="belateNumber != null and belateNumber != ''" > BELATE_NUMBER = #{belateNumber} AND </if>
+			<if test="leaveEarlyNumber != null and leaveEarlyNumber != ''" > LEAVE_EARLY_NUMBER = #{leaveEarlyNumber} AND </if>
+			<if test="absentNumber != null and absentNumber != ''" > ABSENT_NUMBER = #{absentNumber} AND </if>
+			<if test="leaveNumber != null and leaveNumber != ''" > LEAVE_NUMBER = #{leaveNumber} AND </if>
+			<if test="requiredAttendanceDays != null and requiredAttendanceDays != ''" > REQUIRED_ATTENDANCE_DAYS = #{requiredAttendanceDays} AND </if>
+			<if test="actualAttendanceDays != null and actualAttendanceDays != ''" > ACTUAL_ATTENDANCE_DAYS = #{actualAttendanceDays} AND </if>
+			<if test="whetherUpdate != null and whetherUpdate != ''" > WHETHER_UPDATE = #{whetherUpdate} AND </if>
+			<if test="createdTime != null and createdTime != ''" > CREATED_TIME = #{createdTime} AND </if>
+			<if test="createdBy != null and createdBy != ''" > CREATED_BY = #{createdBy} AND </if>
+        </trim>
+    </sql>
+
+    <!-- 新增  2022-09-22 ywwb905  -->
+    <insert id="addPojo" parameterType="ppmEmpKqInfo">
+        INSERT INTO PPM_EMP_KQ_INFO (
+        <trim suffixOverrides=",">
+			<if test="id != null " > ID , </if>
+			<if test="jobId != null " > JOB_ID , </if>
+			<if test="userName != null " > USER_NAME , </if>
+			<if test="attendanceMonth != null " > ATTENDANCE_MONTH , </if>
+			<if test="overtimeHours != null " > OVERTIME_HOURS , </if>
+			<if test="worktimeHours != null " > WORKTIME_HOURS , </if>
+			<if test="forgetClockInNumber != null " > FORGET_CLOCK_IN_NUMBER , </if>
+			<if test="belateNumber != null " > BELATE_NUMBER , </if>
+			<if test="leaveEarlyNumber != null " > LEAVE_EARLY_NUMBER , </if>
+			<if test="absentNumber != null " > ABSENT_NUMBER , </if>
+			<if test="leaveNumber != null " > LEAVE_NUMBER , </if>
+			<if test="requiredAttendanceDays != null " > REQUIRED_ATTENDANCE_DAYS , </if>
+			<if test="actualAttendanceDays != null " > ACTUAL_ATTENDANCE_DAYS , </if>
+			<if test="whetherUpdate != null " > WHETHER_UPDATE , </if>
+			<if test="createdTime != null " > CREATED_TIME , </if>
+			<if test="createdBy != null " > CREATED_BY , </if>
+          </trim>
+        )
+        VALUES(
+        <trim suffixOverrides=",">
+			<if test="id != null " > #{id} , </if>
+			<if test="jobId != null " > #{jobId} , </if>
+			<if test="userName != null " > #{userName} , </if>
+			<if test="attendanceMonth != null " > #{attendanceMonth} , </if>
+			<if test="overtimeHours != null " > #{overtimeHours} , </if>
+			<if test="worktimeHours != null " > #{worktimeHours} , </if>
+			<if test="forgetClockInNumber != null " > #{forgetClockInNumber} , </if>
+			<if test="belateNumber != null " > #{belateNumber} , </if>
+			<if test="leaveEarlyNumber != null " > #{leaveEarlyNumber} , </if>
+			<if test="absentNumber != null " > #{absentNumber} , </if>
+			<if test="leaveNumber != null " > #{leaveNumber} , </if>
+			<if test="requiredAttendanceDays != null " > #{requiredAttendanceDays} , </if>
+			<if test="actualAttendanceDays != null " > #{actualAttendanceDays} , </if>
+			<if test="whetherUpdate != null " > #{whetherUpdate} , </if>
+			<if test="createdTime != null " > #{createdTime} , </if>
+			<if test="createdBy != null " > #{createdBy} , </if>
+        </trim>
+        )
+    </insert>
+
+	<!--查询集合  ywwb905 2022-09-22 -->
+	<select id="getEmpList" parameterType="ppmEmpKqInfo" resultMap="PPMEMPKQINFO_ALL">
+		SELECT
+		<include refid="sql_flied_all" />
+		FROM PPM_EMP_KQ_INFO
+		<include refid="sql_select_condition" />
+	</select>
+
+
+	<!--通过id编辑 ywwb1103 2023-11-02 -->
+	<update id="updateEmpPojo" parameterType="ppmEmpKqInfo">
+		UPDATE
+		PPM_EMP_KQ_INFO
+		<include refid="update_pojo_sql" />
+		WHERE ID=#{id}
+	</update>
+
+	 <!-- update sql -->
+    <sql id="update_pojo_sql">
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="jobId != null " > JOB_ID=#{jobId} , </if>
+			<if test="userName != null " > USER_NAME=#{userName} , </if>
+			<if test="attendanceMonth != null " > ATTENDANCE_MONTH=#{attendanceMonth} , </if>
+			<if test="overtimeHours != null " > OVERTIME_HOURS=#{overtimeHours} , </if>
+			<if test="worktimeHours != null " > WORKTIME_HOURS=#{worktimeHours} , </if>
+			<if test="forgetClockInNumber != null " > FORGET_CLOCK_IN_NUMBER=#{forgetClockInNumber} , </if>
+			<if test="belateNumber != null " > BELATE_NUMBER=#{belateNumber} , </if>
+			<if test="leaveEarlyNumber != null " > LEAVE_EARLY_NUMBER=#{leaveEarlyNumber} , </if>
+			<if test="absentNumber != null " > ABSENT_NUMBER=#{absentNumber} , </if>
+			<if test="leaveNumber != null " > LEAVE_NUMBER=#{leaveNumber} , </if>
+			<if test="requiredAttendanceDays != null " > REQUIRED_ATTENDANCE_DAYS=#{requiredAttendanceDays} , </if>
+			<if test="actualAttendanceDays != null " > ACTUAL_ATTENDANCE_DAYS=#{actualAttendanceDays} , </if>
+			<if test="whetherUpdate != null " > WHETHER_UPDATE=#{whetherUpdate} , </if>
+			<if test="createdTime != null " > CREATED_TIME=#{createdTime} , </if>
+			<if test="createdBy != null " > CREATED_BY=#{createdBy} , </if>
+        </trim>
+    </sql>
+	
+	<select id="empQueryDetailObject" parameterType="ppmEmpKqInfo" resultMap="PPMEMPKQINFO_ALL">
+        SELECT
+        <include refid="sql_flied_all" />
+        FROM PPM_EMP_KQ_INFO
+        WHERE 
+		JOB_ID = #{jobId} AND 
+		USER_NAME = #{userName} AND 
+		ATTENDANCE_MONTH = #{attendanceMonth}
+    </select>
+	
+	
+	<select id="empQueryBaseInfoList" parameterType="ppmEmpKqInfoView" resultMap="PPMEMPKQINFO_ALL_EXT">
+		SELECT
+		KI.ID,
+		KI.JOB_ID,
+		KI.USER_NAME,
+		KI.ATTENDANCE_MONTH,
+		KI.OVERTIME_HOURS,
+		KI.WORKTIME_HOURS,
+		KI.FORGET_CLOCK_IN_NUMBER,
+		KI.BELATE_NUMBER,
+		KI.LEAVE_EARLY_NUMBER,
+		KI.ABSENT_NUMBER,
+		KI.LEAVE_NUMBER,
+		KI.REQUIRED_ATTENDANCE_DAYS,
+		KI.ACTUAL_ATTENDANCE_DAYS,
+		KI.WHETHER_UPDATE,
+		KI.CREATED_TIME,
+		KI.CREATED_BY,
+		CM.Depid DEPT_ID,
+		CD.LOCATION DEPT_NAME,
+		CM.REPORTTO PM_ID,
+		(select EMPNAME from COMM_EMPLOYEE em where em.eid = CM.Reportto) PM_NAME,
+		CM.CERTIFICATE_NUMBER,
+		CM.EMPSTATUS STATE,
+		E4.DICTNAME STATENAME
+		FROM PPM_EMP_KQ_INFO KI
+		LEFT JOIN COMM_EMPLOYEE CM ON KI.JOB_ID = CM.BADGE
+		LEFT JOIN COMM_DEPARTMENT CD ON CM.Depid = CD.DEPID
+		LEFT JOIN EOS_DICT_ENTRY E4 ON CM.EMPSTATUS = E4.DICTID AND E4.DICTTYPEID = 'COMM_EMPSTATUS'
+		<trim prefix="WHERE" suffixOverrides="AND">
+            <if test="attendanceMonth != null and attendanceMonth != '' ">KI.ATTENDANCE_MONTH = #{attendanceMonth} AND</if>
+            <if test="userName != null and userName != '' ">KI.USER_NAME like '%'||#{userName}||'%' AND</if>
+            <if test="deptId != null and deptId != '' ">CD.Depid = #{deptId} AND</if>
+            <if test="deptId == null or deptId == '' ">CD.Depid IN (
+				SELECT DEPID FROM COMM_DEPARTMENT CD
+				<trim prefix="WHERE" suffixOverrides="AND">
+					<if test="jobId != null and jobId != '' ">
+						CD.ADMINID in(
+						SELECT ADMINID
+						FROM COMM_DEPARTMENT
+						WHERE DEPID = (
+						SELECT DEPID FROM COMM_EMPLOYEE WHERE BADGE = #{jobId}
+						)
+						UNION ALL
+						SELECT ADMINID FROM COMM_DEPARTMENT WHERE ADMINID =#{jobId}
+						group  by ADMINID
+						UNION ALL
+						SELECT ADMINID
+						FROM COMM_DEPARTMENT
+						WHERE DEPID =#{jobId}
+						)
+						AND
+					</if>
+				</trim>
+				) AND</if>
+        </trim>
+		ORDER BY KI.ID DESC
+	</select>
+
+	<!--通过id查询  ywwb1713 2023-11-03 -->
+	<select id="empQueryBaseInfo" parameterType="ppmEmpKqInfo" resultMap="PPMEMPKQINFO_ALL_EXT">
+		SELECT
+		KI.ID,
+		KI.JOB_ID,
+		KI.USER_NAME,
+		KI.ATTENDANCE_MONTH,
+		KI.OVERTIME_HOURS,
+		KI.WORKTIME_HOURS,
+		KI.FORGET_CLOCK_IN_NUMBER,
+		KI.BELATE_NUMBER,
+		KI.LEAVE_EARLY_NUMBER,
+		KI.ABSENT_NUMBER,
+		KI.LEAVE_NUMBER,
+		KI.REQUIRED_ATTENDANCE_DAYS,
+		KI.ACTUAL_ATTENDANCE_DAYS,
+		KI.WHETHER_UPDATE,
+		KI.CREATED_TIME,
+		KI.CREATED_BY,
+		CM.Depid DEPT_ID,
+		CD.LOCATION DEPT_NAME,
+		CM.Reportto PM_ID,
+		(select EMPNAME from COMM_EMPLOYEE em where em.eid = CM.Reportto)  PM_NAME,
+		CM.CERTIFICATE_NUMBER,
+		CM.Empstatus STATE,
+		E5.DICTNAME STATENAME
+		FROM PPM_EMP_KQ_INFO KI
+		LEFT JOIN COMM_EMPLOYEE CM ON KI.JOB_ID = CM.Badge
+		LEFT JOIN COMM_DEPARTMENT CD ON CM.Depid = CD.DEPID
+		LEFT JOIN EOS_DICT_ENTRY E5 ON CM.Empstatus=E5.DICTID AND E5.DICTTYPEID='COMM_EMPSTATUS'
+		WHERE KI.ID = #{id}
+	</select>
+
+</mapper>

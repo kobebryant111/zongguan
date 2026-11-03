@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k1327 2021-08-19 -->
+<mapper namespace="com.work.ppm.application.model.kpi.PpmKpiLevelPerson">
+	 <resultMap type="ppmKpiLevelPerson" id="PPMKPILEVELPERSON_ALL">
+        <result property="id" column="ID" />
+		<result property="depid" column="DEPID" />
+		<result property="centerid" column="CENTERID" />
+		<result property="otype" column="OTYPE" />
+		<result property="role" column="ROLE" />
+		<result property="tlevel" column="TLEVEL" />
+		<result property="nums" column="NUMS" />
+		<result property="createtime" column="CREATETIME" />
+		<result property="createuserid" column="CREATEUSERID" />
+		
+     </resultMap>
+
+	<resultMap type="ppmKpiLevelPersonInfo" id="PPMKPILEVELPERSON_ALL_EXT" extends="PPMKPILEVELPERSON_ALL">
+		<result property="depname" column="DEPNAME" />
+		<result property="centername" column="CENTERNAME" />
+		<result property="sortno" column="SORTNO" />
+	</resultMap>
+
+     <!-- 所有字段名称 -->
+        <sql id="sql_flied_all">
+        	ID,
+			DEPID,
+			CENTERID,
+			OTYPE,
+			ROLE,
+			TLEVEL,
+			NUMS,
+			CREATETIME,
+			CREATEUSERID
+        </sql>
+        <sql id="sql_select_condition">
+            <trim prefix="WHERE" suffixOverrides="AND">
+                <if test="id != null " > ID = #{id} AND </if>
+				<if test="depid != null  and depid != '' " > DEPID = #{depid} AND </if>
+				<if test="centerid != null  and centerid != '' " > CENTERID = #{centerid} AND </if>
+				<if test="otype != null  and otype != '' " > OTYPE = #{otype} AND </if>
+				<if test="role != null  and role != '' " > ROLE = #{role} AND </if>
+				<if test="tlevel != null  and tlevel != '' " > TLEVEL = #{tlevel} AND </if>
+				<if test="nums != null " > NUMS = #{nums} AND </if>
+				<if test="createtime != null " > CREATETIME = #{createtime} AND </if>
+				<if test="createuserid != null  and createuserid != '' " > CREATEUSERID = #{createuserid} AND </if>
+				
+            </trim>
+        </sql>
+    	<!-- 查询分页  2021-08-19 k1327  -->
+        <select id="queryPagerList" parameterType="map" resultMap="PPMKPILEVELPERSON_ALL">
+        	SELECT
+            <include refid="sql_flied_all" />
+            FROM PPM_KPI_LEVEL_PERSON
+            <include refid="sql_select_condition" />
+        </select>
+
+        <!-- 新增  2021-08-19 k1327  -->
+        <insert id="addPojo" parameterType="ppmKpiLevelPerson">
+    		INSERT INTO PPM_KPI_LEVEL_PERSON (
+    		<trim suffixOverrides=",">
+    		 <if test="id != null " > ID , </if>
+				<if test="depid != null  and depid != '' " > DEPID , </if>
+				<if test="centerid != null  and centerid != '' " > CENTERID , </if>
+				<if test="otype != null  and otype != '' " > OTYPE , </if>
+				<if test="role != null  and role != '' " > ROLE , </if>
+				<if test="tlevel != null  and tlevel != '' " > TLEVEL , </if>
+				<if test="nums != null " > NUMS , </if>
+				<if test="createtime != null " > CREATETIME , </if>
+				<if test="createuserid != null  and createuserid != '' " > CREATEUSERID , </if>
+				
+              </trim>
+    		)
+    		VALUES(
+    		<trim suffixOverrides=",">
+    		 <if test="id != null " > #{id} , </if>
+				<if test="depid != null  and depid != '' " > #{depid} , </if>
+				<if test="centerid != null  and centerid != '' " > #{centerid} , </if>
+				<if test="otype != null  and otype != '' " > #{otype} , </if>
+				<if test="role != null  and role != '' " > #{role} , </if>
+				<if test="tlevel != null  and tlevel != '' " > #{tlevel} , </if>
+				<if test="nums != null " > #{nums} , </if>
+				<if test="createtime != null " > #{createtime} , </if>
+				<if test="createuserid != null  and createuserid != '' " > #{createuserid} , </if>
+				
+            </trim>
+    		)
+        </insert>
+
+        <!--通过id查询  k1327 2021-08-19 -->
+        <select id="queryDetail" parameterType="ppmKpiLevelPerson" resultMap="PPMKPILEVELPERSON_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_KPI_LEVEL_PERSON  WHERE ID=#{id}
+        </select>
+
+         <!--查询集合  k1327 2021-08-19 -->
+        <select id="getList" parameterType="ppmKpiLevelPerson" resultMap="PPMKPILEVELPERSON_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_KPI_LEVEL_PERSON
+        	<include refid="sql_select_condition" />
+        </select>
+        <!-- update sql -->
+        <sql id="update_pojo_sql">
+        	<trim prefix="SET" suffixOverrides=",">
+        		<if test="id != null " > ID=#{id} , </if>
+				<if test="depid != null  and depid != '' " > DEPID=#{depid} , </if>
+				<if test="centerid != null  and centerid != '' " > CENTERID=#{centerid} , </if>
+				<if test="otype != null  and otype != '' " > OTYPE=#{otype} , </if>
+				<if test="role != null  and role != '' " > ROLE=#{role} , </if>
+				<if test="tlevel != null  and tlevel != '' " > TLEVEL=#{tlevel} , </if>
+				<if test="nums != null " > NUMS=#{nums} , </if>
+				<if test="createtime != null " > CREATETIME=#{createtime} , </if>
+				<if test="createuserid != null  and createuserid != '' " > CREATEUSERID=#{createuserid} , </if>
+				
+            </trim>
+        </sql>
+
+        <!--通过id编辑 k1327 2021-08-19 -->
+    	<update id="updatePojo" parameterType="ppmKpiLevelPerson">
+        	UPDATE
+        	PPM_KPI_LEVEL_PERSON
+        	<include refid="update_pojo_sql" />
+        	WHERE ID=#{id}
+        </update>
+
+        <!--通过id批量删除  k1327 2021-08-19 -->
+        <delete id="deleteById" parameterType="ppmKpiLevelPerson">
+        	DELETE
+        	FROM
+        	PPM_KPI_LEVEL_PERSON
+        	WHERE ID = #{id}
+        </delete>
+
+		<!--查询二级部统计  k1327 2021-08-19 -->
+		<select id="querySecondDepGroup" parameterType="map" resultMap="PPMKPILEVELPERSON_ALL_EXT">
+			select p.depid,max(d.location) depname,
+			max(p.centerid) centerid,max(c.centername) centername
+			from PPM_KPI_LEVEL_PERSON p
+			left join comm_department d on p.depid=d.depid
+			left join ppm_da_center c on p.centerid=c.id
+			<trim prefix="WHERE" suffixOverrides="AND">
+				<if test="depid != null  and depid != '' " > p.DEPID = #{depid} AND </if>
+				<if test="centerid != null  and centerid != '' " > p.CENTERID = #{centerid} AND </if>
+				<if test="true" > OTYPE = '1' AND </if>
+			</trim>
+			group by p.depid order by p.depid asc
+		</select>
+		<!--查询中心统计  k1327 2021-08-19 -->
+		<select id="queryCenterGroup" parameterType="map" resultMap="PPMKPILEVELPERSON_ALL_EXT">
+			select p.centerid,max(c.centername) centername from PPM_KPI_LEVEL_PERSON p
+			left join comm_department d on p.depid=d.depid
+			left join ppm_da_center c on p.centerid=c.id
+			<trim prefix="WHERE" suffixOverrides="AND">
+				<if test="centerid != null  and centerid != '' " > CENTERID = #{centerid} AND </if>
+				<if test="role != null  and role != '' " > ROLE = #{role} AND </if>
+				<if test="true" > OTYPE = '2' AND </if>
+			</trim>
+			group by p.centerid order by p.centerid asc
+		</select>
+
+		<!--查询一级部统计  k1327 2021-08-19 -->
+		<select id="queryFirstDepGroup" parameterType="map" resultMap="PPMKPILEVELPERSON_ALL_EXT">
+			select p.depid,max(d.location) depname from PPM_KPI_LEVEL_PERSON p
+			left join comm_department d on p.depid=d.depid
+			left join ppm_da_center c on p.centerid=c.id
+			<trim prefix="WHERE" suffixOverrides="AND">
+				<if test="true" > OTYPE = '3' AND </if>
+			</trim>
+			group by p.depid order by p.depid asc
+		</select>
+		<!--查询一级部统计  k1327 2021-08-19 -->
+		<select id="queryNoSetLevel" parameterType="map" resultMap="PPMKPILEVELPERSON_ALL_EXT">
+			select e.dictid tlevel from eos_dict_entry e where e.dicttypeid='KPI_LEVEL' and e.dictid not in (
+			select p.tlevel from PPM_KPI_LEVEL_PERSON p
+			<trim prefix="WHERE" suffixOverrides="AND">
+				<if test="true" > NUMS !=0 AND </if>
+				<if test="id != null " > ID = #{id} AND </if>
+				<if test="depid != null  and depid != '' " > DEPID = #{depid} AND </if>
+				<if test="centerid != null  and centerid != '' " > CENTERID = #{centerid} AND </if>
+				<if test="otype != null  and otype != '' " > OTYPE = #{otype} AND </if>
+				<if test="role != null  and role != '' " > ROLE = #{role} AND </if>
+				<if test="tlevel != null  and tlevel != '' " > TLEVEL = #{tlevel} AND </if>
+				<if test="nums != null " > NUMS = #{nums} AND </if>
+				<if test="createtime != null " > CREATETIME = #{createtime} AND </if>
+				<if test="createuserid != null  and createuserid != '' " > CREATEUSERID = #{createuserid} AND </if>
+			</trim>
+			)
+		</select>
+
+	<!--查询集合  k1327 2021-08-19 -->
+	<select id="getListByCondition" parameterType="ppmKpiLevelPersonInfo" resultMap="PPMKPILEVELPERSON_ALL_EXT">
+		select p.id,
+		p.depid,
+		p.centerid,
+		p.otype,
+		p.role,
+		p.tlevel,
+		p.nums,
+		p.createtime,
+		p.createuserid ,
+		d.location depname,
+		c.centername,
+		e.sortno
+		from PPM_KPI_LEVEL_PERSON p
+		left join comm_department d on p.depid=d.depid
+		left join ppm_da_center c on p.centerid=c.id
+		left join eos_dict_entry e on e.dicttypeid='KPI_LEVEL' and e.dictid=p.tlevel
+		<trim prefix="WHERE" suffixOverrides="AND">
+			<if test="id != null " > p.ID = #{id} AND </if>
+			<if test="depid != null  and depid != '' " > p.DEPID = #{depid} AND </if>
+			<if test="centerid != null  and centerid != '' " > p.CENTERID = #{centerid} AND </if>
+			<if test="otype != null  and otype != '' " > p.OTYPE = #{otype} AND </if>
+			<if test="role != null  and role != '' " > p.ROLE = #{role} AND </if>
+			<if test="tlevel != null  and tlevel != '' " > p.TLEVEL = #{tlevel} AND </if>
+			<if test="nums != null " > p.NUMS = #{nums} AND </if>
+			<if test="createtime != null " > p.CREATETIME = #{createtime} AND </if>
+			<if test="createuserid != null  and createuserid != '' " > p.CREATEUSERID = #{createuserid} AND </if>
+		</trim>
+		order by e.sortno asc
+	</select>
+
+
+	<!--不在考核组织树终的部门批量删除  k1327 2021-05-20 -->
+	<delete id="deleteDepLevelPerson" parameterType="ppmKpiDepRole">
+		delete ppm.Ppm_Kpi_Level_Person p where p.depid not in (select d.depid from ppm_kpi_dep_role d where d.sign='1') and p.otype='1'
+	</delete>
+
+
+	<!--不在考核组织树终的中心批量删除  k1327 2021-05-20 -->
+	<delete id="deleteCenterLevelPerson" parameterType="ppmKpiDepRole">
+		delete ppm.Ppm_Kpi_Level_Person p where p.centerid not in (select d.centerid from ppm_kpi_dep_role d where d.sign='2') and p.otype='2'
+	</delete>
+
+
+	<!--不在等级设置终的等级批量删除  k1327 2021-05-20 -->
+	<delete id="deleteLevelPerson" parameterType="ppmKpiDepRole">
+		delete ppm.Ppm_Kpi_Level_Person p where p.tlevel not in (select e.dictid from eos_dict_entry e where e.dicttypeid='KPI_LEVEL')
+	</delete>
+
+
+</mapper>

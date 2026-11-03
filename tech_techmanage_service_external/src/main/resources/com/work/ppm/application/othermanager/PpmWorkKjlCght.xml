@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k6991 2020-07-24 -->
+<mapper namespace="com.work.ppm.application.model.othermanager.PpmWorkKjlCght">
+	 <resultMap type="ppmWorkKjlCght" id="PPMWORKKJLCGHT_ALL">
+        <result property="htbh" column="HTBH" />
+		<result property="htmc" column="HTMC" />
+		<result property="htje" column="HTJE" />
+		<result property="wbq" column="WBQ" />
+		<result property="wbfy" column="WBFY" />
+		<result property="wbksrq" column="WBKSRQ" />
+		<result property="wbjsrq" column="WBJSRQ" />
+		<result property="ksrq" column="KSRQ" />
+		<result property="jsrq" column="JSRQ" />
+		<result property="cgnr" column="CGNR" />
+		<result property="gysmc" column="GYSMC" />
+		<result property="htwb" column="HTWB" />
+		<result property="rlzylxbh" column="RLZYLXBH" />
+		<result property="time" column="TIME" />
+		<result property="id" column="ID" />
+		<result property="dealdept" column="DEALDEPT" />
+		<result property="creator" column="CREATOR" />
+		<result property="createtime" column="CREATETIME" />
+		<result property="instanceid" column="INSTANCEID" />
+		<result property="dealdeptid" column="DEALDEPTID" />
+		<result property="issendemail" column="ISSENDEMAIL" />
+		<result property="isdel" column="ISDEL" />
+		<result property="htlb" column="HTLB" />
+		<result property="isrlht" column="ISRLHT" />
+		
+     </resultMap>
+
+     <!-- 所有字段名称 -->
+        <sql id="sql_flied_all">
+        	HTBH,
+			HTMC,
+			HTJE,
+			WBQ,
+			WBFY,
+			WBKSRQ,
+			WBJSRQ,
+			KSRQ,
+			JSRQ,
+			CGNR,
+			GYSMC,
+			HTWB,
+			RLZYLXBH,
+			TIME,
+			ID,
+			DEALDEPT,
+			CREATOR,
+			CREATETIME,
+			INSTANCEID,
+			DEALDEPTID,
+			ISSENDEMAIL,
+			ISDEL,
+			HTLB,
+			ISRLHT
+        </sql>
+    	<!-- 查询分页  2020-07-24 k6991  -->
+        <select id="queryPagerList" parameterType="map" resultMap="PPMWORKKJLCGHT_ALL">
+        	SELECT
+            <include refid="sql_flied_all" />
+            FROM PPM_WORK_KJL_CGHT T
+            <trim prefix="WHERE" suffixOverrides="AND">
+				<if test="true"> (T.HTLB='33' OR T.HTLB='37')  AND T.ISRLHT = '0' AND </if>
+                <if test="htbh != null  and htbh != '' " > SUBSTR(T.HTBH,4,4)=#{htbh} AND </if>
+				<if test="htmc != null  and htmc != '' " > INSTR(HTMC , #{htmc}) > 0 AND </if>
+				<if test="htje != null " > HTJE = #{htje} AND </if>
+				<if test="wbq != null " > WBQ = #{wbq} AND </if>
+				<if test="wbfy != null  and wbfy != '' " > WBFY = #{wbfy} AND </if>
+				<if test="wbksrq != null " > WBKSRQ = #{wbksrq} AND </if>
+				<if test="wbjsrq != null " > WBJSRQ = #{wbjsrq} AND </if>
+				<if test="ksrq != null " > KSRQ = #{ksrq} AND </if>
+				<if test="jsrq != null " > JSRQ = #{jsrq} AND </if>
+				<if test="cgnr != null  and cgnr != '' " > CGNR = #{cgnr} AND </if>
+				<if test="gysmc != null  and gysmc != '' " > GYSMC = #{gysmc} AND </if>
+				<if test="htwb != null  and htwb != '' " > HTWB = #{htwb} AND </if>
+				<if test="rlzylxbh != null  and rlzylxbh != '' " > RLZYLXBH = #{rlzylxbh} AND </if>
+				<if test="time != null " > TIME = #{time} AND </if>
+				<if test="id != null " > ID = #{id} AND </if>
+				<if test="dealdept != null  and dealdept != '' " > DEALDEPT = #{dealdept} AND </if>
+				<if test="creator != null  and creator != '' " > CREATOR = #{creator} AND </if>
+				<if test="createtime != null " > CREATETIME = #{createtime} AND </if>
+				<if test="instanceid != null  and instanceid != '' " > INSTANCEID = #{instanceid} AND </if>
+				<if test="dealdeptid != null  and dealdeptid != '' " > INSTR(DEALDEPTID , #{dealdeptid}) > 0 AND </if>
+				<if test="issendemail != null " > ISSENDEMAIL = #{issendemail} AND </if>
+				<if test="isdel != null " > ISDEL = #{isdel} AND </if>
+				<if test="htlb != null " > HTLB = #{htlb} AND </if>
+				<if test="isrlht != null  and isrlht != '' " > ISRLHT = #{isrlht} AND </if>
+            </trim>
+        </select>
+
+        <!-- 新增  2020-07-24 k6991  -->
+        <insert id="addPojo" parameterType="ppmWorkKjlCght">
+    		INSERT INTO PPM_WORK_KJL_CGHT (
+    		<trim suffixOverrides=",">
+    		 <if test="htbh != null  and htbh != '' " > HTBH , </if>
+				<if test="htmc != null  and htmc != '' " > HTMC , </if>
+				<if test="htje != null " > HTJE , </if>
+				<if test="wbq != null " > WBQ , </if>
+				<if test="wbfy != null  and wbfy != '' " > WBFY , </if>
+				<if test="wbksrq != null " > WBKSRQ , </if>
+				<if test="wbjsrq != null " > WBJSRQ , </if>
+				<if test="ksrq != null " > KSRQ , </if>
+				<if test="jsrq != null " > JSRQ , </if>
+				<if test="cgnr != null  and cgnr != '' " > CGNR , </if>
+				<if test="gysmc != null  and gysmc != '' " > GYSMC , </if>
+				<if test="htwb != null  and htwb != '' " > HTWB , </if>
+				<if test="rlzylxbh != null  and rlzylxbh != '' " > RLZYLXBH , </if>
+				<if test="time != null " > TIME , </if>
+				<if test="id != null " > ID , </if>
+				<if test="dealdept != null  and dealdept != '' " > DEALDEPT , </if>
+				<if test="creator != null  and creator != '' " > CREATOR , </if>
+				<if test="createtime != null " > CREATETIME , </if>
+				<if test="instanceid != null  and instanceid != '' " > INSTANCEID , </if>
+				<if test="dealdeptid != null  and dealdeptid != '' " > DEALDEPTID , </if>
+				<if test="issendemail != null " > ISSENDEMAIL , </if>
+				<if test="isdel != null " > ISDEL , </if>
+				<if test="htlb != null " > HTLB , </if>
+				<if test="isrlht != null  and isrlht != '' " > ISRLHT , </if>
+				
+              </trim>
+    		)
+    		VALUES(
+    		<trim suffixOverrides=",">
+    		 <if test="htbh != null  and htbh != '' " > #{htbh} , </if>
+				<if test="htmc != null  and htmc != '' " > #{htmc} , </if>
+				<if test="htje != null " > #{htje} , </if>
+				<if test="wbq != null " > #{wbq} , </if>
+				<if test="wbfy != null  and wbfy != '' " > #{wbfy} , </if>
+				<if test="wbksrq != null " > #{wbksrq} , </if>
+				<if test="wbjsrq != null " > #{wbjsrq} , </if>
+				<if test="ksrq != null " > #{ksrq} , </if>
+				<if test="jsrq != null " > #{jsrq} , </if>
+				<if test="cgnr != null  and cgnr != '' " > #{cgnr} , </if>
+				<if test="gysmc != null  and gysmc != '' " > #{gysmc} , </if>
+				<if test="htwb != null  and htwb != '' " > #{htwb} , </if>
+				<if test="rlzylxbh != null  and rlzylxbh != '' " > #{rlzylxbh} , </if>
+				<if test="time != null " > #{time} , </if>
+				<if test="id != null " > #{id} , </if>
+				<if test="dealdept != null  and dealdept != '' " > #{dealdept} , </if>
+				<if test="creator != null  and creator != '' " > #{creator} , </if>
+				<if test="createtime != null " > #{createtime} , </if>
+				<if test="instanceid != null  and instanceid != '' " > #{instanceid} , </if>
+				<if test="dealdeptid != null  and dealdeptid != '' " > #{dealdeptid} , </if>
+				<if test="issendemail != null " > #{issendemail} , </if>
+				<if test="isdel != null " > #{isdel} , </if>
+				<if test="htlb != null " > #{htlb} , </if>
+				<if test="isrlht != null  and isrlht != '' " > #{isrlht} , </if>
+				
+            </trim>
+    		)
+        </insert>
+
+        <!--通过id查询  k6991 2020-07-24 -->
+        <select id="queryDetail" parameterType="ppmWorkKjlCght" resultMap="PPMWORKKJLCGHT_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_WORK_KJL_CGHT  WHERE HTBH=#{htbh}
+        </select>
+
+         <!--查询集合  k6991 2020-07-24 -->
+        <select id="getList" parameterType="ppmWorkKjlCght" resultMap="PPMWORKKJLCGHT_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_WORK_KJL_CGHT
+        	<trim prefix="WHERE" suffixOverrides="AND">
+        		<if test="htbh != null  and htbh != '' " > HTBH=#{htbh} AND </if>
+				<if test="htmc != null  and htmc != '' " > HTMC=#{htmc} AND </if>
+				<if test="htje != null " > HTJE=#{htje} AND </if>
+				<if test="wbq != null " > WBQ=#{wbq} AND </if>
+				<if test="wbfy != null  and wbfy != '' " > WBFY=#{wbfy} AND </if>
+				<if test="wbksrq != null " > WBKSRQ=#{wbksrq} AND </if>
+				<if test="wbjsrq != null " > WBJSRQ=#{wbjsrq} AND </if>
+				<if test="ksrq != null " > KSRQ=#{ksrq} AND </if>
+				<if test="jsrq != null " > JSRQ=#{jsrq} AND </if>
+				<if test="cgnr != null  and cgnr != '' " > CGNR=#{cgnr} AND </if>
+				<if test="gysmc != null  and gysmc != '' " > GYSMC=#{gysmc} AND </if>
+				<if test="htwb != null  and htwb != '' " > HTWB=#{htwb} AND </if>
+				<if test="rlzylxbh != null  and rlzylxbh != '' " > RLZYLXBH=#{rlzylxbh} AND </if>
+				<if test="time != null " > TIME=#{time} AND </if>
+				<if test="id != null " > ID=#{id} AND </if>
+				<if test="dealdept != null  and dealdept != '' " > DEALDEPT=#{dealdept} AND </if>
+				<if test="creator != null  and creator != '' " > CREATOR=#{creator} AND </if>
+				<if test="createtime != null " > CREATETIME=#{createtime} AND </if>
+				<if test="instanceid != null  and instanceid != '' " > INSTANCEID=#{instanceid} AND </if>
+				<if test="dealdeptid != null  and dealdeptid != '' " > DEALDEPTID=#{dealdeptid} AND </if>
+				<if test="issendemail != null " > ISSENDEMAIL=#{issendemail} AND </if>
+				<if test="isdel != null " > ISDEL=#{isdel} AND </if>
+				<if test="htlb != null " > HTLB=#{htlb} AND </if>
+				<if test="isrlht != null  and isrlht != '' " > ISRLHT=#{isrlht} AND </if>
+				
+            </trim>
+        </select>
+        <!-- update sql -->
+        <sql id="update_pojo_sql">
+        	<trim prefix="SET" suffixOverrides=",">
+        		<if test="htbh != null  and htbh != '' " > HTBH=#{htbh} , </if>
+				<if test="htmc != null  and htmc != '' " > HTMC=#{htmc} , </if>
+				<if test="htje != null " > HTJE=#{htje} , </if>
+				<if test="wbq != null " > WBQ=#{wbq} , </if>
+				<if test="wbfy != null  and wbfy != '' " > WBFY=#{wbfy} , </if>
+				<if test="wbksrq != null " > WBKSRQ=#{wbksrq} , </if>
+				<if test="wbjsrq != null " > WBJSRQ=#{wbjsrq} , </if>
+				<if test="ksrq != null " > KSRQ=#{ksrq} , </if>
+				<if test="jsrq != null " > JSRQ=#{jsrq} , </if>
+				<if test="cgnr != null  and cgnr != '' " > CGNR=#{cgnr} , </if>
+				<if test="gysmc != null  and gysmc != '' " > GYSMC=#{gysmc} , </if>
+				<if test="htwb != null  and htwb != '' " > HTWB=#{htwb} , </if>
+				<if test="rlzylxbh != null  and rlzylxbh != '' " > RLZYLXBH=#{rlzylxbh} , </if>
+				<if test="time != null " > TIME=#{time} , </if>
+				<if test="id != null " > ID=#{id} , </if>
+				<if test="dealdept != null  and dealdept != '' " > DEALDEPT=#{dealdept} , </if>
+				<if test="creator != null  and creator != '' " > CREATOR=#{creator} , </if>
+				<if test="createtime != null " > CREATETIME=#{createtime} , </if>
+				<if test="instanceid != null  and instanceid != '' " > INSTANCEID=#{instanceid} , </if>
+				<if test="dealdeptid != null  and dealdeptid != '' " > DEALDEPTID=#{dealdeptid} , </if>
+				<if test="issendemail != null " > ISSENDEMAIL=#{issendemail} , </if>
+				<if test="isdel != null " > ISDEL=#{isdel} , </if>
+				<if test="htlb != null " > HTLB=#{htlb} , </if>
+				<if test="isrlht != null  and isrlht != '' " > ISRLHT=#{isrlht} , </if>
+				
+            </trim>
+        </sql>
+
+        <!--通过id编辑 k6991 2020-07-24 -->
+    	<update id="updatePojo" parameterType="ppmWorkKjlCght">
+        	UPDATE
+        	PPM_WORK_KJL_CGHT
+        	<include refid="update_pojo_sql" />
+        	WHERE HTBH=#{htbh}
+        </update>
+
+        <!--通过id批量删除  k6991 2020-07-24 -->
+        <delete id="deleteById" parameterType="ppmWorkKjlCght">
+        	DELETE
+        	FROM
+        	PPM_WORK_KJL_CGHT
+        	WHERE HTBH = #{htbh}
+        </delete>
+
+        <!-- 获取主键id -->
+        <select id="getPrimaryKey" parameterType="map" resultType="long">
+            SELECT MAX(HTBH) FROM PPM_WORK_KJL_CGHT
+        </select>
+
+		<!-- 查询分页  2021-01-27 k1327  -->
+		<select id="queryContracts" parameterType="ppmWorkKjlCght" resultMap="PPMWORKKJLCGHT_ALL">
+			select * from ppm_work_kjl_cght  t
+			<trim prefix="WHERE" suffixOverrides="AND">
+				<if test="true" >(t.htlb='33' or t.htlb='37')  and t.isrlht = '0' AND </if>
+				<if test="htmc != null  and htmc != '' " > HTMC = #{htmc} AND </if>
+				<if test="gysmc != null  and gysmc != '' " > GYSMC = #{gysmc} AND </if>
+				<if test="dealdeptid != null  and dealdeptid != '' " > DEALDEPTID = #{dealdeptid} AND </if>
+
+			</trim>
+		</select>
+</mapper>

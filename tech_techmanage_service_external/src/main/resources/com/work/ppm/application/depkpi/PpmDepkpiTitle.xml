@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k76239 2021-11-27 -->
+<mapper namespace="com.work.ppm.application.model.depkpi.PpmDepkpiTitle">
+    <resultMap type="ppmDepkpiTitle" id="PPMDEPKPITITLE_ALL">
+        <result property="id" column="ID"/>
+        <result property="depid" column="DEPID"/>
+        <result property="targetid" column="TARGETID"/>
+        <result property="detailid" column="DETAILID"/>
+        <result property="name" column="NAME"/>
+        <result property="levelnum" column="LEVELNUM"/>
+        <result property="parentid" column="PARENTID"/>
+        <result property="hasson" column="HASSON"/>
+        <result property="evaltype" column="EVALTYPE"/>
+        <result property="selfeval" column="SELFEVAL"/>
+        <result property="isdel" column="ISDEL"/>
+        <result property="lastmoduserid" column="LASTMODUSERID"/>
+        <result property="lastmodtime" column="LASTMODTIME"/>
+        <result property="basepoint" column="BASEPOINT"/>
+        <result property="maxpoint" column="MAXPOINT"/>
+        <result property="minpoint" column="MINPOINT"/>
+        <result property="targettype" column="TARGETTYPE"/>
+    </resultMap>
+
+    <!--查询标题树结构内容配置映射-->
+    <resultMap type="ppmDepkpiTitleInfo" id="PPMDEPKPITITLE_ALL_DDL">
+        <result property="targetid" column="TARGETID"/>
+        <result property="detailid" column="DETAILID"/>
+        <collection property="titlelist" javaType="java.util.ArrayList" resultMap="s1"></collection>
+    </resultMap>
+
+    <!--检验分数容配置映射-->
+    <resultMap type="ppmDepkpiTitleInfo" id="PPMDEPKPITITLE_ALL_EXD" extends="PPMDEPKPITITLE_ALL">
+        <result property="sumContentPoint" column="SUMCONTENTPOINT"/>
+    </resultMap>
+
+    <resultMap id="s1" type="com.work.ppm.application.model.depkpi.PpmDepkpiTitle">
+        <result property="id" column="ID"/>
+        <result property="depid" column="DEPID"/>
+        <result property="titleid" column="TITLEID"/>
+        <result property="name" column="NAME"/>
+        <result property="levelnum" column="LEVELNUM"/>
+        <result property="parentid" column="PARENTID"/>
+        <result property="hasson" column="HASSON"/>
+        <result property="evaltype" column="EVALTYPE"/>
+        <result property="selfeval" column="SELFEVAL"/>
+        <result property="isdel" column="ISDEL"/>
+        <result property="lastmoduserid" column="LASTMODUSERID"/>
+        <result property="lastmodtime" column="LASTMODTIME"/>
+        <result property="basepoint" column="BASEPOINT"/>
+        <result property="maxpoint" column="MAXPOINT"/>
+        <result property="minpoint" column="MINPOINT"/>
+    </resultMap>
+
+    <!-- 所有字段名称 -->
+    <sql id="sql_flied_all">
+        ID,
+        DEPID,
+        TARGETID,
+        DETAILID,
+        NAME,
+        LEVELNUM,
+        PARENTID,
+        HASSON,
+        EVALTYPE,
+        SELFEVAL,
+        ISDEL,
+        LASTMODUSERID,
+        LASTMODTIME,
+        BASEPOINT,
+        MAXPOINT,
+        MINPOINT,
+        TARGETTYPE
+    </sql>
+
+    <sql id="sql_select_condition">
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="id != null ">ID = #{id} AND</if>
+            <if test="depid != null ">DEPID = #{depid} AND</if>
+            <if test="targetid != null ">TARGETID = #{targetid} AND</if>
+            <if test="detailid != null ">DETAILID = #{detailid} AND</if>
+            <if test="name != null  and name != '' ">NAME = #{name} AND</if>
+            <if test="levelnum != null ">LEVELNUM = #{levelnum} AND</if>
+            <if test="parentid != null ">PARENTID = #{parentid} AND</if>
+            <if test="hasson != null ">HASSON = #{hasson} AND</if>
+            <if test="evaltype != null ">EVALTYPE = #{evaltype} AND</if>
+            <if test="selfeval != null ">SELFEVAL = #{selfeval} AND</if>
+            <if test="isdel != null ">ISDEL = #{isdel} AND</if>
+            <if test="lastmoduserid != null  and lastmoduserid != '' ">LASTMODUSERID = #{lastmoduserid} AND</if>
+            <if test="lastmodtime != null ">LASTMODTIME = #{lastmodtime} AND</if>
+            <if test="basepoint != null ">BASEPOINT = #{basepoint} AND</if>
+            <if test="maxpoint != null ">MAXPOINT = #{maxpoint} AND</if>
+            <if test="minpoint != null ">MINPOINT = #{minpoint} AND</if>
+            <if test="targettype != null ">TARGETTYPE = #{targettype} AND</if>
+        </trim>
+    </sql>
+
+    <!-- 新增  2021-11-27 k76239  -->
+    <insert id="addPojo" parameterType="ppmDepkpiTitle">
+        INSERT INTO PPM_DEPKPI_TITLE (
+        <trim suffixOverrides=",">
+            <if test="id != null ">ID ,</if>
+            <if test="depid != null ">DEPID ,</if>
+            <if test="targetid != null ">TARGETID ,</if>
+            <if test="detailid != null ">DETAILID ,</if>
+            <if test="name != null  and name != '' ">NAME ,</if>
+            <if test="levelnum != null ">LEVELNUM ,</if>
+            <if test="parentid != null ">PARENTID ,</if>
+            <if test="hasson != null ">HASSON ,</if>
+            <if test="evaltype != null ">EVALTYPE ,</if>
+            <if test="selfeval != null ">SELFEVAL ,</if>
+            <if test="isdel != null ">ISDEL ,</if>
+            <if test="lastmoduserid != null  and lastmoduserid != '' ">LASTMODUSERID ,</if>
+            <if test="lastmodtime != null ">LASTMODTIME ,</if>
+            <if test="basepoint != null ">BASEPOINT ,</if>
+            <if test="maxpoint != null ">MAXPOINT ,</if>
+            <if test="minpoint != null ">MINPOINT ,</if>
+            <if test="targettype != null ">TARGETTYPE,</if>
+        </trim>
+        )
+        VALUES(
+        <trim suffixOverrides=",">
+            <if test="id != null ">#{id} ,</if>
+            <if test="depid != null ">#{depid} ,</if>
+            <if test="targetid != null ">#{targetid} ,</if>
+            <if test="detailid != null ">#{detailid} ,</if>
+            <if test="name != null  and name != '' ">#{name} ,</if>
+            <if test="levelnum != null ">#{levelnum} ,</if>
+            <if test="parentid != null ">#{parentid} ,</if>
+            <if test="hasson != null ">#{hasson} ,</if>
+            <if test="evaltype != null ">#{evaltype} ,</if>
+            <if test="selfeval != null ">#{selfeval} ,</if>
+            <if test="isdel != null ">#{isdel} ,</if>
+            <if test="lastmoduserid != null  and lastmoduserid != '' ">#{lastmoduserid} ,</if>
+            <if test="lastmodtime != null ">#{lastmodtime} ,</if>
+            <if test="basepoint != null ">#{basepoint} ,</if>
+            <if test="maxpoint != null ">#{maxpoint} ,</if>
+            <if test="minpoint != null ">#{minpoint} ,</if>
+            <if test="targettype != null ">#{targettype} ,</if>
+        </trim>
+        )
+    </insert>
+
+    <!--查询集合  k76239 2021-11-27 -->
+    <select id="selectList" parameterType="ppmDepkpiTitle" resultMap="PPMDEPKPITITLE_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM PPM_DEPKPI_TITLE
+        <include refid="sql_select_condition"/>
+        ORDER BY depid, lastmodtime desc
+    </select>
+    <!--通过id查询  k76179 2021-11-26 -->
+    <select id="queryByParentId" parameterType="ppmDepkpiTitle" resultMap="PPMDEPKPITITLE_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM PPM_DEPKPI_TITLE WHERE PARENTID=#{parentid} AND ISDEL=0
+    </select>
+    <!--查询树结构 -->
+    <select id="queryTitleTreeData" parameterType="ppmDepkpiTitle" resultMap="PPMDEPKPITITLE_ALL_DDL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM PPM_DEPKPI_TITLE
+        <include refid="sql_select_condition"/>
+        ORDER BY depid, lastmodtime desc
+    </select>
+
+    <!-- update sql -->
+    <sql id="update_pojo_sql">
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="id != null ">ID=#{id} ,</if>
+            <if test="depid != null ">DEPID=#{depid} ,</if>
+            <if test="targetid != null ">TARGETID=#{targetid} ,</if>
+            <if test="detailid != null ">DETAILID=#{detailid} ,</if>
+            <if test="name != null  and name != '' ">NAME=#{name} ,</if>
+            <if test="levelnum != null ">LEVELNUM=#{levelnum} ,</if>
+            <if test="parentid != null ">PARENTID=#{parentid} ,</if>
+            <if test="hasson != null ">HASSON=#{hasson} ,</if>
+            <if test="evaltype != null ">EVALTYPE=#{evaltype} ,</if>
+            <if test="selfeval != null ">SELFEVAL=#{selfeval} ,</if>
+            <if test="isdel != null ">ISDEL=#{isdel} ,</if>
+            <if test="lastmoduserid != null  and lastmoduserid != '' ">LASTMODUSERID=#{lastmoduserid} ,</if>
+            <if test="lastmodtime != null ">LASTMODTIME=#{lastmodtime} ,</if>
+            <if test="basepoint != null ">BASEPOINT=#{basepoint} ,</if>
+            <if test="maxpoint != null ">MAXPOINT=#{maxpoint} ,</if>
+            <if test="minpoint != null ">MINPOINT=#{minpoint} ,</if>
+            <if test="targettype != null ">TARGETTYPE = #{targettype},</if>
+        </trim>
+    </sql>
+
+    <!--通过id编辑 k76239 2021-11-27 -->
+    <update id="updatePojo" parameterType="ppmDepkpiTitle">
+        UPDATE
+        PPM_DEPKPI_TITLE
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="id != null ">ID=#{id} ,</if>
+            <if test="depid != null ">DEPID=#{depid} ,</if>
+            <if test="targetid != null ">TARGETID=#{targetid} ,</if>
+            <if test="detailid != null ">DETAILID=#{detailid} ,</if>
+            <if test="name != null  and name != '' ">NAME=#{name} ,</if>
+            <if test="levelnum != null ">LEVELNUM=#{levelnum} ,</if>
+            <if test="parentid != null ">PARENTID=#{parentid} ,</if>
+            <if test="hasson != null ">HASSON=#{hasson} ,</if>
+            <if test="evaltype != null ">EVALTYPE=#{evaltype} ,</if>
+            <if test="selfeval != null ">SELFEVAL=#{selfeval} ,</if>
+            <if test="isdel != null ">ISDEL=#{isdel} ,</if>
+            <if test="lastmoduserid != null  and lastmoduserid != '' ">LASTMODUSERID=#{lastmoduserid} ,</if>
+            <if test="lastmodtime != null ">LASTMODTIME=#{lastmodtime} ,</if>
+            <if test="basepoint != null ">BASEPOINT=#{basepoint} ,</if>
+            <if test="maxpoint != null ">MAXPOINT=#{maxpoint} ,</if>
+            <if test="minpoint != null ">MINPOINT=#{minpoint} ,</if>
+            <if test="targettype != null ">TARGETTYPE = #{targettype},</if>
+        </trim>
+            WHERE ID=#{id}
+    </update>
+
+    <!--查询明细  k76239 2021-11-27 -->
+    <select id="selectTitleById" parameterType="ppmDepkpiTitle" resultMap="PPMDEPKPITITLE_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM PPM_DEPKPI_TITLE
+        WHERE ID = #{id}
+    </select>
+
+    <!--根据detailis查询  k76179 2021-12-8 -->
+    <select id="queryByDetailId" parameterType="ppmDepkpiTitle" resultMap="PPMDEPKPITITLE_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM PPM_DEPKPI_TITLE
+        WHERE DETAILID = #{detailid} AND HASSON = #{hasson} AND ISDEL = #{isdel}
+    </select>
+
+    <!--自定义代办检验分值  k76239 2021-11-27 -->
+    <select id="checkPoint" parameterType="ppmDepkpiTitle" resultMap="PPMDEPKPITITLE_ALL_EXD">
+        SELECT
+        NVL(T1.BASEPOINT,0) BASEPOINT,NVL(SUM(T2.BASEPOINT),0) SUMCONTENTPOINT,T1.ID
+        FROM PPM_DEPKPI_TITLE T1
+        LEFT JOIN PPM_DEPKPI_CONTENT T2
+        ON T1.ID=T2.TITLEID
+        WHERE T1.DEPID=#{depid} AND T1.HASSON=#{hasson}
+        GROUP BY T1.BASEPOINT,T1.ID
+    </select>
+
+    <!--公共代办检验分值  k76239 2021-11-27 -->
+    <select id="ggCheckPoint" parameterType="ppmDepkpiTitle" resultMap="PPMDEPKPITITLE_ALL_EXD">
+        SELECT
+        NVL(T1.BASEPOINT,0) BASEPOINT,NVL(SUM(T2.BASEPOINT),0) SUMCONTENTPOINT,T1.ID
+        FROM PPM_DEPKPI_TITLE T1
+        LEFT JOIN PPM_DEPKPI_CONTENT T2
+        ON T1.ID=T2.TITLEID
+        WHERE T1.DETAILID=#{detatlid} AND T1.HASSON=#{hasson}
+        GROUP BY T1.BASEPOINT,T1.ID
+    </select>
+
+    <!--通过id编辑删除标题数据 k76239 2021-11-27 -->
+    <update id="updateIsdelById" parameterType="ppmDepkpiTitle">
+        update PPM_DEPKPI_TITLE
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="lastmoduserid != null  and lastmoduserid != '' ">LASTMODUSERID=#{lastmoduserid} ,</if>
+            <if test="lastmodtime != null ">LASTMODTIME=#{lastmodtime} ,</if>
+            ISDEL = #{isdel}
+        </trim>
+        where id in( select id from PPM_DEPKPI_TITLE
+        start with id = #{id}
+        connect by prior id = parentid)
+    </update>
+
+    <!--通过id编辑 k76239 2021-11-27 -->
+    <update id="updateById" parameterType="ppmDepkpiTitle">
+        UPDATE
+        PPM_DEPKPI_TITLE
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="depid != null ">DEPID=#{depid} ,</if>
+            <if test="targetid != null ">TARGETID=#{targetid} ,</if>
+            <if test="detailid != null ">DETAILID=#{detailid} ,</if>
+            <if test="levelnum != null ">LEVELNUM=#{levelnum} ,</if>
+            <if test="parentid != null ">PARENTID=#{parentid} ,</if>
+            <if test="hasson != null ">HASSON=#{hasson} ,</if>
+            <if test="isdel != null ">ISDEL=#{isdel} ,</if>
+            <if test="lastmoduserid != null  and lastmoduserid != '' ">LASTMODUSERID=#{lastmoduserid} ,</if>
+            <if test="lastmodtime != null ">LASTMODTIME=#{lastmodtime} ,</if>
+            <if test="targettype != null ">TARGETTYPE = #{targettype},</if>
+            BASEPOINT=#{basepoint, jdbcType=INTEGER},
+            NAME=#{name, jdbcType=VARCHAR},
+            SELFEVAL=#{selfeval, jdbcType=INTEGER},
+            MAXPOINT=#{maxpoint, jdbcType=INTEGER},
+            MINPOINT=#{minpoint, jdbcType=INTEGER},
+            EVALTYPE=#{evaltype, jdbcType=INTEGER},
+        </trim>
+        WHERE ID=#{id}
+    </update>
+</mapper>

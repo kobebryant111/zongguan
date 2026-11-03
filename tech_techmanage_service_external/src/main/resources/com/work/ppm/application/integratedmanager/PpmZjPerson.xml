@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:ywwb436 2022-08-09 -->
+<!--  闸机人员信息 查询脚本 -->
+<mapper namespace="com.work.ppm.application.model.integratedmanager.PpmZjPerson">
+    <resultMap type="ppmZjPerson" id="PPMZJPERSON_ALL">
+        <result property="personId" column="PERSON_ID"/>
+        <result property="personName" column="PERSON_NAME"/>
+        <result property="pinyin" column="PINYIN"/>
+        <result property="gender" column="GENDER"/>
+        <result property="orgIndexCode" column="ORG_INDEX_CODE"/>
+        <result property="orgPath" column="ORG_PATH"/>
+        <result property="certificateType" column="CERTIFICATE_TYPE"/>
+        <result property="certificateNo" column="CERTIFICATE_NO"/>
+        <result property="jobNo" column="JOB_NO"/>
+        <result property="age" column="AGE"/>
+        <result property="faceNum" column="FACE_NUM"/>
+        <result property="fingerPrintNum" column="FINGER_PRINT_NUM"/>
+        <result property="createTime" column="CREATE_TIME"/>
+        <result property="updateTime" column="UPDATE_TIME"/>
+
+    </resultMap>
+
+    <!-- 所有字段名称 -->
+    <sql id="sql_flied_all">
+        PERSON_ID,
+        PERSON_NAME,
+        PINYIN,
+        GENDER,
+        ORG_INDEX_CODE,
+        ORG_PATH,
+        CERTIFICATE_TYPE,
+        CERTIFICATE_NO,
+        JOB_NO,
+        AGE,
+        FACE_NUM,
+        FINGER_PRINT_NUM,
+        CREATE_TIME,
+        UPDATE_TIME
+    </sql>
+    <sql id="sql_select_condition">
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="personId != null  and personId != '' ">PERSON_ID = #{personId} AND</if>
+            <if test="personName != null  and personName != '' ">PERSON_NAME = #{personName} AND</if>
+            <if test="pinyin != null  and pinyin != '' ">PINYIN = #{pinyin} AND</if>
+            <if test="gender != null ">GENDER = #{gender} AND</if>
+            <if test="orgIndexCode != null  and orgIndexCode != '' ">ORG_INDEX_CODE = #{orgIndexCode} AND</if>
+            <if test="orgPath != null  and orgPath != '' ">ORG_PATH = #{orgPath} AND</if>
+            <if test="certificateType != null ">CERTIFICATE_TYPE = #{certificateType} AND</if>
+            <if test="certificateNo != null  and certificateNo != '' ">CERTIFICATE_NO = #{certificateNo} AND</if>
+            <if test="jobNo != null  and jobNo != '' ">JOB_NO = #{jobNo} AND</if>
+            <if test="age != null ">AGE = #{age} AND</if>
+            <if test="faceNum != null ">FACE_NUM = #{faceNum} AND</if>
+            <if test="fingerPrintNum != null ">FINGER_PRINT_NUM = #{fingerPrintNum} AND</if>
+            <if test="createTime != null ">CREATE_TIME = #{createTime} AND</if>
+            <if test="updateTime != null ">UPDATE_TIME = #{updateTime} AND</if>
+
+        </trim>
+    </sql>
+    <!-- 查询分页  2022-08-09 ywwb436  -->
+    <select id="queryPagerList" parameterType="map" resultMap="PPMZJPERSON_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM PPM_ZJ_PERSON
+        <include refid="sql_select_condition"/>
+    </select>
+
+    <!-- 新增  2022-08-09 ywwb436  -->
+    <insert id="addPojo" parameterType="ppmZjPerson">
+        INSERT INTO PPM_ZJ_PERSON (
+        <trim suffixOverrides=",">
+            <if test="personId != null  and personId != '' ">PERSON_ID ,</if>
+            <if test="personName != null  and personName != '' ">PERSON_NAME ,</if>
+            <if test="pinyin != null  and pinyin != '' ">PINYIN ,</if>
+            <if test="gender != null ">GENDER ,</if>
+            <if test="orgIndexCode != null  and orgIndexCode != '' ">ORG_INDEX_CODE ,</if>
+            <if test="orgPath != null  and orgPath != '' ">ORG_PATH ,</if>
+            <if test="certificateType != null ">CERTIFICATE_TYPE ,</if>
+            <if test="certificateNo != null  and certificateNo != '' ">CERTIFICATE_NO ,</if>
+            <if test="jobNo != null  and jobNo != '' ">JOB_NO ,</if>
+            <if test="age != null ">AGE ,</if>
+            <if test="faceNum != null ">FACE_NUM ,</if>
+            <if test="fingerPrintNum != null ">FINGER_PRINT_NUM ,</if>
+            <if test="createTime != null ">CREATE_TIME ,</if>
+            <if test="updateTime != null ">UPDATE_TIME ,</if>
+
+        </trim>
+        )
+        VALUES(
+        <trim suffixOverrides=",">
+            <if test="personId != null  and personId != '' ">#{personId} ,</if>
+            <if test="personName != null  and personName != '' ">#{personName} ,</if>
+            <if test="pinyin != null  and pinyin != '' ">#{pinyin} ,</if>
+            <if test="gender != null ">#{gender} ,</if>
+            <if test="orgIndexCode != null  and orgIndexCode != '' ">#{orgIndexCode} ,</if>
+            <if test="orgPath != null  and orgPath != '' ">#{orgPath} ,</if>
+            <if test="certificateType != null ">#{certificateType} ,</if>
+            <if test="certificateNo != null  and certificateNo != '' ">#{certificateNo} ,</if>
+            <if test="jobNo != null  and jobNo != '' ">#{jobNo} ,</if>
+            <if test="age != null ">#{age} ,</if>
+            <if test="faceNum != null ">#{faceNum} ,</if>
+            <if test="fingerPrintNum != null ">#{fingerPrintNum} ,</if>
+            <if test="createTime != null ">#{createTime} ,</if>
+            <if test="updateTime != null ">#{updateTime} ,</if>
+
+        </trim>
+        )
+    </insert>
+
+    <!--通过id查询  ywwb436 2022-08-09 -->
+    <select id="queryDetail" parameterType="ppmZjPerson" resultMap="PPMZJPERSON_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM PPM_ZJ_PERSON WHERE PERSON_ID=#{personId}
+    </select>
+
+    <!-- 根据身份证号取人员编号 -->
+    <select id="getPersonId" parameterType="ppmZjPerson" resultMap="PPMZJPERSON_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM PPM_ZJ_PERSON WHERE CERTIFICATE_NO=#{certificateNo}
+    </select>
+
+    <!--查询集合  ywwb436 2022-08-09 -->
+    <select id="getList" parameterType="ppmZjPerson" resultMap="PPMZJPERSON_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM PPM_ZJ_PERSON
+        <include refid="sql_select_condition"/>
+    </select>
+    <!-- update sql -->
+    <sql id="update_pojo_sql">
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="personId != null  and personId != '' ">PERSON_ID=#{personId} ,</if>
+            <if test="personName != null  and personName != '' ">PERSON_NAME=#{personName} ,</if>
+            <if test="pinyin != null  and pinyin != '' ">PINYIN=#{pinyin} ,</if>
+            <if test="gender != null ">GENDER=#{gender} ,</if>
+            <if test="orgIndexCode != null  and orgIndexCode != '' ">ORG_INDEX_CODE=#{orgIndexCode} ,</if>
+            <if test="orgPath != null  and orgPath != '' ">ORG_PATH=#{orgPath} ,</if>
+            <if test="certificateType != null ">CERTIFICATE_TYPE=#{certificateType} ,</if>
+            <if test="certificateNo != null  and certificateNo != '' ">CERTIFICATE_NO=#{certificateNo} ,</if>
+            <if test="jobNo != null  and jobNo != '' ">JOB_NO=#{jobNo} ,</if>
+            <if test="age != null ">AGE=#{age} ,</if>
+            <if test="faceNum != null ">FACE_NUM=#{faceNum} ,</if>
+            <if test="fingerPrintNum != null ">FINGER_PRINT_NUM=#{fingerPrintNum} ,</if>
+            <if test="createTime != null ">CREATE_TIME=#{createTime} ,</if>
+            <if test="updateTime != null ">UPDATE_TIME=#{updateTime} ,</if>
+
+        </trim>
+    </sql>
+
+    <!--通过id编辑 ywwb436 2022-08-09 -->
+    <update id="updatePojo" parameterType="ppmZjPerson">
+        UPDATE
+        PPM_ZJ_PERSON
+        <include refid="update_pojo_sql"/>
+        WHERE PERSON_ID=#{personId}
+    </update>
+
+    <!--通过id批量删除  ywwb436 2022-08-09 -->
+    <delete id="deleteById" parameterType="ppmZjPerson">
+        DELETE
+        FROM
+        PPM_ZJ_PERSON
+        WHERE PERSON_ID = #{personId}
+    </delete>
+
+</mapper>

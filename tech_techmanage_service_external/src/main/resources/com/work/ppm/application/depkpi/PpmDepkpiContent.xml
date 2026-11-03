@@ -1,0 +1,676 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k76239 2021-11-27 -->
+<mapper namespace="com.work.ppm.application.model.depkpi.PpmDepkpiContent">
+    <resultMap type="ppmDepkpiContent" id="PPMDEPKPICONTENT_ALL">
+        <result property="id" column="ID"/>
+        <result property="tyear" column="TYEAR"/>
+        <result property="depid" column="DEPID"/>
+        <result property="targetid" column="TARGETID"/>
+        <result property="targettype" column="TARGETTYPE"/>
+        <result property="detailid" column="DETAILID"/>
+        <result property="titleid" column="TITLEID"/>
+        <result property="basepoint" column="BASEPOINT"/>
+        <result property="content" column="CONTENT"/>
+        <result property="standard" column="STANDARD"/>
+        <result property="startdate" column="STARTDATE"/>
+        <result property="enddate" column="ENDDATE"/>
+        <result property="evaltype" column="EVALTYPE"/>
+        <result property="selfeval" column="SELFEVAL"/>
+        <result property="isdel" column="ISDEL"/>
+        <result property="lastmoduserid" column="LASTMODUSERID"/>
+        <result property="lastmodtime" column="LASTMODTIME"/>
+        <result property="selfevalres" column="SELFEVALRES"/>
+        <result property="selfevalstatus" column="SELFEVALSTATUS"/>
+        <result property="firstcheckres" column="FIRSTCHECKRES"/>
+        <result property="firstcheckpoint" column="FIRSTCHECKPOINT"/>
+        <result property="firstcheckremark" column="FIRSTCHECKREMARK"/>
+        <result property="firstcheckstatus" column="FIRSTCHECKSTATUS"/>
+        <result property="secondcheckres" column="SECONDCHECKRES"/>
+        <result property="secondcheckpoint" column="SECONDCHECKPOINT"/>
+        <result property="secondcheckremark" column="SECONDCHECKREMARK"/>
+        <result property="secondcheckstatus" column="SECONDCHECKSTATUS"/>
+        <result property="maxpoint" column="MAXPOINT"/>
+        <result property="minpoint" column="MINPOINT"/>
+        <result property="firstchecktime" column="FIRSTCHECKTIME"/>
+        <result property="secondchecktime" column="SECONDCHECKTIME"/>
+
+    </resultMap>
+
+    <resultMap type="ppmDepkpiContentInfo" id="PPMDEPKPICONTENT_ALL_EXT" extends="PPMDEPKPICONTENT_ALL">
+        <result property="targetname" column="TARGETNAME"/>
+        <result property="depname" column="DEPNAME"/>
+        <result property="titlename" column="TITLENAME"/>
+        <result property="dbstatus" column="DBSTATUS"/>
+        <result property="userid" column="USERID"/>
+        <result property="ggsumpoint" column="GGSUMPOINT"/>
+        <result property="zdysumpoint" column="ZDYSUMPOINT"/>
+        <result property="commitsum" column="COMMITSUM"/>
+        <result property="sumpoint" column="SUMPOINT"/>
+        <result property="countcontent" column="COUNTCONTENT"/>
+        <result property="sign" column="SIGN"/>
+        <result property="isSecond" column="ISSECOND"/>
+        <result property="firstcheck" column="FIRSTCHECK"/>
+        <result property="secondcheck" column="SECONDCHECK"/>
+        <result property="dbuser" column="DBUSER"/>
+    </resultMap>
+
+    <!-- 所有字段名称 -->
+    <sql id="sql_flied_all">
+        ID,
+        TYEAR,
+        DEPID,
+        TARGETID,
+        TARGETTYPE,
+        TITLEID,
+        DETAILID,
+        BASEPOINT,
+        CONTENT,
+        STANDARD,
+        STARTDATE,
+        ENDDATE,
+        EVALTYPE,
+        SELFEVAL,
+        ISDEL,
+        LASTMODUSERID,
+        LASTMODTIME,
+        SELFEVALRES,
+        SELFEVALSTATUS,
+        FIRSTCHECKRES,
+        FIRSTCHECKPOINT,
+        FIRSTCHECKREMARK,
+        FIRSTCHECKSTATUS,
+        SECONDCHECKRES,
+        SECONDCHECKPOINT,
+        SECONDCHECKREMARK,
+        SECONDCHECKSTATUS,
+        MAXPOINT,
+        MINPOINT,
+        FIRSTCHECKTIME,
+        SECONDCHECKTIME
+    </sql>
+    <sql id="Asql_flied_all">
+        a.ID,
+        a.TYEAR,
+        a.DEPID,
+        a.TARGETID,
+        a.TARGETTYPE,
+        a.TITLEID,
+        a.DETAILID,
+        a.BASEPOINT,
+        a.CONTENT,
+        a.STANDARD,
+        a.STARTDATE,
+        a.ENDDATE,
+        a.EVALTYPE,
+        a.SELFEVAL,
+        a.ISDEL,
+        a.LASTMODUSERID,
+        a.LASTMODTIME,
+        a.SELFEVALRES,
+        a.SELFEVALSTATUS,
+        a.FIRSTCHECKRES,
+        a.FIRSTCHECKPOINT,
+        a.FIRSTCHECKREMARK,
+        a.FIRSTCHECKSTATUS,
+        a.SECONDCHECKRES,
+        a.SECONDCHECKPOINT,
+        a.SECONDCHECKREMARK,
+        a.SECONDCHECKSTATUS,
+        a.MAXPOINT,
+        a.MINPOINT,
+        a.FIRSTCHECKTIME,
+        a.SECONDCHECKTIME
+    </sql>
+    <sql id="sql_select_condition">
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="id != null ">ID = #{id} AND</if>
+            <if test="tyear != null">TYEAR = #{tyear} AND</if>
+            <if test="depid != null ">DEPID = #{depid} AND</if>
+            <if test="targetid != null ">TARGETID = #{targetid} AND</if>
+            <if test="targettype != null ">TARGETTYPE=#{targettype} AND</if>
+            <if test="detailid != null and parentDetailid == null">DETAILID = #{detailid} AND</if>
+            <if test="titleid != null ">TITLEID = #{titleid} AND</if>
+            <if test="basepoint != null ">BASEPOINT = #{basepoint} AND</if>
+            <if test="content != null ">CONTENT like '%' || #{content} || '%' AND</if>
+            <if test="standard != null ">STANDARD = #{standard} AND</if>
+            <if test="startdate != null ">STARTDATE = #{startdate} AND</if>
+            <if test="enddate != null ">ENDDATE = #{enddate} AND</if>
+            <if test="evaltype != null ">EVALTYPE = #{evaltype} AND</if>
+            <if test="selfeval != null ">SELFEVAL = #{selfeval} AND</if>
+            <if test="isdel != null ">ISDEL = #{isdel} AND</if>
+            <if test="lastmoduserid != null ">LASTMODUSERID = #{lastmoduserid} AND</if>
+            <if test="lastmodtime != null ">LASTMODTIME = #{lastmodtime} AND</if>
+            <if test="selfevalres != null ">SELFEVALRES = #{selfevalres} AND</if>
+            <if test="selfevalstatus != null ">SELFEVALSTATUS = #{selfevalstatus} AND</if>
+            <if test="firstcheckres != null ">FIRSTCHECKRES = #{firstcheckres} AND</if>
+            <if test="firstcheckpoint != null ">FIRSTCHECKPOINT = #{firstcheckpoint} AND</if>
+            <if test="firstcheckremark != null ">FIRSTCHECKREMARK = #{firstcheckremark} AND</if>
+            <if test="firstcheckstatus != null ">FIRSTCHECKSTATUS = #{firstcheckstatus} AND</if>
+            <if test="secondcheckres != null ">SECONDCHECKRES = #{secondcheckres} AND</if>
+            <if test="secondcheckpoint != null ">SECONDCHECKPOINT = #{secondcheckpoint} AND</if>
+            <if test="secondcheckremark != null ">SECONDCHECKREMARK = #{secondcheckremark} AND</if>
+            <if test="secondcheckstatus != null ">SECONDCHECKSTATUS = #{secondcheckstatus} AND</if>
+            <if test="maxpoint != null ">MAXPOINT = #{maxpoint} AND</if>
+            <if test="firstchecktime != null ">FIRSTCHECKTIME = #{firstchecktime} AND</if>
+            <if test="secondchecktime != null ">SECONDCHECKTIME = #{secondchecktime} AND</if>
+            <if test="secondchecktime != null ">FIRSTCHECK = #{firstcheck} AND</if>
+            <if test="secondchecktime != null ">SECONDCHECK = #{secondcheck} AND</if>
+            <if test="parentTitleid != null ">
+                titleid in (
+                SELECT id FROM PPM_DEPKPI_TITLE WHERE HASSON = 0
+                START WITH ID = #{parentTitleid}
+                CONNECT BY PRIOR ID = PARENTID
+                ) AND
+            </if>
+            <if test="parentDetailid != null ">
+                detailid in (
+                SELECT id FROM PPM_DEPKPI_DEP_CHECK WHERE HASSON = 0
+                START WITH ID = #{parentDetailid}
+                CONNECT BY PRIOR ID = PARENTID
+                ) AND
+            </if>
+        </trim>
+    </sql>
+
+    <sql id="sql_select_a_condition">
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="id != null ">a.ID = #{id} AND</if>
+            <if test="tyear != null">a.TYEAR = #{tyear} AND</if>
+            <if test="depid != null ">a.DEPID = #{depid} AND</if>
+            <if test="targetid != null ">a.TARGETID = #{targetid} AND</if>
+            <if test="targettype != null ">a.TARGETTYPE=#{targettype} AND</if>
+            <if test="detailid != null and parentDetailid == null">a.DETAILID = #{detailid} AND</if>
+            <if test="titleid != null ">a.TITLEID = #{titleid} AND</if>
+            <if test="basepoint != null ">a.BASEPOINT = #{basepoint} AND</if>
+            <if test="content != null ">a.CONTENT like '%' || #{content} || '%' AND</if>
+            <if test="standard != null ">a.STANDARD = #{standard} AND</if>
+            <if test="startdate != null ">a.STARTDATE = #{startdate} AND</if>
+            <if test="enddate != null ">a.ENDDATE = #{enddate} AND</if>
+            <if test="evaltype != null ">a.EVALTYPE = #{evaltype} AND</if>
+            <if test="selfeval != null ">a.SELFEVAL = #{selfeval} AND</if>
+            <if test="isdel != null ">a.ISDEL = #{isdel} AND</if>
+            <if test="lastmoduserid != null ">a.LASTMODUSERID = #{lastmoduserid} AND</if>
+            <if test="lastmodtime != null ">a.LASTMODTIME = #{lastmodtime} AND</if>
+            <if test="selfevalres != null ">a.SELFEVALRES = #{selfevalres} AND</if>
+            <if test="selfevalstatus != null ">a.SELFEVALSTATUS = #{selfevalstatus} AND</if>
+            <if test="firstcheckres != null ">a.FIRSTCHECKRES = #{firstcheckres} AND</if>
+            <if test="firstcheckpoint != null ">a.FIRSTCHECKPOINT = #{firstcheckpoint} AND</if>
+            <if test="firstcheckremark != null ">a.FIRSTCHECKREMARK = #{firstcheckremark} AND</if>
+            <if test="firstcheckstatus != null ">a.FIRSTCHECKSTATUS = #{firstcheckstatus} AND</if>
+            <if test="secondcheckres != null ">a.SECONDCHECKRES = #{secondcheckres} AND</if>
+            <if test="secondcheckpoint != null ">a.SECONDCHECKPOINT = #{secondcheckpoint} AND</if>
+            <if test="secondcheckremark != null ">a.SECONDCHECKREMARK = #{secondcheckremark} AND</if>
+            <if test="secondcheckstatus != null ">a.SECONDCHECKSTATUS = #{secondcheckstatus} AND</if>
+            <if test="maxpoint != null ">a.MAXPOINT = #{maxpoint} AND</if>
+            <if test="firstchecktime != null ">a.FIRSTCHECKTIME = #{firstchecktime} AND</if>
+            <if test="secondchecktime != null ">a.SECONDCHECKTIME = #{secondchecktime} AND</if>
+            <if test="secondchecktime != null ">a.FIRSTCHECK = #{firstcheck} AND</if>
+            <if test="secondchecktime != null ">a.SECONDCHECK = #{secondcheck} AND</if>
+            <if test="parentTitleid != null ">
+                a.titleid in (
+                SELECT id FROM PPM_DEPKPI_TITLE WHERE HASSON = 0
+                START WITH ID = #{parentTitleid}
+                CONNECT BY PRIOR ID = PARENTID
+                ) AND
+            </if>
+            <if test="parentDetailid != null ">
+                a.detailid in (
+                SELECT id FROM PPM_DEPKPI_DEP_CHECK WHERE HASSON = 0
+                START WITH ID = #{parentDetailid}
+                CONNECT BY PRIOR ID = PARENTID
+                ) AND
+            </if>
+        </trim>
+    </sql>
+
+    <!-- update sql -->
+    <sql id="update_pojo_sql">
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="id != null ">ID=#{id} ,</if>
+            <if test="tyear != null ">TYEAR=#{tyear} ,</if>
+            <if test="depid != null ">DEPID=#{depid} ,</if>
+            <if test="targetid != null ">TARGETID=#{targetid} ,</if>
+            <if test="targettype != null ">TARGETTYPE=#{targettype,jdbcType=BIGINT} ,</if>
+            <if test="detailid != null ">DETAILID = #{detailid} ,</if>
+            <if test="titleid != null ">TITLEID=#{titleid} ,</if>
+            <if test="basepoint != null ">BASEPOINT=#{basepoint} ,</if>
+            <if test="content != null ">CONTENT=#{content} ,</if>
+            <if test="standard != null ">STANDARD=#{standard} ,</if>
+            <if test="startdate != null ">STARTDATE=#{startdate} ,</if>
+            <if test="enddate != null ">ENDDATE=#{enddate} ,</if>
+            <if test="evaltype != null ">EVALTYPE=#{evaltype,jdbcType=BIGINT} ,</if>
+            <if test="selfeval != null ">SELFEVAL=#{selfeval,jdbcType=BIGINT} ,</if>
+            <if test="isdel != null ">ISDEL=#{isdel} ,</if>
+            <if test="lastmoduserid != null ">LASTMODUSERID=#{lastmoduserid} ,</if>
+            <if test="lastmodtime != null ">LASTMODTIME=#{lastmodtime} ,</if>
+            <if test="selfevalres != null ">SELFEVALRES=#{selfevalres} ,</if>
+            <if test="selfevalstatus != null ">SELFEVALSTATUS=#{selfevalstatus} ,</if>
+            <if test="firstcheckres != null ">FIRSTCHECKRES=#{firstcheckres} ,</if>
+            <if test="firstcheckpoint != null ">FIRSTCHECKPOINT=#{firstcheckpoint} ,</if>
+            <if test="firstcheckremark != null ">FIRSTCHECKREMARK=#{firstcheckremark} ,</if>
+            <if test="firstcheckstatus != null ">FIRSTCHECKSTATUS=#{firstcheckstatus} ,</if>
+            <if test="secondcheckres != null ">SECONDCHECKRES=#{secondcheckres} ,</if>
+            <if test="secondcheckpoint != null ">SECONDCHECKPOINT=#{secondcheckpoint} ,</if>
+            <if test="secondcheckremark != null ">SECONDCHECKREMARK=#{secondcheckremark} ,</if>
+            <if test="secondcheckstatus != null ">SECONDCHECKSTATUS=#{secondcheckstatus} ,</if>
+            <if test="maxpoint != null ">MAXPOINT=#{maxpoint,jdbcType=BIGINT} ,</if>
+            <if test="minpoint != null ">MINPOINT=#{minpoint,jdbcType=BIGINT} ,</if>
+            <if test="firstchecktime != null ">FIRSTCHECKTIME = #{firstchecktime},</if>
+            <if test="secondchecktime != null ">SECONDCHECKTIME = #{secondchecktime},</if>
+        </trim>
+    </sql>
+
+    <!-- 查询分页  2021-11-27 k76239  -->
+    <select id="queryPagerList" parameterType="map" resultMap="PPMDEPKPICONTENT_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM PPM_DEPKPI_CONTENT
+        <include refid="sql_select_condition"/>
+    </select>
+
+    <!-- 新增  2021-11-27 k76239  -->
+    <insert id="addPojo" parameterType="ppmDepkpiContent">
+        INSERT INTO PPM_DEPKPI_CONTENT (
+        <trim suffixOverrides=",">
+            <if test="id != null ">ID ,</if>
+            <if test="tyear != null  and tyear != '' ">TYEAR ,</if>
+            <if test="depid != null ">DEPID ,</if>
+            <if test="targetid != null ">TARGETID ,</if>
+            <if test="targettype != null ">TARGETTYPE ,</if>
+            <if test="detailid != null ">DETAILID ,</if>
+            <if test="titleid != null ">TITLEID ,</if>
+            <if test="basepoint != null ">BASEPOINT ,</if>
+            <if test="content != null  and content != '' ">CONTENT ,</if>
+            <if test="standard != null  and standard != '' ">STANDARD ,</if>
+            <if test="startdate != null ">STARTDATE ,</if>
+            <if test="enddate != null ">ENDDATE ,</if>
+            <if test="evaltype != null ">EVALTYPE ,</if>
+            <if test="selfeval != null ">SELFEVAL ,</if>
+            <if test="isdel != null ">ISDEL ,</if>
+            <if test="lastmoduserid != null">LASTMODUSERID ,</if>
+            <if test="lastmodtime != null ">LASTMODTIME ,</if>
+            <if test="selfevalres != null  ">SELFEVALRES ,</if>
+            <if test="selfevalstatus != null ">SELFEVALSTATUS ,</if>
+            <if test="firstcheckres != null ">FIRSTCHECKRES ,</if>
+            <if test="firstcheckpoint != null ">FIRSTCHECKPOINT ,</if>
+            <if test="firstcheckremark != null ">FIRSTCHECKREMARK ,</if>
+            <if test="firstcheckstatus != null ">FIRSTCHECKSTATUS ,</if>
+            <if test="secondcheckres != null ">SECONDCHECKRES ,</if>
+            <if test="secondcheckpoint != null ">SECONDCHECKPOINT ,</if>
+            <if test="secondcheckremark != null ">SECONDCHECKREMARK ,</if>
+            <if test="secondcheckstatus != null ">SECONDCHECKSTATUS ,</if>
+            <if test="maxpoint != null ">MAXPOINT ,</if>
+            <if test="minpoint != null ">MINPOINT ,</if>
+            <if test="firstchecktime != null ">FIRSTCHECKTIME,</if>
+            <if test="secondchecktime != null ">SECONDCHECKTIME ,</if>
+        </trim>
+        )
+        VALUES(
+        <trim suffixOverrides=",">
+            <if test="id != null ">#{id} ,</if>
+            <if test="tyear != null  and tyear != '' ">#{tyear} ,</if>
+            <if test="depid != null ">#{depid} ,</if>
+            <if test="targetid != null ">#{targetid} ,</if>
+            <if test="targettype != null ">#{targettype} ,</if>
+            <if test="detailid != null ">#{detailid} ,</if>
+            <if test="titleid != null ">#{titleid} ,</if>
+            <if test="basepoint != null ">#{basepoint} ,</if>
+            <if test="content != null ">#{content} ,</if>
+            <if test="standard != null ">#{standard} ,</if>
+            <if test="startdate != null ">#{startdate} ,</if>
+            <if test="enddate != null ">#{enddate} ,</if>
+            <if test="evaltype != null ">#{evaltype} ,</if>
+            <if test="selfeval != null ">#{selfeval} ,</if>
+            <if test="isdel != null ">#{isdel} ,</if>
+            <if test="lastmoduserid != null ">#{lastmoduserid} ,</if>
+            <if test="lastmodtime != null ">#{lastmodtime} ,</if>
+            <if test="selfevalres != null ">#{selfevalres} ,</if>
+            <if test="selfevalstatus != null ">#{selfevalstatus} ,</if>
+            <if test="firstcheckres != null ">#{firstcheckres} ,</if>
+            <if test="firstcheckpoint != null ">#{firstcheckpoint} ,</if>
+            <if test="firstcheckremark != null ">#{firstcheckremark} ,</if>
+            <if test="firstcheckstatus != null ">#{firstcheckstatus} ,</if>
+            <if test="secondcheckres != null ">#{secondcheckres} ,</if>
+            <if test="secondcheckpoint != null ">#{secondcheckpoint} ,</if>
+            <if test="secondcheckremark != null ">#{secondcheckremark} ,</if>
+            <if test="secondcheckstatus != null ">#{secondcheckstatus} ,</if>
+            <if test="maxpoint != null ">#{maxpoint} ,</if>
+            <if test="minpoint != null ">#{minpoint} ,</if>
+            <if test="firstchecktime != null ">#{firstchecktime},</if>
+            <if test="secondchecktime != null ">#{secondchecktime},</if>
+        </trim>
+        )
+    </insert>
+
+    <!--通过id查询  k76239 2021-11-27 -->
+    <select id="queryDetail" parameterType="ppmDepkpiContent" resultMap="PPMDEPKPICONTENT_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM PPM_DEPKPI_CONTENT WHERE ID=#{id}
+    </select>
+    <!--查询  k76239 2021-11-27 -->
+    <select id="queryDepIdAndSign" parameterType="ppmDepkpiContent" resultMap="PPMDEPKPICONTENT_ALL_EXT">
+        SELECT
+        T1.DEPID ,T2.SIGN
+        FROM PPM_DEPKPI_CONTENT T1
+        LEFT JOIN PPM_DEPKPI_DEP_CHECK T2
+        ON T1.DETAILID=T2.ID
+        WHERE T1.ID=#{id}
+    </select>
+
+    <!--查询集合  k76239 2021-11-27 -->
+    <select id="getList" parameterType="ppmDepkpiContent" resultMap="PPMDEPKPICONTENT_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM PPM_DEPKPI_CONTENT
+        <include refid="sql_select_condition"/>
+        order by depid, detailid, titleid, lastmodtime
+    </select>
+
+    <!--分数显示查询  k76239 2021-11-27 -->
+    <select id="queryContentList" parameterType="ppmDepkpiContentInfo" resultMap="PPMDEPKPICONTENT_ALL_EXT">
+        SELECT
+        a.ID,
+        a.TYEAR,
+        a.DEPID,
+        a.TARGETID,
+        a.TARGETTYPE,
+        a.TITLEID,
+        a.DETAILID,
+        a.BASEPOINT,
+        a.CONTENT,
+        a.STANDARD,
+        a.STARTDATE,
+        a.ENDDATE,
+        a.EVALTYPE,
+        a.SELFEVAL,
+        a.ISDEL,
+        a.LASTMODUSERID,
+        a.LASTMODTIME,
+        a.SELFEVALRES,
+        a.SELFEVALSTATUS,
+        a.FIRSTCHECKRES,
+        a.FIRSTCHECKPOINT,
+        a.FIRSTCHECKREMARK,
+        a.FIRSTCHECKSTATUS,
+        a.SECONDCHECKRES,
+        nvl(a.SECONDCHECKPOINT,0) SECONDCHECKPOINT,
+        a.SECONDCHECKREMARK,
+        a.SECONDCHECKSTATUS,
+        a.MAXPOINT,
+        a.MINPOINT,
+        a.FIRSTCHECKTIME,
+        a.SECONDCHECKTIME,
+        b.NAME TARGETNAME,
+        z.NAME TITLENAME,
+        z.LASTMODTIME,
+        (select d.EMPNAME from COMM_EMPLOYEE d
+        where d.ISDISABLED=0 and d.BADGE = c.firstcheck) FIRSTCHECK,
+        (select d.EMPNAME from COMM_EMPLOYEE d
+        where d.ISDISABLED=0 and d.BADGE = c.secondcheck) SECONDCHECK
+        FROM PPM_DEPKPI_CONTENT a
+        LEFT JOIN PPM_DEPKPI_DEP_CHECK b
+        ON a.DETAILID=b.ID
+        LEFT JOIN PPM_DEPKPI_TITLE z
+        ON a.TITLEID=z.ID
+        LEFT JOIN PPM_DEPKPI_DEP_REL c
+        <if test="sign == 1 ">ON b.MARKERDEPID=c.DEPID</if>
+        <if test="sign == 2 ">ON b.MARKERDEPID=c.CENTERID</if>
+        <include refid="sql_select_a_condition"/>
+        and b.SIGN=#{sign} and c.SIGN=#{sign}
+        order by a.depid, a.detailid,z.lastmodtime desc, a.lastmodtime desc
+    </select>
+
+    <!--通过id编辑 k76239 2021-11-27 -->
+    <update id="updatePojo" parameterType="ppmDepkpiContent">
+        UPDATE
+        PPM_DEPKPI_CONTENT
+        <include refid="update_pojo_sql"/>
+        WHERE ID = #{id}
+    </update>
+    <!--通过id编辑 k76239 2021-11-27 -->
+    <update id="upSec" parameterType="ppmDepkpiContent">
+        UPDATE
+        PPM_DEPKPI_CONTENT SET
+        SECONDCHECKRES=#{secondcheckres,jdbcType=VARCHAR} ,
+        SECONDCHECKPOINT=#{secondcheckpoint,jdbcType=DOUBLE} ,
+        SECONDCHECKREMARK=#{secondcheckremark,jdbcType=VARCHAR} ,
+        SECONDCHECKSTATUS=#{secondcheckstatus,jdbcType=BIGINT} ,
+        SECONDCHECKTIME=#{secondchecktime} ,
+        LASTMODUSERID=#{lastmoduserid} ,
+        LASTMODTIME=#{lastmodtime}
+        WHERE ID = #{id}
+    </update>
+    <!--通过id编辑 k76239 2021-11-27 -->
+    <update id="upFir" parameterType="ppmDepkpiContent">
+        UPDATE
+        PPM_DEPKPI_CONTENT SET
+        FIRSTCHECKRES=#{firstcheckres,jdbcType=VARCHAR} ,
+        FIRSTCHECKPOINT=#{firstcheckpoint,jdbcType=DOUBLE} ,
+        FIRSTCHECKREMARK=#{firstcheckremark,jdbcType=VARCHAR} ,
+        FIRSTCHECKSTATUS=#{firstcheckstatus,jdbcType=BIGINT} ,
+        FIRSTCHECKTIME=#{firstchecktime} ,
+        LASTMODUSERID=#{lastmoduserid} ,
+        LASTMODTIME=#{lastmodtime}
+        WHERE ID = #{id}
+    </update>
+    <!--查询集合  k76179 2021-12-2 -->
+    <select id="queryZdyCommit" parameterType="ppmDepkpiContentInfo" resultMap="PPMDEPKPICONTENT_ALL">
+        SELECT
+        <include refid="Asql_flied_all"/>
+        FROM PPM_DEPKPI_CONTENT a
+        LEFT JOIN PPM_DEPKPI_DEP_CHECK b
+        ON a.DETAILID=b.ID
+        WHERE a.TYEAR=#{tyear} AND a.DEPID=#{depid} AND a.TARGETTYPE=2 AND a.ISDEL=0
+        <if test="sign == 1">AND nvl(a.FIRSTCHECKSTATUS,0)&lt;&gt;1</if>
+        <if test="sign == 2">AND nvl(a.SECONDCHECKSTATUS,0)&lt;&gt;1</if>
+        <if test="sign == 3">AND nvl(a.SELFEVALSTATUS,0)&lt;&gt;1 AND b.SELFEVAL=1</if>
+    </select>
+    <!--查询集合  k76179 2021-12-8 -->
+    <select id="queryByTitleId" parameterType="ppmDepkpiContent" resultMap="PPMDEPKPICONTENT_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM PPM_DEPKPI_CONTENT
+        WHERE TITLEID=#{titleid} AND ISDEL=#{isdel}
+    </select>
+    <!--查询集合  k76179 2021-12-2 -->
+    <select id="queryGgCommit" parameterType="ppmDepkpiContent" resultMap="PPMDEPKPICONTENT_ALL">
+        SELECT
+        a.ID
+        FROM PPM_DEPKPI_CONTENT a
+        LEFT JOIN PPM_DEPKPI_DEP_CHECK b
+        ON a.DETAILID=b.id
+        WHERE a.depid=#{depid} and  a.tyear=#{tyear} and b.DBUSER=#{userid} and a.isdel = 0
+        and nvl(a.SECONDCHECKSTATUS,0)&lt;&gt;1 and a.TARGETTYPE=1
+    </select>
+
+    <!--查询代办考核内容集合  k76179 2021-12-2 -->
+    <select id="queryGgDbContentList" parameterType="ppmDepkpiContentInfo" resultMap="PPMDEPKPICONTENT_ALL_EXT">
+        select
+        <include refid="Asql_flied_all"/>, b.STATUS DBSTATUS, b.NAME TARGETNAME, z.NAME TITLENAME, z.LASTMODTIME
+        from PPM_DEPKPI_CONTENT a
+        left join PPM_DEPKPI_DEP_CHECK b
+        on a.detailid = b.id
+        LEFT JOIN PPM_DEPKPI_TITLE z
+        ON a.TITLEID=z.ID
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="id != null ">a.ID = #{id} AND</if>
+            <if test="tyear != null">a.TYEAR = #{tyear} AND</if>
+            <if test="depid != null ">a.DEPID = #{depid} AND</if>
+            <if test="targetid != null ">a.TARGETID = #{targetid} AND</if>
+            <if test="targettype != null ">a.TARGETTYPE=#{targettype} AND</if>
+            <if test="detailid != null ">a.DETAILID = #{detailid} AND</if>
+            <if test="titleid != null ">a.TITLEID = #{titleid} AND</if>
+            <if test="basepoint != null ">a.BASEPOINT = #{basepoint} AND</if>
+            <if test="content != null ">a.CONTENT like '%'|| #{content} ||'%' AND</if>
+            <if test="standard != null ">a.STANDARD = #{standard} AND</if>
+            <if test="startdate != null ">a.STARTDATE = #{startdate} AND</if>
+            <if test="enddate != null ">a.ENDDATE = #{enddate} AND</if>
+            <if test="evaltype != null ">a.EVALTYPE = #{evaltype} AND</if>
+            <if test="selfeval != null ">a.SELFEVAL = #{selfeval} AND</if>
+            <if test="isdel != null ">a.ISDEL = #{isdel} AND</if>
+            <if test="sign != null ">b.SIGN = #{sign} AND</if>
+            <if test="parentTitleid != null ">
+                a.titleid in (
+                SELECT id FROM PPM_DEPKPI_TITLE WHERE HASSON = 0
+                START WITH ID = #{parentTitleid}
+                CONNECT BY PRIOR ID = PARENTID
+                ) AND
+            </if>
+            <if test="parentDetailid != null ">
+                a.detailid in (
+                SELECT id FROM PPM_DEPKPI_DEP_CHECK WHERE HASSON = 0
+                START WITH ID = #{parentDetailid}
+                CONNECT BY PRIOR ID = PARENTID
+                ) AND
+            </if>
+            b.dbuser = #{userid}
+        </trim>
+        order by a.depid, a.detailid,z.lastmodtime desc, a.lastmodtime desc
+    </select>
+    <!--通过id编辑 k76239 2021-11-27 -->
+    <update id="updatePojoBytitileid" parameterType="ppmDepkpiContent">
+        UPDATE
+        PPM_DEPKPI_CONTENT SET
+        ISDEL=#{isdel},
+        LASTMODUSERID=#{lastmoduserid},
+        LASTMODTIME=#{lastmodtime}
+        where TITLEID IN(select id from PPM_DEPKPI_TITLE
+        start with id = #{titleid}
+        connect by prior id = parentid)
+    </update>
+
+    <!--考核汇总查询  k76239 2021-12-02 -->
+    <select id="querySum" parameterType="ppmDepkpiContent" resultMap="PPMDEPKPICONTENT_ALL_EXT">
+        select count(0) countcontent,
+        nvl(sum(decode (nvl(a.secondcheckpoint,-1), -1, a.firstcheckpoint, a.secondcheckpoint)),0) sumpoint,
+        (select count(0) from PPM_DEPKPI_CONTENT where nvl(secondcheckstatus,0) &lt;&gt; 1  and  DEPID = #{depid} AND
+        TYEAR = #{tyear} AND isdel = 0 ) commitsum,
+        nvl(sum(a.secondcheckpoint),0) sumpoint from
+        PPM_DEPKPI_CONTENT a left join PPM_DEPKPI_DEP_CHECK b on (b.id = a.detailid)
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="depid != null ">a.DEPID = #{depid} AND</if>
+            <if test="tyear != null ">a.TYEAR = #{tyear} AND</if>
+            a.ISDEL = 0
+        </trim>
+        group by a.depid
+    </select>
+
+    <!--考核终评汇总查询  k76239 2021-12-02 -->
+    <select id="queryZpSum" parameterType="ppmDepkpiContent" resultMap="PPMDEPKPICONTENT_ALL_EXT">
+        select count(0) countcontent,
+        nvl(sum(decode (a.targettype, 1, a.secondcheckpoint, 0)),0) ggsumpoint,
+        nvl(sum(decode (a.targettype, 2, a.secondcheckpoint, 0)),0) zdysumpoint,
+        (select count(0) from PPM_DEPKPI_CONTENT where nvl(secondcheckstatus,0) &lt;&gt; 1 and targettype = 2 and  DEPID = #{depid} AND
+        TYEAR = #{tyear} AND isdel = 0) commitsum,
+        nvl(sum(a.secondcheckpoint),0) sumpoint from
+        PPM_DEPKPI_CONTENT a left join PPM_DEPKPI_DEP_CHECK b on (b.id = a.detailid)
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="depid != null ">a.DEPID = #{depid} AND</if>
+            <if test="tyear != null ">a.TYEAR = #{tyear} AND</if>
+            a.ISDEL = 0
+        </trim>
+        group by a.depid
+    </select>
+
+    <!--考核初评汇总查询  k76239 2021-12-02 -->
+    <select id="queryCpSum" parameterType="ppmDepkpiContent" resultMap="PPMDEPKPICONTENT_ALL_EXT">
+        select count(0) countcontent,
+        nvl(sum(decode (a.targettype, 1, a.secondcheckpoint, 0)),0) ggsumpoint,
+        nvl(sum(decode (a.targettype, 2, a.firstcheckpoint, 0)),0) zdysumpoint,
+        (select count(0) from PPM_DEPKPI_CONTENT where nvl(firstcheckstatus,0) &lt;&gt; 1 and targettype = 2 AND
+        isdel = 0 and
+        DEPID = #{depid} AND
+        TYEAR = #{tyear} ) commitsum,
+        nvl(sum(a.firstcheckpoint),0) sumpoint from
+        PPM_DEPKPI_CONTENT a left join PPM_DEPKPI_DEP_CHECK b on (b.id = a.detailid)
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="depid != null ">a.DEPID = #{depid} AND</if>
+            <if test="tyear != null ">a.TYEAR = #{tyear} AND</if>
+            a.ISDEL = 0
+        </trim>
+        group by a.depid
+    </select>
+
+    <!--查询集合 k76239 2021-11-27 -->
+    <select id="getListIsSecond" parameterType="ppmDepkpiContentInfo" resultMap="PPMDEPKPICONTENT_ALL_EXT">
+        SELECT
+        <include refid="Asql_flied_all"/>,
+        (select c.EMPNAME from COMM_EMPLOYEE c
+        where c.ISDISABLED=0 and c.BADGE =(decode(a.targettype, 2, b.firstcheck, ''))) FIRSTCHECK,
+        (select d.EMPNAME from COMM_EMPLOYEE d
+        where d.ISDISABLED=0 and d.BADGE = b.secondcheck) SECONDCHECK,
+        #{isSecond} ISSECOND,
+        e.DBUSER, e.NAME TARGETNAME, z.NAME TITLENAME, z.LASTMODTIME
+        FROM PPM_DEPKPI_CONTENT a
+        left join PPM_DEPKPI_DEP_REL b
+        on a.depid=b.depid
+        left join PPM_DEPKPI_DEP_CHECK e
+        on a.DETAILID=e.ID
+        LEFT JOIN PPM_DEPKPI_TITLE z
+        ON a.TITLEID=z.ID
+        where a.isdel=#{isdel}
+        <if test="depid != null "> and a.depid=#{depid}</if>
+        <if test="dbuser != null "> and e.DBUSER=#{dbuser} </if>
+        <if test="detailid != null "> and a.detailid=#{detailid}</if>
+        <if test="content != null ">and a.CONTENT like '%'|| #{content} ||'%'</if>
+        <if test="tyear != null">AND a.TYEAR = #{tyear} </if>
+        <if test="targettype != null">AND a.targettype = #{targettype} </if>
+        <if test="parentTitleid != null ">
+            and a.titleid in (
+            SELECT id FROM PPM_DEPKPI_TITLE WHERE HASSON = 0
+            START WITH ID = #{parentTitleid}
+            CONNECT BY PRIOR ID = PARENTID
+            )
+        </if>
+        <if test="parentDetailid != null ">
+            and a.detailid in (
+            SELECT id FROM PPM_DEPKPI_DEP_CHECK WHERE HASSON = 0
+            START WITH ID = #{parentDetailid}
+            CONNECT BY PRIOR ID = PARENTID
+            )
+        </if>
+        order by a.depid, a.targettype asc, a.detailid,z.lastmodtime desc, a.lastmodtime desc
+    </select>
+
+    <!--查询集合  k76239 2021-11-27 -->
+    <select id="queryByDepid" parameterType="ppmDepkpiContentInfo" resultMap="PPMDEPKPICONTENT_ALL_EXT">
+        select  a.ID,
+        a.TYEAR,
+        a.DEPID,
+        a.TARGETID,
+        a.TARGETTYPE,
+        a.TITLEID,
+        a.DETAILID,
+        a.BASEPOINT,
+        a.CONTENT,
+        a.STANDARD,
+        a.STARTDATE,
+        a.ENDDATE,
+        a.EVALTYPE,
+        a.SELFEVAL,
+        a.ISDEL,
+        a.LASTMODUSERID,
+        a.LASTMODTIME,
+        a.SELFEVALRES,
+        a.SELFEVALSTATUS,
+        a.FIRSTCHECKRES,
+        a.FIRSTCHECKPOINT,
+        a.FIRSTCHECKREMARK,
+        a.FIRSTCHECKSTATUS,
+        a.SECONDCHECKRES,
+        a.SECONDCHECKPOINT,
+        a.SECONDCHECKREMARK,
+        a.SECONDCHECKSTATUS,
+        a.MAXPOINT,
+        a.MINPOINT
+        FROM PPM_DEPKPI_CONTENT a
+        left join PPM_DEPKPI_DEP_CHECK b on a.detailid = b.id
+        where
+        b.DEPID = #{depid}
+        and b.HASSON = 0
+        and b.targettype = 1
+        and b.dbuser = #{userid}
+    </select>
+</mapper>

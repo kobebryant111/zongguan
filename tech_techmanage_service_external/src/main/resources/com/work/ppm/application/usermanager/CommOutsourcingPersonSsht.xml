@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k6991 2020-06-30 -->
+<mapper namespace="com.work.ppm.application.model.usermanager.CommOutsourcingPersonSsht">
+	 <resultMap type="commOutsourcingPersonSsht" id="COMMOUTSOURCINGPERSONSSHT_ALL">
+        <result property="id" column="ID" />
+		<result property="jobid" column="JOBID" />
+		<result property="sshtid" column="SSHTID" />
+		<result property="starttime" column="STARTTIME" />
+		<result property="endtime" column="ENDTIME" />
+		<result property="state" column="STATE" />
+		
+     </resultMap>
+
+     <!-- 所有字段名称 -->
+        <sql id="sql_flied_all">
+        	ID,
+			JOBID,
+			SSHTID,
+			STARTTIME,
+			ENDTIME,
+			STATE
+        </sql>
+    	<!-- 查询分页  2020-06-30 k6991  -->
+        <select id="queryPagerList" parameterType="map" resultMap="COMMOUTSOURCINGPERSONSSHT_ALL">
+        	SELECT
+            <include refid="sql_flied_all" />
+            FROM COMM_OUTSOURCING_PERSON_SSHT
+            <trim prefix="WHERE" suffixOverrides="AND">
+                <if test="id != null " > ID = #{id} AND </if>
+				<if test="jobid != null  and jobid != '' " > JOBID = #{jobid} AND </if>
+				<if test="sshtid != null  and sshtid != '' " > SSHTID = #{sshtid} AND </if>
+				<if test="starttime != null  and starttime != '' " > STARTTIME = #{starttime} AND </if>
+				<if test="endtime != null  and endtime != '' " > ENDTIME = #{endtime} AND </if>
+				<if test="state != null  and state != '' " > STATE = #{state} AND </if>
+				
+            </trim>
+        </select>
+
+        <!-- 新增  2020-06-30 k6991  -->
+        <insert id="addPojo" parameterType="commOutsourcingPersonSsht">
+    		INSERT INTO COMM_OUTSOURCING_PERSON_SSHT (
+    		<trim suffixOverrides=",">
+    		 <if test="id != null " > ID , </if>
+				<if test="jobid != null  and jobid != '' " > JOBID , </if>
+				<if test="sshtid != null  and sshtid != '' " > SSHTID , </if>
+				<if test="starttime != null  and starttime != '' " > STARTTIME , </if>
+				<if test="endtime != null  and endtime != '' " > ENDTIME , </if>
+				<if test="state != null  and state != '' " > STATE , </if>
+				
+              </trim>
+    		)
+    		VALUES(
+    		<trim suffixOverrides=",">
+    		 <if test="id != null " > #{id} , </if>
+				<if test="jobid != null  and jobid != '' " > #{jobid} , </if>
+				<if test="sshtid != null  and sshtid != '' " > #{sshtid} , </if>
+				<if test="starttime != null  and starttime != '' " > #{starttime} , </if>
+				<if test="endtime != null  and endtime != '' " > #{endtime} , </if>
+				<if test="state != null  and state != '' " > #{state} , </if>
+				
+            </trim>
+    		)
+        </insert>
+
+        <!--通过id查询  k6991 2020-06-30 -->
+        <select id="queryDetail" parameterType="map" resultMap="COMMOUTSOURCINGPERSONSSHT_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM COMM_OUTSOURCING_PERSON_SSHT
+			<trim prefix="WHERE" suffixOverrides="AND">
+				<if test="id != null " > ID=#{id} AND </if>
+				<if test="jobid != null  and jobid != '' " > JOBID=#{jobid} AND </if>
+				<if test="sshtid != null  and sshtid != '' " > SSHTID=#{sshtid} AND </if>
+				<if test="starttime != null  and starttime != '' " > STARTTIME=#{starttime} AND </if>
+				<if test="endtime != null  and endtime != '' " > ENDTIME=#{endtime} AND </if>
+				<if test="state != null  and state != '' " > STATE=#{state} AND </if>
+			</trim>
+        </select>
+
+         <!--查询集合  k6991 2020-06-30 -->
+        <select id="getList" parameterType="map" resultMap="COMMOUTSOURCINGPERSONSSHT_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM COMM_OUTSOURCING_PERSON_SSHT
+        	<trim prefix="WHERE" suffixOverrides="AND">
+        		<if test="id != null " > ID=#{id} AND </if>
+				<if test="jobid != null  and jobid != '' " > JOBID=#{jobid} AND </if>
+				<if test="sshtid != null  and sshtid != '' " > SSHTID=#{sshtid} AND </if>
+				<if test="starttime != null  and starttime != '' " > STARTTIME=#{starttime} AND </if>
+				<if test="endtime != null  and endtime != '' " > ENDTIME=#{endtime} AND </if>
+				<if test="state != null  and state != '' " > STATE=#{state} AND </if>
+				
+            </trim>
+        </select>
+        <!-- update sql -->
+        <sql id="update_pojo_sql">
+        	<trim prefix="SET" suffixOverrides=",">
+        		<if test="id != null " > ID=#{id} , </if>
+				<if test="jobid != null  and jobid != '' " > JOBID=#{jobid} , </if>
+				<if test="sshtid != null  and sshtid != '' " > SSHTID=#{sshtid} , </if>
+				<if test="starttime != null  and starttime != '' " > STARTTIME=#{starttime} , </if>
+				<if test="endtime != null  and endtime != '' " > ENDTIME=#{endtime} , </if>
+				<if test="state != null  and state != '' " > STATE=#{state} , </if>
+				
+            </trim>
+        </sql>
+
+        <!--通过id编辑 k6991 2020-06-30 -->
+    	<update id="updatePojo" parameterType="commOutsourcingPersonSsht">
+        	UPDATE
+        	COMM_OUTSOURCING_PERSON_SSHT
+        	<include refid="update_pojo_sql" />
+        	WHERE ID=#{id}
+        </update>
+
+        <!--通过id批量删除  k6991 2020-06-30 -->
+        <delete id="deleteById" parameterType="commOutsourcingPersonSsht">
+        	DELETE
+        	FROM
+        	COMM_OUTSOURCING_PERSON_SSHT
+        	WHERE ID = #{id}
+        </delete>
+
+        <!-- 获取主键id -->
+        <select id="getPrimaryKey" parameterType="map" resultType="long">
+            SELECT MAX(ID) FROM COMM_OUTSOURCING_PERSON_SSHT
+        </select>
+</mapper>

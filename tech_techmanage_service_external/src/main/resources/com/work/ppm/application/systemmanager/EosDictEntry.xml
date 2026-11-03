@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k6991 2020-03-18 -->
+<mapper namespace="com.work.ppm.application.model.systemmanager.EosDictEntry">
+	 <resultMap type="eosDictEntry" id="EOSDICTENTRY_ALL">
+        <result property="dicttypeid" column="DICTTYPEID" />
+		<result property="dictid" column="DICTID" />
+		<result property="dictname" column="DICTNAME" />
+		<result property="status" column="STATUS" />
+		<result property="sortno" column="SORTNO" />
+		<result property="rank" column="RANK" />
+		<result property="parentid" column="PARENTID" />
+		<result property="seqno" column="SEQNO" />
+		<result property="filter1" column="FILTER1" />
+		<result property="filter2" column="FILTER2" />
+
+     </resultMap>
+
+     <!-- 所有字段名称 -->
+        <sql id="sql_flied_all">
+        	DICTTYPEID,
+			DICTID,
+			DICTNAME,
+			STATUS,
+			SORTNO,
+			RANK,
+			PARENTID,
+			SEQNO,
+			FILTER1,
+			FILTER2
+        </sql>
+    	<!-- 查询分页  2020-03-18 k6991  -->
+        <select id="queryPagerList" parameterType="map" resultMap="EOSDICTENTRY_ALL">
+        	SELECT
+            <include refid="sql_flied_all" />
+            FROM EOS_DICT_ENTRY
+            <trim prefix="WHERE" suffixOverrides="AND">
+                <if test="dicttypeid != null  and dicttypeid != '' " > DICTTYPEID = #{dicttypeid} AND </if>
+				<if test="dictid != null  and dictid != '' " > DICTID = #{dictid} AND </if>
+				<if test="dictname != null  and dictname != '' " > DICTNAME = #{dictname} AND </if>
+				<if test="status != null " > STATUS = #{status} AND </if>
+				<if test="sortno != null " > SORTNO = #{sortno} AND </if>
+				<if test="rank != null " > RANK = #{rank} AND </if>
+				<if test="parentid != null  and parentid != '' " > PARENTID = #{parentid} AND </if>
+				<if test="seqno != null  and seqno != '' " > SEQNO = #{seqno} AND </if>
+				<if test="filter1 != null  and filter1 != '' " > FILTER1 = #{filter1} AND </if>
+				<if test="filter2 != null  and filter2 != '' " > FILTER2 = #{filter2} AND </if>
+
+            </trim>
+        </select>
+
+        <!-- 新增  2020-03-18 k6991  -->
+        <insert id="addPojo" parameterType="eosDictEntry">
+    		INSERT INTO EOS_DICT_ENTRY (
+			<trim suffixOverrides=",">
+				<if test="dicttypeid != null and dicttypeid != '' " > DICTTYPEID , </if>
+				<if test="dictid != null  and dictid != '' " > DICTID , </if>
+				<if test="dictname != null  and dictname != '' " > DICTNAME , </if>
+				<if test="status != null " > STATUS , </if>
+				<if test="sortno != null " > SORTNO , </if>
+				<if test="rank != null   " > RANK , </if>
+				<if test="parentid != null and parentid != '' " > PARENTID , </if>
+				<if test="seqno != null  and seqno != '' " > SEQNO , </if>
+				<if test="filter1 != null  and filter1 != '' " > FILTER1 , </if>
+				<if test="filter2 != null  and filter2 != '' " > FILTER2 , </if>
+			</trim>
+    		)
+    		VALUES(
+			<trim suffixOverrides=",">
+				<if test="dicttypeid != null and dicttypeid != '' " > #{dicttypeid},</if>
+				<if test="dictid != null  and dictid != '' " > #{dictid}, </if>
+				<if test="dictname != null  and dictname != '' " > #{dictname}, </if>
+				<if test="status != null " > #{status}, </if>
+				<if test="sortno != null " > #{sortno}, </if>
+				<if test="rank != null " > #{rank}, </if>
+				<if test="parentid != null and parentid != '' " > #{parentid}, </if>
+				<if test="seqno != null and seqno != '' " > #{seqno}, </if>
+				<if test="filter1 != null and filter1 != ''  " > #{filter1}, </if>
+				<if test="filter2 != null  and filter2 != '' " > #{filter2} </if>
+			</trim>
+    		)
+        </insert>
+
+        <!--通过id查询  k6991 2020-03-18 -->
+        <select id="queryDetail" parameterType="map" resultMap="EOSDICTENTRY_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM EOS_DICT_ENTRY  WHERE DICTTYPEID=#{dicttypeid} AND DICTID=#{dictid}
+        </select>
+
+		<!--查询集合  k6991 2020-03-18 -->
+        <select id="getListForParams" parameterType="map" resultMap="EOSDICTENTRY_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM EOS_DICT_ENTRY
+        	<trim prefix="WHERE" suffixOverrides="AND">
+        		<if test="dicttypeid != null  and dicttypeid != '' " > DICTTYPEID = #{dicttypeid} AND </if>
+				<if test="dictid != null  and dictid != '' " > DICTID = #{dictid} AND </if>
+				<if test="dictname != null  and dictname != '' " > DICTNAME = #{dictname} AND </if>
+				<if test="status != null " > STATUS = #{status} AND </if>
+				<if test="sortno != null " > SORTNO = #{sortno} AND </if>
+				<if test="rank != null " > RANK = #{rank} AND </if>
+				<if test="parentid != null  and parentid != '' " > PARENTID = #{parentid} AND </if>
+				<if test="seqno != null  and seqno != '' " > SEQNO = #{seqno} AND </if>
+				<if test="filter1 != null  and filter1 != '' " > FILTER1 = #{filter1} AND </if>
+				<if test="filter2 != null  and filter2 != '' " > FILTER2 = #{filter2} AND </if>
+            </trim>
+			order by SORTNO asc
+        </select>
+
+         <!--查询集合  k6991 2020-03-18 -->
+        <select id="getList" parameterType="map" resultMap="EOSDICTENTRY_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM EOS_DICT_ENTRY
+        	<trim prefix="WHERE" suffixOverrides="AND">
+        		<if test="dicttypeid != null  and dicttypeid != '' " > DICTTYPEID = #{dicttypeid} AND </if>
+				<if test="dicttypeids != null  and dicttypeids != '' " > DICTTYPEID IN (${dicttypeids}) AND </if>
+				<if test="dictid != null  and dictid != '' " > DICTID = #{dictid} AND </if>
+				<if test="dictname != null  and dictname != '' " > DICTNAME = #{dictname} AND </if>
+				<if test="status != null " > STATUS = #{status} AND </if>
+				<if test="sortno != null " > SORTNO = #{sortno} AND </if>
+				<if test="rank != null " > RANK = #{rank} AND </if>
+				<if test="parentid != null  and parentid != '' " > PARENTID = #{parentid} AND </if>
+				<if test="seqno != null  and seqno != '' " > SEQNO = #{seqno} AND </if>
+				<if test="filter1 != null  and filter1 != '' " > FILTER1 = #{filter1} AND </if>
+				<if test="filter2 != null  and filter2 != '' " > FILTER2 = #{filter2} AND </if>
+            </trim>
+			order by  SORTNO asc
+        </select>
+        <!-- update sql -->
+        <sql id="update_pojo_sql">
+        	<trim prefix="SET" suffixOverrides=",">
+        		<if test="dicttypeid != null  and dicttypeid != '' " > DICTTYPEID=#{dicttypeid} , </if>
+				<if test="dictid != null  and dictid != '' " > DICTID=#{dictid} , </if>
+				<if test="dictname != null  and dictname != '' " > DICTNAME=#{dictname} , </if>
+				<if test="status != null " > STATUS=#{status} , </if>
+				<if test="sortno != null " > SORTNO=#{sortno} , </if>
+				<if test="rank != null " > RANK=#{rank} , </if>
+				<if test="parentid != null  and parentid != '' " > PARENTID=#{parentid} , </if>
+				<if test="seqno != null  and seqno != '' " > SEQNO=#{seqno} , </if>
+				<if test="filter1 != null  and filter1 != '' " > FILTER1=#{filter1} , </if>
+				<if test="filter2 != null  and filter2 != '' " > FILTER2=#{filter2} , </if>
+
+            </trim>
+        </sql>
+
+        <!--通过id编辑 k6991 2020-03-18 -->
+    	<update id="updatePojo" parameterType="eosDictEntry">
+        	UPDATE
+        	EOS_DICT_ENTRY
+        	<include refid="update_pojo_sql" />
+        	WHERE DICTTYPEID=#{dicttypeid} and DICTID=#{dictid}
+        </update>
+
+        <!--通过id批量删除  k6991 2020-03-18 -->
+        <delete id="deleteById" parameterType="eosDictEntry">
+        	DELETE
+        	FROM
+        	EOS_DICT_ENTRY
+        	WHERE DICTTYPEID = #{dicttypeid} and DICTID=#{dictid}
+        </delete>
+
+        <!--根据id查name ywwb1713 2020-03-18 -->
+        <select id="getDictName" parameterType="map">
+            SELECT
+                DICTNAME
+            FROM EOS_DICT_ENTRY
+            <trim prefix="WHERE" suffixOverrides="AND">
+                <if test="dicttypeid != null  and dicttypeid != '' " > DICTTYPEID = #{dicttypeid} AND </if>
+                <if test="dicttypeids != null  and dicttypeids != '' " > DICTTYPEID IN (${dicttypeids}) AND </if>
+                <if test="dictid != null  and dictid != '' " > DICTID = #{dictid} AND </if>
+                <if test="dictname != null  and dictname != '' " > DICTNAME = #{dictname} AND </if>
+                <if test="status != null " > STATUS = #{status} AND </if>
+                <if test="sortno != null " > SORTNO = #{sortno} AND </if>
+                <if test="rank != null " > RANK = #{rank} AND </if>
+                <if test="parentid != null  and parentid != '' " > PARENTID = #{parentid} AND </if>
+                <if test="seqno != null  and seqno != '' " > SEQNO = #{seqno} AND </if>
+                <if test="filter1 != null  and filter1 != '' " > FILTER1 = #{filter1} AND </if>
+                <if test="filter2 != null  and filter2 != '' " > FILTER2 = #{filter2} AND </if>
+            </trim>
+            order by  SORTNO asc
+        </select>
+
+	  <!-- 查询全部字典排序  -->
+		<select id="queryPagerListSortNo" parameterType="map" resultMap="EOSDICTENTRY_ALL">
+			SELECT
+			<include refid="sql_flied_all" />
+			FROM EOS_DICT_ENTRY
+			<trim prefix="WHERE" suffixOverrides="AND">
+				<if test="dicttypeid != null  and dicttypeid != '' " > DICTTYPEID = #{dicttypeid} AND </if>
+				<if test="dictid != null  and dictid != '' " > DICTID = #{dictid} AND </if>
+				<if test="dictname != null  and dictname != '' " > DICTNAME = #{dictname} AND </if>
+				<if test="status != null " > STATUS = #{status} AND </if>
+				<if test="sortno != null " > SORTNO = #{sortno} AND </if>
+				<if test="rank != null " > RANK = #{rank} AND </if>
+				<if test="parentid != null  and parentid != '' " > PARENTID = #{parentid} AND </if>
+				<if test="seqno != null  and seqno != '' " > SEQNO = #{seqno} AND </if>
+				<if test="filter1 != null  and filter1 != '' " > FILTER1 = #{filter1} AND </if>
+				<if test="filter2 != null  and filter2 != '' " > FILTER2 = #{filter2} AND </if>
+
+			</trim>
+			order by dicttypeid,SORTNO,dictid
+		</select>
+</mapper>

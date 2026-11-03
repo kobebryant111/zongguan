@@ -1,0 +1,730 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k6991 2020-11-19 -->
+<mapper namespace="com.work.ppm.application.model.processmanager.PpmFlowInfo">
+	 <resultMap type="ppmFlowInfo" id="PPMFLOWINFO_ALL">
+        <result property="clrdxcstxjg" column="CLRDXCSTXJG" />
+		<result property="clrwxcstxjg" column="CLRWXCSTXJG" />
+		<result property="zxrxtxxcstxjg" column="ZXRXTXXCSTXJG" />
+		<result property="zxryjcstxjg" column="ZXRYJCSTXJG" />
+		<result property="zxrdxcstxjg" column="ZXRDXCSTXJG" />
+		<result property="zxrwxcstxjg" column="ZXRWXCSTXJG" />
+		<result property="isclrxtxxys" column="ISCLRXTXXYS" />
+		<result property="clrxtxxyssj" column="CLRXTXXYSSJ" />
+		<result property="isclrxtxxcs" column="ISCLRXTXXCS" />
+		<result property="clrxtxxcssj" column="CLRXTXXCSSJ" />
+		<result property="clrxtxxcsmb" column="CLRXTXXCSMB" />
+		<result property="clrxtxxcscs" column="CLRXTXXCSCS" />
+		<result property="isclryjys" column="ISCLRYJYS" />
+		<result property="clryjyssj" column="CLRYJYSSJ" />
+		<result property="isclryjcs" column="ISCLRYJCS" />
+		<result property="clryjcssj" column="CLRYJCSSJ" />
+		<result property="clryjcsmb" column="CLRYJCSMB" />
+		<result property="clryjcscs" column="CLRYJCSCS" />
+		<result property="isclrdxys" column="ISCLRDXYS" />
+		<result property="clrdxyssj" column="CLRDXYSSJ" />
+		<result property="isclrdxcs" column="ISCLRDXCS" />
+		<result property="clrdxcssj" column="CLRDXCSSJ" />
+		<result property="clrdxcsmb" column="CLRDXCSMB" />
+		<result property="clrdxcscs" column="CLRDXCSCS" />
+		<result property="isclrwxys" column="ISCLRWXYS" />
+		<result property="clrwxyssj" column="CLRWXYSSJ" />
+		<result property="isclrwxcs" column="ISCLRWXCS" />
+		<result property="clrwxcssj" column="CLRWXCSSJ" />
+		<result property="clrwxcsmb" column="CLRWXCSMB" />
+		<result property="clrwxcscs" column="CLRWXCSCS" />
+		<result property="isclrpt" column="ISCLRPT" />
+		<result property="isclrptys" column="ISCLRPTYS" />
+		<result property="clrptyssj" column="CLRPTYSSJ" />
+		<result property="clrptmb" column="CLRPTMB" />
+		<result property="isclrptcs" column="ISCLRPTCS" />
+		<result property="clrptcscs" column="CLRPTCSCS" />
+		<result property="clrptcssj" column="CLRPTCSSJ" />
+		<result property="clrptcsmb" column="CLRPTCSMB" />
+		<result property="clrptcstxjg" column="CLRPTCSTXJG" />
+		<result property="iszxrpt" column="ISZXRPT" />
+		<result property="iszxrptys" column="ISZXRPTYS" />
+		<result property="zxrptyssj" column="ZXRPTYSSJ" />
+		<result property="zxrptmb" column="ZXRPTMB" />
+		<result property="iszxrptcs" column="ISZXRPTCS" />
+		<result property="zxrptcscs" column="ZXRPTCSCS" />
+		<result property="zxrptcssj" column="ZXRPTCSSJ" />
+		<result property="zxrptcsmb" column="ZXRPTCSMB" />
+		<result property="zxrptcstxjg" column="ZXRPTCSTXJG" />
+		<result property="id" column="ID" />
+		<result property="flowdraftno" column="FLOWDRAFTNO" />
+		<result property="flowname" column="FLOWNAME" />
+		<result property="flownodecode" column="FLOWNODECODE" />
+		<result property="flownodename" column="FLOWNODENAME" />
+		<result property="isdispatch" column="ISDISPATCH" />
+		<result property="isdel" column="ISDEL" />
+		<result property="createtime" column="CREATETIME" />
+		<result property="creators" column="CREATORS" />
+		<result property="lastmodtime" column="LASTMODTIME" />
+		<result property="lastmoduser" column="LASTMODUSER" />
+		<result property="flowtypeid" column="FLOWTYPEID" />
+		<result property="isclrxtxx" column="ISCLRXTXX" />
+		<result property="clrxtxxmb" column="CLRXTXXMB" />
+		<result property="isclryj" column="ISCLRYJ" />
+		<result property="clryjmb" column="CLRYJMB" />
+		<result property="isclrdx" column="ISCLRDX" />
+		<result property="clrdxmb" column="CLRDXMB" />
+		<result property="iszxrxtxx" column="ISZXRXTXX" />
+		<result property="zxrxtxxmb" column="ZXRXTXXMB" />
+		<result property="iszxryj" column="ISZXRYJ" />
+		<result property="zxryjmb" column="ZXRYJMB" />
+		<result property="iszxrdx" column="ISZXRDX" />
+		<result property="zxrdxmb" column="ZXRDXMB" />
+		<result property="zxr" column="ZXR" />
+		<result property="zxrjs" column="ZXRJS" />
+		<result property="zxrusers" column="ZXRUSERS" />
+		<result property="zxrjsname" column="ZXRJSNAME" />
+		<result property="isclrwx" column="ISCLRWX" />
+		<result property="clrwxmb" column="CLRWXMB" />
+		<result property="iszxrwx" column="ISZXRWX" />
+		<result property="zxrwxmb" column="ZXRWXMB" />
+		<result property="isys" column="ISYS" />
+		<result property="yssj" column="YSSJ" />
+		<result property="iszxrxtxxys" column="ISZXRXTXXYS" />
+		<result property="zxrxtxxyssj" column="ZXRXTXXYSSJ" />
+		<result property="iszxrxtxxcs" column="ISZXRXTXXCS" />
+		<result property="zxrxtxxcssj" column="ZXRXTXXCSSJ" />
+		<result property="zxrxtxxcsmb" column="ZXRXTXXCSMB" />
+		<result property="zxrxtxxcscs" column="ZXRXTXXCSCS" />
+		<result property="iszxryjys" column="ISZXRYJYS" />
+		<result property="zxryjyssj" column="ZXRYJYSSJ" />
+		<result property="iszxryjcs" column="ISZXRYJCS" />
+		<result property="zxryjcssj" column="ZXRYJCSSJ" />
+		<result property="zxryjcsmb" column="ZXRYJCSMB" />
+		<result property="zxryjcscs" column="ZXRYJCSCS" />
+		<result property="iszxrdxys" column="ISZXRDXYS" />
+		<result property="zxrdxyssj" column="ZXRDXYSSJ" />
+		<result property="iszxrdxcs" column="ISZXRDXCS" />
+		<result property="zxrdxcssj" column="ZXRDXCSSJ" />
+		<result property="zxrdxcsmb" column="ZXRDXCSMB" />
+		<result property="zxrdxcscs" column="ZXRDXCSCS" />
+		<result property="iszxrwxys" column="ISZXRWXYS" />
+		<result property="zxrwxyssj" column="ZXRWXYSSJ" />
+		<result property="iszxrwxcs" column="ISZXRWXCS" />
+		<result property="zxrwxcssj" column="ZXRWXCSSJ" />
+		<result property="zxrwxcsmb" column="ZXRWXCSMB" />
+		<result property="zxrwxcscs" column="ZXRWXCSCS" />
+		<result property="clrxtxxcstxjg" column="CLRXTXXCSTXJG" />
+		<result property="clryjcstxjg" column="CLRYJCSTXJG" />
+		
+     </resultMap>
+
+     <!-- 所有字段名称 -->
+        <sql id="sql_flied_all">
+        	CLRDXCSTXJG,
+			CLRWXCSTXJG,
+			ZXRXTXXCSTXJG,
+			ZXRYJCSTXJG,
+			ZXRDXCSTXJG,
+			ZXRWXCSTXJG,
+			ISCLRXTXXYS,
+			CLRXTXXYSSJ,
+			ISCLRXTXXCS,
+			CLRXTXXCSSJ,
+			CLRXTXXCSMB,
+			CLRXTXXCSCS,
+			ISCLRYJYS,
+			CLRYJYSSJ,
+			ISCLRYJCS,
+			CLRYJCSSJ,
+			CLRYJCSMB,
+			CLRYJCSCS,
+			ISCLRDXYS,
+			CLRDXYSSJ,
+			ISCLRDXCS,
+			CLRDXCSSJ,
+			CLRDXCSMB,
+			CLRDXCSCS,
+			ISCLRWXYS,
+			CLRWXYSSJ,
+			ISCLRWXCS,
+			CLRWXCSSJ,
+			CLRWXCSMB,
+			CLRWXCSCS,
+			ISCLRPT,
+			ISCLRPTYS,
+			CLRPTYSSJ,
+			CLRPTMB,
+			ISCLRPTCS,
+			CLRPTCSCS,
+			CLRPTCSSJ,
+			CLRPTCSMB,
+			CLRPTCSTXJG,
+			ISZXRPT,
+			ISZXRPTYS,
+			ZXRPTYSSJ,
+			ZXRPTMB,
+			ISZXRPTCS,
+			ZXRPTCSCS,
+			ZXRPTCSSJ,
+			ZXRPTCSMB,
+			ZXRPTCSTXJG,
+			ID,
+			FLOWDRAFTNO,
+			FLOWNAME,
+			FLOWNODECODE,
+			FLOWNODENAME,
+			ISDISPATCH,
+			ISDEL,
+			CREATETIME,
+			CREATORS,
+			LASTMODTIME,
+			LASTMODUSER,
+			FLOWTYPEID,
+			ISCLRXTXX,
+			CLRXTXXMB,
+			ISCLRYJ,
+			CLRYJMB,
+			ISCLRDX,
+			CLRDXMB,
+			ISZXRXTXX,
+			ZXRXTXXMB,
+			ISZXRYJ,
+			ZXRYJMB,
+			ISZXRDX,
+			ZXRDXMB,
+			ZXR,
+			ZXRJS,
+			ZXRUSERS,
+			ZXRJSNAME,
+			ISCLRWX,
+			CLRWXMB,
+			ISZXRWX,
+			ZXRWXMB,
+			ISYS,
+			YSSJ,
+			ISZXRXTXXYS,
+			ZXRXTXXYSSJ,
+			ISZXRXTXXCS,
+			ZXRXTXXCSSJ,
+			ZXRXTXXCSMB,
+			ZXRXTXXCSCS,
+			ISZXRYJYS,
+			ZXRYJYSSJ,
+			ISZXRYJCS,
+			ZXRYJCSSJ,
+			ZXRYJCSMB,
+			ZXRYJCSCS,
+			ISZXRDXYS,
+			ZXRDXYSSJ,
+			ISZXRDXCS,
+			ZXRDXCSSJ,
+			ZXRDXCSMB,
+			ZXRDXCSCS,
+			ISZXRWXYS,
+			ZXRWXYSSJ,
+			ISZXRWXCS,
+			ZXRWXCSSJ,
+			ZXRWXCSMB,
+			ZXRWXCSCS,
+			CLRXTXXCSTXJG,
+			CLRYJCSTXJG
+        </sql>
+        <sql id="sql_select_condition">
+            <trim prefix="WHERE" suffixOverrides="AND">
+                <if test="clrdxcstxjg != null  and clrdxcstxjg != '' " > CLRDXCSTXJG = #{clrdxcstxjg} AND </if>
+				<if test="clrwxcstxjg != null  and clrwxcstxjg != '' " > CLRWXCSTXJG = #{clrwxcstxjg} AND </if>
+				<if test="zxrxtxxcstxjg != null  and zxrxtxxcstxjg != '' " > ZXRXTXXCSTXJG = #{zxrxtxxcstxjg} AND </if>
+				<if test="zxryjcstxjg != null  and zxryjcstxjg != '' " > ZXRYJCSTXJG = #{zxryjcstxjg} AND </if>
+				<if test="zxrdxcstxjg != null  and zxrdxcstxjg != '' " > ZXRDXCSTXJG = #{zxrdxcstxjg} AND </if>
+				<if test="zxrwxcstxjg != null  and zxrwxcstxjg != '' " > ZXRWXCSTXJG = #{zxrwxcstxjg} AND </if>
+				<if test="isclrxtxxys != null  and isclrxtxxys != '' " > ISCLRXTXXYS = #{isclrxtxxys} AND </if>
+				<if test="clrxtxxyssj != null  and clrxtxxyssj != '' " > CLRXTXXYSSJ = #{clrxtxxyssj} AND </if>
+				<if test="isclrxtxxcs != null  and isclrxtxxcs != '' " > ISCLRXTXXCS = #{isclrxtxxcs} AND </if>
+				<if test="clrxtxxcssj != null  and clrxtxxcssj != '' " > CLRXTXXCSSJ = #{clrxtxxcssj} AND </if>
+				<if test="clrxtxxcsmb != null  and clrxtxxcsmb != '' " > CLRXTXXCSMB = #{clrxtxxcsmb} AND </if>
+				<if test="clrxtxxcscs != null  and clrxtxxcscs != '' " > CLRXTXXCSCS = #{clrxtxxcscs} AND </if>
+				<if test="isclryjys != null  and isclryjys != '' " > ISCLRYJYS = #{isclryjys} AND </if>
+				<if test="clryjyssj != null  and clryjyssj != '' " > CLRYJYSSJ = #{clryjyssj} AND </if>
+				<if test="isclryjcs != null  and isclryjcs != '' " > ISCLRYJCS = #{isclryjcs} AND </if>
+				<if test="clryjcssj != null  and clryjcssj != '' " > CLRYJCSSJ = #{clryjcssj} AND </if>
+				<if test="clryjcsmb != null  and clryjcsmb != '' " > CLRYJCSMB = #{clryjcsmb} AND </if>
+				<if test="clryjcscs != null  and clryjcscs != '' " > CLRYJCSCS = #{clryjcscs} AND </if>
+				<if test="isclrdxys != null  and isclrdxys != '' " > ISCLRDXYS = #{isclrdxys} AND </if>
+				<if test="clrdxyssj != null  and clrdxyssj != '' " > CLRDXYSSJ = #{clrdxyssj} AND </if>
+				<if test="isclrdxcs != null  and isclrdxcs != '' " > ISCLRDXCS = #{isclrdxcs} AND </if>
+				<if test="clrdxcssj != null  and clrdxcssj != '' " > CLRDXCSSJ = #{clrdxcssj} AND </if>
+				<if test="clrdxcsmb != null  and clrdxcsmb != '' " > CLRDXCSMB = #{clrdxcsmb} AND </if>
+				<if test="clrdxcscs != null  and clrdxcscs != '' " > CLRDXCSCS = #{clrdxcscs} AND </if>
+				<if test="isclrwxys != null  and isclrwxys != '' " > ISCLRWXYS = #{isclrwxys} AND </if>
+				<if test="clrwxyssj != null  and clrwxyssj != '' " > CLRWXYSSJ = #{clrwxyssj} AND </if>
+				<if test="isclrwxcs != null  and isclrwxcs != '' " > ISCLRWXCS = #{isclrwxcs} AND </if>
+				<if test="clrwxcssj != null  and clrwxcssj != '' " > CLRWXCSSJ = #{clrwxcssj} AND </if>
+				<if test="clrwxcsmb != null  and clrwxcsmb != '' " > CLRWXCSMB = #{clrwxcsmb} AND </if>
+				<if test="clrwxcscs != null  and clrwxcscs != '' " > CLRWXCSCS = #{clrwxcscs} AND </if>
+				<if test="isclrpt != null  and isclrpt != '' " > ISCLRPT = #{isclrpt} AND </if>
+				<if test="isclrptys != null  and isclrptys != '' " > ISCLRPTYS = #{isclrptys} AND </if>
+				<if test="clrptyssj != null  and clrptyssj != '' " > CLRPTYSSJ = #{clrptyssj} AND </if>
+				<if test="clrptmb != null  and clrptmb != '' " > CLRPTMB = #{clrptmb} AND </if>
+				<if test="isclrptcs != null  and isclrptcs != '' " > ISCLRPTCS = #{isclrptcs} AND </if>
+				<if test="clrptcscs != null  and clrptcscs != '' " > CLRPTCSCS = #{clrptcscs} AND </if>
+				<if test="clrptcssj != null  and clrptcssj != '' " > CLRPTCSSJ = #{clrptcssj} AND </if>
+				<if test="clrptcsmb != null  and clrptcsmb != '' " > CLRPTCSMB = #{clrptcsmb} AND </if>
+				<if test="clrptcstxjg != null  and clrptcstxjg != '' " > CLRPTCSTXJG = #{clrptcstxjg} AND </if>
+				<if test="iszxrpt != null  and iszxrpt != '' " > ISZXRPT = #{iszxrpt} AND </if>
+				<if test="iszxrptys != null  and iszxrptys != '' " > ISZXRPTYS = #{iszxrptys} AND </if>
+				<if test="zxrptyssj != null  and zxrptyssj != '' " > ZXRPTYSSJ = #{zxrptyssj} AND </if>
+				<if test="zxrptmb != null  and zxrptmb != '' " > ZXRPTMB = #{zxrptmb} AND </if>
+				<if test="iszxrptcs != null  and iszxrptcs != '' " > ISZXRPTCS = #{iszxrptcs} AND </if>
+				<if test="zxrptcscs != null  and zxrptcscs != '' " > ZXRPTCSCS = #{zxrptcscs} AND </if>
+				<if test="zxrptcssj != null  and zxrptcssj != '' " > ZXRPTCSSJ = #{zxrptcssj} AND </if>
+				<if test="zxrptcsmb != null  and zxrptcsmb != '' " > ZXRPTCSMB = #{zxrptcsmb} AND </if>
+				<if test="zxrptcstxjg != null  and zxrptcstxjg != '' " > ZXRPTCSTXJG = #{zxrptcstxjg} AND </if>
+				<if test="id != null " > ID = #{id} AND </if>
+				<if test="flowdraftno != null  and flowdraftno != '' " > FLOWDRAFTNO = #{flowdraftno} AND </if>
+				<if test="flowname != null  and flowname != '' " > FLOWNAME = #{flowname} AND </if>
+				<if test="flownodecode != null  and flownodecode != '' " > FLOWNODECODE = #{flownodecode} AND </if>
+				<if test="flownodename != null  and flownodename != '' " > FLOWNODENAME = #{flownodename} AND </if>
+				<if test="isdispatch != null  and isdispatch != '' " > ISDISPATCH = #{isdispatch} AND </if>
+				<if test="isdel != null " > ISDEL = #{isdel} AND </if>
+				<if test="createtime != null " > CREATETIME = #{createtime} AND </if>
+				<if test="creators != null  and creators != '' " > CREATORS = #{creators} AND </if>
+				<if test="lastmodtime != null " > LASTMODTIME = #{lastmodtime} AND </if>
+				<if test="lastmoduser != null  and lastmoduser != '' " > LASTMODUSER = #{lastmoduser} AND </if>
+				<if test="flowtypeid != null  and flowtypeid != '' " > FLOWTYPEID = #{flowtypeid} AND </if>
+				<if test="isclrxtxx != null  and isclrxtxx != '' " > ISCLRXTXX = #{isclrxtxx} AND </if>
+				<if test="clrxtxxmb != null  and clrxtxxmb != '' " > CLRXTXXMB = #{clrxtxxmb} AND </if>
+				<if test="isclryj != null  and isclryj != '' " > ISCLRYJ = #{isclryj} AND </if>
+				<if test="clryjmb != null  and clryjmb != '' " > CLRYJMB = #{clryjmb} AND </if>
+				<if test="isclrdx != null  and isclrdx != '' " > ISCLRDX = #{isclrdx} AND </if>
+				<if test="clrdxmb != null  and clrdxmb != '' " > CLRDXMB = #{clrdxmb} AND </if>
+				<if test="iszxrxtxx != null  and iszxrxtxx != '' " > ISZXRXTXX = #{iszxrxtxx} AND </if>
+				<if test="zxrxtxxmb != null  and zxrxtxxmb != '' " > ZXRXTXXMB = #{zxrxtxxmb} AND </if>
+				<if test="iszxryj != null  and iszxryj != '' " > ISZXRYJ = #{iszxryj} AND </if>
+				<if test="zxryjmb != null  and zxryjmb != '' " > ZXRYJMB = #{zxryjmb} AND </if>
+				<if test="iszxrdx != null  and iszxrdx != '' " > ISZXRDX = #{iszxrdx} AND </if>
+				<if test="zxrdxmb != null  and zxrdxmb != '' " > ZXRDXMB = #{zxrdxmb} AND </if>
+				<if test="zxr != null  and zxr != '' " > ZXR = #{zxr} AND </if>
+				<if test="zxrjs != null  and zxrjs != '' " > ZXRJS = #{zxrjs} AND </if>
+				<if test="zxrusers != null  and zxrusers != '' " > ZXRUSERS = #{zxrusers} AND </if>
+				<if test="zxrjsname != null  and zxrjsname != '' " > ZXRJSNAME = #{zxrjsname} AND </if>
+				<if test="isclrwx != null  and isclrwx != '' " > ISCLRWX = #{isclrwx} AND </if>
+				<if test="clrwxmb != null  and clrwxmb != '' " > CLRWXMB = #{clrwxmb} AND </if>
+				<if test="iszxrwx != null  and iszxrwx != '' " > ISZXRWX = #{iszxrwx} AND </if>
+				<if test="zxrwxmb != null  and zxrwxmb != '' " > ZXRWXMB = #{zxrwxmb} AND </if>
+				<if test="isys != null  and isys != '' " > ISYS = #{isys} AND </if>
+				<if test="yssj != null  and yssj != '' " > YSSJ = #{yssj} AND </if>
+				<if test="iszxrxtxxys != null  and iszxrxtxxys != '' " > ISZXRXTXXYS = #{iszxrxtxxys} AND </if>
+				<if test="zxrxtxxyssj != null  and zxrxtxxyssj != '' " > ZXRXTXXYSSJ = #{zxrxtxxyssj} AND </if>
+				<if test="iszxrxtxxcs != null  and iszxrxtxxcs != '' " > ISZXRXTXXCS = #{iszxrxtxxcs} AND </if>
+				<if test="zxrxtxxcssj != null  and zxrxtxxcssj != '' " > ZXRXTXXCSSJ = #{zxrxtxxcssj} AND </if>
+				<if test="zxrxtxxcsmb != null  and zxrxtxxcsmb != '' " > ZXRXTXXCSMB = #{zxrxtxxcsmb} AND </if>
+				<if test="zxrxtxxcscs != null  and zxrxtxxcscs != '' " > ZXRXTXXCSCS = #{zxrxtxxcscs} AND </if>
+				<if test="iszxryjys != null  and iszxryjys != '' " > ISZXRYJYS = #{iszxryjys} AND </if>
+				<if test="zxryjyssj != null  and zxryjyssj != '' " > ZXRYJYSSJ = #{zxryjyssj} AND </if>
+				<if test="iszxryjcs != null  and iszxryjcs != '' " > ISZXRYJCS = #{iszxryjcs} AND </if>
+				<if test="zxryjcssj != null  and zxryjcssj != '' " > ZXRYJCSSJ = #{zxryjcssj} AND </if>
+				<if test="zxryjcsmb != null  and zxryjcsmb != '' " > ZXRYJCSMB = #{zxryjcsmb} AND </if>
+				<if test="zxryjcscs != null  and zxryjcscs != '' " > ZXRYJCSCS = #{zxryjcscs} AND </if>
+				<if test="iszxrdxys != null  and iszxrdxys != '' " > ISZXRDXYS = #{iszxrdxys} AND </if>
+				<if test="zxrdxyssj != null  and zxrdxyssj != '' " > ZXRDXYSSJ = #{zxrdxyssj} AND </if>
+				<if test="iszxrdxcs != null  and iszxrdxcs != '' " > ISZXRDXCS = #{iszxrdxcs} AND </if>
+				<if test="zxrdxcssj != null  and zxrdxcssj != '' " > ZXRDXCSSJ = #{zxrdxcssj} AND </if>
+				<if test="zxrdxcsmb != null  and zxrdxcsmb != '' " > ZXRDXCSMB = #{zxrdxcsmb} AND </if>
+				<if test="zxrdxcscs != null  and zxrdxcscs != '' " > ZXRDXCSCS = #{zxrdxcscs} AND </if>
+				<if test="iszxrwxys != null  and iszxrwxys != '' " > ISZXRWXYS = #{iszxrwxys} AND </if>
+				<if test="zxrwxyssj != null  and zxrwxyssj != '' " > ZXRWXYSSJ = #{zxrwxyssj} AND </if>
+				<if test="iszxrwxcs != null  and iszxrwxcs != '' " > ISZXRWXCS = #{iszxrwxcs} AND </if>
+				<if test="zxrwxcssj != null  and zxrwxcssj != '' " > ZXRWXCSSJ = #{zxrwxcssj} AND </if>
+				<if test="zxrwxcsmb != null  and zxrwxcsmb != '' " > ZXRWXCSMB = #{zxrwxcsmb} AND </if>
+				<if test="zxrwxcscs != null  and zxrwxcscs != '' " > ZXRWXCSCS = #{zxrwxcscs} AND </if>
+				<if test="clrxtxxcstxjg != null  and clrxtxxcstxjg != '' " > CLRXTXXCSTXJG = #{clrxtxxcstxjg} AND </if>
+				<if test="clryjcstxjg != null  and clryjcstxjg != '' " > CLRYJCSTXJG = #{clryjcstxjg} AND </if>
+				
+            </trim>
+        </sql>
+    	<!-- 查询分页  2020-11-19 k6991  -->
+        <select id="queryPagerList" parameterType="map" resultMap="PPMFLOWINFO_ALL">
+        	SELECT
+            <include refid="sql_flied_all" />
+            FROM PPM_FLOW_INFO
+            <include refid="sql_select_condition" />
+        </select>
+
+        <!-- 新增  2020-11-19 k6991  -->
+        <insert id="addPojo" parameterType="ppmFlowInfo">
+    		INSERT INTO PPM_FLOW_INFO (
+    		<trim suffixOverrides=",">
+    		 <if test="clrdxcstxjg != null  and clrdxcstxjg != '' " > CLRDXCSTXJG , </if>
+				<if test="clrwxcstxjg != null  and clrwxcstxjg != '' " > CLRWXCSTXJG , </if>
+				<if test="zxrxtxxcstxjg != null  and zxrxtxxcstxjg != '' " > ZXRXTXXCSTXJG , </if>
+				<if test="zxryjcstxjg != null  and zxryjcstxjg != '' " > ZXRYJCSTXJG , </if>
+				<if test="zxrdxcstxjg != null  and zxrdxcstxjg != '' " > ZXRDXCSTXJG , </if>
+				<if test="zxrwxcstxjg != null  and zxrwxcstxjg != '' " > ZXRWXCSTXJG , </if>
+				<if test="isclrxtxxys != null  and isclrxtxxys != '' " > ISCLRXTXXYS , </if>
+				<if test="clrxtxxyssj != null  and clrxtxxyssj != '' " > CLRXTXXYSSJ , </if>
+				<if test="isclrxtxxcs != null  and isclrxtxxcs != '' " > ISCLRXTXXCS , </if>
+				<if test="clrxtxxcssj != null  and clrxtxxcssj != '' " > CLRXTXXCSSJ , </if>
+				<if test="clrxtxxcsmb != null  and clrxtxxcsmb != '' " > CLRXTXXCSMB , </if>
+				<if test="clrxtxxcscs != null  and clrxtxxcscs != '' " > CLRXTXXCSCS , </if>
+				<if test="isclryjys != null  and isclryjys != '' " > ISCLRYJYS , </if>
+				<if test="clryjyssj != null  and clryjyssj != '' " > CLRYJYSSJ , </if>
+				<if test="isclryjcs != null  and isclryjcs != '' " > ISCLRYJCS , </if>
+				<if test="clryjcssj != null  and clryjcssj != '' " > CLRYJCSSJ , </if>
+				<if test="clryjcsmb != null  and clryjcsmb != '' " > CLRYJCSMB , </if>
+				<if test="clryjcscs != null  and clryjcscs != '' " > CLRYJCSCS , </if>
+				<if test="isclrdxys != null  and isclrdxys != '' " > ISCLRDXYS , </if>
+				<if test="clrdxyssj != null  and clrdxyssj != '' " > CLRDXYSSJ , </if>
+				<if test="isclrdxcs != null  and isclrdxcs != '' " > ISCLRDXCS , </if>
+				<if test="clrdxcssj != null  and clrdxcssj != '' " > CLRDXCSSJ , </if>
+				<if test="clrdxcsmb != null  and clrdxcsmb != '' " > CLRDXCSMB , </if>
+				<if test="clrdxcscs != null  and clrdxcscs != '' " > CLRDXCSCS , </if>
+				<if test="isclrwxys != null  and isclrwxys != '' " > ISCLRWXYS , </if>
+				<if test="clrwxyssj != null  and clrwxyssj != '' " > CLRWXYSSJ , </if>
+				<if test="isclrwxcs != null  and isclrwxcs != '' " > ISCLRWXCS , </if>
+				<if test="clrwxcssj != null  and clrwxcssj != '' " > CLRWXCSSJ , </if>
+				<if test="clrwxcsmb != null  and clrwxcsmb != '' " > CLRWXCSMB , </if>
+				<if test="clrwxcscs != null  and clrwxcscs != '' " > CLRWXCSCS , </if>
+				<if test="isclrpt != null  and isclrpt != '' " > ISCLRPT , </if>
+				<if test="isclrptys != null  and isclrptys != '' " > ISCLRPTYS , </if>
+				<if test="clrptyssj != null  and clrptyssj != '' " > CLRPTYSSJ , </if>
+				<if test="clrptmb != null  and clrptmb != '' " > CLRPTMB , </if>
+				<if test="isclrptcs != null  and isclrptcs != '' " > ISCLRPTCS , </if>
+				<if test="clrptcscs != null  and clrptcscs != '' " > CLRPTCSCS , </if>
+				<if test="clrptcssj != null  and clrptcssj != '' " > CLRPTCSSJ , </if>
+				<if test="clrptcsmb != null  and clrptcsmb != '' " > CLRPTCSMB , </if>
+				<if test="clrptcstxjg != null  and clrptcstxjg != '' " > CLRPTCSTXJG , </if>
+				<if test="iszxrpt != null  and iszxrpt != '' " > ISZXRPT , </if>
+				<if test="iszxrptys != null  and iszxrptys != '' " > ISZXRPTYS , </if>
+				<if test="zxrptyssj != null  and zxrptyssj != '' " > ZXRPTYSSJ , </if>
+				<if test="zxrptmb != null  and zxrptmb != '' " > ZXRPTMB , </if>
+				<if test="iszxrptcs != null  and iszxrptcs != '' " > ISZXRPTCS , </if>
+				<if test="zxrptcscs != null  and zxrptcscs != '' " > ZXRPTCSCS , </if>
+				<if test="zxrptcssj != null  and zxrptcssj != '' " > ZXRPTCSSJ , </if>
+				<if test="zxrptcsmb != null  and zxrptcsmb != '' " > ZXRPTCSMB , </if>
+				<if test="zxrptcstxjg != null  and zxrptcstxjg != '' " > ZXRPTCSTXJG , </if>
+				<if test="id != null " > ID , </if>
+				<if test="flowdraftno != null  and flowdraftno != '' " > FLOWDRAFTNO , </if>
+				<if test="flowname != null  and flowname != '' " > FLOWNAME , </if>
+				<if test="flownodecode != null  and flownodecode != '' " > FLOWNODECODE , </if>
+				<if test="flownodename != null  and flownodename != '' " > FLOWNODENAME , </if>
+				<if test="isdispatch != null  and isdispatch != '' " > ISDISPATCH , </if>
+				<if test="isdel != null " > ISDEL , </if>
+				<if test="createtime != null " > CREATETIME , </if>
+				<if test="creators != null  and creators != '' " > CREATORS , </if>
+				<if test="lastmodtime != null " > LASTMODTIME , </if>
+				<if test="lastmoduser != null  and lastmoduser != '' " > LASTMODUSER , </if>
+				<if test="flowtypeid != null  and flowtypeid != '' " > FLOWTYPEID , </if>
+				<if test="isclrxtxx != null  and isclrxtxx != '' " > ISCLRXTXX , </if>
+				<if test="clrxtxxmb != null  and clrxtxxmb != '' " > CLRXTXXMB , </if>
+				<if test="isclryj != null  and isclryj != '' " > ISCLRYJ , </if>
+				<if test="clryjmb != null  and clryjmb != '' " > CLRYJMB , </if>
+				<if test="isclrdx != null  and isclrdx != '' " > ISCLRDX , </if>
+				<if test="clrdxmb != null  and clrdxmb != '' " > CLRDXMB , </if>
+				<if test="iszxrxtxx != null  and iszxrxtxx != '' " > ISZXRXTXX , </if>
+				<if test="zxrxtxxmb != null  and zxrxtxxmb != '' " > ZXRXTXXMB , </if>
+				<if test="iszxryj != null  and iszxryj != '' " > ISZXRYJ , </if>
+				<if test="zxryjmb != null  and zxryjmb != '' " > ZXRYJMB , </if>
+				<if test="iszxrdx != null  and iszxrdx != '' " > ISZXRDX , </if>
+				<if test="zxrdxmb != null  and zxrdxmb != '' " > ZXRDXMB , </if>
+				<if test="zxr != null  and zxr != '' " > ZXR , </if>
+				<if test="zxrjs != null  and zxrjs != '' " > ZXRJS , </if>
+				<if test="zxrusers != null  and zxrusers != '' " > ZXRUSERS , </if>
+				<if test="zxrjsname != null  and zxrjsname != '' " > ZXRJSNAME , </if>
+				<if test="isclrwx != null  and isclrwx != '' " > ISCLRWX , </if>
+				<if test="clrwxmb != null  and clrwxmb != '' " > CLRWXMB , </if>
+				<if test="iszxrwx != null  and iszxrwx != '' " > ISZXRWX , </if>
+				<if test="zxrwxmb != null  and zxrwxmb != '' " > ZXRWXMB , </if>
+				<if test="isys != null  and isys != '' " > ISYS , </if>
+				<if test="yssj != null  and yssj != '' " > YSSJ , </if>
+				<if test="iszxrxtxxys != null  and iszxrxtxxys != '' " > ISZXRXTXXYS , </if>
+				<if test="zxrxtxxyssj != null  and zxrxtxxyssj != '' " > ZXRXTXXYSSJ , </if>
+				<if test="iszxrxtxxcs != null  and iszxrxtxxcs != '' " > ISZXRXTXXCS , </if>
+				<if test="zxrxtxxcssj != null  and zxrxtxxcssj != '' " > ZXRXTXXCSSJ , </if>
+				<if test="zxrxtxxcsmb != null  and zxrxtxxcsmb != '' " > ZXRXTXXCSMB , </if>
+				<if test="zxrxtxxcscs != null  and zxrxtxxcscs != '' " > ZXRXTXXCSCS , </if>
+				<if test="iszxryjys != null  and iszxryjys != '' " > ISZXRYJYS , </if>
+				<if test="zxryjyssj != null  and zxryjyssj != '' " > ZXRYJYSSJ , </if>
+				<if test="iszxryjcs != null  and iszxryjcs != '' " > ISZXRYJCS , </if>
+				<if test="zxryjcssj != null  and zxryjcssj != '' " > ZXRYJCSSJ , </if>
+				<if test="zxryjcsmb != null  and zxryjcsmb != '' " > ZXRYJCSMB , </if>
+				<if test="zxryjcscs != null  and zxryjcscs != '' " > ZXRYJCSCS , </if>
+				<if test="iszxrdxys != null  and iszxrdxys != '' " > ISZXRDXYS , </if>
+				<if test="zxrdxyssj != null  and zxrdxyssj != '' " > ZXRDXYSSJ , </if>
+				<if test="iszxrdxcs != null  and iszxrdxcs != '' " > ISZXRDXCS , </if>
+				<if test="zxrdxcssj != null  and zxrdxcssj != '' " > ZXRDXCSSJ , </if>
+				<if test="zxrdxcsmb != null  and zxrdxcsmb != '' " > ZXRDXCSMB , </if>
+				<if test="zxrdxcscs != null  and zxrdxcscs != '' " > ZXRDXCSCS , </if>
+				<if test="iszxrwxys != null  and iszxrwxys != '' " > ISZXRWXYS , </if>
+				<if test="zxrwxyssj != null  and zxrwxyssj != '' " > ZXRWXYSSJ , </if>
+				<if test="iszxrwxcs != null  and iszxrwxcs != '' " > ISZXRWXCS , </if>
+				<if test="zxrwxcssj != null  and zxrwxcssj != '' " > ZXRWXCSSJ , </if>
+				<if test="zxrwxcsmb != null  and zxrwxcsmb != '' " > ZXRWXCSMB , </if>
+				<if test="zxrwxcscs != null  and zxrwxcscs != '' " > ZXRWXCSCS , </if>
+				<if test="clrxtxxcstxjg != null  and clrxtxxcstxjg != '' " > CLRXTXXCSTXJG , </if>
+				<if test="clryjcstxjg != null  and clryjcstxjg != '' " > CLRYJCSTXJG , </if>
+				
+              </trim>
+    		)
+    		VALUES(
+    		<trim suffixOverrides=",">
+    		 <if test="clrdxcstxjg != null  and clrdxcstxjg != '' " > #{clrdxcstxjg} , </if>
+				<if test="clrwxcstxjg != null  and clrwxcstxjg != '' " > #{clrwxcstxjg} , </if>
+				<if test="zxrxtxxcstxjg != null  and zxrxtxxcstxjg != '' " > #{zxrxtxxcstxjg} , </if>
+				<if test="zxryjcstxjg != null  and zxryjcstxjg != '' " > #{zxryjcstxjg} , </if>
+				<if test="zxrdxcstxjg != null  and zxrdxcstxjg != '' " > #{zxrdxcstxjg} , </if>
+				<if test="zxrwxcstxjg != null  and zxrwxcstxjg != '' " > #{zxrwxcstxjg} , </if>
+				<if test="isclrxtxxys != null  and isclrxtxxys != '' " > #{isclrxtxxys} , </if>
+				<if test="clrxtxxyssj != null  and clrxtxxyssj != '' " > #{clrxtxxyssj} , </if>
+				<if test="isclrxtxxcs != null  and isclrxtxxcs != '' " > #{isclrxtxxcs} , </if>
+				<if test="clrxtxxcssj != null  and clrxtxxcssj != '' " > #{clrxtxxcssj} , </if>
+				<if test="clrxtxxcsmb != null  and clrxtxxcsmb != '' " > #{clrxtxxcsmb} , </if>
+				<if test="clrxtxxcscs != null  and clrxtxxcscs != '' " > #{clrxtxxcscs} , </if>
+				<if test="isclryjys != null  and isclryjys != '' " > #{isclryjys} , </if>
+				<if test="clryjyssj != null  and clryjyssj != '' " > #{clryjyssj} , </if>
+				<if test="isclryjcs != null  and isclryjcs != '' " > #{isclryjcs} , </if>
+				<if test="clryjcssj != null  and clryjcssj != '' " > #{clryjcssj} , </if>
+				<if test="clryjcsmb != null  and clryjcsmb != '' " > #{clryjcsmb} , </if>
+				<if test="clryjcscs != null  and clryjcscs != '' " > #{clryjcscs} , </if>
+				<if test="isclrdxys != null  and isclrdxys != '' " > #{isclrdxys} , </if>
+				<if test="clrdxyssj != null  and clrdxyssj != '' " > #{clrdxyssj} , </if>
+				<if test="isclrdxcs != null  and isclrdxcs != '' " > #{isclrdxcs} , </if>
+				<if test="clrdxcssj != null  and clrdxcssj != '' " > #{clrdxcssj} , </if>
+				<if test="clrdxcsmb != null  and clrdxcsmb != '' " > #{clrdxcsmb} , </if>
+				<if test="clrdxcscs != null  and clrdxcscs != '' " > #{clrdxcscs} , </if>
+				<if test="isclrwxys != null  and isclrwxys != '' " > #{isclrwxys} , </if>
+				<if test="clrwxyssj != null  and clrwxyssj != '' " > #{clrwxyssj} , </if>
+				<if test="isclrwxcs != null  and isclrwxcs != '' " > #{isclrwxcs} , </if>
+				<if test="clrwxcssj != null  and clrwxcssj != '' " > #{clrwxcssj} , </if>
+				<if test="clrwxcsmb != null  and clrwxcsmb != '' " > #{clrwxcsmb} , </if>
+				<if test="clrwxcscs != null  and clrwxcscs != '' " > #{clrwxcscs} , </if>
+				<if test="isclrpt != null  and isclrpt != '' " > #{isclrpt} , </if>
+				<if test="isclrptys != null  and isclrptys != '' " > #{isclrptys} , </if>
+				<if test="clrptyssj != null  and clrptyssj != '' " > #{clrptyssj} , </if>
+				<if test="clrptmb != null  and clrptmb != '' " > #{clrptmb} , </if>
+				<if test="isclrptcs != null  and isclrptcs != '' " > #{isclrptcs} , </if>
+				<if test="clrptcscs != null  and clrptcscs != '' " > #{clrptcscs} , </if>
+				<if test="clrptcssj != null  and clrptcssj != '' " > #{clrptcssj} , </if>
+				<if test="clrptcsmb != null  and clrptcsmb != '' " > #{clrptcsmb} , </if>
+				<if test="clrptcstxjg != null  and clrptcstxjg != '' " > #{clrptcstxjg} , </if>
+				<if test="iszxrpt != null  and iszxrpt != '' " > #{iszxrpt} , </if>
+				<if test="iszxrptys != null  and iszxrptys != '' " > #{iszxrptys} , </if>
+				<if test="zxrptyssj != null  and zxrptyssj != '' " > #{zxrptyssj} , </if>
+				<if test="zxrptmb != null  and zxrptmb != '' " > #{zxrptmb} , </if>
+				<if test="iszxrptcs != null  and iszxrptcs != '' " > #{iszxrptcs} , </if>
+				<if test="zxrptcscs != null  and zxrptcscs != '' " > #{zxrptcscs} , </if>
+				<if test="zxrptcssj != null  and zxrptcssj != '' " > #{zxrptcssj} , </if>
+				<if test="zxrptcsmb != null  and zxrptcsmb != '' " > #{zxrptcsmb} , </if>
+				<if test="zxrptcstxjg != null  and zxrptcstxjg != '' " > #{zxrptcstxjg} , </if>
+				<if test="id != null " > #{id} , </if>
+				<if test="flowdraftno != null  and flowdraftno != '' " > #{flowdraftno} , </if>
+				<if test="flowname != null  and flowname != '' " > #{flowname} , </if>
+				<if test="flownodecode != null  and flownodecode != '' " > #{flownodecode} , </if>
+				<if test="flownodename != null  and flownodename != '' " > #{flownodename} , </if>
+				<if test="isdispatch != null  and isdispatch != '' " > #{isdispatch} , </if>
+				<if test="isdel != null " > #{isdel} , </if>
+				<if test="createtime != null " > #{createtime} , </if>
+				<if test="creators != null  and creators != '' " > #{creators} , </if>
+				<if test="lastmodtime != null " > #{lastmodtime} , </if>
+				<if test="lastmoduser != null  and lastmoduser != '' " > #{lastmoduser} , </if>
+				<if test="flowtypeid != null  and flowtypeid != '' " > #{flowtypeid} , </if>
+				<if test="isclrxtxx != null  and isclrxtxx != '' " > #{isclrxtxx} , </if>
+				<if test="clrxtxxmb != null  and clrxtxxmb != '' " > #{clrxtxxmb} , </if>
+				<if test="isclryj != null  and isclryj != '' " > #{isclryj} , </if>
+				<if test="clryjmb != null  and clryjmb != '' " > #{clryjmb} , </if>
+				<if test="isclrdx != null  and isclrdx != '' " > #{isclrdx} , </if>
+				<if test="clrdxmb != null  and clrdxmb != '' " > #{clrdxmb} , </if>
+				<if test="iszxrxtxx != null  and iszxrxtxx != '' " > #{iszxrxtxx} , </if>
+				<if test="zxrxtxxmb != null  and zxrxtxxmb != '' " > #{zxrxtxxmb} , </if>
+				<if test="iszxryj != null  and iszxryj != '' " > #{iszxryj} , </if>
+				<if test="zxryjmb != null  and zxryjmb != '' " > #{zxryjmb} , </if>
+				<if test="iszxrdx != null  and iszxrdx != '' " > #{iszxrdx} , </if>
+				<if test="zxrdxmb != null  and zxrdxmb != '' " > #{zxrdxmb} , </if>
+				<if test="zxr != null  and zxr != '' " > #{zxr} , </if>
+				<if test="zxrjs != null  and zxrjs != '' " > #{zxrjs} , </if>
+				<if test="zxrusers != null  and zxrusers != '' " > #{zxrusers} , </if>
+				<if test="zxrjsname != null  and zxrjsname != '' " > #{zxrjsname} , </if>
+				<if test="isclrwx != null  and isclrwx != '' " > #{isclrwx} , </if>
+				<if test="clrwxmb != null  and clrwxmb != '' " > #{clrwxmb} , </if>
+				<if test="iszxrwx != null  and iszxrwx != '' " > #{iszxrwx} , </if>
+				<if test="zxrwxmb != null  and zxrwxmb != '' " > #{zxrwxmb} , </if>
+				<if test="isys != null  and isys != '' " > #{isys} , </if>
+				<if test="yssj != null  and yssj != '' " > #{yssj} , </if>
+				<if test="iszxrxtxxys != null  and iszxrxtxxys != '' " > #{iszxrxtxxys} , </if>
+				<if test="zxrxtxxyssj != null  and zxrxtxxyssj != '' " > #{zxrxtxxyssj} , </if>
+				<if test="iszxrxtxxcs != null  and iszxrxtxxcs != '' " > #{iszxrxtxxcs} , </if>
+				<if test="zxrxtxxcssj != null  and zxrxtxxcssj != '' " > #{zxrxtxxcssj} , </if>
+				<if test="zxrxtxxcsmb != null  and zxrxtxxcsmb != '' " > #{zxrxtxxcsmb} , </if>
+				<if test="zxrxtxxcscs != null  and zxrxtxxcscs != '' " > #{zxrxtxxcscs} , </if>
+				<if test="iszxryjys != null  and iszxryjys != '' " > #{iszxryjys} , </if>
+				<if test="zxryjyssj != null  and zxryjyssj != '' " > #{zxryjyssj} , </if>
+				<if test="iszxryjcs != null  and iszxryjcs != '' " > #{iszxryjcs} , </if>
+				<if test="zxryjcssj != null  and zxryjcssj != '' " > #{zxryjcssj} , </if>
+				<if test="zxryjcsmb != null  and zxryjcsmb != '' " > #{zxryjcsmb} , </if>
+				<if test="zxryjcscs != null  and zxryjcscs != '' " > #{zxryjcscs} , </if>
+				<if test="iszxrdxys != null  and iszxrdxys != '' " > #{iszxrdxys} , </if>
+				<if test="zxrdxyssj != null  and zxrdxyssj != '' " > #{zxrdxyssj} , </if>
+				<if test="iszxrdxcs != null  and iszxrdxcs != '' " > #{iszxrdxcs} , </if>
+				<if test="zxrdxcssj != null  and zxrdxcssj != '' " > #{zxrdxcssj} , </if>
+				<if test="zxrdxcsmb != null  and zxrdxcsmb != '' " > #{zxrdxcsmb} , </if>
+				<if test="zxrdxcscs != null  and zxrdxcscs != '' " > #{zxrdxcscs} , </if>
+				<if test="iszxrwxys != null  and iszxrwxys != '' " > #{iszxrwxys} , </if>
+				<if test="zxrwxyssj != null  and zxrwxyssj != '' " > #{zxrwxyssj} , </if>
+				<if test="iszxrwxcs != null  and iszxrwxcs != '' " > #{iszxrwxcs} , </if>
+				<if test="zxrwxcssj != null  and zxrwxcssj != '' " > #{zxrwxcssj} , </if>
+				<if test="zxrwxcsmb != null  and zxrwxcsmb != '' " > #{zxrwxcsmb} , </if>
+				<if test="zxrwxcscs != null  and zxrwxcscs != '' " > #{zxrwxcscs} , </if>
+				<if test="clrxtxxcstxjg != null  and clrxtxxcstxjg != '' " > #{clrxtxxcstxjg} , </if>
+				<if test="clryjcstxjg != null  and clryjcstxjg != '' " > #{clryjcstxjg} , </if>
+				
+            </trim>
+    		)
+        </insert>
+
+        <!--通过id查询  k6991 2020-11-19 -->
+        <select id="queryDetail" parameterType="ppmFlowInfo" resultMap="PPMFLOWINFO_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_FLOW_INFO
+			<trim prefix="WHERE" suffixOverrides="AND">
+				<if test="id"> ID=#{id} AND </if>
+				<if test="flownodecode != null  and flownodecode != '' " > FLOWNODECODE=#{flownodecode} AND </if>
+				<if test="flowdraftno != null  and flowdraftno != '' " > FLOWDRAFTNO=#{flowdraftno} AND </if>
+				<if test="isdel != null " > ISDEL=#{isdel} AND </if>
+			</trim>
+        </select>
+
+         <!--查询集合  k6991 2020-11-19 -->
+        <select id="getList" parameterType="ppmFlowInfo" resultMap="PPMFLOWINFO_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_FLOW_INFO
+        	<include refid="sql_select_condition" />
+        </select>
+        <!-- update sql -->
+        <sql id="update_pojo_sql">
+        	<trim prefix="SET" suffixOverrides=",">
+        		<if test="clrdxcstxjg != null  and clrdxcstxjg != '' " > CLRDXCSTXJG=#{clrdxcstxjg} , </if>
+				<if test="clrwxcstxjg != null  and clrwxcstxjg != '' " > CLRWXCSTXJG=#{clrwxcstxjg} , </if>
+				<if test="zxrxtxxcstxjg != null  and zxrxtxxcstxjg != '' " > ZXRXTXXCSTXJG=#{zxrxtxxcstxjg} , </if>
+				<if test="zxryjcstxjg != null  and zxryjcstxjg != '' " > ZXRYJCSTXJG=#{zxryjcstxjg} , </if>
+				<if test="zxrdxcstxjg != null  and zxrdxcstxjg != '' " > ZXRDXCSTXJG=#{zxrdxcstxjg} , </if>
+				<if test="zxrwxcstxjg != null  and zxrwxcstxjg != '' " > ZXRWXCSTXJG=#{zxrwxcstxjg} , </if>
+				<if test="isclrxtxxys != null  and isclrxtxxys != '' " > ISCLRXTXXYS=#{isclrxtxxys} , </if>
+				<if test="clrxtxxyssj != null  and clrxtxxyssj != '' " > CLRXTXXYSSJ=#{clrxtxxyssj} , </if>
+				<if test="isclrxtxxcs != null  and isclrxtxxcs != '' " > ISCLRXTXXCS=#{isclrxtxxcs} , </if>
+				<if test="clrxtxxcssj != null  and clrxtxxcssj != '' " > CLRXTXXCSSJ=#{clrxtxxcssj} , </if>
+				<if test="clrxtxxcsmb != null  and clrxtxxcsmb != '' " > CLRXTXXCSMB=#{clrxtxxcsmb} , </if>
+				<if test="clrxtxxcscs != null  and clrxtxxcscs != '' " > CLRXTXXCSCS=#{clrxtxxcscs} , </if>
+				<if test="isclryjys != null  and isclryjys != '' " > ISCLRYJYS=#{isclryjys} , </if>
+				<if test="clryjyssj != null  and clryjyssj != '' " > CLRYJYSSJ=#{clryjyssj} , </if>
+				<if test="isclryjcs != null  and isclryjcs != '' " > ISCLRYJCS=#{isclryjcs} , </if>
+				<if test="clryjcssj != null  and clryjcssj != '' " > CLRYJCSSJ=#{clryjcssj} , </if>
+				<if test="clryjcsmb != null  and clryjcsmb != '' " > CLRYJCSMB=#{clryjcsmb} , </if>
+				<if test="clryjcscs != null  and clryjcscs != '' " > CLRYJCSCS=#{clryjcscs} , </if>
+				<if test="isclrdxys != null  and isclrdxys != '' " > ISCLRDXYS=#{isclrdxys} , </if>
+				<if test="clrdxyssj != null  and clrdxyssj != '' " > CLRDXYSSJ=#{clrdxyssj} , </if>
+				<if test="isclrdxcs != null  and isclrdxcs != '' " > ISCLRDXCS=#{isclrdxcs} , </if>
+				<if test="clrdxcssj != null  and clrdxcssj != '' " > CLRDXCSSJ=#{clrdxcssj} , </if>
+				<if test="clrdxcsmb != null  and clrdxcsmb != '' " > CLRDXCSMB=#{clrdxcsmb} , </if>
+				<if test="clrdxcscs != null  and clrdxcscs != '' " > CLRDXCSCS=#{clrdxcscs} , </if>
+				<if test="isclrwxys != null  and isclrwxys != '' " > ISCLRWXYS=#{isclrwxys} , </if>
+				<if test="clrwxyssj != null  and clrwxyssj != '' " > CLRWXYSSJ=#{clrwxyssj} , </if>
+				<if test="isclrwxcs != null  and isclrwxcs != '' " > ISCLRWXCS=#{isclrwxcs} , </if>
+				<if test="clrwxcssj != null  and clrwxcssj != '' " > CLRWXCSSJ=#{clrwxcssj} , </if>
+				<if test="clrwxcsmb != null  and clrwxcsmb != '' " > CLRWXCSMB=#{clrwxcsmb} , </if>
+				<if test="clrwxcscs != null  and clrwxcscs != '' " > CLRWXCSCS=#{clrwxcscs} , </if>
+				<if test="isclrpt != null  and isclrpt != '' " > ISCLRPT=#{isclrpt} , </if>
+				<if test="isclrptys != null  and isclrptys != '' " > ISCLRPTYS=#{isclrptys} , </if>
+				<if test="clrptyssj != null  and clrptyssj != '' " > CLRPTYSSJ=#{clrptyssj} , </if>
+				<if test="clrptmb != null  and clrptmb != '' " > CLRPTMB=#{clrptmb} , </if>
+				<if test="isclrptcs != null  and isclrptcs != '' " > ISCLRPTCS=#{isclrptcs} , </if>
+				<if test="clrptcscs != null  and clrptcscs != '' " > CLRPTCSCS=#{clrptcscs} , </if>
+				<if test="clrptcssj != null  and clrptcssj != '' " > CLRPTCSSJ=#{clrptcssj} , </if>
+				<if test="clrptcsmb != null  and clrptcsmb != '' " > CLRPTCSMB=#{clrptcsmb} , </if>
+				<if test="clrptcstxjg != null  and clrptcstxjg != '' " > CLRPTCSTXJG=#{clrptcstxjg} , </if>
+				<if test="iszxrpt != null  and iszxrpt != '' " > ISZXRPT=#{iszxrpt} , </if>
+				<if test="iszxrptys != null  and iszxrptys != '' " > ISZXRPTYS=#{iszxrptys} , </if>
+				<if test="zxrptyssj != null  and zxrptyssj != '' " > ZXRPTYSSJ=#{zxrptyssj} , </if>
+				<if test="zxrptmb != null  and zxrptmb != '' " > ZXRPTMB=#{zxrptmb} , </if>
+				<if test="iszxrptcs != null  and iszxrptcs != '' " > ISZXRPTCS=#{iszxrptcs} , </if>
+				<if test="zxrptcscs != null  and zxrptcscs != '' " > ZXRPTCSCS=#{zxrptcscs} , </if>
+				<if test="zxrptcssj != null  and zxrptcssj != '' " > ZXRPTCSSJ=#{zxrptcssj} , </if>
+				<if test="zxrptcsmb != null  and zxrptcsmb != '' " > ZXRPTCSMB=#{zxrptcsmb} , </if>
+				<if test="zxrptcstxjg != null  and zxrptcstxjg != '' " > ZXRPTCSTXJG=#{zxrptcstxjg} , </if>
+				<if test="id != null " > ID=#{id} , </if>
+				<if test="flowdraftno != null  and flowdraftno != '' " > FLOWDRAFTNO=#{flowdraftno} , </if>
+				<if test="flowname != null  and flowname != '' " > FLOWNAME=#{flowname} , </if>
+				<if test="flownodecode != null  and flownodecode != '' " > FLOWNODECODE=#{flownodecode} , </if>
+				<if test="flownodename != null  and flownodename != '' " > FLOWNODENAME=#{flownodename} , </if>
+				<if test="isdispatch != null  and isdispatch != '' " > ISDISPATCH=#{isdispatch} , </if>
+				<if test="isdel != null " > ISDEL=#{isdel} , </if>
+				<if test="createtime != null " > CREATETIME=#{createtime} , </if>
+				<if test="creators != null  and creators != '' " > CREATORS=#{creators} , </if>
+				<if test="lastmodtime != null " > LASTMODTIME=#{lastmodtime} , </if>
+				<if test="lastmoduser != null  and lastmoduser != '' " > LASTMODUSER=#{lastmoduser} , </if>
+				<if test="flowtypeid != null  and flowtypeid != '' " > FLOWTYPEID=#{flowtypeid} , </if>
+				<if test="isclrxtxx != null  and isclrxtxx != '' " > ISCLRXTXX=#{isclrxtxx} , </if>
+				<if test="clrxtxxmb != null  and clrxtxxmb != '' " > CLRXTXXMB=#{clrxtxxmb} , </if>
+				<if test="isclryj != null  and isclryj != '' " > ISCLRYJ=#{isclryj} , </if>
+				<if test="clryjmb != null  and clryjmb != '' " > CLRYJMB=#{clryjmb} , </if>
+				<if test="isclrdx != null  and isclrdx != '' " > ISCLRDX=#{isclrdx} , </if>
+				<if test="clrdxmb != null  and clrdxmb != '' " > CLRDXMB=#{clrdxmb} , </if>
+				<if test="iszxrxtxx != null  and iszxrxtxx != '' " > ISZXRXTXX=#{iszxrxtxx} , </if>
+				<if test="zxrxtxxmb != null  and zxrxtxxmb != '' " > ZXRXTXXMB=#{zxrxtxxmb} , </if>
+				<if test="iszxryj != null  and iszxryj != '' " > ISZXRYJ=#{iszxryj} , </if>
+				<if test="zxryjmb != null  and zxryjmb != '' " > ZXRYJMB=#{zxryjmb} , </if>
+				<if test="iszxrdx != null  and iszxrdx != '' " > ISZXRDX=#{iszxrdx} , </if>
+				<if test="zxrdxmb != null  and zxrdxmb != '' " > ZXRDXMB=#{zxrdxmb} , </if>
+				<if test="zxr != null  and zxr != '' " > ZXR=#{zxr} , </if>
+				<if test="zxrjs != null  and zxrjs != '' " > ZXRJS=#{zxrjs} , </if>
+				<if test="zxrusers != null  and zxrusers != '' " > ZXRUSERS=#{zxrusers} , </if>
+				<if test="zxrjsname != null  and zxrjsname != '' " > ZXRJSNAME=#{zxrjsname} , </if>
+				<if test="isclrwx != null  and isclrwx != '' " > ISCLRWX=#{isclrwx} , </if>
+				<if test="clrwxmb != null  and clrwxmb != '' " > CLRWXMB=#{clrwxmb} , </if>
+				<if test="iszxrwx != null  and iszxrwx != '' " > ISZXRWX=#{iszxrwx} , </if>
+				<if test="zxrwxmb != null  and zxrwxmb != '' " > ZXRWXMB=#{zxrwxmb} , </if>
+				<if test="isys != null  and isys != '' " > ISYS=#{isys} , </if>
+				<if test="yssj != null  and yssj != '' " > YSSJ=#{yssj} , </if>
+				<if test="iszxrxtxxys != null  and iszxrxtxxys != '' " > ISZXRXTXXYS=#{iszxrxtxxys} , </if>
+				<if test="zxrxtxxyssj != null  and zxrxtxxyssj != '' " > ZXRXTXXYSSJ=#{zxrxtxxyssj} , </if>
+				<if test="iszxrxtxxcs != null  and iszxrxtxxcs != '' " > ISZXRXTXXCS=#{iszxrxtxxcs} , </if>
+				<if test="zxrxtxxcssj != null  and zxrxtxxcssj != '' " > ZXRXTXXCSSJ=#{zxrxtxxcssj} , </if>
+				<if test="zxrxtxxcsmb != null  and zxrxtxxcsmb != '' " > ZXRXTXXCSMB=#{zxrxtxxcsmb} , </if>
+				<if test="zxrxtxxcscs != null  and zxrxtxxcscs != '' " > ZXRXTXXCSCS=#{zxrxtxxcscs} , </if>
+				<if test="iszxryjys != null  and iszxryjys != '' " > ISZXRYJYS=#{iszxryjys} , </if>
+				<if test="zxryjyssj != null  and zxryjyssj != '' " > ZXRYJYSSJ=#{zxryjyssj} , </if>
+				<if test="iszxryjcs != null  and iszxryjcs != '' " > ISZXRYJCS=#{iszxryjcs} , </if>
+				<if test="zxryjcssj != null  and zxryjcssj != '' " > ZXRYJCSSJ=#{zxryjcssj} , </if>
+				<if test="zxryjcsmb != null  and zxryjcsmb != '' " > ZXRYJCSMB=#{zxryjcsmb} , </if>
+				<if test="zxryjcscs != null  and zxryjcscs != '' " > ZXRYJCSCS=#{zxryjcscs} , </if>
+				<if test="iszxrdxys != null  and iszxrdxys != '' " > ISZXRDXYS=#{iszxrdxys} , </if>
+				<if test="zxrdxyssj != null  and zxrdxyssj != '' " > ZXRDXYSSJ=#{zxrdxyssj} , </if>
+				<if test="iszxrdxcs != null  and iszxrdxcs != '' " > ISZXRDXCS=#{iszxrdxcs} , </if>
+				<if test="zxrdxcssj != null  and zxrdxcssj != '' " > ZXRDXCSSJ=#{zxrdxcssj} , </if>
+				<if test="zxrdxcsmb != null  and zxrdxcsmb != '' " > ZXRDXCSMB=#{zxrdxcsmb} , </if>
+				<if test="zxrdxcscs != null  and zxrdxcscs != '' " > ZXRDXCSCS=#{zxrdxcscs} , </if>
+				<if test="iszxrwxys != null  and iszxrwxys != '' " > ISZXRWXYS=#{iszxrwxys} , </if>
+				<if test="zxrwxyssj != null  and zxrwxyssj != '' " > ZXRWXYSSJ=#{zxrwxyssj} , </if>
+				<if test="iszxrwxcs != null  and iszxrwxcs != '' " > ISZXRWXCS=#{iszxrwxcs} , </if>
+				<if test="zxrwxcssj != null  and zxrwxcssj != '' " > ZXRWXCSSJ=#{zxrwxcssj} , </if>
+				<if test="zxrwxcsmb != null  and zxrwxcsmb != '' " > ZXRWXCSMB=#{zxrwxcsmb} , </if>
+				<if test="zxrwxcscs != null  and zxrwxcscs != '' " > ZXRWXCSCS=#{zxrwxcscs} , </if>
+				<if test="clrxtxxcstxjg != null  and clrxtxxcstxjg != '' " > CLRXTXXCSTXJG=#{clrxtxxcstxjg} , </if>
+				<if test="clryjcstxjg != null  and clryjcstxjg != '' " > CLRYJCSTXJG=#{clryjcstxjg} , </if>
+				
+            </trim>
+        </sql>
+
+        <!--通过id编辑 k6991 2020-11-19 -->
+    	<update id="updatePojo" parameterType="ppmFlowInfo">
+        	UPDATE
+        	PPM_FLOW_INFO
+        	<include refid="update_pojo_sql" />
+        	WHERE ID=#{id}
+        </update>
+
+        <!--通过id批量删除  k6991 2020-11-19 -->
+        <delete id="deleteById" parameterType="ppmFlowInfo">
+        	DELETE
+        	FROM
+        	PPM_FLOW_INFO
+        	WHERE ID=#{id}
+        </delete>
+
+</mapper>

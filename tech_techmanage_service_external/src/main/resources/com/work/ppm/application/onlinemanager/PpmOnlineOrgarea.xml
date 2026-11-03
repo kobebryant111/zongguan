@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k4038 2021-09-28 -->
+<mapper namespace="com.work.ppm.application.model.onlinemanager.PpmOnlineOrgarea">
+	 <resultMap type="ppmOnlineOrgarea" id="PPMONLINEORGAREA_ALL">
+        <result property="coupledsys" column="COUPLEDSYS" />
+		<result property="safetytesttype" column="SAFETYTESTTYPE" />
+		<result property="id" column="ID" />
+		<result property="projectno" column="PROJECTNO" />
+		<result property="planonline" column="PLANONLINE" />
+		<result property="orgarea" column="ORGAREA" />
+		<result property="isdel" column="ISDEL" />
+		<result property="createtime" column="CREATETIME" />
+		<result property="creators" column="CREATORS" />
+		<result property="lastmodtime" column="LASTMODTIME" />
+		<result property="lastmoduser" column="LASTMODUSER" />
+		<result property="onlineno" column="ONLINENO" />
+		<result property="isonline" column="ISONLINE" />
+		<result property="linkman" column="LINKMAN" />
+		<result property="linkname" column="LINKNAME" />
+		 <result property="safetytestname" column="SAFETYTESTNAME" />
+		
+     </resultMap>
+
+     <!-- 所有字段名称 -->
+        <sql id="sql_flied_all">
+        	COUPLEDSYS,
+			SAFETYTESTTYPE,
+			ID,
+			PROJECTNO,
+			PLANONLINE,
+			ORGAREA,
+			ISDEL,
+			CREATETIME,
+			CREATORS,
+			LASTMODTIME,
+			LASTMODUSER,
+			ONLINENO,
+			ISONLINE,
+			LINKMAN,
+			LINKNAME
+        </sql>
+        <sql id="sql_select_condition">
+            <trim prefix="WHERE" suffixOverrides="AND">
+                <if test="coupledsys != null  and coupledsys != '' " > COUPLEDSYS = #{coupledsys} AND </if>
+				<if test="safetytesttype != null  and safetytesttype != '' " > SAFETYTESTTYPE = #{safetytesttype} AND </if>
+				<if test="id != null " > ID = #{id} AND </if>
+				<if test="projectno != null  and projectno != '' " > PROJECTNO = #{projectno} AND </if>
+				<if test="planonline != null " > PLANONLINE = #{planonline} AND </if>
+				<if test="orgarea != null  and orgarea != '' " > ORGAREA = #{orgarea} AND </if>
+				<if test="isdel != null " > ISDEL = #{isdel} AND </if>
+				<if test="createtime != null " > CREATETIME = #{createtime} AND </if>
+				<if test="creators != null  and creators != '' " > CREATORS = #{creators} AND </if>
+				<if test="lastmodtime != null " > LASTMODTIME = #{lastmodtime} AND </if>
+				<if test="lastmoduser != null  and lastmoduser != '' " > LASTMODUSER = #{lastmoduser} AND </if>
+				<if test="onlineno != null  and onlineno != '' " > ONLINENO = #{onlineno} AND </if>
+				<if test="isonline != null  and isonline != '' " > ISONLINE = #{isonline} AND </if>
+				<if test="linkman != null  and linkman != '' " > LINKMAN = #{linkman} AND </if>
+				<if test="linkname != null  and linkname != '' " > LINKNAME = #{linkname} AND </if>
+				<if test="safetytestname != null  and safetytestname != '' " > SAFETYTESTNAME = #{safetytestname} AND </if>
+
+			</trim>
+        </sql>
+    	<!-- 查询分页  2021-09-28 k4038  -->
+        <select id="queryPagerList" parameterType="map" resultMap="PPMONLINEORGAREA_ALL">
+        	SELECT
+            <include refid="sql_flied_all" />
+            FROM PPM_ONLINE_ORGAREA
+            <include refid="sql_select_condition" />
+        </select>
+
+        <!-- 新增  2021-09-28 k4038  -->
+        <insert id="addPojo" parameterType="ppmOnlineOrgarea">
+    		INSERT INTO PPM_ONLINE_ORGAREA (
+    		<trim suffixOverrides=",">
+    		 <if test="coupledsys != null  and coupledsys != '' " > COUPLEDSYS , </if>
+				<if test="safetytesttype != null  and safetytesttype != '' " > SAFETYTESTTYPE , </if>
+				<if test="id != null " > ID , </if>
+				<if test="projectno != null  and projectno != '' " > PROJECTNO , </if>
+				<if test="planonline != null " > PLANONLINE , </if>
+				<if test="orgarea != null  and orgarea != '' " > ORGAREA , </if>
+				<if test="isdel != null " > ISDEL , </if>
+				<if test="createtime != null " > CREATETIME , </if>
+				<if test="creators != null  and creators != '' " > CREATORS , </if>
+				<if test="lastmodtime != null " > LASTMODTIME , </if>
+				<if test="lastmoduser != null  and lastmoduser != '' " > LASTMODUSER , </if>
+				<if test="onlineno != null  and onlineno != '' " > ONLINENO , </if>
+				<if test="isonline != null  and isonline != '' " > ISONLINE , </if>
+				<if test="linkman != null  and linkman != '' " > LINKMAN , </if>
+				<if test="linkname != null  and linkname != '' " > LINKNAME , </if>
+				<if test="safetytestname != null  and safetytestname != '' " > SAFETYTESTNAME , </if>
+
+			</trim>
+    		)
+    		VALUES(
+    		<trim suffixOverrides=",">
+    		 <if test="coupledsys != null  and coupledsys != '' " > #{coupledsys} , </if>
+				<if test="safetytesttype != null  and safetytesttype != '' " > #{safetytesttype} , </if>
+				<if test="id != null " > #{id} , </if>
+				<if test="projectno != null  and projectno != '' " > #{projectno} , </if>
+				<if test="planonline != null " > #{planonline} , </if>
+				<if test="orgarea != null  and orgarea != '' " > #{orgarea} , </if>
+				<if test="isdel != null " > #{isdel} , </if>
+				<if test="createtime != null " > #{createtime} , </if>
+				<if test="creators != null  and creators != '' " > #{creators} , </if>
+				<if test="lastmodtime != null " > #{lastmodtime} , </if>
+				<if test="lastmoduser != null  and lastmoduser != '' " > #{lastmoduser} , </if>
+				<if test="onlineno != null  and onlineno != '' " > #{onlineno} , </if>
+				<if test="isonline != null  and isonline != '' " > #{isonline} , </if>
+				<if test="linkman != null  and linkman != '' " > #{linkman} , </if>
+				<if test="linkname != null  and linkname != '' " > #{linkname} , </if>
+				<if test="safetytestname != null  and safetytestname != '' " > #{safetytestname} , </if>
+
+			</trim>
+    		)
+        </insert>
+
+        <!--通过id查询  k4038 2021-09-28 -->
+        <select id="queryDetail" parameterType="ppmOnlineOrgarea" resultMap="PPMONLINEORGAREA_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_ONLINE_ORGAREA  WHERE COUPLEDSYS=#{coupledsys}
+        </select>
+
+         <!--查询集合  k4038 2021-09-28 -->
+        <select id="getList" parameterType="ppmOnlineOrgarea" resultMap="PPMONLINEORGAREA_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_ONLINE_ORGAREA
+        	<include refid="sql_select_condition" />
+        </select>
+        <!-- update sql -->
+        <sql id="update_pojo_sql">
+        	<trim prefix="SET" suffixOverrides=",">
+        		<if test="coupledsys != null  and coupledsys != '' " > COUPLEDSYS=#{coupledsys} , </if>
+				<if test="safetytesttype != null  and safetytesttype != '' " > SAFETYTESTTYPE=#{safetytesttype} , </if>
+				<if test="id != null " > ID=#{id} , </if>
+				<if test="projectno != null  and projectno != '' " > PROJECTNO=#{projectno} , </if>
+				<if test="planonline != null " > PLANONLINE=#{planonline} , </if>
+				<if test="orgarea != null  and orgarea != '' " > ORGAREA=#{orgarea} , </if>
+				<if test="isdel != null " > ISDEL=#{isdel} , </if>
+				<if test="createtime != null " > CREATETIME=#{createtime} , </if>
+				<if test="creators != null  and creators != '' " > CREATORS=#{creators} , </if>
+				<if test="lastmodtime != null " > LASTMODTIME=#{lastmodtime} , </if>
+				<if test="lastmoduser != null  and lastmoduser != '' " > LASTMODUSER=#{lastmoduser} , </if>
+				<if test="onlineno != null  and onlineno != '' " > ONLINENO=#{onlineno} , </if>
+				<if test="isonline != null  and isonline != '' " > ISONLINE=#{isonline} , </if>
+				<if test="linkman != null  and linkman != '' " > LINKMAN=#{linkman} , </if>
+				<if test="linkname != null  and linkname != '' " > LINKNAME=#{linkname} , </if>
+				<if test="safetytestname != null  and safetytestname != '' " > SAFETYTESTNAME=#{safetytestname} , </if>
+
+			</trim>
+        </sql>
+
+        <!--通过id编辑 k4038 2021-09-28 -->
+    	<update id="updatePojo" parameterType="ppmOnlineOrgarea">
+        	UPDATE
+        	PPM_ONLINE_ORGAREA
+        	<include refid="update_pojo_sql" />
+        	WHERE COUPLEDSYS=#{coupledsys}
+        </update>
+
+        <!--通过id批量删除  k4038 2021-09-28 -->
+        <delete id="deleteById" parameterType="ppmOnlineOrgarea">
+        	DELETE
+        	FROM
+        	PPM_ONLINE_ORGAREA
+        	WHERE COUPLEDSYS = #{coupledsys}
+        </delete>
+
+		<update id="updatePojoByOnlineno" parameterType="map">
+			update ppm_online_orgarea a
+			   set a.isonline=#{isonline}
+			 where a.onlineno=#{onlineno}
+			  and a.projectno=#{projectno}
+		</update>
+
+	<resultMap id="QUERYSYSNOFORONLINENO_MAP" type="ppmOnlineOrgareaInfo">
+		<result column="SYSNO" property="sysNo" />
+		<result column="PROJECTNAME" property="projectname" />
+	</resultMap>
+	<select id="querySysNoForOnlineno" parameterType="map" resultMap="QUERYSYSNOFORONLINENO_MAP">
+		SELECT P.SYSNO,P.PROJECTNAME
+		FROM PPM_PROJECT P
+		LEFT JOIN
+		PPM_ONLINE_ORGAREA A ON(P.SUBPROJECTNO=A.PROJECTNO)
+		LEFT JOIN AAP_SYSTEM AA ON (P.SYSNO = AA.SYSTEM_ID)
+		LEFT JOIN AAP_SYSTEM_RESPONSIBILITY R ON (AA.RES_ID = R.RES_ID)
+		LEFT JOIN COMM_DEPARTMENT D ON (D.DEPID = R.TEC_DEP)
+		LEFT JOIN COMM_ORGANIZATION N ON (D.COMPID = N.COMPID)
+
+		WHERE A.ONLINENO = #{onlineno}
+		AND N.LOCATION LIKE '%分行%'
+	</select>
+
+</mapper>

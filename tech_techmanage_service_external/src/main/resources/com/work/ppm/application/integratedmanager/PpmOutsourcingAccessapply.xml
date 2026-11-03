@@ -1,0 +1,1010 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k6991 2020-10-16 -->
+<mapper namespace="com.work.ppm.application.model.integratedmanager.PpmOutsourcingAccessapply">
+    <resultMap type="ppmOutsourcingAccessapply" id="PPMOUTSOURCINGACCESSAPPLY_ALL">
+        <result property="education" column="EDUCATION"/>
+        <result property="specialty" column="SPECIALTY"/>
+        <result property="school" column="SCHOOL"/>
+        <result property="birthday" column="BIRTHDAY"/>
+        <result property="nativeplace" column="NATIVEPLACE"/>
+        <result property="mobile" column="MOBILE"/>
+        <result property="deptno" column="DEPTNO"/>
+        <result property="position" column="POSITION"/>
+        <result property="politicalStatus" column="POLITICAL_STATUS"/>
+        <result property="organizers" column="ORGANIZERS"/>
+        <result property="projectno" column="PROJECTNO"/>
+        <result property="managerUserid" column="MANAGER_USERID"/>
+        <result property="staffPosition" column="STAFF_POSITION"/>
+        <result property="outsourceType" column="OUTSOURCE_TYPE"/>
+        <result property="userType" column="USER_TYPE"/>
+        <result property="applyreg" column="APPLYREG"/>
+        <result property="appltbegTime" column="APPLTBEG_TIME"/>
+        <result property="iscreditquery" column="ISCREDITQUERY"/>
+        <result property="queryresult" column="QUERYRESULT"/>
+        <result property="isdel" column="ISDEL"/>
+        <result property="whetherAttendance" column="WHETHER_ATTENDANCE"/>
+        <result property="createTime" column="CREATE_TIME"/>
+        <result property="creators" column="CREATORS"/>
+        <result property="lastmodTime" column="LASTMOD_TIME"/>
+        <result property="lastmodUser" column="LASTMOD_USER"/>
+        <result property="childmanageruserid" column="CHILDMANAGERUSERID"/>
+        <result property="insteanceTitle" column="INSTEANCE_TITLE"/>
+        <result property="dutyType" column="DUTY_TYPE"/>
+        <result property="grade" column="GRADE"/>
+        <result property="price" column="PRICE"/>
+        <result property="worktime" column="WORKTIME"/>
+        <result property="addreason" column="ADDREASON"/>
+        <result property="isOtherProject" column="IS_OTHER_PROJECT"/>
+        <result property="sdprojectname" column="SDPROJECTNAME"/>
+        <result property="sdmanageruserid" column="SDMANAGERUSERID"/>
+        <result property="workContent" column="WORK_CONTENT"/>
+        <result property="sociaiSecrityPayment" column="SOCIAI_SECRITY_PAYMENT"/>
+        <result property="systemnos" column="SYSTEMNOS"/>
+        <result property="systemuserids" column="SYSTEMUSERIDS"/>
+        <result property="outsourcingcategories" column="OUTSOURCINGCATEGORIES"/>
+        <result property="notattendancereason" column="NOTATTENDANCEREASON"/>
+        <result property="svnLimit" column="SVN_LIMIT"/>
+        <result property="svnRoad" column="SVN_ROAD"/>
+        <result property="applysvnno" column="APPLYSVNNO"/>
+        <result property="groupId" column="GROUP_ID"/>
+        <result property="issatisfyrequire" column="ISSATISFYREQUIRE"/>
+        <result property="isnewdrawcomputer" column="ISNEWDRAWCOMPUTER"/>
+        <result property="pricechangereason" column="PRICECHANGEREASON"/>
+        <result property="contractId" column="CONTRACT_ID"/>
+        <result property="iskey" column="ISKEY"/>
+        <result property="attendanceTime" column="ATTENDANCE_TIME"/>
+        <result property="attendanceType" column="ATTENDANCE_TYPE"/>
+        <result property="policecheck" column="POLICECHECK"/>
+        <result property="courtinfo" column="COURTINFO"/>
+        <result property="businessinfo" column="BUSINESSINFO"/>
+        <result property="iseverentry" column="ISEVERENTRY"/>
+        <result property="personcredit" column="PERSONCREDIT"/>
+        <result property="faceimage" column="FACEIMAGE"/>
+        <result property="partnerName" column="PARTNER_NAME"/>
+        <result property="idcardNumber" column="IDCARD_NUMBER"/>
+        <result property="spouseCertificateType" column="SPOUSE_CERTIFICATE_TYPE"/>
+        <result property="address" column="ADDRESS"/>
+        <result property="certificate" column="CERTIFICATE"/>
+        <result property="learnExperience" column="LEARN_EXPERIENCE"/>
+        <result property="mainJobs" column="MAIN_JOBS"/>
+        <result property="mainItem" column="MAIN_ITEM"/>
+        <result property="mainReward" column="MAIN_REWARD"/>
+        <result property="mainFamily" column="MAIN_FAMILY"/>
+        <result property="specialAuth" column="SPECIAL_AUTH"/>
+        <result property="authDes" column="AUTH_DES"/>
+        <result property="whetherMeetsClaim" column="WHETHER_MEETS_CLAIM"/>
+        <result property="meetRequirementsReason" column="MEET_REQUIREMENTS_REASON"/>
+        <result property="specifyChargeGeneral" column="SPECIFY_CHARGE_GENERAL"/>
+        <result property="virtualDesktopFlowId" column="VIRTUAL_DESKTOP_FLOW_ID"/>
+        <result property="socialSecurityFlowId" column="SOCIAL_SECURITY_FLOW_ID"/>
+        <result property="beginTime" column="BEGIN_TIME"/>
+        <result property="entryTime" column="ENTRY_TIME"/>
+        <result property="id" column="ID"/>
+        <result property="instanceId" column="INSTANCE_ID"/>
+        <result property="flowId" column="FLOW_ID"/>
+        <result property="jobId" column="JOB_ID"/>
+        <result property="userName" column="USER_NAME"/>
+        <result property="outsourceNo" column="OUTSOURCE_NO"/>
+        <result property="sex" column="SEX"/>
+        <result property="certifType" column="CERTIF_TYPE"/>
+        <result property="creditReport" column="CREDIT_REPORT"/>
+        <result property="sociaiSecrityPaymentProve" column="SOCIAI_SECRITY_PAYMENT_PROVE"/>
+        <result property="dueDiligenceReport" column="DUE_DILIGENCE_REPORT"/>
+        <result property="qtFile" column="QT_FILE"/>
+        <result property="confidentialityCommitment" column="CONFIDENTIALITY_COMMITMENT"/>
+        <result property="otherFile" column="OTHER_FILE"/>
+        <result property="maritalStatus" column="MARITAL_STATUS"/>
+        <result property="certifNumber" column="CERTIF_NUMBER"/>
+        <result property="eitquetteAchievement" column="EITQUETTE_ACHIEVEMENT"/>
+        <result property="eitquetteTime" column="EITQUETTE_TIME"/>
+        <result property="qualityAchievement" column="QUALITY_ACHIEVEMENT"/>
+        <result property="qualityTime" column="QUALITY_TIME"/>
+        <result property="interviewSumAchievement" column="INTERVIEW_SUM_ACHIEVEMENT"/>
+        <result property="interviewResult" column="INTERVIEW_RESULT"/>
+        <result property="oneInterviewer" column="ONE_INTERVIEWER"/>
+        <result property="oneComments" column="ONE_COMMENTS"/>
+        <result property="twoInterviewer" column="TWO_INTERVIEWER"/>
+        <result property="twoComments" column="TWO_COMMENTS"/>
+        <result property="systemPrincipal" column="SYSTEM_PRINCIPAL"/>
+        <result property="presenceState" column="PRESENCE_STATE"/>
+        <result property="vmAccount" column="VM_ACCOUNT"/>
+        <result property="entranceCard" column="ENTRANCE_CARD"/>
+        <result property="newContractId" column="NEW_CONTRACT_ID"/>
+        <result property="ceneralOfficeMotion" column="CENERAL_OFFICE_MOTION"/>
+        <result property="evaluationLevel" column="EVALUATION_LEVEL"/>
+        <result property="levelReason" column="LEVEL_REASON"/>
+        <result property="evaluatorId" column="EVALUATOR_ID"/>
+        <result property="evaluationTime" column="EVALUATION_TIME"/>
+    </resultMap>
+    <resultMap  id="PPMOUTSOURCINGACCESSAPPLY_ALL_EXT" type="ppmOutsourcingAccessapplyInfo" extends="PPMOUTSOURCINGACCESSAPPLY_ALL">
+        <result property="interviewResultname" column="INTERVIEW_RESULTNAME"/>
+        <result property="oneInterviewername" column="ONE_INTERVIEWERNAME"/>
+        <result property="twoInterviewername" column="TWO_INTERVIEWERNAME"/>
+        <result property="ceneralOfficeMotionBe" column="CENERAL_OFFICE_MOTION_BE"/>
+    </resultMap>
+    <!-- 所有字段名称 -->
+    <sql id="sql_flied_all">
+        EDUCATION,
+        SPECIALTY,
+        SCHOOL,
+        BIRTHDAY,
+        NATIVEPLACE,
+        MOBILE,
+        DEPTNO,
+        LETTER_OF_COMMITMENT,
+        LIABILITY_STATEMENT,
+        MEDICAL_EXAMINATION,
+        POSITION,
+        POLITICAL_STATUS,
+        ORGANIZERS,
+        PROJECTNO,
+        MANAGER_USERID,
+        STAFF_POSITION,
+        OUTSOURCE_TYPE,
+        USER_TYPE,
+        APPLYREG,
+        APPLTBEG_TIME,
+        ISCREDITQUERY,
+        QUERYRESULT,
+        ISDEL,
+        WHETHER_ATTENDANCE,
+        CREATE_TIME,
+        CREATORS,
+        LASTMOD_TIME,
+        LASTMOD_USER,
+        CHILDMANAGERUSERID,
+        INSTEANCE_TITLE,
+        DUTY_TYPE,
+        grade,
+        PRICE,
+        WORKTIME,
+        ADDREASON,
+        IS_OTHER_PROJECT,
+        SDPROJECTNAME,
+        SDMANAGERUSERID,
+        WORK_CONTENT,
+        SOCIAI_SECRITY_PAYMENT,
+        SYSTEMNOS,
+        SYSTEMUSERIDS,
+        OUTSOURCINGCATEGORIES,
+        NOTATTENDANCEREASON,
+        SVN_LIMIT,
+        SVN_ROAD,
+        APPLYSVNNO,
+        GROUP_ID,
+        ISSATISFYREQUIRE,
+        ISNEWDRAWCOMPUTER,
+        PRICECHANGEREASON,
+        CONTRACT_ID,
+        ISKEY,
+        ATTENDANCE_TIME,
+        ATTENDANCE_TYPE,
+        POLICECHECK,
+        COURTINFO,
+        BUSINESSINFO,
+        ISEVERENTRY,
+        PERSONCREDIT,
+        FACEIMAGE,
+        PARTNER_NAME,
+        IDCARD_NUMBER,
+        SPOUSE_CERTIFICATE_TYPE,
+        ADDRESS,
+        CERTIFICATE,
+        LEARN_EXPERIENCE,
+        MAIN_JOBS,
+        MAIN_ITEM,
+        MAIN_REWARD,
+        MAIN_FAMILY,
+        SPECIAL_AUTH,
+        AUTH_DES,
+        WHETHER_MEETS_CLAIM,
+        MEET_REQUIREMENTS_REASON,
+        SPECIFY_CHARGE_GENERAL,
+        VIRTUAL_DESKTOP_FLOW_ID,
+        SOCIAL_SECURITY_FLOW_ID,
+        BEGIN_TIME,
+        ENTRY_TIME,
+        ID,
+        INSTANCE_ID,
+        FLOW_ID,
+        JOB_ID,
+        USER_NAME,
+        OUTSOURCE_NO,
+        SEX,
+        CERTIF_TYPE,
+        CERTIF_NUMBER,
+        CREDIT_REPORT,
+        SOCIAI_SECRITY_PAYMENT_PROVE,
+        DUE_DILIGENCE_REPORT,
+        QT_FILE,
+        CONFIDENTIALITY_COMMITMENT,
+        OTHER_FILE,
+        MARITAL_STATUS,
+        EITQUETTE_ACHIEVEMENT,
+        EITQUETTE_TIME,
+        QUALITY_TIME,
+        QUALITY_ACHIEVEMENT,
+        INTERVIEW_SUM_ACHIEVEMENT,
+        INTERVIEW_RESULT,
+        ONE_INTERVIEWER,
+        ONE_COMMENTS,
+        TWO_INTERVIEWER,
+        TWO_COMMENTS,
+        SYSTEM_PRINCIPAL,
+        VM_ACCOUNT,
+        ENTRANCE_CARD,
+        NEW_CONTRACT_ID,
+        CENERAL_OFFICE_MOTION,
+        EVALUATION_LEVEL,
+        LEVEL_REASON,
+        EVALUATOR_ID,
+        EVALUATION_TIME,
+        PRESENCE_STATE
+    </sql>
+    <sql id="sql_select_condition">
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="education != null ">EDUCATION = #{education} AND</if>
+            <if test="specialty != null  and specialty != '' ">SPECIALTY = #{specialty} AND</if>
+            <if test="school != null  and school != '' ">SCHOOL = #{school} AND</if>
+            <if test="birthday != null  and birthday != '' ">BIRTHDAY = #{birthday} AND</if>
+            <if test="nativeplace != null  and nativeplace != '' ">NATIVEPLACE = #{nativeplace} AND</if>
+            <if test="mobile != null  and mobile != '' ">MOBILE = #{mobile} AND</if>
+            <if test="deptno != null  and deptno != '' ">DEPTNO = #{deptno} AND</if>
+            <if test="position != null  and position != '' ">POSITION = #{position} AND</if>
+            <if test="politicalStatus != null  and politicalStatus != '' ">POLITICAL_STATUS = #{politicalStatus} AND
+            </if>
+            <if test="organizers != null  and organizers != '' ">ORGANIZERS = #{organizers} AND</if>
+            <if test="projectno != null  and projectno != '' ">PROJECTNO = #{projectno} AND</if>
+            <if test="managerUserid != null  and managerUserid != '' ">MANAGER_USERID = #{managerUserid} AND</if>
+            <if test="staffPosition != null  and staffPosition != '' ">STAFF_POSITION = #{staffPosition} AND</if>
+            <if test="outsourceType != null  and outsourceType != '' ">OUTSOURCE_TYPE = #{outsourceType} AND</if>
+            <if test="userType != null  and userType != '' ">USER_TYPE = #{userType} AND</if>
+            <if test="applyreg != null  and applyreg != '' ">APPLYREG = #{applyreg} AND</if>
+            <if test="appltbegTime != null ">APPLTBEG_TIME = #{appltbegTime} AND</if>
+            <if test="iscreditquery != null  and iscreditquery != '' ">ISCREDITQUERY = #{iscreditquery} AND</if>
+            <if test="queryresult != null  and queryresult != '' ">QUERYRESULT = #{queryresult} AND</if>
+            <if test="isdel != null ">ISDEL = #{isdel} AND</if>
+            <if test="whetherAttendance != null  and whetherAttendance != '' ">WHETHER_ATTENDANCE = #{whetherAttendance}
+                AND
+            </if>
+            <if test="createTime != null ">CREATE_TIME = #{createTime} AND</if>
+            <if test="creators != null  and creators != '' ">CREATORS = #{creators} AND</if>
+            <if test="lastmodTime != null ">LASTMOD_TIME = #{lastmodTime} AND</if>
+            <if test="lastmodUser != null  and lastmodUser != '' ">LASTMOD_USER = #{lastmodUser} AND</if>
+            <if test="childmanageruserid != null  and childmanageruserid != '' ">CHILDMANAGERUSERID =
+                #{childmanageruserid} AND
+            </if>
+            <if test="insteanceTitle != null  and insteanceTitle != '' ">INSTEANCE_TITLE = #{insteanceTitle} AND</if>
+            <if test="dutyType != null ">DUTY_TYPE = #{dutyType} AND</if>
+            <if test="grade != null  and grade != '' ">GRADE = #{grade} AND</if>
+            <if test="price != null  and price != '' ">PRICE = #{price} AND</if>
+            <if test="worktime != null  and worktime != '' ">WORKTIME = #{worktime} AND</if>
+            <if test="addreason != null  and addreason != '' ">ADDREASON = #{addreason} AND</if>
+            <if test="isOtherProject != null  and isOtherProject != '' ">IS_OTHER_PROJECT = #{isOtherProject} AND</if>
+            <if test="sdprojectname != null  and sdprojectname != '' ">SDPROJECTNAME = #{sdprojectname} AND</if>
+            <if test="sdmanageruserid != null  and sdmanageruserid != '' ">SDMANAGERUSERID = #{sdmanageruserid} AND</if>
+            <if test="workContent != null  and workContent != '' ">WORK_CONTENT = #{workContent} AND</if>
+            <if test="sociaiSecrityPayment != null  and sociaiSecrityPayment != '' ">SOCIAI_SECRITY_PAYMENT =
+                #{sociaiSecrityPayment} AND
+            </if>
+            <if test="systemnos != null  and systemnos != '' ">SYSTEMNOS = #{systemnos} AND</if>
+            <if test="systemuserids != null  and systemuserids != '' ">SYSTEMUSERIDS = #{systemuserids} AND</if>
+            <if test="outsourcingcategories != null ">OUTSOURCINGCATEGORIES = #{outsourcingcategories} AND</if>
+            <if test="notattendancereason != null  and notattendancereason != '' ">NOTATTENDANCEREASON =
+                #{notattendancereason} AND
+            </if>
+            <if test="svnLimit != null  and svnLimit != '' ">SVN_LIMIT = #{svnLimit} AND</if>
+            <if test="svnRoad != null  and svnRoad != '' ">SVN_ROAD = #{svnRoad} AND</if>
+            <if test="applysvnno != null  and applysvnno != '' ">APPLYSVNNO = #{applysvnno} AND</if>
+            <if test="groupId != null  and groupId != '' ">GROUP_ID = #{groupId} AND</if>
+            <if test="issatisfyrequire != null  and issatisfyrequire != '' ">ISSATISFYREQUIRE = #{issatisfyrequire}
+                AND
+            </if>
+            <if test="isnewdrawcomputer != null  and isnewdrawcomputer != '' ">ISNEWDRAWCOMPUTER = #{isnewdrawcomputer}
+                AND
+            </if>
+            <if test="pricechangereason != null  and pricechangereason != '' ">PRICECHANGEREASON = #{pricechangereason}
+                AND
+            </if>
+            <if test="contractId != null  and contractId != '' ">CONTRACT_ID = #{contractId} AND</if>
+            <if test="iskey != null  and iskey != '' ">ISKEY = #{iskey} AND</if>
+            <if test="attendanceTime != null  and attendanceTime != '' ">ATTENDANCE_TIME = #{attendanceTime} AND</if>
+            <if test="attendanceType != null  and attendanceType != '' ">ATTENDANCE_TYPE = #{attendanceType} AND</if>
+            <if test="policecheck != null  and policecheck != '' ">POLICECHECK = #{policecheck} AND</if>
+            <if test="courtinfo != null  and courtinfo != '' ">COURTINFO = #{courtinfo} AND</if>
+            <if test="businessinfo != null  and businessinfo != '' ">BUSINESSINFO = #{businessinfo} AND</if>
+            <if test="iseverentry != null  and iseverentry != '' ">ISEVERENTRY = #{iseverentry} AND</if>
+            <if test="personcredit != null  and personcredit != '' ">PERSONCREDIT = #{personcredit} AND</if>
+            <if test="faceimage != null  and faceimage != '' ">FACEIMAGE = #{faceimage} AND</if>
+            <if test="partnerName != null  and partnerName != '' ">PARTNER_NAME = #{partnerName} AND</if>
+            <if test="idcardNumber != null  and idcardNumber != '' ">IDCARD_NUMBER = #{idcardNumber} AND</if>
+            <if test="spouseCertificateType != null  and spouseCertificateType != '' ">SPOUSE_CERTIFICATE_TYPE =
+                #{spouseCertificateType} AND
+            </if>
+            <if test="address != null  and address != '' ">ADDRESS = #{address} AND</if>
+            <if test="certificate != null  and certificate != '' ">CERTIFICATE = #{certificate} AND</if>
+            <if test="learnExperience != null  and learnExperience != '' ">LEARN_EXPERIENCE = #{learnExperience} AND
+            </if>
+            <if test="mainJobs != null  and mainJobs != '' ">MAIN_JOBS = #{mainJobs} AND</if>
+            <if test="mainItem != null  and mainItem != '' ">MAIN_ITEM = #{mainItem} AND</if>
+            <if test="mainReward != null  and mainReward != '' ">MAIN_REWARD = #{mainReward} AND</if>
+            <if test="mainFamily != null  and mainFamily != '' ">MAIN_FAMILY = #{mainFamily} AND</if>
+            <if test="specialAuth != null  and specialAuth != '' ">SPECIAL_AUTH = #{specialAuth} AND</if>
+            <if test="authDes != null  and authDes != '' ">AUTH_DES = #{authDes} AND</if>
+            <if test="whetherMeetsClaim != null  and whetherMeetsClaim != '' ">WHETHER_MEETS_CLAIM =
+                #{whetherMeetsClaim} AND
+            </if>
+            <if test="meetRequirementsReason != null  and meetRequirementsReason != '' ">MEET_REQUIREMENTS_REASON =
+                #{meetRequirementsReason} AND
+            </if>
+            <if test="specifyChargeGeneral != null  and specifyChargeGeneral != '' ">SPECIFY_CHARGE_GENERAL =
+                #{specifyChargeGeneral} AND
+            </if>
+            <if test="virtualDesktopFlowId != null  and virtualDesktopFlowId != '' ">VIRTUAL_DESKTOP_FLOW_ID =
+                #{virtualDesktopFlowId} AND
+            </if>
+            <if test="socialSecurityFlowId != null  and socialSecurityFlowId != '' ">SOCIAL_SECURITY_FLOW_ID =
+                #{socialSecurityFlowId} AND
+            </if>
+            <if test="beginTime != null ">BEGIN_TIME = #{beginTime} AND</if>
+            <if test="entryTime != null ">ENTRY_TIME = #{entryTime} AND</if>
+            <if test="id != null ">ID = #{id} AND</if>
+            <if test="instanceId != null  and instanceId != '' ">INSTANCE_ID = #{instanceId} AND</if>
+            <if test="flowId != null  and flowId != '' ">FLOW_ID = #{flowId} AND</if>
+            <if test="jobId != null  and jobId != '' ">JOB_ID = #{jobId} AND</if>
+            <if test="userName != null  and userName != '' ">USER_NAME = #{userName} AND</if>
+            <if test="outsourceNo != null  and outsourceNo != '' ">OUTSOURCE_NO = #{outsourceNo} AND</if>
+            <if test="sex != null  and sex != '' ">SEX = #{sex} AND</if>
+            <if test="certifType != null  and certifType != '' ">CERTIF_TYPE = #{certifType} AND</if>
+            <if test="certifNumber != null  and certifNumber != '' ">CERTIF_NUMBER = #{certifNumber} AND</if>
+
+            <if test="creditReport != null  and creditReport != '' ">CREDIT_REPORT = #{creditReport} AND</if>
+            <if test="sociaiSecrityPaymentProve != null  and sociaiSecrityPaymentProve != '' ">
+                SOCIAI_SECRITY_PAYMENT_PROVE = #{sociaiSecrityPaymentProve} AND
+            </if>
+            <if test="dueDiligenceReport != null  and dueDiligenceReport != '' ">
+                DUE_DILIGENCE_REPORT = #{dueDiligenceReport} AND
+            </if>
+            <if test="qtFile != null  and qtFile != '' ">
+                QT_FILE = #{qtFile} AND
+            </if>
+            <if test="confidentialityCommitment != null  and confidentialityCommitment != '' ">
+                CONFIDENTIALITY_COMMITMENT = #{confidentialityCommitment} AND
+            </if>
+            <if test="otherFile != null  and otherFile != '' ">OTHER_FILE = #{otherFile} AND</if>
+            <if test="maritalStatus != null  and maritalStatus != '' ">MARITAL_STATUS = #{maritalStatus} AND</if>
+
+            <if test="eitquetteAchievement != null  ">EITQUETTE_ACHIEVEMENT = #{eitquetteAchievement} AND</if>
+            <if test="eitquetteTime != null">EITQUETTE_TIME = #{eitquetteTime} AND</if>
+            <if test="interviewSumAchievement != null">INTERVIEW_SUM_ACHIEVEMENT = #{interviewSumAchievement} AND</if>
+            <if test="interviewResult != null  and interviewResult != '' ">INTERVIEW_RESULT = #{interviewResult} AND
+            </if>
+            <if test="oneInterviewer != null  and oneInterviewer != '' ">ONE_INTERVIEWER = #{oneInterviewer} AND</if>
+            <if test="oneComments != null  and oneComments != '' ">ONE_COMMENTS = #{oneComments} AND</if>
+            <if test="twoInterviewer != null  and twoInterviewer != '' ">TWO_INTERVIEWER = #{twoInterviewer} AND</if>
+            <if test="twoComments != null  and twoComments != '' ">TWO_COMMENTS = #{twoComments} AND</if>
+            <if test="systemPrincipal != null  and systemPrincipal != '' ">SYSTEM_PRINCIPAL = #{systemPrincipal} AND</if>
+            <if test="vmAccount != null  and vmAccount != '' ">VM_ACCOUNT = #{vmAccount} AND</if>
+            <if test="entranceCard != null  and entranceCard != '' ">ENTRANCE_CARD = #{entranceCard} AND</if>
+            <if test="presenceState != null  and presenceState != '' ">PRESENCE_STATE = #{presenceState} AND</if>
+            <if test="newContractId != null  and newContractId != '' ">NEW_CONTRACT_ID = #{newContractId} AND</if>
+            <if test="ceneralOfficeMotion != null  and ceneralOfficeMotion != '' ">CENERAL_OFFICE_MOTION = #{ceneralOfficeMotion} AND</if>
+        </trim>
+    </sql>
+    <!-- 查询分页  2020-10-16 k6991  -->
+    <select id="queryPagerList" parameterType="map" resultMap="PPMOUTSOURCINGACCESSAPPLY_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM PPM_OUTSOURCING_ACCESSAPPLY
+        <include refid="sql_select_condition"/>
+    </select>
+
+    <!-- 新增  2020-10-16 k6991  -->
+    <insert id="addPojo" parameterType="ppmOutsourcingAccessapply">
+        INSERT INTO PPM_OUTSOURCING_ACCESSAPPLY (
+        <trim suffixOverrides=",">
+            <if test="education != null ">EDUCATION ,</if>
+            <if test="specialty != null  and specialty != '' ">SPECIALTY ,</if>
+            <if test="school != null  and school != '' ">SCHOOL ,</if>
+            <if test="birthday != null  and birthday != '' ">BIRTHDAY ,</if>
+            <if test="nativeplace != null  and nativeplace != '' ">NATIVEPLACE ,</if>
+            <if test="mobile != null  and mobile != '' ">MOBILE ,</if>
+            <if test="deptno != null  and deptno != '' ">DEPTNO ,</if>
+            <if test="position != null  and position != '' ">POSITION ,</if>
+            <if test="politicalStatus != null  and politicalStatus != '' ">POLITICAL_STATUS ,</if>
+            <if test="organizers != null  and organizers != '' ">ORGANIZERS ,</if>
+            <if test="projectno != null  and projectno != '' ">PROJECTNO ,</if>
+            <if test="managerUserid != null  and managerUserid != '' ">MANAGER_USERID ,</if>
+            <if test="staffPosition != null  and staffPosition != '' ">STAFF_POSITION ,</if>
+            <if test="outsourceType != null  and outsourceType != '' ">OUTSOURCE_TYPE ,</if>
+            <if test="userType != null  and userType != '' ">USER_TYPE ,</if>
+            <if test="applyreg != null  and applyreg != '' ">APPLYREG ,</if>
+            <if test="appltbegTime != null ">APPLTBEG_TIME ,</if>
+            <if test="iscreditquery != null  and iscreditquery != '' ">ISCREDITQUERY ,</if>
+            <if test="queryresult != null  and queryresult != '' ">QUERYRESULT ,</if>
+            <if test="isdel != null ">ISDEL ,</if>
+            <if test="whetherAttendance != null  and whetherAttendance != '' ">WHETHER_ATTENDANCE ,</if>
+            <if test="createTime != null ">CREATE_TIME ,</if>
+            <if test="creators != null  and creators != '' ">CREATORS ,</if>
+            <if test="lastmodTime != null ">LASTMOD_TIME ,</if>
+            <if test="lastmodUser != null  and lastmodUser != '' ">LASTMOD_USER ,</if>
+            <if test="childmanageruserid != null  and childmanageruserid != '' ">CHILDMANAGERUSERID ,</if>
+            <if test="insteanceTitle != null  and insteanceTitle != '' ">INSTEANCE_TITLE ,</if>
+            <if test="dutyType != null ">DUTY_TYPE ,</if>
+            <if test="grade != null  and grade != '' ">GRADE ,</if>
+            <if test="price != null  and price != '' ">PRICE ,</if>
+            <if test="worktime != null  and worktime != '' ">WORKTIME ,</if>
+            <if test="addreason != null  and addreason != '' ">ADDREASON ,</if>
+            <if test="isOtherProject != null  and isOtherProject != '' ">IS_OTHER_PROJECT ,</if>
+            <if test="sdprojectname != null  and sdprojectname != '' ">SDPROJECTNAME ,</if>
+            <if test="sdmanageruserid != null  and sdmanageruserid != '' ">SDMANAGERUSERID ,</if>
+            <if test="workContent != null  and workContent != '' ">WORK_CONTENT ,</if>
+            <if test="sociaiSecrityPayment != null  and sociaiSecrityPayment != '' ">SOCIAI_SECRITY_PAYMENT ,</if>
+            <if test="systemnos != null  and systemnos != '' ">SYSTEMNOS ,</if>
+            <if test="systemuserids != null  and systemuserids != '' ">SYSTEMUSERIDS ,</if>
+            <if test="outsourcingcategories != null ">OUTSOURCINGCATEGORIES ,</if>
+            <if test="notattendancereason != null  and notattendancereason != '' ">NOTATTENDANCEREASON ,</if>
+            <if test="svnLimit != null  and svnLimit != '' ">SVN_LIMIT ,</if>
+            <if test="svnRoad != null  and svnRoad != '' ">SVN_ROAD ,</if>
+            <if test="applysvnno != null  and applysvnno != '' ">APPLYSVNNO ,</if>
+            <if test="groupId != null  and groupId != '' ">GROUP_ID ,</if>
+            <if test="issatisfyrequire != null  and issatisfyrequire != '' ">ISSATISFYREQUIRE ,</if>
+            <if test="isnewdrawcomputer != null  and isnewdrawcomputer != '' ">ISNEWDRAWCOMPUTER ,</if>
+            <if test="pricechangereason != null  and pricechangereason != '' ">PRICECHANGEREASON ,</if>
+            <if test="contractId != null  and contractId != '' ">CONTRACT_ID ,</if>
+            <if test="iskey != null  and iskey != '' ">ISKEY ,</if>
+            <if test="attendanceTime != null  and attendanceTime != '' ">ATTENDANCE_TIME ,</if>
+            <if test="attendanceType != null  and attendanceType != '' ">ATTENDANCE_TYPE ,</if>
+            <if test="policecheck != null  and policecheck != '' ">POLICECHECK ,</if>
+            <if test="courtinfo != null  and courtinfo != '' ">COURTINFO ,</if>
+            <if test="businessinfo != null  and businessinfo != '' ">BUSINESSINFO ,</if>
+            <if test="iseverentry != null  and iseverentry != '' ">ISEVERENTRY ,</if>
+            <if test="personcredit != null  and personcredit != '' ">PERSONCREDIT ,</if>
+            <if test="faceimage != null  and faceimage != '' ">FACEIMAGE ,</if>
+            <if test="partnerName != null  and partnerName != '' ">PARTNER_NAME ,</if>
+            <if test="idcardNumber != null  and idcardNumber != '' ">IDCARD_NUMBER ,</if>
+            <if test="spouseCertificateType != null  and spouseCertificateType != '' ">SPOUSE_CERTIFICATE_TYPE ,</if>
+            <if test="address != null  and address != '' ">ADDRESS ,</if>
+            <if test="certificate != null  and certificate != '' ">CERTIFICATE ,</if>
+            <if test="learnExperience != null  and learnExperience != '' ">LEARN_EXPERIENCE ,</if>
+            <if test="mainJobs != null  and mainJobs != '' ">MAIN_JOBS ,</if>
+            <if test="mainItem != null  and mainItem != '' ">MAIN_ITEM ,</if>
+            <if test="mainReward != null  and mainReward != '' ">MAIN_REWARD ,</if>
+            <if test="mainFamily != null  and mainFamily != '' ">MAIN_FAMILY ,</if>
+            <if test="specialAuth != null  and specialAuth != '' ">SPECIAL_AUTH ,</if>
+            <if test="authDes != null  and authDes != '' ">AUTH_DES ,</if>
+            <if test="whetherMeetsClaim != null  and whetherMeetsClaim != '' ">WHETHER_MEETS_CLAIM ,</if>
+            <if test="meetRequirementsReason != null  and meetRequirementsReason != '' ">MEET_REQUIREMENTS_REASON ,</if>
+            <if test="specifyChargeGeneral != null  and specifyChargeGeneral != '' ">SPECIFY_CHARGE_GENERAL ,</if>
+            <if test="virtualDesktopFlowId != null  and virtualDesktopFlowId != '' ">VIRTUAL_DESKTOP_FLOW_ID ,</if>
+            <if test="socialSecurityFlowId != null  and socialSecurityFlowId != '' ">SOCIAL_SECURITY_FLOW_ID ,</if>
+            <if test="beginTime != null ">BEGIN_TIME ,</if>
+            <if test="entryTime != null ">ENTRY_TIME ,</if>
+            <if test="id != null ">ID ,</if>
+            <if test="instanceId != null  and instanceId != '' ">INSTANCE_ID ,</if>
+            <if test="flowId != null  and flowId != '' ">FLOW_ID ,</if>
+            <if test="jobId != null  and jobId != '' ">JOB_ID ,</if>
+            <if test="userName != null  and userName != '' ">USER_NAME ,</if>
+            <if test="outsourceNo != null  and outsourceNo != '' ">OUTSOURCE_NO ,</if>
+            <if test="sex != null  and sex != '' ">SEX ,</if>
+            <if test="certifType != null  and certifType != '' ">CERTIF_TYPE ,</if>
+            <if test="certifNumber != null  and certifNumber != '' ">CERTIF_NUMBER ,</if>
+
+            <if test="creditReport != null  and creditReport != '' ">CREDIT_REPORT ,</if>
+            <if test="sociaiSecrityPaymentProve != null  and sociaiSecrityPaymentProve != '' ">
+                SOCIAI_SECRITY_PAYMENT_PROVE ,
+            </if>
+
+            <if test="dueDiligenceReport != null  and dueDiligenceReport != '' ">
+                DUE_DILIGENCE_REPORT ,
+            </if>
+            <if test="qtFile != null  and qtFile != '' ">
+                QT_FILE ,
+            </if>
+
+            <if test="confidentialityCommitment != null  and confidentialityCommitment != '' ">
+                CONFIDENTIALITY_COMMITMENT ,
+            </if>
+            <if test="otherFile != null  and otherFile != '' ">OTHER_FILE ,</if>
+            <if test="maritalStatus != null  and maritalStatus != '' ">MARITAL_STATUS ,</if>
+            <if test="eitquetteAchievement != null  ">EITQUETTE_ACHIEVEMENT ,</if>
+            <if test="eitquetteTime != null">EITQUETTE_TIME,</if>
+            <if test="qualityAchievement != null ">QUALITY_ACHIEVEMENT,</if>
+            <if test="qualityTime != null ">QUALITY_TIME,</if>
+            <if test="interviewSumAchievement != null">INTERVIEW_SUM_ACHIEVEMENT,</if>
+            <if test="interviewResult != null  and interviewResult != '' ">INTERVIEW_RESULT,</if>
+            <if test="oneInterviewer != null  and oneInterviewer != '' ">ONE_INTERVIEWER,</if>
+            <if test="oneComments != null  and oneComments != '' ">ONE_COMMENTS,</if>
+            <if test="twoInterviewer != null  and twoInterviewer != '' ">TWO_INTERVIEWER,</if>
+            <if test="twoComments != null  and twoComments != '' ">TWO_COMMENTS,</if>
+            <if test="systemPrincipal != null  and systemPrincipal != '' ">SYSTEM_PRINCIPAL,</if>
+            <if test="vmAccount != null  and vmAccount != '' ">VM_ACCOUNT,</if>
+            <if test="entranceCard != null  and entranceCard != '' ">ENTRANCE_CARD,</if>
+            <if test="presenceState != null  and presenceState != '' ">PRESENCE_STATE,</if>
+            <if test="newContractId != null  and newContractId != '' ">NEW_CONTRACT_ID,</if>
+            <if test="ceneralOfficeMotion != null  and ceneralOfficeMotion != '' ">CENERAL_OFFICE_MOTION,</if>
+            <if test="evaluationLevel != null  and evaluationLevel != '' ">EVALUATION_LEVEL,</if>
+            <if test="levelReason != null  and levelReason != '' ">LEVEL_REASON,</if>
+            <if test="evaluatorId != null  and evaluatorId != '' ">EVALUATOR_ID,</if>
+            <if test="evaluationTime != null">EVALUATION_TIME,</if>
+        </trim>
+        )
+        VALUES(
+        <trim suffixOverrides=",">
+            <if test="education != null ">#{education} ,</if>
+            <if test="specialty != null  and specialty != '' ">#{specialty} ,</if>
+            <if test="school != null  and school != '' ">#{school} ,</if>
+            <if test="birthday != null  and birthday != '' ">#{birthday} ,</if>
+            <if test="nativeplace != null  and nativeplace != '' ">#{nativeplace} ,</if>
+            <if test="mobile != null  and mobile != '' ">#{mobile} ,</if>
+            <if test="deptno != null  and deptno != '' ">#{deptno} ,</if>
+            <if test="position != null  and position != '' ">#{position} ,</if>
+            <if test="politicalStatus != null  and politicalStatus != '' ">#{politicalStatus} ,</if>
+            <if test="organizers != null  and organizers != '' ">#{organizers} ,</if>
+            <if test="projectno != null  and projectno != '' ">#{projectno} ,</if>
+            <if test="managerUserid != null  and managerUserid != '' ">#{managerUserid} ,</if>
+            <if test="staffPosition != null  and staffPosition != '' ">#{staffPosition} ,</if>
+            <if test="outsourceType != null  and outsourceType != '' ">#{outsourceType} ,</if>
+            <if test="userType != null  and userType != '' ">#{userType} ,</if>
+            <if test="applyreg != null  and applyreg != '' ">#{applyreg} ,</if>
+            <if test="appltbegTime != null ">#{appltbegTime} ,</if>
+            <if test="iscreditquery != null  and iscreditquery != '' ">#{iscreditquery} ,</if>
+            <if test="queryresult != null  and queryresult != '' ">#{queryresult} ,</if>
+            <if test="isdel != null ">#{isdel} ,</if>
+            <if test="whetherAttendance != null  and whetherAttendance != '' ">#{whetherAttendance} ,</if>
+            <if test="createTime != null ">#{createTime} ,</if>
+            <if test="creators != null  and creators != '' ">#{creators} ,</if>
+            <if test="lastmodTime != null ">#{lastmodTime} ,</if>
+            <if test="lastmodUser != null  and lastmodUser != '' ">#{lastmodUser} ,</if>
+            <if test="childmanageruserid != null  and childmanageruserid != '' ">#{childmanageruserid} ,</if>
+            <if test="insteanceTitle != null  and insteanceTitle != '' ">#{insteanceTitle} ,</if>
+            <if test="dutyType != null ">#{dutyType} ,</if>
+            <if test="grade != null  and grade != '' ">#{grade} ,</if>
+            <if test="price != null  and price != '' ">#{price} ,</if>
+            <if test="worktime != null  and worktime != '' ">#{worktime} ,</if>
+            <if test="addreason != null  and addreason != '' ">#{addreason} ,</if>
+            <if test="isOtherProject != null  and isOtherProject != '' ">#{isOtherProject} ,</if>
+            <if test="sdprojectname != null  and sdprojectname != '' ">#{sdprojectname} ,</if>
+            <if test="sdmanageruserid != null  and sdmanageruserid != '' ">#{sdmanageruserid} ,</if>
+            <if test="workContent != null  and workContent != '' ">#{workContent} ,</if>
+            <if test="sociaiSecrityPayment != null  and sociaiSecrityPayment != '' ">#{sociaiSecrityPayment} ,</if>
+            <if test="systemnos != null  and systemnos != '' ">#{systemnos} ,</if>
+            <if test="systemuserids != null  and systemuserids != '' ">#{systemuserids} ,</if>
+            <if test="outsourcingcategories != null ">#{outsourcingcategories} ,</if>
+            <if test="notattendancereason != null  and notattendancereason != '' ">#{notattendancereason} ,</if>
+            <if test="svnLimit != null  and svnLimit != '' ">#{svnLimit} ,</if>
+            <if test="svnRoad != null  and svnRoad != '' ">#{svnRoad} ,</if>
+            <if test="applysvnno != null  and applysvnno != '' ">#{applysvnno} ,</if>
+            <if test="groupId != null  and groupId != '' ">#{groupId} ,</if>
+            <if test="issatisfyrequire != null  and issatisfyrequire != '' ">#{issatisfyrequire} ,</if>
+            <if test="isnewdrawcomputer != null  and isnewdrawcomputer != '' ">#{isnewdrawcomputer} ,</if>
+            <if test="pricechangereason != null  and pricechangereason != '' ">#{pricechangereason} ,</if>
+            <if test="contractId != null  and contractId != '' ">#{contractId} ,</if>
+            <if test="iskey != null  and iskey != '' ">#{iskey} ,</if>
+            <if test="attendanceTime != null  and attendanceTime != '' ">#{attendanceTime} ,</if>
+            <if test="attendanceType != null  and attendanceType != '' ">#{attendanceType} ,</if>
+            <if test="policecheck != null  and policecheck != '' ">#{policecheck} ,</if>
+            <if test="courtinfo != null  and courtinfo != '' ">#{courtinfo} ,</if>
+            <if test="businessinfo != null  and businessinfo != '' ">#{businessinfo} ,</if>
+            <if test="iseverentry != null  and iseverentry != '' ">#{iseverentry} ,</if>
+            <if test="personcredit != null  and personcredit != '' ">#{personcredit} ,</if>
+            <if test="faceimage != null  and faceimage != '' ">#{faceimage} ,</if>
+            <if test="partnerName != null  and partnerName != '' ">#{partnerName} ,</if>
+            <if test="idcardNumber != null  and idcardNumber != '' ">#{idcardNumber} ,</if>
+            <if test="spouseCertificateType != null  and spouseCertificateType != '' ">#{spouseCertificateType} ,</if>
+            <if test="address != null  and address != '' ">#{address} ,</if>
+            <if test="certificate != null  and certificate != '' ">#{certificate} ,</if>
+            <if test="learnExperience != null  and learnExperience != '' ">#{learnExperience} ,</if>
+            <if test="mainJobs != null  and mainJobs != '' ">#{mainJobs} ,</if>
+            <if test="mainItem != null  and mainItem != '' ">#{mainItem} ,</if>
+            <if test="mainReward != null  and mainReward != '' ">#{mainReward} ,</if>
+            <if test="mainFamily != null  and mainFamily != '' ">#{mainFamily} ,</if>
+            <if test="specialAuth != null  and specialAuth != '' ">#{specialAuth} ,</if>
+            <if test="authDes != null  and authDes != '' ">#{authDes} ,</if>
+            <if test="whetherMeetsClaim != null  and whetherMeetsClaim != '' ">#{whetherMeetsClaim} ,</if>
+            <if test="meetRequirementsReason != null  and meetRequirementsReason != '' ">#{meetRequirementsReason} ,
+            </if>
+            <if test="specifyChargeGeneral != null  and specifyChargeGeneral != '' ">#{specifyChargeGeneral} ,</if>
+            <if test="virtualDesktopFlowId != null  and virtualDesktopFlowId != '' ">#{virtualDesktopFlowId} ,</if>
+            <if test="socialSecurityFlowId != null  and socialSecurityFlowId != '' ">#{socialSecurityFlowId} ,</if>
+            <if test="beginTime != null ">#{beginTime} ,</if>
+            <if test="entryTime != null ">#{entryTime} ,</if>
+            <if test="id != null ">#{id} ,</if>
+            <if test="instanceId != null  and instanceId != '' ">#{instanceId} ,</if>
+            <if test="flowId != null  and flowId != '' ">#{flowId} ,</if>
+            <if test="jobId != null  and jobId != '' ">#{jobId} ,</if>
+            <if test="userName != null  and userName != '' ">#{userName} ,</if>
+            <if test="outsourceNo != null  and outsourceNo != '' ">#{outsourceNo} ,</if>
+            <if test="sex != null  and sex != '' ">#{sex} ,</if>
+            <if test="certifType != null  and certifType != '' ">#{certifType} ,</if>
+            <if test="certifNumber != null  and certifNumber != '' ">#{certifNumber} ,</if>
+            <if test="creditReport != null  and creditReport != '' ">#{creditReport} ,</if>
+            <if test="sociaiSecrityPaymentProve != null  and sociaiSecrityPaymentProve != '' ">
+                #{sociaiSecrityPaymentProve} ,
+            </if>
+            <if test="dueDiligenceReport != null  and dueDiligenceReport != '' ">
+                #{dueDiligenceReport} ,
+            </if>
+            <if test="qtFile != null  and qtFile != '' ">
+                #{qtFile} ,
+            </if>
+            <if test="confidentialityCommitment != null  and confidentialityCommitment != '' ">
+                #{confidentialityCommitment} ,
+            </if>
+            <if test="otherFile != null  and otherFile != '' ">#{otherFile} ,</if>
+            <if test="maritalStatus != null  and maritalStatus != '' ">#{maritalStatus} ,</if>
+            <if test="eitquetteAchievement != null  ">#{eitquetteAchievement} ,</if>
+            <if test="eitquetteTime != null">#{eitquetteTime} ,</if>
+            <if test="qualityAchievement != null ">#{qualityAchievement},</if>
+            <if test="qualityTime != null ">#{qualityTime},</if>
+            <if test="interviewSumAchievement != null">#{interviewSumAchievement} ,</if>
+            <if test="interviewResult != null  and interviewResult != '' ">#{interviewResult} ,</if>
+            <if test="oneInterviewer != null  and oneInterviewer != '' ">#{oneInterviewer} ,</if>
+            <if test="oneComments != null  and oneComments != '' ">#{oneComments} ,</if>
+            <if test="twoInterviewer != null  and twoInterviewer != '' ">#{twoInterviewer} ,</if>
+            <if test="twoComments != null  and twoComments != '' ">#{twoComments} ,</if>
+            <if test="systemPrincipal != null  and systemPrincipal != '' ">#{systemPrincipal} ,</if>
+            <if test="vmAccount != null  and vmAccount != '' ">#{vmAccount},</if>
+            <if test="entranceCard != null  and entranceCard != '' ">#{entranceCard},</if>
+            <if test="presenceState != null  and presenceState != '' ">#{presenceState},</if>
+            <if test="newContractId != null and newContractId != '' ">#{newContractId},</if>
+            <if test="ceneralOfficeMotion != null and ceneralOfficeMotion != '' ">#{ceneralOfficeMotion},</if>
+            <if test="evaluationLevel != null  and evaluationLevel != '' ">#{evaluationLevel},</if>
+            <if test="levelReason != null  and levelReason != '' ">#{levelReason},</if>
+            <if test="evaluatorId != null and evaluatorId != '' ">#{evaluatorId},</if>
+            <if test="evaluationTime != null ">#{evaluationTime},</if>
+        </trim>
+        )
+    </insert>
+
+    <!--通过id查询  k6991 2020-10-16 -->
+    <select id="queryDetail" parameterType="ppmOutsourcingAccessapply" resultMap="PPMOUTSOURCINGACCESSAPPLY_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM PPM_OUTSOURCING_ACCESSAPPLY
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="id != null "> ID=#{id} AND </if>
+            <if test="instanceId != null and instanceId != '' ">INSTANCE_ID = #{instanceId} AND</if>
+            <if test="jobId != null and jobId != '' ">JOB_ID = #{jobId} AND</if>
+            <if test="certifNumber != null ">CERTIF_NUMBER = #{certifNumber} AND</if>
+            <if test="applysvnno != null and applysvnno != '' ">APPLYSVNNO = #{applysvnno} AND</if>
+            <if test="true ">ROWNUM = 1 AND</if>
+        </trim>
+
+    </select>
+    <!--通过id查询  k6991 2020-10-16 -->
+    <select id="checkApply" parameterType="ppmOutsourcingAccessapply" resultType="hashmap">
+        select ppf.* from ppm_outsourcing_accessapply poa
+            join ppm_project_flow ppf on ppf.instanceid = poa.instance_id
+        where ppf.flowstatus='进行中' and poa.certif_number  = #{certifNumber} and rownum = 1
+    </select>
+
+    <!--查询集合  k6991 2020-10-16 -->
+    <select id="getList" parameterType="ppmOutsourcingAccessapply" resultMap="PPMOUTSOURCINGACCESSAPPLY_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM PPM_OUTSOURCING_ACCESSAPPLY
+        <include refid="sql_select_condition"/>
+    </select>
+    <!-- update sql -->
+    <sql id="update_pojo_sql">
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="education != null ">EDUCATION=#{education} ,</if>
+            <if test="specialty != null  and specialty != '' ">SPECIALTY=#{specialty} ,</if>
+            <if test="school != null  and school != '' ">SCHOOL=#{school} ,</if>
+            <if test="birthday != null  and birthday != '' ">BIRTHDAY=#{birthday} ,</if>
+            <if test="nativeplace != null  and nativeplace != '' ">NATIVEPLACE=#{nativeplace} ,</if>
+            <if test="mobile != null  and mobile != '' ">MOBILE=#{mobile} ,</if>
+            <if test="deptno != null  and deptno != '' ">DEPTNO=#{deptno} ,</if>
+            <if test="position != null  and position != '' ">POSITION=#{position} ,</if>
+            <if test="politicalStatus != null  and politicalStatus != '' ">POLITICAL_STATUS=#{politicalStatus} ,</if>
+            <if test="organizers != null  and organizers != '' ">ORGANIZERS=#{organizers} ,</if>
+            <if test="projectno != null  and projectno != '' ">PROJECTNO=#{projectno} ,</if>
+            <if test="managerUserid != null  and managerUserid != '' ">MANAGER_USERID=#{managerUserid} ,</if>
+            <if test="staffPosition != null  and staffPosition != '' ">STAFF_POSITION=#{staffPosition} ,</if>
+            <if test="outsourceType != null  and outsourceType != '' ">OUTSOURCE_TYPE=#{outsourceType} ,</if>
+            <if test="userType != null  and userType != '' ">USER_TYPE=#{userType} ,</if>
+            <if test="applyreg != null  and applyreg != '' ">APPLYREG=#{applyreg} ,</if>
+            <if test="appltbegTime != null ">APPLTBEG_TIME=#{appltbegTime} ,</if>
+            <if test="iscreditquery != null  and iscreditquery != '' ">ISCREDITQUERY=#{iscreditquery} ,</if>
+            <if test="queryresult != null  and queryresult != '' ">QUERYRESULT=#{queryresult} ,</if>
+            <if test="isdel != null ">ISDEL=#{isdel} ,</if>
+            <if test="whetherAttendance != null  and whetherAttendance != '' ">WHETHER_ATTENDANCE=#{whetherAttendance}
+                ,
+            </if>
+            <if test="createTime != null ">CREATE_TIME=#{createTime} ,</if>
+            <if test="creators != null  and creators != '' ">CREATORS=#{creators} ,</if>
+            <if test="lastmodTime != null ">LASTMOD_TIME=#{lastmodTime} ,</if>
+            <if test="lastmodUser != null  and lastmodUser != '' ">LASTMOD_USER=#{lastmodUser} ,</if>
+            <if test="childmanageruserid != null  and childmanageruserid != '' ">
+                CHILDMANAGERUSERID=#{childmanageruserid} ,
+            </if>
+            <if test="insteanceTitle != null  and insteanceTitle != '' ">INSTEANCE_TITLE=#{insteanceTitle} ,</if>
+            <if test="dutyType != null ">DUTY_TYPE=#{dutyType} ,</if>
+            <if test="grade != null  and grade != '' ">GRADE=#{grade} ,</if>
+            <if test="price != null  and price != '' ">PRICE=#{price} ,</if>
+            <if test="worktime != null  and worktime != '' ">WORKTIME=#{worktime} ,</if>
+            <if test="addreason != null  and addreason != '' ">ADDREASON=#{addreason} ,</if>
+            <if test="isOtherProject != null  and isOtherProject != '' ">IS_OTHER_PROJECT=#{isOtherProject} ,</if>
+            <if test="sdprojectname != null  and sdprojectname != '' ">SDPROJECTNAME=#{sdprojectname} ,</if>
+            <if test="sdmanageruserid != null  and sdmanageruserid != '' ">SDMANAGERUSERID=#{sdmanageruserid} ,</if>
+            <if test="workContent != null  and workContent != '' ">WORK_CONTENT=#{workContent} ,</if>
+            <if test="sociaiSecrityPayment != null  and sociaiSecrityPayment != '' ">
+                SOCIAI_SECRITY_PAYMENT=#{sociaiSecrityPayment} ,
+            </if>
+            <if test="systemnos != null  and systemnos != '' ">SYSTEMNOS=#{systemnos} ,</if>
+            <if test="systemuserids != null  and systemuserids != '' ">SYSTEMUSERIDS=#{systemuserids} ,</if>
+            <if test="outsourcingcategories != null ">OUTSOURCINGCATEGORIES=#{outsourcingcategories} ,</if>
+            <if test="notattendancereason != null  and notattendancereason != '' ">
+                NOTATTENDANCEREASON=#{notattendancereason} ,
+            </if>
+            <if test="svnLimit != null  and svnLimit != '' ">SVN_LIMIT=#{svnLimit} ,</if>
+            <if test="svnRoad != null  and svnRoad != '' ">SVN_ROAD=#{svnRoad} ,</if>
+            <if test="applysvnno != null  and applysvnno != '' ">APPLYSVNNO=#{applysvnno} ,</if>
+            <if test="groupId != null  and groupId != '' ">GROUP_ID=#{groupId} ,</if>
+            <if test="issatisfyrequire != null  and issatisfyrequire != '' ">ISSATISFYREQUIRE=#{issatisfyrequire} ,</if>
+            <if test="isnewdrawcomputer != null  and isnewdrawcomputer != '' ">ISNEWDRAWCOMPUTER=#{isnewdrawcomputer}
+                ,
+            </if>
+            <if test="pricechangereason != null  and pricechangereason != '' ">PRICECHANGEREASON=#{pricechangereason}
+                ,
+            </if>
+            <if test="contractId != null  and contractId != '' ">CONTRACT_ID=#{contractId} ,</if>
+            <if test="iskey != null  and iskey != '' ">ISKEY=#{iskey} ,</if>
+            <if test="attendanceTime != null  and attendanceTime != '' ">ATTENDANCE_TIME=#{attendanceTime} ,</if>
+            <if test="attendanceType != null  and attendanceType != '' ">ATTENDANCE_TYPE=#{attendanceType} ,</if>
+            <if test="policecheck != null  and policecheck != '' ">POLICECHECK=#{policecheck} ,</if>
+            <if test="courtinfo != null  and courtinfo != '' ">COURTINFO=#{courtinfo} ,</if>
+            <if test="businessinfo != null  and businessinfo != '' ">BUSINESSINFO=#{businessinfo} ,</if>
+            <if test="iseverentry != null  and iseverentry != '' ">ISEVERENTRY=#{iseverentry} ,</if>
+            <if test="personcredit != null  and personcredit != '' ">PERSONCREDIT=#{personcredit} ,</if>
+            <if test="faceimage != null  and faceimage != '' ">FACEIMAGE=#{faceimage} ,</if>
+            <if test="partnerName != null  and partnerName != '' ">PARTNER_NAME=#{partnerName} ,</if>
+            <if test="idcardNumber != null  and idcardNumber != '' ">IDCARD_NUMBER=#{idcardNumber} ,</if>
+            <if test="spouseCertificateType != null  and spouseCertificateType != '' ">
+                SPOUSE_CERTIFICATE_TYPE=#{spouseCertificateType} ,
+            </if>
+            <if test="address != null  and address != '' ">ADDRESS=#{address} ,</if>
+            <if test="certificate != null  and certificate != '' ">CERTIFICATE=#{certificate} ,</if>
+            <if test="learnExperience != null  and learnExperience != '' ">LEARN_EXPERIENCE=#{learnExperience} ,</if>
+            <if test="mainJobs != null  and mainJobs != '' ">MAIN_JOBS=#{mainJobs} ,</if>
+            <if test="mainItem != null  and mainItem != '' ">MAIN_ITEM=#{mainItem} ,</if>
+            <if test="mainReward != null  and mainReward != '' ">MAIN_REWARD=#{mainReward} ,</if>
+            <if test="mainFamily != null  and mainFamily != '' ">MAIN_FAMILY=#{mainFamily} ,</if>
+            <if test="specialAuth != null  and specialAuth != '' ">SPECIAL_AUTH=#{specialAuth} ,</if>
+            <if test="authDes != null  and authDes != '' ">AUTH_DES=#{authDes} ,</if>
+            <if test="whetherMeetsClaim != null  and whetherMeetsClaim != '' ">WHETHER_MEETS_CLAIM=#{whetherMeetsClaim}
+                ,
+            </if>
+            <if test="meetRequirementsReason != null  and meetRequirementsReason != '' ">
+                MEET_REQUIREMENTS_REASON=#{meetRequirementsReason} ,
+            </if>
+            <if test="specifyChargeGeneral != null  and specifyChargeGeneral != '' ">
+                SPECIFY_CHARGE_GENERAL=#{specifyChargeGeneral} ,
+            </if>
+            <if test="virtualDesktopFlowId != null  and virtualDesktopFlowId != '' ">
+                VIRTUAL_DESKTOP_FLOW_ID=#{virtualDesktopFlowId} ,
+            </if>
+            <if test="socialSecurityFlowId != null  and socialSecurityFlowId != '' ">
+                SOCIAL_SECURITY_FLOW_ID=#{socialSecurityFlowId} ,
+            </if>
+            <if test="beginTime != null ">BEGIN_TIME=#{beginTime} ,</if>
+            <if test="entryTime != null ">ENTRY_TIME=#{entryTime} ,</if>
+            <if test="id != null ">ID=#{id} ,</if>
+            <if test="instanceId != null  and instanceId != '' ">INSTANCE_ID=#{instanceId} ,</if>
+            <if test="flowId != null  and flowId != '' ">FLOW_ID=#{flowId} ,</if>
+            <if test="jobId != null  and jobId != '' ">JOB_ID=#{jobId} ,</if>
+            <if test="userName != null  and userName != '' ">USER_NAME=#{userName} ,</if>
+            <if test="outsourceNo != null  and outsourceNo != '' ">OUTSOURCE_NO=#{outsourceNo} ,</if>
+            <if test="sex != null  and sex != '' ">SEX=#{sex} ,</if>
+            <if test="certifType != null  and certifType != '' ">CERTIF_TYPE=#{certifType} ,</if>
+            <if test="certifNumber != null  and certifNumber != '' ">CERTIF_NUMBER=#{certifNumber} ,</if>
+            <if test="creditReport != null  and creditReport != '' ">CREDIT_REPORT = #{creditReport} ,</if>
+            <if test="sociaiSecrityPaymentProve != null  and sociaiSecrityPaymentProve != '' ">
+                SOCIAI_SECRITY_PAYMENT_PROVE = #{sociaiSecrityPaymentProve} ,
+            </if>
+            <if test="dueDiligenceReport != null  and dueDiligenceReport != '' ">
+                DUE_DILIGENCE_REPORT = #{dueDiligenceReport} ,
+            </if>
+            <if test="qtFile != null  and qtFile != '' ">
+                QT_FILE = #{qtFile} ,
+            </if>
+            <if test="confidentialityCommitment != null  and confidentialityCommitment != '' ">
+                CONFIDENTIALITY_COMMITMENT = #{confidentialityCommitment} ,
+            </if>
+            <if test="otherFile != null  and otherFile != '' ">OTHER_FILE = #{otherFile} ,</if>
+            <if test="maritalStatus != null  and maritalStatus != '' ">MARITAL_STATUS = #{maritalStatus} ,</if>
+            <if test="eitquetteAchievement != null  ">EITQUETTE_ACHIEVEMENT = #{eitquetteAchievement} ,</if>
+            <if test="eitquetteTime != null">EITQUETTE_TIME = #{eitquetteTime} ,</if>
+            <if test="qualityAchievement != null ">QUALITY_ACHIEVEMENT = #{qualityAchievement} ,</if>
+            <if test="qualityTime != null ">QUALITY_TIME = #{qualityTime} ,</if>
+            <if test="interviewSumAchievement != null">INTERVIEW_SUM_ACHIEVEMENT = #{interviewSumAchievement} ,</if>
+            <if test="interviewResult != null  and interviewResult != '' ">INTERVIEW_RESULT = #{interviewResult} ,</if>
+            <if test="oneInterviewer != null  and oneInterviewer != '' ">ONE_INTERVIEWER = #{oneInterviewer} ,</if>
+            <if test="oneComments != null  and oneComments != '' ">ONE_COMMENTS = #{oneComments} ,</if>
+            <if test="twoInterviewer != null  and twoInterviewer != '' ">TWO_INTERVIEWER = #{twoInterviewer} ,</if>
+            <if test="twoComments != null  and twoComments != '' ">TWO_COMMENTS = #{twoComments} ,</if>
+            <if test="systemPrincipal != null  and systemPrincipal != '' ">SYSTEM_PRINCIPAL = #{systemPrincipal} ,</if>
+            <if test="vmAccount != null  and vmAccount != '' ">VM_ACCOUNT = #{vmAccount} ,</if>
+            <if test="entranceCard != null  and entranceCard != '' ">ENTRANCE_CARD = #{entranceCard} ,</if>
+            <if test="presenceState != null  and presenceState != '' ">PRESENCE_STATE = #{presenceState} ,</if>
+            <if test="newContractId != null  and newContractId != '' ">NEW_CONTRACT_ID = #{newContractId} ,</if>
+            <if test="ceneralOfficeMotion != null  and ceneralOfficeMotion != '' ">CENERAL_OFFICE_MOTION = #{ceneralOfficeMotion} ,</if>
+            <if test="letterOfCommitment != null  and letterOfCommitment != '' ">LETTER_OF_COMMITMENT = #{letterOfCommitment} ,</if>
+            <if test="liabilityStatement != null  and liabilityStatement != '' ">LIABILITY_STATEMENT = #{liabilityStatement} ,</if>
+            <if test="medicalExamination != null  and medicalExamination != '' ">MEDICAL_EXAMINATION = #{medicalExamination} ,</if>
+            <if test="evaluationLevel != null  and evaluationLevel != '' ">EVALUATION_LEVEL = #{evaluationLevel} ,</if>
+            <if test="levelReason != null  and levelReason != '' ">LEVEL_REASON = #{levelReason} ,</if>
+            <if test="evaluatorId != null  and evaluatorId != '' ">EVALUATOR_ID = #{evaluatorId} ,</if>
+            <if test="evaluationTime != null ">EVALUATION_TIME = #{evaluationTime} ,</if>
+
+        </trim>
+    </sql>
+
+    <!--通过id编辑 k6991 2020-10-16 -->
+    <update id="updatePojo" parameterType="ppmOutsourcingAccessapply">
+        UPDATE
+        PPM_OUTSOURCING_ACCESSAPPLY
+        <include refid="update_pojo_sql"/>
+        WHERE  ID=#{id}
+    </update>
+
+    <!--通过id批量删除  k6991 2020-10-16 -->
+    <delete id="deleteById" parameterType="ppmOutsourcingAccessapply">
+        DELETE
+        FROM
+        PPM_OUTSOURCING_ACCESSAPPLY
+        WHERE INSTANCE_ID=#{instanceId}
+    </delete>
+
+    <!-- 获取工号 k6991 2020-07-02-->
+    <select id="createJoid" resultType="int">
+        select seq_outsource_jobid.nextval num from dual
+    </select>
+
+    <select id="countEntranceCard" resultType="long">
+        select count(id) from PPM_OUTSOURCING_ACCESSAPPLY where entrance_card like #{prex}||'%'
+    </select>
+    <!--通过id查询  k1327 2021-03-22 -->
+    <select id="queryDetailExt" parameterType="ppmOutsourcingAccessapplyInfo" resultMap="PPMOUTSOURCINGACCESSAPPLY_ALL_EXT">
+        SELECT a.id,
+        a.instance_id,
+        a.flow_id,
+        a.job_id,
+        a.user_name,
+        a.outsource_no,
+        a.sex,
+        a.certif_type,
+        a.certif_number,
+        a.education,
+        a.specialty,
+        a.school,
+        a.birthday,
+        a.nativeplace,
+        a.mobile,
+        a.deptno,
+        a.position,
+        a.political_status,
+        a.organizers,
+        a.projectno,
+        a.manager_userid,
+        a.staff_position,
+        a.outsource_type,
+        a.user_type,
+        a.applyreg,
+        a.appltbeg_time,
+        a.iscreditquery,
+        a.queryresult,
+        a.isdel,
+        a.whether_attendance,
+        a.create_time,
+        a.creators,
+        a.lastmod_time,
+        a.lastmod_user,
+        a.childmanageruserid,
+        a.insteance_title,
+        a.duty_type,
+        a.grade,
+        a.price,
+        a.worktime,
+        a.addreason,
+        a.is_other_project,
+        a.sdprojectname,
+        a.sdmanageruserid,
+        a.work_content,
+        a.sociai_secrity_payment,
+        a.systemnos,
+        a.systemuserids,
+        a.outsourcingcategories,
+        a.notattendancereason,
+        a.svn_limit,
+        a.svn_road,
+        a.applysvnno,
+        a.group_id,
+        a.issatisfyrequire,
+        a.isnewdrawcomputer,
+        a.pricechangereason,
+        a.contract_id,
+        a.iskey,
+        a.attendance_time,
+        a.attendance_type,
+        a.policecheck,
+        a.courtinfo,
+        a.businessinfo,
+        a.iseverentry,
+        a.personcredit,
+        a.faceimage,
+        a.partner_name,
+        a.idcard_number,
+        a.spouse_certificate_type,
+        a.address,
+        a.certificate,
+        a.learn_experience,
+        a.main_jobs,
+        a.main_item,
+        a.main_reward,
+        a.main_family,
+        a.special_auth,
+        a.auth_des,
+        a.whether_meets_claim,
+        a.meet_requirements_reason,
+        a.specify_charge_general,
+        a.virtual_desktop_flow_id,
+        a.social_security_flow_id,
+        a.begin_time,
+        a.entry_time,
+        a.marital_status,
+        a.purchase_item,
+        a.credit_report,
+        a.sociai_secrity_payment_prove,
+        a.DUE_DILIGENCE_REPORT,
+        a.QT_FILE,
+        a.confidentiality_commitment,
+        a.other_file,
+        a.system_principal,
+        a.eitquette_achievement,
+        a.eitquette_time,
+        a.quality_achievement,
+        a.quality_time,
+        a.interview_sum_achievement,
+        a.interview_result,
+        a.one_interviewer,
+        a.one_comments,
+        a.two_interviewer,
+        a.two_comments,
+        a.vm_account,
+        a.entrance_card,
+        a.new_contract_id,
+        a.ceneral_office_motion,
+		a.ceneral_office_motion ceneral_office_motion_be,
+        a.evaluation_level,
+        a.level_reason,
+        a.evaluator_id,
+        a.evaluation_time,
+        e.dictname interview_resultname,
+        emp.empname one_interviewername,
+        emp1.empname two_interviewername
+        FROM PPM_OUTSOURCING_ACCESSAPPLY a
+        left join eos_dict_entry  e on a.interview_result =e.dictid and e.dicttypeid='NEW_BUSI_OUTSOURCE_INTERVRESULT'
+        left join comm_employee emp on a.one_interviewer=emp.badge
+        left join comm_employee emp1 on a.two_interviewer=emp1.badge
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="id != null "> a.ID=#{id} AND </if>
+            <if test="instanceId != null and instanceId != '' ">a.INSTANCE_ID = #{instanceId} AND</if>
+            <if test="jobId != null and jobId != '' ">a.JOB_ID = #{jobId} AND</if>
+            <if test="virtualDesktopFlowId != null and  virtualDesktopFlowId != '' ">a.VIRTUAL_DESKTOP_FLOW_ID =
+                #{virtualDesktopFlowId} AND</if>
+            <if test="applysvnno != null and applysvnno != '' ">a.APPLYSVNNO = #{applysvnno} AND</if>
+            <if test="true ">ROWNUM = 1 AND</if>
+        </trim>
+
+    </select>
+
+    <!--通过id查询  k1327 2021-03-22 -->
+    <select id="queryInstanceIdForJobId" parameterType="ppmOutsourcingAccessapply" resultMap="PPMOUTSOURCINGACCESSAPPLY_ALL">
+        SELECT T.INSTANCE_ID FROM
+            (SELECT INSTANCE_ID FROM PPM_OUTSOURCING_ACCESSAPPLY WHERE JOB_ID = #{jobId} ORDER BY CREATE_TIME DESC) T
+        WHERE ROWNUM = 1
+    </select>
+</mapper>

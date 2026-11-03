@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:ywwb436 2022-07-08 -->
+<!--  考勤日历任务表 查询脚本 -->
+<mapper namespace="com.work.ppm.application.model.integratedmanager.PpmKqCalendarTodo">
+	 <resultMap type="ppmKqCalendarTodo" id="PPMKQCALENDARTODO_ALL">
+        <result property="id" column="ID" />
+		<result property="instanceid" column="INSTANCEID" />
+		<result property="title" column="TITLE" />
+		<result property="flowid" column="FLOWID" />
+		<result property="remark" column="REMARK" />
+		<result property="flag" column="FLAG" />
+		<result property="createid" column="CREATEID" />
+		<result property="createdate" column="CREATEDATE" />
+		<result property="completedate" column="COMPLETEDATE" />
+		
+     </resultMap>
+
+     <!-- 所有字段名称 -->
+    <sql id="sql_flied_all">
+        ID,
+			INSTANCEID,
+			TITLE,
+			FLOWID,
+			REMARK,
+			FLAG,
+			CREATEID,
+			CREATEDATE,
+			COMPLETEDATE
+    </sql>
+    <sql id="sql_select_condition">
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="id != null " > ID = #{id} AND </if>
+				<if test="instanceid != null  and instanceid != '' " > INSTANCEID = #{instanceid} AND </if>
+				<if test="title != null  and title != '' " > TITLE = #{title} AND </if>
+				<if test="flowid != null  and flowid != '' " > FLOWID = #{flowid} AND </if>
+				<if test="remark != null  and remark != '' " > REMARK = #{remark} AND </if>
+				<if test="flag != null " > FLAG = #{flag} AND </if>
+				<if test="createid != null  and createid != '' " > CREATEID = #{createid} AND </if>
+				<if test="createdate != null " > CREATEDATE = #{createdate} AND </if>
+				<if test="completedate != null " > COMPLETEDATE = #{completedate} AND </if>
+				
+        </trim>
+    </sql>
+    <!-- 查询分页  2022-07-08 ywwb436  -->
+    <select id="queryPagerList" parameterType="map" resultMap="PPMKQCALENDARTODO_ALL">
+        SELECT
+        <include refid="sql_flied_all" />
+        FROM PPM_KQ_CALENDAR_TODO
+        <include refid="sql_select_condition" />
+    </select>
+
+    <!-- 新增  2022-07-08 ywwb436  -->
+    <insert id="addPojo" parameterType="ppmKqCalendarTodo">
+        INSERT INTO PPM_KQ_CALENDAR_TODO (
+        <trim suffixOverrides=",">
+         <if test="id != null " > ID , </if>
+				<if test="instanceid != null  and instanceid != '' " > INSTANCEID , </if>
+				<if test="title != null  and title != '' " > TITLE , </if>
+				<if test="flowid != null  and flowid != '' " > FLOWID , </if>
+				<if test="remark != null  and remark != '' " > REMARK , </if>
+				<if test="flag != null " > FLAG , </if>
+				<if test="createid != null  and createid != '' " > CREATEID , </if>
+				<if test="createdate != null " > CREATEDATE , </if>
+				<if test="completedate != null " > COMPLETEDATE , </if>
+				
+          </trim>
+        )
+        VALUES(
+        <trim suffixOverrides=",">
+         <if test="id != null " > #{id} , </if>
+				<if test="instanceid != null  and instanceid != '' " > #{instanceid} , </if>
+				<if test="title != null  and title != '' " > #{title} , </if>
+				<if test="flowid != null  and flowid != '' " > #{flowid} , </if>
+				<if test="remark != null  and remark != '' " > #{remark} , </if>
+				<if test="flag != null " > #{flag} , </if>
+				<if test="createid != null  and createid != '' " > #{createid} , </if>
+				<if test="createdate != null " > #{createdate} , </if>
+				<if test="completedate != null " > #{completedate} , </if>
+				
+        </trim>
+        )
+    </insert>
+
+    <!--通过id查询  ywwb436 2022-07-08 -->
+    <select id="queryDetail" parameterType="ppmKqCalendarTodo" resultMap="PPMKQCALENDARTODO_ALL">
+        SELECT
+        <include refid="sql_flied_all" />
+        FROM PPM_KQ_CALENDAR_TODO
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="id != null " > ID=#{id} AND</if>
+            <if test="instanceid != null  and instanceid != '' " > INSTANCEID=#{instanceid}  AND </if>
+        </trim>
+    </select>
+
+     <!--查询集合  ywwb436 2022-07-08 -->
+    <select id="getList" parameterType="ppmKqCalendarTodo" resultMap="PPMKQCALENDARTODO_ALL">
+        SELECT
+        <include refid="sql_flied_all" />
+        FROM PPM_KQ_CALENDAR_TODO
+        <include refid="sql_select_condition" />
+    </select>
+    <!-- update sql -->
+    <sql id="update_pojo_sql">
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="id != null " > ID=#{id} , </if>
+				<if test="instanceid != null  and instanceid != '' " > INSTANCEID=#{instanceid} , </if>
+				<if test="title != null  and title != '' " > TITLE=#{title} , </if>
+				<if test="flowid != null  and flowid != '' " > FLOWID=#{flowid} , </if>
+				<if test="remark != null  and remark != '' " > REMARK=#{remark} , </if>
+				<if test="flag != null " > FLAG=#{flag} , </if>
+				<if test="createid != null  and createid != '' " > CREATEID=#{createid} , </if>
+				<if test="createdate != null " > CREATEDATE=#{createdate} , </if>
+				<if test="completedate != null " > COMPLETEDATE=#{completedate} , </if>
+        </trim>
+    </sql>
+
+    <!--通过id编辑 ywwb436 2022-07-08 -->
+    <update id="updatePojo" parameterType="ppmKqCalendarTodo">
+        UPDATE
+        PPM_KQ_CALENDAR_TODO
+        <include refid="update_pojo_sql" />
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="id != null " > ID=#{id} AND</if>
+            <if test="instanceid != null  and instanceid != '' " > INSTANCEID=#{instanceid}  AND </if>
+        </trim>
+    </update>
+
+    <!--通过id批量删除  ywwb436 2022-07-08 -->
+    <delete id="deleteById" parameterType="ppmKqCalendarTodo">
+        DELETE
+        FROM
+        PPM_KQ_CALENDAR_TODO
+        WHERE ID = #{id}
+    </delete>
+
+</mapper>

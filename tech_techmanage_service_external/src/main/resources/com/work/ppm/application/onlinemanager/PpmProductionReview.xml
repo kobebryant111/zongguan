@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k4038 2021-10-25 -->
+<mapper namespace="com.work.ppm.application.model.onlinemanager.PpmProductionReview">
+	 <resultMap type="ppmProductionReview" id="PPMPRODUCTIONREVIEW_ALL">
+        <result property="id" column="ID" />
+		<result property="productionno" column="PRODUCTIONNO" />
+		<result property="onlineno" column="ONLINENO" />
+		<result property="projectno" column="PROJECTNO" />
+		<result property="projectname" column="PROJECTNAME" />
+		<result property="chgdate" column="CHGDATE" />
+		<result property="remark" column="REMARK" />
+		<result property="reviewres" column="REVIEWRES" />
+		<result property="instanceid" column="INSTANCEID" />
+		<result property="flowid" column="FLOWID" />
+		<result property="isdel" column="ISDEL" />
+		<result property="createtime" column="CREATETIME" />
+		<result property="creators" column="CREATORS" />
+		<result property="lastmodtime" column="LASTMODTIME" />
+		<result property="lastmoduser" column="LASTMODUSER" />
+		<result property="xmpj" column="XMPJ" />
+		<result property="pjcont" column="PJCONT" />
+		<result property="gbfs" column="GBFS" />
+		<result property="tsqksm" column="TSQKSM" />
+		<result property="jlpjcont" column="JLPJCONT" />
+		<result property="xmjlpj" column="XMJLPJ" />
+		<result property="lastmoduserid" column="LASTMODUSERID" />
+		<result property="isyqyz" column="ISYQYZ" />
+		<result property="jhyzdate" column="JHYZDATE" />
+		<result property="planonline" column="PLANONLINE" />
+		<result property="isqbsx" column="ISQBSX" />
+		
+     </resultMap>
+
+     <!-- 所有字段名称 -->
+        <sql id="sql_flied_all">
+        	ID,
+			PRODUCTIONNO,
+			ONLINENO,
+			PROJECTNO,
+			PROJECTNAME,
+			CHGDATE,
+			REMARK,
+			REVIEWRES,
+			INSTANCEID,
+			FLOWID,
+			ISDEL,
+			CREATETIME,
+			CREATORS,
+			LASTMODTIME,
+			LASTMODUSER,
+			XMPJ,
+			PJCONT,
+			GBFS,
+			TSQKSM,
+			JLPJCONT,
+			XMJLPJ,
+			LASTMODUSERID,
+			ISYQYZ,
+			JHYZDATE,
+			PLANONLINE,
+			ISQBSX
+        </sql>
+        <sql id="sql_select_condition">
+            <trim prefix="WHERE" suffixOverrides="AND">
+                <if test="id != null " > ID = #{id} AND </if>
+				<if test="productionno != null  and productionno != '' " > PRODUCTIONNO = #{productionno} AND </if>
+				<if test="onlineno != null  and onlineno != '' " > ONLINENO = #{onlineno} AND </if>
+				<if test="projectno != null  and projectno != '' " > PROJECTNO = #{projectno} AND </if>
+				<if test="projectname != null  and projectname != '' " > PROJECTNAME = #{projectname} AND </if>
+				<if test="chgdate != null " > CHGDATE = #{chgdate} AND </if>
+				<if test="remark != null  and remark != '' " > REMARK = #{remark} AND </if>
+				<if test="reviewres != null  and reviewres != '' " > REVIEWRES = #{reviewres} AND </if>
+				<if test="instanceid != null  and instanceid != '' " > INSTANCEID = #{instanceid} AND </if>
+				<if test="flowid != null  and flowid != '' " > FLOWID = #{flowid} AND </if>
+				<if test="isdel != null " > ISDEL = #{isdel} AND </if>
+				<if test="createtime != null " > CREATETIME = #{createtime} AND </if>
+				<if test="creators != null  and creators != '' " > CREATORS = #{creators} AND </if>
+				<if test="lastmodtime != null " > LASTMODTIME = #{lastmodtime} AND </if>
+				<if test="lastmoduser != null  and lastmoduser != '' " > LASTMODUSER = #{lastmoduser} AND </if>
+				<if test="xmpj != null  and xmpj != '' " > XMPJ = #{xmpj} AND </if>
+				<if test="pjcont != null  and pjcont != '' " > PJCONT = #{pjcont} AND </if>
+				<if test="gbfs != null  and gbfs != '' " > GBFS = #{gbfs} AND </if>
+				<if test="tsqksm != null  and tsqksm != '' " > TSQKSM = #{tsqksm} AND </if>
+				<if test="jlpjcont != null  and jlpjcont != '' " > JLPJCONT = #{jlpjcont} AND </if>
+				<if test="xmjlpj != null  and xmjlpj != '' " > XMJLPJ = #{xmjlpj} AND </if>
+				<if test="lastmoduserid != null  and lastmoduserid != '' " > LASTMODUSERID = #{lastmoduserid} AND </if>
+				<if test="isyqyz != null  and isyqyz != '' " > ISYQYZ = #{isyqyz} AND </if>
+				<if test="jhyzdate != null " > JHYZDATE = #{jhyzdate} AND </if>
+				<if test="planonline != null  and planonline != '' " > PLANONLINE = #{planonline} AND </if>
+				<if test="isqbsx != null  and isqbsx != '' " > ISQBSX = #{isqbsx} AND </if>
+				
+            </trim>
+        </sql>
+    	<!-- 查询分页  2021-10-25 k4038  -->
+        <select id="queryPagerList" parameterType="map" resultMap="PPMPRODUCTIONREVIEW_ALL">
+        	SELECT
+            <include refid="sql_flied_all" />
+            FROM PPM_PRODUCTION_REVIEW
+            <include refid="sql_select_condition" />
+        </select>
+
+        <!-- 新增  2021-10-25 k4038  -->
+        <insert id="addPojo" parameterType="ppmProductionReview">
+    		INSERT INTO PPM_PRODUCTION_REVIEW (
+    		<trim suffixOverrides=",">
+    		 <if test="id != null " > ID , </if>
+				<if test="productionno != null  and productionno != '' " > PRODUCTIONNO , </if>
+				<if test="onlineno != null  and onlineno != '' " > ONLINENO , </if>
+				<if test="projectno != null  and projectno != '' " > PROJECTNO , </if>
+				<if test="projectname != null  and projectname != '' " > PROJECTNAME , </if>
+				<if test="chgdate != null " > CHGDATE , </if>
+				<if test="remark != null  and remark != '' " > REMARK , </if>
+				<if test="reviewres != null  and reviewres != '' " > REVIEWRES , </if>
+				<if test="instanceid != null  and instanceid != '' " > INSTANCEID , </if>
+				<if test="flowid != null  and flowid != '' " > FLOWID , </if>
+				<if test="isdel != null " > ISDEL , </if>
+				<if test="createtime != null " > CREATETIME , </if>
+				<if test="creators != null  and creators != '' " > CREATORS , </if>
+				<if test="lastmodtime != null " > LASTMODTIME , </if>
+				<if test="lastmoduser != null  and lastmoduser != '' " > LASTMODUSER , </if>
+				<if test="xmpj != null  and xmpj != '' " > XMPJ , </if>
+				<if test="pjcont != null  and pjcont != '' " > PJCONT , </if>
+				<if test="gbfs != null  and gbfs != '' " > GBFS , </if>
+				<if test="tsqksm != null  and tsqksm != '' " > TSQKSM , </if>
+				<if test="jlpjcont != null  and jlpjcont != '' " > JLPJCONT , </if>
+				<if test="xmjlpj != null  and xmjlpj != '' " > XMJLPJ , </if>
+				<if test="lastmoduserid != null  and lastmoduserid != '' " > LASTMODUSERID , </if>
+				<if test="isyqyz != null  and isyqyz != '' " > ISYQYZ , </if>
+				<if test="jhyzdate != null " > JHYZDATE , </if>
+				<if test="planonline != null  and planonline != '' " > PLANONLINE , </if>
+				<if test="isqbsx != null  and isqbsx != '' " > ISQBSX , </if>
+				
+              </trim>
+    		)
+    		VALUES(
+    		<trim suffixOverrides=",">
+    		 <if test="id != null " > #{id} , </if>
+				<if test="productionno != null  and productionno != '' " > #{productionno} , </if>
+				<if test="onlineno != null  and onlineno != '' " > #{onlineno} , </if>
+				<if test="projectno != null  and projectno != '' " > #{projectno} , </if>
+				<if test="projectname != null  and projectname != '' " > #{projectname} , </if>
+				<if test="chgdate != null " > #{chgdate} , </if>
+				<if test="remark != null  and remark != '' " > #{remark} , </if>
+				<if test="reviewres != null  and reviewres != '' " > #{reviewres} , </if>
+				<if test="instanceid != null  and instanceid != '' " > #{instanceid} , </if>
+				<if test="flowid != null  and flowid != '' " > #{flowid} , </if>
+				<if test="isdel != null " > #{isdel} , </if>
+				<if test="createtime != null " > #{createtime} , </if>
+				<if test="creators != null  and creators != '' " > #{creators} , </if>
+				<if test="lastmodtime != null " > #{lastmodtime} , </if>
+				<if test="lastmoduser != null  and lastmoduser != '' " > #{lastmoduser} , </if>
+				<if test="xmpj != null  and xmpj != '' " > #{xmpj} , </if>
+				<if test="pjcont != null  and pjcont != '' " > #{pjcont} , </if>
+				<if test="gbfs != null  and gbfs != '' " > #{gbfs} , </if>
+				<if test="tsqksm != null  and tsqksm != '' " > #{tsqksm} , </if>
+				<if test="jlpjcont != null  and jlpjcont != '' " > #{jlpjcont} , </if>
+				<if test="xmjlpj != null  and xmjlpj != '' " > #{xmjlpj} , </if>
+				<if test="lastmoduserid != null  and lastmoduserid != '' " > #{lastmoduserid} , </if>
+				<if test="isyqyz != null  and isyqyz != '' " > #{isyqyz} , </if>
+				<if test="jhyzdate != null " > #{jhyzdate} , </if>
+				<if test="planonline != null  and planonline != '' " > #{planonline} , </if>
+				<if test="isqbsx != null  and isqbsx != '' " > #{isqbsx} , </if>
+				
+            </trim>
+    		)
+        </insert>
+
+        <!--通过id查询  k4038 2021-10-25 -->
+        <select id="queryDetail" parameterType="ppmProductionReview" resultMap="PPMPRODUCTIONREVIEW_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_PRODUCTION_REVIEW  WHERE ID=#{id}
+        </select>
+
+         <!--查询集合  k4038 2021-10-25 -->
+        <select id="getList" parameterType="ppmProductionReview" resultMap="PPMPRODUCTIONREVIEW_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_PRODUCTION_REVIEW
+        	<include refid="sql_select_condition" />
+        </select>
+        <!-- update sql -->
+        <sql id="update_pojo_sql">
+        	<trim prefix="SET" suffixOverrides=",">
+        		<if test="id != null " > ID=#{id} , </if>
+				<if test="productionno != null  and productionno != '' " > PRODUCTIONNO=#{productionno} , </if>
+				<if test="onlineno != null  and onlineno != '' " > ONLINENO=#{onlineno} , </if>
+				<if test="projectno != null  and projectno != '' " > PROJECTNO=#{projectno} , </if>
+				<if test="projectname != null  and projectname != '' " > PROJECTNAME=#{projectname} , </if>
+				<if test="chgdate != null " > CHGDATE=#{chgdate} , </if>
+				<if test="remark != null  and remark != '' " > REMARK=#{remark} , </if>
+				<if test="reviewres != null  and reviewres != '' " > REVIEWRES=#{reviewres} , </if>
+				<if test="instanceid != null  and instanceid != '' " > INSTANCEID=#{instanceid} , </if>
+				<if test="flowid != null  and flowid != '' " > FLOWID=#{flowid} , </if>
+				<if test="isdel != null " > ISDEL=#{isdel} , </if>
+				<if test="createtime != null " > CREATETIME=#{createtime} , </if>
+				<if test="creators != null  and creators != '' " > CREATORS=#{creators} , </if>
+				<if test="lastmodtime != null " > LASTMODTIME=#{lastmodtime} , </if>
+				<if test="lastmoduser != null  and lastmoduser != '' " > LASTMODUSER=#{lastmoduser} , </if>
+				<if test="xmpj != null  and xmpj != '' " > XMPJ=#{xmpj} , </if>
+				<if test="pjcont != null  and pjcont != '' " > PJCONT=#{pjcont} , </if>
+				<if test="gbfs != null  and gbfs != '' " > GBFS=#{gbfs} , </if>
+				<if test="tsqksm != null  and tsqksm != '' " > TSQKSM=#{tsqksm} , </if>
+				<if test="jlpjcont != null  and jlpjcont != '' " > JLPJCONT=#{jlpjcont} , </if>
+				<if test="xmjlpj != null  and xmjlpj != '' " > XMJLPJ=#{xmjlpj} , </if>
+				<if test="lastmoduserid != null  and lastmoduserid != '' " > LASTMODUSERID=#{lastmoduserid} , </if>
+				<if test="isyqyz != null  and isyqyz != '' " > ISYQYZ=#{isyqyz} , </if>
+				<if test="jhyzdate != null " > JHYZDATE=#{jhyzdate} , </if>
+				<if test="planonline != null  and planonline != '' " > PLANONLINE=#{planonline} , </if>
+				<if test="isqbsx != null  and isqbsx != '' " > ISQBSX=#{isqbsx} , </if>
+				
+            </trim>
+        </sql>
+
+        <!--通过id编辑 k4038 2021-10-25 -->
+    	<update id="updatePojo" parameterType="ppmProductionReview">
+        	UPDATE
+        	PPM_PRODUCTION_REVIEW
+        	<include refid="update_pojo_sql" />
+			<where>
+				<if test="id != null"> AND ID=#{id}  </if>
+				<if test="instanceid != null  and instanceid != '' " > AND INSTANCEID=#{instanceid}   </if>
+			</where>
+        </update>
+
+		<!--通过id查询  k4038 2021-10-25 -->
+		<select id="queryDetailByInstanceid" parameterType="ppmProductionReview" resultMap="PPMPRODUCTIONREVIEW_ALL">
+			SELECT
+			<include refid="sql_flied_all" />
+			FROM PPM_PRODUCTION_REVIEW  WHERE instanceid=#{instanceid}
+		</select>
+
+</mapper>

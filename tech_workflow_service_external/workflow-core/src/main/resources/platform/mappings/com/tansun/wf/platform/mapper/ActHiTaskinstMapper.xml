@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.tansun.wf.platform.mapper.ActHiTaskinstMapper">
+
+    <sql id="actHiProcinstTaskExpand">
+        RES.ID_ "taskId" ,
+        RES.START_TIME_ "startTime"
+        <if test="fieldMapping!=null and fieldMapping.size() > 0">
+            ,
+            <foreach collection="fieldMapping" item="field"  open="" separator="," close="">
+                ${field}
+            </foreach>
+        </if>
+    </sql>
+
+    <select id="selectHiProcinstWithTaskExpand" parameterType="com.tansun.workflow.model.ProcessInfo" resultType="hashMap">
+        select distinct
+        <include refid="actHiProcinstTaskExpand"/>
+        FROM ACT_HI_TASKINST RES
+        left join wf_task_expand_data W on W.task_id = RES.ID_
+        WHERE RES.PROC_INST_ID_ = #{processInfo.processInstanceId}
+        AND RES.END_TIME_ IS NULL
+        order by RES.START_TIME_ asc
+    </select>
+
+    <select id="selectHiProcinstWithHiTaskExpand" parameterType="com.tansun.workflow.model.ProcessInfo" resultType="hashMap">
+        select distinct
+        <include refid="actHiProcinstTaskExpand"/>
+        FROM ACT_HI_TASKINST RES
+        LEFT JOIN wf_hi_task_expand_data W on W.task_id = RES.ID_
+        WHERE RES.PROC_INST_ID_ = #{processInfo.processInstanceId}
+        AND RES.END_TIME_ IS NOT NULL
+        order by RES.START_TIME_ asc
+    </select>
+
+    <select id="selectPreHiTask" parameterType="java.util.HashMap" resultType="hashMap">
+        SELECT
+            ht.task_def_key_ "preActId",
+            ht.name_ "preAct",
+            ht.end_time_ "preEndDate",
+            ht.assignee_ "preUser"
+        FROM
+            act_hi_taskinst ht
+        WHERE
+            ht.DELETE_REASON_ != 'delete'
+            AND ht.DELETE_REASON_ != 'reback'
+            AND ht.DELETE_REASON_ != 'TansunBackDelete'
+            AND ht.proc_inst_id_ = #{processInstanceId}
+            AND ht.TASK_DEF_KEY_ != #{actId}
+            <if test="_databaseId == 'oracle'">
+                AND ht.end_time_ &lt;= to_timestamp(#{createTime},'YYYY-MM-DD HH24:MI:ss.ff3')
+            </if>
+            <if test="_databaseId !='oracle'">
+              AND ht.end_time_ &lt;= #{createTime}
+            </if>
+        ORDER BY ht.end_time_ desc
+    </select>
+
+    <update id="updateHiTaskAssignee"  parameterType="com.tansun.wf.activiti.model.HiTaskEntity" >
+        update ACT_HI_TASKINST RES
+        set  RES.ASSIGNEE_= #{assignee}
+        where RES.ID_= #{taskId}
+    </update>
+
+    <select id="querySliceValue" resultType="java.lang.String">
+        select ${sliceColumnName} from act_hi_taskinst where
+        <if test="taskId !='' and taskId !=null">
+            id_ = #{taskId}
+        </if>
+        <if test="processInstanceId !='' and processInstanceId !=null">
+            AND PROC_INST_ID_ = #{processInstanceId}
+        </if>
+        order by start_time_ desc
+        <if test="_databaseId =='oracle'">
+            and rownum = 1
+        </if>
+        <if test="_databaseId !='oracle'">
+            limit 1
+        </if>
+    </select>
+</mapper>

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k6991 2020-01-19 -->
+<mapper namespace="com.work.ppm.application.model.rdmanager.SyspicListDto">
+
+    <delete id="deleteSystemListDto" parameterType="com.work.ppm.application.model.rdmanager.SystemListDto">
+        DELETE FROM COMM_SYSTEM_LIST
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="id != null ">ID=#{id} AND</if>
+            <if test="systemNo != null and systemNo != ''">SYSTEM_NO=#{systemNo} AND</if>
+        </trim>
+    </delete>
+
+    <delete id="deleteSyspicListDto" parameterType="com.work.ppm.application.model.rdmanager.SyspicListDto">
+        DELETE FROM COMM_SYSPIC_LIST
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="id != null ">ID=#{id} AND</if>
+            <if test="systemNo != null and systemNo != ''">SYSTEM_NO=#{systemNo} AND</if>
+        </trim>
+    </delete>
+
+    <insert id="addSystemListDto" parameterType="list">
+        INSERT ALL
+        <foreach collection="list" item="item" index="index">
+            INTO COMM_SYSTEM_LIST (
+            <trim suffixOverrides=",">
+                <if test="item.id != null and item.id != ''">ID,</if>
+                <if test="item.systemName != null and item.systemName != ''">SYSTEM_NAME,</if>
+                <if test="item.systemNo != null and item.systemNo != ''">SYSTEM_NO,</if>
+            </trim>
+            )
+            VALUES(
+            <trim suffixOverrides=",">
+                <if test="item.id != null and item.id != ''">#{item.id},</if>
+                <if test="item.systemName != null and item.systemName != ''">#{item.systemName},</if>
+                <if test="item.systemNo != null and item.systemNo != ''">#{item.systemNo},</if>
+            </trim>
+            )
+        </foreach>
+        select 1 from dual
+    </insert>
+
+    <insert id="addSyspicListDto" parameterType="list">
+        INSERT ALL
+        <foreach collection="list" item="item" index="index">
+            INTO COMM_SYSPIC_LIST (
+            <trim suffixOverrides=",">
+                <if test="item.id != null and item.id != ''">ID,</if>
+                <if test="item.systemNo != null and item.systemNo != ''">SYSTEM_NO,</if>
+                <if test="item.nameResponsible != null and item.nameResponsible != ''">NAME_RESPONSIBLE,</if>
+                <if test="item.jobidResponsible != null and item.jobidResponsible != ''">JOBID_RESPONSIBLE,</if>
+            </trim>
+            )
+            VALUES(
+            <trim suffixOverrides=",">
+                <if test="item.id != null and item.id != ''">#{item.id},</if>
+                <if test="item.systemNo != null and item.systemNo != ''">#{item.systemNo},</if>
+                <if test="item.nameResponsible != null and item.nameResponsible != ''">#{item.nameResponsible},</if>
+                <if test="item.jobidResponsible != null and item.jobidResponsible != ''">#{item.jobidResponsible},</if>
+            </trim>
+            )
+        </foreach>
+        select 1 from dual
+    </insert>
+
+    <select id="selectCommSysPwDto" parameterType="map" resultType="com.work.ppm.application.model.rdmanager.CommSysPwDto">
+        SELECT
+        id,
+        psd ,
+        VALIDTIME,
+        PSD_KEY
+        FROM
+        (
+        SELECT
+        t.id, t.PSD, t.VALIDTIME, k.PSD_KEY, ROWNUM rn
+        FROM
+        COMM_SYS_PWD t
+        LEFT JOIN COMM_SYTPSD_KEY k ON
+        (t.id = k.id)
+        WHERE
+        ROWNUM &lt; = #{endRow}
+        ORDER BY
+        t.id )
+        WHERE
+        rn &gt; #{startRow}
+    </select>
+
+    <update id="commSysPwd" parameterType="com.work.ppm.application.model.rdmanager.CommSysPwDto">
+        UPDATE COMM_SYS_PWD SET PSD = #{psd}, VALIDTIME = #{validtime} WHERE id = #{id}
+    </update>
+
+    <update id="commSytpsdKey" parameterType="com.work.ppm.application.model.rdmanager.CommSysPwDto">
+        UPDATE COMM_SYTPSD_KEY SET PSD_KEY = #{psdKey} WHERE id = #{id}
+    </update>
+
+</mapper>

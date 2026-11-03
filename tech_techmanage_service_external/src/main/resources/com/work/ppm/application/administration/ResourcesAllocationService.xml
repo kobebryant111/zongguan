@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:ywwb2082 2024-12-24 -->
+<mapper namespace="com.work.ppm.application.model.integratedmanager.PpmKqRdCalendar">
+    <resultMap type="PpmKqRdCalendar" id="PPMKQRDCALENDAR_ALL">
+        <result property="attendanceOrno" column="ATTENDANCE_ORNO"/>
+        <result property="attendanceStatus" column="ATTENDANCE_STATUS"/>
+        <result property="attendanceTime" column="ATTENDANCE_TIME"/>
+        <result property="calendarDate" column="CALENDAR_DATE"/>
+        <result property="dayOfCalendar" column="DAY_OF_CALENDAR"/>
+        <result property="dayOfMonth" column="DAY_OF_MONTH"/>
+        <result property="dayOfWeek" column="DAY_OF_WEEK"/>
+        <result property="eidCode" column="EID_CODE"/>
+        <result property="isHoliday" column="IS_HOLIDAY"/>
+        <result property="monthOfYear" column="MONTH_OF_YEAR"/>
+        <result property="yearOfCalendar" column="YEAR_OF_CALENDAR"/>
+    </resultMap>
+    <update id="editAttenStatus" parameterType="map">
+        UPDATE RD_PROJECT_CONFIG
+        <trim prefix="SET" suffixOverrides=",">
+            ATTENDANCE_ORNO=#{attendanceOrno} ,
+            ATTENDANCE_TIME = 0,
+        </trim>
+        WHERE EID_CODE LIKE #{eidCode} || '%'
+        AND MONTH_OF_YEAR = #{monthOfYear}
+        AND YEAR_OF_CALENDAR = #{yearOfCalendar}
+        AND DAY_OF_MONTH = #{dayOfMonth}
+    </update>
+
+    <update id="editPojoAttenStatus" parameterType="map">
+        UPDATE RD_PROJECT_CONFIG
+        SET
+        <if test="arrivalTime != null ">
+            ATTENDANCE_ORNO = CASE
+            WHEN <![CDATA[CALENDAR_DATE < TO_DATE(#{arrivalTime},'yyyy-mm-dd')]]>  and IS_HOLIDAY = 'N' THEN '0'
+            WHEN <![CDATA[CALENDAR_DATE >= TO_DATE(#{arrivalTime},'yyyy-mm-dd')]]> and IS_HOLIDAY = 'N' THEN '1'
+            ELSE ATTENDANCE_ORNO
+            END,
+            ATTENDANCE_TIME = CASE
+            WHEN <![CDATA[CALENDAR_DATE < TO_DATE(#{arrivalTime},'yyyy-mm-dd')]]> and IS_HOLIDAY = 'N' THEN 0
+            ELSE ATTENDANCE_TIME
+            END
+        </if>
+        WHERE EID_CODE like #{eid} || '%'
+        AND (
+        to_char(CALENDAR_DATE, 'yyyy-MM') NOT IN (SELECT to_char(CALENDAR_DATE, 'yyyy-MM')
+        FROM PPM.COMM_RD_ATTENDANCE_AUDIT E
+        WHERE E.EID = #{eid} and ATTENDANCE_STATUS = '4'
+        )
+        )
+    </update>
+
+    <update id="editPojoLevetStatus" parameterType="map">
+        UPDATE RD_PROJECT_CONFIG
+        SET
+        <if test="arrivalTime != null and leaveTime != null">
+            ATTENDANCE_ORNO = CASE
+            WHEN <![CDATA[CALENDAR_DATE >= TO_DATE(#{arrivalTime},'yyyy-mm-dd')
+            AND CALENDAR_DATE < TO_DATE(#{leaveTime},'yyyy-mm-dd') ]]> and IS_HOLIDAY = 'N' THEN '1'
+            WHEN <![CDATA[CALENDAR_DATE < TO_DATE(#{arrivalTime},'yyyy-mm-dd')
+            OR CALENDAR_DATE >= TO_DATE(#{leaveTime},'yyyy-mm-dd') ]]> and IS_HOLIDAY = 'N' THEN '0'
+            ELSE ATTENDANCE_ORNO
+            END,
+            ATTENDANCE_TIME = CASE
+            WHEN <![CDATA[CALENDAR_DATE < TO_DATE(#{arrivalTime},'yyyy-mm-dd')
+            OR CALENDAR_DATE >= TO_DATE(#{leaveTime},'yyyy-mm-dd') ]]> and IS_HOLIDAY = 'N'  THEN 0
+            ELSE ATTENDANCE_TIME
+            END
+        </if>
+        WHERE EID_CODE like #{eid} || '%'
+        AND (
+        to_char(CALENDAR_DATE, 'yyyy-MM') NOT IN (SELECT to_char(CALENDAR_DATE, 'yyyy-MM')
+        FROM PPM.COMM_RD_ATTENDANCE_AUDIT E
+        WHERE E.EID = #{eid} and ATTENDANCE_STATUS = '4'
+        )
+        )
+    </update>
+</mapper>

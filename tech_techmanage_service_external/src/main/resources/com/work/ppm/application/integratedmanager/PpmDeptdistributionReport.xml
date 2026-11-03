@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k6991 2021-05-07 -->
+<mapper namespace="com.work.ppm.application.model.integratedmanager.PpmDeptdistributionReport">
+	 <resultMap type="ppmDeptdistributionReport" id="PPMDEPTDISTRIBUTIONREPORT_ALL">
+        <result property="id" column="ID" />
+		<result property="depId" column="DEP_ID" />
+		<result property="depNum" column="DEP_NUM" />
+		<result property="researchNum" column="RESEARCH_NUM" />
+		<result property="productNum" column="PRODUCT_NUM" />
+		<result property="appSuportNum" column="APP_SUPORT_NUM" />
+		<result property="systemNum" column="SYSTEM_NUM" />
+		<result property="testNum" column="TEST_NUM" />
+		<result property="functionsifNum" column="FUNCTIONSIF_NUM" />
+		<result property="batch" column="BATCH" />
+		
+     </resultMap>
+
+     <!-- 所有字段名称 -->
+        <sql id="sql_flied_all">
+        	ID,
+			DEP_ID,
+			DEP_NUM,
+			RESEARCH_NUM,
+			PRODUCT_NUM,
+			APP_SUPORT_NUM,
+			SYSTEM_NUM,
+			TEST_NUM,
+			FUNCTIONSIF_NUM,
+			BATCH
+        </sql>
+        <sql id="sql_select_condition">
+            <trim prefix="WHERE" suffixOverrides="AND">
+                <if test="id != null " > ID = #{id} AND </if>
+				<if test="depId != null  and depId != '' " > DEP_ID = #{depId} AND </if>
+				<if test="depNum != null " > DEP_NUM = #{depNum} AND </if>
+				<if test="researchNum != null " > RESEARCH_NUM = #{researchNum} AND </if>
+				<if test="productNum != null " > PRODUCT_NUM = #{productNum} AND </if>
+				<if test="appSuportNum != null " > APP_SUPORT_NUM = #{appSuportNum} AND </if>
+				<if test="systemNum != null " > SYSTEM_NUM = #{systemNum} AND </if>
+				<if test="testNum != null " > TEST_NUM = #{testNum} AND </if>
+				<if test="functionsifNum != null " > FUNCTIONSIF_NUM = #{functionsifNum} AND </if>
+				<if test="batch != null  and batch != '' " > TO_CHAR(TO_DATE(BATCH, 'YYYY-MM'),'YYYY') = #{batch} AND </if>
+            </trim>
+        </sql>
+    	<!-- 查询分页  2021-05-07 k6991  -->
+        <select id="queryPagerList" parameterType="map" resultMap="PPMDEPTDISTRIBUTIONREPORT_ALL">
+        	SELECT
+            <include refid="sql_flied_all" />
+            FROM PPM_DEPTDISTRIBUTION_REPORT
+            <include refid="sql_select_condition" />
+        </select>
+
+        <!-- 新增  2021-05-07 k6991  -->
+        <insert id="batchAdd" parameterType="list">
+            INSERT ALL
+            <foreach collection="list" item="item" index="index">
+            INTO PPM_DEPTDISTRIBUTION_REPORT (
+    		<trim suffixOverrides=",">
+    		 <if test="item.id != null " > ID , </if>
+				<if test="item.depId != null  and item.depId != '' " > DEP_ID , </if>
+				<if test="item.depNum != null " > DEP_NUM , </if>
+				<if test="item.researchNum != null " > RESEARCH_NUM , </if>
+				<if test="item.productNum != null " > PRODUCT_NUM , </if>
+				<if test="item.appSuportNum != null " > APP_SUPORT_NUM , </if>
+				<if test="item.systemNum != null " > SYSTEM_NUM , </if>
+				<if test="item.testNum != null " > TEST_NUM , </if>
+				<if test="item.functionsifNum != null " > FUNCTIONSIF_NUM , </if>
+				<if test="item.batch != null  and item.batch != '' " > BATCH , </if>
+              </trim>
+    		)
+    		VALUES(
+    		<trim suffixOverrides=",">
+    		 <if test="item.id != null " > #{item.id} , </if>
+				<if test="item.depId != null  and item.depId != '' " > #{item.depId} , </if>
+				<if test="item.depNum != null " > #{item.depNum} , </if>
+				<if test="item.researchNum != null " > #{item.researchNum} , </if>
+				<if test="item.productNum != null " > #{item.productNum} , </if>
+				<if test="item.appSuportNum != null " > #{item.appSuportNum} , </if>
+				<if test="item.systemNum != null " > #{item.systemNum} , </if>
+				<if test="item.testNum != null " > #{item.testNum} , </if>
+				<if test="item.functionsifNum != null " > #{item.functionsifNum} , </if>
+				<if test="item.batch != null  and item.batch != '' " > #{item.batch} , </if>
+            </trim>
+    		)
+            </foreach>
+            select 1 from dual
+        </insert>
+
+        <!--通过id查询  k6991 2021-05-07 -->
+        <select id="queryDetail" parameterType="ppmDeptdistributionReport" resultMap="PPMDEPTDISTRIBUTIONREPORT_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_DEPTDISTRIBUTION_REPORT  WHERE ID=#{id}
+        </select>
+
+         <!--查询集合  k6991 2021-05-07 -->
+        <select id="getList" parameterType="ppmDeptdistributionReport" resultMap="PPMDEPTDISTRIBUTIONREPORT_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_DEPTDISTRIBUTION_REPORT
+        	<include refid="sql_select_condition" />
+        </select>
+        <!-- update sql -->
+        <sql id="update_pojo_sql">
+        	<trim prefix="SET" suffixOverrides=",">
+        		<if test="id != null " > ID=#{id} , </if>
+				<if test="depId != null  and depId != '' " > DEP_ID=#{depId} , </if>
+				<if test="depNum != null " > DEP_NUM=#{depNum} , </if>
+				<if test="researchNum != null " > RESEARCH_NUM=#{researchNum} , </if>
+				<if test="productNum != null " > PRODUCT_NUM=#{productNum} , </if>
+				<if test="appSuportNum != null " > APP_SUPORT_NUM=#{appSuportNum} , </if>
+				<if test="systemNum != null " > SYSTEM_NUM=#{systemNum} , </if>
+				<if test="testNum != null " > TEST_NUM=#{testNum} , </if>
+				<if test="functionsifNum != null " > FUNCTIONSIF_NUM=#{functionsifNum} , </if>
+				<if test="batch != null  and batch != '' " > BATCH=#{batch} , </if>
+				
+            </trim>
+        </sql>
+
+        <!--通过id编辑 k6991 2021-05-07 -->
+    	<update id="updatePojo" parameterType="ppmDeptdistributionReport">
+        	UPDATE
+        	PPM_DEPTDISTRIBUTION_REPORT
+        	<include refid="update_pojo_sql" />
+        	WHERE ID=#{id}
+        </update>
+
+        <!--通过id批量删除  k6991 2021-05-07 -->
+        <delete id="deleteById" parameterType="ppmDeptdistributionReport">
+        	DELETE
+        	FROM
+        	PPM_DEPTDISTRIBUTION_REPORT
+        	WHERE ID = #{id}
+        </delete>
+
+</mapper>

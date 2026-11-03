@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.work.ppm.application.model.vendormanager.AttatchManagement">
+
+    <resultMap type="attatchManagement" id="ATTATCHMANAGEMENT_ALL">
+      <result property="id" column="ID"/>
+      <result property="fileNo" column="FILE_NO"/>
+      <result property="fileName" column="ATTACH_NAME"/>
+      <result property="fileType" column="FILE_TYPE"/>
+      <result property="contractInfo" column="contract_info"/>
+      <result property="startDate" column="START_DATE"/>
+      <result property="endDate" column="END_DATE"/>
+      <result property="status" column="STATUS"/>
+      <result property="doc" column="DOC"/>
+      <result property="isDel" column="IS_DEL"/>
+       <result property="isAssociated" column="IS_ASSOCIATED"/>
+      <result property="totals" column="TOTALS"/>
+      <result property="availableCount" column="AVAILABLE_COUNT"/>
+      <result property="numberUsed" column="NUMBER_USED"/>
+      <result property="createDate" column="CREATE_DATE"/>
+      <result property="createUser" column="CREATE_USER"/>
+      <result property="updateDate" column="UPDATE_DATE"/>
+      <result property="updateUser" column="UPDATE_USER"/>
+    </resultMap>
+
+    <!-- 所有字段 -->
+    <sql id="sql_flied_all">
+        ID
+        ,FILE_NO
+        ,ATTACH_NAME
+        ,FILE_TYPE
+        ,contract_info
+        ,START_DATE
+        ,END_DATE
+        ,CASE
+         when  sysdate &lt; to_date(start_date,'yyyy-MM-dd') then '未生效'
+         when  sysdate &gt; to_date(end_date,'yyyy-MM-dd') then '已失效'
+         else '生效中'  end  as STATUS
+        ,DOC
+        ,IS_DEL
+        ,IS_ASSOCIATED
+        ,TOTALS
+        ,AVAILABLE_COUNT
+        ,NUMBER_USED
+    </sql>
+
+    <sql id="sql_flied_basic">
+        ID
+        ,FILE_NO
+        ,ATTACH_NAME
+        ,FILE_TYPE
+        ,contract_info
+        ,START_DATE
+        ,END_DATE
+        ,CASE
+         when  sysdate &lt; to_date(start_date,'yyyy-MM-dd') then '未生效'
+         when  sysdate &gt; to_date(end_date,'yyyy-MM-dd') then '已失效'
+         else '生效中'  end  as STATUS
+        ,DOC
+        ,IS_DEL
+        ,IS_ASSOCIATED
+        ,TOTALS
+        ,AVAILABLE_COUNT
+        ,NUMBER_USED
+
+    </sql>
+
+    <sql id="sql_flied_small">
+          ID
+          ,FILE_NO
+          ,ATTACH_NAME
+          ,FILE_TYPE
+          ,CASE
+           when  sysdate &lt; to_date(start_date,'yyyy-MM-dd') then '未生效'
+           when  sysdate &gt; to_date(end_date,'yyyy-MM-dd') then '已失效'
+           else '生效中'  end  as STATUS
+    </sql>
+
+    <!--  查询条件  -->
+    <sql id="sql_select_condition">
+       <trim prefix="WHERE" suffixOverrides="AND">
+           <if test="id != null and id != '' "> ID = #{id} AND </if>
+           <if test="fileNo != null and fileNo != '' "> FILE_NO = #{fileNo} AND </if>
+           <if test="fileName != null and fileName != '' "> ATTACH_NAME LIKE  '%'||#{fileName}||'%' AND </if>
+           <if test="fileType != null and fileType != '' "> FILE_TYPE = #{fileType} AND </if>
+           <if test="contractInfo != null and contractInfo != '' "> contract_info = #{contractInfo} AND </if>
+           <if test="startDate != null and startDate != '' "> START_DATE &gt;= #{startDate} AND </if>
+           <if test="startDateE != null and startDateE != '' "> START_DATE &lt;= #{startDateE} AND </if>
+           <if test="endDate != null and endDate != '' "> END_DATE &gt;= #{endDate} AND </if>
+           <if test="endDateE != null and endDateE != '' "> END_DATE &lt;= #{endDateE} AND </if>
+           <if test="status != null and status != '' "> STATUS = #{status} AND </if>
+           <if test="doc != null and doc != '' "> DOC = #{doc} AND </if>
+           <if test="isDel != null and isDel != '' "> IS_DEL = #{isDel} AND </if>
+           <if test="isAssociated != null and isAssociated != '' "> IS_ASSOCIATED = #{isAssociated} AND </if>
+           <if test="totals != null "> TOTALS = #{totals} AND </if>
+           <if test="availableCount != null "> AVAILABLE_COUNT = #{availableCount} AND </if>
+           <if test="numberUsed != null "> NUMBER_USED = #{numberUsed} AND </if>
+           <if test="createUser != null and createUser != '' "> CREATE_USER = #{createUser} AND </if>
+           <if test="updateUser != null and updateUser != '' "> UPDATE_USER = #{updateUser} AND </if>
+       </trim>
+    </sql>
+
+    <!-- 查询条件 自定义 -->
+    <sql id="sql_select_condition_cus">
+       <trim prefix="WHERE" suffixOverrides="AND">
+           <if test="id != null and id != '' "> ID = #{id} AND </if>
+           <if test="fileNo != null and fileNo != '' "> FILE_NO = #{fileNo} AND </if>
+           <if test="fileName != null and fileName != '' "> ATTACH_NAME = #{fileName} AND </if>
+           <if test="fileType != null and fileType != '' "> FILE_TYPE = #{fileType} AND </if>
+           <if test="contractInfo != null and contractInfo != '' "> contract_info = #{contractInfo} AND </if>
+           <if test="startDate != null and startDate != '' "> START_DATE &gt;= #{startDate} AND </if>
+           <if test="startDateE != null and startDateE != '' "> START_DATE &lt;= #{startDateE} AND </if>
+           <if test="endDate != null and endDate != '' "> END_DATE &gt;= #{endDate} AND </if>
+           <if test="endDateE != null and endDateE != '' "> END_DATE &lt;= #{endDateE} AND </if>
+           <if test="status != null and status != '' "> STATUS = #{status} AND </if>
+           <if test="doc != null and doc != '' "> DOC = #{doc} AND </if>
+           <if test="isDel != null and isDel != '' "> IS_DEL = #{isDel} AND </if>
+           <if test="isAssociated != null and isAssociated != '' "> IS_ASSOCIATED = #{isAssociated} AND </if>
+           <if test="totals != null "> TOTALS = #{totals} AND </if>
+           <if test="availableCount != null "> AVAILABLE_COUNT = #{availableCount} AND </if>
+           <if test="numberUsed != null "> NUMBER_USED = #{numberUsed} AND </if>
+           <if test="createUser != null and createUser != '' "> CREATE_USER = #{createUser} AND </if>
+           <if test="updateUser != null and updateUser != '' "> UPDATE_USER = #{updateUser} AND </if>
+       </trim>
+    </sql>
+
+    <!-- 更新字段 -->
+    <sql id="update_pojo_sql">
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="fileNo != null and fileNo != '' " > FILE_NO = #{fileNo},</if>
+            <if test="fileName != null and fileName != '' " > ATTACH_NAME = #{fileName},</if>
+            <if test="fileType != null and fileType != '' " > FILE_TYPE = #{fileType},</if>
+            <if test="contractInfo != null and contractInfo != '' "> contract_info = #{contractInfo},</if>
+            <if test="startDate != null and startDate != '' " > START_DATE = #{startDate},</if>
+            <if test="endDate != null and endDate != '' " > END_DATE = #{endDate},</if>
+            <if test="status != null and status != '' " > STATUS = #{status},</if>
+            <if test="doc != null and doc != '' " > DOC = #{doc},</if>
+            <if test="isDel != null and isDel != '' " > IS_DEL = #{isDel},</if>
+            <if test="isAssociated != null and isAssociated != '' " > IS_ASSOCIATED = #{isAssociated},</if>
+            <if test="totals != null" > TOTALS = #{totals},</if>
+            <if test="availableCount != null" > AVAILABLE_COUNT = #{availableCount},</if>
+            <if test="numberUsed != null" > NUMBER_USED = #{numberUsed},</if>
+            <if test="createUser != null and createUser != '' " > CREATE_USER = #{createUser},</if>
+            <if test="updateUser != null and updateUser != '' " > UPDATE_USER = #{updateUser},</if>
+        </trim>
+    </sql>
+
+    <!--  查询  -->
+    <!-- pager query 2022-10-26 ywwb903  -->
+    <select id="queryPagerList" parameterType="map" resultMap="ATTATCHMANAGEMENT_ALL">
+        SELECT
+            <include refid="sql_flied_basic"/>
+            FROM PPM_ATTATCH_MANAGEMENT
+            <include refid="sql_select_condition"/>
+            ORDER BY ID DESC
+    </select>
+
+    <select id="queryPagerFuzzy" parameterType="map" resultMap="ATTATCHMANAGEMENT_ALL">
+        SELECT * FROM PPM_ATTATCH_MANAGEMENT
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="fileName != null and fileName != '' "> ATTACH_NAME LIKE  '%'||#{fileName}||'%' AND </if>
+            <if test="startDate != null and startDate != '' "> START_DATE &gt;= #{startDate} AND </if>
+            <if test="endDate != null and endDate != '' "> END_DATE &lt;= #{endDate} AND </if>
+        </trim>
+        ORDER BY ID DESC
+    </select>
+    <!-- list query 2022-10-26 ywwb903  -->
+    <select id="getList" parameterType="attatchManagement" resultMap="ATTATCHMANAGEMENT_ALL">
+        SELECT
+        <include refid="sql_flied_basic"/>
+        FROM PPM_ATTATCH_MANAGEMENT
+        <include refid="sql_select_condition"/>
+    </select>
+
+    <!-- query details by id 2022-10-26 ywwb903  -->
+    <select id="queryDetailsById" parameterType="map" resultMap="ATTATCHMANAGEMENT_ALL">
+        SELECT
+        <include refid="sql_flied_all" />
+        FROM PPM_ATTATCH_MANAGEMENT WHERE ID=#{id}
+    </select>
+
+    <select id="selectOneDesc" resultMap="ATTATCHMANAGEMENT_ALL">
+        SELECT * FROM (SELECT * FROM PPM_ATTATCH_MANAGEMENT ORDER BY ID DESC) WHERE ROWNUM =1
+    </select>
+
+   <!-- select by map  2022-10-26 ywwb903  -->
+    <select id="selectByMapBasic" parameterType="map" resultMap="ATTATCHMANAGEMENT_ALL">
+        SELECT
+        <include refid="sql_flied_basic" />
+        FROM PPM_ATTATCH_MANAGEMENT
+        <include refid="sql_select_condition_cus"/>
+    </select>
+
+    <select id="selectByMapSmall" parameterType="map" resultMap="ATTATCHMANAGEMENT_ALL">
+        SELECT
+        <include refid="sql_flied_small" />
+        FROM PPM_ATTATCH_MANAGEMENT
+        <include refid="sql_select_condition_cus"/>
+    </select>
+
+   <!-- selectCount  2022-10-26 ywwb903  -->
+    <select id="selectCount" parameterType="map" resultType="Long">
+        SELECT COUNT(1)
+        FROM PPM_ATTATCH_MANAGEMENT
+        <include refid="sql_select_condition_cus"/>
+    </select>
+
+    <!-- selectCountJoinHMC 关联花名册  2022-11-03 ywwb903  -->
+    <select id="selectCountJoinHMC" parameterType="map" resultType="Long">
+        SELECT COUNT(1) count
+        FROM PPM_ATTATCH_MANAGEMENT a
+        INNER JOIN (SELECT AAA AS file_id FROM PPM_OUTSOURCING_BASIC) b
+        ON a.id = b.file_id
+        WHERE a.id = #{id}
+    </select>
+
+    <!-- 二级部门经理及以上  2022-11-03 ywwb903  -->
+    <select id="level2ManagerAbove" parameterType="map" resultType="String">
+        SELECT director from comm_department where location like '%'||#{name}||'%'
+    </select>
+
+    <!-- query details 2022-10-26 ywwb903  -->
+    <select id="queryDetails" parameterType="attatchManagement" resultMap="ATTATCHMANAGEMENT_ALL">
+        SELECT
+        <include refid="sql_flied_all" />
+        FROM PPM_ATTATCH_MANAGEMENT WHERE ID=#{id}
+    </select>
+
+    <!-- selectListByIds 2022-10-26 ywwb903  -->
+    <select id="selectListByIds" resultMap="ATTATCHMANAGEMENT_ALL">
+        SELECT
+        <include refid="sql_flied_all" />
+        FROM PPM_ATTATCH_MANAGEMENT WHERE id in
+        <foreach collection="array" item="ids" open="(" separator=", " close=")" >
+            #{ids}
+        </foreach>
+    </select>
+
+    <!--  新增  -->
+    <!-- insert 2022-10-26 ywwb903  -->
+    <insert id="addPojo" parameterType="attatchManagement">
+    	INSERT INTO PPM_ATTATCH_MANAGEMENT (
+    	<trim suffixOverrides=",">
+    	    <if test="id != null and id != '' ">  ID ,</if>
+    	    <if test="fileNo != null and fileNo != '' ">  FILE_NO ,</if>
+    	    <if test="fileName != null and fileName != '' ">  ATTACH_NAME ,</if>
+    	    <if test="fileType != null and fileType != '' ">  FILE_TYPE ,</if>
+            <if test="contractInfo != null and contractInfo != '' "> contract_info ,</if>
+    	    <if test="startDate != null and startDate != '' ">  START_DATE ,</if>
+    	    <if test="endDate != null and endDate != '' ">  END_DATE ,</if>
+    	    <if test="status != null and status != '' ">  STATUS ,</if>
+    	    <if test="doc != null and doc != '' ">  DOC ,</if>
+    	    <if test="isDel != null and isDel != '' ">  IS_DEL ,</if>
+            <if test="isAssociated != null and isAssociated != '' ">  IS_ASSOCIATED ,</if>
+    	    <if test="totals != null">  TOTALS ,</if>
+    	    <if test="availableCount != null ">  AVAILABLE_COUNT ,</if>
+    	    <if test="numberUsed != null">  NUMBER_USED ,</if>
+    	    <if test="createUser != null and createUser != '' ">  CREATE_USER ,</if>
+    	    <if test="updateUser != null and updateUser != '' ">  UPDATE_USER ,</if>
+    	</trim>
+    	)
+    	VALUES(
+    	<trim suffixOverrides=",">
+            <if test="id != null and id != '' "> #{id} ,</if>
+            <if test="fileNo != null and fileNo != '' "> #{fileNo} ,</if>
+            <if test="fileName != null and fileName != '' "> #{fileName} ,</if>
+            <if test="fileType != null and fileType != '' "> #{fileType} ,</if>
+            <if test="contractInfo != null and contractInfo != '' "> #{contractInfo} ,</if>
+            <if test="startDate != null and startDate != '' "> #{startDate} ,</if>
+            <if test="endDate != null and endDate != '' "> #{endDate} ,</if>
+            <if test="status != null and status != '' "> #{status} ,</if>
+            <if test="doc != null and doc != '' "> #{doc} ,</if>
+            <if test="isDel != null and isDel != '' "> #{isDel} ,</if>
+            <if test="isAssociated != null and isAssociated != '' "> #{isAssociated} ,</if>
+            <if test="totals != null "> #{totals} ,</if>
+            <if test="availableCount != null "> #{availableCount} ,</if>
+            <if test="numberUsed != null "> #{numberUsed} ,</if>
+            <if test="createUser != null and createUser != '' "> #{createUser} ,</if>
+            <if test="updateUser != null and updateUser != '' "> #{updateUser} ,</if>
+    	</trim>
+    	)
+    </insert>
+
+    <!-- batch insert 2022-10-26 ywwb903  -->
+    <insert id="batchAdd" parameterType="list">
+        INSERT ALL
+        <foreach collection="list" item="item" index="index">
+            INTO PPM_ATTATCH_MANAGEMENT (
+            <trim suffixOverrides=",">
+                <if test="item.id != null" > ID ,</if>
+                <if test="item.fileNo != null and item.fileNo != '' ">  FILE_NO ,</if>
+                <if test="item.fileName != null and item.fileName != '' ">  ATTACH_NAME ,</if>
+                <if test="item.fileType != null and item.fileType != '' ">  FILE_TYPE ,</if>
+                <if test="item.contractInfo != null and item.contractInfo != '' "> contract_info ,</if>
+                <if test="item.startDate != null and item.startDate != '' ">  START_DATE ,</if>
+                <if test="item.endDate != null and item.endDate != '' ">  END_DATE ,</if>
+                <if test="item.status != null and item.status != '' ">  STATUS ,</if>
+                <if test="item.doc != null and item.doc != '' ">  DOC ,</if>
+                <if test="item.isDel != null and item.isDel != '' ">  IS_DEL ,</if>
+                <if test="item.totals != null and item.totals != '' ">  TOTALS ,</if>
+                <if test="item.availableCount != null and item.availableCount != '' ">  AVAILABLE_COUNT ,</if>
+                <if test="item.numberUsed != null and item.numberUsed != '' ">  NUMBER_USED ,</if>
+                <if test="item.createUser != null and item.createUser != '' ">  CREATE_USER ,</if>
+                <if test="item.updateUser != null and item.updateUser != '' ">  UPDATE_USER ,</if>
+            </trim>
+            )
+            VALUES(
+            <trim suffixOverrides=",">
+                <if test="item.id != null" > #{item.id} ,</if>
+                <if test="item.fileNo != null and item.fileNo != '' " > #{item.fileNo} ,</if>
+                <if test="item.fileName != null and item.fileName != '' " > #{item.fileName} ,</if>
+                <if test="item.fileType != null and item.fileType != '' " > #{item.fileType} ,</if>
+                <if test="item.contractInfo != null and item.contractInfo != '' ">  #{item.contractInfo},</if>
+                <if test="item.startDate != null and item.startDate != '' " > #{item.startDate} ,</if>
+                <if test="item.endDate != null and item.endDate != '' " > #{item.endDate} ,</if>
+                <if test="item.status != null and item.status != '' " > #{item.status} ,</if>
+                <if test="item.doc != null and item.doc != '' " > #{item.doc} ,</if>
+                <if test="item.isDel != null and item.isDel != '' " > #{item.isDel} ,</if>
+                <if test="item.totals != null and item.totals != '' " > #{item.totals} ,</if>
+                <if test="item.availableCount != null and item.availableCount != '' " > #{item.availableCount} ,</if>
+                <if test="item.numberUsed != null and item.numberUsed != '' " > #{item.numberUsed} ,</if>
+                <if test="item.createUser != null and item.createUser != '' " > #{item.createUser} ,</if>
+                <if test="item.updateUser != null and item.updateUser != '' " > #{item.updateUser} ,</if>
+            </trim>
+            )
+        </foreach>
+        select 1 from dual
+    </insert>
+
+    <!--  更新  -->
+	<!-- update by id 2022-10-26 ywwb903  -->
+	<update id="updatePojo" parameterType="attatchManagement">
+		UPDATE
+		PPM_ATTATCH_MANAGEMENT
+		<include refid="update_pojo_sql" />
+		WHERE ID = #{id}
+	</update>
+
+	<!--  删除  -->
+	<!-- delete by pojo 2022-10-26 ywwb903  -->
+    <delete id="deletePojo" parameterType="attatchManagement">
+        DELETE FROM PPM_ATTATCH_MANAGEMENT WHERE ID = #{id}
+    </delete>
+
+
+</mapper>

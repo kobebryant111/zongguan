@@ -1,0 +1,464 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k6991 2020-06-30 -->
+<mapper namespace="com.work.ppm.application.model.testmanager.PersonnerPortait">
+    <resultMap type="PersonnerPortait" id="PERSONNERPORTAIT_ALL">
+        <result property="pkId" column="PK_ID"/>
+        <result property="badge" column="BADGE"/>
+        <result property="username" column="USERNAME"/>
+        <result property="textTeam" column="TEXT_TEAM"/>
+        <result property="textGroup" column="TEXT_GROUP"/>
+        <result property="presenceState" column="PRESENCE_STATE"/>
+        <result property="outsourcname" column="OUTSOURCNAME"/>
+        <result property="caseWritTime" column="CASE_WRIT_TIME"/>
+        <result property="caseNumAll" column="CASE_NUM_ALL"/>
+        <result property="smokeCaseNum" column="SMOKE_CASE_NUM"/>
+        <result property="SITcaseNum" column="SIT_CASE_NUM"/>
+        <result property="UATcaseNum" column="UAT_CASE_NUM"/>
+        <result property="notVetoedFlawNum" column="NOT_VETOED_FLAW_NUM"/>
+        <result property="validFlawNum" column="VALID_FLAW_NUM"/>
+        <result property="advancedFlawNum" column="ADVANCED_FLAW_NUM"/>
+        <result property="middlleFlawNum" column="MIDDLLE_FLAW_NUM"/>
+        <result property="lowFlawNum" column="LOW_FLAW_NUM"/>
+        <result property="optimizeFlawNum" column="OPTIMIZE_FLAW_NUM"/>
+        <result property="smokeFlawRatio" column="SMOKE_FLAW_RATIO"/>
+        <result property="SITFlawRatio" column="SIT_FLAW_RATIO"/>
+        <result property="UATFlawRatio" column="UAT_Flaw_Ratio"/>
+        <result property="overtimeHours" column="OVERTIME_HOURS"/>
+        <result property="requiredAttendanceDays" column="REQUIRED_ATTENDANCE_DAYS"/>
+        <result property="reportLongHours" column="REPORT_LONGHOURS"/>
+    </resultMap>
+    <select id="queryPagerList" parameterType="map" resultMap="PERSONNERPORTAIT_ALL">
+        SELECT
+        PK_ID,
+        BADGE,
+        USERNAME,
+        TEXT_TEAM,
+        TEXT_GROUP,
+        PRESENCE_STATE,
+        OUTSOURCNAME,
+        CASE_WRIT_TIME,
+        CASE_NUM_ALL,
+        SMOKE_CASE_NUM,
+        SIT_CASE_NUM,
+        UAT_CASE_NUM,
+        NOT_VETOED_FLAW_NUM,
+        VALID_FLAW_NUM,
+        ADVANCED_FLAW_NUM,
+        MIDDLLE_FLAW_NUM,
+        LOW_FLAW_NUM,
+        OPTIMIZE_FLAW_NUM,
+        SMOKE_FLAW_RATIO,
+        SIT_FLAW_RATIO,
+        UAT_Flaw_Ratio,
+        OVERTIME_HOURS,
+        REQUIRED_ATTENDANCE_DAYS,
+        REPORT_LONGHOURS
+        FROM PPM.COMM_PERSONNER_PORTAIT
+    </select>
+
+    <select id="selectTeamMansgerList" parameterType="map" resultType="CommEmployeeInfo">
+        SELECT
+        E.GENDER,
+        E.UPDATEFLG,
+        E.LASTUPDATEDATE,
+        E.REPORTTO,
+        E.ISDISABLED,
+        E.SHORTPHONE,
+        E.EMPNAME,
+        E.EMPAUTH,
+        E.BIRTHDAY,
+        E.CERTIFICATE_TYPE,
+        E.CERTIFICATE_NUMBER,
+        E.AUTHPROPERTY,
+        E.REMARK,
+        E.FULLNAME,
+        E.JOBID,
+        E.EID,
+        E.BADGE,
+        E.COMPID,
+        E.OFFICEPHONE,
+        E.EIDHR,
+        E.BOARDLINE,
+        E.SPELLNAME,
+        E.DEPID,
+        E.HEADSHIP,
+        E.MOBILETELPHONE,
+        E.REPORTTO
+        FROM COMM_EMPLOYEE E
+        WHERE
+        E.DEPID IN (
+        '10684',
+        '10905',
+        '10843',
+        '10818',
+        '10844',
+        '10841'
+        )
+    </select>
+
+    <select id="selectTeamMemberList" parameterType="map" resultType="testEmployeePool">
+        SELECT
+        ID,
+        TEST_EMP_NAME,
+        TEST_EMP_BADGE,
+        AFFIL_COMPANY,
+        EMPLOYEE_STATUS,
+        HEAD_OF_COMPANY,
+        OWNED_TEST_TEAM,
+        OWNED_TEST_GROUP,
+        EMP_ATTRIBUTE,
+        CREATE_USER,
+        CREATE_TIME,
+        UPDATE_USER,
+        UPDATE_TIME,
+        DEPT_ID,
+        CERTIFICATE_NUMBER,
+        TEST_GROUP_LEADER,
+        GROUP_MEMBER
+        FROM TEST_EMPLOYEE_POOL
+        WHERE EMPLOYEE_STATUS = '0'
+        AND OWNED_TEST_TEAM IS NULL
+    </select>
+
+    <insert id="creatOfTeam" parameterType="map">
+        INSERT INTO PPM.COMM_TEST_TEAM (
+        <trim suffixOverrides=",">
+            <if test="teamId != null  and teamId != '' ">TEAM_ID ,</if>
+            <if test="teamName != null  and teamName != '' ">TEAM_NAME ,</if>
+            <if test="teamMansger != null  and teamMansger != '' ">TEAM_MANSGER ,</if>
+            <if test="teamCreateUser != null  and teamCreateUser != '' ">TEAM_CREATE_USER ,</if>
+            <if test="createTime != null  and createTime != '' ">CREATE_TIME ,</if>
+        </trim>
+        )
+        VALUES(
+        <trim suffixOverrides=",">
+            <if test="teamId != null  and teamId != '' ">#{teamId} ,</if>
+            <if test="teamName != null  and teamName != '' ">#{teamName} ,</if>
+            <if test="teamMansger != null  and teamMansger != '' ">#{teamMansger} ,</if>
+            <if test="teamCreateUser != null  and teamCreateUser != '' ">#{teamCreateUser} ,</if>
+            <if test="createTime != null  and createTime != '' ">#{createTime} ,</if>
+        </trim>
+        )
+    </insert>
+
+    <update id="updateTestEmployeePool" parameterType="map">
+        UPDATE TEST_EMPLOYEE_POOL
+        <trim prefix="set" suffixOverrides=",">
+            <if test="teamId != null and teamId != ''">OWNED_TEST_TEAM = #{teamId} ,</if>
+        </trim>
+        WHERE OWNED_TEST_TEAM IS NULL AND TEST_EMP_BADGE IN
+        <foreach collection="teamMember" index="index" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </update>
+
+    <select id="empnamesInfo" parameterType="map" resultType="String">
+        SELECT LISTAGG(EMPNAME, ',') WITHIN GROUP(ORDER BY EID)
+        FROM PPM.COMM_EMPLOYEE
+        WHERE BADGE IN
+        <foreach collection="teamMansger" item="depid" open="(" separator="," close=")">
+            #{depid}
+        </foreach>
+    </select>
+
+    <update id="delTeEmpPool" parameterType="map">
+        UPDATE PPM.TEST_EMPLOYEE_POOL
+        SET OWNED_TEST_TEAM = NULL,
+        OWNED_TEST_GROUP = NULL,
+        EMP_ATTRIBUTE = NULL
+        WHERE TEST_EMP_BADGE IN
+        <foreach collection="teamMember" index="index" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </update>
+
+    <update id="editTestTeam" parameterType="map">
+        UPDATE PPM.COMM_TEST_TEAM
+        <trim prefix="set" suffixOverrides=",">
+            <if test="teamId != null and teamId != ''">TEAM_ID = #{teamId} ,</if>
+            <if test="teamName != null and teamName != ''">TEAM_NAME = #{teamName} ,</if>
+            <if test="teamCreateUser != null and teamCreateUser != ''">TEAM_CREATE_USER = #{teamCreateUser} ,</if>
+            <if test="teamMansger != null and teamMansger != ''">TEAM_MANSGER = #{teamMansger} ,</if>
+        </trim>
+        WHERE TEAM_ID = #{teamId}
+
+    </update>
+
+    <select id="teamNameListInfo" parameterType="map" resultType="TestTeatDto">
+        SELECT
+        DISTINCT
+        T.TEAM_ID,
+        T.TEAM_NAME,
+        T.TEAM_MANSGER,
+        (SELECT COUNT(*) FROM TEST_EMPLOYEE_POOL WHERE OWNED_TEST_TEAM = T.TEAM_ID) TEAM_MEMBER_NO,
+        (SELECT COUNT(*) FROM TEST_GROUP WHERE OWNED_TEST_TEAM = T.TEAM_ID ) TEST_GROUP_NO,
+        T.TEAM_CREATE_USER,
+        T.CREATE_TIME
+        FROM PPM.COMM_TEST_TEAM T
+        LEFT JOIN PPM.TEST_EMPLOYEE_POOL P
+        ON (T.TEAM_ID = P.OWNED_TEST_TEAM)
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="teamId !=null and teamId !=''">T.TEAM_ID =#{teamId} AND</if>
+            <if test="badge != null and badge != ''">T.TEAM_MANSGER like '%'||#{badge}||'%' AND</if>
+            <if test="testEmpBadge != null and testEmpBadge != ''">P.TEST_EMP_BADGE = #{testEmpBadge} AND</if>
+        </trim>
+        ORDER BY T.CREATE_TIME DESC
+    </select>
+
+    <select id="teamMemberListinfo" parameterType="map" resultType="testEmployeePool">
+        SELECT
+        ID,
+        TEST_EMP_NAME,
+        TEST_EMP_BADGE,
+        AFFIL_COMPANY,
+        EMPLOYEE_STATUS,
+        HEAD_OF_COMPANY,
+        OWNED_TEST_TEAM,
+        OWNED_TEST_GROUP,
+        EMP_ATTRIBUTE,
+        CREATE_USER,
+        CREATE_TIME,
+        UPDATE_USER,
+        UPDATE_TIME,
+        DEPT_ID,
+        CERTIFICATE_NUMBER,
+        TEST_GROUP_LEADER,
+        GROUP_MEMBER
+        FROM PPM.TEST_EMPLOYEE_POOL
+        WHERE EMPLOYEE_STATUS = '0'
+        AND OWNED_TEST_TEAM IS NOT NULL
+    </select>
+
+    <select id="editTemMeb" parameterType="map" resultType="testEmployeePool">
+        SELECT ID,
+        TEST_EMP_NAME,
+        TEST_EMP_BADGE,
+        AFFIL_COMPANY,
+        EMPLOYEE_STATUS,
+        HEAD_OF_COMPANY,
+        OWNED_TEST_TEAM,
+        OWNED_TEST_GROUP,
+        EMP_ATTRIBUTE,
+        CREATE_USER,
+        CREATE_TIME,
+        UPDATE_USER,
+        UPDATE_TIME,
+        DEPT_ID,
+        CERTIFICATE_NUMBER,
+        TEST_GROUP_LEADER,
+        GROUP_MEMBER
+        FROM PPM.TEST_EMPLOYEE_POOL
+        WHERE EMPLOYEE_STATUS = '0'
+        <if test="teamId != null and teamId != ''">AND OWNED_TEST_TEAM = #{teamId}</if>
+
+    </select>
+
+    <select id="queryTemMeb" parameterType="map" resultType="testEmployeePool">
+        SELECT ID,
+        TEST_EMP_NAME,
+        TEST_EMP_BADGE,
+        AFFIL_COMPANY,
+        EMPLOYEE_STATUS,
+        HEAD_OF_COMPANY,
+        OWNED_TEST_TEAM,
+        OWNED_TEST_GROUP,
+        EMP_ATTRIBUTE,
+        CREATE_USER,
+        CREATE_TIME,
+        UPDATE_USER,
+        UPDATE_TIME,
+        DEPT_ID,
+        CERTIFICATE_NUMBER,
+        TEST_GROUP_LEADER,
+        GROUP_MEMBER
+        FROM PPM.TEST_EMPLOYEE_POOL
+        WHERE EMPLOYEE_STATUS = '0'
+        AND OWNED_TEST_TEAM IS NULL
+        UNION
+        SELECT ID,
+        TEST_EMP_NAME,
+        TEST_EMP_BADGE,
+        AFFIL_COMPANY,
+        EMPLOYEE_STATUS,
+        HEAD_OF_COMPANY,
+        OWNED_TEST_TEAM,
+        OWNED_TEST_GROUP,
+        EMP_ATTRIBUTE,
+        CREATE_USER,
+        CREATE_TIME,
+        UPDATE_USER,
+        UPDATE_TIME,
+        DEPT_ID,
+        CERTIFICATE_NUMBER,
+        TEST_GROUP_LEADER,
+        GROUP_MEMBER
+        FROM PPM.TEST_EMPLOYEE_POOL
+        WHERE EMPLOYEE_STATUS = '0'
+        <if test="teamId != null and teamId != ''">AND OWNED_TEST_TEAM = #{teamId}</if>
+
+    </select>
+
+    <delete id="deleteTeam" parameterType="map">
+        DELETE FROM PPM.COMM_TEST_TEAM WHERE TEAM_ID = #{teamId}
+    </delete>
+
+    <delete id="deleteGroup" parameterType="map">
+        DELETE FROM PPM.TEST_GROUP WHERE OWNED_TEST_TEAM = #{teamId}
+    </delete>
+
+    <update id="upadteTeEmplPol" parameterType="map">
+        UPDATE PPM.TEST_EMPLOYEE_POOL
+        SET OWNED_TEST_TEAM = NULL,
+        OWNED_TEST_GROUP = NULL,
+        EMP_ATTRIBUTE = NULL
+        WHERE OWNED_TEST_TEAM = #{teamId}
+    </update>
+
+    <select id="secltGroup" parameterType="map" resultType="TestGroup">
+        SELECT
+        ID,
+        TEST_GROUP_NAME,
+        TEST_GROUP_COMEMPLOYEE,
+        OWNED_TEST_TEAM,
+        TEST_GROUP_MEMBER,
+        CREATE_USER,
+        CREATE_TIME,
+        UPDATE_USER,
+        UPDATE_TIME,
+        TEST_GROUP_LEADER
+        FROM PPM.TEST_GROUP
+    </select>
+
+    <select id="queryPagerGrop" parameterType="map" resultType="TestGroupInfo">
+        SELECT P.ID,
+        P.TEST_GROUP_NAME,
+        T.TEAM_NAME,
+        P.OWNED_TEST_TEAM,
+        P.TEST_GROUP_COMEMPLOYEE,
+        (SELECT TEST_EMP_badge FROM PPM.TEST_EMPLOYEE_POOL WHERE OWNED_TEST_GROUP = P.ID and EMP_ATTRIBUTE = '1' )
+        AS TEST_GROUP_LEADER,
+        T.TEAM_MANSGER,
+        (SELECT TEST_EMP_NAME FROM PPM.TEST_EMPLOYEE_POOL WHERE OWNED_TEST_GROUP = P.ID and EMP_ATTRIBUTE = '1' ) AS TEST_EMP_NAME,
+        (SELECT COUNT(ID) FROM PPM.TEST_EMPLOYEE_POOL WHERE OWNED_TEST_GROUP = P.ID) AS GROUP_MEMBER_NO,
+        (SELECT LISTAGG(TEST_EMP_NAME, ',') WITHIN GROUP(ORDER BY ID) FROM PPM.TEST_EMPLOYEE_POOL
+        WHERE OWNED_TEST_GROUP = P.ID) AS GROUP_MEMBER,
+        (SELECT LISTAGG(TEST_EMP_BADGE, ',') WITHIN GROUP(ORDER BY ID) FROM PPM.TEST_EMPLOYEE_POOL
+        WHERE OWNED_TEST_GROUP = P.ID) AS TEST_GROUP_MEMBER
+        FROM PPM.TEST_GROUP P
+        LEFT JOIN PPM.COMM_TEST_TEAM T
+        ON (P.OWNED_TEST_TEAM = T.TEAM_ID)
+        LEFT JOIN PPM.TEST_EMPLOYEE_POOL L
+        ON (P.TEST_GROUP_LEADER = L.TEST_EMP_BADGE)
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="id !=null and id !=''">P.ID =#{id} AND</if>
+            <if test="ownedTestTeam !=null and ownedTestTeam !=''">T.TEAM_ID =#{ownedTestTeam} AND</if>
+            <if test="teamMansger != null and teamMansger != ''">T.TEAM_MANSGER LIKE '%'||#{teamMansger}||'%' AND</if>
+            <if test="testGroupLeader != null and testGroupLeader != ''">
+                P.TEST_GROUP_LEADER = #{testGroupLeader} AND
+            </if>
+            <if test="testGroupMember != null and testGroupMember != ''">
+                P.ID = (SELECT OWNED_TEST_GROUP FROM PPM.TEST_EMPLOYEE_POOL
+                WHERE TEST_EMP_BADGE = #{testGroupMember}) AND
+            </if>
+        </trim>
+        ORDER BY P.UPDATE_TIME DESC
+    </select>
+    <delete id="deleteGroupInfo" parameterType="map">
+        DELETE FROM PPM.TEST_GROUP WHERE ID = #{id}
+    </delete>
+
+    <update id="updateGroupInfo" parameterType="map">
+        UPDATE PPM.TEST_EMPLOYEE_POOL
+        SET OWNED_TEST_GROUP = NULL,
+        EMP_ATTRIBUTE = NULL
+        WHERE OWNED_TEST_GROUP = #{id}
+    </update>
+    <update id="udadelTestGroup" parameterType="map">
+        UPDATE PPM.TEST_EMPLOYEE_POOL
+        SET OWNED_TEST_GROUP = NULL,
+        EMP_ATTRIBUTE = NULL
+        WHERE OWNED_TEST_GROUP = #{id}
+    </update>
+    <update id="updateTestGroup" parameterType="map">
+        UPDATE PPM.TEST_GROUP
+        <trim prefix="set" suffixOverrides=",">
+            <if test="ownedTestTeam != null and ownedTestTeam != ''">OWNED_TEST_TEAM = #{ownedTestTeam} ,</if>
+            <if test="testgroupcomemployee != null and testgroupcomemployee != ''">TEST_GROUP_COMEMPLOYEE =
+                #{testgroupcomemployee} ,
+            </if>
+            <if test="testGroupLeader != null and testGroupLeader != ''">TEST_GROUP_LEADER = #{testGroupLeader} ,</if>
+            <if test="testGroupMembers != null and testGroupMembers != ''">
+                TEST_GROUP_MEMBER = #{testGroupMembers} ,
+            </if>
+        </trim>
+        WHERE ID = #{id}
+    </update>
+    <update id="updatemptepool" parameterType="map">
+        UPDATE PPM.TEST_EMPLOYEE_POOL
+        <trim prefix="set" suffixOverrides=",">
+            <if test="id != null and id != ''">OWNED_TEST_GROUP = #{id} ,</if>
+            EMP_ATTRIBUTE = '0' ,
+        </trim>
+        WHERE TEST_EMP_BADGE IN
+        <foreach collection="paramGroup" index="index" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+        <if test="ownedTestTeam != null and ownedTestTeam != ''">AND OWNED_TEST_TEAM = #{ownedTestTeam}</if>
+    </update>
+    <update id="updatempAttribute" parameterType="map">
+        UPDATE
+        PPM.TEST_EMPLOYEE_POOL
+        <trim prefix="set" suffixOverrides=",">
+            <if test="id != null and id != ''">OWNED_TEST_GROUP = #{id} ,</if>
+            EMP_ATTRIBUTE = '1' ,
+        </trim>
+        WHERE
+        TEST_EMP_BADGE = #{testGroupLeader}
+    </update>
+    <select id="groupDateInfo" parameterType="map" resultType="TestEmployeePool">
+        SELECT ID,
+        TEST_EMP_NAME,
+        TEST_EMP_BADGE,
+        AFFIL_COMPANY,
+        EMPLOYEE_STATUS,
+        HEAD_OF_COMPANY,
+        OWNED_TEST_TEAM,
+        OWNED_TEST_GROUP,
+        EMP_ATTRIBUTE,
+        CREATE_USER,
+        CREATE_TIME,
+        UPDATE_USER,
+        UPDATE_TIME,
+        DEPT_ID,
+        CERTIFICATE_NUMBER,
+        TEST_GROUP_LEADER,
+        GROUP_MEMBER
+        FROM PPM.TEST_EMPLOYEE_POOL
+        WHERE OWNED_TEST_GROUP IS NULL
+        <if test="ownedTestTeam != null and ownedTestTeam != ''">AND OWNED_TEST_TEAM = #{ownedTestTeam}</if>
+        UNION
+        SELECT ID,
+        TEST_EMP_NAME,
+        TEST_EMP_BADGE,
+        AFFIL_COMPANY,
+        EMPLOYEE_STATUS,
+        HEAD_OF_COMPANY,
+        OWNED_TEST_TEAM,
+        OWNED_TEST_GROUP,
+        EMP_ATTRIBUTE,
+        CREATE_USER,
+        CREATE_TIME,
+        UPDATE_USER,
+        UPDATE_TIME,
+        DEPT_ID,
+        CERTIFICATE_NUMBER,
+        TEST_GROUP_LEADER,
+        GROUP_MEMBER
+        FROM PPM.TEST_EMPLOYEE_POOL
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="id !=null and id !=''">OWNED_TEST_GROUP =#{id} AND</if>
+            <if test="ownedTestTeam != null and ownedTestTeam != ''">OWNED_TEST_TEAM = #{ownedTestTeam} AND</if>
+        </trim>
+    </select>
+</mapper>

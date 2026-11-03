@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.work.ppm.application.services.workflow.mapper.WfUserMapper">
+
+    <resultMap  id="sysUserOrgDeptRelMap" type="java.util.Map" >
+        <result column="USER_NUM" property="userNum" javaType="java.lang.String" />
+        <result column="REALNAME" property="userRealname" javaType="java.lang.String" />
+        <result column="LOGIN_NAME" property="userLoginName" javaType="java.lang.String" />
+        <result column="ORG_CODE" property="orgCode" javaType="java.lang.String" />
+        <result column="ORG_NAME" property="orgName" javaType="java.lang.String" />
+        <result column="DEPT_NAME" property="deptName" javaType="java.lang.String" />
+        <result column="DEPT_CODE" property="deptCode" javaType="java.lang.String" />
+        <result column="ROLE_CODE" property="roleCode" javaType="java.lang.String" />
+        <result column="ROLE_NAME" property="roleName" javaType="java.lang.String" />
+    </resultMap>
+
+    <resultMap id="sysUserOrgRoleMap" type="com.tansun.workflow.model.UserOrgRoleInfo" >
+        <result column="ID" property="id" javaType="java.lang.String" />
+        <result column="NAME" property="name" javaType="java.lang.String" />
+        <result column="PID" property="pid" javaType="java.lang.String" />
+        <result column="TYPE" property="type" javaType="java.lang.String" />
+    </resultMap>
+
+    <resultMap  id="sysUserPostMap" type="java.util.Map" >
+        <result column="ORG_CODE" property="orgCode" javaType="java.lang.String" />
+        <result column="ROLE_CODE" property="roleCode" javaType="java.lang.String" />
+        <result column="DEPT_CODE" property="deptCode" javaType="java.lang.String" />
+    </resultMap>
+
+    <select id="findOrgList" parameterType="map" resultMap="sysUserOrgRoleMap">
+        SELECT compid id,
+               location name,
+               DECODE(adminid, null, '#org', adminid) pid,
+               'org' as type
+          FROM comm_organization
+         where ISDISABLED = '0'
+    </select>
+
+    <select id="findRoleList" parameterType="map" resultMap="sysUserOrgRoleMap">
+     select ROL_ID id,
+           ROL_NAME name,
+           DECODE(ROL_PARENT_ID, null, '#role', ROL_PARENT_ID) pid,
+           'role' as type
+      from im_role
+     where sys_type = 1
+    </select>
+
+    <select id="findRoleUserList" parameterType="map" resultMap="sysUserOrgRoleMap">
+       select cp.userid id,
+           cp.operatorname name,
+           urr.urr_roleid pid,
+           'user' as type
+      from comm_operator cp
+      join comm_employee ce
+        on ce.badge = cp.userid
+      join im_user_role_rel urr
+        on cp.userid = urr.urr_userid
+     where ce.isdisabled = 0
+    </select>
+
+    <select id="findOrgUserList" parameterType="map" resultMap="sysUserOrgRoleMap">
+        select u.badge id, u.empname name, u.compid pid, 'user' as type
+        from comm_employee u where u.isdisabled=0 and u.compid is not null
+    </select>
+
+    <select id="findUserOrgDeptRelList" parameterType="map" resultMap="sysUserOrgDeptRelMap">
+          SELECT DISTINCT su.badge    as USER_NUM,
+                        su.empname  as REALNAME,
+                        su.badge    as LOGIN_NAME,
+                        sd.DEPID  as DEPT_CODE,
+                        sd.LOCATION as DEPT_NAME,
+                        so.COMPID as ORG_CODE,
+                        so.LOCATION as ORG_NAME,
+                        sr.ROL_ID   as ROLE_CODE,
+                        sr.ROL_NAME as ROLE_NAME
+          FROM comm_employee su
+          join comm_operator co
+            on co.userid = su.badge
+          left join comm_department sd
+            on sd.DEPID = su.DEPID
+          left join comm_organization so
+            on so.COMPID = su.COMPID
+          left join im_user_role_rel sor
+            on sor.URR_USERID = co.userid
+          left join im_role sr
+            on sr.ROL_ID = sor.URR_ROLEID
+         where su.isdisabled = 0
+           and so.isdisabled = 0
+           and sd.isdisabled = 0
+           and sr.sys_type = 1
+        <if test="userNum!=null and userNum!=''">
+            AND su.badge = #{userNum}
+        </if>
+        <if test="loginName!=null and loginName!=''">
+            AND su.badge = #{loginName}
+        </if>
+        <if test="userLoginNames != null and userLoginNames.size() > 0">
+            AND su.badge IN
+            <foreach collection="userLoginNames" item="userLoginName" open="(" separator="," close=")">
+                #{userLoginName}
+            </foreach>
+        </if>
+        <if test="realname!=null and realname!=''">
+            AND su.empname = #{realname}
+        </if>
+        <if test="realnameLike != null and realnameLike != ''">
+            <bind name="LikeRealNameLike"  value="'%' + _parameter.realnameLike + '%'"/>
+            AND su.empname LIKE #{LikeRealNameLike}
+        </if>
+        <if test="deptCodes != null and deptCodes.size() > 0">
+            AND  sd.DEPID IN
+            <foreach collection="deptCodes" item="deptCode" open="(" separator="," close=")">
+                #{deptCode}
+            </foreach>
+        </if>
+        <if test="orgCodes != null and orgCodes.size() > 0">
+            AND so.COMPID IN
+            <foreach collection="orgCodes" item="orgCode" open="(" separator="," close=")">
+                #{orgCode}
+            </foreach>
+        </if>
+        <if test="roleCodes != null and roleCodes.size() > 0">
+            AND sr.ROL_ID IN
+            <foreach collection="roleCodes" item="roleCode" open="(" separator="," close=")">
+                #{roleCode}
+            </foreach>
+        </if>
+    </select>
+
+    <select id="findAllPostInfo" parameterType="map" resultMap="sysUserPostMap">
+        SELECT DISTINCT ce.compid ORG_CODE,  ir.rol_id as ROLE_CODE, null  DEPT_CODE
+          from comm_employee ce
+          join comm_operator co on co.userid = ce.badge
+          join comm_organization co on co.compid = ce.compid
+          join im_user_role_rel iurr on iurr.urr_userid = co.userid
+          join im_role ir  on ir.rol_id = iurr.urr_roleid  and ir.sys_type = 1
+          WHERE co.compid IS NOT NULL  AND ce.badge = #{userId}
+        
+        UNION ALL
+        SELECT DISTINCT null  ORG_CODE,  ir.rol_id ROLE_CODE, cd.depid  DEPT_CODE
+          from comm_employee ce
+          join comm_operator co on co.userid = ce.badge
+          join comm_department cd on cd.depid = ce.depid
+          join im_user_role_rel iurr on iurr.urr_userid = co.userid
+          join im_role ir on ir.rol_id = iurr.urr_roleid and ir.sys_type = 1
+         WHERE cd.depid IS NOT NULL AND ce.badge = #{userId}
+        
+        UNION ALL
+        SELECT DISTINCT ce.compid ORG_CODE, NULL ROLE_CODE, NULL DEPT_CODE
+          from comm_employee ce
+          join comm_operator co on co.userid = ce.badge
+          join comm_organization co on co.compid = ce.compid
+         WHERE co.compid IS NOT NULL AND ce.badge = #{userId}
+        
+        UNION ALL
+        SELECT DISTINCT NULL ORG_CODE, NULL ROLE_CODE, ce.depid as DEPT_CODE
+          from comm_employee ce
+          join comm_operator co on co.userid = ce.badge
+          join comm_department cd on cd.depid = ce.depid
+         WHERE cd.depid IS NOT NULL AND ce.badge = #{userId}
+
+        UNION ALL
+        SELECT DISTINCT NULL ORG_CODE, ir.rol_id as ROLE_CODE, NULL DEPT_CODE
+          from comm_employee ce
+          join comm_operator co on co.userid = ce.badge
+          join im_user_role_rel iurr on iurr.urr_userid = co.userid
+          join im_role ir on ir.rol_id = iurr.urr_roleid and ir.sys_type = 1
+         WHERE ce.compid IS NOT NULL AND ce.badge = #{userId}
+
+        UNION ALL
+        SELECT DISTINCT ce.compid ORG_CODE, ir.rol_id as ROLE_CODE, ce.depid  as DEPT_CODE
+          from comm_employee ce
+          join comm_operator co on co.userid = ce.badge
+          join comm_organization co on co.compid = ce.compid
+          join im_user_role_rel iurr on iurr.urr_userid = co.userid
+          join im_role ir on ir.rol_id = iurr.urr_roleid and ir.sys_type = 1
+         WHERE co.compid IS NOT NULL and ce.depid IS NOT NULL
+           AND ce.badge = #{userId}
+    </select>
+
+    <select id="findDeptList" parameterType="map" resultMap="sysUserOrgRoleMap">
+             select dept.depid as id,
+                   dept.location as name,
+                   decode(dept.adminid, null, dept.compid, dept.adminid) as pid,
+                   'dept' as type
+              from comm_department dept
+             where dept.isdisabled = 0
+    </select>
+
+    <select id="findDeptUserList" parameterType="map" resultMap="sysUserOrgRoleMap">
+        select u.badge as id,
+                u.empname as name,
+                u.depid pid,
+                'user' as type
+          from comm_employee u
+          join comm_department dept
+            on dept.depid = u.depid
+         where u.ISDISABLED = '0'
+           and dept.isdisabled = 0
+    </select>
+</mapper>

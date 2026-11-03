@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k6991 2020-01-15 -->
+<mapper namespace="com.work.ppm.application.model.banktxmanager.PpmKepAprovalDto">
+    <resultMap type="ppmKepAprovalDto" id="PPMKEPAPROVALDTO_ALL">
+        <result property="detailId" column="DETAIL_ID"/>
+        <result property="empName" column="EMP_NAME"/>
+        <result property="badge" column="BADGE"/>
+        <result property="comleaveData" column="COMLEAVE_DATA"/>
+        <result property="intergNum" column="INTERG_NUM"/>
+        <result property="comleaveReason" column="COMLEAVE_REASON"/>
+        <result property="comleaveBackReason" column="COMLEAVE_BACK_REASON"/>
+        <result property="approver" column="COMLEAVE_CURRENT_APPROVER"/>
+        <result property="approvalStatus" column="APPROVAL_STATUS"/>
+    </resultMap>
+    <select id="queryPager" parameterType="map" resultMap="PPMKEPAPROVALDTO_ALL">
+        SELECT
+        S.DETAIL_ID,
+        S.EMP_NAME,
+        S.BADGE,
+        S.COMLEAVE_DATA,
+        S.INTERG_NUM,
+        S.COMLEAVE_REASON,
+        S.COMLEAVE_BACK_REASON,
+        E.EMPNAME approverName,
+        S.APPROVAL_STATUS
+        FROM PPM.COMM_REST_SCHEDULE S
+        LEFT JOIN COMM_EMPLOYEE E
+        ON (S.COMLEAVE_CURRENT_APPROVER = E.EID)
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="startDate != null and endDate != null ">S.COMLEAVE_DATA between #{startDate} and #{endDate} AND
+            </if>
+            <if test="approvalStatus != null and approvalStatus != '' ">S.APPROVAL_STATUS =#{approvalStatus} and</if>
+            <if test="empName != null and empName != '' ">S.EMP_NAME =#{empName} and</if>
+            <if test="badge != null and badge != '' ">S.BADGE =#{badge} and</if>
+        </trim>
+    </select>
+
+    <insert id="submitApproval" parameterType="map">
+        INSERT INTO COMM_REST_SCHEDULE (
+        <trim suffixOverrides=",">
+            <if test="detailId != null and detailId != ''">DETAIL_ID ,</if>
+            <if test="empName != null and empName != ''">EMP_NAME ,</if>
+            <if test="badge != null and badge != ''">BADGE ,</if>
+            <if test="approver != null and approver != ''">COMLEAVE_CURRENT_APPROVER ,</if>
+            <if test="comleaveData != null ">COMLEAVE_DATA ,</if>
+            <if test="intergNum != null">INTERG_NUM ,</if>
+            <if test="comleaveReason != null and comleaveReason != ''">COMLEAVE_REASON ,</if>
+            <if test="approvalStatus != null and approvalStatus != ''">APPROVAL_STATUS ,</if>
+        </trim>
+        )
+        VALUES(
+        <trim suffixOverrides=",">
+            <if test="detailId != null and detailId != ''">#{detailId} ,</if>
+            <if test="empName != null  and empName != '' ">#{empName} ,</if>
+            <if test="badge != null  and badge != '' ">#{badge} ,</if>
+            <if test="approver != null and approver != ''">#{approver} ,</if>
+            <if test="comleaveData != null  ">#{comleaveData} ,</if>
+            <if test="intergNum != null ">#{intergNum} ,</if>
+            <if test="comleaveReason != null  and comleaveReason != '' ">#{comleaveReason} ,</if>
+            <if test="approvalStatus != null  and approvalStatus != '' ">#{approvalStatus} ,</if>
+        </trim>
+        )
+    </insert>
+
+    <update id="updateApproval" parameterType="map">
+        UPDATE COMM_REST_SCHEDULE
+        <trim prefix="set" suffixOverrides=",">
+            <if test="detailId != null and detailId != ''">DETAIL_ID = #{detailId} ,</if>
+            <if test="empName != null  and empName != '' ">EMP_NAME = #{empName} ,</if>
+            <if test="badge != null  and badge != '' ">BADGE =#{badge} ,</if>
+            <if test="comleaveData != null  ">COMLEAVE_DATA = #{comleaveData} ,</if>
+            <if test="intergNum != null ">INTERG_NUM = #{intergNum} ,</if>
+            <if test="comleaveReason != null  and comleaveReason != '' ">COMLEAVE_REASON = #{comleaveReason} ,</if>
+            <if test="approvalStatus != null  and approvalStatus != '' ">APPROVAL_STATUS = #{approvalStatus} ,</if>
+        </trim>
+        WHERE DETAIL_ID = #{detailId}
+    </update>
+
+    <select id="selectByUserid" parameterType="map" resultType="CommEmployeeInfo">
+        SELECT
+        E.GENDER,
+        E.UPDATEFLG,
+        E.LASTUPDATEDATE,
+        E.REPORTTO,
+        E.ISDISABLED,
+        E.SHORTPHONE,
+        E.EMPNAME,
+        E.EMPAUTH,
+        E.BIRTHDAY,
+        E.CERTIFICATE_TYPE,
+        E.CERTIFICATE_NUMBER,
+        E.AUTHPROPERTY,
+        E.REMARK,
+        E.FULLNAME,
+        E.JOBID,
+        E.EID,
+        E.BADGE,
+        E.COMPID,
+        E.OFFICEPHONE,
+        E.EIDHR,
+        E.BOARDLINE,
+        E.SPELLNAME,
+        E.DEPID,
+        E.HEADSHIP,
+        E.MOBILETELPHONE,
+        E.REPORTTO
+        FROM COMM_EMPLOYEE E
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="userid != null and userid != '' ">BADGE =#{userid} and</if>
+        </trim>
+    </select>
+
+    <delete id="deleteApproval" parameterType="map">
+        DELETE FROM PPM.COMM_REST_SCHEDULE
+        WHERE DETAIL_ID = #{detailId}
+    </delete>
+
+    <select id="userApproval" parameterType="map" resultType="PpmNumAprovalDto">
+        SELECT ((SELECT COALESCE(SUM(INTEG_NUM),0) FROM PPM.INTEG_INFO WHERE STATE = '2' AND BADGE=#{badge}
+        AND TO_CHAR(START_TIME,'YYYY') =#{currentYear}) -
+        (SELECT COALESCE(SUM(INTERG_NUM),0)
+        FROM PPM.COMM_REST_SCHEDULE
+        WHERE APPROVAL_STATUS in ( '0','1') AND BADGE=#{badge}
+        AND TO_CHAR(COMLEAVE_DATA,'YYYY') =#{currentYear})) generateLeave
+        FROM DUAL
+    </select>
+    <select id="pointsQueryPaper" parameterType="map" resultType="IntegInfo">
+        SELECT
+        S.DETAIL_ID,
+        S.EMP_NAME,
+        S.BADGE,
+        S.REGISTER_DATA,
+        S.DATA_TYPE,
+        S.START_TIME,
+        S.END_TIME,
+        S.INTEG_NUM,
+        S.WORK_TYPE,
+        S.INTEG_REASON,
+        S.INTEG_BACK_REASON,
+        S.INTEG_CURRENT_APPROVER,
+        S.INTEG_APPROVER_TIME,
+        S.CREATE_TIME,
+        S.UPDATE_TIME
+        FROM PPM.INTEG_INFO S
+        LEFT JOIN PPM.COMM_EMPLOYEE E
+        ON (S.BADGE = E.BADGE)
+        WHERE S.STATE = '1'
+        AND E.REPORTTO = (select eid from PPM.COMM_EMPLOYEE where badge =#{userid})
+        <if test="startDate != null and endDate != null ">AND S.REGISTER_DATA between #{startDate} and #{endDate}</if>
+        <if test="empName != null and empName != '' ">AND S.EMP_NAME =#{empName} </if>
+        <if test="badge != null and badge != '' ">AND S.BADGE =#{badge} </if>
+        ORDER BY S.REGISTER_DATA
+    </select>
+
+    <update id="confirmPointsChoice" parameterType="List">
+        <foreach collection="list" item="item" index="index" open="begin" close=";end;" separator=";">
+            UPDATE PPM.INTEG_INFO
+            <trim prefix="set" suffixOverrides=",">
+                <if test="item.integBackReason != null and item.integBackReason != '' ">INTEG_BACK_REASON=#{item.integBackReason} ,</if>
+                <if test="item.state != null and item.state != '' ">STATE=#{item.state} ,</if>
+            </trim>
+            WHERE DETAIL_ID =#{item.detailId}
+        </foreach>
+    </update>
+    <update id="confirmLeaveChoice" parameterType="List">
+        <foreach collection="list" item="item" index="index" open="begin" close=";end;" separator=";">
+            UPDATE PPM.COMM_REST_SCHEDULE
+            <trim prefix="set" suffixOverrides=",">
+                <if test="item.comleaveBackReason != null and item.comleaveBackReason != '' ">COMLEAVE_BACK_REASON=#{item.comleaveBackReason} ,</if>
+                <if test="item.approvalStatus != null and item.approvalStatus != '' ">APPROVAL_STATUS=#{item.approvalStatus} ,</if>
+            </trim>
+            WHERE DETAIL_ID =#{item.detailId}
+        </foreach>
+    </update>
+
+    <select id="leaveQueryPager" parameterType="map" resultType="PpmKepAprovalDto">
+        SELECT
+        S.DETAIL_ID,
+        S.EMP_NAME,
+        S.BADGE,
+        S.COMLEAVE_DATA,
+        S.INTERG_NUM,
+        S.COMLEAVE_REASON,
+        S.COMLEAVE_BACK_REASON,
+        S.APPROVAL_STATUS
+        FROM PPM.COMM_REST_SCHEDULE S
+        LEFT JOIN PPM.COMM_EMPLOYEE E
+        ON (S.BADGE = E.BADGE)
+        where APPROVAL_STATUS = '1'
+        AND E.REPORTTO =
+        (select eid from PPM.COMM_EMPLOYEE where badge  =#{userid})
+        <if test="startDate != null and endDate != null ">AND S.COMLEAVE_DATA between #{startDate} and #{endDate}</if>
+        <if test="empName != null and empName != '' ">AND S.EMP_NAME =#{empName} </if>
+        <if test="badge != null and badge != '' ">AND S.BADGE =#{badge} </if>
+        ORDER BY S.COMLEAVE_DATA
+    </select>
+
+    <select id="getIntegNum" parameterType="map" resultType="PpmNumAprovalDto">
+        SELECT
+        COALESCE(SUM(INTEG_NUM),
+        0) generateLeave
+        FROM
+        PPM.INTEG_INFO
+        WHERE
+        <trim suffixOverrides="AND">
+            <if test="state != null  and state != '' ">STATE = #{state} AND</if>
+            <if test="badge != null  and badge != '' ">BADGE = #{badge} AND</if>
+            <if test="startFormatData != null  and startFormatData != '' ">to_char(START_TIME , 'yyyy') = #{startFormatData} AND</if>
+        </trim>
+    </select>
+</mapper>

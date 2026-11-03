@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k6991 2020-03-10 -->
+<mapper namespace="com.work.ppm.application.model.systemmanager.ImUserRoleRel">
+    <resultMap type="imUserRoleRel" id="IMUSERROLEREL_ALL">
+        <result property="urrUserid" column="URR_USERID"/>
+        <result property="urrRoleid" column="URR_ROLEID"/>
+        <result property="sysType" column="SYS_TYPE"/>
+
+    </resultMap>
+
+    <!-- 所有字段名称 -->
+    <sql id="sql_flied_all">
+        URR_USERID,
+        URR_ROLEID,
+        SYS_TYPE
+    </sql>
+
+
+    <!-- 新增  2020-03-10 k6991  -->
+    <insert id="addPojo" parameterType="imUserRoleRel">
+        INSERT INTO IM_USER_ROLE_REL (
+        URR_USERID,
+        URR_ROLEID,
+        SYS_TYPE
+        )
+        VALUES(
+        #{urrUserid},
+        #{urrRoleid},
+        #{sysType}
+        )
+    </insert>
+
+    <update id="deleteCommRole" parameterType="imUserRoleRel">
+        delete FROM ppm.IM_USER_ROLE_REL
+        WHERE URR_USERID  IN
+        (SELECT BADGE FROM COMM_EMPLOYEE  WHERE EMPSTATUS not in ('Norm','Prac'))
+    </update>
+    <insert id="syncCommRole" parameterType="imUserRoleRel">
+        INSERT INTO IM_USER_ROLE_REL
+        select t.badge URR_USERID,
+        'YYZL_EMPLOYEE' URR_ROLEID,
+        '1' SYS_TYPE
+        FROM COMM_EMPLOYEE T
+        WHERE NOT EXISTS
+        (SELECT 1 FROM IM_USER_ROLE_REL urr WHERE urr.URR_USERID = T.BADGE)
+    </insert>
+
+    <!--查询集合  k6991 2020-03-10 -->
+    <select id="getList" parameterType="map" resultMap="IMUSERROLEREL_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM IM_USER_ROLE_REL
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="urrUserid != null  and urrUserid != '' ">URR_USERID=#{urrUserid} AND</if>
+            <if test="urrRoleid != null  and urrRoleid != '' ">URR_ROLEID=#{urrRoleid} AND</if>
+            <if test="sysType != null  ">SYS_TYPE=#{sysType} AND</if>
+        </trim>
+    </select>
+
+    <!--通过id批量删除  k6991 2020-03-10 -->
+    <delete id="deleteById" parameterType="imUserRoleRel">
+        DELETE
+        FROM
+        IM_USER_ROLE_REL
+        WHERE URR_USERID = #{urrUserid} AND URR_ROLEID=#{urrRoleid} AND SYS_TYPE=#{sysType}
+    </delete>
+    <!-- 批量添加 -->
+    <insert id="batchAdd" parameterType="list">
+        INSERT ALL
+        <foreach collection="list" item="item" index="index">
+            INTO IM_USER_ROLE_REL (
+            URR_USERID,
+            URR_ROLEID,
+            SYS_TYPE
+            )
+            VALUES(
+            #{item.urrUserid},
+            #{item.urrRoleid},
+            #{item.sysType}
+            )
+        </foreach>
+        select 1 from dual
+    </insert>
+    <!-- 查询离职外包员工 2020-10-27 k6991 -->
+    <select id="queryResignOutsource" resultMap="IMUSERROLEREL_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM IM_USER_ROLE_REL O WHERE
+        EXISTS(SELECT U.JOB_ID FROM PPM_OUTSOURCING_BASIC U WHERE U.JOB_ID=O.URR_USERID AND U.STATE='1')
+        AND O.URR_ROLEID='PTWB0004' AND SYS_TYPE=1
+    </select>
+    <!-- 批量删除 2020-10-27 k6991-->
+    <delete id="batchDeleteList" parameterType="list">
+        DELETE
+        FROM
+        IM_USER_ROLE_REL
+        WHERE URR_USERID IN
+        <foreach collection="list" item="item" open="(" close=")" separator="," index="index">
+            #{item.urrUserid}
+        </foreach>
+        <foreach collection="list" item="item" index="index">
+            <if test="index == 0">
+                AND URR_ROLEID=#{item.urrRoleid}
+            </if>
+        </foreach>
+        AND SYS_TYPE=1
+    </delete>
+    <!-- 根据角色id删除 角色信息 k6991 2021-04-30 -->
+    <delete id="delByRoleId" parameterType="imUserRoleRel">
+        DELETE
+        FROM
+        IM_USER_ROLE_REL
+        WHERE URR_ROLEID=#{urrRoleid} AND SYS_TYPE=1
+    </delete>
+
+    <insert id="addOperaUserRoleRel" parameterType="imUserRoleRel">
+        INSERT INTO OPERA_USER_ROLE_REL ( URR_USERID, URR_ROLEID, SYS_TYPE)
+        SELECT #{urrUserid}, #{urrRoleid}, #{sysType}
+        FROM dual
+        WHERE NOT EXISTS (
+        SELECT 1
+        FROM OPERA_USER_ROLE_REL
+        WHERE URR_USERID =#{urrUserid} AND URR_ROLEID =#{urrRoleid} )
+    </insert>
+
+    <insert id="addOperaUserRoleBatch" parameterType="map">
+        INSERT INTO OPERA_USER_ROLE_REL (URR_USERID, URR_ROLEID, SYS_TYPE)
+        SELECT
+           #{urrUserid},
+           #{urrRoleid},
+           #{sysType}
+        FROM  dual
+        WHERE NOT EXISTS ( SELECT 1
+        FROM OPERA_USER_ROLE_REL
+        WHERE
+        URR_USERID =#{urrUserid}
+        AND URR_ROLEID =#{urrRoleid} )
+    </insert>
+
+    <delete id="deleteByUserId" parameterType="imUserRoleRel">
+        DELETE
+        FROM
+        OPERA_USER_ROLE_REL
+        WHERE URR_USERID = #{urrUserid} AND URR_ROLEID=#{urrRoleid} AND SYS_TYPE=#{sysType}
+    </delete>
+
+    <select id="getUserRole" resultType="String">
+        SELECT URR_USERID FROM IM_USER_ROLE_REL iurr
+        WHERE iurr.URR_ROLEID IN ('RESEARCHUSER' , 'RESEARCHADMIN')
+    </select>
+
+    <delete id="deleteByUserIds" parameterType="map">
+        DELETE
+        FROM
+        OPERA_USER_ROLE_REL
+        WHERE
+        URR_USERID in ${ids}
+        AND URR_ROLEID = #{roleId}
+    </delete>
+
+
+    <delete id="deleteUserRoleByUserIds" parameterType="map">
+        DELETE
+        FROM
+        IM_USER_ROLE_REL
+        WHERE
+        URR_USERID in ${ids}
+        AND URR_ROLEID = #{roleId}
+    </delete>
+
+</mapper>

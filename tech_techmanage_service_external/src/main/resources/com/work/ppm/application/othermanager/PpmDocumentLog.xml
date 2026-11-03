@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k6991 2020-09-23 -->
+<mapper namespace="com.work.ppm.application.model.othermanager.PpmDocumentLog">
+	 <resultMap type="ppmDocumentLog" id="PPMDOCUMENTLOG_ALL">
+        <result property="id" column="ID" />
+		<result property="catalogno" column="CATALOGNO" />
+		<result property="documentno" column="DOCUMENTNO" />
+		<result property="dealkind" column="DEALKIND" />
+		<result property="oprdate" column="OPRDATE" />
+		<result property="userid" column="USERID" />
+		<result property="username" column="USERNAME" />
+		<result property="remark" column="REMARK" />
+		
+     </resultMap>
+
+     <!-- 所有字段名称 -->
+        <sql id="sql_flied_all">
+        	ID,
+			CATALOGNO,
+			DOCUMENTNO,
+			DEALKIND,
+			OPRDATE,
+			USERID,
+			USERNAME,
+			REMARK
+        </sql>
+        <sql id="sql_select_condition">
+            <trim prefix="WHERE" suffixOverrides="AND">
+                <if test="id != null " > ID = #{id} AND </if>
+				<if test="catalogno != null  and catalogno != '' " > CATALOGNO = #{catalogno} AND </if>
+				<if test="documentno != null  and documentno != '' " > DOCUMENTNO = #{documentno} AND </if>
+				<if test="dealkind != null  and dealkind != '' " > DEALKIND = #{dealkind} AND </if>
+				<if test="oprdate != null " > OPRDATE = #{oprdate} AND </if>
+				<if test="userid != null  and userid != '' " > USERID = #{userid} AND </if>
+				<if test="username != null  and username != '' " > USERNAME = #{username} AND </if>
+				<if test="remark != null  and remark != '' " > REMARK = #{remark} AND </if>
+				
+            </trim>
+        </sql>
+    	<!-- 查询分页  2020-09-23 k6991  -->
+        <select id="queryPagerList" parameterType="map" resultMap="PPMDOCUMENTLOG_ALL">
+        	SELECT
+            <include refid="sql_flied_all" />
+            FROM PPM_DOCUMENT_LOG
+            <include refid="sql_select_condition" />
+        </select>
+
+        <!-- 新增  2020-09-23 k6991  -->
+        <insert id="addPojo" parameterType="ppmDocumentLog">
+    		INSERT INTO PPM_DOCUMENT_LOG (
+    		<trim suffixOverrides=",">
+    		 <if test="id != null " > ID , </if>
+				<if test="catalogno != null  and catalogno != '' " > CATALOGNO , </if>
+				<if test="documentno != null  and documentno != '' " > DOCUMENTNO , </if>
+				<if test="dealkind != null  and dealkind != '' " > DEALKIND , </if>
+				<if test="oprdate != null " > OPRDATE , </if>
+				<if test="userid != null  and userid != '' " > USERID , </if>
+				<if test="username != null  and username != '' " > USERNAME , </if>
+				<if test="remark != null  and remark != '' " > REMARK , </if>
+				
+              </trim>
+    		)
+    		VALUES(
+    		<trim suffixOverrides=",">
+    		 <if test="id != null " > #{id} , </if>
+				<if test="catalogno != null  and catalogno != '' " > #{catalogno} , </if>
+				<if test="documentno != null  and documentno != '' " > #{documentno} , </if>
+				<if test="dealkind != null  and dealkind != '' " > #{dealkind} , </if>
+				<if test="oprdate != null " > #{oprdate} , </if>
+				<if test="userid != null  and userid != '' " > #{userid} , </if>
+				<if test="username != null  and username != '' " > #{username} , </if>
+				<if test="remark != null  and remark != '' " > #{remark} , </if>
+				
+            </trim>
+    		)
+        </insert>
+
+        <!--通过id查询  k6991 2020-09-23 -->
+        <select id="queryDetail" parameterType="ppmDocumentLog" resultMap="PPMDOCUMENTLOG_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_DOCUMENT_LOG
+			<trim prefix="WHERE" suffixOverrides="AND">
+				<if test="id != null " > ID=#{id} AND </if>
+				<if test="catalogno != null  and catalogno != '' " > CATALOGNO=#{catalogno} AND </if>
+			</trim>
+        </select>
+
+         <!--查询集合  k6991 2020-09-23 -->
+        <select id="getList" parameterType="ppmDocumentLog" resultMap="PPMDOCUMENTLOG_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_DOCUMENT_LOG
+        	<include refid="sql_select_condition" />
+        </select>
+        <!-- update sql -->
+        <sql id="update_pojo_sql">
+        	<trim prefix="SET" suffixOverrides=",">
+        		<if test="id != null " > ID=#{id} , </if>
+				<if test="catalogno != null  and catalogno != '' " > CATALOGNO=#{catalogno} , </if>
+				<if test="documentno != null  and documentno != '' " > DOCUMENTNO=#{documentno} , </if>
+				<if test="dealkind != null  and dealkind != '' " > DEALKIND=#{dealkind} , </if>
+				<if test="oprdate != null " > OPRDATE=#{oprdate} , </if>
+				<if test="userid != null  and userid != '' " > USERID=#{userid} , </if>
+				<if test="username != null  and username != '' " > USERNAME=#{username} , </if>
+				<if test="remark != null  and remark != '' " > REMARK=#{remark} , </if>
+				
+            </trim>
+        </sql>
+
+        <!--通过id编辑 k6991 2020-09-23 -->
+    	<update id="updatePojo" parameterType="ppmDocumentLog">
+        	UPDATE
+        	PPM_DOCUMENT_LOG
+        	<include refid="update_pojo_sql" />
+        	WHERE ID=#{id}
+        </update>
+
+        <!--通过id批量删除  k6991 2020-09-23 -->
+        <delete id="deleteById" parameterType="ppmDocumentLog">
+        	DELETE
+        	FROM
+        	PPM_DOCUMENT_LOG
+        	WHERE ID = #{id}
+        </delete>
+
+</mapper>

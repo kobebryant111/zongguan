@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k1327 2021-03-16 -->
+<mapper namespace="com.work.ppm.application.model.integratedmanager.PpmKqTotal">
+	 <resultMap type="ppmKqTotal" id="PPMKQTOTAL_ALL">
+        <result property="id" column="ID" />
+		<result property="jobid" column="JOBID" />
+		<result property="tyear" column="TYEAR" />
+		<result property="tmonth" column="TMONTH" />
+		<result property="mworktime" column="MWORKTIME" />
+		<result property="mworkday" column="MWORKDAY" />
+		<result property="worktime" column="WORKTIME" />
+		<result property="workday" column="WORKDAY" />
+		<result property="unworkday" column="UNWORKDAY" />
+		<result property="lvworkday" column="LVWORKDAY" />
+		<result property="latemin" column="LATEMIN" />
+		<result property="earmin" column="EARMIN" />
+		<result property="latecs" column="LATECS" />
+		<result property="earcs" column="EARCS" />
+		<result property="overtime" column="OVERTIME" />
+		<result property="overtimeday" column="OVERTIMEDAY" />
+		<result property="othertime" column="OTHERTIME" />
+		<result property="isfz" column="ISFZ" />
+		<result property="badge" column="BADGE" />
+		<result property="tiaoxiutime" column="TIAOXIUTIME" />
+		<result property="outsourcetype" column="OUTSOURCETYPE" />
+		<result property="cfmuserid" column="CFMUSERID" />
+		<result property="deptno" column="DEPTNO" />
+		<result property="wjdkcs" column="WJDKCS" />
+		<result property="xiujiatime" column="XIUJIATIME" />
+		<result property="lrrgh" column="LRRGH" />
+		<result property="ysynj" column="YSYNJ" />
+		
+     </resultMap>
+
+     <!-- 所有字段名称 -->
+        <sql id="sql_flied_all">
+        	ID,
+			JOBID,
+			TYEAR,
+			TMONTH,
+			MWORKTIME,
+			MWORKDAY,
+			WORKTIME,
+			WORKDAY,
+			UNWORKDAY,
+			LVWORKDAY,
+			LATEMIN,
+			EARMIN,
+			LATECS,
+			EARCS,
+			OVERTIME,
+			OVERTIMEDAY,
+			OTHERTIME,
+			ISFZ,
+			BADGE,
+			TIAOXIUTIME,
+			OUTSOURCETYPE,
+			CFMUSERID,
+			DEPTNO,
+			WJDKCS,
+			XIUJIATIME,
+			LRRGH,
+			YSYNJ
+        </sql>
+        <sql id="sql_select_condition">
+            <trim prefix="WHERE" suffixOverrides="AND">
+                <if test="id != null " > ID = #{id} AND </if>
+				<if test="jobid != null  and jobid != '' " > JOBID = #{jobid} AND </if>
+				<if test="tyear != null  and tyear != '' " > TYEAR = #{tyear} AND </if>
+				<if test="tmonth != null  and tmonth != '' " > TMONTH = #{tmonth} AND </if>
+				<if test="mworktime != null  and mworktime != '' " > MWORKTIME = #{mworktime} AND </if>
+				<if test="mworkday != null  and mworkday != '' " > MWORKDAY = #{mworkday} AND </if>
+				<if test="worktime != null  and worktime != '' " > WORKTIME = #{worktime} AND </if>
+				<if test="workday != null  and workday != '' " > WORKDAY = #{workday} AND </if>
+				<if test="unworkday != null " > UNWORKDAY = #{unworkday} AND </if>
+				<if test="lvworkday != null " > LVWORKDAY = #{lvworkday} AND </if>
+				<if test="latemin != null " > LATEMIN = #{latemin} AND </if>
+				<if test="earmin != null " > EARMIN = #{earmin} AND </if>
+				<if test="latecs != null " > LATECS = #{latecs} AND </if>
+				<if test="earcs != null " > EARCS = #{earcs} AND </if>
+				<if test="overtime != null " > OVERTIME = #{overtime} AND </if>
+				<if test="overtimeday != null " > OVERTIMEDAY = #{overtimeday} AND </if>
+				<if test="othertime != null  and othertime != '' " > OTHERTIME = #{othertime} AND </if>
+				<if test="isfz != null  and isfz != '' " > ISFZ = #{isfz} AND </if>
+				<if test="badge != null  and badge != '' " > BADGE = #{badge} AND </if>
+				<if test="tiaoxiutime != null " > TIAOXIUTIME = #{tiaoxiutime} AND </if>
+				<if test="outsourcetype != null  and outsourcetype != '' " > OUTSOURCETYPE = #{outsourcetype} AND </if>
+				<if test="cfmuserid != null  and cfmuserid != '' " > CFMUSERID = #{cfmuserid} AND </if>
+				<if test="deptno != null  and deptno != '' " > DEPTNO = #{deptno} AND </if>
+				<if test="wjdkcs != null " > WJDKCS = #{wjdkcs} AND </if>
+				<if test="xiujiatime != null " > XIUJIATIME = #{xiujiatime} AND </if>
+				<if test="lrrgh != null  and lrrgh != '' " > LRRGH = #{lrrgh} AND </if>
+				<if test="ysynj != null " > YSYNJ = #{ysynj} AND </if>
+				
+            </trim>
+        </sql>
+    	<!-- 查询分页  2021-03-16 k1327  -->
+        <select id="queryPagerList" parameterType="map" resultMap="PPMKQTOTAL_ALL">
+        	SELECT
+            <include refid="sql_flied_all" />
+            FROM PPM_KQ_TOTAL
+            <include refid="sql_select_condition" />
+        </select>
+
+        <!-- 新增  2021-03-16 k1327  -->
+        <insert id="addPojo" parameterType="ppmKqTotal">
+    		INSERT INTO PPM_KQ_TOTAL (
+    		<trim suffixOverrides=",">
+    		 <if test="id != null " > ID , </if>
+				<if test="jobid != null  and jobid != '' " > JOBID , </if>
+				<if test="tyear != null  and tyear != '' " > TYEAR , </if>
+				<if test="tmonth != null  and tmonth != '' " > TMONTH , </if>
+				<if test="mworktime != null  and mworktime != '' " > MWORKTIME , </if>
+				<if test="mworkday != null  and mworkday != '' " > MWORKDAY , </if>
+				<if test="worktime != null  and worktime != '' " > WORKTIME , </if>
+				<if test="workday != null  and workday != '' " > WORKDAY , </if>
+				<if test="unworkday != null " > UNWORKDAY , </if>
+				<if test="lvworkday != null " > LVWORKDAY , </if>
+				<if test="latemin != null " > LATEMIN , </if>
+				<if test="earmin != null " > EARMIN , </if>
+				<if test="latecs != null " > LATECS , </if>
+				<if test="earcs != null " > EARCS , </if>
+				<if test="overtime != null " > OVERTIME , </if>
+				<if test="overtimeday != null " > OVERTIMEDAY , </if>
+				<if test="othertime != null  and othertime != '' " > OTHERTIME , </if>
+				<if test="isfz != null  and isfz != '' " > ISFZ , </if>
+				<if test="badge != null  and badge != '' " > BADGE , </if>
+				<if test="tiaoxiutime != null " > TIAOXIUTIME , </if>
+				<if test="outsourcetype != null  and outsourcetype != '' " > OUTSOURCETYPE , </if>
+				<if test="cfmuserid != null  and cfmuserid != '' " > CFMUSERID , </if>
+				<if test="deptno != null  and deptno != '' " > DEPTNO , </if>
+				<if test="wjdkcs != null " > WJDKCS , </if>
+				<if test="xiujiatime != null " > XIUJIATIME , </if>
+				<if test="lrrgh != null  and lrrgh != '' " > LRRGH , </if>
+				<if test="ysynj != null " > YSYNJ , </if>
+				
+              </trim>
+    		)
+    		VALUES(
+    		<trim suffixOverrides=",">
+    		 <if test="id != null " > #{id} , </if>
+				<if test="jobid != null  and jobid != '' " > #{jobid} , </if>
+				<if test="tyear != null  and tyear != '' " > #{tyear} , </if>
+				<if test="tmonth != null  and tmonth != '' " > #{tmonth} , </if>
+				<if test="mworktime != null  and mworktime != '' " > #{mworktime} , </if>
+				<if test="mworkday != null  and mworkday != '' " > #{mworkday} , </if>
+				<if test="worktime != null  and worktime != '' " > #{worktime} , </if>
+				<if test="workday != null  and workday != '' " > #{workday} , </if>
+				<if test="unworkday != null " > #{unworkday} , </if>
+				<if test="lvworkday != null " > #{lvworkday} , </if>
+				<if test="latemin != null " > #{latemin} , </if>
+				<if test="earmin != null " > #{earmin} , </if>
+				<if test="latecs != null " > #{latecs} , </if>
+				<if test="earcs != null " > #{earcs} , </if>
+				<if test="overtime != null " > #{overtime} , </if>
+				<if test="overtimeday != null " > #{overtimeday} , </if>
+				<if test="othertime != null  and othertime != '' " > #{othertime} , </if>
+				<if test="isfz != null  and isfz != '' " > #{isfz} , </if>
+				<if test="badge != null  and badge != '' " > #{badge} , </if>
+				<if test="tiaoxiutime != null " > #{tiaoxiutime} , </if>
+				<if test="outsourcetype != null  and outsourcetype != '' " > #{outsourcetype} , </if>
+				<if test="cfmuserid != null  and cfmuserid != '' " > #{cfmuserid} , </if>
+				<if test="deptno != null  and deptno != '' " > #{deptno} , </if>
+				<if test="wjdkcs != null " > #{wjdkcs} , </if>
+				<if test="xiujiatime != null " > #{xiujiatime} , </if>
+				<if test="lrrgh != null  and lrrgh != '' " > #{lrrgh} , </if>
+				<if test="ysynj != null " > #{ysynj} , </if>
+				
+            </trim>
+    		)
+        </insert>
+
+        <!--通过id查询  k1327 2021-03-16 -->
+        <select id="queryDetail" parameterType="ppmKqTotal" resultMap="PPMKQTOTAL_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_KQ_TOTAL  WHERE ID=#{id}
+        </select>
+
+         <!--查询集合  k1327 2021-03-16 -->
+        <select id="getList" parameterType="ppmKqTotal" resultMap="PPMKQTOTAL_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_KQ_TOTAL
+        	<include refid="sql_select_condition" />
+        </select>
+        <!-- update sql -->
+        <sql id="update_pojo_sql">
+        	<trim prefix="SET" suffixOverrides=",">
+        		<if test="id != null " > ID=#{id} , </if>
+				<if test="jobid != null  and jobid != '' " > JOBID=#{jobid} , </if>
+				<if test="tyear != null  and tyear != '' " > TYEAR=#{tyear} , </if>
+				<if test="tmonth != null  and tmonth != '' " > TMONTH=#{tmonth} , </if>
+				<if test="mworktime != null  and mworktime != '' " > MWORKTIME=#{mworktime} , </if>
+				<if test="mworkday != null  and mworkday != '' " > MWORKDAY=#{mworkday} , </if>
+				<if test="worktime != null  and worktime != '' " > WORKTIME=#{worktime} , </if>
+				<if test="workday != null  and workday != '' " > WORKDAY=#{workday} , </if>
+				<if test="unworkday != null " > UNWORKDAY=#{unworkday} , </if>
+				<if test="lvworkday != null " > LVWORKDAY=#{lvworkday} , </if>
+				<if test="latemin != null " > LATEMIN=#{latemin} , </if>
+				<if test="earmin != null " > EARMIN=#{earmin} , </if>
+				<if test="latecs != null " > LATECS=#{latecs} , </if>
+				<if test="earcs != null " > EARCS=#{earcs} , </if>
+				<if test="overtime != null " > OVERTIME=#{overtime} , </if>
+				<if test="overtimeday != null " > OVERTIMEDAY=#{overtimeday} , </if>
+				<if test="othertime != null  and othertime != '' " > OTHERTIME=#{othertime} , </if>
+				<if test="isfz != null  and isfz != '' " > ISFZ=#{isfz} , </if>
+				<if test="badge != null  and badge != '' " > BADGE=#{badge} , </if>
+				<if test="tiaoxiutime != null " > TIAOXIUTIME=#{tiaoxiutime} , </if>
+				<if test="outsourcetype != null  and outsourcetype != '' " > OUTSOURCETYPE=#{outsourcetype} , </if>
+				<if test="cfmuserid != null  and cfmuserid != '' " > CFMUSERID=#{cfmuserid} , </if>
+				<if test="deptno != null  and deptno != '' " > DEPTNO=#{deptno} , </if>
+				<if test="wjdkcs != null " > WJDKCS=#{wjdkcs} , </if>
+				<if test="xiujiatime != null " > XIUJIATIME=#{xiujiatime} , </if>
+				<if test="lrrgh != null  and lrrgh != '' " > LRRGH=#{lrrgh} , </if>
+				<if test="ysynj != null " > YSYNJ=#{ysynj} , </if>
+				
+            </trim>
+        </sql>
+
+        <!--通过id编辑 k1327 2021-03-16 -->
+    	<update id="updatePojo" parameterType="ppmKqTotal">
+        	UPDATE
+        	PPM_KQ_TOTAL
+        	<include refid="update_pojo_sql" />
+        	WHERE ID=#{id}
+        </update>
+
+        <!--通过id批量删除  k1327 2021-03-16 -->
+        <delete id="deleteById" parameterType="ppmKqTotal">
+        	DELETE
+        	FROM
+        	PPM_KQ_TOTAL
+        	WHERE ID = #{id}
+        </delete>
+	<!--查询外包加班数据统计  k1327 2021-03-16 -->
+	<select id="getOutOvertimeMonthData" parameterType="map" resultType="outOverTimeMonthData">
+		select * from (
+		select t.jobid,t.tmonth,t.overtime
+		from ppm_kq_total t
+		where t.jobid=#{jobid} and t.tyear=#{year}
+		) pivot(
+		sum(overtime) for tmonth in ('01' as jan,'02' as feb,'03' as mar,'04' as apr,'05' as may,'06' as jun,'07' as jul,'08' as aug,'09' as sep,'10' as oct,'11' as nov,'12' as dec,'年度' as year )
+		)
+	</select>
+	<!--查询外包加班数据统计根据部门  k1327 2021-03-16 -->
+	<select id="getOutOvertimeOrderByDep" parameterType="map" resultType="outOvertimeOrderData">
+		select t.jobid,count(*) counts,round(sum(t.overtime)/count(*),2) avgscore from ppm_kq_total t
+		where t.tyear=#{year} and t.deptno=#{deptno} group by t.jobid
+		order by round(sum(t.overtime)/count(*),2) desc
+	</select>
+	<!--查询外包加班数据统计根据供应商 k1327 2021-03-16 -->
+	<select id="getOutOvertimeOrderByOutsourceno" parameterType="map" resultType="outOvertimeOrderData">
+		select t.jobid,count(*) counts,round(sum(t.overtime)/count(*),2) avgscore from ppm_kq_total t
+		left join ppm_outsourcing_basic b on t.jobid=b.job_id
+		where t.tyear=#{year} and b.outsource_no=#{outsourceno} group by t.jobid
+		order by round(sum(t.overtime)/count(*),2) desc
+	</select>
+	<!--查询外包加班数据统计根据科技部 k1327 2021-03-16 -->
+	<select id="getOutOvertimeOrder" parameterType="map" resultType="outOvertimeOrderData">
+		select t.jobid,count(*) counts,round(sum(t.overtime)/count(*),2) avgscore from ppm_kq_total t
+		left join comm_department d on t.deptno=d.depid
+		where t.tyear=#{year} and d.adminid='7004' group by t.jobid
+		order by round(sum(t.overtime)/count(*),2) desc
+	</select>
+</mapper>

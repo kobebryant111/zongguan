@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k6991 2021-09-26 -->
+<mapper namespace="com.work.ppm.application.model.datamanager.PpmPwdShebei">
+    <resultMap type="ppmPwdShebei" id="PPMPWDSHEBEI_ALL">
+        <result property="id" column="ID"/>
+        <result property="instanceid" column="INSTANCEID"/>
+        <result property="systemname" column="SYSTEMNAME"/>
+        <result property="usertype" column="USERTYPE"/>
+        <result property="ip" column="IP"/>
+        <result property="username" column="USERNAME"/>
+        <result property="pwd" column="PWD"/>
+        <result property="loginuser" column="LOGINUSER"/>
+        <result property="endtime" column="ENDTIME"/>
+        <result property="status" column="STATUS"/>
+        <result property="applyer" column="APPLYER"/>
+        <result property="servename" column="SERVENAME"/>
+        <result property="dealcode" column="DEALCODE"/>
+        <result property="starttime" column="STARTTIME"/>
+        <result property="checkindate" column="CHECKINDATE"/>
+        <result property="hascheckin" column="HASCHECKIN"/>
+        <result property="remindstatus" column="REMINDSTATUS"/>
+
+    </resultMap>
+
+    <!-- 所有字段名称 -->
+    <sql id="sql_flied_all">
+        ID,
+        INSTANCEID,
+        SYSTEMNAME,
+        USERTYPE,
+        IP,
+        USERNAME,
+        PWD,
+        LOGINUSER,
+        ENDTIME,
+        STATUS,
+        APPLYER,
+        SERVENAME,
+        DEALCODE,
+        STARTTIME,
+        CHECKINDATE,
+        HASCHECKIN,
+        REMINDSTATUS
+    </sql>
+    <sql id="sql_select_condition">
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="id != null ">ID = #{id} AND</if>
+            <if test="instanceid != null  and instanceid != '' ">INSTANCEID = #{instanceid} AND</if>
+            <if test="systemname != null  and systemname != '' ">SYSTEMNAME = #{systemname} AND</if>
+            <if test="usertype != null  and usertype != '' ">USERTYPE = #{usertype} AND</if>
+            <if test="ip != null  and ip != '' ">IP = #{ip} AND</if>
+            <if test="username != null  and username != '' ">USERNAME = #{username} AND</if>
+            <if test="pwd != null  and pwd != '' ">PWD = #{pwd} AND</if>
+            <if test="loginuser != null  and loginuser != '' ">LOGINUSER = #{loginuser} AND</if>
+            <if test="endtime != null ">ENDTIME = #{endtime} AND</if>
+            <if test="status != null  and status != '' ">STATUS = #{status} AND</if>
+            <if test="applyer != null  and applyer != '' ">APPLYER = #{applyer} AND</if>
+            <if test="servename != null  and servename != '' ">SERVENAME = #{servename} AND</if>
+            <if test="dealcode != null  and dealcode != '' ">DEALCODE = #{dealcode} AND</if>
+            <if test="starttime != null ">STARTTIME = #{starttime} AND</if>
+            <if test="checkindate != null ">CHECKINDATE = #{checkindate} AND</if>
+            <if test="hascheckin != null  and hascheckin != '' ">HASCHECKIN = #{hascheckin} AND</if>
+            <if test="remindstatus != null  and remindstatus != '' ">REMINDSTATUS = #{remindstatus} AND</if>
+
+        </trim>
+    </sql>
+    <!-- 查询分页  2021-09-26 k6991  -->
+    <select id="queryPagerList" parameterType="map" resultMap="PPMPWDSHEBEI_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM PPM_PWD_SHEBEI
+        <include refid="sql_select_condition"/>
+    </select>
+
+    <!-- 新增  2021-09-26 k6991  -->
+    <insert id="batchAdd" parameterType="list">
+        INSERT ALL
+        <foreach collection="list" item="item" index="index">
+            INTO PPM_PWD_SHEBEI (
+            <trim suffixOverrides=",">
+                <if test="item.id != null ">ID ,</if>
+                <if test="item.instanceid != null  and item.instanceid != '' ">INSTANCEID ,</if>
+                <if test="item.systemname != null  and item.systemname != '' ">SYSTEMNAME ,</if>
+                <if test="item.usertype != null  and item.usertype != '' ">USERTYPE ,</if>
+                <if test="item.ip != null  and item.ip != '' ">IP ,</if>
+                <if test="item.username != null  and item.username != '' ">USERNAME ,</if>
+                <if test="item.pwd != null  and item.pwd != '' ">PWD ,</if>
+                <if test="item.loginuser != null  and item.loginuser != '' ">LOGINUSER ,</if>
+                <if test="item.endtime != null ">ENDTIME ,</if>
+                <if test="item.status != null  and item.status != '' ">STATUS ,</if>
+                <if test="item.applyer != null  and item.applyer != '' ">APPLYER ,</if>
+                <if test="item.servename != null  and item.servename != '' ">SERVENAME ,</if>
+                <if test="item.dealcode != null  and item.dealcode != '' ">DEALCODE ,</if>
+                <if test="item.starttime != null ">STARTTIME ,</if>
+                <if test="item.checkindate != null ">CHECKINDATE ,</if>
+                <if test="item.hascheckin != null  and item.hascheckin != '' ">HASCHECKIN ,</if>
+                <if test="item.remindstatus != null  and item.remindstatus != '' ">REMINDSTATUS ,</if>
+            </trim>
+            )
+            VALUES(
+            <trim suffixOverrides=",">
+                <if test="item.id != null ">#{item.id} ,</if>
+                <if test="item.instanceid != null  and item.instanceid != '' ">#{item.instanceid} ,</if>
+                <if test="item.systemname != null  and item.systemname != '' ">#{item.systemname} ,</if>
+                <if test="item.usertype != null  and item.usertype != '' ">#{item.usertype} ,</if>
+                <if test="item.ip != null  and item.ip != '' ">#{item.ip} ,</if>
+                <if test="item.username != null  and item.username != '' ">#{item.username} ,</if>
+                <if test="item.pwd != null  and item.pwd != '' ">#{item.pwd} ,</if>
+                <if test="item.loginuser != null  and item.loginuser != '' ">#{item.loginuser} ,</if>
+                <if test="item.endtime != null ">#{item.endtime} ,</if>
+                <if test="item.status != null  and item.status != '' ">#{item.status} ,</if>
+                <if test="item.applyer != null  and item.applyer != '' ">#{item.applyer} ,</if>
+                <if test="item.servename != null  and item.servename != '' ">#{item.servename} ,</if>
+                <if test="item.dealcode != null  and item.dealcode != '' ">#{item.dealcode} ,</if>
+                <if test="item.starttime != null ">#{item.starttime} ,</if>
+                <if test="item.checkindate != null ">#{item.checkindate} ,</if>
+                <if test="item.hascheckin != null  and item.hascheckin != '' ">#{item.hascheckin} ,</if>
+                <if test="item.remindstatus != null  and item.remindstatus != '' ">#{item.remindstatus} ,</if>
+            </trim>
+            )
+        </foreach>
+        select 1 from dual
+    </insert>
+
+    <!--通过id查询  k6991 2021-09-26 -->
+    <select id="queryDetail" parameterType="ppmPwdShebei" resultMap="PPMPWDSHEBEI_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM PPM_PWD_SHEBEI
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="id != null ">ID = #{id} AND</if>
+            <if test="instanceid != null  and instanceid != '' ">INSTANCEID = #{instanceid} AND</if>
+            <if test="usertype != null  and usertype != '' ">USERTYPE = #{usertype} AND</if>
+            <if test="ip != null  and ip != '' ">IP = #{ip} AND</if>
+            <if test="username != null  and username != '' ">USERNAME = #{username} AND</if>
+            <if test="status != null  and status != '' ">STATUS != #{status} AND</if>
+            <if test="dealcode != null  and dealcode != '' ">DEALCODE = #{dealcode} AND</if>
+            <if test="true"> ROWNUM =1 AND</if>
+        </trim>
+    </select>
+
+    <!--查询集合  k6991 2021-09-26 -->
+    <select id="getList" parameterType="ppmPwdShebei" resultMap="PPMPWDSHEBEI_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM PPM_PWD_SHEBEI
+        <include refid="sql_select_condition"/>
+    </select>
+    <!-- update sql -->
+    <sql id="update_pojo_sql">
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="id != null ">ID=#{id} ,</if>
+            <if test="instanceid != null  and instanceid != '' ">INSTANCEID=#{instanceid} ,</if>
+            <if test="systemname != null  and systemname != '' ">SYSTEMNAME=#{systemname} ,</if>
+            <if test="usertype != null  and usertype != '' ">USERTYPE=#{usertype} ,</if>
+            <if test="ip != null  and ip != '' ">IP=#{ip} ,</if>
+            <if test="username != null  and username != '' ">USERNAME=#{username} ,</if>
+            <if test="pwd != null  and pwd != '' ">PWD=#{pwd} ,</if>
+            <if test="loginuser != null  and loginuser != '' ">LOGINUSER=#{loginuser} ,</if>
+            <if test="endtime != null ">ENDTIME=#{endtime} ,</if>
+            <if test="status != null  and status != '' ">STATUS=#{status} ,</if>
+            <if test="applyer != null  and applyer != '' ">APPLYER=#{applyer} ,</if>
+            <if test="servename != null  and servename != '' ">SERVENAME=#{servename} ,</if>
+            <if test="dealcode != null  and dealcode != '' ">DEALCODE=#{dealcode} ,</if>
+            <if test="starttime != null ">STARTTIME=#{starttime} ,</if>
+            <if test="checkindate != null ">CHECKINDATE=#{checkindate} ,</if>
+            <if test="hascheckin != null  and hascheckin != '' ">HASCHECKIN=#{hascheckin} ,</if>
+            <if test="remindstatus != null  and remindstatus != '' ">REMINDSTATUS=#{remindstatus} ,</if>
+
+        </trim>
+    </sql>
+
+    <!--通过id编辑 k6991 2021-09-26 -->
+    <update id="updatePojo" parameterType="ppmPwdShebei">
+        UPDATE
+        PPM_PWD_SHEBEI
+        <include refid="update_pojo_sql"/>
+        WHERE ID=#{id}
+    </update>
+
+    <select id="getApplyerForShebei" parameterType="map" resultMap="PPMPWDSHEBEI_ALL">
+        SELECT T.PWD,T.APPLYER,ENDTIME FROM PPM_PWD_SHEBEI T
+        LEFT JOIN PPM_PROJECT_FLOW T1 ON T1.INSTANCEID=T.INSTANCEID
+        WHERE T1.FLOWSTATUS='进行中' AND (T.HASCHECKIN!='1' OR T.HASCHECKIN IS NULL)
+        <if test="ip != null and ip != ''">and IP=#{ip}</if>
+        <if test="username != null and username != ''">and USERNAME=#{username}</if>
+    </select>
+
+    <delete id="delForInstanceid" parameterType="map">
+        DELETE FROM PPM_PWD_SHEBEI
+        WHERE INSTANCEID =#{instanceid}
+    </delete>
+    <delete id="deleteShebeiById" parameterType="ppmPwdShebei">
+        DELETE FROM PPM_PWD_SHEBEI
+        WHERE ID =#{id}
+    </delete>
+    <!-- 添加 -->
+    <insert id="addPojo" parameterType="ppmPwdShebei">
+        INSERT
+            INTO PPM_PWD_SHEBEI (
+            <trim suffixOverrides=",">
+                <if test="id != null ">ID ,</if>
+                <if test="instanceid != null  and instanceid != '' ">INSTANCEID ,</if>
+                <if test="systemname != null  and systemname != '' ">SYSTEMNAME ,</if>
+                <if test="usertype != null  and usertype != '' ">USERTYPE ,</if>
+                <if test="ip != null  and ip != '' ">IP ,</if>
+                <if test="username != null  and username != '' ">USERNAME ,</if>
+                <if test="pwd != null  and pwd != '' ">PWD ,</if>
+                <if test="loginuser != null  and loginuser != '' ">LOGINUSER ,</if>
+                <if test="endtime != null ">ENDTIME ,</if>
+                <if test="status != null  and status != '' ">STATUS ,</if>
+                <if test="applyer != null  and applyer != '' ">APPLYER ,</if>
+                <if test="servename != null  and servename != '' ">SERVENAME ,</if>
+                <if test="dealcode != null  and dealcode != '' ">DEALCODE ,</if>
+                <if test="starttime != null ">STARTTIME ,</if>
+                <if test="checkindate != null ">CHECKINDATE ,</if>
+                <if test="hascheckin != null  and hascheckin != '' ">HASCHECKIN ,</if>
+                <if test="remindstatus != null  and remindstatus != '' ">REMINDSTATUS ,</if>
+            </trim>
+            )
+            VALUES(
+            <trim suffixOverrides=",">
+                <if test="id != null ">#{id} ,</if>
+                <if test="instanceid != null  and instanceid != '' ">#{instanceid} ,</if>
+                <if test="systemname != null  and systemname != '' ">#{systemname} ,</if>
+                <if test="usertype != null  and usertype != '' ">#{usertype} ,</if>
+                <if test="ip != null  and ip != '' ">#{ip} ,</if>
+                <if test="username != null  and username != '' ">#{username} ,</if>
+                <if test="pwd != null  and pwd != '' ">#{pwd} ,</if>
+                <if test="loginuser != null  and loginuser != '' ">#{loginuser} ,</if>
+                <if test="endtime != null ">#{endtime} ,</if>
+                <if test="status != null  and status != '' ">#{status} ,</if>
+                <if test="applyer != null  and applyer != '' ">#{applyer} ,</if>
+                <if test="servename != null  and servename != '' ">#{servename} ,</if>
+                <if test="dealcode != null  and dealcode != '' ">#{dealcode} ,</if>
+                <if test="starttime != null ">#{starttime} ,</if>
+                <if test="checkindate != null ">#{checkindate} ,</if>
+                <if test="hascheckin != null  and hascheckin != '' ">#{hascheckin} ,</if>
+                <if test="remindstatus != null  and remindstatus != '' ">#{remindstatus} ,</if>
+            </trim>
+            )
+    </insert>
+    <select id="querySheBeiEndTime" parameterType="map" resultMap="PPMPWDSHEBEI_ALL" >
+        select t.* from ppm_pwd_shebei t
+        left join ppm_project_flow t1 on t1.instanceid=t.instanceid
+        left join ppm_pwd_shebei_configure t2 on t2.systemid=t.systemname and t.usertype=t2.usertype and t2.ip=t.ip and t2.userid= t.username
+        where t1.flowstatus='进行中' and t.checkindate is null and t.endtime is not null and t.endtime > sysdate
+        <if   test="groupname != null and groupname != ''">
+            and t2.groupname = #{groupname}
+        </if>
+        <if  test="groupname != null and groupname != ''">
+            <if  test="username != null and username != ''">
+                and t.username = #{username}
+            </if>
+            <if  test="ip != null and ip != ''">
+                and t.ip = #{ip}
+            </if>
+        </if>
+        order by t.endtime desc
+    </select>
+
+    <select id="getSheBeiList" parameterType="map" resultMap="PPMPWDSHEBEI_ALL">
+
+        select t.* from ppm_pwd_shebei t
+        left join ppm_project_flow t1 on t1.instanceid=t.instanceid
+        where t1.flowstatus='进行中' and (t.hascheckin!='1' or t.hascheckin is null)
+        <if  test="ip != null and ip != ''">
+            AND t.ip=#{ip}
+        </if>
+        <if  test="username != null and username != ''">
+            AND t.username=#{username}
+        </if>
+        <if  test="loginuser != null and loginuser != ''">
+            and t.loginuser=#{loginuser}
+        </if>
+        and t.endtime>to_date(#{nowdate},'yyyy-MM-dd hh24:mi:ss')
+        order by t.endtime desc
+    </select>
+</mapper>

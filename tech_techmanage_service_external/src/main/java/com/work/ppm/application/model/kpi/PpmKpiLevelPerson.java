@@ -1,0 +1,51 @@
+package com.work.ppm.application.model.kpi;
+
+import lombok.Data;
+import com.work.ppm.commons.annotaion.Id;
+import java.util.Date;
+
+
+
+ /**
+  * 描述
+  */
+@Data
+public class PpmKpiLevelPerson {
+	/**
+	*	主键
+	**/
+	@Id
+	private Long id;
+	/**
+	*	部门
+	**/
+	private String depid;
+	/**
+	*	中心
+	**/
+	private String centerid;
+	/**
+	*	类型（1：二级部，2：中心，3：一级部）
+	**/
+	private String otype;
+	/**
+	*	应用角色
+	**/
+	private String role;
+	/**
+	*	等级A。。。
+	**/
+	private String tlevel;
+	/**
+	*	人数
+	**/
+	private Long nums;
+	/**
+	*	创建时间
+	**/
+	private Date createtime;
+	/**
+	*	创建人
+	**/
+	private String createuserid;
+}

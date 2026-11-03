@@ -1,0 +1,365 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.work.ppm.application.model.vendormanager.OutsrcEmpAssessApply">
+
+    <resultMap type="outsrcEmpAssessApply" id="OUTSRCEMPASSESSAPPLY_ALL">
+      <result property="id" column="ID"/>
+      <result property="instanceId" column="INSTANCE_ID"/>
+      <result property="flowId" column="FLOW_ID"/>
+      <result property="deptId" column="DEPT_ID"/>
+      <result property="totals" column="TOTALS"/>
+      <result property="assessType" column="ASSESS_TYPE"/>
+      <result property="assessYear" column="ASSESS_YEAR"/>
+      <result property="assessAnnual" column="ASSESS_ANNUAL"/>
+      <result property="approvalStatus" column="APPROVAL_STATUS"/>
+      <result property="deptName" column="DEPT_NAME"/>
+      <result property="applier" column="APPLIER"/>
+      <result property="prjMgrName" column="PRJ_MGR_NAME"/>
+      <result property="isDel" column="IS_DEL"/>
+      <result property="createDate" column="CREATE_DATE"/>
+      <result property="createUser" column="CREATE_USER"/>
+      <result property="updateDate" column="UPDATE_DATE"/>
+      <result property="updateUser" column="UPDATE_USER"/>
+    </resultMap>
+
+    <resultMap type="com.work.ppm.application.dto.vendormanager.OutsrcEmpAssessApplyDto" id="OUTSRCEMPASSESSAPPLY_ALL_EXT" extends="OUTSRCEMPASSESSAPPLY_ALL">
+    </resultMap>
+
+    <!-- 所有字段 -->
+    <sql id="sql_flied_all">
+        ID
+        ,INSTANCE_ID
+        ,FLOW_ID
+        ,DEPT_ID
+        ,(select location from comm_department where depid = dept_id and isdisabled = '0' and rownum =1) dept_name
+        ,ASSESS_TYPE
+        ,ASSESS_YEAR
+        ,ASSESS_ANNUAL
+        ,TOTALS
+        ,APPROVAL_STATUS
+        ,APPLIER
+        ,PRJ_MGR_NAME
+        ,IS_DEL
+        ,CREATE_DATE
+        ,CREATE_USER
+        ,UPDATE_DATE
+        ,UPDATE_USER
+    </sql>
+
+    <sql id="sql_flied_basic">
+        ID
+        ,INSTANCE_ID
+        ,FLOW_ID
+        ,DEPT_ID
+        ,(select location from comm_department where depid = dept_id and isdisabled = '0' and rownum =1) dept_name
+        ,ASSESS_TYPE
+        ,ASSESS_YEAR
+        ,ASSESS_ANNUAL
+        ,TOTALS
+        ,APPROVAL_STATUS
+        ,APPLIER
+        ,PRJ_MGR_NAME
+        ,IS_DEL
+        ,CREATE_DATE
+        ,CREATE_USER
+        ,UPDATE_DATE
+        ,UPDATE_USER
+    </sql>
+
+    <sql id="sql_flied_small">
+          ID
+          ,INSTANCE_ID
+          ,FLOW_ID
+          ,DEPT_ID
+          ,TOTALS
+          ,APPROVAL_STATUS
+          ,ASSESS_TYPE
+          ,ASSESS_YEAR
+          ,ASSESS_ANNUAL
+          ,DEPT_NAME
+          ,APPLIER
+          ,PRJ_MGR_NAME
+          ,IS_DEL
+          ,CREATE_DATE
+          ,CREATE_USER
+          ,UPDATE_DATE
+          ,UPDATE_USER
+    </sql>
+
+    <!--  查询条件  -->
+    <sql id="sql_select_condition">
+       <trim prefix="WHERE" suffixOverrides="AND">
+           <if test="id != null and id != '' "> ID = #{id} AND </if>
+           <if test="instanceId != null and instanceId != '' "> INSTANCE_ID = #{instanceId} AND </if>
+           <if test="flowId != null and flowId != '' "> FLOW_ID = #{flowId} AND </if>
+           <if test="deptId != null and deptId != '' "> DEPT_ID = #{deptId} AND </if>
+           <if test="assessType != null and assessType != '' "> ASSESS_TYPE = #{assessType} AND </if>
+           <if test="assessYear != null and assessYear != '' "> ASSESS_YEAR = #{assessYear} AND </if>
+           <if test="assessAnnual != null and assessAnnual != '' "> ASSESS_ANNUAL = #{assessAnnual} AND </if>
+           <if test="totals != null and totals != '' "> TOTALS = #{totals} AND </if>
+           <if test="approvalStatus != null and approvalStatus != '' "> APPROVAL_STATUS = #{approvalStatus} AND </if>
+           <if test="deptName != null and deptName != '' "> DEPT_NAME = #{deptName} AND </if>
+           <if test="applier != null and applier != '' "> APPLIER = #{applier} AND </if>
+           <if test="prjMgrName != null and prjMgrName != '' "> prj_Mgr_Name = #{prjMgrName} AND </if>
+           <if test="isDel != null and isDel != '' "> IS_DEL = #{isDel} AND </if>
+           <if test="createUser != null and createUser != '' "> CREATE_USER = #{createUser} AND </if>
+           <if test="updateUser != null and updateUser != '' "> UPDATE_USER = #{updateUser} AND </if>
+       </trim>
+    </sql>
+
+    <!-- 查询条件 自定义 -->
+    <sql id="sql_select_condition_cus">
+       <trim prefix="WHERE" suffixOverrides="AND">
+           <if test="id != null and id != '' "> ID = #{id} AND </if>
+           <if test="instanceId != null and instanceId != '' "> INSTANCE_ID = #{instanceId} AND </if>
+           <if test="flowId != null and flowId != '' "> FLOW_ID = #{flowId} AND </if>
+           <if test="deptId != null and deptId != '' "> DEPT_ID = #{deptId} AND </if>
+           <if test="assessType != null and assessType != '' "> ASSESS_TYPE = #{assessType} AND </if>
+           <if test="assessYear != null and assessYear != '' "> ASSESS_YEAR = #{assessYear} AND </if>
+           <if test="assessAnnual != null and assessAnnual != '' "> ASSESS_ANNUAL = #{assessAnnual} AND </if>
+           <if test="totals != null and totals != '' "> TOTALS = #{totals} AND </if>
+           <if test="approvalStatus != null and approvalStatus != '' "> APPROVAL_STATUS = #{approvalStatus} AND </if>
+           <if test="deptName != null and deptName != '' "> DEPT_NAME = #{deptName} AND </if>
+           <if test="applier != null and applier != '' "> APPLIER = #{applier} AND </if>
+           <if test="prjMgrName != null and prjMgrName != '' "> PRJ_MGR_NAME = #{prjMgrName} AND </if>
+           <if test="isDel != null and isDel != '' "> IS_DEL = #{isDel} AND </if>
+           <if test="createUser != null and createUser != '' "> CREATE_USER = #{createUser} AND </if>
+           <if test="updateUser != null and updateUser != '' "> UPDATE_USER = #{updateUser} AND </if>
+       </trim>
+    </sql>
+
+    <!-- 更新字段 -->
+    <sql id="update_pojo_sql">
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="instanceId != null and instanceId != '' " > INSTANCE_ID = #{instanceId},</if>
+            <if test="flowId != null and flowId != '' " > FLOW_ID = #{flowId},</if>
+            <if test="deptId != null and deptId != '' " > DEPT_ID = #{deptId},</if>
+            <if test="assessType != null and assessType != '' " > ASSESS_TYPE = #{assessType},</if>
+            <if test="assessYear != null and assessYear != '' " > ASSESS_YEAR = #{assessYear},</if>
+            <if test="assessAnnual != null and assessAnnual != '' " > ASSESS_ANNUAL = #{assessAnnual},</if>
+            <if test="totals != null and totals != '' " > TOTALS = #{totals},</if>
+            <if test="approvalStatus != null and approvalStatus != '' " > APPROVAL_STATUS = #{approvalStatus},</if>
+            <if test="deptName != null and deptName != '' " > DEPT_NAME = #{deptName},</if>
+            <if test="applier != null and applier != '' " > APPLIER = #{applier},</if>
+            <if test="prjMgrName != null and prjMgrName != '' " > PRJ_MGR_NAME = #{prjMgrName},</if>
+            <if test="isDel != null and isDel != '' " > IS_DEL = #{isDel},</if>
+            <if test="createUser != null and createUser != '' " > CREATE_USER = #{createUser},</if>
+            <if test="updateUser != null and updateUser != '' " > UPDATE_USER = #{updateUser},</if>
+        </trim>
+    </sql>
+
+    <!--  查询  -->
+    <!-- pager query 2023-01-03 ywwb903  -->
+    <select id="queryPagerList" parameterType="map" resultMap="OUTSRCEMPASSESSAPPLY_ALL_EXT">
+        SELECT
+            <include refid="sql_flied_basic"/>
+            FROM PPM_OUTSRC_EMP_ASSESS_APPLY
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="id != null and id != '' "> ID = #{id} AND </if>
+            <if test="instanceId != null and instanceId != '' "> INSTANCE_ID = #{instanceId} AND </if>
+            <if test="flowId != null and flowId != '' "> FLOW_ID = #{flowId} AND </if>
+            <if test="deptId != null and deptId != '' "> DEPT_ID = #{deptId} AND </if>
+            <if test="assessType != null and assessType != '' "> ASSESS_TYPE = #{assessType} AND </if>
+            <if test="assessYear != null and assessYear != '' "> ASSESS_YEAR = #{assessYear} AND </if>
+            <if test="assessAnnual != null and assessAnnual != '' "> ASSESS_ANNUAL = #{assessAnnual} AND </if>
+            <if test="totals != null and totals != '' "> TOTALS = #{totals} AND </if>
+            <if test="approvalStatus != null and approvalStatus != '' "> APPROVAL_STATUS = #{approvalStatus} AND </if>
+            <if test="deptName != null and deptName != '' "> DEPT_NAME = #{deptName} AND </if>
+            <if test='perm == "common"'> APPLIER = #{permMgr} AND</if>
+            <if test='perm == "managers"'>
+                APPLIER in (select badge from comm_employee where depid in (
+                select depid from comm_employee where badge = #{permMgr} )) AND
+            </if>
+            <if test="prjMgrName != null and prjMgrName != '' "> (APPLIER = #{prjMgrName} or prj_Mgr_Name like '%'|| #{prjMgrName} ||'%' )AND </if>
+            <if test="isDel != null and isDel != '' "> IS_DEL = #{isDel} AND </if>
+            <if test="createUser != null and createUser != '' "> CREATE_USER = #{createUser} AND </if>
+            <if test="updateUser != null and updateUser != '' "> UPDATE_USER = #{updateUser} AND </if>
+        </trim>
+    </select>
+
+    <!-- list query 2023-01-03 ywwb903  -->
+    <select id="getList" parameterType="outsrcEmpAssessApply" resultMap="OUTSRCEMPASSESSAPPLY_ALL">
+        SELECT
+        <include refid="sql_flied_basic"/>
+        FROM PPM_OUTSRC_EMP_ASSESS_APPLY
+        <include refid="sql_select_condition"/>
+    </select>
+
+    <!-- select one by instanceId  2023-01-03 ywwb903  -->
+    <select id="selectOneByInstanceId" parameterType="map" resultMap="OUTSRCEMPASSESSAPPLY_ALL">
+        SELECT
+        <include refid="sql_flied_all" />
+        FROM PPM_OUTSRC_EMP_ASSESS_APPLY
+        WHERE instance_id = #{instanceId}
+          AND is_del = '0'
+          AND rownum = 1
+    </select>
+
+    <!-- select List by instanceId  2023-01-03 ywwb903  -->
+    <select id="selectListByInstanceId" parameterType="map" resultMap="OUTSRCEMPASSESSAPPLY_ALL">
+        SELECT
+        <include refid="sql_flied_all" />
+        FROM PPM_OUTSRC_EMP_ASSESS_APPLY
+        WHERE instance_id = #{instanceId}
+          AND is_del = '0'
+    </select>
+
+    <!-- select one by id  2023-01-03 ywwb903  -->
+    <select id="selectOneById" resultMap="OUTSRCEMPASSESSAPPLY_ALL_EXT">
+        SELECT
+        <include refid="sql_flied_all" />
+        FROM PPM_OUTSRC_EMP_ASSESS_APPLY WHERE id = #{id}
+    </select>
+
+    <!-- select many By ids  2023-01-03 ywwb903 -->
+    <select id="selectListByIds" resultMap="OUTSRCEMPASSESSAPPLY_ALL">
+        SELECT
+        <include refid="sql_flied_small" />
+        FROM PPM_OUTSRC_EMP_ASSESS_APPLY WHERE ID IN
+        <foreach collection="list" item="ids" open="(" separator=", " close=")">
+            #{ids}
+        </foreach>
+    </select>
+
+   <!-- select by map  2023-01-03 ywwb903  -->
+    <select id="selectByMapBasic" parameterType="map" resultMap="OUTSRCEMPASSESSAPPLY_ALL">
+        SELECT
+        <include refid="sql_flied_basic" />
+        FROM PPM_OUTSRC_EMP_ASSESS_APPLY
+        <include refid="sql_select_condition_cus"/>
+    </select>
+
+    <select id="selectByMapSmall" parameterType="map" resultMap="OUTSRCEMPASSESSAPPLY_ALL">
+        SELECT
+        <include refid="sql_flied_small" />
+        FROM PPM_OUTSRC_EMP_ASSESS_APPLY
+        <include refid="sql_select_condition_cus"/>
+    </select>
+
+    <select id="selectByMap" parameterType="map" resultMap="OUTSRCEMPASSESSAPPLY_ALL">
+        SELECT
+        <include refid="sql_flied_all" />
+        FROM PPM_OUTSRC_EMP_ASSESS_APPLY
+        <include refid="sql_select_condition"/>
+    </select>
+
+   <!-- selectCount  2023-01-03 ywwb903  -->
+    <select id="selectCount" parameterType="map" resultType="Long">
+        SELECT COUNT(1)
+        FROM PPM_OUTSRC_EMP_ASSESS_APPLY
+        <include refid="sql_select_condition_cus"/>
+    </select>
+
+
+    <!--  新增  -->
+    <!-- insert 2023-01-03 ywwb903  -->
+    <insert id="addPojo" parameterType="outsrcEmpAssessApply">
+    	INSERT INTO PPM_OUTSRC_EMP_ASSESS_APPLY (
+    	<trim suffixOverrides=",">
+    	    <if test="id != null and id != '' ">  ID ,</if>
+    	    <if test="instanceId != null and instanceId != '' ">  INSTANCE_ID ,</if>
+    	    <if test="flowId != null and flowId != '' ">  FLOW_ID ,</if>
+    	    <if test="deptId != null and deptId != '' ">  DEPT_ID ,</if>
+            <if test="deptName != null and deptName != '' ">  DEPT_NAME ,</if>
+            <if test="assessType != null and assessType != '' ">  ASSESS_TYPE ,</if>
+            <if test="assessYear != null and assessYear != '' ">  ASSESS_YEAR ,</if>
+            <if test="assessAnnual != null and assessAnnual != '' ">  ASSESS_ANNUAL ,</if>
+            <if test="totals != null and totals != '' ">  TOTALS ,</if>
+            <if test="approvalStatus != null and approvalStatus != '' ">  APPROVAL_STATUS ,</if>
+    	    <if test="applier != null and applier != '' ">  APPLIER ,</if>
+            <if test="prjMgrName != null and prjMgrName != '' ">  PRJ_MGR_NAME ,</if>
+    	    <if test="isDel != null and isDel != '' ">  IS_DEL ,</if>
+    	    <if test="createUser != null and createUser != '' ">  CREATE_USER ,</if>
+    	    <if test="updateUser != null and updateUser != '' ">  UPDATE_USER ,</if>
+    	</trim>
+    	)
+    	VALUES(
+    	<trim suffixOverrides=",">
+            <if test="id != null and id != '' "> #{id} ,</if>
+            <if test="instanceId != null and instanceId != '' "> #{instanceId} ,</if>
+            <if test="flowId != null and flowId != '' "> #{flowId} ,</if>
+            <if test="deptId != null and deptId != '' "> #{deptId} ,</if>
+            <if test="deptName != null and deptName != '' "> #{deptName} ,</if>
+            <if test="assessType != null and assessType != '' "> #{assessType} ,</if>
+            <if test="assessYear != null and assessYear != '' "> #{assessYear} ,</if>
+            <if test="assessAnnual != null and assessAnnual != '' "> #{assessAnnual} ,</if>
+            <if test="totals != null and totals != '' "> #{totals} ,</if>
+            <if test="approvalStatus != null and approvalStatus != '' "> #{approvalStatus} ,</if>
+            <if test="applier != null and applier != '' "> #{applier} ,</if>
+            <if test="prjMgrName != null and prjMgrName != '' "> #{prjMgrName} ,</if>
+            <if test="isDel != null and isDel != '' "> #{isDel} ,</if>
+            <if test="createUser != null and createUser != '' "> #{createUser} ,</if>
+            <if test="updateUser != null and updateUser != '' "> #{updateUser} ,</if>
+    	</trim>
+    	)
+    </insert>
+
+    <!-- batch insert 2023-01-03 ywwb903  -->
+    <insert id="batchAdd" parameterType="list">
+        INSERT ALL
+        <foreach collection="list" item="item" index="index">
+            INTO PPM_OUTSRC_EMP_ASSESS_APPLY (
+            <trim suffixOverrides=",">
+                <if test="item.id != null" > ID ,</if>
+                <if test="item.instanceId != null and item.instanceId != '' ">  INSTANCE_ID ,</if>
+                <if test="item.flowId != null and item.flowId != '' ">  FLOW_ID ,</if>
+                <if test="item.deptId != null and item.deptId != '' ">  DEPT_ID ,</if>
+                <if test="item.deptName != null and item.deptName != '' ">  DEPT_NAME ,</if>
+                <if test="item.assessType != null and item.assessType != '' ">  ASSESS_TYPE ,</if>
+                <if test="item.assessYear != null and item.assessYear != '' ">  ASSESS_YEAR ,</if>
+                <if test="item.assessAnnual != null and item.assessAnnual != '' ">  ASSESS_ANNUAL ,</if>
+                <if test="item.totals != null and item.totals != '' ">  TOTALS ,</if>
+                <if test="item.approvalStatus != null and item.approvalStatus != '' ">  APPROVAL_STATUS ,</if>
+                <if test="item.applier != null and item.applier != '' ">  APPLIER ,</if>
+                <if test="item.prjMgrName != null and item.prjMgrName != '' ">  PRJ_MGR_NAME ,</if>
+                <if test="item.isDel != null and item.isDel != '' ">  IS_DEL ,</if>
+                <if test="item.createUser != null and item.createUser != '' ">  CREATE_USER ,</if>
+                <if test="item.updateUser != null and item.updateUser != '' ">  UPDATE_USER ,</if>
+            </trim>
+            )
+            VALUES(
+            <trim suffixOverrides=",">
+                <if test="item.id != null" > #{item.id} ,</if>
+                <if test="item.instanceId != null and item.instanceId != '' " > #{item.instanceId} ,</if>
+                <if test="item.flowId != null and item.flowId != '' " > #{item.flowId} ,</if>
+                <if test="item.deptId != null and item.deptId != '' " > #{item.deptId} ,</if>
+                <if test="item.deptName != null and item.deptName != '' " > #{item.deptName} ,</if>
+                <if test="item.assessType != null and item.assessType != '' " > #{item.assessType} ,</if>
+                <if test="item.assessYear != null and item.assessYear != '' " > #{item.assessYear} ,</if>
+                <if test="item.assessAnnual != null and item.assessAnnual != '' " > #{item.assessAnnual} ,</if>
+                <if test="item.totals != null and item.totals != '' " > #{item.totals} ,</if>
+                <if test="item.approvalStatus != null and item.approvalStatus != '' " > #{item.approvalStatus} ,</if>
+                <if test="item.applier != null and item.applier != '' " > #{item.applier} ,</if>
+                <if test="item.prjMgrName != null and item.prjMgrName != '' " > #{item.prjMgrName} ,</if>
+                <if test="item.isDel != null and item.isDel != '' " > #{item.isDel} ,</if>
+                <if test="item.createUser != null and item.createUser != '' " > #{item.createUser} ,</if>
+                <if test="item.updateUser != null and item.updateUser != '' " > #{item.updateUser} ,</if>
+            </trim>
+            )
+        </foreach>
+        select 1 from dual
+    </insert>
+
+    <!--  更新  -->
+	<!-- update by id 2023-01-03 ywwb903  -->
+	<update id="updatePojo" parameterType="outsrcEmpAssessApply">
+		UPDATE
+        PPM_OUTSRC_EMP_ASSESS_APPLY
+		<include refid="update_pojo_sql" />
+		WHERE is_del = '0' and id = #{id}
+	</update>
+
+    <!-- update by instanceId 2023-01-03 ywwb903  -->
+    <update id="updateByInstanceId" parameterType="outsrcEmpAssessApply">
+        UPDATE
+        PPM_OUTSRC_EMP_ASSESS_APPLY
+        <include refid="update_pojo_sql" />
+        WHERE is_del = '0' and instance_id = #{instanceId}
+    </update>
+
+	<!--  删除  -->
+	<!-- delete by pojo 2023-01-03 ywwb903  -->
+    <delete id="deletePojo" parameterType="outsrcEmpAssessApply">
+        DELETE FROM PPM_OUTSRC_EMP_ASSESS_APPLY WHERE ID = #{id}
+    </delete>
+</mapper>

@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+  
+<mapper namespace="com.tansun.wf.platform.mapper.WfHiTaskExpandDataMapper">
+
+  <resultMap id="hiTaskExpandDataResultMap" type="com.tansun.wf.activiti.model.HiTaskExpandDataEntity">
+    <id property="id" column="id" jdbcType="VARCHAR"/>
+    <result property="taskExpandPlanId" column="task_expand_plan_id" jdbcType="VARCHAR"/>
+    <result property="processInstanceId" column="process_inst_id" jdbcType="VARCHAR"/>
+    <result property="processDefineId" column="process_def_id" jdbcType="VARCHAR"/>
+    <result property="taskId" column="task_id" jdbcType="VARCHAR"/>
+    <result property="taskNodeId" column="task_node_id" jdbcType="VARCHAR"/>
+    <result property="field01" column="field01" jdbcType="VARCHAR"/>
+    <result property="field02" column="field02" jdbcType="VARCHAR"/>
+    <result property="field03" column="field03" jdbcType="VARCHAR"/>
+    <result property="field04" column="field04" jdbcType="VARCHAR"/>
+    <result property="field05" column="field05" jdbcType="VARCHAR"/>
+    <result property="field06" column="field06" jdbcType="VARCHAR"/>
+    <result property="field07" column="field07" jdbcType="VARCHAR"/>
+    <result property="field08" column="field08" jdbcType="VARCHAR"/>
+    <result property="field09" column="field09" jdbcType="VARCHAR"/>
+    <result property="field10" column="field10" jdbcType="VARCHAR"/>
+    <result property="field11" column="field11" jdbcType="VARCHAR"/>
+    <result property="field12" column="field12" jdbcType="VARCHAR"/>
+    <result property="field13" column="field13" jdbcType="VARCHAR"/>
+    <result property="field14" column="field14" jdbcType="VARCHAR"/>
+    <result property="field15" column="field15" jdbcType="VARCHAR"/>
+    <result property="field16" column="field16" jdbcType="VARCHAR"/>
+    <result property="field17" column="field17" jdbcType="VARCHAR"/>
+    <result property="field18" column="field18" jdbcType="VARCHAR"/>
+    <result property="field19" column="field19" jdbcType="VARCHAR"/>
+    <result property="field20" column="field20" jdbcType="VARCHAR"/>
+    <result property="commentMsg" column="COMMENT_MSG" jdbcType="VARCHAR"/>
+    <result property="opinion" column="OPINION" jdbcType="VARCHAR"/>
+    <result property="opion" column="OPION" jdbcType="VARCHAR"/>
+    <result property="opionKey" column="OPION_KEY" jdbcType="VARCHAR"/>
+    <result property="assigneeOrgName" column="ASSIGNEE_ORG_NAME" jdbcType="VARCHAR"/>
+    <result property="assigneeOrgCode" column="ASSIGNEE_ORG_CODE" jdbcType="VARCHAR"/>
+    <result property="assigneeDeptName" column="ASSIGNEE_DEPT_NAME" jdbcType="VARCHAR"/>
+    <result property="assigneeDeptCode" column="ASSIGNEE_DEPT_CODE" jdbcType="VARCHAR"/>
+    <result property="assigneeRoleName" column="ASSIGNEE_ROLE_NAME" jdbcType="VARCHAR"/>
+    <result property="assigneeRoleCode" column="ASSIGNEE_ROLE_CODE" jdbcType="VARCHAR"/>
+    <result property="candidateOrgs" column="CANDIDATE_ORGS" jdbcType="VARCHAR"/>
+    <result property="candidateDepts" column="CANDIDATE_DEPTS" jdbcType="VARCHAR"/>
+    <result property="candidateRoles" column="CANDIDATE_ROLES" jdbcType="VARCHAR"/>
+    <result property="selectUserModel" column="SELECT_USER_MODEL" jdbcType="VARCHAR"/>
+    <result property="isMulti" column="IS_MULTI" jdbcType="VARCHAR"/>
+    <result property="actButton" column="ACT_BUTTON" jdbcType="VARCHAR"/>
+    <result property="formScene" column="FORM_SCENE" jdbcType="VARCHAR"/>
+    <result property="taskEndTime" column="TASK_END_TIME" jdbcType="VARCHAR"/>
+    <result property="taskCreateTime" column="TASK_CREATE_TIME" jdbcType="VARCHAR"/>
+    <result property="isStartNode" column="IS_START_NODE" jdbcType="VARCHAR"/>
+    <result property="taskType" column="TASK_TYPE" jdbcType="VARCHAR"/>
+    <result property="taskName" column="TASK_NAME" jdbcType="VARCHAR"/>
+    <result property="startUserOrgCode" column="START_USER_ORG_CODE" jdbcType="VARCHAR"/>
+    <result property="startUserParentOrgCode" column="START_USER_PARENT_ORG_CODE" jdbcType="VARCHAR"/>
+    <result property="startUserRoleCode" column="START_USER_ROLE_CODE" jdbcType="VARCHAR"/>
+    <result property="startUserDeptCode" column="START_USER_DEPT_CODE" jdbcType="VARCHAR"/>
+    <result property="startUserId" column="START_USER_ID" jdbcType="VARCHAR"/>
+    <result property="processEndTime" column="PROCESS_END_TIME" jdbcType="VARCHAR"/>
+    <result property="processStartTime" column="PROCESS_START_TIME" jdbcType="VARCHAR"/>
+    <result property="superProcessInstanceId" column="SUPER_PROCESS_INSTANCE_ID" jdbcType="VARCHAR"/>
+    <result property="processClassifyCode" column="PROCESS_CLASSIFY_CODE" jdbcType="VARCHAR"/>
+    <result property="processName" column="PROCESS_NAME" jdbcType="VARCHAR"/>
+    <result property="processClassifyId" column="PROCESS_CLASSIFY_ID" jdbcType="VARCHAR"/>
+    <result property="businessKey" column="BUSINESS_KEY" jdbcType="VARCHAR"/>
+    <result property="processDefKey" column="PROCESS_DEF_KEY" jdbcType="VARCHAR"/>
+    <result property="tenantId" column="TENANT_ID" jdbcType="VARCHAR"/>
+    <result property="startUserName" column="START_USER_NAME" jdbcType="VARCHAR"/>
+  </resultMap>
+
+  <select id="selectByHiTaskId" parameterType="com.tansun.wf.activiti.query.WfHiTaskQuery" resultMap="hiTaskExpandDataResultMap">
+    SELECT
+        ID,
+        TASK_EXPAND_PLAN_ID,
+        PROCESS_INST_ID,
+        PROCESS_DEF_ID,
+        TASK_ID,
+        TASK_NODE_ID,
+        FIELD01,
+        FIELD02,
+        FIELD03,
+        FIELD04,
+        FIELD05,
+        FIELD06,
+        FIELD07,
+        FIELD08,
+        FIELD09,
+        FIELD10,
+        FIELD11,
+        FIELD12,
+        FIELD13,
+        FIELD14,
+        FIELD15,
+        FIELD16,
+        FIELD17,
+        FIELD18,
+        FIELD19,
+        FIELD20,
+        COMMENT_MSG,
+        OPINION,
+        OPION,
+        OPION_KEY,
+        ASSIGNEE_ORG_NAME,
+        ASSIGNEE_ORG_CODE,
+        ASSIGNEE_DEPT_NAME,
+        ASSIGNEE_DEPT_CODE,
+        ASSIGNEE_ROLE_NAME,
+        ASSIGNEE_ROLE_CODE,
+        CANDIDATE_ORGS,
+        CANDIDATE_DEPTS,
+        CANDIDATE_ROLES,
+        SELECT_USER_MODEL,
+        IS_MULTI,
+        ACT_BUTTON,
+        FORM_SCENE,
+        TASK_END_TIME,
+        TASK_CREATE_TIME,
+        IS_START_NODE,
+        TASK_TYPE,
+        TASK_NAME,
+        START_USER_ORG_CODE,
+        START_USER_PARENT_ORG_CODE,
+        START_USER_ROLE_CODE,
+        START_USER_DEPT_CODE,
+        START_USER_ID,
+        PROCESS_END_TIME,
+        PROCESS_START_TIME,
+        SUPER_PROCESS_INSTANCE_ID,
+        PROCESS_CLASSIFY_CODE,
+        PROCESS_NAME,
+        PROCESS_CLASSIFY_ID,
+        BUSINESS_KEY,
+        PROCESS_DEF_KEY,
+        TENANT_ID,
+        START_USER_NAME
+    FROM
+        WF_HI_TASK_EXPAND_DATA
+    <where>
+      <if test="taskId!=null and taskId!=null">
+        TASK_ID = #{taskId}
+      </if>
+      <if test="taskIds!=null and taskIds.size>0">
+        TASK_ID IN
+        <foreach collection="taskIds" item="taskId"  open="(" separator="," close=")">
+          #{taskId}
+        </foreach>
+      </if>
+    </where>
+  </select>
+
+</mapper>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tansun.wf.platform.mapper.WfReportMapper">
+
+    <select id="queryProcessNumber" resultType="java.util.Map" parameterType="java.lang.String">
+       SELECT NAME_ as 'processName' , count(NAME_) as 'processNumber'
+       from act_hi_procinst
+       where TENANT_ID_ = #{tenantId} and NAME_ != ''
+       GROUP BY NAME_
+       ORDER BY count(NAME_) desc
+    </select>
+
+    <select id="queryRunProcessNumber" resultType="java.util.Map" parameterType="java.lang.String">
+       SELECT PROC_DEF_KEY_ as 'processName' , count(PROC_DEF_KEY_) as 'processNumber' , count(END_TIME_) as 'endProcessNumber'
+        from act_hi_procinst
+        <where>
+            <if test="tenantId != null and tenantId != ''">
+                TENANT_ID_ =  #{tenantId}
+            </if>
+        </where>
+        GROUP BY PROC_DEF_KEY_
+        ORDER BY count(PROC_DEF_KEY_) desc
+    </select>
+
+    <select id="queryProcessState" resultType="java.util.Map" parameterType="java.lang.String">
+      SELECT SUM(END_TIME_ is null) AS '运行流程',
+      COUNT(END_TIME_) AS '结束流程',
+      COUNT(DELETE_REASON_ ) AS '强制终止流程'
+      FROM act_hi_procinst
+    </select>
+
+    <select id="queryUserProcessNumber" resultType="java.util.Map" parameterType="java.lang.String">
+        <if test="_databaseId == 'oracle'">
+            SELECT to_char(END_TIME_, 'YYYY-mm') mont, count(*) 'coun'
+        </if>
+        <if test="_databaseId == 'mysql'">
+            SELECT date_format(END_TIME_, '%Y-%m') mont, count(*) 'coun'
+        </if>
+        FROM act_hi_taskinst
+        WHERE TENANT_ID_ = #{tenantId} AND
+        END_TIME_ is not null
+        AND assignee_ = #{userId}
+        <if test="_databaseId == 'oracle'">
+            GROUP BY to_char(END_TIME_, 'YYYY-mm')
+        </if>
+        <if test="_databaseId == 'mysql'">
+            GROUP BY date_format(END_TIME_, '%Y-%m')
+        </if>
+
+    </select>
+
+
+
+</mapper>

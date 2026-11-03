@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+  
+<mapper namespace="com.tansun.wf.activiti.mapper.WfLeaveTransferMapper">
+
+  <resultMap id="leaveTransferResultMap" type="com.tansun.wf.activiti.model.LeaveTransferEntity">
+    <id property="id" column="ID" jdbcType="VARCHAR" />
+    <result property="classifyId" column="CLASSIFY_ID" jdbcType="VARCHAR" />
+    <result property="classifyName" column="CLASSIFY_NAME" jdbcType="VARCHAR" />
+    <result property="procInstId" column="PROC_INST_ID" jdbcType="VARCHAR" />
+    <result property="procInstName" column="PROC_INST_NAME" jdbcType="VARCHAR" />
+    <result property="rootId" column="ROOT_ID" jdbcType="VARCHAR" />
+    <result property="userId" column="USER_ID" jdbcType="VARCHAR" />
+    <result property="userName" column="USER_NAME" jdbcType="VARCHAR" />
+    <result property="roleCode" column="ROLE_CODE" jdbcType="VARCHAR" />
+    <result property="roleName" column="ROLE_NAME" jdbcType="VARCHAR" />
+    <result property="orgCode" column="ORG_CODE" jdbcType="VARCHAR" />
+    <result property="orgName" column="ORG_NAME" jdbcType="VARCHAR" />
+    <result property="deptCode" column="DEPT_CODE" jdbcType="VARCHAR" />
+    <result property="deptName" column="Dept_NAME" jdbcType="VARCHAR" />
+    <result property="transferId" column="TRANSFER_ID" jdbcType="VARCHAR" />
+    <result property="transferUserName" column="TRANSFER_USER_NAME" jdbcType="VARCHAR" />
+    <result property="transferRoleCode" column="TRANSFER_ROLE_CODE" jdbcType="VARCHAR" />
+    <result property="transferRoleName" column="TRANSFER_ROLE_NAME" jdbcType="VARCHAR" />
+    <result property="transferOrgCode" column="TRANSFER_ORG_CODE" jdbcType="VARCHAR" />
+    <result property="transferOrgName" column="TRANSFER_ORG_NAME" jdbcType="VARCHAR" />
+    <result property="transferDeptCode" column="TRANSFER_DEPT_CODE" jdbcType="VARCHAR" />
+    <result property="transferDeptName" column="TRANSFER_DEPT_NAME" jdbcType="VARCHAR" />
+    <result property="startTime" column="START_TIME" jdbcType="TIMESTAMP" />
+    <result property="endTime" column="END_TIME" jdbcType="TIMESTAMP" />
+    <result property="describe" column="DESCRIBE_" jdbcType="VARCHAR" />
+    <result property="startStatus" column="START_STATUS" jdbcType="VARCHAR" />
+    <result property="status" column="STATUS" jdbcType="VARCHAR" />
+    <result property="setStatus" column="SET_STATUS" jdbcType="VARCHAR" />
+    <result property="isTransfer" column="IS_TRANSFER" jdbcType="VARCHAR" />
+    <result property="isPower" column="IS_POWER" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <select id="selectWfLeaveTransferCountByQueryCriteria" parameterType="com.tansun.wf.activiti.model.LeaveTransferEntity" resultType="long">
+    select count(distinct RES.ID_)
+    <include refid="selectWfLeaveTransferByQueryCriteriaSql"/>
+  </select>
+
+  <select id="selectWfLeaveTransferByQueryCriteria" parameterType="com.tansun.wf.activiti.model.LeaveTransferEntity" resultMap="leaveTransferResultMap">
+    ${limitBefore}
+    select distinct RES.*
+
+    <if test="databaseType !='db2'">
+      ${limitBetween}
+    </if>
+    <if test="databaseType =='db2'">
+      , row_number() over (ORDER BY RES.ID ) rnk FROM ( select distinct RES.*
+    </if>
+    <include refid="selectWfLeaveTransferByQueryCriteriaSql"/>
+
+    ${limitAfter}
+  </select>
+
+  <sql id="selectWfLeaveTransferByQueryCriteriaSql">
+    from ${prefix}wf_leave_transfer RES
+    <where>
+      <if test="status != null and status !=''">
+          RES.STATUS = #{status}
+      </if>
+      <if test="classifyId != null and classifyId !=''">
+        AND RES.CLASSIFY_ID = #{classifyId}
+      </if>
+      <if test="procInstId != null and procInstId !=''">
+        AND RES.PROC_INST_ID = #{procInstId}
+      </if>
+      <if test="startStatus != null and startStatus !=''">
+        AND RES.START_STATUS = #{startStatus}
+      </if>
+      <if test="userId != null and userId !=''">
+        AND RES.USER_ID = #{userId}
+      </if>
+      <if test="transferId != null and transferId != ''">
+			AND RES.TRANSFER_ID = #{transferId}
+	  </if>
+      <if test="time != null">
+      	AND #{time} BETWEEN RES.START_TIME AND RES.END_TIME
+      </if>
+      <if test="ids!=null and ids.size()>0">
+          AND RES.ID IN
+          <foreach collection="ids" item="leaveId"  open="(" separator="," close=")">
+              ${leaveId}
+          </foreach>
+      </if>
+    </where>
+  </sql>
+  
+  <!-- 自动发起授权 -->
+  <update id="updateLeaveTransferAutoStart" parameterType="com.tansun.wf.activiti.model.LeaveTransferEntity">
+    UPDATE ${prefix}wf_leave_transfer RES
+    SET RES.START_STATUS=#{startStatus}
+    WHERE 
+    	RES.ID = #{id} 
+  </update>
+ 	
+  <!-- 自动终止 -->
+  <update id="updateLeaveTransferStatus" parameterType="com.tansun.wf.activiti.model.LeaveTransferEntity">
+    UPDATE ${prefix}wf_leave_transfer RES
+    SET RES.STATUS=#{status}
+    WHERE 
+    	RES.ID = #{id} 
+  </update>
+
+  <insert id="insertLeaveTransfer">
+		INSERT INTO wf_leave_transfer(
+			id,
+			classify_id,
+			classify_name,
+			proc_inst_id,
+			operation_user_id,
+			proc_inst_name,
+			user_id,
+			transfer_id,
+			start_time,
+			end_time,
+			status,
+			start_status,
+			describe_,
+            is_transfer,
+			is_power,
+			tenant_id,
+			is_transfer_historical_tasks
+		) VALUES (
+			#{id,jdbcType = VARCHAR},
+			#{classifyId,jdbcType = VARCHAR},
+			#{classifyName,jdbcType = VARCHAR},
+			#{procInstId,jdbcType = VARCHAR},
+			#{operationUserId,jdbcType = VARCHAR},
+			#{procInstName,jdbcType = VARCHAR},
+			#{userId,jdbcType = VARCHAR},
+			#{transferId,jdbcType = VARCHAR},
+			#{startTime,jdbcType=TIMESTAMP},
+			#{endTime,jdbcType=TIMESTAMP},
+			#{status,jdbcType = VARCHAR},
+			#{startStatus,jdbcType = VARCHAR},
+			#{describe,jdbcType = VARCHAR},
+            #{isTransfer,jdbcType = VARCHAR},
+			#{isPower,jdbcType = VARCHAR},
+			#{tenantId,jdbcType = VARCHAR},
+			#{isTransferHistoricalTasks,jdbcType = VARCHAR}
+		)
+	</insert>
+
+    <!-- 移交历史任务 -->
+    <update id="updateLeaveTransfer">
+      UPDATE wf_leave_transfer SET
+          classify_id = #{classifyId},
+          classify_name = #{classifyName},
+          proc_inst_id = #{procInstId},
+          proc_inst_name = #{procInstName},
+          transfer_id = #{transferId},
+          start_time = #{startTime},
+          end_time = #{endTime},
+          status = #{status},
+          describe_ = #{describe}
+      WHERE id = #{id}
+    </update>
+
+    <!-- 移交历史任务 -->
+    <update id="transferHiTask" parameterType="java.util.HashMap">
+        UPDATE act_hi_taskinst
+        SET assignee_ = #{transferId}
+        <where>
+            assignee_ = #{userId}
+            and id_ in
+            <foreach collection="taskIds" item="taskId"  open="(" separator="," close=")">
+                #{taskId}
+            </foreach>
+        </where>
+    </update>
+
+</mapper>

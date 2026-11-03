@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k6991 2020-02-21 -->
+<mapper namespace="com.work.ppm.application.model.systemmanager.ImMenus">
+    <resultMap type="imMenus" id="IMMENUS_ALL">
+        <result property="type" column="TYPE"/>
+        <result property="code" column="CODE"/>
+        <result property="parentid" column="PARENTID"/>
+        <result property="routeid" column="ROUTEID"/>
+        <result property="url" column="URL"/>
+        <result property="readme" column="README"/>
+        <result property="name" column="NAME"/>
+        <result property="ordernum" column="ORDERNUM"/>
+        <result property="modifydate" column="MODIFYDATE"/>
+        <result property="mid" column="MID"/>
+        <result property="createdate" column="CREATEDATE"/>
+        <result property="icon" column="ICON"/>
+        <result property="sysType" column="SYS_TYPE"/>
+    </resultMap>
+
+    <!-- 所有字段名称 -->
+    <sql id="sql_flied_all">
+        TYPE,
+        CODE,
+        PARENTID,
+        ROUTEID,
+        URL,
+        README,
+        NAME,
+        ORDERNUM,
+        MODIFYDATE,
+        MID,
+        CREATEDATE,
+        ICON,
+        SYS_TYPE
+    </sql>
+    <!-- 查询分页  2020-02-21 k6991  -->
+    <select id="queryPagerList" parameterType="map" resultMap="IMMENUS_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM IM_MENUS
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="type != null ">TYPE = #{type} AND</if>
+            <if test="code != null  and code != '' ">CODE = #{code} AND</if>
+            <if test="parentid != null  and parentid != '' ">PARENTID = #{parentid} AND</if>
+            <if test="routeid != null  and routeid != '' ">ROUTEID = #{routeid} AND</if>
+            <if test="url != null  and url != '' ">URL = #{url} AND</if>
+            <if test="readme != null  and readme != '' ">README = #{readme} AND</if>
+            <if test="name != null  and name != '' ">NAME = #{name} AND</if>
+            <if test="ordernum != null  and ordernum != '' ">ORDERNUM = #{ordernum} AND</if>
+            <if test="modifydate != null ">MODIFYDATE = #{modifydate} AND</if>
+            <if test="mid != null  and mid != '' ">MID = #{mid} AND</if>
+            <if test="createdate != null ">CREATEDATE = #{createdate} AND</if>
+            <if test="icon != null  and icon != '' ">ICON = #{icon} AND</if>
+            <if test="sysType != null">SYS_TYPE = #{sysType} AND</if>
+        </trim>
+    </select>
+
+    <!-- 新增  2020-02-21 k6991  -->
+    <insert id="addPojo" parameterType="imMenus">
+        <selectKey keyProperty="mid" resultType="string" order="BEFORE">
+            select sys_guid() from dual
+        </selectKey>
+        INSERT INTO IM_MENUS (
+        TYPE,
+        CODE,
+        PARENTID,
+        ROUTEID,
+        URL,
+        README,
+        NAME,
+        ORDERNUM,
+        MODIFYDATE,
+        MID,
+        CREATEDATE,
+        ICON,
+        SYS_TYPE
+        )
+        VALUES(
+        #{type},
+        #{code},
+        #{parentid},
+        #{routeid},
+        #{url},
+        #{readme},
+        #{name},
+        #{ordernum},
+        #{modifydate},
+        #{mid},
+        #{createdate},
+        #{icon},
+        #{sysType}
+        )
+    </insert>
+
+    <!--通过id查询  k6991 2020-02-21 -->
+    <select id="queryDetail" parameterType="map" resultMap="IMMENUS_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM IM_MENUS
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="type != null ">TYPE=#{type} AND</if>
+            <if test="mid != null  and mid != '' ">MID=#{mid} AND</if>
+            <if test="sysType != null ">SYS_TYPE=#{sysType} AND</if>
+        </trim>
+    </select>
+
+    <!--查询集合  k6991 2020-02-21 -->
+    <select id="getList" parameterType="imMenus" resultMap="IMMENUS_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM IM_MENUS
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="type != null ">TYPE=#{type} AND</if>
+            <if test="code != null  and code != '' ">CODE=#{code} AND</if>
+            <if test="parentid != null  and parentid != '' ">PARENTID=#{parentid} AND</if>
+            <if test="routeid != null  and routeid != '' ">ROUTEID=#{routeid} AND</if>
+            <if test="url != null  and url != '' ">URL=#{url} AND</if>
+            <if test="readme != null  and readme != '' ">README=#{readme} AND</if>
+            <if test="name != null  and name != '' ">NAME=#{name} AND</if>
+            <if test="ordernum != null  and ordernum != '' ">ORDERNUM=#{ordernum} AND</if>
+            <if test="modifydate != null ">MODIFYDATE=#{modifydate} AND</if>
+            <if test="mid != null  and mid != '' ">MID=#{mid} AND</if>
+            <if test="createdate != null ">CREATEDATE=#{createdate} AND</if>
+            <if test="icon != null  and icon != '' ">ICON=#{icon} AND</if>
+            <if test="sysType != null ">SYS_TYPE=#{sysType} AND</if>
+        </trim>
+    </select>
+    <!-- update sql -->
+    <sql id="update_pojo_sql">
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="type != null ">TYPE=#{type} ,</if>
+            <if test="code != null  and code != '' ">CODE=#{code} ,</if>
+            <if test="parentid != null  and parentid != '' ">PARENTID=#{parentid} ,</if>
+            <if test="routeid != null  and routeid != '' ">ROUTEID=#{routeid} ,</if>
+            <if test="url != null  and url != '' ">URL=#{url} ,</if>
+            <if test="readme != null  and readme != '' ">README=#{readme} ,</if>
+            <if test="name != null  and name != '' ">NAME=#{name} ,</if>
+            <if test="ordernum != null  and ordernum != '' ">ORDERNUM=#{ordernum} ,</if>
+            <if test="modifydate != null ">MODIFYDATE=#{modifydate} ,</if>
+            <if test="mid != null  and mid != '' ">MID=#{mid} ,</if>
+            <if test="createdate != null ">CREATEDATE=#{createdate} ,</if>
+            <if test="icon != null  and icon != '' ">ICON=#{icon} ,</if>
+            <if test="sysType != null ">SYS_TYPE=#{sysType} ,</if>
+        </trim>
+    </sql>
+
+    <!--通过id编辑 k6991 2020-02-21 -->
+    <update id="updatePojo" parameterType="imMenus">
+        UPDATE
+        IM_MENUS
+        <include refid="update_pojo_sql"/>
+        WHERE MID=#{mid} AND SYS_TYPE=1
+    </update>
+
+    <!--通过id批量删除  k6991 2020-02-21 -->
+    <delete id="deleteById" parameterType="imMenus">
+        DELETE
+        FROM
+        IM_MENUS
+        WHERE MID = #{mid} AND SYS_TYPE=1
+    </delete>
+    <!-- 获取登录权限   k6991 2020-02-21 -->
+    <select id="LoginMenusList" parameterType="map" resultMap="IMMENUS_ALL">
+        SELECT T2.MID,T2.ROUTEID,CODE,NAME,T2.TYPE,ORDERNUM,URL,PARENTID,ICON
+        FROM IM_PERMISSIONS T1 LEFT JOIN IM_MENUS T2 ON(T1.MID=T2.MID)
+        WHERE T1.RID IN (${rid}) AND T1.SYS_TYPE=1 AND T2.TYPE &gt;=0
+    </select>
+
+    <!--查询集合  k6991 2020-04-27 -->
+    <select id="getMidsForList" parameterType="map" resultMap="IMMENUS_ALL">
+        SELECT
+        <include refid="sql_flied_all" />
+        FROM IM_MENUS
+        WHERE MID IN (${mids})
+    </select>
+
+    <!--查询集合  k6991 2020-02-21 -->
+    <select id="getOperaMenusList" parameterType="imMenus" resultMap="IMMENUS_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM OPERA_MENUS
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="type != null ">TYPE=#{type} AND</if>
+            <if test="code != null  and code != '' ">CODE=#{code} AND</if>
+            <if test="parentid != null  and parentid != '' ">PARENTID=#{parentid} AND</if>
+            <if test="routeid != null  and routeid != '' ">ROUTEID=#{routeid} AND</if>
+            <if test="url != null  and url != '' ">URL=#{url} AND</if>
+            <if test="readme != null  and readme != '' ">README=#{readme} AND</if>
+            <if test="name != null  and name != '' ">NAME=#{name} AND</if>
+            <if test="ordernum != null  and ordernum != '' ">ORDERNUM=#{ordernum} AND</if>
+            <if test="modifydate != null ">MODIFYDATE=#{modifydate} AND</if>
+            <if test="mid != null  and mid != '' ">MID=#{mid} AND</if>
+            <if test="createdate != null ">CREATEDATE=#{createdate} AND</if>
+            <if test="icon != null  and icon != '' ">ICON=#{icon} AND</if>
+            <if test="sysType != null ">SYS_TYPE=#{sysType} AND</if>
+        </trim>
+    </select>
+
+
+    <select id="queryParentId" parameterType="map" resultMap="IMMENUS_ALL">
+        SELECT MID , PARENTID
+        FROM OPERA_MENUS
+        WHERE MID = #{mid}
+    </select>
+</mapper>

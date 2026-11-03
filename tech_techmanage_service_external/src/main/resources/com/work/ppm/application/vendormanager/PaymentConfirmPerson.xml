@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.work.ppm.application.model.vendormanager.PaymentConfirmPerson">
+
+    <resultMap type="paymentConfirmPerson" id="PAYMENTCONFIRMPERSON_ALL">
+      <result property="id" column="ID"/>
+      <result property="instanceId" column="INSTANCE_ID"/>
+      <result property="jobId" column="JOB_ID"/>
+      <result property="userName" column="USER_NAME"/>
+      <result property="paymentYear" column="PAYMENT_YEAR"/>
+      <result property="paymentMonth" column="PAYMENT_MONTH"/>
+      <result property="isDel" column="IS_DEL"/>
+      <result property="price" column="PRICE"/>
+      <result property="actualPrice" column="ACTUAL_PRICE"/>
+      <result property="requiredAttendanceDays" column="REQUIRED_ATTENDANCE_DAYS"/>
+      <result property="actualAttendanceDays" column="ACTUAL_ATTENDANCE_DAYS"/>
+      <result property="createDate" column="CREATE_DATE"/>
+      <result property="createUser" column="CREATE_USER"/>
+      <result property="updateDate" column="UPDATE_DATE"/>
+      <result property="updateUser" column="UPDATE_USER"/>
+    </resultMap>
+
+    <resultMap type="com.work.ppm.application.dto.vendormanager.PaymentConfirmPersonDto" id="PAYMENTCONFIRMPERSON_ALL_EXT" extends="PAYMENTCONFIRMPERSON_ALL">
+    </resultMap>
+
+    <!-- 所有字段 -->
+    <sql id="sql_flied_all">
+        ID
+        ,INSTANCE_ID
+        ,JOB_ID
+        ,USER_NAME
+        ,PAYMENT_YEAR
+        ,PAYMENT_MONTH
+        ,IS_DEL
+        ,PRICE
+        ,REQUIRED_ATTENDANCE_DAYS
+        ,ACTUAL_ATTENDANCE_DAYS
+        ,ACTUAL_PRICE
+    </sql>
+
+    <sql id="sql_flied_basic">
+        ID
+        ,INSTANCE_ID
+        ,JOB_ID
+        ,USER_NAME
+        ,PAYMENT_YEAR
+        ,PAYMENT_MONTH
+        ,IS_DEL
+        ,PRICE
+        ,REQUIRED_ATTENDANCE_DAYS
+        ,ACTUAL_ATTENDANCE_DAYS
+        ,ACTUAL_PRICE
+    </sql>
+
+    <sql id="sql_flied_small">
+          ID
+          ,INSTANCE_ID
+          ,JOB_ID
+          ,USER_NAME
+          ,PAYMENT_YEAR
+          ,PAYMENT_MONTH
+          ,IS_DEL
+          ,PRICE
+          ,ACTUAL_PRICE
+          ,REQUIRED_ATTENDANCE_DAYS
+          ,ACTUAL_ATTENDANCE_DAYS
+    </sql>
+
+    <!--  查询条件  -->
+    <sql id="sql_select_condition">
+       <trim prefix="WHERE" suffixOverrides="AND">
+           <if test="id != null and id != '' "> ID = #{id} AND </if>
+           <if test="instanceId != null and instanceId != '' "> INSTANCE_ID = #{instanceId} AND </if>
+           <if test="jobId != null and jobId != '' "> JOB_ID = #{jobId} AND </if>
+           <if test="userName != null and userName != '' "> USER_NAME = #{userName} AND </if>
+           <if test="paymentYear != null and paymentYear != '' "> PAYMENT_YEAR = #{paymentYear} AND </if>
+           <if test="paymentMonth != null and paymentMonth != '' "> PAYMENT_MONTH = #{paymentMonth} AND </if>
+           <if test="isDel != null and isDel != '' "> IS_DEL = #{isDel} AND </if>
+           <if test="price != null and price != '' "> PRICE = #{price} AND </if>
+           <if test="requiredAttendanceDays != null and requiredAttendanceDays != '' "> REQUIRED_ATTENDANCE_DAYS = #{requiredAttendanceDays} AND </if>
+           <if test="actualAttendanceDays != null and actualAttendanceDays != '' "> ACTUAL_ATTENDANCE_DAYS = #{actualAttendanceDays} AND </if>
+           <if test="actualPrice != null and actualPrice != '' "> ACTUAL_PRICE = #{actualPrice} AND </if>
+           <if test="createUser != null and createUser != '' "> CREATE_USER = #{createUser} AND </if>
+           <if test="updateUser != null and updateUser != '' "> UPDATE_USER = #{updateUser} AND </if>
+       </trim>
+    </sql>
+
+    <!-- 查询条件 自定义 -->
+    <sql id="sql_select_condition_cus">
+       <trim prefix="WHERE" suffixOverrides="AND">
+           <if test="id != null and id != '' "> ID = #{id} AND </if>
+           <if test="instanceId != null and instanceId != '' "> INSTANCE_ID = #{instanceId} AND </if>
+           <if test="jobId != null and jobId != '' "> JOB_ID = #{jobId} AND </if>
+           <if test="userName != null and userName != '' "> USER_NAME = #{userName} AND </if>
+           <if test="paymentYear != null and paymentYear != '' "> PAYMENT_YEAR = #{paymentYear} AND </if>
+           <if test="paymentMonth != null and paymentMonth != '' "> PAYMENT_MONTH = #{paymentMonth} AND </if>
+           <if test="isDel != null and isDel != '' "> IS_DEL = #{isDel} AND </if>
+           <if test="price != null and price != '' "> PRICE = #{price} AND </if>
+           <if test="actualPrice != null and actualPrice != '' "> ACTUAL_PRICE = #{actualPrice} AND </if>
+           <if test="requiredAttendanceDays != null and requiredAttendanceDays != '' "> REQUIRED_ATTENDANCE_DAYS = #{requiredAttendanceDays} AND </if>
+           <if test="actualAttendanceDays != null and actualAttendanceDays != '' "> ACTUAL_ATTENDANCE_DAYS = #{actualAttendanceDays} AND </if>
+           <if test="createUser != null and createUser != '' "> CREATE_USER = #{createUser} AND </if>
+           <if test="updateUser != null and updateUser != '' "> UPDATE_USER = #{updateUser} AND </if>
+       </trim>
+    </sql>
+
+    <!-- 更新字段 -->
+    <sql id="update_pojo_sql">
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="instanceId != null and instanceId != '' " > INSTANCE_ID = #{instanceId},</if>
+            <if test="jobId != null and jobId != '' " > JOB_ID = #{jobId},</if>
+            <if test="userName != null and userName != '' " > USER_NAME = #{userName},</if>
+            <if test="paymentYear != null and paymentYear != '' " > PAYMENT_YEAR = #{paymentYear},</if>
+            <if test="paymentMonth != null and paymentMonth != '' " > PAYMENT_MONTH = #{paymentMonth},</if>
+            <if test="isDel != null and isDel != '' " > IS_DEL = #{isDel},</if>
+            <if test="price != null " > PRICE = #{price},</if>
+            <if test="actualPrice != null" > ACTUAL_PRICE = #{actualPrice},</if>
+            <if test="requiredAttendanceDays != null and requiredAttendanceDays != '' " > REQUIRED_ATTENDANCE_DAYS = #{requiredAttendanceDays},</if>
+            <if test="actualAttendanceDays != null and actualAttendanceDays != '' " > ACTUAL_ATTENDANCE_DAYS = #{actualAttendanceDays},</if>
+            <if test="createUser != null and createUser != '' " > CREATE_USER = #{createUser},</if>
+            <if test="updateUser != null and updateUser != '' " > UPDATE_USER = #{updateUser},</if>
+        </trim>
+    </sql>
+
+    <!--  查询  -->
+    <!-- pager query 2023-01-17 ywwb903  -->
+    <select id="queryPagerList" parameterType="map" resultMap="PAYMENTCONFIRMPERSON_ALL">
+        SELECT
+            <include refid="sql_flied_basic"/>
+            FROM PPM_PAYMENT_CONFIRM_PERSON
+            <include refid="sql_select_condition"/>
+    </select>
+
+    <!-- list query 2023-01-17 ywwb903  -->
+    <select id="getList" parameterType="paymentConfirmPerson" resultMap="PAYMENTCONFIRMPERSON_ALL">
+        SELECT
+        <include refid="sql_flied_basic"/>
+        FROM PPM_PAYMENT_CONFIRM_PERSON
+        <include refid="sql_select_condition"/>
+    </select>
+
+    <!-- select one by instanceId  2023-01-17 ywwb903  -->
+    <select id="selectOneByInstanceId" parameterType="map" resultMap="PAYMENTCONFIRMPERSON_ALL">
+        SELECT
+        <include refid="sql_flied_all" />
+        FROM PPM_PAYMENT_CONFIRM_PERSON
+        WHERE instance_id = #{instanceId}
+          AND is_del = '0'
+          AND rownum = 1
+    </select>
+
+    <!-- select List by instanceId  2023-01-17 ywwb903  -->
+    <select id="selectListByInstanceId" parameterType="map" resultMap="PAYMENTCONFIRMPERSON_ALL_EXT">
+        SELECT
+        <include refid="sql_flied_all" />
+        FROM PPM_PAYMENT_CONFIRM_PERSON
+        WHERE instance_id = #{instanceId}
+          AND is_del = '0'
+    </select>
+
+    <!-- select one by id  2023-01-17 ywwb903  -->
+    <select id="selectOneById" resultMap="PAYMENTCONFIRMPERSON_ALL_EXT">
+        SELECT
+        <include refid="sql_flied_all" />
+        FROM PPM_PAYMENT_CONFIRM_PERSON WHERE id = #{id}
+    </select>
+
+    <!-- select many By ids  2023-01-17 ywwb903 -->
+    <select id="selectListByIds" resultMap="PAYMENTCONFIRMPERSON_ALL">
+        SELECT
+        <include refid="sql_flied_small" />
+        FROM PPM_PAYMENT_CONFIRM_PERSON WHERE ID IN
+        <foreach collection="list" item="ids" open="(" separator=", " close=")">
+            #{ids}
+        </foreach>
+    </select>
+
+   <!-- select by map  2023-01-17 ywwb903  -->
+    <select id="selectByMapBasic" parameterType="map" resultMap="PAYMENTCONFIRMPERSON_ALL">
+        SELECT
+        <include refid="sql_flied_basic" />
+        FROM PPM_PAYMENT_CONFIRM_PERSON
+        <include refid="sql_select_condition_cus"/>
+    </select>
+
+    <select id="selectByMapSmall" parameterType="map" resultMap="PAYMENTCONFIRMPERSON_ALL">
+        SELECT
+        <include refid="sql_flied_small" />
+        FROM PPM_PAYMENT_CONFIRM_PERSON
+        <include refid="sql_select_condition_cus"/>
+    </select>
+
+    <select id="selectByMap" parameterType="map" resultMap="PAYMENTCONFIRMPERSON_ALL">
+        SELECT
+        <include refid="sql_flied_all" />
+        FROM PPM_PAYMENT_CONFIRM_PERSON
+        <include refid="sql_select_condition"/>
+    </select>
+
+   <!-- selectCount  2023-01-17 ywwb903  -->
+    <select id="selectCount" parameterType="map" resultType="Long">
+        SELECT COUNT(1)
+        FROM PPM_PAYMENT_CONFIRM_PERSON
+        <include refid="sql_select_condition_cus"/>
+    </select>
+
+
+    <!--  新增  -->
+    <!-- insert 2023-01-17 ywwb903  -->
+    <insert id="addPojo" parameterType="paymentConfirmPerson">
+    	INSERT INTO PPM_PAYMENT_CONFIRM_PERSON (
+    	<trim suffixOverrides=",">
+    	    <if test="id != null and id != '' ">  ID ,</if>
+    	    <if test="instanceId != null and instanceId != '' ">  INSTANCE_ID ,</if>
+    	    <if test="jobId != null and jobId != '' ">  JOB_ID ,</if>
+    	    <if test="userName != null and userName != '' ">  USER_NAME ,</if>
+    	    <if test="paymentYear != null and paymentYear != '' ">  PAYMENT_YEAR ,</if>
+    	    <if test="paymentMonth != null and paymentMonth != '' ">  PAYMENT_MONTH ,</if>
+    	    <if test="isDel != null and isDel != '' ">  IS_DEL ,</if>
+    	    <if test="price != null ">  PRICE ,</if>
+    	    <if test="actualPrice != null ">  ACTUAL_PRICE ,</if>
+            <if test="requiredAttendanceDays != null and requiredAttendanceDays != '' ">  REQUIRED_ATTENDANCE_DAYS ,</if>
+            <if test="actualAttendanceDays != null and actualAttendanceDays != '' ">  ACTUAL_ATTENDANCE_DAYS ,</if>
+    	    <if test="createDate != null and createDate != '' ">  CREATE_DATE ,</if>
+    	    <if test="createUser != null and createUser != '' ">  CREATE_USER ,</if>
+    	    <if test="updateDate != null and updateDate != '' ">  UPDATE_DATE ,</if>
+    	    <if test="updateUser != null and updateUser != '' ">  UPDATE_USER ,</if>
+    	</trim>
+    	)
+    	VALUES(
+    	<trim suffixOverrides=",">
+            <if test="id != null and id != '' "> #{id} ,</if>
+            <if test="instanceId != null and instanceId != '' "> #{instanceId} ,</if>
+            <if test="jobId != null and jobId != '' "> #{jobId} ,</if>
+            <if test="userName != null and userName != '' "> #{userName} ,</if>
+            <if test="paymentYear != null and paymentYear != '' "> #{paymentYear} ,</if>
+            <if test="paymentMonth != null and paymentMonth != '' "> #{paymentMonth} ,</if>
+            <if test="isDel != null and isDel != '' "> #{isDel} ,</if>
+            <if test="price != null"> #{price} ,</if>
+            <if test="actualPrice != null"> #{actualPrice} ,</if>
+            <if test="requiredAttendanceDays != null and requiredAttendanceDays != '' "> #{requiredAttendanceDays} ,</if>
+            <if test="actualAttendanceDays != null and actualAttendanceDays != '' "> #{actualAttendanceDays} ,</if>
+            <if test="createDate != null and createDate != '' "> #{createDate} ,</if>
+            <if test="createUser != null and createUser != '' "> #{createUser} ,</if>
+            <if test="updateDate != null and updateDate != '' "> #{updateDate} ,</if>
+            <if test="updateUser != null and updateUser != '' "> #{updateUser} ,</if>
+    	</trim>
+    	)
+    </insert>
+
+    <!-- batch insert 2023-01-17 ywwb903  -->
+    <insert id="batchAdd" parameterType="list">
+        INSERT ALL
+        <foreach collection="list" item="item" index="index">
+            INTO PPM_PAYMENT_CONFIRM_PERSON (
+            <trim suffixOverrides=",">
+                <if test="item.id != null" > ID ,</if>
+                <if test="item.instanceId != null and item.instanceId != '' ">  INSTANCE_ID ,</if>
+                <if test="item.jobId != null and item.jobId != '' ">  JOB_ID ,</if>
+                <if test="item.userName != null and item.userName != '' ">  USER_NAME ,</if>
+                <if test="item.paymentYear != null and item.paymentYear != '' ">  PAYMENT_YEAR ,</if>
+                <if test="item.paymentMonth != null and item.paymentMonth != '' ">  PAYMENT_MONTH ,</if>
+                <if test="item.isDel != null and item.isDel != '' ">  IS_DEL ,</if>
+                <if test="item.price != null">  PRICE ,</if>
+                <if test="item.actualPrice != null">  ACTUAL_PRICE ,</if>
+                <if test="item.requiredAttendanceDays != null and item.requiredAttendanceDays != '' ">  REQUIRED_ATTENDANCE_DAYS ,</if>
+                <if test="item.actualAttendanceDays != null and item.actualAttendanceDays != '' ">  ACTUAL_ATTENDANCE_DAYS ,</if>
+                <if test="item.createDate != null and item.createDate != '' ">  CREATE_DATE ,</if>
+                <if test="item.createUser != null and item.createUser != '' ">  CREATE_USER ,</if>
+                <if test="item.updateDate != null and item.updateDate != '' ">  UPDATE_DATE ,</if>
+                <if test="item.updateUser != null and item.updateUser != '' ">  UPDATE_USER ,</if>
+            </trim>
+            )
+            VALUES(
+            <trim suffixOverrides=",">
+                <if test="item.id != null" > #{item.id} ,</if>
+                <if test="item.instanceId != null and item.instanceId != '' " > #{item.instanceId} ,</if>
+                <if test="item.jobId != null and item.jobId != '' " > #{item.jobId} ,</if>
+                <if test="item.userName != null and item.userName != '' " > #{item.userName} ,</if>
+                <if test="item.paymentYear != null and item.paymentYear != '' " > #{item.paymentYear} ,</if>
+                <if test="item.paymentMonth != null and item.paymentMonth != '' " > #{item.paymentMonth} ,</if>
+                <if test="item.isDel != null and item.isDel != '' " > #{item.isDel} ,</if>
+                <if test="item.price != null" > #{item.price} ,</if>
+                <if test="item.actualPrice != null" > #{item.actualPrice} ,</if>
+                <if test="item.requiredAttendanceDays != null and item.requiredAttendanceDays != '' " > #{item.requiredAttendanceDays} ,</if>
+                <if test="item.actualAttendanceDays != null and item.actualAttendanceDays != '' " > #{item.actualAttendanceDays} ,</if>
+                <if test="item.createDate != null and item.createDate != '' " > #{item.createDate} ,</if>
+                <if test="item.createUser != null and item.createUser != '' " > #{item.createUser} ,</if>
+                <if test="item.updateDate != null and item.updateDate != '' " > #{item.updateDate} ,</if>
+                <if test="item.updateUser != null and item.updateUser != '' " > #{item.updateUser} ,</if>
+            </trim>
+            )
+        </foreach>
+        select 1 from dual
+    </insert>
+
+    <!--  更新  -->
+	<!-- update by id 2023-01-17 ywwb903  -->
+	<update id="updatePojo" parameterType="paymentConfirmPerson">
+		UPDATE
+		PPM_PAYMENT_CONFIRM_PERSON
+		<include refid="update_pojo_sql" />
+		WHERE is_del = '0' and id = #{id}
+	</update>
+
+    <!-- update by instanceId 2023-01-17 ywwb903  -->
+    <update id="updateByInstanceId" parameterType="paymentConfirmPerson">
+        UPDATE
+		PPM_PAYMENT_CONFIRM_PERSON
+        <include refid="update_pojo_sql" />
+        WHERE is_del = '0' and instance_id = #{instanceId}
+    </update>
+
+	<!--  删除  -->
+	<!-- delete by pojo 2023-01-17 ywwb903  -->
+    <delete id="deletePojo" parameterType="paymentConfirmPerson">
+        DELETE FROM PPM_PAYMENT_CONFIRM_PERSON WHERE ID = #{id}
+    </delete>
+</mapper>

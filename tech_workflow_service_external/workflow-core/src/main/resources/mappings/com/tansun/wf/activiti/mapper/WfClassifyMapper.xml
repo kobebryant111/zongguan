@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.tansun.wf.activiti.mapper.WfClassifyMapper">
+
+  <resultMap id="classifyResultMap" type="com.tansun.wf.activiti.model.ClassifyEntity">
+    <id property="id" column="ID" jdbcType="VARCHAR" />
+    <result property="parent_id" column="PARENT_ID" jdbcType="VARCHAR" />
+    <result property="parent_ids" column="PARENT_IDS" jdbcType="VARCHAR" />
+    <result property="name" column="NAME" jdbcType="VARCHAR" />
+    <result property="sort" column="SORT" jdbcType="DECIMAL" />
+    <result property="code" column="CODE" jdbcType="VARCHAR" />
+    <result property="type" column="TYPE" jdbcType="CHAR" />
+    <result property="USEABLE" column="USEABLE" jdbcType="VARCHAR" />
+    <result property="create_by" column="CREATE_BY" jdbcType="VARCHAR" />
+    <result property="create_date" column="CREAT_DATE" jdbcType="DATE" />
+    <result property="update_by" column="UPDATE_BY" jdbcType="VARCHAR" />
+    <result property="update_date" column="UPDATE_DATE" jdbcType="DATE" />
+    <result property="remarks" column="REMARKS" jdbcType="VARCHAR" />
+    <result property="isDefault" column="IS_DEFAULT" jdbcType="DECIMAL" />
+    <result property="del_flag" column="DEL_FLAG" jdbcType="CHAR" />
+  </resultMap>
+
+
+  <select id="selectWfClassifyCountByQueryCriteria" parameterType="com.tansun.wf.activiti.model.ClassifyEntity" resultType="long">
+    select count( RES.ID_)
+    <include refid="selectWfClassifyByQueryCriteriaSql"/>
+  </select>
+
+  <select id="selectWfClassifyByQueryCriteria" parameterType="com.tansun.wf.activiti.model.ClassifyEntity" resultMap="classifyResultMap">
+    ${limitBefore}
+    <if test="databaseType !='db2'">
+    select  RES.*
+      ${limitBetween}
+    </if>
+    <if test="databaseType =='db2'">
+      select RES.*
+      , row_number() over (ORDER BY RES.ID ) rnk FROM ( select RES.*
+    </if>
+    <include refid="selectWfClassifyByQueryCriteriaSql"/>
+    ${limitAfter}
+  </select>
+
+  <sql id="selectWfClassifyByQueryCriteriaSql">
+    from ${prefix}wf_process_classify RES
+    <where>
+      <if test="code != null">
+        RES.code = #{code}
+      </if>
+      <if test="databaseType == 'mysql' and id != null">
+      	AND RES.parent_ids LIKE CONCAT('%,',#{id},',%')
+      </if>
+      <if test="databaseType == 'mysql' and name != null">
+        AND RES.name LIKE CONCAT('%',#{name},'%')
+      </if>
+      <if test="databaseType == 'oracle' and id != null">
+      	AND RES.parent_ids LIKE '%'||#{id}||'%'
+      </if>
+      <if test="databaseType == 'oracle' and name != null">
+        AND RES.name LIKE '%'||#{name}||'%'
+      </if>
+      <if test="databaseType == 'mssql' and id != null">
+      	AND RES.parent_ids LIKE '%'+#{id}+'%'
+      </if>
+      <if test="databaseType == 'mssql' and name != null">
+        AND RES.name LIKE '%'+#{name}+'%'
+      </if>
+      <if test="databaseType == 'postgre' and id != null">
+      	AND RES.parent_ids LIKE '%'||#{id}||'%'
+      </if>
+      <if test="databaseType == 'postgre' and name != null">
+        AND RES.name LIKE '%'||#{name}||'%'
+      </if>
+      and del_flag = '0'
+    </where>
+  </sql>
+
+</mapper>

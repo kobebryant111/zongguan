@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k6991 2020-06-16 -->
+<mapper namespace="com.work.ppm.application.model.usermanager.PpmEmpView">
+	 <resultMap type="ppmEmpView" id="PPMEMPVIEW_ALL">
+        <result property="badge" column="BADGE" />
+		<result property="empname" column="EMPNAME" />
+		<result property="compid" column="COMPID" />
+		<result property="depid" column="DEPID" />
+		<result property="jobid" column="JOBID" />
+		<result property="headship" column="HEADSHIP" />
+		<result property="empauth" column="EMPAUTH" />
+		<result property="officephone" column="OFFICEPHONE" />
+		<result property="shortphone" column="SHORTPHONE" />
+		<result property="mobiletelphone" column="MOBILETELPHONE" />
+		<result property="eidhr" column="EIDHR" />
+		<result property="boardline" column="BOARDLINE" />
+		<result property="reportto" column="REPORTTO" />
+		<result property="fullname" column="FULLNAME" />
+		<result property="spellname" column="SPELLNAME" />
+		<result property="authproperty" column="AUTHPROPERTY" />
+		<result property="empstatus" column="EMPSTATUS" />
+		
+     </resultMap>
+
+     <!-- 所有字段名称 -->
+        <sql id="sql_flied_all">
+        	BADGE,
+			EMPNAME,
+			COMPID,
+			DEPID,
+			JOBID,
+			HEADSHIP,
+			EMPAUTH,
+			OFFICEPHONE,
+			SHORTPHONE,
+			MOBILETELPHONE,
+			EIDHR,
+			BOARDLINE,
+			REPORTTO,
+			FULLNAME,
+			SPELLNAME,
+			AUTHPROPERTY,
+			EMPSTATUS
+        </sql>
+    	<!-- 查询分页  2020-06-16 k6991  -->
+        <select id="queryPagerList" parameterType="map" resultMap="PPMEMPVIEW_ALL">
+        	SELECT
+            <include refid="sql_flied_all" />
+            FROM PPM_EMP_VIEW
+            <trim prefix="WHERE" suffixOverrides="AND">
+                <if test="badge != null  and badge != '' " > BADGE = #{badge} AND </if>
+				<if test="empname != null  and empname != '' " > EMPNAME = #{empname} AND </if>
+				<if test="compid != null " > COMPID = #{compid} AND </if>
+				<if test="depid != null  and depid != '' " > DEPID = #{depid} AND </if>
+				<if test="jobid != null " > JOBID = #{jobid} AND </if>
+				<if test="headship != null  and headship != '' " > HEADSHIP = #{headship} AND </if>
+				<if test="empauth != null  and empauth != '' " > EMPAUTH = #{empauth} AND </if>
+				<if test="officephone != null  and officephone != '' " > OFFICEPHONE = #{officephone} AND </if>
+				<if test="shortphone != null  and shortphone != '' " > SHORTPHONE = #{shortphone} AND </if>
+				<if test="mobiletelphone != null  and mobiletelphone != '' " > MOBILETELPHONE = #{mobiletelphone} AND </if>
+				<if test="eidhr != null " > EIDHR = #{eidhr} AND </if>
+				<if test="boardline != null  and boardline != '' " > BOARDLINE = #{boardline} AND </if>
+				<if test="reportto != null " > REPORTTO = #{reportto} AND </if>
+				<if test="fullname != null  and fullname != '' " > FULLNAME = #{fullname} AND </if>
+				<if test="spellname != null  and spellname != '' " > SPELLNAME = #{spellname} AND </if>
+				<if test="authproperty != null  and authproperty != '' " > AUTHPROPERTY = #{authproperty} AND </if>
+				<if test="empstatus != null  and empstatus != '' " > EMPSTATUS = #{empstatus} AND </if>
+				
+            </trim>
+        </select>
+
+        <!-- 新增  2020-06-16 k6991  -->
+        <insert id="addPojo" parameterType="ppmEmpView">
+    		INSERT INTO PPM_EMP_VIEW (
+    		<trim suffixOverrides=",">
+    		 <if test="badge != null  and badge != '' " > BADGE , </if>
+				<if test="empname != null  and empname != '' " > EMPNAME , </if>
+				<if test="compid != null " > COMPID , </if>
+				<if test="depid != null  and depid != '' " > DEPID , </if>
+				<if test="jobid != null " > JOBID , </if>
+				<if test="headship != null  and headship != '' " > HEADSHIP , </if>
+				<if test="empauth != null  and empauth != '' " > EMPAUTH , </if>
+				<if test="officephone != null  and officephone != '' " > OFFICEPHONE , </if>
+				<if test="shortphone != null  and shortphone != '' " > SHORTPHONE , </if>
+				<if test="mobiletelphone != null  and mobiletelphone != '' " > MOBILETELPHONE , </if>
+				<if test="eidhr != null " > EIDHR , </if>
+				<if test="boardline != null  and boardline != '' " > BOARDLINE , </if>
+				<if test="reportto != null " > REPORTTO , </if>
+				<if test="fullname != null  and fullname != '' " > FULLNAME , </if>
+				<if test="spellname != null  and spellname != '' " > SPELLNAME , </if>
+				<if test="authproperty != null  and authproperty != '' " > AUTHPROPERTY , </if>
+				<if test="empstatus != null  and empstatus != '' " > EMPSTATUS , </if>
+				
+              </trim>
+    		)
+    		VALUES(
+    		<trim suffixOverrides=",">
+    		 <if test="badge != null  and badge != '' " > #{badge} , </if>
+				<if test="empname != null  and empname != '' " > #{empname} , </if>
+				<if test="compid != null " > #{compid} , </if>
+				<if test="depid != null  and depid != '' " > #{depid} , </if>
+				<if test="jobid != null " > #{jobid} , </if>
+				<if test="headship != null  and headship != '' " > #{headship} , </if>
+				<if test="empauth != null  and empauth != '' " > #{empauth} , </if>
+				<if test="officephone != null  and officephone != '' " > #{officephone} , </if>
+				<if test="shortphone != null  and shortphone != '' " > #{shortphone} , </if>
+				<if test="mobiletelphone != null  and mobiletelphone != '' " > #{mobiletelphone} , </if>
+				<if test="eidhr != null " > #{eidhr} , </if>
+				<if test="boardline != null  and boardline != '' " > #{boardline} , </if>
+				<if test="reportto != null " > #{reportto} , </if>
+				<if test="fullname != null  and fullname != '' " > #{fullname} , </if>
+				<if test="spellname != null  and spellname != '' " > #{spellname} , </if>
+				<if test="authproperty != null  and authproperty != '' " > #{authproperty} , </if>
+				<if test="empstatus != null  and empstatus != '' " > #{empstatus} , </if>
+				
+            </trim>
+    		)
+        </insert>
+
+        <!--通过id查询  k6991 2020-06-16 -->
+        <select id="queryDetail" parameterType="map" resultMap="PPMEMPVIEW_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_EMP_VIEW  WHERE BADGE=#{badge}
+        </select>
+
+         <!--查询集合  k6991 2020-06-16 -->
+        <select id="getList" parameterType="map" resultMap="PPMEMPVIEW_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_EMP_VIEW
+        	<trim prefix="WHERE" suffixOverrides="AND">
+        		<if test="badge != null  and badge != '' " > BADGE=#{badge} AND </if>
+				<if test="empname != null  and empname != '' " > EMPNAME=#{empname} AND </if>
+				<if test="compid != null " > COMPID=#{compid} AND </if>
+				<if test="depid != null  and depid != '' " > DEPID=#{depid} AND </if>
+				<if test="jobid != null " > JOBID=#{jobid} AND </if>
+				<if test="headship != null  and headship != '' " > HEADSHIP=#{headship} AND </if>
+				<if test="empauth != null  and empauth != '' " > EMPAUTH=#{empauth} AND </if>
+				<if test="officephone != null  and officephone != '' " > OFFICEPHONE=#{officephone} AND </if>
+				<if test="shortphone != null  and shortphone != '' " > SHORTPHONE=#{shortphone} AND </if>
+				<if test="mobiletelphone != null  and mobiletelphone != '' " > MOBILETELPHONE=#{mobiletelphone} AND </if>
+				<if test="eidhr != null " > EIDHR=#{eidhr} AND </if>
+				<if test="boardline != null  and boardline != '' " > BOARDLINE=#{boardline} AND </if>
+				<if test="reportto != null " > REPORTTO=#{reportto} AND </if>
+				<if test="fullname != null  and fullname != '' " > FULLNAME=#{fullname} AND </if>
+				<if test="spellname != null  and spellname != '' " > SPELLNAME=#{spellname} AND </if>
+				<if test="authproperty != null  and authproperty != '' " > AUTHPROPERTY=#{authproperty} AND </if>
+				<if test="empstatus != null  and empstatus != '' " > EMPSTATUS=#{empstatus} AND </if>
+				
+            </trim>
+        </select>
+        <!-- update sql -->
+        <sql id="update_pojo_sql">
+        	<trim prefix="SET" suffixOverrides=",">
+        		<if test="badge != null  and badge != '' " > BADGE=#{badge} , </if>
+				<if test="empname != null  and empname != '' " > EMPNAME=#{empname} , </if>
+				<if test="compid != null " > COMPID=#{compid} , </if>
+				<if test="depid != null  and depid != '' " > DEPID=#{depid} , </if>
+				<if test="jobid != null " > JOBID=#{jobid} , </if>
+				<if test="headship != null  and headship != '' " > HEADSHIP=#{headship} , </if>
+				<if test="empauth != null  and empauth != '' " > EMPAUTH=#{empauth} , </if>
+				<if test="officephone != null  and officephone != '' " > OFFICEPHONE=#{officephone} , </if>
+				<if test="shortphone != null  and shortphone != '' " > SHORTPHONE=#{shortphone} , </if>
+				<if test="mobiletelphone != null  and mobiletelphone != '' " > MOBILETELPHONE=#{mobiletelphone} , </if>
+				<if test="eidhr != null " > EIDHR=#{eidhr} , </if>
+				<if test="boardline != null  and boardline != '' " > BOARDLINE=#{boardline} , </if>
+				<if test="reportto != null " > REPORTTO=#{reportto} , </if>
+				<if test="fullname != null  and fullname != '' " > FULLNAME=#{fullname} , </if>
+				<if test="spellname != null  and spellname != '' " > SPELLNAME=#{spellname} , </if>
+				<if test="authproperty != null  and authproperty != '' " > AUTHPROPERTY=#{authproperty} , </if>
+				<if test="empstatus != null  and empstatus != '' " > EMPSTATUS=#{empstatus} , </if>
+				
+            </trim>
+        </sql>
+
+        <!--通过id编辑 k6991 2020-06-16 -->
+    	<update id="updatePojo" parameterType="ppmEmpView">
+        	UPDATE
+        	PPM_EMP_VIEW
+        	<include refid="update_pojo_sql" />
+        	WHERE BADGE=#{badge}
+        </update>
+
+        <!--通过id批量删除  k6991 2020-06-16 -->
+        <delete id="deleteById" parameterType="ppmEmpView">
+        	DELETE
+        	FROM
+        	PPM_EMP_VIEW
+        	WHERE BADGE = #{badge}
+        </delete>
+
+        <!-- 获取主键id -->
+        <select id="getPrimaryKey" parameterType="map" resultType="long">
+            SELECT MAX(BADGE) FROM PPM_EMP_VIEW
+        </select>
+	<resultMap type="ppmEmpView" id="GETBADGEFORNAME_MAP">
+		<result property="badge" column="BADGE" />
+		<result property="empname" column="EMPNAME" />
+	</resultMap>
+	<!-- 根据用户编号查询用户名称 2020-09-04 -->
+	<select id="getBadgeForName" parameterType="map" resultMap="GETBADGEFORNAME_MAP">
+		SELECT
+		BADGE，
+		EMPNAME
+		FROM PPM_EMP_VIEW  WHERE BADGE=#{badge}
+	</select>
+</mapper>

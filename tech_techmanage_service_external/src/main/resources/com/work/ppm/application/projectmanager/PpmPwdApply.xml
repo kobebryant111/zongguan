@@ -1,0 +1,364 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k6991 2021-10-25 -->
+<mapper namespace="com.work.ppm.application.model.projectmanager.PpmPwdApply">
+    <resultMap type="ppmPwdApply" id="PPMPWDAPPLY_ALL">
+        <result property="isgetbydep" column="ISGETBYDEP"/>
+        <result property="getbydepreason" column="GETBYDEPREASON"/>
+        <result property="isrelate" column="ISRELATE"/>
+        <result property="isnew" column="ISNEW"/>
+        <result property="bfreason" column="BFREASON"/>
+        <result property="relateactivity" column="RELATEACTIVITY"/>
+        <result property="dealcode" column="DEALCODE"/>
+        <result property="affectqr" column="AFFECTQR"/>
+        <result property="adminreason" column="ADMINREASON"/>
+        <result property="ishavestep" column="ISHAVESTEP"/>
+        <result property="isinerimadmin" column="ISINERIMADMIN"/>
+        <result property="id" column="ID"/>
+        <result property="instanceid" column="INSTANCEID"/>
+        <result property="applycode" column="APPLYCODE"/>
+        <result property="title" column="TITLE"/>
+        <result property="applyer" column="APPLYER"/>
+        <result property="applyerdeptid" column="APPLYERDEPTID"/>
+        <result property="applyertel" column="APPLYERTEL"/>
+        <result property="applytime" column="APPLYTIME"/>
+        <result property="isurgent" column="ISURGENT"/>
+        <result property="usehour" column="USEHOUR"/>
+        <result property="usestarttime" column="USESTARTTIME"/>
+        <result property="reason" column="REASON"/>
+        <result property="relateflow" column="RELATEFLOW"/>
+        <result property="relateflowstatus" column="RELATEFLOWSTATUS"/>
+        <result property="reasonnote" column="REASONNOTE"/>
+        <result property="spuserid" column="SPUSERID"/>
+        <result property="endtime" column="ENDTIME"/>
+        <result property="isdelay" column="ISDELAY"/>
+        <result property="delayreason" column="DELAYREASON"/>
+        <result property="res" column="RES"/>
+        <result property="isenable" column="ISENABLE"/>
+        <result property="creator" column="CREATOR"/>
+        <result property="creattime" column="CREATTIME"/>
+        <result property="updater" column="UPDATER"/>
+        <result property="updatetime" column="UPDATETIME"/>
+        <result property="realstarttime" column="REALSTARTTIME"/>
+        <result property="useendtime" column="USEENDTIME"/>
+        <result property="spuserbid" column="SPUSERBID"/>
+        <result property="relateflowname" column="RELATEFLOWNAME"/>
+        <result property="systemid" column="SYSTEMID"/>
+        <result property="planstarttime" column="PLANSTARTTIME"/>
+        <result property="planusehour" column="PLANUSEHOUR"/>
+        <result property="planendtime" column="PLANENDTIME"/>
+        <result property="relateinstanceid" column="RELATEINSTANCEID"/>
+        <result property="note" column="NOTE"/>
+
+    </resultMap>
+
+    <!-- 所有字段名称 -->
+    <sql id="sql_flied_all">
+        ISGETBYDEP,
+        GETBYDEPREASON,
+        ISRELATE,
+        ISNEW,
+        BFREASON,
+        RELATEACTIVITY,
+        DEALCODE,
+        AFFECTQR,
+        ADMINREASON,
+        ISHAVESTEP,
+        ISINERIMADMIN,
+        ID,
+        INSTANCEID,
+        APPLYCODE,
+        TITLE,
+        APPLYER,
+        APPLYERDEPTID,
+        APPLYERTEL,
+        APPLYTIME,
+        ISURGENT,
+        USEHOUR,
+        USESTARTTIME,
+        REASON,
+        RELATEFLOW,
+        RELATEFLOWSTATUS,
+        REASONNOTE,
+        SPUSERID,
+        ENDTIME,
+        ISDELAY,
+        DELAYREASON,
+        RES,
+        ISENABLE,
+        CREATOR,
+        CREATTIME,
+        UPDATER,
+        UPDATETIME,
+        REALSTARTTIME,
+        USEENDTIME,
+        SPUSERBID,
+        RELATEFLOWNAME,
+        SYSTEMID,
+        PLANSTARTTIME,
+        PLANUSEHOUR,
+        PLANENDTIME,
+        RELATEINSTANCEID,
+        NOTE
+    </sql>
+    <sql id="sql_select_condition">
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="isgetbydep != null  and isgetbydep != '' ">ISGETBYDEP = #{isgetbydep} AND</if>
+            <if test="getbydepreason != null  and getbydepreason != '' ">GETBYDEPREASON = #{getbydepreason} AND</if>
+            <if test="isrelate != null  and isrelate != '' ">ISRELATE = #{isrelate} AND</if>
+            <if test="isnew != null  and isnew != '' ">ISNEW = #{isnew} AND</if>
+            <if test="bfreason != null  and bfreason != '' ">BFREASON = #{bfreason} AND</if>
+            <if test="relateactivity != null  and relateactivity != '' ">RELATEACTIVITY = #{relateactivity} AND</if>
+            <if test="dealcode != null  and dealcode != '' ">DEALCODE = #{dealcode} AND</if>
+            <if test="affectqr != null  and affectqr != '' ">AFFECTQR = #{affectqr} AND</if>
+            <if test="adminreason != null  and adminreason != '' ">ADMINREASON = #{adminreason} AND</if>
+            <if test="ishavestep != null  and ishavestep != '' ">ISHAVESTEP = #{ishavestep} AND</if>
+            <if test="isinerimadmin != null  and isinerimadmin != '' ">ISINERIMADMIN = #{isinerimadmin} AND</if>
+            <if test="id != null ">ID = #{id} AND</if>
+            <if test="instanceid != null  and instanceid != '' ">INSTANCEID = #{instanceid} AND</if>
+            <if test="applycode != null  and applycode != '' ">APPLYCODE = #{applycode} AND</if>
+            <if test="title != null  and title != '' ">TITLE = #{title} AND</if>
+            <if test="applyer != null  and applyer != '' ">APPLYER = #{applyer} AND</if>
+            <if test="applyerdeptid != null  and applyerdeptid != '' ">APPLYERDEPTID = #{applyerdeptid} AND</if>
+            <if test="applyertel != null  and applyertel != '' ">APPLYERTEL = #{applyertel} AND</if>
+            <if test="applytime != null ">APPLYTIME = #{applytime} AND</if>
+            <if test="isurgent != null  and isurgent != '' ">ISURGENT = #{isurgent} AND</if>
+            <if test="usehour != null  and usehour != '' ">USEHOUR = #{usehour} AND</if>
+            <if test="usestarttime != null ">USESTARTTIME = #{usestarttime} AND</if>
+            <if test="reason != null  and reason != '' ">REASON = #{reason} AND</if>
+            <if test="relateflow != null  and relateflow != '' ">RELATEFLOW = #{relateflow} AND</if>
+            <if test="relateflowstatus != null  and relateflowstatus != '' ">RELATEFLOWSTATUS = #{relateflowstatus}
+                AND
+            </if>
+            <if test="reasonnote != null  and reasonnote != '' ">REASONNOTE = #{reasonnote} AND</if>
+            <if test="spuserid != null  and spuserid != '' ">SPUSERID = #{spuserid} AND</if>
+            <if test="endtime != null ">ENDTIME = #{endtime} AND</if>
+            <if test="isdelay != null  and isdelay != '' ">ISDELAY = #{isdelay} AND</if>
+            <if test="delayreason != null  and delayreason != '' ">DELAYREASON = #{delayreason} AND</if>
+            <if test="res != null  and res != '' ">RES = #{res} AND</if>
+            <if test="isenable != null  and isenable != '' ">ISENABLE = #{isenable} AND</if>
+            <if test="creator != null  and creator != '' ">CREATOR = #{creator} AND</if>
+            <if test="creattime != null ">CREATTIME = #{creattime} AND</if>
+            <if test="updater != null  and updater != '' ">UPDATER = #{updater} AND</if>
+            <if test="updatetime != null ">UPDATETIME = #{updatetime} AND</if>
+            <if test="realstarttime != null ">REALSTARTTIME = #{realstarttime} AND</if>
+            <if test="useendtime != null ">USEENDTIME = #{useendtime} AND</if>
+            <if test="spuserbid != null  and spuserbid != '' ">SPUSERBID = #{spuserbid} AND</if>
+            <if test="relateflowname != null  and relateflowname != '' ">RELATEFLOWNAME = #{relateflowname} AND</if>
+            <if test="systemid != null  and systemid != '' ">SYSTEMID = #{systemid} AND</if>
+            <if test="planstarttime != null ">PLANSTARTTIME = #{planstarttime} AND</if>
+            <if test="planusehour != null  and planusehour != '' ">PLANUSEHOUR = #{planusehour} AND</if>
+            <if test="planendtime != null ">PLANENDTIME = #{planendtime} AND</if>
+            <if test="relateinstanceid != null  and relateinstanceid != '' ">RELATEINSTANCEID = #{relateinstanceid}
+                AND
+            </if>
+            <if test="note != null  and note != '' ">NOTE = #{note} AND</if>
+
+        </trim>
+    </sql>
+    <!-- 查询分页  2021-10-25 k6991  -->
+    <select id="queryPagerList" parameterType="map" resultMap="PPMPWDAPPLY_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM PPM_PWD_APPLY
+        <include refid="sql_select_condition"/>
+    </select>
+
+    <!-- 新增  2021-10-25 k6991  -->
+    <insert id="addPojo" parameterType="ppmPwdApply">
+        INSERT INTO PPM_PWD_APPLY (
+        <trim suffixOverrides=",">
+            <if test="isgetbydep != null  and isgetbydep != '' ">ISGETBYDEP ,</if>
+            <if test="getbydepreason != null  and getbydepreason != '' ">GETBYDEPREASON ,</if>
+            <if test="isrelate != null  and isrelate != '' ">ISRELATE ,</if>
+            <if test="isnew != null  and isnew != '' ">ISNEW ,</if>
+            <if test="bfreason != null  and bfreason != '' ">BFREASON ,</if>
+            <if test="relateactivity != null  and relateactivity != '' ">RELATEACTIVITY ,</if>
+            <if test="dealcode != null  and dealcode != '' ">DEALCODE ,</if>
+            <if test="affectqr != null  and affectqr != '' ">AFFECTQR ,</if>
+            <if test="adminreason != null  and adminreason != '' ">ADMINREASON ,</if>
+            <if test="ishavestep != null  and ishavestep != '' ">ISHAVESTEP ,</if>
+            <if test="isinerimadmin != null  and isinerimadmin != '' ">ISINERIMADMIN ,</if>
+            <if test="id != null ">ID ,</if>
+            <if test="instanceid != null  and instanceid != '' ">INSTANCEID ,</if>
+            <if test="applycode != null  and applycode != '' ">APPLYCODE ,</if>
+            <if test="title != null  and title != '' ">TITLE ,</if>
+            <if test="applyer != null  and applyer != '' ">APPLYER ,</if>
+            <if test="applyerdeptid != null  and applyerdeptid != '' ">APPLYERDEPTID ,</if>
+            <if test="applyertel != null  and applyertel != '' ">APPLYERTEL ,</if>
+            <if test="applytime != null ">APPLYTIME ,</if>
+            <if test="isurgent != null  and isurgent != '' ">ISURGENT ,</if>
+            <if test="usehour != null  and usehour != '' ">USEHOUR ,</if>
+            <if test="usestarttime != null ">USESTARTTIME ,</if>
+            <if test="reason != null  and reason != '' ">REASON ,</if>
+            <if test="relateflow != null  and relateflow != '' ">RELATEFLOW ,</if>
+            <if test="relateflowstatus != null  and relateflowstatus != '' ">RELATEFLOWSTATUS ,</if>
+            <if test="reasonnote != null  and reasonnote != '' ">REASONNOTE ,</if>
+            <if test="spuserid != null  and spuserid != '' ">SPUSERID ,</if>
+            <if test="endtime != null ">ENDTIME ,</if>
+            <if test="isdelay != null  and isdelay != '' ">ISDELAY ,</if>
+            <if test="delayreason != null  and delayreason != '' ">DELAYREASON ,</if>
+            <if test="res != null  and res != '' ">RES ,</if>
+            <if test="isenable != null  and isenable != '' ">ISENABLE ,</if>
+            <if test="creator != null  and creator != '' ">CREATOR ,</if>
+            <if test="creattime != null ">CREATTIME ,</if>
+            <if test="updater != null  and updater != '' ">UPDATER ,</if>
+            <if test="updatetime != null ">UPDATETIME ,</if>
+            <if test="realstarttime != null ">REALSTARTTIME ,</if>
+            <if test="useendtime != null ">USEENDTIME ,</if>
+            <if test="spuserbid != null  and spuserbid != '' ">SPUSERBID ,</if>
+            <if test="relateflowname != null  and relateflowname != '' ">RELATEFLOWNAME ,</if>
+            <if test="systemid != null  and systemid != '' ">SYSTEMID ,</if>
+            <if test="planstarttime != null ">PLANSTARTTIME ,</if>
+            <if test="planusehour != null  and planusehour != '' ">PLANUSEHOUR ,</if>
+            <if test="planendtime != null ">PLANENDTIME ,</if>
+            <if test="relateinstanceid != null  and relateinstanceid != '' ">RELATEINSTANCEID ,</if>
+            <if test="note != null  and note != '' ">NOTE ,</if>
+
+        </trim>
+        )
+        VALUES(
+        <trim suffixOverrides=",">
+            <if test="isgetbydep != null  and isgetbydep != '' ">#{isgetbydep} ,</if>
+            <if test="getbydepreason != null  and getbydepreason != '' ">#{getbydepreason} ,</if>
+            <if test="isrelate != null  and isrelate != '' ">#{isrelate} ,</if>
+            <if test="isnew != null  and isnew != '' ">#{isnew} ,</if>
+            <if test="bfreason != null  and bfreason != '' ">#{bfreason} ,</if>
+            <if test="relateactivity != null  and relateactivity != '' ">#{relateactivity} ,</if>
+            <if test="dealcode != null  and dealcode != '' ">#{dealcode} ,</if>
+            <if test="affectqr != null  and affectqr != '' ">#{affectqr} ,</if>
+            <if test="adminreason != null  and adminreason != '' ">#{adminreason} ,</if>
+            <if test="ishavestep != null  and ishavestep != '' ">#{ishavestep} ,</if>
+            <if test="isinerimadmin != null  and isinerimadmin != '' ">#{isinerimadmin} ,</if>
+            <if test="id != null ">#{id} ,</if>
+            <if test="instanceid != null  and instanceid != '' ">#{instanceid} ,</if>
+            <if test="applycode != null  and applycode != '' ">#{applycode} ,</if>
+            <if test="title != null  and title != '' ">#{title} ,</if>
+            <if test="applyer != null  and applyer != '' ">#{applyer} ,</if>
+            <if test="applyerdeptid != null  and applyerdeptid != '' ">#{applyerdeptid} ,</if>
+            <if test="applyertel != null  and applyertel != '' ">#{applyertel} ,</if>
+            <if test="applytime != null ">#{applytime} ,</if>
+            <if test="isurgent != null  and isurgent != '' ">#{isurgent} ,</if>
+            <if test="usehour != null  and usehour != '' ">#{usehour} ,</if>
+            <if test="usestarttime != null ">#{usestarttime} ,</if>
+            <if test="reason != null  and reason != '' ">#{reason} ,</if>
+            <if test="relateflow != null  and relateflow != '' ">#{relateflow} ,</if>
+            <if test="relateflowstatus != null  and relateflowstatus != '' ">#{relateflowstatus} ,</if>
+            <if test="reasonnote != null  and reasonnote != '' ">#{reasonnote} ,</if>
+            <if test="spuserid != null  and spuserid != '' ">#{spuserid} ,</if>
+            <if test="endtime != null ">#{endtime} ,</if>
+            <if test="isdelay != null  and isdelay != '' ">#{isdelay} ,</if>
+            <if test="delayreason != null  and delayreason != '' ">#{delayreason} ,</if>
+            <if test="res != null  and res != '' ">#{res} ,</if>
+            <if test="isenable != null  and isenable != '' ">#{isenable} ,</if>
+            <if test="creator != null  and creator != '' ">#{creator} ,</if>
+            <if test="creattime != null ">#{creattime} ,</if>
+            <if test="updater != null  and updater != '' ">#{updater} ,</if>
+            <if test="updatetime != null ">#{updatetime} ,</if>
+            <if test="realstarttime != null ">#{realstarttime} ,</if>
+            <if test="useendtime != null ">#{useendtime} ,</if>
+            <if test="spuserbid != null  and spuserbid != '' ">#{spuserbid} ,</if>
+            <if test="relateflowname != null  and relateflowname != '' ">#{relateflowname} ,</if>
+            <if test="systemid != null  and systemid != '' ">#{systemid} ,</if>
+            <if test="planstarttime != null ">#{planstarttime} ,</if>
+            <if test="planusehour != null  and planusehour != '' ">#{planusehour} ,</if>
+            <if test="planendtime != null ">#{planendtime} ,</if>
+            <if test="relateinstanceid != null  and relateinstanceid != '' ">#{relateinstanceid} ,</if>
+            <if test="note != null  and note != '' ">#{note} ,</if>
+
+        </trim>
+        )
+    </insert>
+
+    <!--通过id查询  k6991 2021-10-25 -->
+    <select id="queryDetail" parameterType="ppmPwdApply" resultMap="PPMPWDAPPLY_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM PPM_PWD_APPLY
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="relateinstanceid != null  and relateinstanceid != '' ">
+                RELATEINSTANCEID =#{relateinstanceid} AND
+            </if>
+            <if test="true">
+                ROWNUM =1 AND
+            </if>
+        </trim>
+    </select>
+
+    <!--查询集合  k6991 2021-10-25 -->
+    <select id="getList" parameterType="ppmPwdApply" resultMap="PPMPWDAPPLY_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM PPM_PWD_APPLY
+        <include refid="sql_select_condition"/>
+    </select>
+    <!-- update sql -->
+    <sql id="update_pojo_sql">
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="isgetbydep != null  and isgetbydep != '' ">ISGETBYDEP=#{isgetbydep} ,</if>
+            <if test="getbydepreason != null  and getbydepreason != '' ">GETBYDEPREASON=#{getbydepreason} ,</if>
+            <if test="isrelate != null  and isrelate != '' ">ISRELATE=#{isrelate} ,</if>
+            <if test="isnew != null  and isnew != '' ">ISNEW=#{isnew} ,</if>
+            <if test="bfreason != null  and bfreason != '' ">BFREASON=#{bfreason} ,</if>
+            <if test="relateactivity != null  and relateactivity != '' ">RELATEACTIVITY=#{relateactivity} ,</if>
+            <if test="dealcode != null  and dealcode != '' ">DEALCODE=#{dealcode} ,</if>
+            <if test="affectqr != null  and affectqr != '' ">AFFECTQR=#{affectqr} ,</if>
+            <if test="adminreason != null  and adminreason != '' ">ADMINREASON=#{adminreason} ,</if>
+            <if test="ishavestep != null  and ishavestep != '' ">ISHAVESTEP=#{ishavestep} ,</if>
+            <if test="isinerimadmin != null  and isinerimadmin != '' ">ISINERIMADMIN=#{isinerimadmin} ,</if>
+            <if test="id != null ">ID=#{id} ,</if>
+            <if test="instanceid != null  and instanceid != '' ">INSTANCEID=#{instanceid} ,</if>
+            <if test="applycode != null  and applycode != '' ">APPLYCODE=#{applycode} ,</if>
+            <if test="title != null  and title != '' ">TITLE=#{title} ,</if>
+            <if test="applyer != null  and applyer != '' ">APPLYER=#{applyer} ,</if>
+            <if test="applyerdeptid != null  and applyerdeptid != '' ">APPLYERDEPTID=#{applyerdeptid} ,</if>
+            <if test="applyertel != null  and applyertel != '' ">APPLYERTEL=#{applyertel} ,</if>
+            <if test="applytime != null ">APPLYTIME=#{applytime} ,</if>
+            <if test="isurgent != null  and isurgent != '' ">ISURGENT=#{isurgent} ,</if>
+            <if test="usehour != null  and usehour != '' ">USEHOUR=#{usehour} ,</if>
+            <if test="usestarttime != null ">USESTARTTIME=#{usestarttime} ,</if>
+            <if test="reason != null  and reason != '' ">REASON=#{reason} ,</if>
+            <if test="relateflow != null  and relateflow != '' ">RELATEFLOW=#{relateflow} ,</if>
+            <if test="relateflowstatus != null  and relateflowstatus != '' ">RELATEFLOWSTATUS=#{relateflowstatus} ,</if>
+            <if test="reasonnote != null  and reasonnote != '' ">REASONNOTE=#{reasonnote} ,</if>
+            <if test="spuserid != null  and spuserid != '' ">SPUSERID=#{spuserid} ,</if>
+            <if test="endtime != null ">ENDTIME=#{endtime} ,</if>
+            <if test="isdelay != null  and isdelay != '' ">ISDELAY=#{isdelay} ,</if>
+            <if test="delayreason != null  and delayreason != '' ">DELAYREASON=#{delayreason} ,</if>
+            <if test="res != null  and res != '' ">RES=#{res} ,</if>
+            <if test="isenable != null  and isenable != '' ">ISENABLE=#{isenable} ,</if>
+            <if test="creator != null  and creator != '' ">CREATOR=#{creator} ,</if>
+            <if test="creattime != null ">CREATTIME=#{creattime} ,</if>
+            <if test="updater != null  and updater != '' ">UPDATER=#{updater} ,</if>
+            <if test="updatetime != null ">UPDATETIME=#{updatetime} ,</if>
+            <if test="realstarttime != null ">REALSTARTTIME=#{realstarttime} ,</if>
+            <if test="useendtime != null ">USEENDTIME=#{useendtime} ,</if>
+            <if test="spuserbid != null  and spuserbid != '' ">SPUSERBID=#{spuserbid} ,</if>
+            <if test="relateflowname != null  and relateflowname != '' ">RELATEFLOWNAME=#{relateflowname} ,</if>
+            <if test="systemid != null  and systemid != '' ">SYSTEMID=#{systemid} ,</if>
+            <if test="planstarttime != null ">PLANSTARTTIME=#{planstarttime} ,</if>
+            <if test="planusehour != null  and planusehour != '' ">PLANUSEHOUR=#{planusehour} ,</if>
+            <if test="planendtime != null ">PLANENDTIME=#{planendtime} ,</if>
+            <if test="relateinstanceid != null  and relateinstanceid != '' ">RELATEINSTANCEID=#{relateinstanceid} ,</if>
+            <if test="note != null  and note != '' ">NOTE=#{note} ,</if>
+
+        </trim>
+    </sql>
+
+    <!--通过id编辑 k6991 2021-10-25 -->
+    <update id="updatePojo" parameterType="ppmPwdApply">
+        UPDATE
+        PPM_PWD_APPLY
+        <include refid="update_pojo_sql"/>
+        WHERE INSTANCEID=#{instanceid}
+    </update>
+
+    <!--通过id批量删除  k6991 2021-10-25 -->
+    <delete id="deleteById" parameterType="ppmPwdApply">
+        DELETE
+        FROM
+        PPM_PWD_APPLY
+        WHERE ISGETBYDEP = #{isgetbydep}
+    </delete>
+
+</mapper>

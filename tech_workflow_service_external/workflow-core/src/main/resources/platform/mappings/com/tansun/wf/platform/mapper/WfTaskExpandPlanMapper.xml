@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.tansun.wf.platform.mapper.WfTaskExpandPlanMapper">
+
+  <resultMap id="taskExpandPlanResultMap" type="com.tansun.wf.platform.model.WfTaskExpandPlanEntity">
+    <id property="id" column="ID" jdbcType="VARCHAR" />
+    <result property="wfClassId" column="WF_CLASS_ID" jdbcType="INTEGER" />
+    <result property="wfClassName" column="WF_CLASS_NAME" jdbcType="VARCHAR" />
+    <result property="fieldKey" column="FIELD_KEY" jdbcType="VARCHAR" />
+    <result property="fieldName" column="FIELD_NAME" jdbcType="VARCHAR" />
+    <result property="fieldValue" column="FIELD_VALUE" jdbcType="VARCHAR" />
+    <result property="fieldType" column="FIELD_TYPE" jdbcType="VARCHAR" />
+    <result property="fieldStatus" column="FIELD_STATUS" jdbcType="VARCHAR" />
+    <result property="fieldUrl" column="FIELD_URL" jdbcType="VARCHAR" />
+    <result property="tenantId" column="tenant_id" jdbcType="VARCHAR" />
+    <result property="isQueryCondition" column="is_query_condition" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="wfTaskExpandPlanColumns">
+		a.id,
+		a.wf_class_id,
+		a.wf_class_name,
+		a.field_key,
+		a.field_name,
+		a.field_value,
+		a.field_type,
+		a.field_url,
+		a.field_status,
+		a.is_query_condition
+	</sql>
+
+
+  <select id="selectWfTaskExpandPlanCountByQueryCriteria" parameterType="com.tansun.wf.activiti.query.WfExpandPlanQuery" resultType="long">
+    select count(distinct RES.ID_)
+    <include refid="selectWfTaskExpandPlanByQueryCriteriaSql"/>
+  </select>
+
+  <select id="selectWfTaskExpandPlanByQueryCriteria" parameterType="com.tansun.wf.activiti.query.WfExpandPlanQuery" resultMap="taskExpandPlanResultMap">
+    ${limitBefore}
+    select distinct RES.*
+    <if test="_databaseId !='db2'">
+      ${limitBetween}
+    </if>
+    <if test="_databaseId =='db2'">
+      , row_number() over (ORDER BY RES.ID ) rnk FROM ( select distinct RES.*
+    </if>
+    <include refid="selectWfTaskExpandPlanByQueryCriteriaSql"/>
+
+    ${limitAfter}
+  </select>
+
+  <sql id="selectWfTaskExpandPlanByQueryCriteriaSql">
+    from ${prefix}wf_task_expand_plan RES
+    <where>
+      <if test="wfClassId != null">
+        RES.WF_CLASS_ID = #{wfClassId}
+      </if>
+      <if test="wfClassCode != null and wfClassCode !=''">
+        RES.WF_CLASS_ID = (
+          SELECT id FROM wf_process_classify WHERE code = #{wfClassCode}
+          AND del_flag = '0'
+        )
+      </if>
+      <if test="fieldKey != null">
+        RES.FIELD_KEY = #{fieldKey}
+      </if>
+
+    </where>
+    ORDER BY RES.field_value
+  </sql>
+
+    <select id="getExpandPlanByClassifyCodes" parameterType="java.util.List" resultMap="taskExpandPlanResultMap">
+        select
+            *
+        from wf_task_expand_plan where field_status = '1'
+        <if test="classifyCodes!=null and classifyCodes.size > 0">
+            and wf_class_id in
+            (SELECT id FROM wf_process_classify WHERE code in
+            <foreach collection="classifyCodes" item="classifyCode"  open="(" separator="," close=")">
+                #{classifyCode}
+            </foreach>
+            AND del_flag = '0')
+        </if>
+        order by field_value
+    </select>
+
+  <select id="getAllExpandPlanClassifyCount" resultType="long">
+    SELECT count(distinct wf_class_id) from wf_task_expand_plan
+  </select>
+  <delete id="delete">
+        delete from wf_task_expand_plan where id = #{id}
+    </delete>
+
+
+  <insert id="insert" >
+		 INSERT INTO wf_task_expand_plan (
+            id,
+            wf_class_id,
+            wf_class_name,
+            field_key,
+            field_name,
+            field_value,
+            field_type,
+            field_url,
+            field_status,
+            tenant_id,
+            is_query_condition
+        )
+        VALUES (
+          #{id,jdbcType=VARCHAR},
+          #{wfClassId,jdbcType=VARCHAR},
+          #{wfClassName,jdbcType=VARCHAR},
+          #{fieldKey,jdbcType=VARCHAR},
+          #{fieldName,jdbcType=VARCHAR},
+          #{fieldValue,jdbcType=VARCHAR},
+          #{fieldType,jdbcType=VARCHAR},
+          #{fieldUrl,jdbcType=VARCHAR},
+          #{fieldStatus,jdbcType=VARCHAR},
+          #{tenantId,jdbcType=VARCHAR},
+          #{isQueryCondition,jdbcType=VARCHAR}
+        )
+	</insert>
+
+  <update id="update" >
+    UPDATE wf_task_expand_plan
+    <set>
+      <if test="wfClassId != null">
+        wf_class_id = #{wfClassId},
+      </if>
+      <if test="wfClassName != null">
+        wf_class_name = #{wfClassName},
+      </if>
+      <if test="fieldKey != null">
+        field_key = #{fieldKey},
+      </if>
+      <if test="fieldName != null">
+        field_name = #{fieldName},
+      </if>
+      <if test="fieldType != null">
+        field_type = #{fieldType},
+      </if>
+      <if test="fieldValue != null">
+        field_value = #{fieldValue},
+      </if>
+      <if test="fieldUrl != null">
+        field_url = #{fieldUrl},
+      </if>
+      <if test="fieldStatus != null">
+        field_status = #{fieldStatus},
+      </if>
+      <if test="isQueryCondition != null">
+        is_query_condition = #{isQueryCondition}
+      </if>
+    </set>
+    WHERE id = #{id}
+  </update>
+
+
+  <select id="findList"  resultMap="taskExpandPlanResultMap">
+    SELECT
+    <include refid="wfTaskExpandPlanColumns"/>
+    FROM wf_task_expand_plan a
+    <where>
+      <if test="id != null and id !=''">
+        AND a.id = #{id}
+      </if>
+      <if test="fieldKey != null and fieldKey !=''">
+        <bind name="fieldKey" value="'%'+_parameter.fieldKey + '%'"/>
+        AND a.field_key like #{fieldKey}
+      </if>
+      <if test="wfClassId != null and wfClassId != ''">
+        AND a.wf_class_id = #{wfClassId}
+      </if>
+      <if test="fieldStatus != null and fieldStatus != ''">
+        AND a.field_status = #{fieldStatus}
+      </if>
+      <if test="fieldName != null and fieldName != ''">
+        <bind name="fieldName" value="'%'+_parameter.fieldName + '%'"/>
+        AND a.field_name like #{fieldName}
+      </if>
+      <if test="wfClassCode != null and wfClassCode !=''">
+        AND a.wf_class_id = (
+        SELECT id FROM wf_process_classify WHERE code = #{wfClassCode}
+        AND del_flag = '0'
+        AND tenant_id = #{tenantId}
+        )
+      </if>
+      <if test="tenantId != null and tenantId != ''">
+        AND a.tenant_id = #{tenantId}
+      </if>
+    </where>
+  </select>
+</mapper>

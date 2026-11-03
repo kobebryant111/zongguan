@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k6991 2020-09-14 -->
+<mapper namespace="com.work.ppm.application.model.integratedmanager.PpmOutsourcingInfoPrice">
+	 <resultMap type="ppmOutsourcingInfoPrice" id="PPMOUTSOURCINGINFOPRICE_ALL">
+        <result property="id" column="ID" />
+		<result property="orgcode" column="ORGCODE" />
+		<result property="position" column="POSITION" />
+		<result property="firststartprie" column="FIRSTSTARTPRIE" />
+		<result property="firstendprie" column="FIRSTENDPRIE" />
+		<result property="secondstartprie" column="SECONDSTARTPRIE" />
+		<result property="secondendprie" column="SECONDENDPRIE" />
+		<result property="thirdstartprie" column="THIRDSTARTPRIE" />
+		<result property="thirdendprie" column="THIRDENDPRIE" />
+		<result property="fourthstartprie" column="FOURTHSTARTPRIE" />
+		<result property="fourthendprie" column="FOURTHENDPRIE" />
+		<result property="remark" column="REMARK" />
+		<result property="createtime" column="CREATETIME" />
+		<result property="createusrid" column="CREATEUSRID" />
+		<result property="isDel" column="IS_DEL" />
+		
+     </resultMap>
+
+     <!-- 所有字段名称 -->
+        <sql id="sql_flied_all">
+        	ID,
+			ORGCODE,
+			POSITION,
+			FIRSTSTARTPRIE,
+			FIRSTENDPRIE,
+			SECONDSTARTPRIE,
+			SECONDENDPRIE,
+			THIRDSTARTPRIE,
+			THIRDENDPRIE,
+			FOURTHSTARTPRIE,
+			FOURTHENDPRIE,
+			REMARK,
+			CREATETIME,
+			CREATEUSRID,
+			IS_DEL
+        </sql>
+        <sql id="sql_select_condition">
+            <trim prefix="WHERE" suffixOverrides="AND">
+                <if test="id != null " > ID = #{id} AND </if>
+				<if test="orgcode != null  and orgcode != '' " > ORGCODE = #{orgcode} AND </if>
+				<if test="position != null  and position != '' " > POSITION = #{position} AND </if>
+				<if test="firststartprie != null " > FIRSTSTARTPRIE = #{firststartprie} AND </if>
+				<if test="firstendprie != null " > FIRSTENDPRIE = #{firstendprie} AND </if>
+				<if test="secondstartprie != null " > SECONDSTARTPRIE = #{secondstartprie} AND </if>
+				<if test="secondendprie != null " > SECONDENDPRIE = #{secondendprie} AND </if>
+				<if test="thirdstartprie != null " > THIRDSTARTPRIE = #{thirdstartprie} AND </if>
+				<if test="thirdendprie != null " > THIRDENDPRIE = #{thirdendprie} AND </if>
+				<if test="fourthstartprie != null " > FOURTHSTARTPRIE = #{fourthstartprie} AND </if>
+				<if test="fourthendprie != null " > FOURTHENDPRIE = #{fourthendprie} AND </if>
+				<if test="remark != null  and remark != '' " > REMARK = #{remark} AND </if>
+				<if test="createtime != null " > CREATETIME = #{createtime} AND </if>
+				<if test="createusrid != null  and createusrid != '' " > CREATEUSRID = #{createusrid} AND </if>
+				<if test="isDel != null  and isDel != '' " > IS_DEL = #{isDel} AND </if>
+				
+            </trim>
+        </sql>
+    	<!-- 查询分页  2020-09-14 k6991  -->
+        <select id="queryPagerList" parameterType="map" resultMap="PPMOUTSOURCINGINFOPRICE_ALL">
+        	SELECT
+            <include refid="sql_flied_all" />
+            FROM PPM_OUTSOURCING_INFO_PRICE
+            <include refid="sql_select_condition" />
+        </select>
+
+        <!-- 新增  2020-09-14 k6991  -->
+        <insert id="addPojo" parameterType="ppmOutsourcingInfoPrice">
+    		INSERT INTO PPM_OUTSOURCING_INFO_PRICE (
+    		<trim suffixOverrides=",">
+    		 <if test="id != null " > ID , </if>
+				<if test="orgcode != null  and orgcode != '' " > ORGCODE , </if>
+				<if test="position != null  and position != '' " > POSITION , </if>
+				<if test="firststartprie != null " > FIRSTSTARTPRIE , </if>
+				<if test="firstendprie != null " > FIRSTENDPRIE , </if>
+				<if test="secondstartprie != null " > SECONDSTARTPRIE , </if>
+				<if test="secondendprie != null " > SECONDENDPRIE , </if>
+				<if test="thirdstartprie != null " > THIRDSTARTPRIE , </if>
+				<if test="thirdendprie != null " > THIRDENDPRIE , </if>
+				<if test="fourthstartprie != null " > FOURTHSTARTPRIE , </if>
+				<if test="fourthendprie != null " > FOURTHENDPRIE , </if>
+				<if test="remark != null  and remark != '' " > REMARK , </if>
+				<if test="createtime != null " > CREATETIME , </if>
+				<if test="createusrid != null  and createusrid != '' " > CREATEUSRID , </if>
+				<if test="isDel != null  and isDel != '' " > IS_DEL , </if>
+				
+              </trim>
+    		)
+    		VALUES(
+    		<trim suffixOverrides=",">
+    		 <if test="id != null " > #{id} , </if>
+				<if test="orgcode != null  and orgcode != '' " > #{orgcode} , </if>
+				<if test="position != null  and position != '' " > #{position} , </if>
+				<if test="firststartprie != null " > #{firststartprie} , </if>
+				<if test="firstendprie != null " > #{firstendprie} , </if>
+				<if test="secondstartprie != null " > #{secondstartprie} , </if>
+				<if test="secondendprie != null " > #{secondendprie} , </if>
+				<if test="thirdstartprie != null " > #{thirdstartprie} , </if>
+				<if test="thirdendprie != null " > #{thirdendprie} , </if>
+				<if test="fourthstartprie != null " > #{fourthstartprie} , </if>
+				<if test="fourthendprie != null " > #{fourthendprie} , </if>
+				<if test="remark != null  and remark != '' " > #{remark} , </if>
+				<if test="createtime != null " > #{createtime} , </if>
+				<if test="createusrid != null  and createusrid != '' " > #{createusrid} , </if>
+				<if test="isDel != null  and isDel != '' " > #{isDel} , </if>
+				
+            </trim>
+    		)
+        </insert>
+
+        <!--通过id查询  k6991 2020-09-14 -->
+        <select id="queryDetail" parameterType="ppmOutsourcingInfoPrice" resultMap="PPMOUTSOURCINGINFOPRICE_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_OUTSOURCING_INFO_PRICE  WHERE ID=#{id}
+        </select>
+
+         <!--查询集合  k6991 2020-09-14 -->
+        <select id="getList" parameterType="ppmOutsourcingInfoPrice" resultMap="PPMOUTSOURCINGINFOPRICE_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_OUTSOURCING_INFO_PRICE
+        	<include refid="sql_select_condition" />
+        </select>
+        <!-- update sql -->
+        <sql id="update_pojo_sql">
+        	<trim prefix="SET" suffixOverrides=",">
+        		<if test="id != null " > ID=#{id} , </if>
+				<if test="orgcode != null  and orgcode != '' " > ORGCODE=#{orgcode} , </if>
+				<if test="position != null  and position != '' " > POSITION=#{position} , </if>
+				<if test="firststartprie != null " > FIRSTSTARTPRIE=#{firststartprie} , </if>
+				<if test="firstendprie != null " > FIRSTENDPRIE=#{firstendprie} , </if>
+				<if test="secondstartprie != null " > SECONDSTARTPRIE=#{secondstartprie} , </if>
+				<if test="secondendprie != null " > SECONDENDPRIE=#{secondendprie} , </if>
+				<if test="thirdstartprie != null " > THIRDSTARTPRIE=#{thirdstartprie} , </if>
+				<if test="thirdendprie != null " > THIRDENDPRIE=#{thirdendprie} , </if>
+				<if test="fourthstartprie != null " > FOURTHSTARTPRIE=#{fourthstartprie} , </if>
+				<if test="fourthendprie != null " > FOURTHENDPRIE=#{fourthendprie} , </if>
+				<if test="remark != null  and remark != '' " > REMARK=#{remark} , </if>
+				<if test="createtime != null " > CREATETIME=#{createtime} , </if>
+				<if test="createusrid != null  and createusrid != '' " > CREATEUSRID=#{createusrid} , </if>
+				<if test="isDel != null  and isDel != '' " > IS_DEL=#{isDel} , </if>
+				
+            </trim>
+        </sql>
+
+        <!--通过id编辑 k6991 2020-09-14 -->
+    	<update id="updatePojo" parameterType="ppmOutsourcingInfoPrice">
+        	UPDATE
+        	PPM_OUTSOURCING_INFO_PRICE
+        	<include refid="update_pojo_sql" />
+        	WHERE ID=#{id}
+        </update>
+
+        <!--通过id批量删除  k6991 2020-09-14 -->
+        <delete id="deleteById" parameterType="ppmOutsourcingInfoPrice">
+        	DELETE
+        	FROM
+        	PPM_OUTSOURCING_INFO_PRICE
+        	WHERE ID = #{id}
+        </delete>
+		<resultMap id="GETOUTSOURCPRICES_MAP" type="ppmOutsourcingInfoPriceInfo" extends="PPMOUTSOURCINGINFOPRICE_ALL">
+			<result column="OUTSOURCNAME" property="outsourcname" />
+			<result column="DICTNAME" property="positionName" />
+			<result column="DEL_VAL" property="delVal" />
+		</resultMap>
+		<!-- 根据外包商编号和人员类型编号查询外包商单价 k6991 2020-09-15 -->
+		<select id="getOutsourcPrices" parameterType="ppmOutsourcingInfoPrice" resultMap="GETOUTSOURCPRICES_MAP">
+			SELECT
+			P.POSITION,
+			P.FIRSTSTARTPRIE,
+			P.FIRSTENDPRIE,
+			P.SECONDSTARTPRIE,
+			P.SECONDENDPRIE,
+			P.THIRDSTARTPRIE,
+			P.THIRDENDPRIE,
+			P.FOURTHSTARTPRIE,
+			P.FOURTHENDPRIE,
+			P.REMARK,
+			I.OUTSOURCNAME,
+			E.DICTNAME
+			FROM PPM_OUTSOURCING_INFO_PRICE P
+			LEFT JOIN PPM_OUTSOURCING_INFO I ON P.ORGCODE=I.ORGCODE
+			LEFT JOIN EOS_DICT_ENTRY E ON E.DICTTYPEID='RLWBXQLX' AND P.POSITION=E.DICTID
+			<trim prefix="WHERE" suffixOverrides="AND">
+				<if test="true" > P.IS_DEL = '0' AND</if>
+				<if test="id != null " > I.ID=#{id} AND</if>
+				<if test="orgcode != null  and orgcode != '' " > p.ORGCODE=#{orgcode} AND </if>
+				<if test="position != null  and position != '' " > p.POSITION=#{position} AND </if>
+			</trim>
+		</select>
+		
+		
+	<update id="deleteInId" parameterType="ppmOutsourcingInfoPrice">
+        UPDATE
+        PPM_OUTSOURCING_INFO_PRICE
+		SET IS_DEL = '1'
+		<trim prefix="WHERE" suffixOverrides="AND">
+			<if test="true">ORGCODE=#{orgcode} AND IS_DEL = '0' AND</if>
+			<if test="delVal != null and delVal != '' ">ID NOT IN (${delVal}) AND</if>
+		</trim>
+    </update>
+</mapper>

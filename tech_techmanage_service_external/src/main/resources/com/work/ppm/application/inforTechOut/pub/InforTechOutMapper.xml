@@ -1,0 +1,367 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.work.ppm.application.dao.inforTechOut.InforTechOutMapper">
+
+    <insert id="saveInforTechApply">
+        INSERT INTO INFORMAT_TECHNOLOGY_APPLICAT (
+        <trim suffixOverrides=",">
+            <if test="id != null and id != '' ">ID ,</if>
+            <if test="empname != null and empname != '' ">EMPNAME,</if>
+            <if test="alctionTime != null  ">ALCTION_TIME,</if>
+            <if test="alctionDepid != null and alctionDepid != '' ">ALCTION_DEPID,</if>
+            <if test="alctionLocation != null and alctionLocation != '' ">ALCTION_LOCATION,</if>
+            <if test="outReqNum != null and outReqNum != '' ">OUT_REQ_NUM,</if>
+            <if test="outType != null and outType != '' ">OUT_TYPE,</if>
+            <if test="outreqName != null and outreqName != '' ">OUTREQ_NAME,</if>
+            <if test="alctionDirector != null and alctionDirector != '' ">ALCTION_DIRECTOR,</if>
+            <if test="outDepid != null and outDepid != '' ">OUT_DEPID,</if>
+            <if test="outDirector != null and outDirector != '' ">OUT_DIRECTOR,</if>
+            <if test="outDirectorBadge != null and outDirectorBadge != '' ">OUT_DIRECTOR_BADGE,</if>
+            <if test="outreqExplan != null and outreqExplan != '' ">OUTREQ_EXPLAN,</if>
+        </trim>
+        ) values (
+        <trim suffixOverrides=",">
+            <if test="id != null and id != '' ">#{id},</if>
+            <if test="empname != null and empname != '' ">#{empname},</if>
+            <if test="alctionTime != null ">#{alctionTime},</if>
+            <if test="alctionDepid != null and alctionDepid != '' ">#{alctionDepid},</if>
+            <if test="alctionDepid != null and alctionLocation != '' ">#{alctionLocation},</if>
+            <if test="outReqNum != null and outReqNum != '' ">#{outReqNum},</if>
+            <if test="outType != null and outType != '' ">#{outType},</if>
+            <if test="outreqName != null and outreqName != '' ">#{outreqName},</if>
+            <if test="alctionDirector != null and alctionDirector != '' ">#{alctionDirector},</if>
+            <if test="outDepid != null and outDepid != '' ">#{outDepid},</if>
+            <if test="outDirector != null and outDirector != '' ">#{outDirector},</if>
+            <if test="outDirectorBadge != null and outDirectorBadge != '' ">#{outDirectorBadge},</if>
+            <if test="outreqExplan != null and outreqExplan != '' ">#{outreqExplan},</if>
+        </trim>
+        )
+    </insert>
+    <insert id="addPpmOutsourcingXklx">
+        INSERT INTO PPM_OUTSOURCING_XKLX (
+        <trim suffixOverrides=",">
+            <if test="id != null ">ID ,</if>
+            <if test="instanceid != null  and instanceid != '' ">INSTANCEID ,</if>
+            <if test="createid != null  and createid != '' ">CREATEID ,</if>
+            <if test="createdate != null  and createdate != '' ">CREATEDATE ,</if>
+            <if test="title != null  and title != '' ">TITLE ,</if>
+            <if test="flowid != null  and flowid != '' ">FLOWID ,</if>
+            <if test="empname != null and empname != '' ">EMPNAME,</if>
+            <if test="flag != null and flag != '' ">FLAG,</if>
+            <if test="alctionTime != null  ">ALCTION_TIME,</if>
+            <if test="alctionDepid != null and alctionDepid != '' ">ALCTION_DEPID,</if>
+            <if test="alctionLocation != null and alctionLocation != '' ">ALCTION_LOCATION,</if>
+            <if test="outReqNum != null and outReqNum != '' ">OUT_REQ_NUM,</if>
+            <if test="outType != null and outType != '' ">OUT_TYPE,</if>
+            <if test="outreqName != null and outreqName != '' ">OUTREQ_NAME,</if>
+            <if test="alctionDirector != null and alctionDirector != '' ">ALCTION_DIRECTOR,</if>
+            <if test="outDepid != null and outDepid != '' ">OUT_DEPID,</if>
+            <if test="outDirector != null and outDirector != '' ">OUT_DIRECTOR,</if>
+            <if test="outDirectorBadge != null and outDirectorBadge != '' ">OUT_DIRECTOR_BADGE,</if>
+            <if test="outreqExplan != null and outreqExplan != '' ">OUTREQ_EXPLAN,</if>
+        </trim>
+        )
+        VALUES(
+        <trim suffixOverrides=",">
+            <if test="id != null ">#{id} ,</if>
+            <if test="instanceid != null  and instanceid != '' ">#{instanceid} ,</if>
+            <if test="createid != null  and createid != '' ">#{createid} ,</if>
+            <if test="createdate != null  and createdate != '' ">#{createdate} ,</if>
+            <if test="title != null  and title != '' ">#{title} ,</if>
+            <if test="flowid != null  and flowid != '' ">#{flowid} ,</if>
+            <if test="empname != null and empname != '' ">#{empname},</if>
+            <if test="flag != null and flag != '' ">#{flag},</if>
+            <if test="alctionTime != null ">#{alctionTime},</if>
+            <if test="alctionDepid != null and alctionDepid != '' ">#{alctionDepid},</if>
+            <if test="alctionDepid != null and alctionLocation != '' ">#{alctionLocation},</if>
+            <if test="outReqNum != null and outReqNum != '' ">#{outReqNum},</if>
+            <if test="outType != null and outType != '' ">#{outType},</if>
+            <if test="outreqName != null and outreqName != '' ">#{outreqName},</if>
+            <if test="alctionDirector != null and alctionDirector != '' ">#{alctionDirector},</if>
+            <if test="outDepid != null and outDepid != '' ">#{outDepid},</if>
+            <if test="outDirector != null and outDirector != '' ">#{outDirector},</if>
+            <if test="outDirectorBadge != null and outDirectorBadge != '' ">#{outDirectorBadge},</if>
+            <if test="outreqExplan != null and outreqExplan != '' ">#{outreqExplan},</if>
+        </trim>
+        )
+    </insert>
+    <update id="updatePpmOutsourcingXklx">
+        UPDATE PPM_OUTSOURCING_XKLX
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="flag != null ">
+                FLAG = #{flag}
+            </if>
+        </trim>
+        where ID =#{id}
+    </update>
+    <update id="updateAllPpmOutsourcingXklx">
+        UPDATE PPM_OUTSOURCING_XKLX
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="id != null ">ID = #{id} ,</if>
+            <if test="instanceid != null and instanceid != ''">INSTANCEID = #{instanceid} ,</if>
+            <if test="createid != null and createid != ''">CREATEID = #{createid} ,</if>
+            <if test="createdate != null and createdate != ''">CREATEDATE = #{createdate} ,</if>
+            <if test="title != null and title != ''">TITLE = #{title} ,</if>
+            <if test="flowid != null and flowid != ''">FLOWID = #{flowid} ,</if>
+            <if test="flag != null ">FLAG = #{flag} ,</if>
+            <if test="remark != null and remark != ''">REMARK = #{remark} ,</if>
+            <if test="empname != null and empname != ''">EMPNAME = #{empname} ,</if>
+            <if test="alctionTime != null ">ALCTION_TIME = #{alctionTime} ,</if>
+            <if test="alctionDepid != null and alctionDepid != ''">ALCTION_DEPID = #{alctionDepid} ,</if>
+            <if test="alctionLocation != null and alctionLocation != ''">ALCTION_LOCATION = #{alctionLocation} ,</if>
+            <if test="outReqNum != null and outReqNum != ''">OUT_REQ_NUM = #{outReqNum} ,</if>
+            <if test="outType != null and outType != ''">OUT_TYPE = #{outType},</if>
+            <if test="outreqName != null and outreqName != ''">OUTREQ_NAME = #{outreqName} ,</if>
+            <if test="alctionDirector != null and alctionDirector != ''">ALCTION_DIRECTOR = #{alctionDirector},</if>
+            <if test="outDepid != null and outDepid != ''">OUT_DEPID = #{outDepid} ,</if>
+            <if test="outDirector != null and outDirector != ''">OUT_DIRECTOR = #{outDirector} ,</if>
+            <if test="outDirectorBadge != null and outDirectorBadge != ''">OUT_DIRECTOR_BADGE = #{outDirectorBadge},
+            </if>
+            <if test="outreqExplan != null and outreqExplan != ''">OUTREQ_EXPLAN = #{outreqExplan},</if>
+
+        </trim>
+        where ID =#{id}
+    </update>
+    <delete id="deleteByInstanceid">
+        DELETE FROM PPM_OUTSOURCING_XKLX WHERE INSTANCEID = #{instanceid}
+    </delete>
+
+
+    <select id="queryList" resultType="com.work.ppm.application.model.systemmanager.CommEmployee">
+        SELECT
+        E.BADGE,
+        E.EMPNAME,
+        E.DEPID
+        FROM
+        COMM_DEPARTMENT T
+        LEFT JOIN COMM_EMPLOYEE E ON
+        (T.DIRECTOR = E.EID)
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="depid != null and depid != '' ">T.DEPID =#{depid} AND</if>
+        </trim>
+    </select>
+    <sql id="xklx">
+        x.ID,
+        x.INSTANCEID,
+        x.CREATEID,
+        x.CREATEDATE,
+        x.TITLE,
+        x.FLOWID,
+        x.FLAG,
+        x.REMARK,
+        x.EMPNAME,
+        x.ALCTION_TIME,
+        x.ALCTION_DEPID,
+        x.ALCTION_LOCATION,
+        x.OUT_REQ_NUM,
+        x.OUT_TYPE,
+        x.OUTREQ_NAME,
+        x.ALCTION_DIRECTOR,
+        x.OUT_DEPID,
+        cd.LOCATION outLocation,
+        x.OUT_DIRECTOR,
+        x.OUT_DIRECTOR_BADGE,
+        x.OUTREQ_EXPLAN
+    </sql>
+    <select id="getDb" resultType="com.work.ppm.application.dto.inforTechOut.PpmOutsourcingXklx">
+        select
+        <include refid="xklx"/>
+        FROM PPM_OUTSOURCING_XKLX x LEFT JOIN COMM_DEPARTMENT cd ON (x.OUT_DEPID =cd.DEPID )
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="instanceid != null and instanceid != '' ">INSTANCEID =#{instanceid} AND</if>
+        </trim>
+        ORDER BY x.ALCTION_TIME
+    </select>
+
+    <select id="selectXklxPager" resultType="com.work.ppm.application.dto.inforTechOut.PpmOutsourcingXklx">
+        select
+        <include refid="xklx"/>
+        FROM PPM_OUTSOURCING_XKLX x LEFT JOIN COMM_DEPARTMENT cd ON (x.OUT_DEPID =cd.DEPID )
+        where 1 = 1
+        <if test="outReqNum != null and outReqNum != '' ">AND OUT_REQ_NUM =#{outReqNum}</if>
+        <if test="empname != null and empname != '' ">AND EMPNAME LIKE '%'||#{empname}||'%'</if>
+        <if test="alctionDepid != null and alctionDepid.size() > 0 ">AND ALCTION_DEPID in
+            <foreach item="item" index="index" collection="alctionDepid" open="(" separator="," close=")">
+                #{item.depid,jdbcType=VARCHAR}
+            </foreach>
+        </if>
+        <if test="outreqName != null and outreqName != '' ">AND OUTREQ_NAME LIKE '%'|| #{outreqName} ||'%'</if>
+        <if test="outDepid != null and outDepid != '' ">AND OUT_DEPID =#{outDepid}</if>
+        <if test="outType != null and outType != '' ">AND OUT_TYPE =#{outType}</if>
+        <if test="deptId != null and deptId.size() > 0  ">AND ALCTION_DEPID in
+            <foreach item="item" index="index" collection="deptId" open="(" separator="," close=")">
+                #{item.depid,jdbcType=VARCHAR}
+            </foreach>
+        </if>
+        ORDER BY x.ALCTION_TIME DESC
+    </select>
+    <select id="getLogs" resultType="com.work.ppm.application.model.flowmanager.ext.PpmFlowLogInfo">
+        SELECT CREATETIME,
+        T.CONCLUSION,
+        T.SUGGEST,
+        T.APPLYDESC,
+        T.USERID,
+        T1.EMPNAME || '(' || T.USERID || ')' AS USERNAME,
+        T1.MOBILETELPHONE TEL,
+        (SELECT LOCATION FROM COMM_DEPARTMENT WHERE TO_CHAR(DEPID) = T.DEPTNO) AS DEPTNAME,
+        ISFALSE
+        FROM PPM_NEWFLOW_LOG T
+        LEFT JOIN PPM_EMP_VIEWALL T1 ON T1.BADGE = T.USERID
+        WHERE T.FLOWCASENO = #{flowcaseno}
+        AND T.ISDEL = '0'
+        ORDER BY T.CREATETIME ,T.ID ASC
+    </select>
+    <select id="getHistoryLogs" resultType="com.work.ppm.application.model.flowmanager.ext.PpmFlowLogInfo">
+        SELECT CREATETIME,
+        T.CONCLUSION,
+        T.SUGGEST,
+        T.APPLYDESC,
+        T.USERID,
+        T1.EMPNAME || '(' || T.USERID || ')' AS USERNAME,
+        T1.MOBILETELPHONE TEL,
+        (SELECT LOCATION FROM COMM_DEPARTMENT WHERE TO_CHAR(DEPID) = T.DEPTNO) AS DEPTNAME,
+        ISFALSE
+        FROM PPM_NEWFLOW_HISTORYLOG T
+        LEFT JOIN PPM_EMP_VIEWALL T1 ON T1.BADGE = T.USERID
+        WHERE T.FLOWCASENO = #{flowcaseno}
+        AND T.ISDEL = '0'
+        ORDER BY T.CREATETIME ,T.ID ASC
+    </select>
+    <select id="getMechanism" resultType="com.work.ppm.application.model.systemmanager.CommDepartment">
+        SELECT
+        DISTINCT a.*
+        FROM
+        (
+        SELECT
+        DEPID, depcode, LOCATION, compid, DEPGRADE
+        FROM
+        COMM_DEPARTMENT
+        WHERE
+        ADMINID = (
+        SELECT
+        ADMINID
+        FROM
+        COMM_DEPARTMENT
+        WHERE
+        DEPID = #{deptId}
+        AND DEPGRADE = '013')
+        UNION ALL
+        SELECT
+        DEPID, depcode, LOCATION, compid, DEPGRADE
+        FROM
+        COMM_DEPARTMENT
+        WHERE
+        DEPID = #{deptId}
+        AND DEPGRADE = '011'
+        UNION ALL
+        SELECT
+        DEPID, depcode, LOCATION, compid, DEPGRADE
+        FROM
+        COMM_DEPARTMENT
+        WHERE
+        ADMINID = (
+        SELECT
+        DEPID
+        FROM
+        COMM_DEPARTMENT
+        WHERE
+        DEPID = #{deptId}
+        AND DEPGRADE = '011')
+        UNION ALL
+        SELECT
+        DEPID, depcode, LOCATION, compid, DEPGRADE
+        FROM
+        COMM_DEPARTMENT
+        WHERE
+        ADMINID IN (
+        SELECT
+        DEPID
+        FROM
+        COMM_DEPARTMENT
+        WHERE
+        ADMINID = (
+        SELECT
+        DEPID
+        FROM
+        COMM_DEPARTMENT
+        WHERE
+        DEPID = #{deptId}
+        AND DEPGRADE = '010'))
+        UNION ALL
+        SELECT
+        DEPID, depcode, LOCATION, compid, DEPGRADE
+        FROM
+        COMM_DEPARTMENT
+        WHERE
+        ADMINID = (
+        SELECT
+        DEPID
+        FROM
+        COMM_DEPARTMENT
+        WHERE
+        DEPID = #{deptId}
+        AND DEPGRADE = '010')
+        UNION ALL
+        SELECT
+        DEPID, depcode, LOCATION, compid, DEPGRADE
+        FROM
+        COMM_DEPARTMENT
+        WHERE
+        DEPID = #{deptId}
+        AND DEPGRADE = '010' ) a
+        ORDER BY
+        a.DEPGRADE
+
+    </select>
+    <select id="selectDirector" resultType="com.work.ppm.application.model.systemmanager.CommDepartment">
+        SELECT
+        cd.DEPID,
+        cd.depcode,
+        cd.LOCATION,
+        cd.compid,
+        cd.DEPGRADE
+        FROM
+        COMM_DEPARTMENT cd
+        LEFT JOIN COMM_EMPLOYEE ce ON
+        (cd.DIRECTOR = ce.EID)
+        WHERE
+        ce.BADGE = #{userid}
+        AND cd.DEPID IN (10715,
+        10681)
+    </select>
+    <select id="getPhoneDb" resultType="com.work.ppm.application.dto.inforTechOut.PpmOutsourcingXklx">
+        SELECT
+        ce.EMPNAME ALCTION_DIRECTOR,
+        cd.LOCATION OUT_DEPID,
+        x.ID,
+        x.INSTANCEID,
+        x.CREATEID,
+        x.CREATEDATE,
+        x.TITLE,
+        x.FLOWID,
+        x.FLAG,
+        x.REMARK,
+        x.EMPNAME,
+        x.ALCTION_TIME,
+        x.ALCTION_DEPID,
+        x.ALCTION_LOCATION,
+        x.OUT_REQ_NUM,
+        x.OUT_TYPE,
+        x.OUTREQ_NAME,
+        x.OUT_DIRECTOR,
+        x.OUT_DIRECTOR_BADGE,
+        x.OUTREQ_EXPLAN
+        FROM
+        PPM_OUTSOURCING_XKLX x
+        LEFT JOIN COMM_DEPARTMENT cd ON
+        (x.OUT_DEPID = cd.DEPID )
+        LEFT JOIN COMM_EMPLOYEE ce ON
+        (x.ALCTION_DIRECTOR = ce.BADGE )
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="instanceid != null and instanceid != '' ">INSTANCEID =#{instanceid} AND</if>
+        </trim>
+        ORDER BY x.ALCTION_TIME
+    </select>
+
+
+</mapper>

@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+  
+<mapper namespace="com.tansun.wf.mocktest.mapper.WfTestPlanMapper">
+
+    <insert id="insert" parameterType="com.tansun.wf.mocktest.model.WfTestPlanEntity">
+        INSERT INTO WF_TEST_PLAN (
+            ID,
+            PLAN_CODE,
+            PLAN_NAME,
+            TENANT_ID,
+            TENANT_NAME,
+            CLASSIFY_ID,
+            CLASSIFY_CODE,
+            CLASSIFY_NAME,
+            PROCESS_DEF_KEY,
+            CREATE_TIME
+        )
+        VALUES (
+          #{id,jdbcType=VARCHAR},
+          #{planCode,jdbcType=VARCHAR},
+          #{planName,jdbcType=VARCHAR},
+          #{tenantId,jdbcType=VARCHAR},
+          #{tenantName,jdbcType=VARCHAR},
+          #{classifyId,jdbcType=VARCHAR},
+          #{classifyCode,jdbcType=VARCHAR},
+          #{classifyName,jdbcType=VARCHAR},
+          #{processDefKey,jdbcType=VARCHAR},
+          #{createTime,jdbcType=TIMESTAMP}
+        )
+    </insert>
+
+    <insert id="bulkInsert" parameterType="com.tansun.wf.mocktest.model.WfTestPlanEntity">
+        INSERT INTO WF_TEST_PLAN (
+        ID,
+        PLAN_CODE,
+        PLAN_NAME,
+        TENANT_ID,
+        TENANT_NAME,
+        CLASSIFY_ID,
+        CLASSIFY_CODE,
+        CLASSIFY_NAME,
+        PROCESS_DEF_KEY,
+        CREATE_TIME
+        )
+        VALUES
+        <foreach collection="list" item="copy" index="index" separator=",">
+          (#{id,jdbcType=VARCHAR},
+            #{planCode,jdbcType=VARCHAR},
+            #{planName,jdbcType=VARCHAR},
+            #{tenantId,jdbcType=VARCHAR},
+            #{tenantName,jdbcType=VARCHAR},
+            #{classifyId,jdbcType=VARCHAR},
+            #{classifyCode,jdbcType=VARCHAR},
+            #{classifyName,jdbcType=VARCHAR},
+            #{processDefKey,jdbcType=VARCHAR},
+            #{createTime,jdbcType=TIMESTAMP})
+        </foreach>
+    </insert>
+
+    <resultMap id="baseResultMap" type="com.tansun.wf.mocktest.model.WfTestPlanEntity" >
+        <id column="ID" property="id" jdbcType="VARCHAR" />
+        <result column="PLAN_CODE" property="planCode" jdbcType="VARCHAR" />
+        <result column="PLAN_NAME" property="planName" jdbcType="VARCHAR" />
+        <result column="TENANT_ID" property="tenantId" jdbcType="VARCHAR" />
+        <result column="TENANT_NAME" property="tenantName" jdbcType="VARCHAR" />
+        <result column="CLASSIFY_ID" property="classifyId" jdbcType="VARCHAR" />
+        <result column="CLASSIFY_CODE" property="classifyCode" jdbcType="VARCHAR" />
+        <result column="CLASSIFY_NAME" property="classifyName" jdbcType="VARCHAR" />
+        <result column="PROCESS_DEF_KEY" property="processDefKey" jdbcType="VARCHAR" />
+        <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    </resultMap>
+
+    <select id="findList" parameterType="com.tansun.wf.mocktest.query.WfTestPlanQuery" resultMap="baseResultMap">
+        select
+        ID,
+        PLAN_CODE,
+        PLAN_NAME,
+        TENANT_ID,
+        TENANT_NAME,
+        CLASSIFY_ID,
+        CLASSIFY_CODE,
+        CLASSIFY_NAME,
+        PROCESS_DEF_KEY,
+        CREATE_TIME
+
+        <include refid="selectWfHiCarbonCopyByQueryCriteriaSql"/>
+
+    </select>
+
+    <sql id="selectWfHiCarbonCopyByQueryCriteriaSql">
+        FROM WF_TEST_PLAN RES
+        <where>
+            <if test="planCode != null and planCode!=''">
+                AND RES.PLAN_CODE like  #{planCode} || '%'
+            </if>
+            <if test="planName != null and planName!=''">
+                AND RES.PLAN_NAME like #{planName}|| '%'
+            </if>
+            <if test="tenantId != null and tenantId!=''">
+                AND RES.TENANT_ID = #{tenantId}
+            </if>
+            <if test="processDefKey != null and processDefKey!=''">
+                AND RES.PROCESS_DEF_KEY = #{processDefKey}
+            </if>
+        </where>
+         ORDER BY RES.CREATE_TIME DESC
+    </sql>
+
+    <select id="selectById" resultMap="baseResultMap" parameterType="java.lang.String" >
+        select
+        ID,
+        PLAN_CODE,
+        PLAN_NAME,
+        TENANT_ID,
+        TENANT_NAME,
+        CLASSIFY_ID,
+        CLASSIFY_CODE,
+        CLASSIFY_NAME,
+        PROCESS_DEF_KEY,
+        CREATE_TIME
+        from WF_TEST_PLAN
+        where ID = #{id,jdbcType=VARCHAR}
+    </select>
+
+    <delete id="delete" parameterType="com.tansun.wf.mocktest.query.WfTestPlanQuery">
+        delete from WF_TEST_PLAN where id = #{id}
+    </delete>
+
+
+    <update id="update" parameterType="com.tansun.wf.mocktest.model.WfTestPlanEntity">
+        update WF_TEST_PLAN set
+          ID = #{id,jdbcType=VARCHAR},
+          PLAN_CODE = #{planCode,jdbcType=VARCHAR},
+          PLAN_NAME = #{planName,jdbcType=VARCHAR},
+          TENANT_ID = #{tenantId,jdbcType=VARCHAR},
+          TENANT_NAME = #{tenantName,jdbcType=VARCHAR},
+          CLASSIFY_ID = #{classifyId,jdbcType=VARCHAR},
+          CLASSIFY_CODE = #{classifyCode,jdbcType=VARCHAR},
+          CLASSIFY_NAME = #{classifyName,jdbcType=VARCHAR},
+          PROCESS_DEF_KEY = #{processDefKey,jdbcType=VARCHAR},
+          CREATE_TIME = #{createTime,jdbcType=TIMESTAMP}
+         where id = #{id}
+    </update>
+
+</mapper>

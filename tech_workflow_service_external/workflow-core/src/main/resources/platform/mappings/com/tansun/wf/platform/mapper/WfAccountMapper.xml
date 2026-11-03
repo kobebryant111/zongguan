@@ -1,0 +1,625 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.tansun.wf.platform.mapper.WfAccountMapper">
+
+    <select id="workloadStatisticsHandle" resultType="long" parameterType="com.tansun.wf.activiti.model.WorkloadStatisticsTypesVo">
+        select count(0) from act_hi_actinst t
+        where end_time_ is not null
+        and end_time_ &lt;= #{searchTimeEnd}
+        and end_time_ &gt;= #{searchTimeBegin}
+        and assignee_ in
+        <foreach collection="userLoginNames" item="userLoginName"  open="(" separator="," close=")">
+            #{userLoginName}
+        </foreach>
+    </select>
+
+    <select id="workloadStatisticsCreate" resultType="long" parameterType="com.tansun.wf.activiti.model.WorkloadStatisticsTypesVo">
+        select count(0) from act_hi_procinst t
+        where start_time_ is not null
+        and start_time_ &lt;= #{searchTimeEnd}
+        and start_time_ &gt;= #{searchTimeBegin}
+        and start_user_id_ in
+        <foreach collection="userLoginNames" item="userLoginName"  open="(" separator="," close=")">
+            #{userLoginName}
+        </foreach>
+    </select>
+
+    <select id="workloadStatisticsHandleByDate" resultType="com.tansun.wf.activiti.model.WorkloadStatisticsDto" parameterType="com.tansun.wf.activiti.model.WorkloadStatisticsTypesVo">
+        select name "name", count(0) as handle_cnt "handleCnt" from (
+        select
+        <choose>
+            <when test="qtype==2">
+                to_char(end_time_, 'yyyy') as name
+            </when>
+            <otherwise>
+                to_char(end_time_, 'yyyy-MM') as name
+            </otherwise>
+        </choose>
+        from act_hi_actinst t
+        where end_time_ is not null
+        and end_time_ &lt;= #{searchTimeEnd}
+        and end_time_ &gt;= #{searchTimeBegin}
+        and assignee_ in
+        <foreach collection="userLoginNames" item="userLoginName"  open="(" separator="," close=")">
+            #{userLoginName}
+        </foreach>
+        ) temp group by name
+    </select>
+
+    <select id="workloadStatisticsCreateByDate" resultType="com.tansun.wf.activiti.model.WorkloadStatisticsDto" parameterType="com.tansun.wf.activiti.model.WorkloadStatisticsTypesVo">
+        select name "name", count(0) as create_cnt "createCnt" from (
+        select
+        <choose>
+            <when test="qtype==2">
+                to_char(start_time_, 'yyyy') as name
+            </when>
+            <otherwise>
+                to_char(start_time_, 'yyyy-MM') as name
+            </otherwise>
+        </choose>
+        from act_hi_procinst t
+        where start_time_ is not null
+        and start_time_ &lt;= #{searchTimeEnd}
+        and start_time_ &gt;= #{searchTimeBegin}
+        and start_user_id_ in
+        <foreach collection="userLoginNames" item="userLoginName"  open="(" separator="," close=")">
+            #{userLoginName}
+        </foreach>
+        ) temp group by name
+    </select>
+
+    <select id="executionTime" resultType="com.tansun.wf.activiti.model.WfExecutionTimeDto" parameterType="com.tansun.wf.activiti.model.WfExecutionTimeQo">
+        select
+        tmp.key_ "modelKey",
+        max(tmp.name_) "name",
+        <if test="_databaseId =='oracle'">
+            avg(nvl(tmp.time_diff, 0)) "average",
+            max(nvl(tmp.time_diff, 0)) "maximum",
+            min(nvl(tmp.time_diff, 0)) "minimum"
+        </if>
+        <if test="_databaseId =='mysql'">
+            avg(IFNULL(tmp.time_diff, 0)) "average",
+            max(IFNULL(tmp.time_diff, 0)) "maximum",
+            min(IFNULL(tmp.time_diff, 0)) "minimum"
+        </if>
+        from (
+        select re.name_, re.key_, re.version_,
+        <if test="_databaseId =='oracle'">
+            EXTRACT (MINUTE FROM hi.end_time_ - hi.start_time_) time_diff
+        </if>
+        <if test="_databaseId =='mysql'">
+            TIMESTAMPDIFF(MINUTE,hi.start_time_,hi.end_time_ ) time_diff
+        </if>
+        from (select max(name_) name_, key_, max(version_) as version_ from ACT_RE_PROCDEF group by key_) re
+        left join act_hi_procinst hi on re.key_ = hi.proc_def_key_
+        and hi.end_time_ is not null
+        <if test="_databaseId =='oracle'">
+            and hi.start_time_ &lt;= to_timestamp(#{searchTimeEndDate},'YYYY-MM-DD HH24:MI:ss.ff3')
+            and hi.start_time_ &gt;= to_timestamp(#{searchTimeBeginDate},'YYYY-MM-DD HH24:MI:ss.ff3')
+        </if>
+        <if test="_databaseId =='mysql'">
+            and hi.start_time_ &lt;= str_to_date(#{searchTimeEndDate},'YYYY-MM-DD HH24:MI:ss.ff3')
+            and hi.start_time_ &gt;= str_to_date(#{searchTimeBeginDate},'YYYY-MM-DD HH24:MI:ss.ff3')
+        </if>
+        where re.key_ in
+        <foreach collection="entitys" item="entity"  open="(" separator="," close=")">
+            #{entity.modelKey}
+        </foreach>
+        ) tmp group by tmp.key_
+    </select>
+
+    <select id="executionTimeByVersoin" resultType="com.tansun.wf.activiti.model.WfExecutionTimeDto" parameterType="com.tansun.wf.activiti.model.WfExecutionTimeQo">
+        select
+        tmp.key_ "modelKey",
+        tmp.version_ "modelVersion",
+        max(tmp.name_)||'('||tmp.version_||')' "name",
+        <if test="_databaseId =='oracle'">
+            avg(nvl(tmp.time_diff, 0)) "average",
+            max(nvl(tmp.time_diff, 0)) "maximum",
+            min(nvl(tmp.time_diff, 0)) "minimum"
+        </if>
+        <if test="_databaseId =='mysql'">
+            avg(IFNULL(tmp.time_diff, 0)) "average",
+            max(IFNULL(tmp.time_diff, 0)) "maximum",
+            min(IFNULL(tmp.time_diff, 0)) "minimum"
+        </if>
+        from (
+        select re.name_, re.key_, re.version_,
+        <if test="_databaseId =='oracle'">
+            EXTRACT (MINUTE FROM hi.end_time_ - hi.start_time_) time_diff
+        </if>
+        <if test="_databaseId =='mysql'">
+            TIMESTAMPDIFF(MINUTE,hi.start_time_,hi.end_time_ ) time_diff
+        </if>
+        from ACT_RE_PROCDEF re left join act_hi_procinst hi
+        on re.key_ = hi.proc_def_key_
+        and hi.end_time_ is not null
+        and proc_def_id_ like re.key_||':'||re.version_||':%'
+        <if test="_databaseId =='oracle'">
+            and hi.start_time_ &lt;= to_timestamp(#{searchTimeEndDate},'YYYY-MM-DD HH24:MI:ss.ff3')
+            and hi.start_time_ &gt;= to_timestamp(#{searchTimeBeginDate},'YYYY-MM-DD HH24:MI:ss.ff3')
+        </if>
+        <if test="_databaseId =='mysql'">
+            and hi.start_time_ &lt;= str_to_date(#{searchTimeEndDate},'YYYY-MM-DD HH24:MI:ss.ff3')
+            and hi.start_time_ &gt;= str_to_date(#{searchTimeBeginDate},'YYYY-MM-DD HH24:MI:ss.ff3')
+        </if>
+        where re.key_ in
+        <foreach collection="entitys" item="entity"  open="(" separator="," close=")">
+            #{entity.modelKey}
+        </foreach>
+        ) tmp group by tmp.key_, tmp.version_
+    </select>
+
+    <select id="executionTimeByMonth" resultType="com.tansun.wf.activiti.model.WfExecutionTimeDto" parameterType="com.tansun.wf.activiti.model.WfExecutionTimeQo">
+        select
+        tmp.key_ "modelKey",
+        tmp.version_ "modelVersion",
+        tmp.start_time_ "name",
+        <if test="_databaseId =='oracle'">
+            avg(nvl(tmp.time_diff, 0)) "average",
+            max(nvl(tmp.time_diff, 0)) "maximum",
+            min(nvl(tmp.time_diff, 0)) "minimum"
+        </if>
+        <if test="_databaseId =='mysql'">
+            avg(IFNULL(tmp.time_diff, 0)) "average",
+            max(IFNULL(tmp.time_diff, 0)) "maximum",
+            min(IFNULL(tmp.time_diff, 0)) "minimum"
+        </if>
+        from (
+        select re.name_, re.key_, re.version_, to_char(hi.start_time_, 'yyyy-MM') start_time_, EXTRACT (MINUTE FROM hi.end_time_ - hi.start_time_) time_diff
+        from ACT_RE_PROCDEF re left join act_hi_procinst hi
+        on re.key_ = hi.proc_def_key_
+        and proc_def_id_ like re.key_||':'||re.version_||':%'
+        and hi.end_time_ is not null
+        <if test="_databaseId =='oracle'">
+            and hi.start_time_ &lt;= to_timestamp(#{searchTimeEndDate},'YYYY-MM-DD HH24:MI:ss.ff3')
+            and hi.start_time_ &gt;= to_timestamp(#{searchTimeBeginDate},'YYYY-MM-DD HH24:MI:ss.ff3')
+        </if>
+        <if test="_databaseId =='mysql'">
+            and hi.start_time_ &lt;= str_to_date(#{searchTimeEndDate},'YYYY-MM-DD HH24:MI:ss.ff3')
+            and hi.start_time_ &gt;= str_to_date(#{searchTimeBeginDate},'YYYY-MM-DD HH24:MI:ss.ff3')
+        </if>
+        where re.key_ = #{entity.modelKey} and re.version_ = #{entity.modelVersion}
+        ) tmp group by tmp.key_, tmp.version_, start_time_
+    </select>
+
+    <select id="queryWfVersionInfo" parameterType="String" resultType="com.tansun.wf.activiti.model.WfVersionVo">
+    select name_ "modelName", key_ "modelKey", version_ "modelVersion" from ACT_RE_PROCDEF where key_ = #{key}
+  </select>
+
+    <select id="activityTime" resultType="com.tansun.wf.activiti.model.WfActivityTimeDto" parameterType="com.tansun.wf.activiti.model.WfActivityTimeQo">
+        select
+        tmp.act_id_ "actId",
+        max(tmp.act_name_) "actName",
+        max(tmp.key_) "modelKey",
+        max(tmp.name_) "name",
+        <if test="_databaseId =='oracle'">
+            avg(nvl(tmp.time_diff, 0)) "average",
+            max(nvl(tmp.time_diff, 0)) "maximum",
+            min(nvl(tmp.time_diff, 0)) "minimum"
+        </if>
+        <if test="_databaseId =='mysql'">
+            avg(IFNULL(tmp.time_diff, 0)) "average",
+            max(IFNULL(tmp.time_diff, 0)) "maximum",
+            min(IFNULL(tmp.time_diff, 0)) "minimum"
+        </if>
+        from (
+        select hi.act_id_, hi.act_name_, nvl(hi.act_name_, hi.act_id_) name_, hi.proc_def_key_ key_,
+        <if test="_databaseId =='oracle'">
+            EXTRACT (MINUTE FROM hi.end_time_ - hi.start_time_) time_diff
+        </if>
+        <if test="_databaseId =='mysql'">
+            TIMESTAMPDIFF(MINUTE,hi.start_time_,hi.end_time_ ) time_diff
+        </if>
+        from act_hi_actinst hi
+        where hi.end_time_ is not null
+        <if test="_databaseId =='oracle'">
+            and hi.start_time_ &lt;= to_timestamp(#{searchTimeEndDate},'YYYY-MM-DD HH24:MI:ss.ff3')
+            and hi.start_time_ &gt;= to_timestamp(#{searchTimeBeginDate},'YYYY-MM-DD HH24:MI:ss.ff3')
+        </if>
+        <if test="_databaseId =='mysql'">
+            and hi.start_time_ &lt;= str_to_date(#{searchTimeEndDate},'YYYY-MM-DD HH24:MI:ss.ff3')
+            and hi.start_time_ &gt;= str_to_date(#{searchTimeBeginDate},'YYYY-MM-DD HH24:MI:ss.ff3')
+        </if>
+        and hi.proc_def_key_ = #{modelKey}
+        and hi.proc_def_id_ like #{procDefIdLike}
+        ) tmp group by tmp.act_id_
+    </select>
+
+    <select id="activityTimeByMonth" resultType="com.tansun.wf.activiti.model.WfActivityTimeDto" parameterType="com.tansun.wf.activiti.model.WfActivityTimeQo">
+        select
+        tmp.act_id_ "actId",
+        tmp.start_time_ "name",
+        max(tmp.act_name_) "actName",
+        max(tmp.key_) "modelKey",
+        <if test="_databaseId =='oracle'">
+            avg(nvl(tmp.time_diff, 0)) "average",
+            max(nvl(tmp.time_diff, 0)) "maximum",
+            min(nvl(tmp.time_diff, 0)) "minimum"
+        </if>
+        <if test="_databaseId =='mysql'">
+            avg(IFNULL(tmp.time_diff, 0)) "average",
+            max(IFNULL(tmp.time_diff, 0)) "maximum",
+            min(IFNULL(tmp.time_diff, 0)) "minimum"
+        </if>
+        from (
+        select hi.act_id_, hi.act_name_, to_char(hi.start_time_, 'yyyy-MM') start_time_, hi.proc_def_key_ key_,
+        <if test="_databaseId =='oracle'">
+            EXTRACT (MINUTE FROM hi.end_time_ - hi.start_time_) time_diff
+        </if>
+        <if test="_databaseId =='mysql'">
+            TIMESTAMPDIFF(MINUTE,hi.start_time_,hi.end_time_ ) time_diff
+        </if>
+        from act_hi_actinst hi
+        where hi.end_time_ is not null
+        <if test="_databaseId =='oracle'">
+            and hi.start_time_ &lt;= to_timestamp(#{searchTimeEndDate},'YYYY-MM-DD HH24:MI:ss.ff3')
+            and hi.start_time_ &gt;= to_timestamp(#{searchTimeBeginDate},'YYYY-MM-DD HH24:MI:ss.ff3')
+        </if>
+        <if test="_databaseId =='mysql'">
+            and hi.start_time_ &lt;= str_to_date(#{searchTimeEndDate},'YYYY-MM-DD HH24:MI:ss.ff3')
+            and hi.start_time_ &gt;= str_to_date(#{searchTimeBeginDate},'YYYY-MM-DD HH24:MI:ss.ff3')
+        </if>
+        and hi.proc_def_key_ = #{modelKey}
+        and hi.proc_def_id_ like #{procDefIdLike}
+        and hi.act_id_ = #{actId}
+        ) tmp group by tmp.act_id_, tmp.start_time_
+    </select>
+
+    <select id="executionStat" resultType="com.tansun.wf.activiti.model.WfExecutionStatDto" parameterType="com.tansun.wf.activiti.model.WfExecutionStatQo">
+        select
+        re.key_ "modelKey",
+        max(re.name_) "name",
+        sum(case when hi.STATE_='ACTIVE' then 1 else 0 end) "active",
+        sum(case when hi.STATE_='COMPLETED' then 1 else 0 end) "completed",
+        sum(case when hi.STATE_ like '%TERMINATED%' then 1 else 0 end) "terminated"
+        from (select max(name_) name_, key_, max(version_) as version_ from ACT_RE_PROCDEF group by key_) re
+        left join act_hi_procinst hi on re.key_ = hi.proc_def_key_
+        <if test="_databaseId =='oracle'">
+            and hi.start_time_ &lt;= to_timestamp(#{searchTimeEndDate},'YYYY-MM-DD HH24:MI:ss.ff3')
+            and hi.start_time_ &gt;= to_timestamp(#{searchTimeBeginDate},'YYYY-MM-DD HH24:MI:ss.ff3')
+        </if>
+        <if test="_databaseId =='mysql'">
+            and hi.start_time_ &lt;= str_to_date(#{searchTimeEndDate},'YYYY-MM-DD HH24:MI:ss.ff3')
+            and hi.start_time_ &gt;= str_to_date(#{searchTimeBeginDate},'YYYY-MM-DD HH24:MI:ss.ff3')
+        </if>
+        where re.key_ in
+        <foreach collection="entitys" item="entity"  open="(" separator="," close=")">
+            #{entity.modelKey}
+        </foreach>
+        group by re.key_
+    </select>
+
+    <select id="executionStatByVersoin" resultType="com.tansun.wf.activiti.model.WfExecutionStatDto" parameterType="com.tansun.wf.activiti.model.WfExecutionStatQo">
+        select
+        re.key_ "modelKey",
+        re.version_ "modelVersion",
+        max(re.name_)||'('||re.version_||')' "name",
+        sum(case when hi.STATE_='ACTIVE' then 1 else 0 end) "active",
+        sum(case when hi.STATE_='COMPLETED' then 1 else 0 end) "completed",
+        sum(case when hi.STATE_ like '%TERMINATED%' then 1 else 0 end) "teminated"
+        from ACT_RE_PROCDEF re
+        left join act_hi_procinst hi on re.key_ = hi.proc_def_key_
+        and hi.proc_def_id_ like re.key_||':'||re.version_||':%'
+        <if test="_databaseId =='oracle'">
+            and hi.start_time_ &lt;= to_timestamp(#{searchTimeEndDate},'YYYY-MM-DD HH24:MI:ss.ff3')
+            and hi.start_time_ &gt;= to_timestamp(#{searchTimeBeginDate},'YYYY-MM-DD HH24:MI:ss.ff3')
+        </if>
+        <if test="_databaseId =='mysql'">
+            and hi.start_time_ &lt;= str_to_date(#{searchTimeEndDate},'YYYY-MM-DD HH24:MI:ss.ff3')
+            and hi.start_time_ &gt;= str_to_date(#{searchTimeBeginDate},'YYYY-MM-DD HH24:MI:ss.ff3')
+        </if>
+        where re.key_ in
+        <foreach collection="entitys" item="entity"  open="(" separator="," close=")">
+            #{entity.modelKey}
+        </foreach>
+        group by re.key_, re.version_
+    </select>
+
+    <select id="executionStatByMonth" resultType="com.tansun.wf.activiti.model.WfExecutionStatDto" parameterType="com.tansun.wf.activiti.model.WfExecutionStatQo">
+        select
+        tmp.start_time_ "name",
+        max(tmp.key_) "modelKey",
+        sum(case when tmp.STATE_='ACTIVE' then 1 else 0 end) "active",
+        sum(case when tmp.STATE_='COMPLETED' then 1 else 0 end) "completed",
+        sum(case when tmp.STATE_ like '%TERMINATED%' then 1 else 0 end) "terminated"
+        from (
+        select to_char(hi.start_time_, 'yyyy-MM') start_time_, hi.proc_def_key_ key_, hi.state_
+        from act_hi_procinst hi
+        where
+        <if test="_databaseId =='oracle'">
+            hi.start_time_ &lt;= to_timestamp(#{searchTimeEndDate},'YYYY-MM-DD HH24:MI:ss.ff3')
+            and hi.start_time_ &gt;= to_timestamp(#{searchTimeBeginDate},'YYYY-MM-DD HH24:MI:ss.ff3')
+        </if>
+        <if test="_databaseId =='mysql'">
+            hi.start_time_ &lt;= str_to_date(#{searchTimeEndDate},'YYYY-MM-DD HH24:MI:ss.ff3')
+            and hi.start_time_ &gt;= str_to_date(#{searchTimeBeginDate},'YYYY-MM-DD HH24:MI:ss.ff3')
+        </if>
+        and hi.proc_def_key_ = #{entity.modelKey}
+        and hi.proc_def_id_ like #{procDefIdLike}
+        ) tmp group by tmp.start_time_
+    </select>
+
+    <select id="instTimeoutRate" parameterType="com.tansun.wf.activiti.model.WfTimeoutRateQo" resultType="com.tansun.wf.activiti.model.WfTimeoutRateDto">
+        select model_key "modelKey", max(name) "name", sum(inst_timeout) "instTimeout", sum(inst_completed) "instCompleted" from (
+        select
+        re.key_ model_key,
+        max(re.name_) name,
+        case when max(hi.due_date_) &lt; max(hi.end_time_) then 1 else 0 end inst_timeout,
+        case when max(inst.state_) = 'COMPLETED' then 1 else 0 end inst_completed
+        from (select max(name_) name_, max(key_) key_, max(version_) as version_ from ACT_RE_PROCDEF group by key_) re
+        left join act_hi_taskinst hi on re.key_ = hi.proc_def_key_
+        <if test="_databaseId =='oracle'">
+            and hi.start_time_ &lt;= to_timestamp(#{searchTimeEndDate},'YYYY-MM-DD HH24:MI:ss.ff3')
+            and hi.start_time_ &gt;= to_timestamp(#{searchTimeBeginDate},'YYYY-MM-DD HH24:MI:ss.ff3')
+        </if>
+        <if test="_databaseId =='mysql'">
+            and hi.start_time_ &lt;= str_to_date(#{searchTimeEndDate},'YYYY-MM-DD HH24:MI:ss.ff3')
+            and hi.start_time_ &gt;= str_to_date(#{searchTimeBeginDate},'YYYY-MM-DD HH24:MI:ss.ff3')
+        </if>
+        left join act_hi_procinst inst on hi.proc_inst_id_ = inst.proc_inst_id_
+        where re.key_ in
+        <foreach collection="entitys" item="entity"  open="(" separator="," close=")">
+            #{entity.modelKey}
+        </foreach>
+        group by re.key_, hi.proc_inst_id_) tmp group by tmp.model_key
+    </select>
+
+    <select id="taskTimeoutRate" parameterType="com.tansun.wf.activiti.model.WfTimeoutRateQo" resultType="com.tansun.wf.activiti.model.WfTimeoutRateDto">
+        select
+        re.key_ "modelKey",
+        max(re.name_) "name",
+        sum(case when hi.due_date_ &lt; hi.end_time_ then 1 else 0 end) "actTimeout",
+        sum(case when hi.due_date_ is null and hi.end_time_ is not null or hi.due_date_ &gt;= hi.end_time_ then 1 else 0 end) "actCompleted"
+        from (select max(name_) name_, max(key_) key_, max(version_) as version_ from ACT_RE_PROCDEF group by key_) re
+        left join act_hi_taskinst hi on re.key_ = hi.proc_def_key_
+        <if test="_databaseId =='oracle'">
+            and hi.start_time_ &lt;= to_timestamp(#{searchTimeEndDate},'YYYY-MM-DD HH24:MI:ss.ff3')
+            and hi.start_time_ &gt;= to_timestamp(#{searchTimeBeginDate},'YYYY-MM-DD HH24:MI:ss.ff3')
+        </if>
+        <if test="_databaseId =='mysql'">
+            and hi.start_time_ &lt;= str_to_date(#{searchTimeEndDate},'YYYY-MM-DD HH24:MI:ss.ff3')
+            and hi.start_time_ &gt;= str_to_date(#{searchTimeBeginDate},'YYYY-MM-DD HH24:MI:ss.ff3')
+        </if>
+        where re.key_ in
+        <foreach collection="entitys" item="entity"  open="(" separator="," close=")">
+            #{entity.modelKey}
+        </foreach>
+        group by re.key_
+    </select>
+
+    <select id="instTimeoutRateVersion" parameterType="com.tansun.wf.activiti.model.WfTimeoutRateQo" resultType="com.tansun.wf.activiti.model.WfTimeoutRateDto">
+        select model_key "modelKey", max(name) "name", sum(inst_timeout) "instTimeout", sum(inst_completed) "instCompleted", model_version "modelVersion" from (
+        select
+        re.key_ model_key,
+        max(re.name_)||'('||max(re.version_)||')' name,
+        max(re.version_) model_version,
+        case when max(hi.due_date_) &lt; max(hi.end_time_) then 1 else 0 end inst_timeout,
+        case when max(inst.state_) = 'COMPLETED' then 1 else 0 end inst_completed
+        from ACT_RE_PROCDEF re
+        left join act_hi_taskinst hi on re.key_ = hi.proc_def_key_
+        and proc_def_id_ like re.key_||':'||re.version_||':%'
+        <if test="_databaseId =='oracle'">
+            and hi.start_time_ &lt;= to_timestamp(#{searchTimeEndDate},'YYYY-MM-DD HH24:MI:ss.ff3')
+            and hi.start_time_ &gt;= to_timestamp(#{searchTimeBeginDate},'YYYY-MM-DD HH24:MI:ss.ff3')
+        </if>
+        <if test="_databaseId =='mysql'">
+            and hi.start_time_ &lt;= str_to_date(#{searchTimeEndDate},'YYYY-MM-DD HH24:MI:ss.ff3')
+            and hi.start_time_ &gt;= str_to_date(#{searchTimeBeginDate},'YYYY-MM-DD HH24:MI:ss.ff3')
+        </if>
+        left join act_hi_procinst inst on hi.proc_inst_id_ = inst.proc_inst_id_
+        where re.key_ in
+        <foreach collection="entitys" item="entity"  open="(" separator="," close=")">
+            #{entity.modelKey}
+        </foreach>
+        group by re.key_, hi.proc_inst_id_) tmp group by tmp.model_key, tmp.model_version
+    </select>
+
+    <select id="taskTimeoutRateVersion" parameterType="com.tansun.wf.activiti.model.WfTimeoutRateQo" resultType="com.tansun.wf.activiti.model.WfTimeoutRateDto">
+        select
+        re.key_ "modelKey",
+        max(re.name_)||'('||re.version_||')' "name",
+        re.version_ "modelVersion",
+        sum(case when hi.due_date_ &lt; hi.end_time_ then 1 else 0 end) "actTimeout",
+        sum(case when hi.due_date_ is null and hi.end_time_ is not null or hi.due_date_ &gt;= hi.end_time_ then 1 else 0 end) "actCompleted"
+        from ACT_RE_PROCDEF re
+        left join act_hi_taskinst hi on re.key_ = hi.proc_def_key_
+        and proc_def_id_ like re.key_||':'||re.version_||':%'
+        <if test="_databaseId =='oracle'">
+            and hi.start_time_ &lt;= to_timestamp(#{searchTimeEndDate},'YYYY-MM-DD HH24:MI:ss.ff3')
+            and hi.start_time_ &gt;= to_timestamp(#{searchTimeBeginDate},'YYYY-MM-DD HH24:MI:ss.ff3')
+        </if>
+        <if test="_databaseId =='mysql'">
+            and hi.start_time_ &lt;= str_to_date(#{searchTimeEndDate},'YYYY-MM-DD HH24:MI:ss.ff3')
+            and hi.start_time_ &gt;= str_to_date(#{searchTimeBeginDate},'YYYY-MM-DD HH24:MI:ss.ff3')
+        </if>
+        where re.key_ in
+        <foreach collection="entitys" item="entity"  open="(" separator="," close=")">
+            #{entity.modelKey}
+        </foreach>
+        group by re.key_, re.version_
+    </select>
+
+    <select id="instTimeoutRateMonth" parameterType="com.tansun.wf.activiti.model.WfTimeoutRateQo" resultType="com.tansun.wf.activiti.model.WfTimeoutRateDto">
+        select model_key "modelKey", name "name", sum(inst_timeout) "instTimeout", sum(inst_completed) "instCompleted", max(model_version) "modelVersion" from (
+        select
+        re.key_ model_key,
+        to_char(max(hi.start_time_), 'yyyy-MM') as name,
+        max(re.version_) model_version,
+        case when max(hi.due_date_) &lt; max(hi.end_time_) then 1 else 0 end inst_timeout,
+        case when max(inst.state_) = 'COMPLETED' then 1 else 0 end inst_completed
+        from ACT_RE_PROCDEF re
+        left join act_hi_taskinst hi on re.key_ = hi.proc_def_key_
+        and proc_def_id_ like re.key_||':'||re.version_||':%'
+        <if test="_databaseId =='oracle'">
+            and hi.start_time_ &lt;= to_timestamp(#{searchTimeEndDate},'YYYY-MM-DD HH24:MI:ss.ff3')
+            and hi.start_time_ &gt;= to_timestamp(#{searchTimeBeginDate},'YYYY-MM-DD HH24:MI:ss.ff3')
+        </if>
+        <if test="_databaseId =='mysql'">
+            and hi.start_time_ &lt;= str_to_date(#{searchTimeEndDate},'YYYY-MM-DD HH24:MI:ss.ff3')
+            and hi.start_time_ &gt;= str_to_date(#{searchTimeBeginDate},'YYYY-MM-DD HH24:MI:ss.ff3')
+        </if>
+        left join act_hi_procinst inst on hi.proc_inst_id_ = inst.proc_inst_id_
+        where re.version_ = #{entity.modelVersion}
+        and re.key_ in
+        <foreach collection="entitys" item="entity"  open="(" separator="," close=")">
+            #{entity.modelKey}
+        </foreach>
+        group by re.key_, hi.proc_inst_id_) tmp group by tmp.model_key, tmp.name
+    </select>
+
+    <select id="taskTimeoutRateMonth" parameterType="com.tansun.wf.activiti.model.WfTimeoutRateQo" resultType="com.tansun.wf.activiti.model.WfTimeoutRateDto">
+        select
+        re.key_ "modelKey",
+        hi.name "name",
+        max(re.version_) "modelVersion",
+        sum(case when hi.due_date_ &lt; hi.end_time_ then 1 else 0 end) "actTimeout",
+        sum(case when hi.due_date_ is null and hi.end_time_ is not null or hi.due_date_ &gt;= hi.end_time_ then 1 else 0 end) "actCompleted"
+        from ACT_RE_PROCDEF re
+        left join (select to_char(start_time_, 'yyyy-MM') name, start_time_, proc_def_id_, due_date_, end_time_, proc_def_key_ from act_hi_taskinst) hi
+        on re.key_ = hi.proc_def_key_
+        and hi.proc_def_id_ like re.key_||':'||re.version_||':%'
+        <if test="_databaseId =='oracle'">
+            and hi.start_time_ &lt;= to_timestamp(#{searchTimeEndDate},'YYYY-MM-DD HH24:MI:ss.ff3')
+            and hi.start_time_ &gt;= to_timestamp(#{searchTimeBeginDate},'YYYY-MM-DD HH24:MI:ss.ff3')
+        </if>
+        <if test="_databaseId =='mysql'">
+            and hi.start_time_ &lt;= str_to_date(#{searchTimeEndDate},'YYYY-MM-DD HH24:MI:ss.ff3')
+            and hi.start_time_ &gt;= str_to_date(#{searchTimeBeginDate},'YYYY-MM-DD HH24:MI:ss.ff3')
+        </if>
+        where re.version_ = #{entity.modelVersion}
+        and re.key_ in
+        <foreach collection="entitys" item="entity"  open="(" separator="," close=")">
+            #{entity.modelKey}
+        </foreach>
+        group by re.key_, hi.name
+    </select>
+
+    <select id="queryTimeoutDuration" resultType="com.tansun.wf.activiti.model.WfTimeoutDurationDto" parameterType="com.tansun.wf.activiti.model.WfTimeoutDurationQo">
+        select proc_inst_id_ "procInstId", max(inst_start_time) "instStartTime", sum(case when act_timeout_diff=0 then 1 else act_timeout_diff end) "instTimeoutDiff" from (
+        select
+        task.proc_inst_id_ proc_inst_id_,
+        to_char(inst.start_time_, 'yyyy-MM-dd hh:mm:ss') as inst_start_time,
+        inst.start_user_id_ inst_user,
+        <if test="_databaseId =='oracle'">
+            EXTRACT (MINUTE FROM task.end_time_ - task.due_date_) act_timeout_diff
+        </if>
+        <if test="_databaseId =='mysql'">
+            TIMESTAMPDIFF(MINUTE,task.due_date_,task.end_time_) act_timeout_diff
+        </if>
+        from act_hi_taskinst task left join act_hi_procinst inst
+        on task.proc_inst_id_ = inst.proc_inst_id_
+        where task.proc_def_id_ like #{procDefIdLike}
+        <if test="_databaseId =='oracle'">
+            and hi.start_time_ &lt;= to_timestamp(#{searchTimeEndDate},'YYYY-MM-DD HH24:MI:ss.ff3')
+            and hi.start_time_ &gt;= to_timestamp(#{searchTimeBeginDate},'YYYY-MM-DD HH24:MI:ss.ff3')
+        </if>
+        <if test="_databaseId =='mysql'">
+            and hi.start_time_ &lt;= str_to_date(#{searchTimeEndDate},'YYYY-MM-DD HH24:MI:ss.ff3')
+            and hi.start_time_ &gt;= str_to_date(#{searchTimeBeginDate},'YYYY-MM-DD HH24:MI:ss.ff3')
+        </if>
+        and task.end_time_ is not null
+        and task.due_date_ &lt; task.end_time_
+        ) tmp group by proc_inst_id_
+    </select>
+
+    <select id="queryActTimeoutDuration" resultType="com.tansun.wf.activiti.model.WfTimeoutDurationDto" parameterType="com.tansun.wf.activiti.model.WfTimeoutDurationQo">
+        select act_name "actName", act_start_time "actStartTime", act_user "actUser", case when act_timeout_diff=0 then 1 else act_timeout_diff end "actTimeoutDiff" from (
+        select
+        name_ act_name,
+        to_char(task.start_time_, 'yyyy-MM-dd hh:mm:ss') as act_start_time,
+        task.assignee_ act_user,
+        <if test="_databaseId =='oracle'">
+            EXTRACT (MINUTE FROM task.end_time_ - task.due_date_) act_timeout_diff
+        </if>
+        <if test="_databaseId =='mysql'">
+            TIMESTAMPDIFF(MINUTE,task.due_date_,task.end_time_) act_timeout_diff
+        </if>
+        from act_hi_taskinst task
+        where task.proc_def_id_ like #{procDefIdLike}
+        <if test="_databaseId =='oracle'">
+            and hi.start_time_ &lt;= to_timestamp(#{searchTimeEndDate},'YYYY-MM-DD HH24:MI:ss.ff3')
+            and hi.start_time_ &gt;= to_timestamp(#{searchTimeBeginDate},'YYYY-MM-DD HH24:MI:ss.ff3')
+        </if>
+        <if test="_databaseId =='mysql'">
+            and hi.start_time_ &lt;= str_to_date(#{searchTimeEndDate},'YYYY-MM-DD HH24:MI:ss.ff3')
+            and hi.start_time_ &gt;= str_to_date(#{searchTimeBeginDate},'YYYY-MM-DD HH24:MI:ss.ff3')
+        </if>
+        and task.end_time_ is not null
+        and task.due_date_ &lt; task.end_time_
+        ) tmp
+    </select>
+
+    <select id="instBackTask" parameterType="com.tansun.wf.activiti.model.WfBackTaskQo" resultType="com.tansun.wf.activiti.model.WfBackTaskDto">
+        select
+        re.version_ "modelVersion",
+        max(re.name_)||'('||re.version_ ||')' "name",
+        sum(case when hi.act_type_='userTask' then 1 else 0 end) "startCnt",
+        sum(case when hi.act_type_='userTask' and hi.act_inst_state_='2' then 1 else 0 end) "backCnt"
+        from ACT_RE_PROCDEF re left join act_hi_actinst hi
+        on re.key_ = hi.proc_def_key_ and hi.act_type_='userTask'
+        and proc_def_id_ like re.key_||':'||re.version_||':%'
+        <if test="_databaseId =='oracle'">
+            and hi.start_time_ &lt;= to_timestamp(#{searchTimeEndDate},'YYYY-MM-DD HH24:MI:ss.ff3')
+            and hi.start_time_ &gt;= to_timestamp(#{searchTimeBeginDate},'YYYY-MM-DD HH24:MI:ss.ff3')
+        </if>
+        <if test="_databaseId =='mysql'">
+            and hi.start_time_ &lt;= str_to_date(#{searchTimeEndDate},'YYYY-MM-DD HH24:MI:ss.ff3')
+            and hi.start_time_ &gt;= str_to_date(#{searchTimeBeginDate},'YYYY-MM-DD HH24:MI:ss.ff3')
+        </if>
+        where re.key_=#{entity.modelKey}
+        group by re.key_, re.version_
+    </select>
+
+    <select id="actBackTask" parameterType="com.tansun.wf.activiti.model.WfBackTaskQo" resultType="com.tansun.wf.activiti.model.WfBackTaskDto">
+        select
+        act_name_ "name",
+        sum(case when hi.act_type_='userTask' then 1 else 0 end) "startCnt",
+        sum(case when hi.act_type_='userTask' and hi.act_inst_state_='2' then 1 else 0 end) "backCnt"
+        from ACT_RE_PROCDEF re left join act_hi_actinst hi
+        on re.key_ = hi.proc_def_key_ and hi.act_type_='userTask'
+        and proc_def_id_ like re.key_||':'||re.version_||':%'
+        <if test="_databaseId =='oracle'">
+            and hi.start_time_ &lt;= to_timestamp(#{searchTimeEndDate},'YYYY-MM-DD HH24:MI:ss.ff3')
+            and hi.start_time_ &gt;= to_timestamp(#{searchTimeBeginDate},'YYYY-MM-DD HH24:MI:ss.ff3')
+        </if>
+        <if test="_databaseId =='mysql'">
+            and hi.start_time_ &lt;= str_to_date(#{searchTimeEndDate},'YYYY-MM-DD HH24:MI:ss.ff3')
+            and hi.start_time_ &gt;= str_to_date(#{searchTimeBeginDate},'YYYY-MM-DD HH24:MI:ss.ff3')
+        </if>
+        where re.key_=#{entity.modelKey} and re.version_ = #{entity.modelVersion}
+        group by hi.act_name_
+    </select>
+
+    <select id="proVersion" resultType="com.tansun.wf.activiti.model.WfProVersionDto" parameterType="com.tansun.wf.activiti.model.WfProVersionQo">
+        select
+        re.key_ "modelKey",
+        max(re.name_) "modelName",
+        max(re.version_) "currentVersion",
+        count(re.version_) "versionCnt",
+        min(deploy.deploy_time_) "proCreateTime",
+        max(deploy.deploy_time_) "lastCreateTime",
+        <if test="_databaseId =='oracle'">
+            EXTRACT (DAY FROM sysdate - min(deploy.deploy_time_)) + 1 "proCreateDays"
+        </if>
+        <if test="_databaseId =='mysql'">
+            TIMESTAMPDIFF(DAY,min(deploy.deploy_time_),now())+1 "proCreateDays"
+        </if>
+        from act_re_procdef re left join act_re_deployment deploy
+        on re.deployment_id_ = deploy.id_
+        <where>
+            <if test="classifyId != null and classifyId !=''">
+                AND re.category_ = #{classifyId}
+            </if>
+            <if test="modelNameLike != null and modelNameLike !=''">
+                AND re.name_ like #{modelNameLike}
+            </if>
+            <if test="tenantId != null and tenantId !=''">
+                AND re.tenant_id_ = #{tenantId}
+            </if>
+        </where>
+        group by re.key_
+    </select>
+</mapper>

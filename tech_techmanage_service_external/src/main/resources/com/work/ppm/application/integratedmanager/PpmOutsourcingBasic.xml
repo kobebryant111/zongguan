@@ -1,0 +1,1124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k6991 2020-10-16 -->
+<mapper namespace="com.work.ppm.application.model.integratedmanager.PpmOutsourcingBasic">
+    <resultMap type="ppmOutsourcingBasic" id="PPMOUTSOURCINGBASIC_ALL">
+        <result property="id" column="ID"/>
+        <result property="jobId" column="JOB_ID"/>
+        <result property="userName" column="USER_NAME"/>
+        <result property="sex" column="SEX"/>
+        <result property="certificateType" column="CERTIFICATE_TYPE"/>
+        <result property="certificateNumber" column="CERTIFICATE_NUMBER"/>
+        <result property="grade" column="GRADE"/>
+        <result property="price" column="PRICE"/>
+        <result property="mobile" column="MOBILE"/>
+        <result property="deptId" column="DEPT_ID"/>
+        <result property="outsourceType" column="OUTSOURCE_TYPE"/>
+        <result property="userType" column="USER_TYPE"/>
+        <result property="state" column="STATE"/>
+        <result property="age" column="AGE"/>
+        <result property="maritalStatus" column="MARITAL_STATUS"/>
+        <result property="politicalStatus" column="POLITICAL_STATUS"/>
+        <result property="education" column="EDUCATION"/>
+        <result property="birthday" column="BIRTHDAY"/>
+        <result property="profession" column="PROFESSION"/>
+        <result property="groupId" column="GROUP_ID"/>
+        <result property="postId" column="POST_ID"/>
+        <result property="workContent" column="WORK_CONTENT"/>
+        <result property="college" column="COLLEGE"/>
+        <result property="hometown" column="HOMETOWN"/>
+        <result property="projectNumber" column="PROJECT_NUMBER"/>
+        <result property="projectManager" column="PROJECT_MANAGER"/>
+        <result property="isOtherProject" column="IS_OTHER_PROJECT"/>
+        <result property="sdprojectName" column="SDPROJECT_NAME"/>
+        <result property="sdmanageruserId" column="SDMANAGERUSER_ID"/>
+        <result property="personInCharge" column="PERSON_IN_CHARGE"/>
+        <result property="systemNo" column="SYSTEM_NO"/>
+        <result property="systemPrincipal" column="SYSTEM_PRINCIPAL"/>
+        <result property="purchaseItem" column="PURCHASE_ITEM"/>
+        <result property="faceimage" column="FACEIMAGE"/>
+        <result property="vmAccount" column="VM_ACCOUNT"/>
+        <result property="entranceCard" column="ENTRANCE_CARD"/>
+        <result property="leavingTime" column="LEAVING_TIME"/>
+        <result property="beginTime" column="BEGIN_TIME"/>
+        <result property="entryTime" column="ENTRY_TIME"/>
+        <result property="outsourceNo" column="OUTSOURCE_NO"/>
+        <result property="appltbegTime" column="APPLTBEG_TIME"/>
+        <result property="presenceState" column="PRESENCE_STATE"/>
+        <result property="newContractId" column="NEW_CONTRACT_ID"/>
+        <result property="ceneralOfficeMotion" column="CENERAL_OFFICE_MOTION"/>
+        <result property="evaluationLevel" column="EVALUATION_LEVEL"/>
+        <result property="levelReason" column="LEVEL_REASON"/>
+        <result property="evaluatorId" column="EVALUATOR_ID"/>
+        <result property="evaluationTime" column="EVALUATION_TIME"/>
+    </resultMap>
+    <resultMap id="PPMOUTSOURCINGBASIC_ALL_EXT" type="ppmOutsourcingBasicInfo" extends="PPMOUTSOURCINGBASIC_ALL">
+        <result property="sexname" column="SEXNAME"/>
+        <result property="outsourcname" column="OUTSOURCNAME"/>
+        <result property="certificateTypename" column="CERTIFICATE_TYPENAME"/>
+        <result property="educationname" column="EDUCATIONNAME"/>
+        <result property="maritalStatusname" column="MARITAL_STATUSNAME"/>
+        <result property="outsourceTypename" column="OUTSOURCE_TYPENAME"/>
+        <result property="userTypename" column="USER_TYPENAME"/>
+        <result property="depname" column="DEPNAME"/>
+        <result property="groupname" column="GROUPNAME"/>
+        <result property="personInChargename" column="PERSON_IN_CHARGENAME"/>
+        <result property="postname" column="POSTNAME"/>
+        <result property="contractId" column="CONTRACT_ID"/>
+        <result property="htmc" column="HTMC"/>
+        <result property="isProjectEssential" column="ISPROJECT_ESSENTIAL"/>
+        <result property="projectname" column="PROJECTNAME"/>
+        <result property="projectmanagername" column="PROJECTMANAGERNAME"/>
+        <result property="systemnames" column="SYSTEMNAMES"/>
+        <result property="systemprincipalnames" column="SYSTEMPRINCIPALNAMES"/>
+        <result property="statename" column="STATENAME"/>
+        <result property="workhandover" column="WORKHANDOVER"/>
+        <result property="eitquetteTime" column="EITQUETTE_TIME"/>
+        <result property="qualityTime" column="QUALITY_TIME"/>
+        <result property="eitquetteAchievement" column="EITQUETTE_ACHIEVEMENT"/>
+        <result property="qualityAchievement" column="QUALITY_ACHIEVEMENT"/>
+        <result property="leavFlowTime" column="LEAV_FLOW_TIME"/>
+        <result property="accessFlowTime" column="ACCESS_FLOW_TIME"/>
+        <result property="price" column="PRICE"/>
+        <result property="attendanceTypename" column="ATTENDANCE_TYPENAME"/>
+        <result property="centername" column="CENTERNAME"/>
+        <result property="proattrbutes" column="PROATTRBUTES"/>
+    </resultMap>
+
+    <!-- 所有字段名称 -->
+    <sql id="sql_flied_all">
+        ID,
+        JOB_ID,
+        USER_NAME,
+        SEX,
+        CERTIFICATE_TYPE,
+        CERTIFICATE_NUMBER,
+        GRADE,
+        PRICE,
+        MOBILE,
+        DEPT_ID,
+        OUTSOURCE_TYPE,
+        USER_TYPE,
+        STATE,
+        AGE,
+        MARITAL_STATUS,
+        POLITICAL_STATUS,
+        EDUCATION,
+        BIRTHDAY,
+        PROFESSION,
+        GROUP_ID,
+        POST_ID,
+        WORK_CONTENT,
+        COLLEGE,
+        HOMETOWN,
+        PROJECT_NUMBER,
+        PROJECT_MANAGER,
+        VM_ACCOUNT,
+        ENTRANCE_CARD,
+        IS_OTHER_PROJECT,
+        SDPROJECT_NAME,
+        SDMANAGERUSER_ID,
+        PERSON_IN_CHARGE,
+        SYSTEM_NO,
+        SYSTEM_PRINCIPAL,
+        PURCHASE_ITEM,
+        FACEIMAGE,
+        LEAVING_TIME,
+        BEGIN_TIME,
+        ENTRY_TIME,
+        OUTSOURCE_NO,
+        APPLTBEG_TIME,
+        PRESENCE_STATE,
+		NEW_CONTRACT_ID,
+		CENERAL_OFFICE_MOTION,
+        EVALUATION_LEVEL,
+        LEVEL_REASON,
+        EVALUATOR_ID,
+        EVALUATION_TIME
+    </sql>
+    <sql id="sql_select_condition_detail">
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="id != null ">ID = #{id} AND</if>
+            <if test="jobId != null  and jobId != '' ">JOB_ID = #{jobId} AND</if>
+            <if test="userName != null  and userName != '' ">USER_NAME = #{userName} AND</if>
+            <if test="certificateNumber != null  and certificateNumber != '' ">CERTIFICATE_NUMBER = #{certificateNumber}
+                AND
+            </if>
+        </trim>
+    </sql>
+    <sql id="sql_select_condition">
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="id != null ">ID = #{id} AND</if>
+            <if test="jobId != null  and jobId != '' ">JOB_ID = #{jobId} AND</if>
+            <if test="userName != null  and userName != '' ">USER_NAME = #{userName} AND</if>
+            <if test="sex != null  and sex != '' ">SEX = #{sex} AND</if>
+            <if test="certificateType != null  and certificateType != '' ">CERTIFICATE_TYPE = #{certificateType} AND
+            </if>
+            <if test="certificateNumber != null  and certificateNumber != '' ">CERTIFICATE_NUMBER = #{certificateNumber}
+                AND
+            </if>
+            <if test="grade != null  and grade != '' ">GRADE = #{grade} AND</if>
+            <if test="price != null  and price != '' ">PRICE = #{price} AND</if>
+            <if test="mobile != null  and mobile != '' ">MOBILE = #{mobile} AND</if>
+            <if test="deptId != null  and deptId != '' ">DEPT_ID IN(${deptId}) AND</if>
+            <if test="outsourceType != null  and outsourceType != '' ">OUTSOURCE_TYPE = #{outsourceType} AND</if>
+            <if test="userType != null  and userType != '' ">USER_TYPE = #{userType} AND</if>
+            <if test="state != null  and state != '' ">STATE = #{state} AND</if>
+            <if test="age != null ">AGE = #{age} AND</if>
+            <if test="maritalStatus != null  and maritalStatus != '' ">MARITAL_STATUS = #{maritalStatus} AND</if>
+            <if test="politicalStatus != null  and politicalStatus != '' ">POLITICAL_STATUS = #{politicalStatus} AND
+            </if>
+            <if test="education != null  and education != '' ">EDUCATION = #{education} AND</if>
+            <if test="birthday != null  and birthday != '' ">BIRTHDAY = #{birthday} AND</if>
+            <if test="profession != null  and profession != '' ">PROFESSION = #{profession} AND</if>
+            <if test="groupId != null  and groupId != '' ">GROUP_ID = #{groupId} AND</if>
+            <if test="postId != null  and postId != '' ">POST_ID = #{postId} AND</if>
+            <if test="workContent != null  and workContent != '' ">WORK_CONTENT = #{workContent} AND</if>
+            <if test="college != null  and college != '' ">COLLEGE = #{college} AND</if>
+            <if test="hometown != null  and hometown != '' ">HOMETOWN = #{hometown} AND</if>
+            <if test="projectNumber != null  and projectNumber != '' ">PROJECT_NUMBER = #{projectNumber} AND</if>
+            <if test="projectManager != null  and projectManager != '' ">PROJECT_MANAGER = #{projectManager} AND</if>
+            <if test="isOtherProject != null  and isOtherProject != '' ">IS_OTHER_PROJECT = #{isOtherProject} AND</if>
+            <if test="sdprojectName != null  and sdprojectName != '' ">SDPROJECT_NAME = #{sdprojectName} AND</if>
+            <if test="sdmanageruserId != null  and sdmanageruserId != '' ">SDMANAGERUSER_ID = #{sdmanageruserId} AND
+            </if>
+            <if test="personInCharge != null  and personInCharge != '' ">PERSON_IN_CHARGE = #{personInCharge} AND</if>
+            <if test="systemNo != null  and systemNo != '' ">SYSTEM_NO = #{systemNo} AND</if>
+            <if test="systemPrincipal != null  and systemPrincipal != '' ">SYSTEM_PRINCIPAL = #{systemPrincipal} AND
+            </if>
+            <if test="purchaseItem != null  and purchaseItem != '' ">PURCHASE_ITEM = #{purchaseItem} AND</if>
+            <if test="faceimage != null  and faceimage != '' ">FACEIMAGE = #{faceimage} AND</if>
+            <if test="leavingTime != null ">LEAVING_TIME = #{leavingTime} AND</if>
+            <if test="beginTime != null ">BEGIN_TIME = #{beginTime} AND</if>
+            <if test="entryTime != null ">ENTRY_TIME = #{entryTime} AND</if>
+            <if test="outsourceNo != null and outsourceNo != '' ">OUTSOURCE_NO = #{outsourceNo} AND</if>
+            <if test="appltbegTime != null ">APPLTBEG_TIME = #{appltbegTime} AND</if>
+            <if test="presenceState != null and presenceState != '' ">PRESENCE_STATE = #{presenceState} AND</if>
+            <if test="newContractId != null and newContractId != '' ">NEW_CONTRACT_ID = #{newContractId} AND</if>
+            <if test="entranceCard != null and entranceCard != '' ">ENTRANCE_CARD = #{entranceCard} AND</if>
+            <if test="ceneralOfficeMotion != null and ceneralOfficeMotion != '' ">CENERAL_OFFICE_MOTION = #{ceneralOfficeMotion} AND</if>
+        </trim>
+    </sql>
+    <!-- 查询分页  2020-10-16 k6991  -->
+    <select id="queryPagerList" parameterType="map" resultMap="PPMOUTSOURCINGBASIC_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM PPM_OUTSOURCING_BASIC
+        <include refid="sql_select_condition"/>
+    </select>
+
+    <!-- 新增  2020-10-16 k6991  -->
+    <insert id="addPojo" parameterType="ppmOutsourcingBasic">
+        INSERT INTO PPM_OUTSOURCING_BASIC (
+        <trim suffixOverrides=",">
+            <if test="id != null ">ID ,</if>
+            <if test="jobId != null  and jobId != '' ">JOB_ID ,</if>
+            <if test="userName != null  and userName != '' ">USER_NAME ,</if>
+            <if test="sex != null  and sex != '' ">SEX ,</if>
+            <if test="certificateType != null  and certificateType != '' ">CERTIFICATE_TYPE ,</if>
+            <if test="certificateNumber != null  and certificateNumber != '' ">CERTIFICATE_NUMBER ,</if>
+            <if test="grade != null  and grade != '' ">GRADE ,</if>
+            <if test="price != null  and price != '' ">PRICE ,</if>
+            <if test="mobile != null  and mobile != '' ">MOBILE ,</if>
+            <if test="deptId != null  and deptId != '' ">DEPT_ID ,</if>
+            <if test="outsourceType != null  and outsourceType != '' ">OUTSOURCE_TYPE ,</if>
+            <if test="userType != null  and userType != '' ">USER_TYPE ,</if>
+            <if test="state != null  and state != '' ">STATE ,</if>
+            <if test="age != null ">AGE ,</if>
+            <if test="maritalStatus != null  and maritalStatus != '' ">MARITAL_STATUS ,</if>
+            <if test="politicalStatus != null  and politicalStatus != '' ">POLITICAL_STATUS ,</if>
+            <if test="education != null  and education != '' ">EDUCATION ,</if>
+            <if test="birthday != null  and birthday != '' ">BIRTHDAY ,</if>
+            <if test="profession != null  and profession != '' ">PROFESSION ,</if>
+            <if test="groupId != null  and groupId != '' ">GROUP_ID ,</if>
+            <if test="postId != null  and postId != '' ">POST_ID ,</if>
+            <if test="workContent != null  and workContent != '' ">WORK_CONTENT ,</if>
+            <if test="college != null  and college != '' ">COLLEGE ,</if>
+            <if test="hometown != null  and hometown != '' ">HOMETOWN ,</if>
+            <if test="projectNumber != null  and projectNumber != '' ">PROJECT_NUMBER ,</if>
+            <if test="projectManager != null  and projectManager != '' ">PROJECT_MANAGER ,</if>
+            <if test="isOtherProject != null  and isOtherProject != '' ">IS_OTHER_PROJECT ,</if>
+            <if test="sdprojectName != null  and sdprojectName != '' ">SDPROJECT_NAME ,</if>
+            <if test="sdmanageruserId != null  and sdmanageruserId != '' ">SDMANAGERUSER_ID ,</if>
+            <if test="personInCharge != null  and personInCharge != '' ">PERSON_IN_CHARGE ,</if>
+            <if test="systemNo != null  and systemNo != '' ">SYSTEM_NO ,</if>
+            <if test="systemPrincipal != null  and systemPrincipal != '' ">SYSTEM_PRINCIPAL ,</if>
+            <if test="purchaseItem != null  and purchaseItem != '' ">PURCHASE_ITEM ,</if>
+            <if test="faceimage != null  and faceimage != '' ">FACEIMAGE ,</if>
+            <if test="vmAccount != null  and vmAccount != '' ">VM_ACCOUNT ,</if>
+            <if test="entranceCard != null  and entranceCard != '' ">ENTRANCE_CARD ,</if>
+            <if test="leavingTime != null ">LEAVING_TIME ,</if>
+            <if test="beginTime != null ">BEGIN_TIME ,</if>
+            <if test="entryTime != null ">ENTRY_TIME ,</if>
+            <if test="outsourceNo != null and outsourceNo != '' ">OUTSOURCE_NO ,</if>
+            <if test="appltbegTime != null ">APPLTBEG_TIME ,</if>
+            <if test="presenceState != null and presenceState != '' ">PRESENCE_STATE ,</if>
+            <if test="newContractId != null and newContractId != '' ">NEW_CONTRACT_ID ,</if>
+            <if test="ceneralOfficeMotion != null and ceneralOfficeMotion != '' ">CENERAL_OFFICE_MOTION ,</if>
+            <if test="evaluationLevel != null  and evaluationLevel != '' ">EVALUATION_LEVEL,</if>
+            <if test="levelReason != null  and levelReason != '' ">LEVEL_REASON,</if>
+            <if test="evaluatorId != null  and evaluatorId != '' ">EVALUATOR_ID,</if>
+            <if test="evaluationTime != null">EVALUATION_TIME,</if>
+        </trim>
+        )
+        VALUES(
+        <trim suffixOverrides=",">
+            <if test="id != null ">#{id} ,</if>
+            <if test="jobId != null  and jobId != '' ">#{jobId} ,</if>
+            <if test="userName != null  and userName != '' ">#{userName} ,</if>
+            <if test="sex != null  and sex != '' ">#{sex} ,</if>
+            <if test="certificateType != null  and certificateType != '' ">#{certificateType} ,</if>
+            <if test="certificateNumber != null  and certificateNumber != '' ">#{certificateNumber} ,</if>
+            <if test="grade != null  and grade != '' ">#{grade} ,</if>
+            <if test="price != null  and price != '' ">#{price} ,</if>
+            <if test="mobile != null  and mobile != '' ">#{mobile} ,</if>
+            <if test="deptId != null  and deptId != '' ">#{deptId} ,</if>
+            <if test="outsourceType != null  and outsourceType != '' ">#{outsourceType} ,</if>
+            <if test="userType != null  and userType != '' ">#{userType} ,</if>
+            <if test="state != null  and state != '' ">#{state} ,</if>
+            <if test="age != null ">#{age} ,</if>
+            <if test="maritalStatus != null  and maritalStatus != '' ">#{maritalStatus} ,</if>
+            <if test="politicalStatus != null  and politicalStatus != '' ">#{politicalStatus} ,</if>
+            <if test="education != null  and education != '' ">#{education} ,</if>
+            <if test="birthday != null  and birthday != '' ">#{birthday} ,</if>
+            <if test="profession != null  and profession != '' ">#{profession} ,</if>
+            <if test="groupId != null  and groupId != '' ">#{groupId} ,</if>
+            <if test="postId != null  and postId != '' ">#{postId} ,</if>
+            <if test="workContent != null  and workContent != '' ">#{workContent} ,</if>
+            <if test="college != null  and college != '' ">#{college} ,</if>
+            <if test="hometown != null  and hometown != '' ">#{hometown} ,</if>
+            <if test="projectNumber != null  and projectNumber != '' ">#{projectNumber} ,</if>
+            <if test="projectManager != null  and projectManager != '' ">#{projectManager} ,</if>
+            <if test="isOtherProject != null  and isOtherProject != '' ">#{isOtherProject} ,</if>
+            <if test="sdprojectName != null  and sdprojectName != '' ">#{sdprojectName} ,</if>
+            <if test="sdmanageruserId != null  and sdmanageruserId != '' ">#{sdmanageruserId} ,</if>
+            <if test="personInCharge != null  and personInCharge != '' ">#{personInCharge} ,</if>
+            <if test="systemNo != null  and systemNo != '' ">#{systemNo} ,</if>
+            <if test="systemPrincipal != null  and systemPrincipal != '' ">#{systemPrincipal} ,</if>
+            <if test="purchaseItem != null  and purchaseItem != '' ">#{purchaseItem} ,</if>
+            <if test="faceimage != null  and faceimage != '' ">#{faceimage} ,</if>
+            <if test="vmAccount != null  and vmAccount != '' ">#{vmAccount} ,</if>
+            <if test="entranceCard != null  and entranceCard != '' ">#{entranceCard} ,</if>
+            <if test="leavingTime != null ">#{leavingTime} ,</if>
+            <if test="beginTime != null ">#{beginTime} ,</if>
+            <if test="entryTime != null ">#{entryTime} ,</if>
+            <if test="outsourceNo != null and outsourceNo != '' ">#{outsourceNo} ,</if>
+            <if test="appltbegTime != null ">#{appltbegTime} ,</if>
+            <if test="presenceState != null and presenceState != '' ">#{presenceState} ,</if>
+            <if test="newContractId != null and newContractId != '' ">#{newContractId} ,</if>
+            <if test="ceneralOfficeMotion != null and ceneralOfficeMotion != '' ">#{ceneralOfficeMotion} ,</if>
+            <if test="evaluationLevel != null  and evaluationLevel != '' ">#{evaluationLevel},</if>
+            <if test="levelReason != null  and levelReason != '' ">#{levelReason},</if>
+            <if test="evaluatorId != null and evaluatorId != '' ">#{evaluatorId},</if>
+            <if test="evaluationTime != null ">#{evaluationTime},</if>
+        </trim>
+        )
+    </insert>
+
+    <!--通过id查询  k6991 2020-10-16 -->
+    <select id="queryDetail" parameterType="ppmOutsourcingBasic" resultMap="PPMOUTSOURCINGBASIC_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM PPM_OUTSOURCING_BASIC
+        <include refid="sql_select_condition_detail"/>
+    </select>
+
+    <!--查询集合  k6991 2020-10-16 -->
+    <select id="getList" parameterType="ppmOutsourcingBasic" resultMap="PPMOUTSOURCINGBASIC_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM PPM_OUTSOURCING_BASIC
+        <include refid="sql_select_condition"/>
+    </select>
+
+    <!-- update sql -->
+    <sql id="update_pojo_sql">
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="id != null ">ID=#{id} ,</if>
+            <if test="oldId != null  and oldId != '' ">JOB_ID=#{oldId} ,</if>
+            <if test="userName != null  and userName != '' ">USER_NAME=#{userName} ,</if>
+            <if test="sex != null  and sex != '' ">SEX=#{sex} ,</if>
+            <if test="certificateType != null  and certificateType != '' ">CERTIFICATE_TYPE=#{certificateType} ,</if>
+            <if test="certificateNumber != null  and certificateNumber != '' ">CERTIFICATE_NUMBER=#{certificateNumber} ,</if>
+            <if test="grade != null  and grade != '' ">GRADE=#{grade} ,</if>
+            <if test="price != null  and price != '' ">PRICE=#{price} ,</if>
+            <if test="mobile != null  and mobile != '' ">MOBILE=#{mobile} ,</if>
+            <if test="deptId != null  and deptId != '' ">DEPT_ID=#{deptId} ,</if>
+            <if test="outsourceType != null  and outsourceType != '' ">OUTSOURCE_TYPE=#{outsourceType} ,</if>
+            <if test="userType != null  and userType != '' ">USER_TYPE=#{userType} ,</if>
+            <if test="state != null  and state != '' ">STATE=#{state} ,</if>
+            <if test="age != null ">AGE=#{age} ,</if>
+            <if test="maritalStatus != null  and maritalStatus != '' ">MARITAL_STATUS=#{maritalStatus} ,</if>
+            <if test="politicalStatus != null  and politicalStatus != '' ">POLITICAL_STATUS=#{politicalStatus} ,</if>
+            <if test="education != null  and education != '' ">EDUCATION=#{education} ,</if>
+            <if test="birthday != null  and birthday != '' ">BIRTHDAY=#{birthday} ,</if>
+            <if test="profession != null  and profession != '' ">PROFESSION=#{profession} ,</if>
+            <if test="groupId != null  and groupId != '' ">GROUP_ID=#{groupId} ,</if>
+            <if test="postId != null  and postId != '' ">POST_ID=#{postId} ,</if>
+            <if test="workContent != null  and workContent != '' ">WORK_CONTENT=#{workContent} ,</if>
+            <if test="college != null  and college != '' ">COLLEGE=#{college} ,</if>
+            <if test="hometown != null  and hometown != '' ">HOMETOWN=#{hometown} ,</if>
+            <if test="projectNumber != null  and projectNumber != '' ">PROJECT_NUMBER=#{projectNumber} ,</if>
+            <if test="projectManager != null  and projectManager != '' ">PROJECT_MANAGER=#{projectManager} ,</if>
+            <if test="isOtherProject != null  and isOtherProject != '' ">IS_OTHER_PROJECT=#{isOtherProject} ,</if>
+            <if test="sdprojectName != null  and sdprojectName != '' ">SDPROJECT_NAME=#{sdprojectName} ,</if>
+            <if test="sdmanageruserId != null  and sdmanageruserId != '' ">SDMANAGERUSER_ID=#{sdmanageruserId} ,</if>
+            <if test="personInCharge != null  and personInCharge != '' ">PERSON_IN_CHARGE=#{personInCharge} ,</if>
+            <if test="systemNo != null  and systemNo != '' ">SYSTEM_NO=#{systemNo} ,</if>
+            <if test="systemPrincipal != null  and systemPrincipal != '' ">SYSTEM_PRINCIPAL=#{systemPrincipal} ,</if>
+            <if test="purchaseItem != null  and purchaseItem != '' ">PURCHASE_ITEM=#{purchaseItem} ,</if>
+            <if test="faceimage != null  and faceimage != '' ">FACEIMAGE=#{faceimage} ,</if>
+            <if test="leavingTime != null ">LEAVING_TIME=#{leavingTime} ,</if>
+            <if test="beginTime != null ">BEGIN_TIME=#{beginTime} ,</if>
+            <if test="entryTime != null ">ENTRY_TIME=#{entryTime} ,</if>
+            <if test="outsourceNo != null and outsourceNo != '' ">OUTSOURCE_NO=#{outsourceNo} ,</if>
+            <if test="appltbegTime != null ">APPLTBEG_TIME=#{appltbegTime} ,</if>
+            <if test="presenceState != null and presenceState != '' ">PRESENCE_STATE=#{presenceState} ,</if>
+            <if test="vmAccount != null and vmAccount != '' ">VM_ACCOUNT=#{vmAccount} ,</if>
+            <if test="entranceCard != null and entranceCard != '' ">ENTRANCE_CARD=#{entranceCard} ,</if>
+            <if test="newContractId != null and newContractId != '' ">NEW_CONTRACT_ID=#{newContractId} ,</if>
+            <if test="ceneralOfficeMotion != null and ceneralOfficeMotion != '' ">CENERAL_OFFICE_MOTION=#{ceneralOfficeMotion} ,</if>
+<!--            <if test="evaluationLevel != null  and evaluationLevel != '' ">EVALUATION_LEVEL = #{evaluationLevel} ,</if>-->
+<!--            <if test="levelReason != null  and levelReason != '' ">LEVEL_REASON = #{levelReason} ,</if>-->
+<!--            <if test="evaluatorId != null  and evaluatorId != '' ">EVALUATOR_ID = #{evaluatorId} ,</if>-->
+<!--            <if test="evaluationTime != null ">EVALUATION_TIME = #{evaluationTime} ,</if>-->
+        </trim>
+    </sql>
+
+    <sql id="update_pojo_sql_cus">
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="id != null ">ID=#{id} ,</if>
+            <if test="jobId != null  and jobId != '' ">JOB_ID=#{jobId} ,</if>
+            <if test="userName != null  and userName != '' ">USER_NAME=#{userName} ,</if>
+            <if test="sex != null  and sex != '' ">SEX=#{sex} ,</if>
+            <if test="certificateType != null  and certificateType != '' ">CERTIFICATE_TYPE=#{certificateType} ,</if>
+            <if test="certificateNumber != null  and certificateNumber != '' ">CERTIFICATE_NUMBER=#{certificateNumber} ,</if>
+            <if test="grade != null  and grade != '' ">GRADE=#{grade} ,</if>
+            <if test="price != null  and price != '' ">PRICE=#{price} ,</if>
+            <if test="mobile != null  and mobile != '' ">MOBILE=#{mobile} ,</if>
+            <if test="deptId != null  and deptId != '' ">DEPT_ID=#{deptId} ,</if>
+            <if test="outsourceType != null  and outsourceType != '' ">OUTSOURCE_TYPE=#{outsourceType} ,</if>
+            <if test="userType != null  and userType != '' ">USER_TYPE=#{userType} ,</if>
+            <if test="state != null  and state != '' ">STATE=#{state} ,</if>
+            <if test="age != null ">AGE=#{age} ,</if>
+            <if test="maritalStatus != null  and maritalStatus != '' ">MARITAL_STATUS=#{maritalStatus} ,</if>
+            <if test="politicalStatus != null  and politicalStatus != '' ">POLITICAL_STATUS=#{politicalStatus} ,</if>
+            <if test="education != null  and education != '' ">EDUCATION=#{education} ,</if>
+            <if test="birthday != null  and birthday != '' ">BIRTHDAY=#{birthday} ,</if>
+            <if test="profession != null  and profession != '' ">PROFESSION=#{profession} ,</if>
+            <if test="groupId != null  and groupId != '' ">GROUP_ID=#{groupId} ,</if>
+            <if test="postId != null  and postId != '' ">POST_ID=#{postId} ,</if>
+            <if test="workContent != null  and workContent != '' ">WORK_CONTENT=#{workContent} ,</if>
+            <if test="college != null  and college != '' ">COLLEGE=#{college} ,</if>
+            <if test="hometown != null  and hometown != '' ">HOMETOWN=#{hometown} ,</if>
+            <if test="projectNumber != null and projectNumber != '' ">PROJECT_NUMBER=#{projectNumber} ,</if>
+            <if test="projectNumber != null and projectNumber != '' ">SYSTEM_NO = NULL ,</if>
+            <if test="projectManager != null  and projectManager != '' ">PROJECT_MANAGER=#{projectManager} ,</if>
+            <if test="isOtherProject != null  and isOtherProject != '' ">IS_OTHER_PROJECT=#{isOtherProject} ,</if>
+            <if test="sdprojectName != null  and sdprojectName != '' ">SDPROJECT_NAME=#{sdprojectName} ,</if>
+            <if test="sdmanageruserId != null  and sdmanageruserId != '' ">SDMANAGERUSER_ID=#{sdmanageruserId} ,</if>
+            <if test="personInCharge != null  and personInCharge != '' ">PERSON_IN_CHARGE=#{personInCharge} ,</if>
+            <if test="systemNo != null  and systemNo != '' ">SYSTEM_NO=#{systemNo} ,</if>
+            <if test="systemNo != null  and systemNo != '' ">PROJECT_NUMBER=NULL,</if>
+            <if test="systemPrincipal != null  and systemPrincipal != '' ">SYSTEM_PRINCIPAL=#{systemPrincipal} ,</if>
+            <if test="purchaseItem != null  and purchaseItem != '' ">PURCHASE_ITEM=#{purchaseItem} ,</if>
+            <if test="faceimage != null  and faceimage != '' ">FACEIMAGE=#{faceimage} ,</if>
+            <if test="leavingTime != null ">LEAVING_TIME=#{leavingTime} ,</if>
+            <if test="beginTime != null ">BEGIN_TIME=#{beginTime} ,</if>
+            <if test="entryTime != null ">ENTRY_TIME=#{entryTime} ,</if>
+            <if test="outsourceNo != null and outsourceNo != '' ">OUTSOURCE_NO=#{outsourceNo} ,</if>
+            <if test="appltbegTime != null ">APPLTBEG_TIME=#{appltbegTime} ,</if>
+            <if test="presenceState != null and presenceState != '' ">PRESENCE_STATE=#{presenceState} ,</if>
+            <if test="vmAccount != null and vmAccount != '' ">VM_ACCOUNT=#{vmAccount} ,</if>
+            <if test="entranceCard != null and entranceCard != '' ">ENTRANCE_CARD=#{entranceCard} ,</if>
+            <if test="newContractId != null and newContractId != '' ">NEW_CONTRACT_ID=#{newContractId} ,</if>
+            <if test="ceneralOfficeMotion != null and ceneralOfficeMotion != '' ">CENERAL_OFFICE_MOTION=#{ceneralOfficeMotion} ,</if>
+<!--            <if test="evaluationLevel != null  and evaluationLevel != '' ">EVALUATION_LEVEL = #{evaluationLevel} ,</if>-->
+<!--            <if test="levelReason != null  and levelReason != '' ">LEVEL_REASON = #{levelReason} ,</if>-->
+<!--            <if test="evaluatorId != null  and evaluatorId != '' ">EVALUATOR_ID = #{evaluatorId} ,</if>-->
+<!--            <if test="evaluationTime != null ">EVALUATION_TIME = #{evaluationTime} ,</if>-->
+        </trim>
+    </sql>
+
+    <!--通过id编辑 k6991 2022-12-3 -->
+    <update id="updatePojoInfo" parameterType="ppmOutsourcingBasic">
+        UPDATE
+        PPM_OUTSOURCING_BASIC
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="outsourceType != null  and outsourceType != '' ">OUTSOURCE_TYPE=#{outsourceType} ,</if>
+            <if test="userType != null  and userType != '' ">USER_TYPE=#{userType} ,</if>
+            <if test="postId != null  and postId != '' ">POST_ID=#{postId} ,</if>
+            <if test="faceimage != null  and faceimage != '' ">FACEIMAGE=#{faceimage} ,</if>
+            <if test="vmAccount != null and vmAccount != '' ">VM_ACCOUNT=#{vmAccount} ,</if>
+            <if test="entranceCard != null and entranceCard != '' ">ENTRANCE_CARD=#{entranceCard} ,</if>
+            <if test="newContractId != null and newContractId != ''">NEW_CONTRACT_ID=#{newContractId} ,</if>
+            <if test="newContractId == null ">NEW_CONTRACT_ID='',</if>
+            <if test="ceneralOfficeMotion != null and ceneralOfficeMotion != '' ">CENERAL_OFFICE_MOTION=#{ceneralOfficeMotion} ,</if>
+            <if test="deptId != null  and deptId != '' ">DEPT_ID = #{deptId} ,</if>
+            <if test="systemNo != null  and systemNo != '' ">SYSTEM_NO = #{systemNo} ,</if>
+            <if test="personInCharge != null  and personInCharge != '' ">PERSON_IN_CHARGE = #{personInCharge} ,</if>
+            <if test="evaluationLevel != null  and evaluationLevel != '' ">EVALUATION_LEVEL = #{evaluationLevel} ,</if>
+            <if test="levelReason != null  and levelReason != '' ">LEVEL_REASON = #{levelReason} ,</if>
+            <if test="evaluatorId != null  and evaluatorId != '' ">EVALUATOR_ID = #{evaluatorId} ,</if>
+            <if test="evaluationTime != null ">EVALUATION_TIME = #{evaluationTime} ,</if>
+        </trim>
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="id != null ">ID=#{id} AND</if>
+            <if test="jobId != null  and jobId != '' ">JOB_ID=#{jobId} AND</if>
+        </trim>
+    </update>
+	
+	<update id="updatePojoTransfer" parameterType="ppmOutsourcingBasic">
+        UPDATE
+        PPM_OUTSOURCING_BASIC
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="deptId != null  and deptId != '' ">DEPT_ID=#{deptId} ,</if>
+            <if test="personInCharge != null  and personInCharge != '' ">PERSON_IN_CHARGE=#{personInCharge} ,</if>
+            <if test="projectNumber != null  and projectNumber != '' ">PROJECT_NUMBER=#{projectNumber} , SYSTEM_NO='',</if>
+            <if test="projectManager != null  and projectManager != '' ">PROJECT_MANAGER=#{projectManager} ,SYSTEM_PRINCIPAL='' ,</if>
+            <if test="systemNo != null and systemNo != '' ">SYSTEM_NO=#{systemNo} , PROJECT_NUMBER='' ,</if>
+            <if test="systemPrincipal != null and systemPrincipal != '' ">SYSTEM_PRINCIPAL=#{systemPrincipal} ,PROJECT_MANAGER='',</if>
+        </trim>
+        WHERE ID = #{id}
+    </update>
+	
+	<!--通过id编辑 k6991 2020-10-16 -->
+    <update id="updatePojo" parameterType="ppmOutsourcingBasic">
+        UPDATE
+        PPM_OUTSOURCING_BASIC
+        <include refid="update_pojo_sql"/>
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="id != null ">ID=#{id} AND</if>
+            <if test="jobId != null  and jobId != '' ">JOB_ID=#{jobId} AND</if>
+        </trim>
+    </update>
+
+    <update id="updatePojoCus" parameterType="ppmOutsourcingBasic">
+        UPDATE
+        PPM_OUTSOURCING_BASIC
+        <include refid="update_pojo_sql_cus"/>
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="id != null ">ID=#{id} AND</if>
+            <if test="jobId != null">JOB_ID=#{jobId} AND</if>
+        </trim>
+    </update>
+
+    <!--通过id批量删除  k6991 2020-10-16 -->
+    <delete id="deleteById" parameterType="ppmOutsourcingBasic">
+        DELETE
+        FROM
+        PPM_OUTSOURCING_BASIC
+        WHERE ID = #{id}
+    </delete>
+    <resultMap id="QUERYBASEINFO_MAP" type="ppmOutsourcingBasicInfo" extends="PPMOUTSOURCINGBASIC_ALL_EXT">
+        <result column="LEAV_FLOW_TIME" property="leavFlowTime" />
+        <result column="ACCESS_FLOW_TIME" property="accessFlowTime" />
+        <result column="ATTACH_NAME" property="attachName" />
+        <result column="CONTRACT_NAME" property="contractName" />
+    </resultMap>
+    <!--通过id查询  k6991 2020-10-16 -->
+    <select id="queryBaseInfo" parameterType="map" resultMap="QUERYBASEINFO_MAP">
+        select b.id,
+        b.job_id,
+        b.user_name,
+        b.sex,
+        b.certificate_type,
+        b.certificate_number,
+        b.grade,
+        b.price,
+        b.mobile,
+        b.dept_id,
+        b.outsource_type,
+        b.user_type,
+        b.state,
+        e7.dictname statename,
+        b.age,
+        b.marital_status,
+        b.political_status,
+        b.education,
+        e2.dictname educationname,
+        b.birthday,
+        b.profession,
+        b.group_id,
+        g.groupname,
+        b.post_id,
+        b.work_content,
+        b.college,
+        b.hometown,
+        b.project_number,
+        b.project_manager,
+        ce1.empname projectmanagername,
+        b.is_other_project,
+        b.sdproject_name,
+        b.sdmanageruser_id,
+        b.person_in_charge,
+        b.system_no,
+        b.system_principal,
+        b.vm_account,
+        b.entrance_card,
+        b.faceimage,
+        b.purchase_item,
+        b.leaving_time,
+        b.begin_time,
+        b.entry_time,
+        b.outsource_no,
+		b.new_contract_id,
+		b.ceneral_office_motion,
+        e.dictname sexname,
+        i.outsourcname,
+        e1.dictname certificate_typename,
+        e2.dictname educationname,
+        b.MARITAL_STATUS,
+        e3.dictname MARITAL_STATUSNAME,
+        e4.dictname outsource_typename,
+        e5.dictname user_typename,
+        d.location depname,
+        g.groupname,
+        ce.empname PERSON_IN_CHARGENAME,
+        e6.dictname postname,
+        ext.contract_id,
+        ht.htmc,
+        s.projectname,
+        s.PROATTRBUTES,
+        decode(ext.IS_PROJECT_ESSENTIAL,'01','是','02','否','') IS_PROJECT_ESSENTIAL,
+        ce1.empname projectmanager,
+        ext.leav_flow_time,
+        vc.contract_name,
+        am.attach_name,
+        ext.access_flow_time
+        from PPM_OUTSOURCING_BASIC b
+        left join eos_dict_entry e on b.sex=e.dictid and e.dicttypeid='BUSI_OUTSOURCE_GENFER'
+        left join eos_dict_entry e1 on b.certificate_type=e1.dictid and e1.dicttypeid='BUSI_OUTSOURCE_CERTIFTYPE'
+        left join eos_dict_entry e2 on b.education=e2.dictid and e2.dicttypeid='BUSI_OUTSOURCE_EDUCATION'
+        left join eos_dict_entry e3 on b.marital_status=e3.dictid and e3.dicttypeid='BUSI_OUTSOURCE_MARITALSTATUS'
+        left join eos_dict_entry e4 on b.outsource_type=e4.dictid and e4.dicttypeid='BUSI_OUTSOURCE_OUTSOURCETYPE'
+        left join eos_dict_entry e5 on b.user_type=e5.dictid and e5.dicttypeid='NEWKG_JSFS'
+        left join eos_dict_entry e6 on b.POST_ID=e6.dictid and e6.dicttypeid='BUSI_OUTSOURCE_POSITION'
+        left join eos_dict_entry e7 on b.STATE=e7.dictid and e7.dicttypeid='NEWKG_RYZT'
+        left join ppm_outsourcing_info i on i.orgcode=b.outsource_no
+        left join ppm_vendor_contract vc on vc.id = b.new_contract_id
+        left join PPM_ATTATCH_MANAGEMENT am on am.id = b.ceneral_office_motion
+        left join comm_department d on b.dept_id=d.depid
+        left join ppm_da_team_group g on g.id=b.group_id
+        left join comm_employee ce on b.PERSON_IN_CHARGE=ce.badge
+        left join PPM_OUTSOURCING_EXT ext on b.job_id=ext.user_id
+        left join ppm_project_build_soft s on s.projectno=b.project_number
+        left join comm_employee ce1 on b.PROJECT_MANAGER=ce1.badge
+        left join (
+        select i.htid,i.htmc from ppm_rlwbht_info i
+        union
+        select c.id||'' htid,c.htmc from PPM_WORK_KJL_CGHT c
+        )ht on ht.htid=ext.contract_id
+        where b.job_id=#{jobid}
+    </select>
+
+
+    <!--通过id查询  k6991 2020-10-16 -->
+    <select id="queryBaseInfoByTerms"  parameterType="ppmOutsourcingBasic" resultMap="QUERYBASEINFO_MAP">
+        select b.id,
+        b.job_id,
+        b.user_name,
+        b.sex,
+        b.certificate_type,
+        b.certificate_number,
+        b.grade,
+        b.price,
+        b.mobile,
+        b.dept_id,
+        b.outsource_type,
+        b.user_type,
+        b.state,
+        e7.dictname statename,
+        b.age,
+        b.marital_status,
+        b.political_status,
+        b.education,
+        e2.dictname educationname,
+        b.birthday,
+        b.profession,
+        b.group_id,
+        g.groupname,
+        b.post_id,
+        b.work_content,
+        b.college,
+        b.hometown,
+        b.project_number,
+        b.project_manager,
+        ce1.empname projectmanagername,
+        b.is_other_project,
+        b.sdproject_name,
+        b.sdmanageruser_id,
+        b.person_in_charge,
+        b.system_no,
+        b.system_principal,
+        b.vm_account,
+        b.entrance_card,
+        b.faceimage,
+        b.purchase_item,
+        b.leaving_time,
+        b.begin_time,
+        b.entry_time,
+        b.outsource_no,
+        b.new_contract_id,
+        b.ceneral_office_motion,
+        e.dictname sexname,
+        i.outsourcname,
+        e1.dictname certificate_typename,
+        e2.dictname educationname,
+        b.MARITAL_STATUS,
+        e3.dictname MARITAL_STATUSNAME,
+        e4.dictname outsource_typename,
+        e5.dictname user_typename,
+        d.location depname,
+        g.groupname,
+        ce.empname PERSON_IN_CHARGENAME,
+        e6.dictname postname,
+        ext.contract_id,
+        ht.htmc,
+        s.projectname,
+        s.PROATTRBUTES,
+        decode(ext.IS_PROJECT_ESSENTIAL,'01','是','02','否','') IS_PROJECT_ESSENTIAL,
+        ce1.empname projectmanager,
+        ext.leav_flow_time,
+        vc.contract_name,
+        am.attach_name,
+        ext.access_flow_time
+        from PPM_OUTSOURCING_BASIC b
+        left join eos_dict_entry e on b.sex=e.dictid and e.dicttypeid='BUSI_OUTSOURCE_GENFER'
+        left join eos_dict_entry e1 on b.certificate_type=e1.dictid and e1.dicttypeid='BUSI_OUTSOURCE_CERTIFTYPE'
+        left join eos_dict_entry e2 on b.education=e2.dictid and e2.dicttypeid='BUSI_OUTSOURCE_EDUCATION'
+        left join eos_dict_entry e3 on b.marital_status=e3.dictid and e3.dicttypeid='BUSI_OUTSOURCE_MARITALSTATUS'
+        left join eos_dict_entry e4 on b.outsource_type=e4.dictid and e4.dicttypeid='BUSI_OUTSOURCE_OUTSOURCETYPE'
+        left join eos_dict_entry e5 on b.user_type=e5.dictid and e5.dicttypeid='NEWKG_JSFS'
+        left join eos_dict_entry e6 on b.POST_ID=e6.dictid and e6.dicttypeid='BUSI_OUTSOURCE_POSITION'
+		left join eos_dict_entry e7 on b.STATE=e7.dictid and e7.dicttypeid='NEWKG_RYZT'
+        left join ppm_outsourcing_info i on i.orgcode=b.outsource_no
+        left join ppm_vendor_contract vc on vc.id = b.new_contract_id
+        left join PPM_ATTATCH_MANAGEMENT am on am.id = b.ceneral_office_motion
+        left join comm_department d on b.dept_id=d.depid
+        left join ppm_da_team_group g on g.id=b.group_id
+        left join comm_employee ce on b.PERSON_IN_CHARGE=ce.badge
+        left join PPM_OUTSOURCING_EXT ext on b.job_id=ext.user_id
+        left join ppm_project_build_soft s on s.projectno=b.project_number
+        left join comm_employee ce1 on b.PROJECT_MANAGER=ce1.badge
+        left join (
+        select i.htid,i.htmc from ppm_rlwbht_info i
+        union
+        select c.id||'' htid,c.htmc from PPM_WORK_KJL_CGHT c
+        )ht on ht.htid=ext.contract_id
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="id != null ">ID = #{id} AND</if>
+            <if test="jobId != null  and jobId != '' ">JOB_ID = #{jobId} AND</if>
+            <if test="userName != null  and userName != '' ">USER_NAME = #{userName} AND</if>
+            <if test="deptId != null  and deptId != '' ">DEPT_ID = #{deptId} AND</if>
+        </trim>
+    </select>
+
+    <!-- 根据岗位状态 查询 员工编号 并排除已经角色已有的数据 2020-10-26 k6991 -->
+    <select id="queryUserIdForState" parameterType="map" resultMap="PPMOUTSOURCINGBASIC_ALL">
+        SELECT JOB_ID from PPM_OUTSOURCING_BASIC  B
+        WHERE  NOT EXISTS(SELECT 1 FROM IM_USER_ROLE_REL R WHERE R.URR_ROLEID=#{roleId} AND R.URR_USERID=B.JOB_ID)
+        AND STATE=${state}
+    </select>
+    <!-- 更新老应用  2020-10-28 k1327  -->
+    <insert id="insertCommOutsourcingPerson" parameterType="map">
+        insert into comm_outsourcing_person
+        select
+        b.id*-1*10000,b.user_name,b.outsource_no,b.sex,'1',b.certificate_number,b.mobile,b.dept_id,b.outsource_type,b.user_type,b.job_id,
+        decode(e.whether_attendance,'0','02','1','01','01'),null,to_char(b.leaving_time,'yyyy-MM-dd'),'0',sysdate,null,sysdate,null,
+        b.state,null,null,null,b.birthday,b.hometown,null,b.education,b.profession,b.college,null,b.age,
+        e.partner_name,e.idcard_number,null,e.pricechangereason,e.political_status,e.contract_id,null,e.is_project_essential,e.attendance_type
+        from ppm_outsourcing_basic b left join ppm_outsourcing_ext e on b.job_id=e.user_id where b.job_id not in (
+        select p.jobid from comm_outsourcing_person p
+        )
+    </insert>
+    <!-- 更新老应用  2020-10-28 k1327  -->
+    <insert id="insertPpmOutsourcingApply" parameterType="map">
+        insert into ppm_outsourcing_apply
+        select
+        b.id*-1*10000,null,null,b.user_name,b.outsource_no,b.sex,
+        '1',b.certificate_number,b.mobile,b.person_in_charge,
+        b.project_number,b.project_manager,e.staff_position,b.dept_id,b.outsource_type,null,null,null,null,
+        b.user_type,b.job_id,decode(e.whether_attendance,'0','02','1','01','01')
+        ,null,null,null,to_char(b.leaving_time,'yyyy-MM-dd'),b.entry_time,null,null,null,null,
+        '0',sysdate,null,sysdate,null,null,null,null,e.duty_type,
+        e.price,decode(e.VACATION,null,0,e.vacation),b.education,b.profession,b.college,b.birthday,b.hometown,null,
+        null,null,null,null,null,null,null,null,
+        null,null,null,null,null,null,null,b.is_other_project,b.sdproject_name,b.sdmanageruser_id,b.work_content,null,null,null,null,null,b.system_no,
+        b.system_principal,null,e.no_attendance_reason,
+        null,
+        decode(e.svn_limit,'1','1','2','0',''),
+        e.svn_path,e.svn_application,b.group_id,null,
+        decode(e.whether_meets_claim,'0','1','1','0','0'),
+        e.partner_name,e.idcard_number,null,null,null,e.contract_id,
+        null,null,e.is_project_essential,
+        e.attendance_type,null,null,null,null,null,null
+        from ppm_outsourcing_basic b left join ppm_outsourcing_ext e on b.job_id=e.user_id where b.job_id not in (
+        select p.jobid from comm_outsourcing_person p
+        )
+    </insert>
+    <!-- 更新老应用  2020-10-28 k1327  -->
+    <update id="updatePpmOutsourcingApply" parameterType="map">
+        update ppm_outsourcing_apply a set (a.outsourceno,a.telephone,a.projectno,a.manageruserid,a.deptno,a.outsourcetype,a.usertype,a.appltlimit,
+        a.appltbegtime,a.dutytype,a.price,a.groupid,a.kqtype,a.signaltype,a.organizers,a.position,a.systemnos,a.systemuserids,a.xiujia,a.gxxjsj)
+        =(select b.outsource_no,b.mobile,b.project_number,b.project_manager,b.dept_id,b.outsource_type,b.user_type,to_char(b.leaving_time,'yyyy-MM-dd'),
+        b.entry_time,e.duty_type,e.price,b.group_id,e.attendance_type,
+        decode(e.whether_attendance,'0','02','1','01','01'),
+        b.person_in_charge,b.post_id ,b.system_no,b.system_principal,decode(e.VACATION,null,0,e.VACATION),to_char(e.VACATION_UPDATE_TIME,'yyyy-MM-dd')
+        from ppm_outsourcing_basic b
+        left join ppm_outsourcing_ext e on b.job_id=e.user_id
+        where a.jobid=b.job_id) where exists (select 1 from  ppm_outsourcing_basic b where a.jobid=b.job_id
+        and b.state='0')
+    </update>
+    <!-- 更新老应用  2020-10-28 k1327  -->
+    <update id="updateCommOutsourcingPerson" parameterType="map">
+        update comm_outsourcing_person p set (p.outsourceno,p.certifnumber,p.telephone,p.deptno,p.outsourcetype,p.usertype,p.signaltype,p.appltlimit,
+        p.status,p.appltbegtime,p.kqtype)=(select b.outsource_no,b.certificate_number,b.mobile,b.dept_id,b.outsource_type,b.user_type,
+        decode(e.whether_attendance,'0','02','1','01','01'),
+        to_char(b.leaving_time,'yyyy-MM-dd'),b.state,b.entry_time,e.attendance_type from ppm_outsourcing_basic b
+        left join ppm_outsourcing_ext e on b.job_id=e.user_id
+        where p.jobid=b.job_id) where exists (select 1 from  ppm_outsourcing_basic b where p.jobid=b.job_id)
+    </update>
+
+    <!--通过jobid查询或者姓名模糊查询  k1327 2021-01-16 -->
+    <select id="queryDetailByIdAndName" parameterType="ppmOutsourcingBasic" resultMap="PPMOUTSOURCINGBASIC_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM PPM_OUTSOURCING_BASIC
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="id != null ">ID = #{id} AND</if>
+            <if test="state != null ">state = #{state} AND</if>
+            <if test="jobId != null  and jobId != '' ">JOB_ID = #{jobId} AND</if>
+            <if test="userName != null  and userName != '' ">USER_NAME like '%'||#{userName}||'%' AND</if>
+        </trim>
+    </select>
+    <!--通过id查询  k6991 2020-10-16 -->
+    <select id="queryBaseInfoList" parameterType="ppmOutsourcingBasicInfo" resultMap="PPMOUTSOURCINGBASIC_ALL_EXT">
+        select b.id,
+        b.job_id,
+        b.user_name,
+        b.sex,
+        b.certificate_type,
+        b.certificate_number,
+        b.grade,
+        b.price,
+        b.mobile,
+        b.dept_id,
+        b.vm_account,
+        b.entrance_card,
+        b.outsource_type,
+        b.user_type,
+        b.state,
+        poa.eitquette_time,
+        poa.eitquette_achievement,
+        poa.quality_time,
+        poa.quality_achievement,
+        e7.dictname statename,
+        b.age,
+        b.marital_status,
+        b.political_status,
+        b.education,
+        e2.dictname educationname,
+        b.birthday,
+        b.profession,
+        b.group_id,
+        g.groupname,
+        b.post_id,
+        b.work_content,
+        b.college,
+        b.hometown,
+        b.project_number,
+        b.project_manager,
+        b.is_other_project,
+        b.sdproject_name,
+        b.sdmanageruser_id,
+        b.person_in_charge,
+        b.system_no,
+        b.system_principal,
+        b.faceimage,
+        b.purchase_item,
+        b.leaving_time,
+        b.begin_time,
+        b.entry_time,
+        b.OUTSOURCE_NO,
+        b.NEW_CONTRACT_ID,
+        b.CENERAL_OFFICE_MOTION,
+        e.dictname sexname,
+        i.outsourcname,
+        e1.dictname certificate_typename,
+        e2.dictname educationname,
+        b.MARITAL_STATUS,
+        e3.dictname MARITAL_STATUSNAME,
+        e4.dictname outsource_typename,
+        e5.dictname user_typename,
+        d.location depname,
+        g.groupname,
+        ce.empname PERSON_IN_CHARGENAME,
+        e6.dictname postname,
+        ext.contract_id,
+        ht.htmc,
+        s.name projectname,
+        psi.name as systemnames,
+        decode(ext.IS_PROJECT_ESSENTIAL, '01', '是', '02', '否', '') IS_PROJECT_ESSENTIAL,
+        ext.LEAV_FLOW_TIME,
+        ext.access_flow_time,
+        ext.price,
+        cen.centername,
+        replace(p.name, '星期一', '') attendance_typename
+        from PPM_OUTSOURCING_BASIC b
+        left join eos_dict_entry e  on b.sex = e.dictid and e.dicttypeid = 'BUSI_OUTSOURCE_GENFER'
+        left join eos_dict_entry e1 on b.certificate_type = e1.dictid and e1.dicttypeid = 'BUSI_OUTSOURCE_CERTIFTYPE'
+        left join eos_dict_entry e2 on b.education = e2.dictid and e2.dicttypeid = 'BUSI_OUTSOURCE_EDUCATION'
+        left join eos_dict_entry e3 on b.marital_status = e3.dictid and e3.dicttypeid = 'BUSI_OUTSOURCE_MARITALSTATUS'
+        left join eos_dict_entry e4 on b.outsource_type = e4.dictid and e4.dicttypeid = 'BUSI_OUTSOURCE_OUTSOURCETYPE'
+        left join eos_dict_entry e5 on b.user_type = e5.dictid and e5.dicttypeid = 'BUSI_OUTSOURCE_USERTYPE'
+        left join eos_dict_entry e6 on b.POST_ID = e6.dictid and e6.dicttypeid = 'BUSI_OUTSOURCE_POSITION'
+		left join eos_dict_entry e7 on b.STATE=e7.dictid and e7.dicttypeid='NEWKG_RYZT'
+        left join ppm_outsourcing_info i on i.orgcode = b.outsource_no
+        left join ppm_outsourcing_accessapply poa on poa.job_id = b.job_id and poa.instance_id is not null
+        left join comm_department d on b.dept_id = d.depid
+        left join ppm_da_team_group g on g.id = b.group_id
+        left join comm_employee ce on b.PERSON_IN_CHARGE = ce.badge
+        left join PPM_OUTSOURCING_EXT ext on b.job_id = ext.user_id
+        left join ppm_project_info s  on s.id = b.project_number
+        left join ppm_system_info psi on psi.id = b.system_no
+        left join (select i.htid, i.htmc from ppm_rlwbht_info i union select c.id || '' htid, c.htmc from PPM_WORK_KJL_CGHT c) ht on ht.htid = ext.contract_id
+        left join ppm_da_dept_manager m on b.dept_id = m.deptid
+        left join ppm_da_center cen on m.centerid = cen.id
+        left join ppm_kq_duty_plan p on p.kq_type = ext.attendance_type and p.code = '1'
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="true">adminid = '7004' AND</if>
+            <if test="jobId != null  and jobId != '' ">b.JOB_ID = #{jobId} AND</if>
+            <if test="userName != null  and userName != '' ">b.USER_NAME = #{userName} AND</if>
+            <if test="deptId != null  and deptId != '' ">b.DEPT_ID IN (${deptId}) AND</if>
+            <if test="state != null  and state != '' ">b.STATE = #{state} AND</if>
+            <if test="entryStartDate != null and entryEndDate != null">b.entry_time between #{entryStartDate} and #{entryEndDate} AND</if>
+            <if test="leaveStartDate != null and leaveEndDate != null">b.leaving_time between #{leaveStartDate} and #{leaveEndDate} AND</if>
+            <if test="personInCharge != null  and personInCharge != '' ">
+                (INSTR(B.PERSON_IN_CHARGE , #{personInCharge}) > 0 OR INSTR(CE.EMPNAME,#{personInCharge}) > 0 )
+                AND</if>
+            <if test="presenceState != null and presenceState != '' ">b.PRESENCE_STATE = #{presenceState} AND</if>
+        </trim>
+    </select>
+
+    <!--通过jobid查询相关流程信息  k6991 2020-10-16 -->
+    <select id="getOutFlowData" parameterType="map" resultType="outFlowData">
+        select * from (
+        select '1' flowtype,i.flowtitle,i.instanceid,i.flowid,i.flowurl,i.createtime,
+        to_char(i.lastmodtime,'yyyy-mm-dd') lastmodtime
+        from
+        ppm_outsourcing_accessapply a
+        left join ppm_project_flow i on a.instance_id=i.instanceid
+        where a.job_id=#{jobid}
+        union
+        select '2' flowtype,i.flowtitle,i.instanceid,i.flowid,i.flowurl,i.createtime,
+        to_char(i.lastmodtime,'yyyy-mm-dd') lastmodtime from ppm_outsourcing_lzsq l left
+        join ppm_project_flow i on l.instanceid=i.instanceid
+        where l.jobid=#{jobid}
+        union
+        select '3' flowtype,i.flowtitle,i.instanceid,i.flowid,i.flowurl,i.createtime,
+        to_char(i.lastmodtime,'yyyy-mm-dd') lastmodtime
+        from
+        ppm_outsourcing_change_apply c
+        left join ppm_outsourcing_change_infos infos on c.instanceid=infos.instanceid
+        left join ppm_project_flow i on c.instanceid=i.instanceid
+        where infos.jobid=#{jobid}
+        union
+        select '4' flowtype,i.flowtitle,i.instanceid,i.flowid,i.flowurl,i.createtime,
+        to_char(i.lastmodtime,'yyyy-mm-dd') lastmodtime
+        from
+        PPM_OUTSOURC_UPDATE_INFO c
+        left join ppm_project_flow i on c.instanceid=i.instanceid
+        where c.JOB_ID=#{jobid}
+        union
+        select '5' flowtype,i.flowtitle,i.instanceid,i.flowid,i.flowurl,i.createtime,
+        to_char(i.lastmodtime,'yyyy-mm-dd') lastmodtime
+        from
+        PPM_STAFF_TRANSFER_INFO c
+        left join ppm_project_flow i on c.instanceid=i.instanceid
+        where c.JOB_ID=#{jobid}
+        union
+        select '6' flowtype,
+        '【'||c.USER_NAME||' '||substr(flowtitle,-15,8) || '】人员属性变更' AS flowtitle
+        ,i.instanceid,i.flowid,i.flowurl,i.createtime,
+        to_char(i.lastmodtime,'yyyy-mm-dd') lastmodtime
+        from
+        PPM_OUTSRCING_ATTR_CHG c
+        left join ppm_project_flow i on c.instance_id=i.instanceid
+        where c.USER_CODE = #{jobid} and c.is_del = '0'
+        union
+        select '7' flowtype,
+        '【'||c.USER_NAME||' '||substr(flowtitle,-15,8) || '】单价调整' AS flowtitle
+        ,i.instanceid,i.flowid,i.flowurl,i.createtime,
+        to_char(i.lastmodtime,'yyyy-mm-dd') lastmodtime
+        from
+        PPM_OUTSRCING_PRICE_CHG c
+        left join ppm_project_flow i on c.instance_id=i.instanceid
+        where c.USER_CODE = #{jobid} and c.is_del = '0'
+        )t order by t.flowtype asc,t.createtime desc
+    </select>
+
+
+    <resultMap id="CREWPAGELIST_MAP" type="commEmployeeInfo">
+        <result column="JOB_ID" property="badge"/>
+        <result column="USER_NAME" property="username"/>
+        <result column="GROUPNAME" property="groupname"/>
+        <result column="CERTIFICATE_TYPE" property="certificateType" />
+        <result column="CERTIFICATE_NUMBER" property="certificateNumber"/>
+        <result column="OUTSOURCE_TYPE_NAME" property="outsourceTypeName"/>
+        <result column="LOCATION" property="chargeName"/>
+        <result column="DICTNAME" property="comorgName"/>
+        <result column="GROUPNAME" property="groupname"/>
+        <result column="EMPNAME" property="empName"/>
+        <result column="DEPID" property="depid"/>
+        <result column="ID" property="groupId"/>
+        <result column="MOBILE" property="mobiletelphone"/>
+        <result column="PERSON_IN_CHARGE" property="personInCharge"/>
+        <result column="STATE" property="state"/>
+        <result column="PRESENCE_STATE" property="presenceState"/>
+        <result column="OUTSOURCNAME" property="outsourcname"/>
+        <result column="ORGCODE" property="orgcode"/>
+        <result column="ENTRY_TIME" property="entryTime"/>
+        <result column="LEAVING_TIME" property="leavingTime"/>
+        <result column="EVALUATION_LEVEL" property="evaluationLevel"/>
+    </resultMap>
+    <!-- 外包花名册分页 -1  k1327 2020-05-26 -->
+    <select id="queryCrewPageList" parameterType="map" resultMap="CREWPAGELIST_MAP">
+        SELECT
+        E.JOB_ID ,E.USER_NAME ,E.MOBILE,WB.OUTSOURCE_TYPE_NAME,E.CERTIFICATE_TYPE,E.CERTIFICATE_NUMBER,
+        E.GRADE,E.PRICE,D.LOCATION ,Y.DICTNAME ,G.GROUPNAME , M.EMPNAME,E.PERSON_IN_CHARGE,D.DEPID,G.ID, E.STATE,
+        E.PRESENCE_STATE,U.OUTSOURCNAME, E.ENTRY_TIME,E.LEAVING_TIME,E.EVALUATION_LEVEL
+        FROM PPM_OUTSOURCING_BASIC E
+        LEFT JOIN COMM_DEPARTMENT D ON(E.Dept_Id=to_char(D.DEPID))
+        LEFT JOIN (
+        SELECT S.DICTNAME OUTSOURCE_TYPE_NAME ,S.DICTID OUTSOURCE_TYPE FROM EOS_DICT_ENTRY S WHERE
+        S.DICTTYPEID='BUSI_OUTSOURCE_OUTSOURCETYPE'
+        )WB ON(E.OUTSOURCE_TYPE=WB.OUTSOURCE_TYPE)
+        LEFT JOIN COMM_EMPLOYEE M ON (E.PERSON_IN_CHARGE=M.BADGE)
+        LEFT JOIN COMM_ORGANIZATION O ON(D.COMPID=O.COMPID)
+        LEFT JOIN PPM_DA_TEAM_USER T ON(E.JOB_ID=T.USERID)
+        LEFT JOIN (
+        SELECT S.DICTNAME,S.DICTID FROM EOS_DICT_ENTRY S WHERE S.DICTTYPEID='BUSI_OUTSOURCE_POSITION'
+        )Y ON(Y.DICTID = T.GW)
+        LEFT JOIN PPM_OUTSOURCING_INFO U ON(U.ORGCODE=E.OUTSOURCE_NO)
+        LEFT JOIN PPM_DA_TEAM_GROUP G ON(E.GROUP_ID=G.ID)
+
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="badge != null  and badge != '' ">INSTR(E.JOB_ID,#{badge} ) > 0 AND</if>
+            <if test="empname != null  and empname != '' ">
+                (INSTR(M.EMPNAME, #{empname}) > 0 OR INSTR(E.PERSON_IN_CHARGE,   #{empname}) > 0 ) AND
+            </if>
+            <if test="entryStartDate != null and entryEndDate != null">E.entry_time between #{entryStartDate} and #{entryEndDate} AND</if>
+            <if test="leaveStartDate != null and leaveEndDate != null">E.leaving_time between #{leaveStartDate} and #{leaveEndDate} AND</if>
+            <if test="username != null  and username != '' ">INSTR(E.USER_NAME,#{username} ) > 0 AND</if>
+            <if test="depid != null and depid!= '' ">D.DEPID = #{depid} AND</if>
+            <if test="gro != null and gro != '' ">G.ID = #{gro} AND</if>
+            <if test="state != null and state != '' ">E.STATE = #{state} AND</if>
+            <if test="deps != null and deps != '' ">D.DEPID in (${deps}) AND</if>
+            <if test="personInCharge != null and personInCharge != '' ">E.PERSON_IN_CHARGE =#{personInCharge} AND</if>
+            <if test="groups != null and groups != '' ">E.GROUP_ID in (${groups}) AND</if>
+            <if test="orgcode != null and orgcode != '' ">E.OUTSOURCE_NO =#{orgcode} AND</if>
+            <if test="presenceState != null and presenceState != '' ">E.PRESENCE_STATE = (#{presenceState}) AND</if>
+            D.LOCATION is not null AND
+        </trim>
+        ORDER BY E.ENTRY_TIME DESC,e.job_id,e.user_name
+    </select>
+    <!-- 外包花名册分页相关流程信息 -1  k1327 2020-05-26 -->
+    <select id="queryOutFlowsInfos" parameterType="map" resultType="ppmProjectFlow">
+        select f.* from ppm_outsourcing_accessapply a
+        left join ppm_project_flow f on a.instance_id=f.instanceid
+        where a.job_id=#{jobid}
+        union
+        select f.* from ppm_outsourcing_change_infos l
+        left join ppm_project_flow f on l.instanceid=f.instanceid
+        where l.jobid=#{jobid}
+        union
+        select f.* from ppm_outsourcing_lzsq l
+        left join ppm_project_flow f on l.instanceid=f.instanceid
+        where l.jobid=#{jobid}
+    </select>
+	
+	<select id="queryHumanList" parameterType="ppmOutsourcingBasicInfo" resultMap="PPMOUTSOURCINGBASIC_ALL_EXT">
+        select 
+		  b.job_id,
+		  b.user_name,
+		  b.state,
+		  e7.dictname statename,
+		  b.person_in_charge,
+		  b.system_no,
+		  b.system_principal,
+		  b.OUTSOURCE_NO,
+		  i.outsourcname,
+		  b.outsource_type,
+		  e4.dictname outsource_typename,
+		  d.location depname,
+		  ce.empname PERSON_IN_CHARGENAME,
+		  b.PRESENCE_STATE,
+		  psi.name as systemnames
+        from PPM_OUTSOURCING_BASIC b
+        left join eos_dict_entry e4 on b.outsource_type = e4.dictid and e4.dicttypeid = 'BUSI_OUTSOURCE_OUTSOURCETYPE'
+        left join eos_dict_entry e7 on b.state = e7.dictid and e7.dicttypeid = 'NEWKG_RYZT'
+        left join ppm_outsourcing_info i on i.orgcode = b.outsource_no
+        left join comm_department d on b.dept_id = d.depid
+        left join comm_employee ce on b.PERSON_IN_CHARGE = ce.badge
+        left join ppm_system_info psi on psi.id = b.system_no
+        <trim prefix="WHERE" suffixOverrides="AND">
+			<if test="true">b.state = '0' AND</if>
+            <if test="jobId != null  and jobId != '' ">b.JOB_ID = #{jobId} AND</if>
+            <if test="userName != null  and userName != '' ">b.USER_NAME = #{userName} AND</if>
+            <if test="deptId != null  and deptId != '' ">b.DEPT_ID IN (${deptId}) AND</if>
+            <if test="personInCharge != null  and personInCharge != '' ">b.person_in_charge = ${personInCharge} AND</if>
+            <if test="presenceState != null and presenceState != '' ">b.PRESENCE_STATE = #{presenceState} AND</if>
+        </trim>
+    </select>
+
+    <!--    人力外包人员所属项目经理-->
+    <select id="queryMgrList" parameterType="ppmOutsourcingBasic" resultMap="PPMOUTSOURCINGBASIC_ALL_EXT">
+        SELECT dept_id,(select location from comm_department where depid = dept_id and rownum=1) depname
+        ,person_in_charge
+        ,( select empname from ppm.comm_employee where badge = person_in_charge and rownum =1) PERSON_IN_CHARGENAME FROM (
+        SELECT MAX(dept_id) dept_id, person_in_charge
+        FROM PPM_OUTSOURCING_BASIC WHERE OUTSOURCE_TYPE = #{outsourceType}
+<!--        AND person_in_charge in ('213186', '202261','183159')-->
+        GROUP BY person_in_charge ) T
+    </select>
+
+    <select id="queryCrewToEmployeePool" parameterType="map" resultMap="CREWPAGELIST_MAP">
+        SELECT
+        E.JOB_ID ,E.USER_NAME ,E.MOBILE,WB.OUTSOURCE_TYPE_NAME,E.CERTIFICATE_TYPE,E.CERTIFICATE_NUMBER,
+        E.GRADE,E.PRICE,D.LOCATION ,Y.DICTNAME ,G.GROUPNAME , M.EMPNAME,E.PERSON_IN_CHARGE,D.DEPID,G.ID, E.STATE,
+        E.PRESENCE_STATE,U.OUTSOURCNAME, U.ORGCODE, E.ENTRY_TIME,E.LEAVING_TIME
+        FROM PPM_OUTSOURCING_BASIC E
+        LEFT JOIN COMM_DEPARTMENT D ON(E.Dept_Id=to_char(D.DEPID))
+        LEFT JOIN (
+        SELECT S.DICTNAME OUTSOURCE_TYPE_NAME ,S.DICTID OUTSOURCE_TYPE FROM EOS_DICT_ENTRY S WHERE
+        S.DICTTYPEID='BUSI_OUTSOURCE_OUTSOURCETYPE'
+        )WB ON(E.OUTSOURCE_TYPE=WB.OUTSOURCE_TYPE)
+        LEFT JOIN COMM_EMPLOYEE M ON (E.PERSON_IN_CHARGE=M.BADGE)
+        LEFT JOIN COMM_ORGANIZATION O ON(D.COMPID=O.COMPID)
+        LEFT JOIN PPM_DA_TEAM_USER T ON(E.JOB_ID=T.USERID)
+        LEFT JOIN (
+        SELECT S.DICTNAME,S.DICTID FROM EOS_DICT_ENTRY S WHERE S.DICTTYPEID='BUSI_OUTSOURCE_POSITION'
+        )Y ON(Y.DICTID = T.GW)
+        LEFT JOIN PPM_OUTSOURCING_INFO U ON(U.ORGCODE=E.OUTSOURCE_NO)
+        LEFT JOIN PPM_DA_TEAM_GROUP G ON(E.GROUP_ID=G.ID)
+
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="badge != null  and badge != '' ">INSTR(E.JOB_ID,#{badge} ) > 0 AND</if>
+            <if test="empname != null  and empname != '' ">
+                (INSTR(M.EMPNAME, #{empname}) > 0 OR INSTR(E.PERSON_IN_CHARGE,   #{empname}) > 0 ) AND
+            </if>
+            <if test="entryStartDate != null and entryEndDate != null">E.entry_time between #{entryStartDate} and #{entryEndDate} AND</if>
+            <if test="leaveStartDate != null and leaveEndDate != null">E.leaving_time between #{leaveStartDate} and #{leaveEndDate} AND</if>
+            <if test="username != null  and username != '' ">INSTR(E.USER_NAME,#{username} ) > 0 AND</if>
+            <if test="depid != null and depid!= '' ">D.DEPID = #{depid} AND</if>
+            <if test="gro != null and gro != '' ">G.ID = #{gro} AND</if>
+            <if test="state != null and state != '' ">E.STATE = #{state} AND</if>
+            <if test="deps != null and deps != '' ">D.DEPID in (${deps}) AND</if>
+            <if test="personInCharge != null and personInCharge != '' ">E.PERSON_IN_CHARGE =#{personInCharge} AND</if>
+            <if test="groups != null and groups != '' ">E.GROUP_ID in (${groups}) AND</if>
+            <if test="presenceState != null and presenceState != '' ">E.PRESENCE_STATE = (#{presenceState}) AND</if>
+        </trim>
+        ORDER BY E.ENTRY_TIME DESC,e.job_id,e.user_name
+    </select>
+</mapper>

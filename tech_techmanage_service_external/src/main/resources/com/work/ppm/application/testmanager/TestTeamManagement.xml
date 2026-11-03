@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k6991 2020-06-30 -->
+<mapper namespace="com.work.ppm.application.model.testmanager.TestGroup">
+    <resultMap type="testGroup" id="TESTGROUP_ALL">
+        <result property="id" column="ID"/>
+        <result property="testGroupName" column="TEST_GROUP_NAME"/>
+        <result property="testGroupComemployee" column="TEST_GROUP_COMEMPLOYEE"/>
+        <result property="ownedTestTeam" column="OWNED_TEST_TEAM"/>
+        <result property="testGroupLeader" column="TEST_GROUP_LEADER"/>
+        <result property="testGroupMember" column="TEST_GROUP_MEMBER"/>
+        <result property="createUser" column="CREATE_USER"/>
+        <result property="createTime" column="CREATE_TIME"/>
+        <result property="updateUser" column="UPDATE_USER"/>
+        <result property="updateTime" column="UPDATE_TIME"/>
+    </resultMap>
+
+    <resultMap id="PPMTESTTEAMDTO_ALL" type="com.work.ppm.application.dto.testmanagement.PpmTestTeamDto">
+        <result property="teamId" column="TEAM_ID"/>
+        <result property="teamName" column="TEAM_NAME"/>
+    </resultMap>
+
+    <!-- 所有字段名称 -->
+    <sql id="sql_flied_all">
+        ID,
+        TEST_GROUP_NAME,
+        TEST_GROUP_COMEMPLOYEE,
+        OWNED_TEST_TEAM,
+        TEST_GROUP_LEADER,
+        TEST_GROUP_MEMBER,
+        CREATE_USER,
+        CREATE_TIME,
+        UPDATE_USER,
+        UPDATE_TIME
+    </sql>
+
+    <sql id="sql_select_condition">
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="id != null ">ID = #{id} AND</if>
+            <if test="testGroupName != null  and testGroupName != '' ">TEST_GROUP_NAME = #{testGroupName} AND</if>
+            <if test="testGroupComemployee != null  and testGroupComemployee != '' ">
+                TEST_GROUP_COMEMPLOYEE = #{testGroupComemployee} AND</if>
+            <if test="ownedTestTeam != null and ownedTestTeam != '' ">OWNED_TEST_TEAM = #{ownedTestTeam} AND</if>
+            <if test="testGroupLeader != null and testGroupLeader != '' ">TEST_GROUP_LEADER = #{testGroupLeader} AND</if>
+            <if test="testGroupMember != null  and testGroupMember != '' ">TEST_GROUP_MEMBER = #{testGroupMember} AND</if>
+        </trim>
+    </sql>
+
+    <insert id="creatTestGroup" parameterType="TestGroup">
+        INSERT INTO PPM.TEST_GROUP (
+        <trim suffixOverrides=",">
+            <if test="id != null  and id != '' ">ID ,</if>
+            <if test="testGroupName != null  and testGroupName != '' ">TEST_GROUP_NAME ,</if>
+            <if test="testGroupComemployee != null and testGroupComemployee != '' ">TEST_GROUP_COMEMPLOYEE ,</if>
+            <if test="ownedTestTeam != null and ownedTestTeam != '' ">OWNED_TEST_TEAM ,</if>
+            <if test="testGroupLeader != null  and testGroupLeader != '' ">TEST_GROUP_LEADER ,</if>
+            <if test="testGroupMember != null  and testGroupMember != '' ">TEST_GROUP_MEMBER ,</if>
+            <if test="createUser != null ">CREATE_USER ,</if>
+            <if test="createTime != null ">CREATE_TIME ,</if>
+            <if test="updateUser != null ">UPDATE_USER ,</if>
+            <if test="updateTime != null ">UPDATE_TIME ,</if>
+        </trim>
+        )
+        SELECT
+        <trim suffixOverrides=",">
+            <if test="id != null  and id != '' ">#{id} ,</if>
+            <if test="testGroupName != null  and testGroupName != '' ">#{testGroupName} ,</if>
+            <if test="testGroupComemployee != null and testGroupComemployee != '' ">#{testGroupComemployee} ,</if>
+            <if test="ownedTestTeam != null  and ownedTestTeam != '' ">#{ownedTestTeam} ,</if>
+            <if test="testGroupLeader != null and testGroupLeader != '' ">#{testGroupLeader} ,</if>
+            <if test="testGroupMember != null and testGroupMember != '' ">#{testGroupMember} ,</if>
+            <if test="createTime != null and createTime != '' ">#{createTime} ,</if>
+            <if test="createUser != null and createUser != '' ">#{createUser} ,</if>
+            <if test="updateTime != null and updateTime != '' ">#{updateTime} ,</if>
+            <if test="updateUser != null and updateUser != '' ">#{updateUser} ,</if>
+        </trim>
+        FROM dual
+        WHERE NOT EXISTS(
+        SELECT 1
+        FROM  TEST_GROUP
+        WHERE
+        <trim suffixOverrides="AND">
+            <if test="testGroupName != null and testGroupName != ''  ">TEST_GROUP_NAME = #{testGroupName} AND</if>
+        </trim>
+        )
+    </insert>
+
+    <select id="queryTestGroupName" parameterType="map" resultMap="TESTGROUP_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM TEST_GROUP
+        <include refid="sql_select_condition"/>
+    </select>
+
+    <select id="getOwnedTestGroupList" parameterType="map" resultMap="TESTGROUP_ALL">
+        SELECT
+        ID,
+        TEST_GROUP_NAME
+        FROM PPM.TEST_GROUP
+    </select>
+
+    <update id="updateTestGroup" parameterType="map">
+        UPDATE
+        PPM.TEST_GROUP
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="testGroupName != null  and testGroupName != '' ">TEST_GROUP_NAME = #{testGroupName} ,</if>
+            <if test="testGroupComemployee != null  and testGroupComemployee != '' ">
+                TEST_GROUP_COMEMPLOYEE = #{testGroupComemployee} ,</if>
+            <if test="ownedTestTeam != null  and ownedTestTeam != '' ">OWNED_TEST_TEAM = #{ownedTestTeam} ,</if>
+            <if test="testGroupLeader != null and testGroupLeader != '' ">TEST_GROUP_LEADER = #{testGroupLeader} ,</if>
+            <if test="testGroupMember != null and testGroupMember != '' ">TEST_GROUP_MEMBER = #{testGroupMember} ,</if>
+            <if test="updateTime != null and updateTime != '' ">UPDATE_TIME= to_date(#{updateTime} , 'YYYY-MM-DD
+                HH24:MI:SS') ,
+            </if>
+        </trim>
+        WHERE ID = #{id}
+    </update>
+
+</mapper>

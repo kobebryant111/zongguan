@@ -1,0 +1,180 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<parent>
+		<groupId>com.tansun</groupId>
+		<artifactId>workflow-framework</artifactId>
+		<version>7.0.1</version>
+	</parent>
+	<modelVersion>4.0.0</modelVersion>
+	<packaging>jar</packaging>
+	<artifactId>workflow-micro-service</artifactId>
+
+	<properties>
+		<maven.build.timestamp.format>yyyyMMdd-HHmm</maven.build.timestamp.format>
+		<java.version>1.8</java.version>
+		<spring.boot.version>2.0.8.RELEASE</spring.boot.version>
+		<spring.cloud.version>Greenwich.SR2</spring.cloud.version>
+		<msdp.cloud.version>2.4.0-RELEASE</msdp.cloud.version>
+        <tjmas.cloud.version>2.0.1</tjmas.cloud.version>
+		<spring.version>5.0.12.RELEASE</spring.version>
+		<mybatis.version>3.4.5</mybatis.version>
+		<mybatis-spring.version>2.0.4</mybatis-spring.version>
+		<jackson.version>2.12.3</jackson.version>
+	</properties>
+
+	<dependencyManagement>
+		<dependencies>
+			<!-- spring boot 基础依赖 -->
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-dependencies</artifactId>
+				<version>${spring.boot.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-dependencies</artifactId>
+				<version>${spring.cloud.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<dependencies>
+        <dependency>
+            <groupId>com.tansun</groupId>
+            <artifactId>workflow-spring-boot-starter</artifactId>
+            <version>${workflow.version}</version>
+        </dependency>
+        <!--		<dependency>-->
+        <!--			<groupId>org.camunda.bpm</groupId>-->
+        <!--			<artifactId>camunda-bpmn-converter</artifactId>-->
+        <!--			<version>5.22.0</version>-->
+        <!--			<scope>system</scope>-->
+        <!--			<systemPath>${project.basedir}/src/main/resources/lib/camunda-bpmn-converter-5.22.0.jar</systemPath>-->
+        <!--		</dependency>-->
+        <!--灰度包-->
+        <!--		<dependency>-->
+        <!--			<groupId>com.tansun.tjmas</groupId>-->
+        <!--			<artifactId>tjmas-cloud-starter-base-grayscale</artifactId>-->
+        <!--			<version>1.2.3-RELEASE</version>-->
+        <!--		</dependency>-->
+        <!-- druid 若注释掉，则只有10并发-->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid-spring-boot-starter</artifactId>
+            <version>1.1.10</version>
+        </dependency>
+        <!--注册中心 nacos、eureka-->
+        <!--<dependency>-->
+            <!--<groupId>com.tansun.tjmas</groupId>-->
+            <!--<artifactId>tjmas-cloud-starter-base-register</artifactId>-->
+            <!--<version>${tjmas.cloud.version}</version>-->
+        <!--</dependency>-->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid</artifactId>
+            <version>1.1.23</version>
+        </dependency>
+
+		<!-- msdp cloud -->
+		<dependency>
+			<groupId>com.jeedev.msdp.common</groupId>
+			<artifactId>msdp-auth</artifactId>
+			<version>${msdp.cloud.version}</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>pagehelper-spring-boot-autoconfigure</artifactId>
+					<groupId>com.github.pagehelper</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<artifactId>msdp-sysmgr</artifactId>
+			<groupId>com.jeedev.msdp.common</groupId>
+			<version>${msdp.cloud.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.jeedev.msdp.common</groupId>
+			<artifactId>msdp-idata</artifactId>
+			<version>${msdp.cloud.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.github.ulisesbocchio</groupId>
+			<artifactId>jasypt-spring-boot-starter</artifactId>
+		</dependency>
+        <!-- 配置中心
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-config</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-bus-amqp</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.retry</groupId>
+            <artifactId>spring-retry</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-stream-rabbit</artifactId>
+        </dependency>-->
+
+        <!-- 配置文件配置项加密 -->
+        <dependency>
+			<groupId>com.example</groupId>
+			<artifactId>mercury-profileitem-encrypt</artifactId>
+			<version>1.0.0-RELEASE</version>
+        </dependency>
+	</dependencies>
+
+	<build>
+		<finalName>workflow-micro-service</finalName>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<version>2.3.4.RELEASE</version>
+				<configuration>
+					<includeSystemScope>true</includeSystemScope>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>repackage</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<configuration combine.children="override">
+					<descriptors>
+						<descriptor>sql-assembly.xml</descriptor>
+						<descriptor>static-assembly.xml</descriptor>
+					</descriptors>
+				</configuration>
+
+				<executions >
+					<execution >
+						<id>make-assembly</id>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal> <!--执行一次-->
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+</project>

@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k6991 2021-09-26 -->
+<mapper namespace="com.work.ppm.application.model.projectmanager.PpmFhyyxtbgApply">
+    <resultMap type="ppmFhyyxtbgApply" id="PPMFHYYXTBGAPPLY_ALL">
+        <result property="id" column="ID"/>
+        <result property="applyuser" column="APPLYUSER"/>
+        <result property="compcode" column="COMPCODE"/>
+        <result property="applytime" column="APPLYTIME"/>
+        <result property="applyChangeTitle" column="APPLY_CHANGE_TITLE"/>
+        <result property="mSysno" column="M_SYSNO"/>
+        <result property="changedate" column="CHANGEDATE"/>
+        <result property="fhitmanager" column="FHITMANAGER"/>
+        <result property="fhyybmanager" column="FHYYBMANAGER"/>
+        <result property="createdate" column="CREATEDATE"/>
+        <result property="createuser" column="CREATEUSER"/>
+        <result property="updatedate" column="UPDATEDATE"/>
+        <result property="updateuser" column="UPDATEUSER"/>
+        <result property="instanceid" column="INSTANCEID"/>
+        <result property="changetype" column="CHANGETYPE"/>
+        <result property="projectno" column="PROJECTNO"/>
+        <result property="patchtitle" column="PATCHTITLE"/>
+        <result property="pdefectid" column="PDEFECTID"/>
+        <result property="changehour" column="CHANGEHOUR"/>
+        <result property="istopwd" column="ISTOPWD"/>
+        <result property="pwdnote" column="PWDNOTE"/>
+        <result property="usestarttime" column="USESTARTTIME"/>
+        <result property="useendtime" column="USEENDTIME"/>
+        <result property="usehour" column="USEHOUR"/>
+        <result property="applycode" column="APPLYCODE"/>
+        <result property="planstarttime" column="PLANSTARTTIME"/>
+        <result property="issueId" column="ISSUE_ID"/>
+        <result property="onlineno" column="ONLINENO"/>
+        <result property="ifWebChange" column="IF_WEB_CHANGE"/>
+        <result property="ifServerChange" column="IF_SERVER_CHANGE"/>
+        <result property="ifMiddleware" column="IF_MIDDLEWARE"/>
+
+    </resultMap>
+
+    <!-- 所有字段名称 -->
+    <sql id="sql_flied_all">
+        ID,
+        APPLYUSER,
+        COMPCODE,
+        APPLYTIME,
+        APPLY_CHANGE_TITLE,
+        M_SYSNO,
+        CHANGEDATE,
+        FHITMANAGER,
+        FHYYBMANAGER,
+        CREATEDATE,
+        CREATEUSER,
+        UPDATEDATE,
+        UPDATEUSER,
+        INSTANCEID,
+        CHANGETYPE,
+        PROJECTNO,
+        PATCHTITLE,
+        PDEFECTID,
+        CHANGEHOUR,
+        ISTOPWD,
+        PWDNOTE,
+        USESTARTTIME,
+        USEENDTIME,
+        USEHOUR,
+        APPLYCODE,
+        PLANSTARTTIME,
+        ISSUE_ID,
+        ONLINENO,
+        IF_WEB_CHANGE,
+        IF_SERVER_CHANGE,
+        IF_MIDDLEWARE
+    </sql>
+    <sql id="sql_select_condition">
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="id != null ">ID = #{id} AND</if>
+            <if test="applyuser != null  and applyuser != '' ">APPLYUSER = #{applyuser} AND</if>
+            <if test="compcode != null  and compcode != '' ">COMPCODE = #{compcode} AND</if>
+            <if test="applytime != null ">APPLYTIME = #{applytime} AND</if>
+            <if test="applyChangeTitle != null  and applyChangeTitle != '' ">APPLY_CHANGE_TITLE = #{applyChangeTitle}
+                AND
+            </if>
+            <if test="mSysno != null  and mSysno != '' ">M_SYSNO = #{mSysno} AND</if>
+            <if test="changedate != null ">CHANGEDATE = #{changedate} AND</if>
+            <if test="fhitmanager != null  and fhitmanager != '' ">FHITMANAGER = #{fhitmanager} AND</if>
+            <if test="fhyybmanager != null  and fhyybmanager != '' ">FHYYBMANAGER = #{fhyybmanager} AND</if>
+            <if test="createdate != null ">CREATEDATE = #{createdate} AND</if>
+            <if test="createuser != null  and createuser != '' ">CREATEUSER = #{createuser} AND</if>
+            <if test="updatedate != null ">UPDATEDATE = #{updatedate} AND</if>
+            <if test="updateuser != null  and updateuser != '' ">UPDATEUSER = #{updateuser} AND</if>
+            <if test="instanceid != null  and instanceid != '' ">INSTANCEID = #{instanceid} AND</if>
+            <if test="changetype != null  and changetype != '' ">CHANGETYPE = #{changetype} AND</if>
+            <if test="projectno != null  and projectno != '' ">PROJECTNO = #{projectno} AND</if>
+            <if test="patchtitle != null  and patchtitle != '' ">PATCHTITLE = #{patchtitle} AND</if>
+            <if test="pdefectid != null  and pdefectid != '' ">PDEFECTID IN (${pdefectid}) > 0 AND</if>
+            <if test="changehour != null  and changehour != '' ">CHANGEHOUR = #{changehour} AND</if>
+            <if test="istopwd != null  and istopwd != '' ">ISTOPWD = #{istopwd} AND</if>
+            <if test="pwdnote != null  and pwdnote != '' ">PWDNOTE = #{pwdnote} AND</if>
+            <if test="usestarttime != null ">USESTARTTIME = #{usestarttime} AND</if>
+            <if test="useendtime != null ">USEENDTIME = #{useendtime} AND</if>
+            <if test="usehour != null  and usehour != '' ">USEHOUR = #{usehour} AND</if>
+            <if test="applycode != null  and applycode != '' ">APPLYCODE = #{applycode} AND</if>
+            <if test="planstarttime != null ">PLANSTARTTIME = #{planstarttime} AND</if>
+            <if test="issueId != null ">ISSUE_ID = #{issueId} AND</if>
+            <if test="onlineno != null and onlineno != ''">ONLINENO = #{onlineno} AND</if>
+            <if test="ifWebChange != null and ifWebChange != ''">IF_WEB_CHANGE = #{ifWebChange} AND</if>
+            <if test="ifServerChange != null and ifServerChange != ''">IF_SERVER_CHANGE = #{ifServerChange} AND</if>
+            <if test="ifMiddleware != null and ifMiddleware != ''">IF_MIDDLEWARE = #{ifMiddleware} AND</if>
+        </trim>
+    </sql>
+    <!-- 查询分页  2021-09-26 k6991  -->
+    <select id="queryPagerList" parameterType="map" resultMap="PPMFHYYXTBGAPPLY_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM PPM_FHYYXTBG_APPLY
+        <include refid="sql_select_condition"/>
+    </select>
+
+    <!-- 新增  2021-09-26 k6991  -->
+    <insert id="addPojo" parameterType="ppmFhyyxtbgApply">
+        INSERT INTO PPM_FHYYXTBG_APPLY (
+        <trim suffixOverrides=",">
+            <if test="id != null ">ID ,</if>
+            <if test="applyuser != null  and applyuser != '' ">APPLYUSER ,</if>
+            <if test="compcode != null  and compcode != '' ">COMPCODE ,</if>
+            <if test="applytime != null ">APPLYTIME ,</if>
+            <if test="applyChangeTitle != null  and applyChangeTitle != '' ">APPLY_CHANGE_TITLE ,</if>
+            <if test="mSysno != null  and mSysno != '' ">M_SYSNO ,</if>
+            <if test="changedate != null ">CHANGEDATE ,</if>
+            <if test="fhitmanager != null  and fhitmanager != '' ">FHITMANAGER ,</if>
+            <if test="fhyybmanager != null  and fhyybmanager != '' ">FHYYBMANAGER ,</if>
+            <if test="createdate != null ">CREATEDATE ,</if>
+            <if test="createuser != null  and createuser != '' ">CREATEUSER ,</if>
+            <if test="updatedate != null ">UPDATEDATE ,</if>
+            <if test="updateuser != null  and updateuser != '' ">UPDATEUSER ,</if>
+            <if test="instanceid != null  and instanceid != '' ">INSTANCEID ,</if>
+            <if test="changetype != null  and changetype != '' ">CHANGETYPE ,</if>
+            <if test="projectno != null  and projectno != '' ">PROJECTNO ,</if>
+            <if test="patchtitle != null  and patchtitle != '' ">PATCHTITLE ,</if>
+            <if test="pdefectid != null  and pdefectid != '' ">PDEFECTID ,</if>
+            <if test="changehour != null  and changehour != '' ">CHANGEHOUR ,</if>
+            <if test="istopwd != null  and istopwd != '' ">ISTOPWD ,</if>
+            <if test="pwdnote != null  and pwdnote != '' ">PWDNOTE ,</if>
+            <if test="usestarttime != null ">USESTARTTIME ,</if>
+            <if test="useendtime != null ">USEENDTIME ,</if>
+            <if test="usehour != null  and usehour != '' ">USEHOUR ,</if>
+            <if test="applycode != null  and applycode != '' ">APPLYCODE ,</if>
+            <if test="planstarttime != null ">PLANSTARTTIME ,</if>
+            <if test="issueId != null ">ISSUE_ID ,</if>
+            <if test="onlineno != null and onlineno != ''">ONLINENO,</if>
+            <if test="ifWebChange != null and ifWebChange != ''">IF_WEB_CHANGE,</if>
+            <if test="ifServerChange != null and ifServerChange != ''">IF_SERVER_CHANGE,</if>
+            <if test="ifMiddleware != null and ifMiddleware != ''">IF_MIDDLEWARE,</if>
+        </trim>
+        )
+        VALUES(
+        <trim suffixOverrides=",">
+            <if test="id != null ">#{id} ,</if>
+            <if test="applyuser != null  and applyuser != '' ">#{applyuser} ,</if>
+            <if test="compcode != null  and compcode != '' ">#{compcode} ,</if>
+            <if test="applytime != null ">#{applytime} ,</if>
+            <if test="applyChangeTitle != null  and applyChangeTitle != '' ">#{applyChangeTitle} ,</if>
+            <if test="mSysno != null  and mSysno != '' ">#{mSysno} ,</if>
+            <if test="changedate != null ">#{changedate} ,</if>
+            <if test="fhitmanager != null  and fhitmanager != '' ">#{fhitmanager} ,</if>
+            <if test="fhyybmanager != null  and fhyybmanager != '' ">#{fhyybmanager} ,</if>
+            <if test="createdate != null ">#{createdate} ,</if>
+            <if test="createuser != null  and createuser != '' ">#{createuser} ,</if>
+            <if test="updatedate != null ">#{updatedate} ,</if>
+            <if test="updateuser != null  and updateuser != '' ">#{updateuser} ,</if>
+            <if test="instanceid != null  and instanceid != '' ">#{instanceid} ,</if>
+            <if test="changetype != null  and changetype != '' ">#{changetype} ,</if>
+            <if test="projectno != null  and projectno != '' ">#{projectno} ,</if>
+            <if test="patchtitle != null  and patchtitle != '' ">#{patchtitle} ,</if>
+            <if test="pdefectid != null  and pdefectid != '' ">#{pdefectid} ,</if>
+            <if test="changehour != null  and changehour != '' ">#{changehour} ,</if>
+            <if test="istopwd != null  and istopwd != '' ">#{istopwd} ,</if>
+            <if test="pwdnote != null  and pwdnote != '' ">#{pwdnote} ,</if>
+            <if test="usestarttime != null ">#{usestarttime} ,</if>
+            <if test="useendtime != null ">#{useendtime} ,</if>
+            <if test="usehour != null  and usehour != '' ">#{usehour} ,</if>
+            <if test="applycode != null  and applycode != '' ">#{applycode} ,</if>
+            <if test="planstarttime != null ">#{planstarttime} ,</if>
+            <if test="issueId != null ">#{issueId} ,</if>
+            <if test="onlineno != null and onlineno != ''">#{onlineno} ,</if>
+            <if test="ifWebChange != null and ifWebChange != ''">#{ifWebChange} ,</if>
+            <if test="ifServerChange != null and ifServerChange != ''">#{ifServerChange} ,</if>
+            <if test="ifMiddleware != null and ifMiddleware != ''">#{ifMiddleware} ,</if>
+        </trim>
+        )
+    </insert>
+
+    <!--通过id查询  k6991 2021-09-26 -->
+    <select id="queryDetail" parameterType="ppmFhyyxtbgApply" resultMap="PPMFHYYXTBGAPPLY_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM PPM_FHYYXTBG_APPLY
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="id != null ">ID=#{id} AND</if>
+            <if test="instanceid != null  and instanceid != '' ">INSTANCEID=#{instanceid} AND</if>
+        </trim>
+    </select>
+
+    <!--查询集合  k6991 2021-09-26 -->
+    <select id="getList" parameterType="ppmFhyyxtbgApply" resultMap="PPMFHYYXTBGAPPLY_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM PPM_FHYYXTBG_APPLY
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="id != null ">ID=#{id} AND</if>
+            <if test="issueId != null ">ISSUE_ID IN (${issueId}) and</if>
+        </trim>
+    </select>
+    <!-- update sql -->
+    <sql id="update_pojo_sql">
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="id != null ">ID=#{id} ,</if>
+            <if test="applyuser != null  and applyuser != '' ">APPLYUSER=#{applyuser} ,</if>
+            <if test="compcode != null  and compcode != '' ">COMPCODE=#{compcode} ,</if>
+            <if test="applytime != null ">APPLYTIME=#{applytime} ,</if>
+            <if test="applyChangeTitle != null  and applyChangeTitle != '' ">APPLY_CHANGE_TITLE=#{applyChangeTitle} ,
+            </if>
+            <if test="mSysno != null  and mSysno != '' ">M_SYSNO=#{mSysno} ,</if>
+            <if test="changedate != null ">CHANGEDATE=#{changedate} ,</if>
+            <if test="fhitmanager != null  and fhitmanager != '' ">FHITMANAGER=#{fhitmanager} ,</if>
+            <if test="fhyybmanager != null  and fhyybmanager != '' ">FHYYBMANAGER=#{fhyybmanager} ,</if>
+            <if test="createdate != null ">CREATEDATE=#{createdate} ,</if>
+            <if test="createuser != null  and createuser != '' ">CREATEUSER=#{createuser} ,</if>
+            <if test="updatedate != null ">UPDATEDATE=#{updatedate} ,</if>
+            <if test="updateuser != null  and updateuser != '' ">UPDATEUSER=#{updateuser} ,</if>
+            <if test="instanceid != null  and instanceid != '' ">INSTANCEID=#{instanceid} ,</if>
+            <if test="changetype != null  and changetype != '' ">CHANGETYPE=#{changetype} ,</if>
+            <if test="projectno != null  and projectno != '' ">PROJECTNO=#{projectno} ,</if>
+            <if test="patchtitle != null  and patchtitle != '' ">PATCHTITLE=#{patchtitle} ,</if>
+            <if test="pdefectid != null  and pdefectid != '' ">PDEFECTID=#{pdefectid} ,</if>
+            <if test="changehour != null  and changehour != '' ">CHANGEHOUR=#{changehour} ,</if>
+            <if test="istopwd != null  and istopwd != '' ">ISTOPWD=#{istopwd} ,</if>
+            <if test="pwdnote != null  and pwdnote != '' ">PWDNOTE=#{pwdnote} ,</if>
+            <if test="usestarttime != null ">USESTARTTIME=#{usestarttime} ,</if>
+            <if test="useendtime != null ">USEENDTIME=#{useendtime} ,</if>
+            <if test="usehour != null  and usehour != '' ">USEHOUR=#{usehour} ,</if>
+            <if test="applycode != null  and applycode != '' ">APPLYCODE=#{applycode} ,</if>
+            <if test="planstarttime != null ">PLANSTARTTIME=#{planstarttime} ,</if>
+            <if test="issueId != null ">ISSUE_ID = #{issueId} ,</if>
+            <if test="onlineno != null and onlineno != ''">ONLINENO = #{onlineno} ,</if>
+            <if test="ifWebChange != null and ifWebChange != ''">IF_WEB_CHANGE = #{ifWebChange} ,</if>
+            <if test="ifServerChange != null and ifServerChange != ''">IF_SERVER_CHANGE = #{ifServerChange} ,</if>
+            <if test="ifMiddleware != null and ifMiddleware != ''">IF_MIDDLEWARE = #{ifMiddleware} ,</if>
+        </trim>
+    </sql>
+
+    <!--通过id编辑 k6991 2021-09-26 -->
+    <update id="updatePojo" parameterType="ppmFhyyxtbgApply">
+        UPDATE
+        PPM_FHYYXTBG_APPLY
+        <include refid="update_pojo_sql"/>
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="instanceid != null  and instanceid != '' ">INSTANCEID = #{instanceid} AND </if>
+            <if test="id != null ">ID=#{id} AND</if>
+        </trim>
+    </update>
+
+    <!--通过id批量删除  k6991 2021-09-26 -->
+    <delete id="deleteById" parameterType="ppmFhyyxtbgApply">
+        DELETE
+        FROM
+        PPM_FHYYXTBG_APPLY
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="instanceid != null  and instanceid != '' ">INSTANCEID = #{instanceid} AND</if>
+            <if test="id != null ">ID=#{id} AND</if>
+        </trim>
+    </delete>
+	<select id="getFlowinfoForPwd" parameterType="map" resultMap="PPMFHYYXTBGAPPLY_ALL">
+        select t.apply_change_title,
+        t.applycode,
+        t.projectno,
+        to_char(t.usestarttime, 'yyyy-mm-dd hh24:mi:ss') usestarttime,
+        to_char(t.useendtime, 'yyyy-mm-dd hh24:mi:ss') useendtime
+        from ppm_fhyyxtbg_apply t
+        where t.instanceid = #{instanceid}
+    </select>
+</mapper>

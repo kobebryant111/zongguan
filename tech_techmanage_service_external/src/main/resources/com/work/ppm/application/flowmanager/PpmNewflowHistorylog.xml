@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k6991 2021-04-07 -->
+<mapper namespace="com.work.ppm.application.model.flowmanager.PpmNewflowHistorylog">
+	 <resultMap type="ppmNewflowHistorylog" id="PPMNEWFLOWHISTORYLOG_ALL">
+        <result property="id" column="ID" />
+		<result property="flowdraftno" column="FLOWDRAFTNO" />
+		<result property="flowcaseno" column="FLOWCASENO" />
+		<result property="userid" column="USERID" />
+		<result property="examine" column="EXAMINE" />
+		<result property="conclusion" column="CONCLUSION" />
+		<result property="suggest" column="SUGGEST" />
+		<result property="isdel" column="ISDEL" />
+		<result property="createtime" column="CREATETIME" />
+		<result property="creators" column="CREATORS" />
+		<result property="lastmodtime" column="LASTMODTIME" />
+		<result property="lastmoduser" column="LASTMODUSER" />
+		<result property="applydesc" column="APPLYDESC" />
+		<result property="deptno" column="DEPTNO" />
+		<result property="isfalse" column="ISFALSE" />
+		<result property="roleid" column="ROLEID" />
+		
+     </resultMap>
+
+     <!-- 所有字段名称 -->
+        <sql id="sql_flied_all">
+        	ID,
+			FLOWDRAFTNO,
+			FLOWCASENO,
+			USERID,
+			EXAMINE,
+			CONCLUSION,
+			SUGGEST,
+			ISDEL,
+			CREATETIME,
+			CREATORS,
+			LASTMODTIME,
+			LASTMODUSER,
+			APPLYDESC,
+			DEPTNO,
+			ISFALSE,
+			ROLEID
+        </sql>
+        <sql id="sql_select_condition">
+            <trim prefix="WHERE" suffixOverrides="AND">
+                <if test="id != null " > ID = #{id} AND </if>
+				<if test="flowdraftno != null  and flowdraftno != '' " > FLOWDRAFTNO = #{flowdraftno} AND </if>
+				<if test="flowcaseno != null  and flowcaseno != '' " > FLOWCASENO = #{flowcaseno} AND </if>
+				<if test="userid != null  and userid != '' " > USERID = #{userid} AND </if>
+				<if test="examine != null " > EXAMINE = #{examine} AND </if>
+				<if test="conclusion != null  and conclusion != '' " > CONCLUSION = #{conclusion} AND </if>
+				<if test="suggest != null  and suggest != '' " > SUGGEST = #{suggest} AND </if>
+				<if test="isdel != null " > ISDEL = #{isdel} AND </if>
+				<if test="createtime != null " > CREATETIME = #{createtime} AND </if>
+				<if test="creators != null  and creators != '' " > CREATORS = #{creators} AND </if>
+				<if test="lastmodtime != null " > LASTMODTIME = #{lastmodtime} AND </if>
+				<if test="lastmoduser != null  and lastmoduser != '' " > LASTMODUSER = #{lastmoduser} AND </if>
+				<if test="applydesc != null  and applydesc != '' " > APPLYDESC = #{applydesc} AND </if>
+				<if test="deptno != null  and deptno != '' " > DEPTNO = #{deptno} AND </if>
+				<if test="isfalse != null  and isfalse != '' " > ISFALSE = #{isfalse} AND </if>
+				<if test="roleid != null  and roleid != '' " > ROLEID = #{roleid} AND </if>
+				
+            </trim>
+        </sql>
+
+
+        <!-- 新增  2021-04-07 k6991  -->
+        <insert id="addPojo" parameterType="ppmNewflowHistorylog">
+    		INSERT INTO PPM_NEWFLOW_HISTORYLOG (
+    		<trim suffixOverrides=",">
+    		 <if test="id != null " > ID , </if>
+				<if test="flowdraftno != null  and flowdraftno != '' " > FLOWDRAFTNO , </if>
+				<if test="flowcaseno != null  and flowcaseno != '' " > FLOWCASENO , </if>
+				<if test="userid != null  and userid != '' " > USERID , </if>
+				<if test="examine != null " > EXAMINE , </if>
+				<if test="conclusion != null  and conclusion != '' " > CONCLUSION , </if>
+				<if test="suggest != null  and suggest != '' " > SUGGEST , </if>
+				<if test="isdel != null " > ISDEL , </if>
+				<if test="createtime != null " > CREATETIME , </if>
+				<if test="creators != null  and creators != '' " > CREATORS , </if>
+				<if test="lastmodtime != null " > LASTMODTIME , </if>
+				<if test="lastmoduser != null  and lastmoduser != '' " > LASTMODUSER , </if>
+				<if test="applydesc != null  and applydesc != '' " > APPLYDESC , </if>
+				<if test="deptno != null  and deptno != '' " > DEPTNO , </if>
+				<if test="isfalse != null  and isfalse != '' " > ISFALSE , </if>
+				<if test="roleid != null  and roleid != '' " > ROLEID , </if>
+				
+              </trim>
+    		)
+    		VALUES(
+    		<trim suffixOverrides=",">
+    		 <if test="id != null " > #{id} , </if>
+				<if test="flowdraftno != null  and flowdraftno != '' " > #{flowdraftno} , </if>
+				<if test="flowcaseno != null  and flowcaseno != '' " > #{flowcaseno} , </if>
+				<if test="userid != null  and userid != '' " > #{userid} , </if>
+				<if test="examine != null " > #{examine} , </if>
+				<if test="conclusion != null  and conclusion != '' " > #{conclusion} , </if>
+				<if test="suggest != null  and suggest != '' " > #{suggest} , </if>
+				<if test="isdel != null " > #{isdel} , </if>
+				<if test="createtime != null " > #{createtime} , </if>
+				<if test="creators != null  and creators != '' " > #{creators} , </if>
+				<if test="lastmodtime != null " > #{lastmodtime} , </if>
+				<if test="lastmoduser != null  and lastmoduser != '' " > #{lastmoduser} , </if>
+				<if test="applydesc != null  and applydesc != '' " > #{applydesc} , </if>
+				<if test="deptno != null  and deptno != '' " > #{deptno} , </if>
+				<if test="isfalse != null  and isfalse != '' " > #{isfalse} , </if>
+				<if test="roleid != null  and roleid != '' " > #{roleid} , </if>
+				
+            </trim>
+    		)
+        </insert>
+
+        <!--通过id查询  k6991 2021-04-07 -->
+        <select id="queryDetail" parameterType="ppmNewflowHistorylog" resultMap="PPMNEWFLOWHISTORYLOG_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_NEWFLOW_HISTORYLOG  WHERE ID=#{id}
+        </select>
+	<resultMap id="GETLOGS_MAP" type="ppmNewflowHistorylogInfo" extends="PPMNEWFLOWHISTORYLOG_ALL">
+		<result column="USERNAME" property="userName" />
+	</resultMap>
+	<!-- 查询多条记录  k6991 2021-04-07 -->
+	<select id="getLogList" parameterType="ppmNewflowHistorylog" resultMap="GETLOGS_MAP">
+		SELECT CREATETIME,
+		T.CONCLUSION,
+		T.SUGGEST,
+		T.APPLYDESC,
+		T.USERID,
+		T1.EMPNAME || '(' || T.USERID || ')' AS USERNAME,
+		T1.MOBILETELPHONE TEL,
+		(SELECT LOCATION FROM COMM_DEPARTMENT WHERE TO_CHAR(DEPID) = T.DEPTNO) AS DEPTNAME,
+		ISFALSE
+		FROM PPM_NEWFLOW_HISTORYLOG T
+		LEFT JOIN PPM_EMP_VIEWALL T1 ON T1.BADGE = T.USERID
+		WHERE T.FLOWCASENO = #{flowcaseno}
+		AND T.ISDEL = '0'
+		ORDER BY T.CREATETIME ,T.ID ASC
+	</select>
+
+
+
+	<!-- update sql -->
+        <sql id="update_pojo_sql">
+        	<trim prefix="SET" suffixOverrides=",">
+        		<if test="id != null " > ID=#{id} , </if>
+				<if test="flowdraftno != null  and flowdraftno != '' " > FLOWDRAFTNO=#{flowdraftno} , </if>
+				<if test="flowcaseno != null  and flowcaseno != '' " > FLOWCASENO=#{flowcaseno} , </if>
+				<if test="userid != null  and userid != '' " > USERID=#{userid} , </if>
+				<if test="examine != null " > EXAMINE=#{examine} , </if>
+				<if test="conclusion != null  and conclusion != '' " > CONCLUSION=#{conclusion} , </if>
+				<if test="suggest != null  and suggest != '' " > SUGGEST=#{suggest} , </if>
+				<if test="isdel != null " > ISDEL=#{isdel} , </if>
+				<if test="createtime != null " > CREATETIME=#{createtime} , </if>
+				<if test="creators != null  and creators != '' " > CREATORS=#{creators} , </if>
+				<if test="lastmodtime != null " > LASTMODTIME=#{lastmodtime} , </if>
+				<if test="lastmoduser != null  and lastmoduser != '' " > LASTMODUSER=#{lastmoduser} , </if>
+				<if test="applydesc != null  and applydesc != '' " > APPLYDESC=#{applydesc} , </if>
+				<if test="deptno != null  and deptno != '' " > DEPTNO=#{deptno} , </if>
+				<if test="isfalse != null  and isfalse != '' " > ISFALSE=#{isfalse} , </if>
+				<if test="roleid != null  and roleid != '' " > ROLEID=#{roleid} , </if>
+				
+            </trim>
+        </sql>
+
+        <!--通过id编辑 k6991 2021-04-07 -->
+    	<update id="updatePojo" parameterType="ppmNewflowHistorylog">
+        	UPDATE
+        	PPM_NEWFLOW_HISTORYLOG
+        	<include refid="update_pojo_sql" />
+        	WHERE ID=#{id}
+        </update>
+
+        <!--通过id批量删除  k6991 2021-04-07 -->
+        <delete id="deleteById" parameterType="ppmNewflowHistorylog">
+        	DELETE
+        	FROM
+        	PPM_NEWFLOW_HISTORYLOG
+        	WHERE ID = #{id}
+        </delete>
+
+		<!--通过id批量删除  ywwb905 2022-11-16 -->
+		<delete id="deleteByHisNullLog" parameterType="ppmNewflowHistorylog">
+			DELETE
+			FROM
+			PPM_NEWFLOW_HISTORYLOG
+			WHERE FLOWCASENO = #{flowcaseno} AND CONCLUSION IS NULL
+		</delete>
+
+</mapper>

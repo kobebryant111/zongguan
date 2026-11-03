@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k6991 2020-08-24 -->
+<mapper namespace="com.work.ppm.application.model.integratedmanager.PpmIntervieweeInfo">
+    <resultMap type="ppmIntervieweeInfo" id="PPMINTERVIEWEEINFO_ALL">
+        <result property="id" column="ID"/>
+        <result property="msname" column="MSNAME"/>
+        <result property="sex" column="SEX"/>
+        <result property="idcard" column="IDCARD"/>
+        <result property="birthday" column="BIRTHDAY"/>
+        <result property="workyears" column="WORKYEARS"/>
+        <result property="suggestlevel" column="SUGGESTLEVEL"/>
+        <result property="wbsid" column="WBSID"/>
+        <result property="position" column="POSITION"/>
+        <result property="jl" column="JL"/>
+        <result property="instanceid" column="INSTANCEID"/>
+        <result property="mspy" column="MSPY"/>
+        <result property="score" column="SCORE"/>
+        <result property="interviewresult" column="INTERVIEWRESULT"/>
+        <result property="suggestprice" column="SUGGESTPRICE"/>
+        <result property="reason" column="REASON"/>
+        <result property="msDate" column="MS_DATE"/>
+        <result property="researchers" column="RESEARCHERS"/>
+    </resultMap>
+	<resultMap id="PPMINTERVIEWEEINFO_ALL_EXT" type="ppmIntervieweeInfoView" extends="PPMINTERVIEWEEINFO_ALL">
+		<result property="deptNo" column="DEPT_NO" />
+		<result property="interviewId" column="INTERVIEW_ID" />
+		<result property="deptName" column="DEPT_NAME" />
+		<result property="outSourceName" column="OUT_SOURCE_NAME" />
+		<result property="cardNo" column="CARD_NO" />
+		<result property="userName" column="USER_NAME" />
+     </resultMap>
+
+    <!-- 所有字段名称 -->
+    <sql id="sql_flied_all">
+        ID,
+        MSNAME,
+        SEX,
+        IDCARD,
+        BIRTHDAY,
+        WORKYEARS,
+        SUGGESTLEVEL,
+        WBSID,
+        POSITION,
+        JL,
+        INSTANCEID,
+        MSPY,
+        SCORE,
+        INTERVIEWRESULT,
+        SUGGESTPRICE,
+        REASON,
+        MS_DATE,
+        RESEARCHERS
+    </sql>
+    <sql id="sql_select_condition">
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="id != null  and id != '' ">ID = #{id} AND</if>
+            <if test="msname != null  and msname != '' ">MSNAME = #{msname} AND</if>
+            <if test="sex != null  and sex != '' ">SEX = #{sex} AND</if>
+            <if test="idcard != null  and idcard != '' ">IDCARD = #{idcard} AND</if>
+            <if test="birthday != null  and birthday != '' ">BIRTHDAY = #{birthday} AND</if>
+            <if test="workyears != null  and workyears != '' ">WORKYEARS = #{workyears} AND</if>
+            <if test="suggestlevel != null  and suggestlevel != '' ">SUGGESTLEVEL = #{suggestlevel} AND</if>
+            <if test="wbsid != null  and wbsid != '' ">WBSID = #{wbsid} AND</if>
+            <if test="position != null  and position != '' ">POSITION = #{position} AND</if>
+            <if test="jl != null  and jl != '' ">JL = #{jl} AND</if>
+            <if test="instanceid != null  and instanceid != '' ">INSTANCEID = #{instanceid} AND</if>
+            <if test="mspy != null  and mspy != '' ">MSPY = #{mspy} AND</if>
+            <if test="score != null  and score != '' ">SCORE = #{score} AND</if>
+            <if test="interviewresult != null  and interviewresult != '' ">INTERVIEWRESULT = #{interviewresult} AND</if>
+            <if test="suggestprice != null  and suggestprice != '' ">SUGGESTPRICE = #{suggestprice} AND</if>
+            <if test="reason != null  and reason != '' ">REASON = #{reason} AND</if>
+            <if test="msDate != null  ">MS_DATE = #{msDate} AND</if>
+            <if test="researchers != null  ">RESEARCHERS = #{researchers} AND</if>
+        </trim>
+    </sql>
+    <!-- 查询分页  2020-08-24 k6991  -->
+    <select id="queryPagerList" parameterType="map" resultMap="PPMINTERVIEWEEINFO_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM PPM_INTERVIEWEE_INFO
+        <include refid="sql_select_condition"/>
+    </select>
+
+    <!-- 新增  2020-08-24 k6991  -->
+    <insert id="addPojo" parameterType="ppmIntervieweeInfo">
+        INSERT INTO PPM_INTERVIEWEE_INFO (
+        <trim suffixOverrides=",">
+            <if test="id != null  and id != '' ">ID ,</if>
+            <if test="msname != null  and msname != '' ">MSNAME ,</if>
+            <if test="sex != null  and sex != '' ">SEX ,</if>
+            <if test="idcard != null  and idcard != '' ">IDCARD ,</if>
+            <if test="birthday != null  and birthday != '' ">BIRTHDAY ,</if>
+            <if test="workyears != null  and workyears != '' ">WORKYEARS ,</if>
+            <if test="suggestlevel != null  and suggestlevel != '' ">SUGGESTLEVEL ,</if>
+            <if test="wbsid != null  and wbsid != '' ">WBSID ,</if>
+            <if test="position != null  and position != '' ">POSITION ,</if>
+            <if test="jl != null  and jl != '' ">JL ,</if>
+            <if test="instanceid != null  and instanceid != '' ">INSTANCEID ,</if>
+            <if test="mspy != null  and mspy != '' ">MSPY ,</if>
+            <if test="score != null  and score != '' ">SCORE ,</if>
+            <if test="interviewresult != null  and interviewresult != '' ">INTERVIEWRESULT ,</if>
+            <if test="suggestprice != null  and suggestprice != '' ">SUGGESTPRICE ,</if>
+            <if test="reason != null  and reason != '' ">REASON ,</if>
+            <if test="msDate != null  ">MS_DATE ,</if>
+            <if test="researchers != null  ">RESEARCHERS ,</if>
+        </trim>
+        )
+        VALUES(
+        <trim suffixOverrides=",">
+            <if test="id != null  and id != '' ">#{id} ,</if>
+            <if test="msname != null  and msname != '' ">#{msname} ,</if>
+            <if test="sex != null  and sex != '' ">#{sex} ,</if>
+            <if test="idcard != null  and idcard != '' ">#{idcard} ,</if>
+            <if test="birthday != null  and birthday != '' ">#{birthday} ,</if>
+            <if test="workyears != null  and workyears != '' ">#{workyears} ,</if>
+            <if test="suggestlevel != null  and suggestlevel != '' ">#{suggestlevel} ,</if>
+            <if test="wbsid != null  and wbsid != '' ">#{wbsid} ,</if>
+            <if test="position != null  and position != '' ">#{position} ,</if>
+            <if test="jl != null  and jl != '' ">#{jl} ,</if>
+            <if test="instanceid != null  and instanceid != '' ">#{instanceid} ,</if>
+            <if test="mspy != null  and mspy != '' ">#{mspy} ,</if>
+            <if test="score != null  and score != '' ">#{score} ,</if>
+            <if test="interviewresult != null  and interviewresult != '' ">#{interviewresult} ,</if>
+            <if test="suggestprice != null  and suggestprice != '' ">#{suggestprice} ,</if>
+            <if test="reason != null  and reason != '' ">#{reason} ,</if>
+            <if test="msDate != null  ">#{msDate} ,</if>
+            <if test="researchers != null  ">#{researchers} ,</if>
+        </trim>
+        )
+    </insert>
+
+    <!--通过id查询  k6991 2020-08-24 -->
+    <select id="queryDetail" parameterType="ppmIntervieweeInfo" resultMap="PPMINTERVIEWEEINFO_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM PPM_INTERVIEWEE_INFO WHERE ID=#{id} AND INSTANCEID=#{instanceid}
+    </select>
+
+    <!--查询集合  k6991 2020-08-24 -->
+    <resultMap id="GETLISTFORID_MAP" type="ppmIntervieweeInfoInfo" extends="PPMINTERVIEWEEINFO_ALL">
+        <result property="outsourcName" column="OUTSOURCNAME"/>
+        <result property="sexName" column="SEX_NAME"/>
+        <result property="positionName" column="POSITION_NAME"/>
+        <result property="rlId" column="rl_Id"/>
+		
+    </resultMap>
+    <select id="getListForInstanceid" parameterType="map" resultMap="GETLISTFORID_MAP">
+        SELECT I.*, O.OUTSOURCNAME,A.RL_ID, E.DICTNAME SEX_NAME, N.DICTNAME POSITION_NAME
+        FROM PPM_INTERVIEWEE_INFO I
+        LEFT JOIN PPM_INTERVIEW_APPLY A on(I.Instanceid=A.Instanceid)
+        LEFT JOIN PPM_OUTSOURCING_INFO O
+        ON (I.WBSID = O.ID)
+        LEFT JOIN EOS_DICT_ENTRY E
+        ON (I.SEX = E.DICTID AND E.DICTTYPEID = 'BUSI_OUTSOURCE_GENFER')
+        LEFT JOIN EOS_DICT_ENTRY N
+        ON (I.POSITION = N.DICTID AND N.DICTTYPEID = 'RLWBXQLX')
+        WHERE I.instanceid = #{instanceid}
+    </select>
+    <!-- update sql -->
+    <sql id="update_pojo_sql">
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="id != null  and id != '' ">ID=#{id} ,</if>
+            <if test="msname != null  and msname != '' ">MSNAME=#{msname} ,</if>
+            <if test="sex != null  and sex != '' ">SEX=#{sex} ,</if>
+            <if test="idcard != null  and idcard != '' ">IDCARD=#{idcard} ,</if>
+            <if test="birthday != null  and birthday != '' ">BIRTHDAY=#{birthday} ,</if>
+            <if test="workyears != null  and workyears != '' ">WORKYEARS=#{workyears} ,</if>
+            <if test="suggestlevel != null  and suggestlevel != '' ">SUGGESTLEVEL=#{suggestlevel} ,</if>
+            <if test="wbsid != null  and wbsid != '' ">WBSID=#{wbsid} ,</if>
+            <if test="position != null  and position != '' ">POSITION=#{position} ,</if>
+            <if test="jl != null  and jl != '' ">JL=#{jl} ,</if>
+            <if test="instanceid != null  and instanceid != '' ">INSTANCEID=#{instanceid} ,</if>
+            <if test="mspy != null  and mspy != '' ">MSPY=#{mspy} ,</if>
+            <if test="score != null  and score != '' ">SCORE=#{score} ,</if>
+            <if test="interviewresult != null  and interviewresult != '' ">INTERVIEWRESULT=#{interviewresult} ,</if>
+            <if test="suggestprice != null  and suggestprice != '' ">SUGGESTPRICE=#{suggestprice} ,</if>
+            <if test="reason != null  and reason != '' ">REASON=#{reason} ,</if>
+            <if test="msDate != null ">MS_DATE=#{msDate} ,</if>
+            <if test="researchers != null  ">RESEARCHERS = #{researchers} ,</if>
+        </trim>
+    </sql>
+
+    <!--通过id编辑 k6991 2020-08-24 -->
+    <update id="updatePojo" parameterType="ppmIntervieweeInfo">
+        UPDATE
+        PPM_INTERVIEWEE_INFO
+        <include refid="update_pojo_sql"/>
+        WHERE INSTANCEID=#{instanceid} AND ID=#{id}
+    </update>
+
+    <delete id="deleteById" parameterType="ppmIntervieweeInfo">
+        DELETE FROM PPM_INTERVIEWEE_INFO  WHERE ID = #{id}
+    </delete>
+
+    <delete id="deleteByInstanceId" parameterType="ppmIntervieweeInfo">
+        DELETE FROM  PPM_INTERVIEWEE_INFO  WHERE  INSTANCEID=#{instanceid}
+    </delete>
+
+    <resultMap id="GETINTERVIEWPROGRESS_MAP" type="ppmIntervieweeInfoInfo">
+        <result property="msDate" column="DATES"/>
+        <result property="sumNum" column="SUMNUM"/>
+        <result property="tgNum" column="TGNUM"/>
+        <result property="instanceid" column="INSTANCEID"/>
+        <result property="msname" column="MSNAME"/>
+    </resultMap>
+    <!-- 面试进度 k6991 2020-09-30  -->
+    <select id="getInterviewProgress" parameterType="ppmIntervieweeInfo" resultMap="GETINTERVIEWPROGRESS_MAP">
+        SELECT TRUNC(I.MS_DATE, 'DD') DATES, COUNT(1) SUMNUM,MAX(I.INSTANCEID)INSTANCEID,
+        (SELECT COUNT(1) FROM PPM_INTERVIEWEE_INFO II WHERE II.INTERVIEWRESULT=1 AND II.INSTANCEID=#{instanceid}) TGNUM,
+        MAX(I.MSNAME) MSNAME
+        FROM PPM_INTERVIEWEE_INFO I
+        WHERE I.INSTANCEID=#{instanceid}
+        GROUP BY TRUNC(I.MS_DATE, 'DD')
+        ORDER BY DATES
+    </select>
+
+    <!--查询集合  k6991 2020-08-24 -->
+    <select id="getList" parameterType="map" resultMap="PPMINTERVIEWEEINFO_ALL">
+        SELECT
+        <include refid="sql_flied_all" />
+        FROM PPM_INTERVIEWEE_INFO
+        <include refid="sql_select_condition" />
+        ORDER BY MS_DATE DESC
+    </select>
+
+    <!--查询集合  ywwb905 2022-11-23 -->
+    <select id="getCourseInfoList" parameterType="ppmIntervieweeInfoView" resultMap="PPMINTERVIEWEEINFO_ALL_EXT">
+        SELECT 
+			II.ID INTERVIEW_ID,
+			II.MSNAME USER_NAME,
+			II.WORKYEARS,
+			II.SUGGESTPRICE,
+			II.WBSID,
+			DE.DICTNAME POSITION,
+			IA.DEPTNO             DEPT_NO,
+			CD.LOCATION           DEPT_NAME,
+			II.IDCARD CARD_NO,
+			OI.OUTSOURCNAME OUT_SOURCE_NAME
+		 FROM PPM.PPM_INTERVIEWEE_OVERINFO II 
+			LEFT JOIN PPM_INTERVIEW_APPLY IA ON IA.INSTANCEID = II.INSTANCEID
+			LEFT JOIN PPM_OUTSOURCING_BASIC OB ON (II.IDCARD = OB.CERTIFICATE_NUMBER AND OB.STATE = '0')
+			LEFT JOIN COMM_DEPARTMENT CD ON IA.DEPTNO = CD.DEPID
+			LEFT JOIN PPM_OUTSOURCING_INFO OI ON II.WBSID = OI.ID
+			LEFT JOIN EOS_DICT_ENTRY DE ON (II.POSITION = DE.DICTID AND DE.DICTTYPEID = 'RLWBXQLX')
+        WHERE 
+			II.ISRZ = 1 
+			AND OB.ID IS NULL
+			AND IA.DEPTNO = #{deptNo}
+		ORDER BY II.ID DESC
+    </select>
+
+</mapper>

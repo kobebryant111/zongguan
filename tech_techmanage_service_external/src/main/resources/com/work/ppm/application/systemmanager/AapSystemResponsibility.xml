@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k6991 2021-10-11 -->
+<mapper namespace="com.work.ppm.application.model.systemmanager.AapSystemResponsibility">
+    <resultMap type="aapSystemResponsibility" id="AAPSYSTEMRESPONSIBILITY_ALL">
+        <result property="resId" column="RES_ID"/>
+        <result property="tecDep" column="TEC_DEP"/>
+        <result property="tecDepName" column="TEC_DEP_NAME"/>
+        <result property="principala" column="PRINCIPALA"/>
+        <result property="principalaName" column="PRINCIPALA_NAME"/>
+        <result property="principalb" column="PRINCIPALB"/>
+        <result property="principalbName" column="PRINCIPALB_NAME"/>
+        <result property="admina" column="ADMINA"/>
+        <result property="adminaName" column="ADMINA_NAME"/>
+        <result property="adminb" column="ADMINB"/>
+        <result property="adminbName" column="ADMINB_NAME"/>
+        <result property="busDep" column="BUS_DEP"/>
+        <result property="busDepName" column="BUS_DEP_NAME"/>
+        <result property="busPrin" column="BUS_PRIN"/>
+        <result property="busPrinName" column="BUS_PRIN_NAME"/>
+        <result property="superAdmin" column="SUPER_ADMIN"/>
+        <result property="superAdminName" column="SUPER_ADMIN_NAME"/>
+        <result property="createTime" column="CREATE_TIME"/>
+        <result property="modifyTime" column="MODIFY_TIME"/>
+        <result property="createPerson" column="CREATE_PERSON"/>
+        <result property="modifyPerson" column="MODIFY_PERSON"/>
+        <result property="transport" column="TRANSPORT"/>
+        <result property="keji" column="KEJI"/>
+        <result property="kejiName" column="KEJI_NAME"/>
+        <result property="istest" column="ISTEST"/>
+        <result property="testmanager" column="TESTMANAGER"/>
+        <result property="testmanagername" column="TESTMANAGERNAME"/>
+
+    </resultMap>
+
+    <!-- 所有字段名称 -->
+    <sql id="sql_flied_all">
+        RES_ID,
+        TEC_DEP,
+        TEC_DEP_NAME,
+        PRINCIPALA,
+        PRINCIPALA_NAME,
+        PRINCIPALB,
+        PRINCIPALB_NAME,
+        ADMINA,
+        ADMINA_NAME,
+        ADMINB,
+        ADMINB_NAME,
+        BUS_DEP,
+        BUS_DEP_NAME,
+        BUS_PRIN,
+        BUS_PRIN_NAME,
+        SUPER_ADMIN,
+        SUPER_ADMIN_NAME,
+        CREATE_TIME,
+        MODIFY_TIME,
+        CREATE_PERSON,
+        MODIFY_PERSON,
+        TRANSPORT,
+        KEJI,
+        KEJI_NAME,
+        ISTEST,
+        TESTMANAGER,
+        TESTMANAGERNAME
+    </sql>
+    <sql id="sql_select_condition">
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="resId != null  and resId != '' ">RES_ID = #{resId} AND</if>
+            <if test="tecDep != null  and tecDep != '' ">TEC_DEP = #{tecDep} AND</if>
+            <if test="tecDepName != null  and tecDepName != '' ">TEC_DEP_NAME = #{tecDepName} AND</if>
+            <if test="principala != null  and principala != '' ">PRINCIPALA = #{principala} AND</if>
+            <if test="principalaName != null  and principalaName != '' ">PRINCIPALA_NAME = #{principalaName} AND</if>
+            <if test="principalb != null  and principalb != '' ">PRINCIPALB = #{principalb} AND</if>
+            <if test="principalbName != null  and principalbName != '' ">PRINCIPALB_NAME = #{principalbName} AND</if>
+            <if test="admina != null  and admina != '' ">ADMINA = #{admina} AND</if>
+            <if test="adminaName != null  and adminaName != '' ">ADMINA_NAME = #{adminaName} AND</if>
+            <if test="adminb != null  and adminb != '' ">ADMINB = #{adminb} AND</if>
+            <if test="adminbName != null  and adminbName != '' ">ADMINB_NAME = #{adminbName} AND</if>
+            <if test="busDep != null  and busDep != '' ">BUS_DEP = #{busDep} AND</if>
+            <if test="busDepName != null  and busDepName != '' ">BUS_DEP_NAME = #{busDepName} AND</if>
+            <if test="busPrin != null  and busPrin != '' ">BUS_PRIN = #{busPrin} AND</if>
+            <if test="busPrinName != null  and busPrinName != '' ">BUS_PRIN_NAME = #{busPrinName} AND</if>
+            <if test="superAdmin != null  and superAdmin != '' ">SUPER_ADMIN = #{superAdmin} AND</if>
+            <if test="superAdminName != null  and superAdminName != '' ">SUPER_ADMIN_NAME = #{superAdminName} AND</if>
+            <if test="createTime != null ">CREATE_TIME = #{createTime} AND</if>
+            <if test="modifyTime != null ">MODIFY_TIME = #{modifyTime} AND</if>
+            <if test="createPerson != null  and createPerson != '' ">CREATE_PERSON = #{createPerson} AND</if>
+            <if test="modifyPerson != null  and modifyPerson != '' ">MODIFY_PERSON = #{modifyPerson} AND</if>
+            <if test="transport != null  and transport != '' ">TRANSPORT = #{transport} AND</if>
+            <if test="keji != null  and keji != '' ">KEJI = #{keji} AND</if>
+            <if test="kejiName != null  and kejiName != '' ">KEJI_NAME = #{kejiName} AND</if>
+            <if test="istest != null  and istest != '' ">ISTEST = #{istest} AND</if>
+            <if test="testmanager != null  and testmanager != '' ">TESTMANAGER = #{testmanager} AND</if>
+            <if test="testmanagername != null  and testmanagername != '' ">TESTMANAGERNAME = #{testmanagername} AND</if>
+
+        </trim>
+    </sql>
+
+
+    <!--通过id查询  k6991 2021-10-11 -->
+    <select id="queryDetail" parameterType="aapSystemResponsibility" resultMap="AAPSYSTEMRESPONSIBILITY_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM AAP_SYSTEM_RESPONSIBILITY WHERE RES_ID=#{resId}
+    </select>
+
+    <!--查询集合  k6991 2021-10-11 -->
+    <select id="getkejiByResId" parameterType="map" resultMap="AAPSYSTEMRESPONSIBILITY_ALL">
+        SELECT KEJI FROM AAP_SYSTEM_RESPONSIBILITY WHERE RES_ID =
+        (
+        SELECT RES_ID FROM AAP_SYSTEM WHERE SYSTEM_ID = #{sysNo}
+        ) AND ROWNUM =1
+    </select>
+    <resultMap id="GETSYSTEMHEADAB_MAP" type="aapSystemResponsibilityInfo" extends="AAPSYSTEMRESPONSIBILITY_ALL">
+        <result property="sysName" column="SYS_NAME" />
+        <result property="systemId" column="SYSTEM_ID" />
+        <result property="changeStatus" column="CHANGESTATUS" />
+    </resultMap>
+    <!--查询系统AB岗负责人  k6991 2021-10-13 -->
+    <select id="getSystemHeadAB" parameterType="map" resultMap="GETSYSTEMHEADAB_MAP">
+
+        SELECT S.SYS_NAME,S.SYSTEM_ID,
+        R.PRINCIPALA,R.PRINCIPALA_NAME,
+        R.PRINCIPALB, R.PRINCIPALB_NAME,
+        F.CHANGESTATUS
+        FROM AAP_SYSTEM_RESPONSIBILITY R
+        LEFT JOIN AAP_SYSTEM S ON (R.RES_ID=S.RES_ID)
+        LEFT JOIN PPM_FHYYXTBG_SYSTEM F ON(R.RES_ID=F.SYSNO)
+        <where>
+            <if test="systemId != null and systemId != ''">
+                S.SYSTEM_ID IN (${systemId})
+            </if>
+            <if test="refinstanceid != null and refinstanceid != ''">
+                AND f.refinstanceid=#{refinstanceid}
+            </if>
+        </where>
+
+    </select>
+    <!-- update sql -->
+    <sql id="update_pojo_sql">
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="resId != null  and resId != '' ">RES_ID=#{resId} ,</if>
+            <if test="tecDep != null  and tecDep != '' ">TEC_DEP=#{tecDep} ,</if>
+            <if test="tecDepName != null  and tecDepName != '' ">TEC_DEP_NAME=#{tecDepName} ,</if>
+            <if test="principala != null  and principala != '' ">PRINCIPALA=#{principala} ,</if>
+            <if test="principalaName != null  and principalaName != '' ">PRINCIPALA_NAME=#{principalaName} ,</if>
+            <if test="principalb != null  and principalb != '' ">PRINCIPALB=#{principalb} ,</if>
+            <if test="principalbName != null  and principalbName != '' ">PRINCIPALB_NAME=#{principalbName} ,</if>
+            <if test="admina != null  and admina != '' ">ADMINA=#{admina} ,</if>
+            <if test="adminaName != null  and adminaName != '' ">ADMINA_NAME=#{adminaName} ,</if>
+            <if test="adminb != null  and adminb != '' ">ADMINB=#{adminb} ,</if>
+            <if test="adminbName != null  and adminbName != '' ">ADMINB_NAME=#{adminbName} ,</if>
+            <if test="busDep != null  and busDep != '' ">BUS_DEP=#{busDep} ,</if>
+            <if test="busDepName != null  and busDepName != '' ">BUS_DEP_NAME=#{busDepName} ,</if>
+            <if test="busPrin != null  and busPrin != '' ">BUS_PRIN=#{busPrin} ,</if>
+            <if test="busPrinName != null  and busPrinName != '' ">BUS_PRIN_NAME=#{busPrinName} ,</if>
+            <if test="superAdmin != null  and superAdmin != '' ">SUPER_ADMIN=#{superAdmin} ,</if>
+            <if test="superAdminName != null  and superAdminName != '' ">SUPER_ADMIN_NAME=#{superAdminName} ,</if>
+            <if test="createTime != null ">CREATE_TIME=#{createTime} ,</if>
+            <if test="modifyTime != null ">MODIFY_TIME=#{modifyTime} ,</if>
+            <if test="createPerson != null  and createPerson != '' ">CREATE_PERSON=#{createPerson} ,</if>
+            <if test="modifyPerson != null  and modifyPerson != '' ">MODIFY_PERSON=#{modifyPerson} ,</if>
+            <if test="transport != null  and transport != '' ">TRANSPORT=#{transport} ,</if>
+            <if test="keji != null  and keji != '' ">KEJI=#{keji} ,</if>
+            <if test="kejiName != null  and kejiName != '' ">KEJI_NAME=#{kejiName} ,</if>
+            <if test="istest != null  and istest != '' ">ISTEST=#{istest} ,</if>
+            <if test="testmanager != null  and testmanager != '' ">TESTMANAGER=#{testmanager} ,</if>
+            <if test="testmanagername != null  and testmanagername != '' ">TESTMANAGERNAME=#{testmanagername} ,</if>
+
+        </trim>
+    </sql>
+    <!--通过id编辑 k4038 2021-10-08 -->
+    <update id="updatePojo" parameterType="aapSystemResponsibility">
+        UPDATE
+        AAP_SYSTEM_RESPONSIBILITY
+        <include refid="update_pojo_sql" />
+        WHERE RES_ID=#{resId}
+    </update>
+
+
+    <!--查询集合  k4038 2021-10-08 -->
+    <select id="getList" parameterType="aapSystemResponsibility" resultMap="AAPSYSTEMRESPONSIBILITY_ALL">
+        SELECT
+        <include refid="sql_flied_all" />
+        FROM AAP_SYSTEM_RESPONSIBILITY
+        <include refid="sql_select_condition" />
+    </select>
+    <!--通过id查询  k4038 2021-10-08 -->
+    <select id="getSysKeji" parameterType="aapSystemResponsibility" resultMap="AAPSYSTEMRESPONSIBILITY_ALL">
+        select * from aap_system_responsibility where res_id =
+        (
+        select res_id from aap_system where system_id = #{systemId}
+        )
+    </select>
+</mapper>

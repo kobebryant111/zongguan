@@ -1,0 +1,752 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k76239 2021-12-01 -->
+<mapper namespace="com.work.ppm.application.model.depkpi.PpmDepkpiDepCheck">
+    <resultMap type="ppmDepkpiDepCheck" id="PPMDEPKPIDEPCHECK_ALL">
+        <result property="suggest" column="SUGGEST"/>
+        <result property="id" column="ID"/>
+        <result property="depid" column="DEPID"/>
+        <result property="targetid" column="TARGETID"/>
+        <result property="parentid" column="PARENTID"/>
+        <result property="basepoint" column="BASEPOINT"/>
+        <result property="hasson" column="HASSON"/>
+        <result property="sign" column="SIGN"/>
+        <result property="name" column="NAME"/>
+        <result property="remark" column="REMARK"/>
+        <result property="levelnum" column="LEVELNUM"/>
+        <result property="targettype" column="TARGETTYPE"/>
+        <result property="evaltype" column="EVALTYPE"/>
+        <result property="selfeval" column="SELFEVAL"/>
+        <result property="maxpoint" column="MAXPOINT"/>
+        <result property="minpoint" column="MINPOINT"/>
+        <result property="tyear" column="TYEAR"/>
+        <result property="status" column="STATUS"/>
+        <result property="dbuser" column="DBUSER"/>
+        <result property="markerdepid" column="MARKERDEPID"/>
+
+    </resultMap>
+    <resultMap type="ppmDepkpiDepCheckInfo" id="PPMDEPKPIDEPCHECK_ALL_EXT" extends="PPMDEPKPIDEPCHECK_ALL">
+        <result property="depname" column="DEPNAME"/>
+        <result property="targetnamelist" column="TARGETNAMELIST"/>
+        <result property="firstcheck" column="FIRSTCHECK"/>
+        <result property="secondcheck" column="SECONDCHECK"/>
+        <result property="zdypoint" column="ZDYPOINT"/>
+        <result property="ggpoint" column="GGPOINT"/>
+        <result property="sumpoint" column="SUMPOINT"/>
+        <result property="countcontent" column="COUNTCONTENT"/>
+        <result property="ranknum" column="RANKNUM"/>
+        <result property="centerid" column="CENTERID"/>
+        <result property="centername" column="CENTERNAME"/>
+        <result property="markerdepname" column="MARKERDEPNAME"/>
+        <result property="commitnum" column="COMMITNUM"/>
+        <result property="nocommitnum" column="NOCOMMITNUM"/>
+        <result property="num" column="NUM"/>
+    </resultMap>
+
+    <!-- 所有字段名称 -->
+    <sql id="sql_flied_all">
+        SUGGEST,
+        ID,
+        DEPID,
+        TARGETID,
+        PARENTID,
+        BASEPOINT,
+        HASSON,
+        SIGN,
+        NAME,
+        REMARK,
+        LEVELNUM,
+        TARGETTYPE,
+        EVALTYPE,
+        SELFEVAL,
+        MAXPOINT,
+        MINPOINT,
+        TYEAR,
+        STATUS,
+        DBUSER,
+        MARKERDEPID
+    </sql>
+    <!-- 所有字段名称 -->
+    <sql id="Asql_flied_all">
+        a.SUGGEST,
+        a.ID,
+        a.DEPID,
+        a.TARGETID,
+        a.PARENTID,
+        a.BASEPOINT,
+        a.HASSON,
+        a.SIGN,
+        a.NAME,
+        a.REMARK,
+        a.LEVELNUM,
+        a.TARGETTYPE,
+        a.EVALTYPE,
+        a.SELFEVAL,
+        a.MAXPOINT,
+        a.MINPOINT,
+        a.TYEAR,
+        a.STATUS,
+        a.DBUSER,
+        a.MARKERDEPID
+    </sql>
+    <sql id="sql_select_condition">
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="suggest != null  and suggest != '' ">SUGGEST = #{suggest} AND</if>
+            <if test="id != null ">ID = #{id} AND</if>
+            <if test="depid != null ">DEPID = #{depid} AND</if>
+            <if test="targetid != null ">TARGETID = #{targetid} AND</if>
+            <if test="parentid != null ">PARENTID = #{parentid} AND</if>
+            <if test="basepoint != null ">BASEPOINT = #{basepoint} AND</if>
+            <if test="hasson != null ">HASSON = #{hasson} AND</if>
+            <if test="sign != null ">SIGN = #{sign} AND</if>
+            <if test="name != null  and name != '' ">NAME like '%'|| #{name} ||'%' AND</if>
+            <if test="remark != null  and remark != '' ">REMARK = #{remark} AND</if>
+            <if test="levelnum != null ">LEVELNUM = #{levelnum} AND</if>
+            <if test="targettype != null ">TARGETTYPE = #{targettype} AND</if>
+            <if test="evaltype != null ">EVALTYPE = #{evaltype} AND</if>
+            <if test="selfeval != null ">SELFEVAL = #{selfeval} AND</if>
+            <if test="maxpoint != null ">MAXPOINT = #{maxpoint} AND</if>
+            <if test="minpoint != null ">MINPOINT = #{minpoint} AND</if>
+            <if test="tyear != null and tyear != '' ">TYEAR = #{tyear} AND</if>
+            <if test="status != null ">STATUS = #{status} AND</if>
+            <if test="dbuser != null and dbuser != '' ">DBUSER = #{dbuser} AND</if>
+            <if test="markerdepid != null and markerdepid != '' ">MARKERDEPID = #{markerdepid} AND</if>
+
+        </trim>
+    </sql>
+    <!-- 查询分页  2021-12-01 k76239  -->
+    <select id="getListPage" parameterType="map" resultMap="PPMDEPKPIDEPCHECK_ALL_EXT">
+        SELECT
+        <include refid="Asql_flied_all"/>
+        <if test="sign == 1 ">, (select LOCATION from COMM_DEPARTMENT where depid = a.markerdepid) MARKERDEPNAME
+            FROM PPM_DEPKPI_DEP_CHECK a
+        </if>
+        <if test="sign == 2 ">, (select CENTERNAME from ppm_da_center where id = a.markerdepid) MARKERDEPNAME
+            FROM PPM_DEPKPI_DEP_CHECK a
+        </if>
+        <include refid="sql_select_condition"/>
+    </select>
+
+    <!-- 新增  2021-12-01 k76239  -->
+    <insert id="addPojo" parameterType="ppmDepkpiDepCheck">
+        INSERT INTO PPM_DEPKPI_DEP_CHECK (
+        <trim suffixOverrides=",">
+            <if test="id != null ">ID ,</if>
+            <if test="suggest != null  and suggest != '' ">SUGGEST ,</if>
+            <if test="depid != null ">DEPID ,</if>
+            <if test="targetid != null ">TARGETID ,</if>
+            <if test="parentid != null ">PARENTID ,</if>
+            <if test="basepoint != null ">BASEPOINT ,</if>
+            <if test="hasson != null ">HASSON ,</if>
+            <if test="sign != null ">SIGN ,</if>
+            <if test="name != null  and name != '' ">NAME ,</if>
+            <if test="remark != null  and remark != '' ">REMARK ,</if>
+            <if test="levelnum != null ">LEVELNUM ,</if>
+            <if test="targettype != null ">TARGETTYPE ,</if>
+            <if test="evaltype != null ">EVALTYPE ,</if>
+            <if test="selfeval != null ">SELFEVAL ,</if>
+            <if test="maxpoint != null ">MAXPOINT ,</if>
+            <if test="minpoint != null ">MINPOINT ,</if>
+            <if test="tyear != null  and tyear != '' ">TYEAR ,</if>
+            <if test="status != null ">STATUS ,</if>
+            <if test="dbuser != null  and dbuser != '' ">DBUSER ,</if>
+            <if test="markerdepid != null and markerdepid != '' ">MARKERDEPID ,</if>
+        </trim>
+        )
+        VALUES(
+        <trim suffixOverrides=",">
+            <if test="id != null ">#{id} ,</if>
+            <if test="suggest != null  and suggest != '' ">#{suggest} ,</if>
+            <if test="depid != null ">#{depid} ,</if>
+            <if test="targetid != null ">#{targetid} ,</if>
+            <if test="parentid != null ">#{parentid} ,</if>
+            <if test="basepoint != null ">#{basepoint} ,</if>
+            <if test="hasson != null ">#{hasson} ,</if>
+            <if test="sign != null ">#{sign} ,</if>
+            <if test="name != null  and name != '' ">#{name} ,</if>
+            <if test="remark != null  and remark != '' ">#{remark} ,</if>
+            <if test="levelnum != null ">#{levelnum} ,</if>
+            <if test="targettype != null ">#{targettype} ,</if>
+            <if test="evaltype != null ">#{evaltype} ,</if>
+            <if test="selfeval != null ">#{selfeval} ,</if>
+            <if test="maxpoint != null ">#{maxpoint} ,</if>
+            <if test="minpoint != null ">#{minpoint} ,</if>
+            <if test="tyear != null  and tyear != '' ">#{tyear} ,</if>
+            <if test="status != null ">#{status} ,</if>
+            <if test="dbuser != null  and dbuser != '' ">#{dbuser} ,</if>
+            <if test="markerdepid != null  and markerdepid != '' ">#{markerdepid} ,</if>
+
+        </trim>
+        )
+    </insert>
+
+    <!--通过id查询  k76239 2021-12-01 -->
+    <select id="queryDetail" parameterType="ppmDepkpiDepCheck" resultMap="PPMDEPKPIDEPCHECK_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM PPM_DEPKPI_DEP_CHECK WHERE ID=#{id}
+    </select>
+    <!--通过parentid查询  k76239 2021-12-01 -->
+    <select id="queryByParentId" parameterType="ppmDepkpiDepCheck" resultMap="PPMDEPKPIDEPCHECK_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM PPM_DEPKPI_DEP_CHECK WHERE PARENTID=#{parentid}
+    </select>
+    <!--通过depid查询  k76239 2021-12-01 -->
+    <select id="queryByDepId" parameterType="ppmDepkpiDepCheck" resultMap="PPMDEPKPIDEPCHECK_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM PPM_DEPKPI_DEP_CHECK WHERE DEPID=#{depid} AND TARGETTYPE=#{targettype} AND HASSON=0
+    </select>
+
+    <!--查询集合  部门已提交考核项查询使用k76239 2021-12-01 -->
+
+    <select id="getList" parameterType="ppmDepkpiDepCheck" resultMap="PPMDEPKPIDEPCHECK_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM PPM_DEPKPI_DEP_CHECK
+        <include refid="sql_select_condition"/>
+    </select>
+    <!-- update sql -->
+    <sql id="update_pojo_sql">
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="suggest != null  and suggest != '' ">SUGGEST=#{suggest} ,</if>
+            <if test="id != null ">ID=#{id} ,</if>
+            <if test="depid != null ">DEPID=#{depid} ,</if>
+            <if test="targetid != null ">TARGETID=#{targetid} ,</if>
+            <if test="parentid != null ">PARENTID=#{parentid} ,</if>
+            <if test="basepoint != null ">BASEPOINT=#{basepoint} ,</if>
+            <if test="hasson != null ">HASSON=#{hasson} ,</if>
+            <if test="sign != null ">SIGN=#{sign} ,</if>
+            <if test="name != null  and name != '' ">NAME=#{name} ,</if>
+            <if test="remark != null  and remark != '' ">REMARK=#{remark} ,</if>
+            <if test="levelnum != null ">LEVELNUM=#{levelnum} ,</if>
+            <if test="targettype != null ">TARGETTYPE=#{targettype} ,</if>
+            <if test="evaltype != null ">EVALTYPE=#{evaltype} ,</if>
+            <if test="selfeval != null ">SELFEVAL=#{selfeval} ,</if>
+            <if test="maxpoint != null ">MAXPOINT=#{maxpoint} ,</if>
+            <if test="minpoint != null ">MINPOINT=#{minpoint} ,</if>
+            <if test="tyear != null  and tyear != '' ">TYEAR=#{tyear} ,</if>
+            <if test="status != null ">STATUS=#{status} ,</if>
+            <if test="dbuser != null  and dbuser != '' ">DBUSER=#{dbuser} ,</if>
+            <if test="markerdepid != null  and markerdepid != '' ">MARKERDEPID = #{markerdepid} ,</if>
+        </trim>
+    </sql>
+
+    <!--通过id编辑 k76239 2021-12-01 -->
+    <update id="updatePojo" parameterType="ppmDepkpiDepCheck">
+        UPDATE
+        PPM_DEPKPI_DEP_CHECK
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="suggest != null  and suggest != '' ">SUGGEST=#{suggest} ,</if>
+            <if test="depid != null ">DEPID=#{depid} ,</if>
+            <if test="targetid != null ">TARGETID=#{targetid} ,</if>
+            <if test="parentid != null ">PARENTID=#{parentid} ,</if>
+            <if test="basepoint != null ">BASEPOINT=#{basepoint} ,</if>
+            <if test="hasson != null ">HASSON=#{hasson} ,</if>
+            <if test="sign != null ">SIGN=#{sign} ,</if>
+            <if test="name != null  and name != '' ">NAME=#{name} ,</if>
+            <if test="remark != null  and remark != '' ">REMARK=#{remark} ,</if>
+            <if test="levelnum != null ">LEVELNUM=#{levelnum} ,</if>
+            <if test="targettype != null ">TARGETTYPE=#{targettype} ,</if>
+            <if test="evaltype != null ">EVALTYPE=#{evaltype} ,</if>
+            <if test="selfeval != null ">SELFEVAL=#{selfeval} ,</if>
+            <if test="maxpoint != null ">MAXPOINT=#{maxpoint} ,</if>
+            <if test="minpoint != null ">MINPOINT=#{minpoint} ,</if>
+            <if test="tyear != null  and tyear != '' ">TYEAR=#{tyear} ,</if>
+            <if test="status != null ">STATUS=#{status} ,</if>
+            <if test="dbuser != null">DBUSER=#{dbuser} ,</if>
+            <if test="markerdepid != null  and markerdepid != '' ">MARKERDEPID = #{markerdepid} ,</if>
+        </trim>
+        WHERE ID=#{id}
+    </update>
+    <!--通过id编辑 k76239 2021-12-01 -->
+    <update id="updateCommit" parameterType="ppmDepkpiDepCheck">
+        UPDATE
+        PPM_DEPKPI_DEP_CHECK
+        set STATUS=#{status}, DBUSER=#{dbuser}
+        WHERE ID=#{id}
+    </update>
+
+    <!--通过id批量删除  k76239 2021-12-01 -->
+    <delete id="deleteById" parameterType="ppmDepkpiDepCheck">
+        DELETE
+        FROM
+        PPM_DEPKPI_DEP_CHECK
+        WHERE = #{id}
+    </delete>
+
+    <!--1自定义考核制定提交/2公共考核制定提交 k76239 2021-12-01 -->
+    <update id="updatePojoByYearAndDepid" parameterType="ppmDepkpiDepCheck">
+        UPDATE
+        PPM_DEPKPI_DEP_CHECK
+        set status=#{status},dbuser=''
+        where DEPID = #{depid} AND TYEAR = #{tyear} AND HASSON=0 AND TARGETTYPE=#{targettype}
+    </update>
+
+    <!-- 考核查询分页  2021-12-01 k76239  -->
+    <select id="queryAllPagerList" parameterType="map" resultMap="PPMDEPKPIDEPCHECK_ALL_EXT">
+        SELECT TMP.CENTERID,
+        TMP.DEPID,
+        TMP.TYEAR,
+        TMP.CENTERNAME,
+        TMP.DEPNAME,
+        TMP.STATUS,
+        nvl((SELECT SUM(SECONDCHECKPOINT) SUMPOINT FROM PPM_DEPKPI_CONTENT WHERE DEPID = TMP.DEPID and isdel = 0),0) SUMPOINT,
+        rank() over( order by
+        nvl((SELECT SUM(SECONDCHECKPOINT) SUMPOINT FROM PPM_DEPKPI_CONTENT WHERE DEPID = TMP.DEPID and isdel = 0),0) desc
+        ) RANKNUM
+        FROM (SELECT
+        B.CENTERID CENTERID,
+        B.DEPID DEPID,
+        A.TYEAR TYEAR,
+        D.LOCATION DEPNAME,
+        E.centername CENTERNAME,
+        MIN(A.STATUS) STATUS
+        FROM PPM_DEPKPI_DEP_CHECK A
+        LEFT JOIN PPM_DEPKPI_DEP_REL B
+        ON A.depid = B.DEPID
+        left join comm_department D on A.depid=D.depid
+        left join ppm_da_center E on B.centerid=E.id
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="depid != null ">A.DEPID = #{depid} AND</if>
+            <if test="centerid != null ">B.CENTERID = #{centerid} AND</if>
+            <if test="tyear != null  and tyear != '' ">A.TYEAR = #{tyear} AND</if>
+            <if test="hasson != null ">A.HASSON = #{hasson} AND</if>
+            <if test="sign != null ">A.SIGN = #{sign} AND</if>
+            <if test="userid != null ">( B.marker = #{userid} or B.firstcheck = #{userid} or
+                B.secondcheck = #{userid}) AND
+            </if>
+            B.ISDEL = 0
+        </trim>
+        GROUP BY B.CENTERID, B.DEPID, A.TYEAR, D.LOCATION, E.centername
+        ) TMP
+        order by RANKNUM, SUMPOINT , CENTERID, TMP.DEPID
+    </select>
+
+    <!-- 考核中心查询分页  2021-12-01 k76239  -->
+    <select id="queryCenterPagerList" parameterType="map" resultMap="PPMDEPKPIDEPCHECK_ALL_EXT">
+        SELECT
+        TMP.CENTERID,
+        TMP.TYEAR,
+        TMP.CENTERNAME,
+        TMP.STATUS,
+        nvl((SELECT SUM(SECONDCHECKPOINT) SUMPOINT FROM PPM_DEPKPI_CONTENT WHERE DEPID = TMP.CENTERID and isdel = 0),0) SUMPOINT,
+        rank() over( order by
+        nvl((SELECT SUM(SECONDCHECKPOINT) SUMPOINT FROM PPM_DEPKPI_CONTENT WHERE DEPID = TMP.CENTERID and isdel = 0),0) desc
+        ) RANKNUM
+        FROM (SELECT
+        A.DEPID CENTERID,
+        A.TYEAR TYEAR,
+        E.centername CENTERNAME,
+        MIN(A.STATUS) STATUS
+        FROM PPM_DEPKPI_DEP_CHECK A
+        left join ppm_da_center E on A.depid=E.id
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="depid != null ">A.DEPID = #{depid} AND</if>
+            <if test="tyear != null  and tyear != '' ">A.TYEAR = #{tyear} AND</if>
+            <if test="sign != null  and sign != '' ">A.SIGN = #{sign} AND</if>
+            <if test="hasson != null ">A.HASSON = #{hasson} AND</if>
+        </trim>
+        GROUP BY A.DEPID, A.TYEAR, E.centername
+        ) TMP
+        order by RANKNUM, SUMPOINT , CENTERID
+    </select>
+
+    <!--我的待办数量查询  k76179 2021-12-02 -->
+    <select id="queryMyDbNum" parameterType="ppmDepkpiDepCheck" resultMap="PPMDEPKPIDEPCHECK_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM PPM_DEPKPI_DEP_CHECK WHERE DBUSER=#{userid} AND HASSON=#{hasson}
+    </select>
+
+    <!--自定义指标制定分页查询  k76179 2021-12-02 -->
+    <select id="queryZdyzbzdPagerList" parameterType="ppmDepkpiDepCheck" resultMap="PPMDEPKPIDEPCHECK_ALL_EXT">
+        SELECT
+        <if test="sign == 1 ">T2.LOCATION</if><if test="sign == 2 ">T3.centername</if> DEPNAME,T1.DEPID,T1.STATUS,T1.SUGGEST,
+        listagg(T1.name,'、') within group (order by name) TARGETNAMELIST
+        FROM PPM_DEPKPI_DEP_CHECK T1
+        <if test="sign == 1 ">
+            LEFT JOIN COMM_DEPARTMENT T2
+            ON T1.DEPID=T2.DEPID
+        </if>
+        <if test="sign == 2 ">
+            LEFT JOIN ppm_da_center T3 on T3.id=T1.depid
+        </if>
+        WHERE T1.SIGN=#{sign} AND T1.HASSON=#{hasson} AND T1.TYEAR=#{tyear} AND T1.STATUS=#{status}
+        AND T1.TARGETTYPE=#{targettype} AND T1.DBUSER=#{userid}
+        GROUP BY <if test="sign == 1 ">T2.LOCATION</if><if test="sign == 2 ">T3.centername</if>,T1.DEPID,T1.STATUS,T1.SUGGEST
+    </select>
+
+    <!--自定义指标自评分页查询  k76179 2021-12-02 -->
+    <select id="queryZdyzbzpPagerList" parameterType="ppmDepkpiDepCheck" resultMap="PPMDEPKPIDEPCHECK_ALL_EXT">
+        SELECT
+        <if test="sign == 1 ">T2.LOCATION</if><if test="sign == 2 ">T3.centername</if> DEPNAME,T1.DEPID,T1.STATUS,T1.SUGGEST
+        FROM PPM_DEPKPI_DEP_CHECK T1
+        <if test="sign == 1 ">
+            LEFT JOIN COMM_DEPARTMENT T2
+            ON T1.DEPID=T2.DEPID
+        </if>
+        <if test="sign == 2 ">
+            LEFT JOIN ppm_da_center T3 on T3.id=T1.depid
+        </if>
+        WHERE T1.SIGN=#{sign} AND T1.HASSON=#{hasson} AND T1.TYEAR=#{tyear} AND T1.STATUS=#{status}
+        AND T1.TARGETTYPE=#{targettype} AND T1.DBUSER=#{userid}
+        GROUP BY <if test="sign == 1 ">T2.LOCATION</if><if test="sign == 2 ">T3.centername</if>,T1.DEPID,T1.STATUS,T1.SUGGEST
+    </select>
+
+    <!--评价分页查询  k76239 2021-12-02 -->
+    <select id="queryPjPagerList" parameterType="ppmDepkpiDepCheck" resultMap="PPMDEPKPIDEPCHECK_ALL_EXT">
+        SELECT
+        TMP.TYEAR,
+        TMP.CENTERID,
+        TMP.DEPID,
+        TMP.CENTERNAME,
+        TMP.DEPNAME,
+        nvl((SELECT SUM(decode(tmp.status, 5, firstcheckpoint, secondcheckpoint)) ZDYPOINT
+        FROM PPM_DEPKPI_CONTENT WHERE DEPID = TMP.DEPID And TARGETTYPE = 2 and isdel = 0), 0) ZDYPOINT,
+        nvl((SELECT SUM(secondcheckpoint) GGPOINT FROM PPM_DEPKPI_CONTENT WHERE DEPID = TMP.DEPID And TARGETTYPE = 1 and isdel = 0), 0) GGPOINT
+        FROM
+        (SELECT
+        a.TYEAR,
+        b.CENTERID,
+        b.DEPID,
+        d.LOCATION DEPNAME,
+        e.centername CENTERNAME,
+        a.status
+        FROM PPM_DEPKPI_DEP_CHECK a
+        LEFT JOIN PPM_DEPKPI_DEP_REL b ON a.depid = b.depid
+        left join comm_department d on a.depid=d.depid
+        left join ppm_da_center e on b.centerid=e.id
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="tyear != null ">a.tyear = #{tyear} AND</if>
+            <if test="userid != null ">a.DBUSER = #{userid} AND</if>
+            <if test="hasson != null ">a.HASSON = #{hasson} AND</if>
+            <if test="sign != null ">a.SIGN = #{sign} AND</if>
+            <if test="targettype != null ">a.TARGETTYPE = #{targettype} AND</if>
+            b.ISDEL = 0 and a.status in(5,6)
+        </trim>
+        group by b.CENTERID,b.DEPID,a.TYEAR ,d.LOCATION , e.centername,a.status) TMP
+        order by CENTERID desc, DEPID desc
+    </select>
+
+    <!--中心评价分页查询  k76239 2021-12-02 -->
+    <select id="queryCenterPjPagerList" parameterType="ppmDepkpiDepCheck" resultMap="PPMDEPKPIDEPCHECK_ALL_EXT">
+        SELECT TMP.TYEAR,
+        TMP.CENTERID,
+        TMP.CENTERNAME,
+        nvl((SELECT SUM(decode(tmp.status, 5, firstcheckpoint, secondcheckpoint)) ZDYPOINT
+        FROM PPM_DEPKPI_CONTENT WHERE DEPID = TMP.CENTERID And TARGETTYPE = 2 and isdel = 0),
+        0) ZDYPOINT,
+        nvl((SELECT SUM(secondcheckpoint) GGPOINT FROM PPM_DEPKPI_CONTENT WHERE DEPID = TMP.CENTERID And TARGETTYPE = 1 and isdel = 0),
+        0) GGPOINT
+        FROM
+        (SELECT a.TYEAR,
+        e.id CENTERID,
+        e.centername CENTERNAME,
+        a.status
+        FROM PPM_DEPKPI_DEP_CHECK a
+        left join ppm_da_center e on e.id = a.depid
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="tyear != null ">a.tyear = #{tyear} AND</if>
+            <if test="userid != null ">a.DBUSER = #{userid} AND</if>
+            <if test="sign != null ">a.SIGN = #{sign} AND</if>
+            <if test="hasson != null ">a.HASSON = #{hasson} AND</if>
+            <if test="targettype != null ">a.TARGETTYPE = #{targettype} AND</if>
+            a.status in(5,6)
+        </trim>
+        group by a.TYEAR,e.id ,e.centername,a.status) TMP
+        order by CENTERID desc
+    </select>
+
+    <!--公共指标制定分页查询  k76179 2021-12-02 -->
+    <select id="queryGgzbzdPagerList" parameterType="ppmDepkpiDepCheck" resultMap="PPMDEPKPIDEPCHECK_ALL_EXT">
+        SELECT
+        <if test="sign == 1 ">T2.LOCATION</if><if test="sign == 2 ">T3.centername</if> DEPNAME,T1.DEPID,T1.STATUS,T1.SUGGEST，T1.NAME,T1.TARGETID,T1.BASEPOINT,T1.EVALTYPE,T1.ID
+        FROM PPM_DEPKPI_DEP_CHECK T1
+        <if test="sign == 1 ">
+            LEFT JOIN COMM_DEPARTMENT T2
+            ON T1.DEPID=T2.DEPID
+        </if>
+        <if test="sign == 2 ">
+            LEFT JOIN ppm_da_center T3 on T3.id=T1.depid
+        </if>
+        WHERE T1.SIGN=#{sign} AND T1.HASSON=#{hasson} AND T1.TYEAR=#{tyear} AND T1.STATUS=#{status}
+        AND T1.TARGETTYPE=#{targettype} AND T1.DBUSER=#{userid}
+        <if test="name != null  and name != '' ">AND T1.NAME LIKE '%'||#{name}||'%'</if>
+    </select>
+
+    <!--查询当年部门下所有数据  k76179 2021-12-02 -->
+    <select id="zpCommit" parameterType="ppmDepkpiDepCheck" resultMap="PPMDEPKPIDEPCHECK_ALL_EXT">
+        SELECT
+        T1.ID,T2.FIRSTCHECK,T2.SECONDCHECK
+        FROM PPM_DEPKPI_DEP_CHECK T1
+        LEFT JOIN PPM_DEPKPI_DEP_REL T2
+        <if test="sign == 1 ">ON T1.MARKERDEPID=T2.DEPID</if>
+        <if test="sign == 2 ">ON T1.MARKERDEPID=T2.CENTERID</if>
+        WHERE T1.TYEAR=#{tyear} AND T1.DEPID=#{depid}
+        AND T1.TARGETTYPE=#{targettype}
+    </select>
+
+    <!--查询当年部门下所有数据  k76179 2021-12-02 -->
+    <select id="zdyPjCommit" parameterType="ppmDepkpiDepCheck" resultMap="PPMDEPKPIDEPCHECK_ALL_EXT">
+        SELECT
+        <include refid="Asql_flied_all"/>,T2.FIRSTCHECK,T2.SECONDCHECK
+        FROM PPM_DEPKPI_DEP_CHECK a
+        LEFT JOIN PPM_DEPKPI_DEP_REL T2
+        <if test="sign == 1"> ON a.MARKERDEPID=T2.DEPID</if>
+        <if test="sign == 2"> ON a.MARKERDEPID=T2.CENTERID</if>
+        WHERE a.TYEAR=#{tyear} AND a.DEPID=#{depid} AND a.TARGETTYPE=2
+    </select>
+    <!--查询所有数据  k76179 2021-12-02 -->
+    <select id="queryAll" parameterType="ppmDepkpiDepCheck" resultMap="PPMDEPKPIDEPCHECK_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM PPM_DEPKPI_DEP_CHECK
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="depid != null and depid != ''">DEPID = #{depid} AND</if>
+            <if test="targettype != null and targettype != ''">TARGETTYPE = #{targettype} AND</if>
+            <if test="tyear != null  and tyear != '' ">TYEAR = #{tyear} AND</if>
+        </trim>
+    </select>
+
+    <!--查询当年部门下所有数据  k76179 2021-12-02 -->
+    <select id="ggPjCommit" parameterType="ppmDepkpiDepCheck" resultMap="PPMDEPKPIDEPCHECK_ALL_EXT">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM PPM_DEPKPI_DEP_CHECK
+        WHERE DEPID=#{depid} and TARGETTYPE=1 and tyear=#{tyear} and DBUSER=#{userid}
+    </select>
+
+    <!--查询当年部门下所有数据  k76179 2021-12-02 -->
+    <select id="queryDbuser" parameterType="ppmDepkpiDepCheck" resultMap="PPMDEPKPIDEPCHECK_ALL_EXT">
+        SELECT
+        T3.MARKER DBUSER,T3.SECONDCHECK,T3.FIRSTCHECK
+        FROM PPM_DEPKPI_DEP_CHECK T1
+        LEFT JOIN PPM_DEPKPI_DEP_REL T3
+        <if test="sign == 1 ">ON T1.markerdepid =T3.depid</if>
+        <if test="sign == 2 ">ON T1.markerdepid = T3.CENTERID and T3.sign=#{sign}</if>
+        WHERE T1.ID=#{id}
+    </select>
+    <!--根据id查询树结构  k76179 2021-12-15 -->
+    <select id="queryTreeById" parameterType="ppmDepkpiDepCheck" resultMap="PPMDEPKPIDEPCHECK_ALL">
+        select
+        <include refid="sql_flied_all"/>
+        from PPM_DEPKPI_DEP_CHECK
+        start with id = #{id}
+        connect by prior id = parentid
+    </select>
+
+    <!--查询考核树 -->
+    <select id="getCheckTree" parameterType="ppmDepkpiDepCheck" resultMap="PPMDEPKPIDEPCHECK_ALL_EXT">
+        SELECT
+        DISTINCT
+        <include refid="sql_flied_all"/>
+        FROM PPM_DEPKPI_DEP_CHECK
+        START WITH ID IN (
+        SELECT ID FROM PPM_DEPKPI_DEP_CHECK
+        <include refid="sql_select_condition"/>
+        )
+        CONNECT BY PRIOR PARENTID = ID
+        ORDER BY TARGETTYPE asc
+    </select>
+
+    <!--考核评价发起接口 k76239 2021-12-01 -->
+    <update id="updateCheck" parameterType="ppmDepkpiDepCheck">
+        update ppm_depkpi_dep_check a
+        set a.status = 4 ,
+        a.dbuser =
+        <if test="sign == 1 ">(select marker from ppm_depkpi_dep_rel b where a.markerdepid = b.depid and b.isdel=0) </if>
+        <if test="sign == 2 ">(select marker from ppm_depkpi_dep_rel b where a.markerdepid = b.CENTERID and b.isdel=0 and b.sign=#{sign})</if>
+        where a.TYEAR = #{tyear}
+        and a.SIGN = #{sign}
+        and a.targettype = 2
+        and a.selfeval = 1
+        and a.status = 3
+    </update>
+    <!--考核评价发起接口 k76239 2021-12-01 -->
+    <update id="updateGgCheck" parameterType="ppmDepkpiDepCheck">
+        update ppm_depkpi_dep_check a
+        set a.status = 6 ,
+        a.dbuser =
+        <if test="sign == 1 ">(select marker from ppm_depkpi_dep_rel b where a.markerdepid = b.depid and b.isdel=0) </if>
+        <if test="sign == 2 ">(select marker from ppm_depkpi_dep_rel b where a.markerdepid = b.CENTERID and b.isdel=0 and b.sign=#{sign})</if>
+        where a.TYEAR = #{tyear}
+        AND a.status = 3
+        AND a.SIGN = #{sign}
+        AND a.targettype = 1
+    </update>
+
+    <!--查询最底层子级-->
+    <select id="querySon" parameterType="ppmDepkpiDepCheck" resultMap="PPMDEPKPIDEPCHECK_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM PPM_DEPKPI_DEP_CHECK
+        WHERE SIGN = #{sign} AND TYEAR = #{tyear} AND HASSON=0
+    </select>
+    <!--查询最底层子级-->
+    <select id="querySonByYearAndDepid" parameterType="ppmDepkpiDepCheck" resultMap="PPMDEPKPIDEPCHECK_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM PPM_DEPKPI_DEP_CHECK
+        where DEPID = #{depid} AND TYEAR = #{tyear} AND HASSON=0 AND TARGETTYPE=#{targettype}
+    </select>
+    <!--根据ids查询父级-->
+    <select id="queryParByIds" parameterType="ppmDepkpiDepCheck" resultMap="PPMDEPKPIDEPCHECK_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM PPM_DEPKPI_DEP_CHECK
+        WHERE ID IN (${remark})
+    </select>
+
+    <!--考核评价发起接口 k76239 2021-12-01 -->
+    <update id="updateBytargettype" parameterType="ppmDepkpiDepCheck">
+        update ppm_depkpi_dep_check a
+        set status = (
+        select
+        decode(nvl(b.firstcheck, 'null'), 'null', 6, b.secondcheck, 6, 5)
+        from ppm_depkpi_dep_rel b
+        where <if test="sign == 1 ">a.markerdepid =b.depid and b.isdel=0 </if>
+        <if test="sign == 2 "> a.markerdepid = b.CENTERID and b.isdel=0 and b.sign=#{sign}</if>
+        ),
+        dbuser = (
+        select
+        decode(nvl(b.firstcheck, 'null'), 'null', b.secondcheck, b.secondcheck, b.secondcheck, b.firstcheck)
+        from ppm_depkpi_dep_rel b
+        where <if test="sign == 1 ">a.markerdepid =b.depid and b.isdel=0</if>
+        <if test="sign == 2 "> a.markerdepid = b.CENTERID and b.isdel=0 and b.sign=#{sign}</if>
+        )
+        where a.TYEAR = #{tyear} and a.SIGN = #{sign} and ((a.targettype = 2 and nvl(a.selfeval,2) = 2)) and a.status = 3
+    </update>
+
+    <!--考核评价发起接口 k76239 2021-12-01 -->
+    <update id="update" parameterType="ppmDepkpiDepCheck">
+        update ppm_depkpi_dep_check a set status = 5 ,
+        dbuser = (
+        select firstcheck from ppm_depkpi_dep_rel
+        where a.markerdepid = depid
+        and (firstcheck is not null or firstcheck != secondcheck)
+        )
+        where a.TYEAR = #{tyear} and a.SIGN = #{sign} and a.targettype =2
+    </update>
+
+    <!--公共查询考核内容数量、总分、基准分 k76239 2021-12-02 -->
+    <select id="getSumPointList" parameterType="ppmDepkpiDepCheck" resultMap="PPMDEPKPIDEPCHECK_ALL_EXT">
+        select
+        nvl(sum(decode(b.SECONDCHECKSTATUS,1,0,1)),0) NOCOMMITNUM,
+        nvl(sum(decode(b.SECONDCHECKSTATUS,1,1,0)),0) COMMITNUM,
+        nvl(sum(b.secondcheckpoint),0) SUMPOINT
+        from PPM_DEPKPI_DEP_CHECK a left join PPM_DEPKPI_CONTENT b on (a.id = b.detailid)
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="depid != null ">a.DEPID = #{depid} AND</if>
+            <if test="hasson != null ">a.HASSON = #{hasson} AND</if>
+            <if test="tyear != null ">a.tyear = #{tyear} AND</if>
+        </trim>
+        and b.ISDEL = 0 and a.dbuser=#{userid} and a.targettype=1
+    </select>
+
+    <!--查询考核内容数量、总分  k76239 2021-12-02 -->
+    <select id="getSumPoint" parameterType="ppmDepkpiDepCheck" resultMap="PPMDEPKPIDEPCHECK_ALL_EXT">
+        select
+        nvl(count(b.id),0) countcontent,
+        nvl(sum(b.secondcheckpoint),0) sumpoint from
+        PPM_DEPKPI_DEP_CHECK a left join PPM_DEPKPI_CONTENT b on (a.id = b.detailid)
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="depid != null ">a.DEPID = #{depid} AND</if>
+            <if test="id != null ">a.ID = #{id} AND</if>
+            <if test="hasson != null ">a.HASSON = #{hasson} AND</if>
+            <if test="sign != null ">a.SIGN = #{sign} AND</if>
+            b.ISDEL = 0
+        </trim>
+        group by a.tyear
+    </select>
+
+    <!--查询公共考核分页  k76179 2021-12-02 -->
+    <select id="queryGgCheckPage" parameterType="ppmDepkpiDepCheck" resultMap="PPMDEPKPIDEPCHECK_ALL_EXT">
+        SELECT a.TARGETID, a.NAME, a.REMARK, a.TYEAR
+        FROM PPM_DEPKPI_DEP_CHECK a
+        LEFT JOIN PPM_DEPKPI_DEP_REL b
+        <if test="sign == 1 ">ON a.MARKERDEPID=b.DEPID</if>
+        <if test="sign == 2 ">ON a.MARKERDEPID=b.CENTERID</if>
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="sign != null ">a.SIGN = #{sign} AND</if>
+            <if test="userid != null">b.MARKER = #{userid} AND</if>
+            <if test="depid != null ">a.DEPID = #{depid} AND</if>
+            <if test="name != null ">a.NAME like '%'|| #{name} ||'%' AND</if>
+            <if test="hasson != null ">a.HASSON = #{hasson} AND</if>
+            <if test="targettype != null ">a.TARGETTYPE = #{targettype} AND</if>
+            <if test="tyear != null ">a.TYEAR = #{tyear} AND</if>
+        </trim>
+        GROUP BY  a.TARGETID, a.NAME, a.REMARK, a.TYEAR
+        ORDER BY a.TARGETID
+    </select>
+
+    <!--查询公共考核分页  k76179 2021-12-02 -->
+    <select id="queryGgCheckDetailPage" parameterType="ppmDepkpiDepCheck" resultMap="PPMDEPKPIDEPCHECK_ALL_EXT">
+        SELECT
+        A.ID,
+        A.TYEAR,
+        A.DEPID,
+        <if test="sign == 1 ">C.LOCATION DEPNAME,</if>
+        <if test="sign == 2 ">'' DEPNAME,</if>
+        B.CENTERID,
+        D.centername CENTERNAME,
+        A.BASEPOINT,
+        A.STATUS,
+        nvl((SELECT SUM(SECONDCHECKPOINT) SUMPOINT FROM PPM_DEPKPI_CONTENT WHERE DETAILID = A.ID and isdel = 0),0) SUMPOINT
+        FROM PPM_DEPKPI_DEP_CHECK A
+        LEFT JOIN PPM_DEPKPI_DEP_REL B
+        <if test="sign == 1 ">
+            ON A.MARKERDEPID=B.DEPID
+            left join comm_department C on A.depid=C.depid
+            left join ppm_da_center D on B.centerid=D.id
+        </if>
+        <if test="sign == 2 ">
+            ON A.MARKERDEPID=B.CENTERID
+            left join ppm_da_center D on A.depid=D.id
+        </if>
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="targetid != null ">A.TARGETID = #{targetid} AND</if>
+            <if test="targettype != null ">A.TARGETTYPE = #{targettype} AND</if>
+            <if test="userid != null">B.MARKER = #{userid} AND</if>
+            <if test="sign != null ">A.SIGN = #{sign} AND</if>
+            <if test="depid != null ">A.DEPID = #{depid} AND</if>
+            <if test="centerid != null ">B.CENTERID = #{centerid} AND</if>
+            <if test="hasson != null ">A.HASSON = #{hasson} AND</if>
+            <if test="tyear != null and tyear != '' ">A.TYEAR = #{tyear} AND</if>
+            B.ISDEL = 0
+        </trim>
+        GROUP BY A.ID,A.TYEAR,
+        A.DEPID,
+        <if test="sign == 1 ">C.LOCATION,</if>
+        B.CENTERID,
+        D.centername,
+        A.BASEPOINT,
+        A.STATUS
+        ORDER BY A.ID
+    </select>
+
+    <!--查询集合  k76239 2021-11-27 -->
+    <select id="queryTreeByDepid" parameterType="ppmDepkpiDepCheckInfo" resultMap="PPMDEPKPIDEPCHECK_ALL_EXT">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM PPM_DEPKPI_DEP_CHECK
+        START WITH ID IN (
+        SELECT ID FROM PPM_DEPKPI_DEP_CHECK
+        <include refid="sql_select_condition"/>
+        )
+        CONNECT BY PRIOR PARENTID = ID
+    </select>
+    <!--单个指标汇总总分查询  k76179 2021-12-11 -->
+    <select id="querySumPointById" parameterType="ppmDepkpiDepCheck" resultMap="PPMDEPKPIDEPCHECK_ALL_EXT">
+        SELECT
+        count(b.id) NUM,
+        a.BASEPOINT,
+        nvl(sum(b.SECONDCHECKPOINT),0) SUMPOINT
+        FROM PPM_DEPKPI_DEP_CHECK a
+        LEFT JOIN PPM_DEPKPI_CONTENT b
+        on a.id=b.detailid
+        where a.id=#{id}
+        group by a.BASEPOINT
+    </select>
+</mapper>

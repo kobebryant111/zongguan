@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:ywwb905 2022-10-14 -->
+<!--  人脸考勤数据 查询脚本 -->
+<mapper namespace="com.work.ppm.application.model.integratedmanager.PpmKqFaceData">
+	 <resultMap type="PpmKqFaceData" id="PPMKQFACEDATA_ALL">
+        <result property="id" column="ID" />
+		<result property="ipAddress" column="IP_ADDRESS" />
+		<result property="cardNO" column="CARD_NO" />
+		<result property="punchTime" column="PUNCH_TIME" />
+		<result property="createdDate" column="CREATED_DATE" />
+		<result property="type" column="TYPE" />
+     </resultMap>
+	 <resultMap type="PpmFaceEmpInfoByLease" id="PPMFACEEMPINFOBYLEASE" extends="PPMKQFACEDATA_ALL">
+        <result property="badge" column="BADGE" />
+		<result property="jobId" column="JOB_ID" />
+		<result property="empName" column="EMPNAME" />
+		<result property="dataSource" column="DATASOURCE" />
+		<result property="viewType" column="VIEW_TYPE" />
+     </resultMap>
+	
+     <!-- 所有字段名称 -->
+    <sql id="sql_flied_all">
+        ID,
+		IP_ADDRESS,
+		CARD_NO,
+		PUNCH_TIME,
+		CREATED_DATE
+    </sql>
+    <sql id="sql_select_condition">
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="id != null " > ID = #{id} AND </if>
+				<if test="ipAddress != null " > IP_ADDRESS = #{ipAddress} AND </if>
+				<if test="cardNO != null " > CARD_NO = #{cardNO} AND </if>
+				<if test="punchTime != null " > PUNCH_TIME = #{punchTime} AND </if>
+				<if test="createdDate != null" > CREATED_DATE = #{createdDate} AND </if>
+        </trim>
+    </sql>
+	
+	<!-- 查询分页  2022-09-22 ywwb905  -->
+    <select id="queryPagerList" parameterType="map" resultMap="PPMKQFACEDATA_ALL">
+        SELECT
+        <include refid="sql_flied_all" />
+        FROM PPM_KQ_FACE_DATA
+        <include refid="sql_select_condition" />
+        
+    </select>
+
+    <!-- 新增  2022-10-08 ywwb905  -->
+    <insert id="addPojo" parameterType="PpmKqFaceData">
+        INSERT INTO PPM_KQ_FACE_DATA (
+        <trim suffixOverrides=",">
+         <if test="id != null " > ID , </if>
+				<if test="ipAddress != null " > IP_ADDRESS , </if>
+				<if test="cardNO != null " > CARD_NO , </if>
+				<if test="punchTime != null " > PUNCH_TIME , </if>
+				<if test="createdDate != null " > CREATED_DATE , </if>
+          </trim>
+        )
+        VALUES(
+        <trim suffixOverrides=",">
+         <if test="id != null " > #{id} , </if>
+				<if test="ipAddress != null " > #{ipAddress} , </if>
+				<if test="cardNO != null " > #{cardNO} , </if>
+				<if test="punchTime != null " > #{punchTime} , </if>
+				<if test="createdDate != null" > #{createdDate} , </if>
+        </trim>
+        )
+    </insert>
+
+    <!--通过id查询  ywwb905 2022-10-08 -->
+    <select id="queryDetail" parameterType="PpmKqFaceData" resultMap="PPMKQFACEDATA_ALL">
+        SELECT
+        <include refid="sql_flied_all" />
+        FROM PPM_KQ_FACE_DATA
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="id != null " > ID = #{id} AND </if>
+        </trim>
+    </select>
+
+     <!--查询集合  ywwb905 2022-10-08 -->
+    <select id="getList" parameterType="PpmKqFaceData" resultMap="PPMKQFACEDATA_ALL">
+        SELECT
+        <include refid="sql_flied_all" />
+        FROM PPM_KQ_FACE_DATA
+        <include refid="sql_select_condition" />
+    </select>
+    <!-- update sql -->
+    <sql id="update_pojo_sql">
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="id != null " > ID=#{id} , </if>
+				<if test="ipAddress != null " > IP_ADDRESS=#{ipAddress} , </if>
+				<if test="cardNO != null " > CARD_NO=#{cardNO} , </if>
+				<if test="punchTime != null" > PUNCH_TIME=#{punchTime} , </if>
+				<if test="createdDate != null" > CREATED_DATE=#{createdDate} , </if>
+
+        </trim>
+    </sql>
+
+    <!--通过id编辑 ywwb905 2022-10-08 -->
+    <update id="updatePojo" parameterType="PpmKqFaceData">
+        UPDATE
+        PPM_KQ_FACE_DATA
+        <include refid="update_pojo_sql" />
+        WHERE ID = #{id}
+    </update>
+
+    <!--通过id批量删除  ywwb436 2022-06-30 -->
+    <delete id="deleteById" parameterType="PpmKqFaceData">
+        DELETE
+        FROM
+        PPM_KQ_FACE_DATA
+        WHERE ID = #{id}
+    </delete>
+	
+	<select id="getPpmFaceEmpInfoLease" parameterType="PpmFaceEmpInfoByLease" resultMap="PPMFACEEMPINFOBYLEASE">
+        SELECT
+			BADGE,
+			JOB_ID,
+			EMPNAME,
+			DATASOURCE,
+			VIEW_TYPE
+        FROM
+			PPM_FACE_EMP_INFO_LEASE 
+		WHERE 
+			BADGE = #{cardNO}
+    </select>
+	
+	
+
+</mapper>

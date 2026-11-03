@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k6991 2020-07-01 -->
+<mapper namespace="com.work.ppm.application.model.usermanager.PpmDaTeamGroup">
+	 <resultMap type="ppmDaTeamGroup" id="PPMDATEAMGROUP_ALL">
+        <result property="groupqauserid" column="GROUPQAUSERID" />
+		<result property="id" column="ID" />
+		<result property="groupname" column="GROUPNAME" />
+		<result property="detail" column="DETAIL" />
+		<result property="groupuserid" column="GROUPUSERID" />
+		<result property="type" column="TYPE" />
+		<result property="isotherdep" column="ISOTHERDEP" />
+		<result property="teamid" column="TEAMID" />
+		<result property="teamids" column="TEAMIDS" />
+		<result property="teamidnames" column="TEAMIDNAMES" />
+		<result property="isdel" column="ISDEL" />
+		<result property="projectno" column="PROJECTNO" />
+		<result property="projectname" column="PROJECTNAME" />
+		<result property="isbigproject" column="ISBIGPROJECT" />
+		<result property="depid" column="DEPID" />
+		<result property="teammanager" column="TEAMMANAGER" />
+		
+     </resultMap>
+
+     <!-- 所有字段名称 -->
+        <sql id="sql_flied_all">
+        	GROUPQAUSERID,
+			ID,
+			GROUPNAME,
+			DETAIL,
+			GROUPUSERID,
+			TYPE,
+			ISOTHERDEP,
+			TEAMID,
+			TEAMIDS,
+			TEAMIDNAMES,
+			ISDEL,
+			PROJECTNO,
+			PROJECTNAME,
+			ISBIGPROJECT,
+			DEPID,
+			TEAMMANAGER
+        </sql>
+    	<!-- 查询分页  2020-07-01 k6991  -->
+        <select id="queryPagerList" parameterType="map" resultMap="PPMDATEAMGROUP_ALL">
+        	SELECT
+            <include refid="sql_flied_all" />
+            FROM PPM_DA_TEAM_GROUP
+            <trim prefix="WHERE" suffixOverrides="AND">
+                <if test="groupqauserid != null  and groupqauserid != '' " > GROUPQAUSERID = #{groupqauserid} AND </if>
+				<if test="id != null  and id != '' " > ID = #{id} AND </if>
+				<if test="groupname != null  and groupname != '' " > GROUPNAME = #{groupname} AND </if>
+				<if test="detail != null  and detail != '' " > DETAIL = #{detail} AND </if>
+				<if test="groupuserid != null  and groupuserid != '' " > GROUPUSERID = #{groupuserid} AND </if>
+				<if test="type != null  and type != '' " > TYPE = #{type} AND </if>
+				<if test="isotherdep != null  and isotherdep != '' " > ISOTHERDEP = #{isotherdep} AND </if>
+				<if test="teamid != null  and teamid != '' " > TEAMID = #{teamid} AND </if>
+				<if test="teamids != null  and teamids != '' " > TEAMIDS = #{teamids} AND </if>
+				<if test="teamidnames != null  and teamidnames != '' " > TEAMIDNAMES = #{teamidnames} AND </if>
+				<if test="isdel != null  and isdel != '' " > ISDEL = #{isdel} AND </if>
+				<if test="projectno != null  and projectno != '' " > PROJECTNO = #{projectno} AND </if>
+				<if test="projectname != null  and projectname != '' " > PROJECTNAME = #{projectname} AND </if>
+				<if test="isbigproject != null  and isbigproject != '' " > ISBIGPROJECT = #{isbigproject} AND </if>
+				<if test="depid != null  and depid != '' " > DEPID = #{depid} AND </if>
+				<if test="teammanager != null  and teammanager != '' " > TEAMMANAGER = #{teammanager} AND </if>
+				
+            </trim>
+        </select>
+
+        <!-- 新增  2020-07-01 k6991  -->
+        <insert id="addPojo" parameterType="ppmDaTeamGroup">
+    		INSERT INTO PPM_DA_TEAM_GROUP (
+    		<trim suffixOverrides=",">
+    		 <if test="groupqauserid != null  and groupqauserid != '' " > GROUPQAUSERID , </if>
+				<if test="id != null  and id != '' " > ID , </if>
+				<if test="groupname != null  and groupname != '' " > GROUPNAME , </if>
+				<if test="detail != null  and detail != '' " > DETAIL , </if>
+				<if test="groupuserid != null  and groupuserid != '' " > GROUPUSERID , </if>
+				<if test="type != null  and type != '' " > TYPE , </if>
+				<if test="isotherdep != null  and isotherdep != '' " > ISOTHERDEP , </if>
+				<if test="teamid != null  and teamid != '' " > TEAMID , </if>
+				<if test="teamids != null  and teamids != '' " > TEAMIDS , </if>
+				<if test="teamidnames != null  and teamidnames != '' " > TEAMIDNAMES , </if>
+				<if test="isdel != null  and isdel != '' " > ISDEL , </if>
+				<if test="projectno != null  and projectno != '' " > PROJECTNO , </if>
+				<if test="projectname != null  and projectname != '' " > PROJECTNAME , </if>
+				<if test="isbigproject != null  and isbigproject != '' " > ISBIGPROJECT , </if>
+				<if test="depid != null  and depid != '' " > DEPID , </if>
+				<if test="teammanager != null  and teammanager != '' " > TEAMMANAGER , </if>
+				
+              </trim>
+    		)
+    		VALUES(
+    		<trim suffixOverrides=",">
+    		 <if test="groupqauserid != null  and groupqauserid != '' " > #{groupqauserid} , </if>
+				<if test="id != null  and id != '' " > #{id} , </if>
+				<if test="groupname != null  and groupname != '' " > #{groupname} , </if>
+				<if test="detail != null  and detail != '' " > #{detail} , </if>
+				<if test="groupuserid != null  and groupuserid != '' " > #{groupuserid} , </if>
+				<if test="type != null  and type != '' " > #{type} , </if>
+				<if test="isotherdep != null  and isotherdep != '' " > #{isotherdep} , </if>
+				<if test="teamid != null  and teamid != '' " > #{teamid} , </if>
+				<if test="teamids != null  and teamids != '' " > #{teamids} , </if>
+				<if test="teamidnames != null  and teamidnames != '' " > #{teamidnames} , </if>
+				<if test="isdel != null  and isdel != '' " > #{isdel} , </if>
+				<if test="projectno != null  and projectno != '' " > #{projectno} , </if>
+				<if test="projectname != null  and projectname != '' " > #{projectname} , </if>
+				<if test="isbigproject != null  and isbigproject != '' " > #{isbigproject} , </if>
+				<if test="depid != null  and depid != '' " > #{depid} , </if>
+				<if test="teammanager != null  and teammanager != '' " > #{teammanager} , </if>
+				
+            </trim>
+    		)
+        </insert>
+
+        <!--通过id查询  k6991 2020-07-01 -->
+        <select id="queryDetail" parameterType="ppmDaTeamGroup" resultMap="PPMDATEAMGROUP_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_DA_TEAM_GROUP  WHERE ID=#{id}
+        </select>
+
+         <!--查询集合  k6991 2020-07-01 -->
+        <select id="getList" parameterType="ppmDaTeamGroup" resultMap="PPMDATEAMGROUP_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_DA_TEAM_GROUP
+        	<trim prefix="WHERE" suffixOverrides="AND">
+        		<if test="groupqauserid != null  and groupqauserid != '' " > GROUPQAUSERID=#{groupqauserid} AND </if>
+				<if test="id != null  and id != '' " > ID=#{id} AND </if>
+				<if test="groupname != null  and groupname != '' " > GROUPNAME=#{groupname} AND </if>
+				<if test="detail != null  and detail != '' " > DETAIL=#{detail} AND </if>
+				<if test="groupuserid != null  and groupuserid != '' " > GROUPUSERID=#{groupuserid} AND </if>
+				<if test="type != null  and type != '' " > TYPE=#{type} AND </if>
+				<if test="isotherdep != null  and isotherdep != '' " > ISOTHERDEP=#{isotherdep} AND </if>
+				<if test="teamid != null  and teamid != '' " > TEAMID=#{teamid} AND </if>
+				<if test="teamids != null  and teamids != '' " > TEAMIDS=#{teamids} AND </if>
+				<if test="teamidnames != null  and teamidnames != '' " > TEAMIDNAMES=#{teamidnames} AND </if>
+				<if test="isdel != null  and isdel != '' " > ISDEL=#{isdel} AND </if>
+				<if test="projectno != null  and projectno != '' " > PROJECTNO=#{projectno} AND </if>
+				<if test="projectname != null  and projectname != '' " > PROJECTNAME=#{projectname} AND </if>
+				<if test="isbigproject != null  and isbigproject != '' " > ISBIGPROJECT=#{isbigproject} AND </if>
+				<if test="depid != null  and depid != '' " > DEPID=#{depid} AND </if>
+				<if test="teammanager != null  and teammanager != '' " > TEAMMANAGER=#{teammanager} AND </if>
+				
+            </trim>
+        </select>
+        <!-- update sql -->
+        <sql id="update_pojo_sql">
+        	<trim prefix="SET" suffixOverrides=",">
+        		<if test="groupqauserid != null  and groupqauserid != '' " > GROUPQAUSERID=#{groupqauserid} , </if>
+				<if test="id != null  and id != '' " > ID=#{id} , </if>
+				<if test="groupname != null  and groupname != '' " > GROUPNAME=#{groupname} , </if>
+				<if test="detail != null  and detail != '' " > DETAIL=#{detail} , </if>
+				<if test="groupuserid != null  and groupuserid != '' " > GROUPUSERID=#{groupuserid} , </if>
+				<if test="type != null  and type != '' " > TYPE=#{type} , </if>
+				<if test="isotherdep != null  and isotherdep != '' " > ISOTHERDEP=#{isotherdep} , </if>
+				<if test="teamid != null  and teamid != '' " > TEAMID=#{teamid} , </if>
+				<if test="teamids != null  and teamids != '' " > TEAMIDS=#{teamids} , </if>
+				<if test="teamidnames != null  and teamidnames != '' " > TEAMIDNAMES=#{teamidnames} , </if>
+				<if test="isdel != null  and isdel != '' " > ISDEL=#{isdel} , </if>
+				<if test="projectno != null  and projectno != '' " > PROJECTNO=#{projectno} , </if>
+				<if test="projectname != null  and projectname != '' " > PROJECTNAME=#{projectname} , </if>
+				<if test="isbigproject != null  and isbigproject != '' " > ISBIGPROJECT=#{isbigproject} , </if>
+				<if test="depid != null  and depid != '' " > DEPID=#{depid} , </if>
+				<if test="teammanager != null  and teammanager != '' " > TEAMMANAGER=#{teammanager} , </if>
+				
+            </trim>
+        </sql>
+
+        <!--通过id编辑 k6991 2020-07-01 -->
+    	<update id="updatePojo" parameterType="ppmDaTeamGroup">
+        	UPDATE
+        	PPM_DA_TEAM_GROUP
+        	<include refid="update_pojo_sql" />
+        	WHERE GROUPQAUSERID=#{groupqauserid}
+        </update>
+
+        <!--通过id批量删除  k6991 2020-07-01 -->
+        <delete id="deleteById" parameterType="ppmDaTeamGroup">
+        	DELETE
+        	FROM
+        	PPM_DA_TEAM_GROUP
+        	WHERE GROUPQAUSERID = #{groupqauserid}
+        </delete>
+
+        <!-- 获取主键id -->
+        <select id="getPrimaryKey" parameterType="map" resultType="long">
+            SELECT MAX(GROUPQAUSERID) FROM PPM_DA_TEAM_GROUP
+        </select>
+		<!--查询团队的分管经理-->
+		<select id="queryGroupManager" parameterType="map" resultMap="PPMDATEAMGROUP_ALL">
+			select * from (
+			select pdt.*,'1' flag from ppm_da_team_user u left join ppm.ppm_da_team_group pdt on u.teamgrpupid=pdt.id where u.userid=#{userid}
+			and u.teamgrpupid is not null
+			union
+			select pdt.*,'2' flag from ppm.ppm_da_team_group pdt where  pdt.groupuserid=#{userid} and pdt.isdel='0'
+			)t order by t.flag desc
+		</select>
+</mapper>

@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k1327 2021-08-04 -->
+<mapper namespace="com.work.ppm.application.model.kpi.PpmKpiPostevaluation">
+	 <resultMap type="ppmKpiPostevaluation" id="PPMKPIPOSTEVALUATION_ALL">
+        <result property="id" column="ID" />
+		<result property="pid" column="PID" />
+		<result property="item" column="ITEM" />
+		<result property="itemdescribe" column="ITEMDESCRIBE" />
+		<result property="plan" column="PLAN" />
+		<result property="plandescribe" column="PLANDESCRIBE" />
+		<result property="value" column="VALUE" />
+		<result property="finishdate" column="FINISHDATE" />
+		<result property="workremark" column="WORKREMARK" />
+		<result property="firstevalscore" column="FIRSTEVALSCORE" />
+		<result property="firstevalgoal" column="FIRSTEVALGOAL" />
+		<result property="secondevalscore" column="SECONDEVALSCORE" />
+		<result property="secondevalgoal" column="SECONDEVALGOAL" />
+		<result property="tscore" column="TSCORE" />
+		<result property="firsteval" column="FIRSTEVAL" />
+		<result property="secondeval" column="SECONDEVAL" />
+		<result property="firstevaltime" column="FIRSTEVALTIME" />
+		<result property="secondevaltime" column="SECONDEVALTIME" />
+		<result property="itemstatus" column="ITEMSTATUS" />
+		<result property="weight" column="WEIGHT" />
+		<result property="mainpart" column="MAINPART" />
+		<result property="createtime" column="CREATETIME" />
+		<result property="createuserid" column="CREATEUSERID" />
+		<result property="eid" column="EID" />
+		<result property="term" column="TERM" />
+		<result property="tyear" column="TYEAR" />
+
+     </resultMap>
+
+	<resultMap type="ppmKpiPostevaluationInfo" id="PPMKPIPOSTEVALUATION_ALL_EXT" extends="PPMKPIPOSTEVALUATION_ALL">
+		<result property="eidname" column="EIDNAME" />
+		<result property="depname" column="DEPNAME" />
+		<result property="centername" column="CENTERNAME" />
+		<result property="itemstatusname" column="ITEMSTATUSNAME" />
+	</resultMap>
+
+
+
+     <!-- 所有字段名称 -->
+        <sql id="sql_flied_all">
+        	ID,
+			PID,
+			ITEM,
+			ITEMDESCRIBE,
+			PLAN,
+			PLANDESCRIBE,
+			VALUE,
+			FINISHDATE,
+			WORKREMARK,
+			FIRSTEVALSCORE,
+			FIRSTEVALGOAL,
+			SECONDEVALSCORE,
+			SECONDEVALGOAL,
+			TSCORE,
+			FIRSTEVAL,
+			SECONDEVAL,
+			FIRSTEVALTIME,
+			SECONDEVALTIME,
+			ITEMSTATUS,
+			WEIGHT,
+			MAINPART,
+			CREATETIME,
+			CREATEUSERID,
+			EID,
+			TERM,
+			TYEAR
+        </sql>
+        <sql id="sql_select_condition">
+            <trim prefix="WHERE" suffixOverrides="AND">
+                <if test="id != null " > ID = #{id} AND </if>
+				<if test="pid != null " > PID = #{pid} AND </if>
+				<if test="item != null  and item != '' " > ITEM = #{item} AND </if>
+				<if test="itemdescribe != null  and itemdescribe != '' " > ITEMDESCRIBE = #{itemdescribe} AND </if>
+				<if test="plan != null  and plan != '' " > PLAN = #{plan} AND </if>
+				<if test="plandescribe != null  and plandescribe != '' " > PLANDESCRIBE = #{plandescribe} AND </if>
+				<if test="value != null " > VALUE = #{value} AND </if>
+				<if test="finishdate != null " > FINISHDATE = #{finishdate} AND </if>
+				<if test="workremark != null  and workremark != '' " > WORKREMARK = #{workremark} AND </if>
+				<if test="firstevalscore != null " > FIRSTEVALSCORE = #{firstevalscore} AND </if>
+				<if test="firstevalgoal != null " > FIRSTEVALGOAL = #{firstevalgoal} AND </if>
+				<if test="secondevalscore != null " > SECONDEVALSCORE = #{secondevalscore} AND </if>
+				<if test="secondevalgoal != null " > SECONDEVALGOAL = #{secondevalgoal} AND </if>
+				<if test="tscore != null " > TSCORE = #{tscore} AND </if>
+				<if test="firsteval != null  and firsteval != '' " > FIRSTEVAL = #{firsteval} AND </if>
+				<if test="secondeval != null  and secondeval != '' " > SECONDEVAL = #{secondeval} AND </if>
+				<if test="firstevaltime != null " > FIRSTEVALTIME = #{firstevaltime} AND </if>
+				<if test="secondevaltime != null " > SECONDEVALTIME = #{secondevaltime} AND </if>
+				<if test="itemstatus != null " > ITEMSTATUS = #{itemstatus} AND </if>
+				<if test="weight != null " > WEIGHT = #{weight} AND </if>
+				<if test="mainpart != null  and mainpart != '' " > MAINPART = #{mainpart} AND </if>
+				<if test="createtime != null " > CREATETIME = #{createtime} AND </if>
+				<if test="createuserid != null  and createuserid != '' " > CREATEUSERID = #{createuserid} AND </if>
+				<if test="eid != null  and eid != '' " > EID = #{eid} AND </if>
+				<if test="term != null  and term != '' " > TERM = #{term} AND </if>
+				<if test="tyear != null  and tyear != '' " > TYEAR = #{tyear} AND </if>
+
+            </trim>
+        </sql>
+    	<!-- 查询分页  2021-08-04 k1327  -->
+        <select id="queryPagerList" parameterType="map" resultMap="PPMKPIPOSTEVALUATION_ALL">
+        	SELECT
+            <include refid="sql_flied_all" />
+            FROM PPM_KPI_POSTEVALUATION
+			<trim prefix="WHERE" suffixOverrides="AND">
+				<if test="id != null " > ID = #{id} AND </if>
+				<if test="pid != null " > PID = #{pid} AND </if>
+				<if test="item != null  and item != '' " > ITEM = #{item} AND </if>
+				<if test="itemdescribe != null  and itemdescribe != '' " > ITEMDESCRIBE = #{itemdescribe} AND </if>
+				<if test="plan != null  and plan != '' " > PLAN = #{plan} AND </if>
+				<if test="plandescribe != null  and plandescribe != '' " > PLANDESCRIBE = #{plandescribe} AND </if>
+				<if test="value != null " > VALUE = #{value} AND </if>
+				<if test="finishdate != null " > FINISHDATE = #{finishdate} AND </if>
+				<if test="workremark != null  and workremark != '' " > WORKREMARK = #{workremark} AND </if>
+				<if test="firstevalscore != null " > FIRSTEVALSCORE = #{firstevalscore} AND </if>
+				<if test="firstevalgoal != null " > FIRSTEVALGOAL = #{firstevalgoal} AND </if>
+				<if test="secondevalscore != null " > SECONDEVALSCORE = #{secondevalscore} AND </if>
+				<if test="secondevalgoal != null " > SECONDEVALGOAL = #{secondevalgoal} AND </if>
+				<if test="tscore != null " > TSCORE = #{tscore} AND </if>
+				<if test="firsteval != null  and firsteval != '' " > FIRSTEVAL = #{firsteval} AND </if>
+				<if test="secondeval != null  and secondeval != '' " > SECONDEVAL = #{secondeval} AND </if>
+				<if test="firstevaltime != null " > FIRSTEVALTIME = #{firstevaltime} AND </if>
+				<if test="secondevaltime != null " > SECONDEVALTIME = #{secondevaltime} AND </if>
+				<if test="itemstatus != null " > ITEMSTATUS = #{itemstatus} AND </if>
+				<if test="weight != null " > WEIGHT = #{weight} AND </if>
+				<if test="mainpart != null  and mainpart != '' " > MAINPART = #{mainpart} AND </if>
+				<if test="createtime != null " > CREATETIME = #{createtime} AND </if>
+				<if test="createuserid != null  and createuserid != '' " > CREATEUSERID = #{createuserid} AND </if>
+				<if test="eid != null  and eid != '' " > EID = #{eid} AND </if>
+				<if test="term != null  and term != '' " > TERM = #{term} AND </if>
+				<if test="tyear != null  and tyear != '' " > TYEAR = #{tyear} AND </if>
+				<if test="notFinish != null and notFinish != '' " >  ITEMSTATUS != 7 AND </if>
+				<if test="check != null  and check != '' " >
+					(( FIRSTEVAL = #{check} and  itemstatus=5)
+					or
+					( SECONDEVAL = #{check} and  itemstatus=6))
+				</if>
+			</trim>
+        </select>
+
+        <!-- 新增  2021-08-04 k1327  -->
+        <insert id="addPojo" parameterType="ppmKpiPostevaluation">
+    		INSERT INTO PPM_KPI_POSTEVALUATION (
+    		<trim suffixOverrides=",">
+    		 <if test="id != null " > ID , </if>
+				<if test="pid != null " > PID , </if>
+				<if test="item != null  and item != '' " > ITEM , </if>
+				<if test="itemdescribe != null  and itemdescribe != '' " > ITEMDESCRIBE , </if>
+				<if test="plan != null  and plan != '' " > PLAN , </if>
+				<if test="plandescribe != null  and plandescribe != '' " > PLANDESCRIBE , </if>
+				<if test="value != null " > VALUE , </if>
+				<if test="finishdate != null " > FINISHDATE , </if>
+				<if test="workremark != null  and workremark != '' " > WORKREMARK , </if>
+				<if test="firstevalscore != null " > FIRSTEVALSCORE , </if>
+				<if test="firstevalgoal != null " > FIRSTEVALGOAL , </if>
+				<if test="secondevalscore != null " > SECONDEVALSCORE , </if>
+				<if test="secondevalgoal != null " > SECONDEVALGOAL , </if>
+				<if test="tscore != null " > TSCORE , </if>
+				<if test="firsteval != null  and firsteval != '' " > FIRSTEVAL , </if>
+				<if test="secondeval != null  and secondeval != '' " > SECONDEVAL , </if>
+				<if test="firstevaltime != null " > FIRSTEVALTIME , </if>
+				<if test="secondevaltime != null " > SECONDEVALTIME , </if>
+				<if test="itemstatus != null " > ITEMSTATUS , </if>
+				<if test="weight != null " > WEIGHT , </if>
+				<if test="mainpart != null  and mainpart != '' " > MAINPART , </if>
+				<if test="createtime != null " > CREATETIME , </if>
+				<if test="createuserid != null  and createuserid != '' " > CREATEUSERID , </if>
+				<if test="eid != null  and eid != '' " > EID , </if>
+				<if test="term != null  and term != '' " > TERM , </if>
+				<if test="tyear != null  and tyear != '' " > TYEAR , </if>
+
+              </trim>
+    		)
+    		VALUES(
+    		<trim suffixOverrides=",">
+    		 <if test="id != null " > #{id} , </if>
+				<if test="pid != null " > #{pid} , </if>
+				<if test="item != null  and item != '' " > #{item} , </if>
+				<if test="itemdescribe != null  and itemdescribe != '' " > #{itemdescribe} , </if>
+				<if test="plan != null  and plan != '' " > #{plan} , </if>
+				<if test="plandescribe != null  and plandescribe != '' " > #{plandescribe} , </if>
+				<if test="value != null " > #{value} , </if>
+				<if test="finishdate != null " > #{finishdate} , </if>
+				<if test="workremark != null  and workremark != '' " > #{workremark} , </if>
+				<if test="firstevalscore != null " > #{firstevalscore} , </if>
+				<if test="firstevalgoal != null " > #{firstevalgoal} , </if>
+				<if test="secondevalscore != null " > #{secondevalscore} , </if>
+				<if test="secondevalgoal != null " > #{secondevalgoal} , </if>
+				<if test="tscore != null " > #{tscore} , </if>
+				<if test="firsteval != null  and firsteval != '' " > #{firsteval} , </if>
+				<if test="secondeval != null  and secondeval != '' " > #{secondeval} , </if>
+				<if test="firstevaltime != null " > #{firstevaltime} , </if>
+				<if test="secondevaltime != null " > #{secondevaltime} , </if>
+				<if test="itemstatus != null " > #{itemstatus} , </if>
+				<if test="weight != null " > #{weight} , </if>
+				<if test="mainpart != null  and mainpart != '' " > #{mainpart} , </if>
+				<if test="createtime != null " > #{createtime} , </if>
+				<if test="createuserid != null  and createuserid != '' " > #{createuserid} , </if>
+				<if test="eid != null  and eid != '' " > #{eid} , </if>
+				<if test="term != null  and term != '' " > #{term} , </if>
+				<if test="tyear != null  and tyear != '' " > #{tyear} , </if>
+
+            </trim>
+    		)
+        </insert>
+
+        <!--通过id查询  k1327 2021-08-04 -->
+        <select id="queryDetail" parameterType="ppmKpiPostevaluation" resultMap="PPMKPIPOSTEVALUATION_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_KPI_POSTEVALUATION  WHERE ID=#{id}
+        </select>
+
+         <!--查询集合  k1327 2021-08-04 -->
+        <select id="getList" parameterType="ppmKpiPostevaluation" resultMap="PPMKPIPOSTEVALUATION_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_KPI_POSTEVALUATION
+        	<include refid="sql_select_condition" />
+        </select>
+        <!-- update sql -->
+        <sql id="update_pojo_sql">
+        	<trim prefix="SET" suffixOverrides=",">
+        		<if test="id != null " > ID=#{id} , </if>
+				<if test="pid != null " > PID=#{pid} , </if>
+				<if test="item != null  and item != '' " > ITEM=#{item} , </if>
+				<if test="itemdescribe != null  and itemdescribe != '' " > ITEMDESCRIBE=#{itemdescribe} , </if>
+				<if test="plan != null  and plan != '' " > PLAN=#{plan} , </if>
+				<if test="plandescribe != null  and plandescribe != '' " > PLANDESCRIBE=#{plandescribe} , </if>
+				<if test="value != null " > VALUE=#{value} , </if>
+				<if test="finishdate != null " > FINISHDATE=#{finishdate} , </if>
+				<if test="workremark != null  and workremark != '' " > WORKREMARK=#{workremark} , </if>
+				<if test="firstevalscore != null " > FIRSTEVALSCORE=#{firstevalscore} , </if>
+				<if test="firstevalgoal != null " > FIRSTEVALGOAL=#{firstevalgoal} , </if>
+				<if test="secondevalscore != null " > SECONDEVALSCORE=#{secondevalscore} , </if>
+				<if test="secondevalgoal != null " > SECONDEVALGOAL=#{secondevalgoal} , </if>
+				<if test="tscore != null " > TSCORE=#{tscore} , </if>
+				<if test="firsteval != null  and firsteval != '' " > FIRSTEVAL=#{firsteval} , </if>
+				<if test="secondeval != null  and secondeval != '' " > SECONDEVAL=#{secondeval} , </if>
+				<if test="firstevaltime != null " > FIRSTEVALTIME=#{firstevaltime} , </if>
+				<if test="secondevaltime != null " > SECONDEVALTIME=#{secondevaltime} , </if>
+				<if test="itemstatus != null " > ITEMSTATUS=#{itemstatus} , </if>
+				<if test="weight != null " > WEIGHT=#{weight} , </if>
+				<if test="mainpart != null  and mainpart != '' " > MAINPART=#{mainpart} , </if>
+				<if test="createtime != null " > CREATETIME=#{createtime} , </if>
+				<if test="createuserid != null  and createuserid != '' " > CREATEUSERID=#{createuserid} , </if>
+				<if test="eid != null  and eid != '' " > EID=#{eid} , </if>
+				<if test="term != null  and term != '' " > TERM=#{term} , </if>
+				<if test="tyear != null  and tyear != '' " > TYEAR=#{tyear} , </if>
+
+            </trim>
+        </sql>
+
+        <!--通过id编辑 k1327 2021-08-04 -->
+    	<update id="updatePojo" parameterType="ppmKpiPostevaluation">
+        	UPDATE
+        	PPM_KPI_POSTEVALUATION
+        	<include refid="update_pojo_sql" />
+        	WHERE ID=#{id}
+        </update>
+
+        <!--通过id批量删除  k1327 2021-08-04 -->
+        <delete id="deleteById" parameterType="ppmKpiPostevaluation">
+        	DELETE
+        	FROM
+        	PPM_KPI_POSTEVALUATION
+        	WHERE ID = #{id}
+        </delete>
+
+		<!--查询集合  k1327 2021-08-04 -->
+		<select id="getPpmKpiPostevaluations" parameterType="ppmKpiPostevaluation" resultMap="PPMKPIPOSTEVALUATION_ALL">
+			select p.*,e.empname eidname,t.location depname,c.centername,en.dictname itemstatusname from ppm_kpi_postevaluation p
+			left join ppm_kpi_pm_detail d on p.id=p.pid
+			left join ppm_kpi_pm m on d.pid=m.id
+			left join comm_employee e on p.eid=e.eid
+			left join comm_department t on m.depid=to_char(t.depid)
+			left join ppm_da_center c on m.centerid=c.id
+			left join eos_dict_entry en on en.dicttypeid='KPI_ITEM_STATUS' and en.dictid=p.itemstatus
+			<trim prefix="WHERE" suffixOverrides="AND">
+				<if test="id != null " > p.ID = #{id} AND </if>
+				<if test="pid != null " > p.PID = #{pid} AND </if>
+				<if test="item != null  and item != '' " > p.ITEM = #{item} AND </if>
+				<if test="itemdescribe != null  and itemdescribe != '' " > p.ITEMDESCRIBE = #{itemdescribe} AND </if>
+				<if test="plan != null  and plan != '' " > p.PLAN = #{plan} AND </if>
+				<if test="plandescribe != null  and plandescribe != '' " > p.PLANDESCRIBE = #{plandescribe} AND </if>
+				<if test="value != null " > p.VALUE = #{value} AND </if>
+				<if test="finishdate != null " > p.FINISHDATE = #{finishdate} AND </if>
+				<if test="workremark != null  and workremark != '' " > p.WORKREMARK = #{workremark} AND </if>
+				<if test="firstevalscore != null " > p.FIRSTEVALSCORE = #{firstevalscore} AND </if>
+				<if test="firstevalgoal != null " > p.FIRSTEVALGOAL = #{firstevalgoal} AND </if>
+				<if test="secondevalscore != null " > p.SECONDEVALSCORE = #{secondevalscore} AND </if>
+				<if test="secondevalgoal != null " > p.SECONDEVALGOAL = #{secondevalgoal} AND </if>
+				<if test="tscore != null " > p.TSCORE = #{tscore} AND </if>
+				<if test="firsteval != null  and firsteval != '' " > p.FIRSTEVAL = #{firsteval} AND </if>
+				<if test="secondeval != null  and secondeval != '' " > p.SECONDEVAL = #{secondeval} AND </if>
+				<if test="firstevaltime != null " > p.FIRSTEVALTIME = #{firstevaltime} AND </if>
+				<if test="secondevaltime != null " > p.SECONDEVALTIME = #{secondevaltime} AND </if>
+				<if test="itemstatus != null " > p.ITEMSTATUS = #{itemstatus} AND </if>
+				<if test="weight != null " > p.WEIGHT = #{weight} AND </if>
+				<if test="mainpart != null  and mainpart != '' " > p.MAINPART = #{mainpart} AND </if>
+				<if test="createtime != null " > p.CREATETIME = #{createtime} AND </if>
+				<if test="createuserid != null  and createuserid != '' " > p.CREATEUSERID = #{createuserid} AND </if>
+				<if test="eid != null  and eid != '' " > p.EID = #{eid} AND </if>
+				<if test="term != null  and term != '' " > p.TERM = #{term} AND </if>
+				<if test="tyear != null  and tyear != '' " > p.TYEAR = #{tyear} AND </if>
+				<if test="check != null  and check != '' " >
+					(( p.FIRSTEVAL = #{check} and  p.itemstatus=5)
+					or
+					( p.SECONDEVAL = #{check} and  p.itemstatus=6))
+				</if>
+			</trim>
+		</select>
+
+	<select id="getAvgScore" parameterType="map" resultMap="PPMKPIPOSTEVALUATION_ALL">
+			select avg(p.tscore) tscore from ppm_kpi_postevaluation p
+		    where  p.PID = #{pid} AND p.ITEM = #{item} AND  p.PLAN = #{plan} AND p.ITEMSTATUS = #{itemstatus}
+	</select>
+
+	<!--查询综合能力和履职评估统计分数  k1327 2021-05-31 -->
+	<select id="queryPostEvaluationSumScore" parameterType="map"  resultMap="PPMKPIPOSTEVALUATION_ALL">
+		select  sum(round((sum(d.tscore)/count(*))*max(d.weight),2)) tscore from ppm_kpi_postevaluation p
+		where p.tyear=#{tyear} and p.eid=#{eid} and p.secondeval=#{secondeval}
+		group by p.item
+	</select>
+</mapper>

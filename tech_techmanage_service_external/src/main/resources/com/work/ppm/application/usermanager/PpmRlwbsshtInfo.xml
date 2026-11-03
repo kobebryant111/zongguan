@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k6991 2020-06-30 -->
+<mapper namespace="com.work.ppm.application.model.usermanager.PpmRlwbsshtInfo">
+	 <resultMap type="ppmRlwbsshtInfo" id="PPMRLWBSSHTINFO_ALL">
+        <result property="htid" column="HTID" />
+		<result property="jobid" column="JOBID" />
+		<result property="starttime" column="STARTTIME" />
+		<result property="endtime" column="ENDTIME" />
+		
+     </resultMap>
+
+     <!-- 所有字段名称 -->
+        <sql id="sql_flied_all">
+        	HTID,
+			JOBID,
+			STARTTIME,
+			ENDTIME
+        </sql>
+    	<!-- 查询分页  2020-06-30 k6991  -->
+        <select id="queryPagerList" parameterType="map" resultMap="PPMRLWBSSHTINFO_ALL">
+        	SELECT
+            <include refid="sql_flied_all" />
+            FROM PPM_RLWBSSHT_INFO
+            <trim prefix="WHERE" suffixOverrides="AND">
+                <if test="htid != null  and htid != '' " > HTID = #{htid} AND </if>
+				<if test="jobid != null  and jobid != '' " > JOBID = #{jobid} AND </if>
+				<if test="starttime != null  and starttime != '' " > STARTTIME = #{starttime} AND </if>
+				<if test="endtime != null  and endtime != '' " > ENDTIME = #{endtime} AND </if>
+				
+            </trim>
+        </select>
+
+        <!-- 新增  2020-06-30 k6991  -->
+        <insert id="addPojo" parameterType="ppmRlwbsshtInfo">
+    		INSERT INTO PPM_RLWBSSHT_INFO (
+    		<trim suffixOverrides=",">
+    		 <if test="htid != null  and htid != '' " > HTID , </if>
+				<if test="jobid != null  and jobid != '' " > JOBID , </if>
+				<if test="starttime != null  and starttime != '' " > STARTTIME , </if>
+				<if test="endtime != null  and endtime != '' " > ENDTIME , </if>
+				
+              </trim>
+    		)
+    		VALUES(
+    		<trim suffixOverrides=",">
+    		 <if test="htid != null  and htid != '' " > #{htid} , </if>
+				<if test="jobid != null  and jobid != '' " > #{jobid} , </if>
+				<if test="starttime != null  and starttime != '' " > #{starttime} , </if>
+				<if test="endtime != null  and endtime != '' " > #{endtime} , </if>
+				
+            </trim>
+    		)
+        </insert>
+
+        <!--通过id查询  k6991 2020-06-30 -->
+        <select id="queryDetail" parameterType="ppmRlwbsshtInfo" resultMap="PPMRLWBSSHTINFO_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_RLWBSSHT_INFO
+			<trim prefix="WHERE" suffixOverrides="AND">
+				<if test="htid != null  and htid != '' " > HTID = #{htid} AND </if>
+				<if test="jobid != null  and jobid != '' " > JOBID = #{jobid} AND </if>
+			</trim>
+        </select>
+
+         <!--查询集合  k6991 2020-06-30 -->
+        <select id="getList" parameterType="map" resultMap="PPMRLWBSSHTINFO_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_RLWBSSHT_INFO
+        	<trim prefix="WHERE" suffixOverrides="AND">
+        		<if test="htid != null  and htid != '' " > HTID=#{htid} AND </if>
+				<if test="jobid != null  and jobid != '' " > JOBID=#{jobid} AND </if>
+				<if test="starttime != null  and starttime != '' " > STARTTIME=#{starttime} AND </if>
+				<if test="endtime != null  and endtime != '' " > ENDTIME=#{endtime} AND </if>
+				
+            </trim>
+        </select>
+        <!-- update sql -->
+        <sql id="update_pojo_sql">
+        	<trim prefix="SET" suffixOverrides=",">
+        		<if test="htid != null  and htid != '' " > HTID=#{htid} , </if>
+				<if test="jobid != null  and jobid != '' " > JOBID=#{jobid} , </if>
+				<if test="starttime != null  and starttime != '' " > STARTTIME=#{starttime} , </if>
+				<if test="endtime != null  and endtime != '' " > ENDTIME=#{endtime} , </if>
+				
+            </trim>
+        </sql>
+
+        <!--通过id编辑 k6991 2020-06-30 -->
+    	<update id="updatePojo" parameterType="ppmRlwbsshtInfo">
+        	UPDATE
+        	PPM_RLWBSSHT_INFO
+        	<include refid="update_pojo_sql" />
+        	WHERE JOBID = #{jobid} and HTID=#{htid}
+        </update>
+
+        <!--通过id批量删除  k6991 2020-06-30 -->
+        <delete id="deleteById" parameterType="ppmRlwbsshtInfo">
+        	DELETE
+        	FROM
+        	PPM_RLWBSSHT_INFO
+        	WHERE HTID = #{htid}
+        </delete>
+
+        <!-- 获取主键id -->
+        <select id="getPrimaryKey" parameterType="map" resultType="long">
+            SELECT MAX(HTID) FROM PPM_RLWBSSHT_INFO
+        </select>
+</mapper>

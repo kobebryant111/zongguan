@@ -1,0 +1,40 @@
+import Cookies from 'js-cookie'
+
+const TokenKey = 'Admin-Token'
+const SecretKey = 'Secret-Token'
+
+export function getToken() {
+  return Cookies.get(TokenKey)
+}
+
+export function setToken(token) {
+  return Cookies.set(TokenKey, token,{expires:1,path:'/'})
+}
+
+export function removeToken() {
+  return Cookies.remove(TokenKey)
+}
+
+export function getSecretToken() {
+  return Cookies.get(SecretKey)
+}
+
+export function setSecretToken(token) {
+  return Cookies.set(SecretKey, token,{expires:1,path:'/'})
+}
+
+export function removeSecretToken() {
+  return Cookies.remove(SecretKey)
+}
+
+// export function getToken() {
+//   return window.localStorage.getItem(TokenKey)
+// }
+
+// export function setToken(token) {
+//   return window.localStorage.setItem(TokenKey, token)
+// }
+
+// export function removeToken() {
+//   return window.localStorage.setItem(TokenKey, '')
+// }

@@ -1,0 +1,628 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:ywwb905 2022-11-17 -->
+<!--  信息变更申请信息表 查询脚本 -->
+<mapper namespace="com.work.ppm.application.model.integratedmanager.PpmOutsourcUpdateInfo">
+	<resultMap type="ppmOutsourcUpdateInfo" id="PPMOUTSOURCUPDATEINFO_ALL">
+		<result property="id" column="ID" />
+		<result property="pid" column="PID" />
+		<result property="jobId" column="JOB_ID" />
+		<result property="userName" column="USER_NAME" />
+		<result property="instanceid" column="INSTANCEID" />
+		<result property="positionBe" column="POSITION_BE" />
+		<result property="positionAf" column="POSITION_AF" />
+		<result property="outsourceTypeBe" column="OUTSOURCE_TYPE_BE" />
+		<result property="outsourceTypeAf" column="OUTSOURCE_TYPE_AF" />
+		<result property="userTypeBe" column="USER_TYPE_BE" />
+		<result property="userTypeAf" column="USER_TYPE_AF" />
+		<result property="vmAccountBe" column="VM_ACCOUNT_BE" />
+		<result property="vmAccountAf" column="VM_ACCOUNT_AF" />
+		<result property="entranceCardBe" column="ENTRANCE_CARD_BE" />
+		<result property="entranceCardAf" column="ENTRANCE_CARD_AF" />
+		<result property="newContractIdBe" column="NEW_CONTRACT_ID_BE" />
+		<result property="newContractIdAf" column="NEW_CONTRACT_ID_AF" />
+		<result property="ceneralOfficeMotionBe" column="CENERAL_OFFICE_MOTION_BE" />
+		<result property="ceneralOfficeMotionAf" column="CENERAL_OFFICE_MOTION_AF" />
+		<result property="creditReportBe" column="CREDIT_REPORT_BE" />
+		<result property="creditReportAf" column="CREDIT_REPORT_AF" />
+		<result property="ssPaymentProveBe" column="SS_PAYMENT_PROVE_BE" />
+		<result property="ssPaymentProveAf" column="SS_PAYMENT_PROVE_AF" />
+		<result property="confidentCommitmentBe" column="CONFIDENT_COMMITMENT_BE" />
+		<result property="confidentCommitmentAf" column="CONFIDENT_COMMITMENT_AF" />
+		<result property="dueDiligenceReportBe" column="DUE_DILIGENCE_REPORT_BE" />
+		<result property="dueDiligenceReportAf" column="DUE_DILIGENCE_REPORT_AF" />
+		<result property="qtFileBe" column="QT_FILE_BE" />
+		<result property="qtFileAf" column="QT_FILE_AF" />
+
+		<result property="otherFileBe" column="OTHER_FILE_BE" />
+		<result property="otherFileAf" column="OTHER_FILE_AF" />
+		<result property="faceimageBe" column="FACEIMAGE_BE" />
+		<result property="faceimageAf" column="FACEIMAGE_AF" />
+		<result property="createdTime" column="CREATED_TIME" />
+		<result property="createdBy" column="CREATED_BY" />
+		<result property="modifiedTime" column="MODIFIED_TIME" />
+		<result property="modifiedBy" column="MODIFIED_BY" />
+		<result property="deptIdBe" column="DEPT_ID_BE"/>
+		<result property="systemNoBe" column="SYSTEM_NO_BE"/>
+		<result property="personInChargeBe" column="PERSON_IN_CHARGE_BE"/>
+		<result property="evaluationLevelBe" column="EVALUATION_LEVEL_BE"/>
+		<result property="levelReasonBe" column="LEVEL_REASON_BE"/>
+		<result property="evaluatorIdBe" column="EVALUATOR_ID_BE"/>
+		<result property="deptIdAf" column="DEPT_ID_AF"/>
+		<result property="systemNoAf" column="SYSTEM_NO_AF"/>
+		<result property="personInChargeAf" column="PERSON_IN_CHARGE_AF"/>
+		<result property="evaluationLevelAf" column="EVALUATION_LEVEL_AF"/>
+		<result property="levelReasonAf" column="LEVEL_REASON_AF"/>
+		<result property="evaluatorIdAf" column="EVALUATOR_ID_AF"/>
+		<result property="evaluationTime" column="EVALUATION_TIME"/>
+	</resultMap>
+	<resultMap id="PPMOUTSOURCUPDATEINFO_ALL_EXT" type="ppmOutsourcUpdateInfoView" extends="PPMOUTSOURCUPDATEINFO_ALL">
+		<result property="applyer" column="APPLYER" />
+		<result property="applyerName" column="APPLYER_NAME" />
+		<result property="applyerDept" column="APPLYER_DEPT" />
+		<result property="applyerDeptName" column="APPLYER_DEPT_NAME" />
+		<result property="state" column="STATE" />
+		<result property="stateName" column="STATE_NAME" />
+		<result property="currentId" column="CURRENT_ID" />
+		<result property="currentName" column="CURRENT_NAME" />
+		<result property="presenceState" column="PRESENCE_STATE" />
+		<result property="personInCharge" column="PERSON_IN_CHARGE" />
+		<result property="newContractIdBeNo" column="NEW_CONTRACT_ID_BE_NO" />
+		<result property="newContractIdBeName" column="NEW_CONTRACT_ID_BE_NAME" />
+		<result property="newContractIdAfNo" column="NEW_CONTRACT_ID_AF_NO" />
+		<result property="newContractIdAfName" column="NEW_CONTRACT_ID_AF_NAME" />
+		<result property="ceneralOfficeMotionBeNo" column="CENERAL_OFFICE_MOTION_BE_NO" />
+		<result property="ceneralOfficeMotionBeName" column="CENERAL_OFFICE_MOTION_BE_NAME" />
+		<result property="ceneralOfficeMotionAfNo" column="CENERAL_OFFICE_MOTION_AF_NO" />
+		<result property="ceneralOfficeMotionAfName" column="CENERAL_OFFICE_MOTION_AF_NAME" />
+		<result property="payConfirmId" column="PAY_CONFIRM_ID" />
+		<result property="payConfirmNo" column="PAY_CONFIRM_NO" />
+		<result property="price" column="PRICE" />
+		<result property="workTime" column="WORK_TIME" />
+	</resultMap>
+
+	<!-- 所有字段名称 -->
+	<sql id="sql_flied_all">
+		ID,
+		PID,
+		JOB_ID,
+		USER_NAME,
+		INSTANCEID,
+		POSITION_BE,
+		POSITION_AF,
+		OUTSOURCE_TYPE_BE,
+		OUTSOURCE_TYPE_AF,
+		USER_TYPE_BE,
+		USER_TYPE_AF,
+		VM_ACCOUNT_BE,
+		VM_ACCOUNT_AF,
+		ENTRANCE_CARD_BE,
+		ENTRANCE_CARD_AF,
+		NEW_CONTRACT_ID_BE,
+		NEW_CONTRACT_ID_AF,
+		CENERAL_OFFICE_MOTION_BE,
+		CENERAL_OFFICE_MOTION_AF,
+		CREDIT_REPORT_BE,
+		CREDIT_REPORT_AF,
+		SS_PAYMENT_PROVE_BE,
+		SS_PAYMENT_PROVE_AF,
+		CONFIDENT_COMMITMENT_BE,
+		CONFIDENT_COMMITMENT_AF,
+		DUE_DILIGENCE_REPORT_BE,
+		DUE_DILIGENCE_REPORT_AF,
+		QT_FILE_BE,
+		QT_FILE_AF,
+		OTHER_FILE_BE,
+		OTHER_FILE_AF,
+		FACEIMAGE_BE,
+		FACEIMAGE_AF,
+		CREATED_TIME,
+		CREATED_BY,
+		MODIFIED_TIME,
+		DEPT_ID_BE,
+		DEPT_ID_AF,
+		SYSTEM_NO_BE,
+		SYSTEM_NO_AF,
+		PERSON_IN_CHARGE_BE,
+		PERSON_IN_CHARGE_AF,
+		EVALUATION_LEVEL_BE,
+		EVALUATION_LEVEL_AF,
+		LEVEL_REASON_BE,
+		LEVEL_REASON_AF,
+		EVALUATOR_ID_BE,
+		EVALUATOR_ID_AF,
+		EVALUATION_TIME,
+		MODIFIED_BY
+	</sql>
+	<sql id="sql_select_condition">
+		<trim prefix="WHERE" suffixOverrides="AND">
+			<if test="id != null " > ID = #{id} AND </if>
+			<if test="pid != null " > PID = #{pid} AND </if>
+			<if test="jobId != null  and jobId != '' " > JOB_ID = #{jobId} AND </if>
+			<if test="userName != null  and userName != '' " > USER_NAME = #{userName} AND </if>
+			<if test="instanceid != null  and instanceid != '' " > INSTANCEID = #{instanceid} AND </if>
+			<if test="positionBe != null  and positionBe != '' " > POSITION_BE = #{positionBe} AND </if>
+			<if test="positionAf != null  and positionAf != '' " > POSITION_AF = #{positionAf} AND </if>
+			<if test="outsourceTypeBe != null  and outsourceTypeBe != '' " > OUTSOURCE_TYPE_BE = #{outsourceTypeBe} AND </if>
+			<if test="outsourceTypeAf != null  and outsourceTypeAf != '' " > OUTSOURCE_TYPE_AF = #{outsourceTypeAf} AND </if>
+			<if test="userTypeBe != null  and userTypeBe != '' " > USER_TYPE_BE = #{userTypeBe} AND </if>
+			<if test="userTypeAf != null  and userTypeAf != '' " > USER_TYPE_AF = #{userTypeAf} AND </if>
+			<if test="vmAccountBe != null  and vmAccountBe != '' " > VM_ACCOUNT_BE = #{vmAccountBe} AND </if>
+			<if test="vmAccountAf != null  and vmAccountAf != '' " > VM_ACCOUNT_AF = #{vmAccountAf} AND </if>
+			<if test="entranceCardBe != null  and entranceCardBe != '' " > ENTRANCE_CARD_BE = #{entranceCardBe} AND </if>
+			<if test="entranceCardAf != null  and entranceCardAf != '' " > ENTRANCE_CARD_AF = #{entranceCardAf} AND </if>
+			<if test="newContractIdBe != null " > NEW_CONTRACT_ID_BE = #{newContractIdBe} AND </if>
+			<if test="newContractIdAf != null " > NEW_CONTRACT_ID_AF = #{newContractIdAf} AND </if>
+			<if test="ceneralOfficeMotionBe != null " > CENERAL_OFFICE_MOTION_BE = #{ceneralOfficeMotionBe} AND </if>
+			<if test="ceneralOfficeMotionAf != null " > CENERAL_OFFICE_MOTION_AF = #{ceneralOfficeMotionAf} AND </if>
+			<if test="creditReportBe != null  and creditReportBe != '' " > CREDIT_REPORT_BE = #{creditReportBe} AND </if>
+			<if test="creditReportAf != null  and creditReportAf != '' " > CREDIT_REPORT_AF = #{creditReportAf} AND </if>
+			<if test="ssPaymentProveBe != null  and ssPaymentProveBe != '' " > SS_PAYMENT_PROVE_BE = #{ssPaymentProveBe} AND </if>
+			<if test="ssPaymentProveAf != null  and ssPaymentProveAf != '' " > SS_PAYMENT_PROVE_AF = #{ssPaymentProveAf} AND </if>
+			<if test="confidentCommitmentBe != null  and confidentCommitmentBe != '' " > CONFIDENT_COMMITMENT_BE = #{confidentCommitmentBe} AND </if>
+			<if test="confidentCommitmentAf != null  and confidentCommitmentAf != '' " > CONFIDENT_COMMITMENT_AF = #{confidentCommitmentAf} AND </if>
+			<if test="dueDiligenceReportBe != null  and dueDiligenceReportBe != '' " > DUE_DILIGENCE_REPORT_BE = #{dueDiligenceReportBe} AND </if>
+			<if test="dueDiligenceReportAf != null  and dueDiligenceReportAf != '' " > DUE_DILIGENCE_REPORT_AF = #{dueDiligenceReportAf} AND </if>
+			<if test="qtFileBe != null  and qtFileBe != '' " > QT_FILE_BE = #{qtFileBe} AND </if>
+			<if test="qtFileAf != null  and qtFileAf != '' " > QT_FILE_AF = #{qtFileAf} AND </if>
+			<if test="otherFileBe != null  and otherFileBe != '' " > OTHER_FILE_BE = #{otherFileBe} AND </if>
+			<if test="otherFileAf != null  and otherFileAf != '' " > OTHER_FILE_AF = #{otherFileAf} AND </if>
+			<if test="faceimageBe != null  and faceimageBe != '' " > FACEIMAGE_BE = #{faceimageBe} AND </if>
+			<if test="faceimageAf != null  and faceimageAf != '' " > FACEIMAGE_AF = #{faceimageAf} AND </if>
+			<if test="createdTime != null " > CREATED_TIME = #{createdTime} AND </if>
+			<if test="createdBy != null  and createdBy != '' " > CREATED_BY = #{createdBy} AND </if>
+			<if test="modifiedTime != null " > MODIFIED_TIME = #{modifiedTime} AND </if>
+			<if test="modifiedBy != null  and modifiedBy != '' " > MODIFIED_BY = #{modifiedBy} AND </if>
+		</trim>
+	</sql>
+	<!-- 查询分页  2022-11-17 ywwb905  -->
+	<select id="queryPagerList" parameterType="map" resultMap="PPMOUTSOURCUPDATEINFO_ALL">
+		SELECT
+		<include refid="sql_flied_all" />
+		FROM PPM_OUTSOURC_UPDATE_INFO
+		<include refid="sql_select_condition" />
+	</select>
+
+	<!-- 新增  2022-11-17 ywwb905  -->
+	<insert id="addPojo" parameterType="ppmOutsourcUpdateInfo">
+		INSERT INTO PPM_OUTSOURC_UPDATE_INFO (
+		<trim suffixOverrides=",">
+			<if test="id != null " > ID , </if>
+			<if test="pid != null " > PID , </if>
+			<if test="jobId != null  and jobId != '' " > JOB_ID , </if>
+			<if test="userName != null  and userName != '' " > USER_NAME , </if>
+			<if test="instanceid != null  and instanceid != '' " > INSTANCEID , </if>
+			<if test="positionBe != null  and positionBe != '' " > POSITION_BE , </if>
+			<if test="positionAf != null  and positionAf != '' " > POSITION_AF , </if>
+			<if test="outsourceTypeBe != null  and outsourceTypeBe != '' " > OUTSOURCE_TYPE_BE , </if>
+			<if test="outsourceTypeAf != null  and outsourceTypeAf != '' " > OUTSOURCE_TYPE_AF , </if>
+			<if test="userTypeBe != null  and userTypeBe != '' " > USER_TYPE_BE , </if>
+			<if test="userTypeAf != null  and userTypeAf != '' " > USER_TYPE_AF , </if>
+			<if test="vmAccountBe != null  and vmAccountBe != '' " > VM_ACCOUNT_BE , </if>
+			<if test="vmAccountAf != null  and vmAccountAf != '' " > VM_ACCOUNT_AF , </if>
+			<if test="entranceCardBe != null  and entranceCardBe != '' " > ENTRANCE_CARD_BE , </if>
+			<if test="entranceCardAf != null  and entranceCardAf != '' " > ENTRANCE_CARD_AF , </if>
+			<if test="newContractIdBe != null " > NEW_CONTRACT_ID_BE , </if>
+			<if test="newContractIdAf != null " > NEW_CONTRACT_ID_AF , </if>
+			<if test="ceneralOfficeMotionBe != null " > CENERAL_OFFICE_MOTION_BE , </if>
+			<if test="ceneralOfficeMotionAf != null " > CENERAL_OFFICE_MOTION_AF , </if>
+			<if test="creditReportBe != null  and creditReportBe != '' " > CREDIT_REPORT_BE , </if>
+			<if test="creditReportAf != null  and creditReportAf != '' " > CREDIT_REPORT_AF , </if>
+			<if test="ssPaymentProveBe != null  and ssPaymentProveBe != '' " > SS_PAYMENT_PROVE_BE , </if>
+			<if test="ssPaymentProveAf != null  and ssPaymentProveAf != '' " > SS_PAYMENT_PROVE_AF , </if>
+			<if test="confidentCommitmentBe != null  and confidentCommitmentBe != '' " > CONFIDENT_COMMITMENT_BE , </if>
+			<if test="confidentCommitmentAf != null  and confidentCommitmentAf != '' " > CONFIDENT_COMMITMENT_AF , </if>
+			<if test="dueDiligenceReportBe != null  and dueDiligenceReportBe != '' " > DUE_DILIGENCE_REPORT_BE , </if>
+			<if test="dueDiligenceReportAf != null  and dueDiligenceReportAf != '' " > DUE_DILIGENCE_REPORT_AF , </if>
+			<if test="qtFileBe != null  and qtFileBe != '' " > QT_FILE_BE , </if>
+			<if test="qtFileAf != null  and qtFileAf != '' " > QT_FILE_AF , </if>
+			<if test="otherFileBe != null  and otherFileBe != '' " > OTHER_FILE_BE , </if>
+			<if test="otherFileAf != null  and otherFileAf != '' " > OTHER_FILE_AF , </if>
+			<if test="faceimageBe != null  and faceimageBe != '' " > FACEIMAGE_BE , </if>
+			<if test="faceimageAf != null  and faceimageAf != '' " > FACEIMAGE_AF , </if>
+			<if test="createdTime != null " > CREATED_TIME , </if>
+			<if test="createdBy != null  and createdBy != '' " > CREATED_BY , </if>
+			<if test="modifiedTime != null " > MODIFIED_TIME , </if>
+			<if test="modifiedBy != null  and modifiedBy != '' " > MODIFIED_BY , </if>
+			<if test="deptIdBe != null  and deptIdBe != '' ">DEPT_ID_BE,</if>
+			<if test="deptIdAf != null  and deptIdAf != '' ">DEPT_ID_AF,</if>
+			<if test="systemNoBe != null  and systemNoBe != '' ">SYSTEM_NO_BE,</if>
+			<if test="systemNoAf != null  and systemNoAf != '' ">SYSTEM_NO_AF,</if>
+			<if test="personInChargeBe != null  and personInChargeBe != '' ">PERSON_IN_CHARGE_BE,</if>
+			<if test="personInChargeAf != null  and personInChargeAf != '' ">PERSON_IN_CHARGE_AF,</if>
+			<if test="evaluationLevelBe != null  and evaluationLevelBe != '' ">EVALUATION_LEVEL_BE,</if>
+			<if test="evaluationLevelAf != null  and evaluationLevelAf != '' ">EVALUATION_LEVEL_AF,</if>
+			<if test="levelReasonBe != null  and levelReasonBe != '' ">LEVEL_REASON_BE,</if>
+			<if test="levelReasonAf != null  and levelReasonAf != '' ">LEVEL_REASON_AF,</if>
+			<if test="evaluatorIdBe != null  and evaluatorIdBe != '' ">EVALUATOR_ID_BE,</if>
+			<if test="evaluatorIdAf != null  and evaluatorIdAf != '' ">EVALUATOR_ID_AF,</if>
+			<if test="evaluationTime != null">EVALUATION_TIME,</if>
+			<if test="evaluationTimeBe != null  and evaluationTimeBe != '' ">EVALUATION_TIME_BE,</if>
+		</trim>
+		)
+		VALUES(
+		<trim suffixOverrides=",">
+			<if test="id != null " > #{id} , </if>
+			<if test="pid != null " > #{pid} , </if>
+			<if test="jobId != null  and jobId != '' " > #{jobId} , </if>
+			<if test="userName != null  and userName != '' " > #{userName} , </if>
+			<if test="instanceid != null  and instanceid != '' " > #{instanceid} , </if>
+			<if test="positionBe != null  and positionBe != '' " > #{positionBe} , </if>
+			<if test="positionAf != null  and positionAf != '' " > #{positionAf} , </if>
+			<if test="outsourceTypeBe != null  and outsourceTypeBe != '' " > #{outsourceTypeBe} , </if>
+			<if test="outsourceTypeAf != null  and outsourceTypeAf != '' " > #{outsourceTypeAf} , </if>
+			<if test="userTypeBe != null  and userTypeBe != '' " > #{userTypeBe} , </if>
+			<if test="userTypeAf != null  and userTypeAf != '' " > #{userTypeAf} , </if>
+			<if test="vmAccountBe != null  and vmAccountBe != '' " > #{vmAccountBe} , </if>
+			<if test="vmAccountAf != null  and vmAccountAf != '' " > #{vmAccountAf} , </if>
+			<if test="entranceCardBe != null  and entranceCardBe != '' " > #{entranceCardBe} , </if>
+			<if test="entranceCardAf != null  and entranceCardAf != '' " > #{entranceCardAf} , </if>
+			<if test="newContractIdBe != null " > #{newContractIdBe} , </if>
+			<if test="newContractIdAf != null " > #{newContractIdAf} , </if>
+			<if test="ceneralOfficeMotionBe != null " > #{ceneralOfficeMotionBe} , </if>
+			<if test="ceneralOfficeMotionAf != null " > #{ceneralOfficeMotionAf} , </if>
+			<if test="creditReportBe != null  and creditReportBe != '' " > #{creditReportBe} , </if>
+			<if test="creditReportAf != null  and creditReportAf != '' " > #{creditReportAf} , </if>
+			<if test="ssPaymentProveBe != null  and ssPaymentProveBe != '' " > #{ssPaymentProveBe} , </if>
+			<if test="ssPaymentProveAf != null  and ssPaymentProveAf != '' " > #{ssPaymentProveAf} , </if>
+			<if test="confidentCommitmentBe != null  and confidentCommitmentBe != '' " > #{confidentCommitmentBe} , </if>
+			<if test="confidentCommitmentAf != null  and confidentCommitmentAf != '' " > #{confidentCommitmentAf} , </if>
+			<if test="dueDiligenceReportBe != null  and dueDiligenceReportBe != '' " > #{dueDiligenceReportBe} , </if>
+			<if test="dueDiligenceReportAf != null  and dueDiligenceReportAf != '' " > #{dueDiligenceReportAf} , </if>
+			<if test="qtFileBe != null  and qtFileBe != '' " > #{qtFileBe} , </if>
+			<if test="qtFileAf != null  and qtFileAf != '' " > #{qtFileAf} , </if>
+			<if test="otherFileBe != null  and otherFileBe != '' " > #{otherFileBe} , </if>
+			<if test="otherFileAf != null  and otherFileAf != '' " > #{otherFileAf} , </if>
+			<if test="faceimageBe != null  and faceimageBe != '' " > #{faceimageBe} , </if>
+			<if test="faceimageAf != null  and faceimageAf != '' " > #{faceimageAf} , </if>
+			<if test="createdTime != null " > #{createdTime} , </if>
+			<if test="createdBy != null  and createdBy != '' " > #{createdBy} , </if>
+			<if test="modifiedTime != null " > #{modifiedTime} , </if>
+			<if test="modifiedBy != null  and modifiedBy != '' " > #{modifiedBy} , </if>
+			<if test="deptIdBe != null  and deptIdBe != '' ">#{deptIdBe},</if>
+			<if test="deptIdAf != null  and deptIdAf != '' ">#{deptIdAf},</if>
+			<if test="systemNoBe != null and systemNoBe != '' ">#{systemNoBe},</if>
+			<if test="systemNoAf != null  and systemNoAf != '' ">#{systemNoAf},</if>
+			<if test="personInChargeBe != null  and personInChargeBe != '' ">#{personInChargeBe},</if>
+			<if test="personInChargeAf != null and personInChargeAf != '' ">#{personInChargeAf},</if>
+			<if test="evaluationLevelBe != null  and evaluationLevelBe != '' ">#{evaluationLevelBe},</if>
+			<if test="evaluationLevelAf != null  and evaluationLevelAf != '' ">#{evaluationLevelAf},</if>
+			<if test="levelReasonBe != null and levelReasonBe != '' ">#{levelReasonBe},</if>
+			<if test="levelReasonAf != null  and levelReasonAf != '' ">#{levelReasonAf},</if>
+			<if test="evaluatorIdBe != null  and evaluatorIdBe != '' ">#{evaluatorIdBe},</if>
+			<if test="evaluatorIdAf != null and evaluatorIdAf != '' ">#{evaluatorIdAf},</if>
+			<if test="evaluationTime != null ">#{evaluationTime},</if>
+			<if test="evaluationTimeBe != null  and evaluationTimeBe != '' ">#{evaluationTimeBe},</if>
+		</trim>
+		)
+	</insert>
+
+	<!--通过id查询  ywwb905 2022-11-17 -->
+	<select id="queryDetail" parameterType="ppmOutsourcUpdateInfo" resultMap="PPMOUTSOURCUPDATEINFO_ALL">
+		SELECT
+		<include refid="sql_flied_all" />
+		FROM PPM_OUTSOURC_UPDATE_INFO  WHERE ID=#{id}
+	</select>
+
+	<!--查询集合  ywwb905 2022-11-17 -->
+	<select id="getList" parameterType="ppmOutsourcUpdateInfo" resultMap="PPMOUTSOURCUPDATEINFO_ALL">
+		SELECT
+		<include refid="sql_flied_all" />
+		FROM PPM_OUTSOURC_UPDATE_INFO
+		<include refid="sql_select_condition" />
+	</select>
+	<!-- update sql -->
+	<sql id="update_pojo_sql">
+		<trim prefix="SET" suffixOverrides=",">
+			<if test="pid != null " > PID=#{pid} , </if>
+			<if test="jobId != null  and jobId != '' " > JOB_ID=#{jobId} , </if>
+			<if test="userName != null  and userName != '' " > USER_NAME=#{userName} , </if>
+			<if test="instanceid != null  and instanceid != '' " > INSTANCEID=#{instanceid} , </if>
+			<if test="positionBe != null  and positionBe != '' " > POSITION_BE=#{positionBe} , </if>
+			<if test="positionAf != null  and positionAf != '' " > POSITION_AF=#{positionAf} , </if>
+			<if test="outsourceTypeBe != null  and outsourceTypeBe != '' " > OUTSOURCE_TYPE_BE=#{outsourceTypeBe} , </if>
+			<if test="outsourceTypeAf != null  and outsourceTypeAf != '' " > OUTSOURCE_TYPE_AF=#{outsourceTypeAf} , </if>
+			<if test="userTypeBe != null  and userTypeBe != '' " > USER_TYPE_BE=#{userTypeBe} , </if>
+			<if test="userTypeAf != null  and userTypeAf != '' " > USER_TYPE_AF=#{userTypeAf} , </if>
+			<if test="vmAccountBe != null  and vmAccountBe != '' " > VM_ACCOUNT_BE=#{vmAccountBe} , </if>
+			<if test="vmAccountAf != null  and vmAccountAf != '' " > VM_ACCOUNT_AF=#{vmAccountAf} , </if>
+			<if test="entranceCardBe != null  and entranceCardBe != '' " > ENTRANCE_CARD_BE=#{entranceCardBe} , </if>
+			<if test="entranceCardAf != null  and entranceCardAf != '' " > ENTRANCE_CARD_AF=#{entranceCardAf} , </if>
+			<if test="newContractIdBe != null " > NEW_CONTRACT_ID_BE=#{newContractIdBe} , </if>
+			<if test="newContractIdAf != null " > NEW_CONTRACT_ID_AF=#{newContractIdAf} , </if>
+			<if test="ceneralOfficeMotionBe != null " > CENERAL_OFFICE_MOTION_BE=#{ceneralOfficeMotionBe} , </if>
+			<if test="ceneralOfficeMotionAf != null " > CENERAL_OFFICE_MOTION_AF=#{ceneralOfficeMotionAf} , </if>
+			<if test="creditReportBe != null  and creditReportBe != '' " > CREDIT_REPORT_BE=#{creditReportBe} , </if>
+			<if test="creditReportAf != null  and creditReportAf != '' " > CREDIT_REPORT_AF=#{creditReportAf} , </if>
+			<if test="ssPaymentProveBe != null  and ssPaymentProveBe != '' " > SS_PAYMENT_PROVE_BE=#{ssPaymentProveBe} , </if>
+			<if test="ssPaymentProveAf != null  and ssPaymentProveAf != '' " > SS_PAYMENT_PROVE_AF=#{ssPaymentProveAf} , </if>
+			<if test="confidentCommitmentBe != null  and confidentCommitmentBe != '' " > CONFIDENT_COMMITMENT_BE=#{confidentCommitmentBe} , </if>
+			<if test="confidentCommitmentAf != null  and confidentCommitmentAf != '' " > CONFIDENT_COMMITMENT_AF=#{confidentCommitmentAf} , </if>
+			<if test="dueDiligenceReportBe != null  and dueDiligenceReportBe != '' " > DUE_DILIGENCE_REPORT_BE=#{dueDiligenceReportBe} , </if>
+			<if test="dueDiligenceReportAf != null  and dueDiligenceReportAf != '' " > DUE_DILIGENCE_REPORT_AF=#{dueDiligenceReportAf} , </if>
+			<if test="qtFileBe != null  and qtFileBe != '' " > QT_FILE_BE=#{qtFileBe} , </if>
+			<if test="qtFileAf != null  and qtFileAf != '' " > QT_FILE_AF=#{qtFileAf} , </if>
+			<if test="otherFileBe != null  and otherFileBe != '' " > OTHER_FILE_BE=#{otherFileBe} , </if>
+			<if test="otherFileAf != null  and otherFileAf != '' " > OTHER_FILE_AF=#{otherFileAf} , </if>
+			<if test="faceimageBe != null  and faceimageBe != '' " > FACEIMAGE_BE=#{faceimageBe} , </if>
+			<if test="faceimageAf != null  and faceimageAf != '' " > FACEIMAGE_AF=#{faceimageAf} , </if>
+			<if test="createdTime != null " > CREATED_TIME=#{createdTime} , </if>
+			<if test="createdBy != null  and createdBy != '' " > CREATED_BY=#{createdBy} , </if>
+			<if test="modifiedTime != null " > MODIFIED_TIME=#{modifiedTime} , </if>
+			<if test="modifiedBy != null  and modifiedBy != '' " > MODIFIED_BY=#{modifiedBy} , </if>
+			<if test="deptIdBe != null  and deptIdBe != '' ">DEPT_ID_BE = #{deptIdBe} ,</if>
+			<if test="deptIdAf != null  and deptIdAf != '' ">DEPT_ID_AF = #{deptIdAf} ,</if>
+			<if test="systemNoBe != null  and systemNoBe != '' ">SYSTEM_NO_BE = #{systemNoBe} ,</if>
+			<if test="systemNoAf != null  and systemNoAf != '' ">SYSTEM_NO_AF = #{systemNoAf} ,</if>
+			<if test="personInChargeBe != null  and personInChargeBe != '' ">PERSON_IN_CHARGE_BE = #{personInChargeBe} ,</if>
+			<if test="personInChargeAf != null  and personInChargeAf != '' ">PERSON_IN_CHARGE_AF = #{personInChargeAf} ,</if>
+			<if test="evaluationLevelBe != null  and evaluationLevelBe != '' ">EVALUATION_LEVEL_BE = #{evaluationLevelBe} ,</if>
+			<if test="evaluationLevelAf != null  and evaluationLevelAf != '' ">EVALUATION_LEVEL_AF = #{evaluationLevelAf} ,</if>
+			<if test="levelReasonBe != null  and levelReasonBe != '' ">LEVEL_REASON_BE = #{levelReasonBe} ,</if>
+			<if test="levelReasonAf != null  and levelReasonAf != '' ">LEVEL_REASON_AF = #{levelReasonAf} ,</if>
+			<if test="evaluatorIdBe != null  and evaluatorIdBe != '' ">EVALUATOR_ID_BE = #{evaluatorIdBe} ,</if>
+			<if test="evaluatorIdAf != null  and evaluatorIdAf != '' ">EVALUATOR_ID_AF = #{evaluatorIdAf} ,</if>
+			<if test="evaluationTime != null ">EVALUATION_TIME = #{evaluationTime} ,</if>
+			<if test="evaluationTimeBe != null  and evaluationTimeBe != '' ">EVALUATION_TIME_BE = #{evaluationTimeBe} ,</if>
+
+		</trim>
+	</sql>
+
+	<!--通过id编辑 ywwb905 2022-11-17 -->
+	<update id="updatePojo" parameterType="ppmOutsourcUpdateInfo">
+		UPDATE
+		PPM_OUTSOURC_UPDATE_INFO
+		<include refid="update_pojo_sql" />
+		WHERE ID=#{id}
+	</update>
+
+	<!--通过id批量删除  ywwb905 2022-11-17 -->
+	<delete id="deleteById" parameterType="ppmOutsourcUpdateInfo">
+		DELETE
+		FROM
+		PPM_OUTSOURC_UPDATE_INFO
+		WHERE ID = #{id}
+	</delete>
+
+	<delete id="deleteByInstanceId" parameterType="ppmOutsourcUpdateInfo">
+		DELETE
+		FROM
+		PPM_OUTSOURC_UPDATE_INFO
+		WHERE INSTANCEID = #{instanceid}
+	</delete>
+
+
+	<!--通过id查询  ywwb905 2022-10-10 -->
+	<select id="queryBaseInfo" parameterType="ppmOutsourcUpdateInfoView" resultMap="PPMOUTSOURCUPDATEINFO_ALL_EXT">
+		SELECT
+		UI.ID,
+		UI.PID,
+		UI.JOB_ID,
+		UI.USER_NAME,
+		UI.INSTANCEID,
+		OB.POST_ID POSITION_BE,
+		UI.POSITION_AF,
+		OB.OUTSOURCE_TYPE OUTSOURCE_TYPE_BE,
+		UI.OUTSOURCE_TYPE_AF,
+		OB.USER_TYPE USER_TYPE_BE,
+		UI.USER_TYPE_AF,
+		OB.VM_ACCOUNT VM_ACCOUNT_BE,
+		UI.VM_ACCOUNT_AF,
+		OB.ENTRANCE_CARD ENTRANCE_CARD_BE,
+		UI.ENTRANCE_CARD_AF,
+		OB.NEW_CONTRACT_ID NEW_CONTRACT_ID_BE,
+		UI.NEW_CONTRACT_ID_AF,
+		OB.CENERAL_OFFICE_MOTION CENERAL_OFFICE_MOTION_BE,
+		UI.CENERAL_OFFICE_MOTION_AF,
+		OE.CREDIT_REPORT CREDIT_REPORT_BE,
+		UI.CREDIT_REPORT_AF,
+		OE.SOCIAI_SECRITY_PAYMENT_PROVE SS_PAYMENT_PROVE_BE,
+		UI.SS_PAYMENT_PROVE_AF,
+		OE.CONFIDENTIALITY_COMMITMENT CONFIDENT_COMMITMENT_BE,
+		UI.CONFIDENT_COMMITMENT_AF,
+		OE.DUE_DILIGENCE_REPORT DUE_DILIGENCE_REPORT_BE,
+		UI.DUE_DILIGENCE_REPORT_AF,
+		OE.QT_FILE QT_FILE_BE,
+		UI.QT_FILE_AF,
+		OE.OTHER_FILE OTHER_FILE_BE,
+		UI.OTHER_FILE_AF,
+		OB.FACEIMAGE FACEIMAGE_BE,
+		UI.FACEIMAGE_AF,
+		UI.CREATED_TIME,
+		UI.CREATED_BY,
+		UI.MODIFIED_TIME,
+		UI.MODIFIED_BY,
+		OU.APPLYER,
+		CE.EMPNAME APPLYER_NAME,
+		OU.APPLYER_DEPT,
+		CD.LOCATION APPLYER_DEPT_NAME,
+		OU.STATE,
+		OU.STATE_NAME,
+		OU.CURRENT_ID,
+		OU.CURRENT_NAME
+		FROM PPM_OUTSOURC_UPDATE_INFO UI
+		LEFT JOIN PPM_OUTSOURC_UPDATE OU ON OU.ID = UI.PID
+		LEFT JOIN COMM_EMPLOYEE CE ON OU.APPLYER = CE.BADGE
+		LEFT JOIN COMM_DEPARTMENT CD ON OU.APPLYER_DEPT = CD.DEPID
+		LEFT JOIN PPM_OUTSOURCING_BASIC OB ON OB.JOB_ID = UI.JOB_ID
+		LEFT JOIN PPM_OUTSOURCING_EXT OE ON OE.USER_ID = OB.JOB_ID
+		WHERE UI.ID = #{id}
+	</select>
+
+	<select id="queryBaseInfoList" parameterType="ppmOutsourcUpdateInfoView" resultMap="PPMOUTSOURCUPDATEINFO_ALL_EXT">
+		SELECT
+		UI.ID,
+		UI.PID,
+		UI.JOB_ID,
+		UI.USER_NAME,
+		UI.INSTANCEID,
+		UI.POSITION_BE,
+		UI.POSITION_AF,
+		UI.OUTSOURCE_TYPE_BE,
+		UI.OUTSOURCE_TYPE_AF,
+		UI.USER_TYPE_BE,
+		UI.USER_TYPE_AF,
+		UI.VM_ACCOUNT_BE,
+		UI.VM_ACCOUNT_AF,
+		UI.ENTRANCE_CARD_BE,
+		UI.ENTRANCE_CARD_AF,
+		UI.NEW_CONTRACT_ID_BE,
+		UI.NEW_CONTRACT_ID_AF,
+		UI.CENERAL_OFFICE_MOTION_BE,
+		UI.CENERAL_OFFICE_MOTION_AF,
+		UI.CREDIT_REPORT_BE,
+		UI.CREDIT_REPORT_AF,
+		UI.SS_PAYMENT_PROVE_BE,
+		UI.SS_PAYMENT_PROVE_AF,
+		UI.CONFIDENT_COMMITMENT_BE,
+		UI.CONFIDENT_COMMITMENT_AF,
+		UI.DUE_DILIGENCE_REPORT_BE,
+		UI.DUE_DILIGENCE_REPORT_AF,
+		UI.QT_FILE_BE,
+		UI.QT_FILE_AF,
+		UI.OTHER_FILE_BE,
+		UI.OTHER_FILE_AF,
+		UI.FACEIMAGE_BE,
+		UI.FACEIMAGE_AF,
+		UI.DEPT_ID_BE,
+		UI.DEPT_ID_AF,
+		UI.SYSTEM_NO_BE,
+		UI.SYSTEM_NO_AF,
+		UI.PERSON_IN_CHARGE_BE,
+		UI.PERSON_IN_CHARGE_AF,
+		UI.EVALUATION_LEVEL_BE,
+		UI.EVALUATION_LEVEL_AF,
+		UI.LEVEL_REASON_BE,
+		UI.LEVEL_REASON_AF,
+		UI.EVALUATOR_ID_BE,
+		UI.EVALUATOR_ID_AF,
+		UI.EVALUATION_TIME_BE,
+        UI.EVALUATION_TIME,
+		UI.CREATED_TIME,
+		UI.CREATED_BY,
+		UI.MODIFIED_TIME,
+		UI.MODIFIED_BY,
+		OU.APPLYER,
+		CE.EMPNAME APPLYER_NAME,
+		OU.APPLYER_DEPT,
+		CD.LOCATION APPLYER_DEPT_NAME,
+		OU.STATE,
+		OU.STATE_NAME,
+		OU.CURRENT_ID,
+		OU.CURRENT_NAME
+		FROM PPM_OUTSOURC_UPDATE_INFO UI
+		LEFT JOIN PPM_OUTSOURC_UPDATE OU ON OU.ID = UI.PID
+		LEFT JOIN COMM_EMPLOYEE CE ON OU.APPLYER = CE.BADGE
+		LEFT JOIN COMM_DEPARTMENT CD ON OU.APPLYER_DEPT = CD.DEPID
+		LEFT JOIN PPM_OUTSOURCING_BASIC OB ON OB.JOB_ID = UI.JOB_ID
+		LEFT JOIN PPM_OUTSOURCING_EXT OE ON OE.USER_ID = OB.JOB_ID
+		<trim prefix="WHERE" suffixOverrides="AND">
+			<if test="userName != null and userName != '' ">UI.USER_NAME = #{userName} AND</if>
+			<if test="applyerDept != null and applyerDept != '' ">OU.APPLYER_DEPT = #{applyerDept} AND</if>
+			<if test="instanceid != null and instanceid != '' ">UI.INSTANCEID = #{instanceid} AND</if>
+			<if test="pid != null and pid != '' ">UI.PID = #{pid} AND</if>
+			<if test="applyer != null and applyer != '' " > OU.APPLYER = #{applyer} AND </if>
+			<if test="applyerName != null and applyerName != '' " > CE.EMPNAME = #{applyerName} AND </if>
+			<if test="state != null and state != '' " > OU.STATE = #{state} AND </if>
+			<if test="jobId != null and jobId != '' " > UI.JOB_ID = #{jobId} AND </if>
+		</trim>
+		ORDER BY OU.ID DESC
+	</select>
+
+	<select id="getPersenceList" parameterType="ppmOutsourcUpdateInfoView" resultMap="PPMOUTSOURCUPDATEINFO_ALL_EXT">
+		SELECT
+		OB.JOB_ID,
+		OB.USER_NAME,
+		OB.DEPT_ID DEPT_ID_BE,
+		OB.SYSTEM_NO SYSTEM_NO_BE,
+		OB.PERSON_IN_CHARGE PERSON_IN_CHARGE_BE,
+		OB.EVALUATION_LEVEL EVALUATION_LEVEL_BE,
+		OB.LEVEL_REASON LEVEL_REASON_BE,
+		OB.EVALUATOR_ID EVALUATOR_ID_BE,
+		OB.EVALUATION_TIME,
+		OB.PRICE,
+		OB.WORK_TIME,
+		OB.POST_ID POSITION_BE ,
+		OB.POST_ID POSITION_AF ,
+		OB.VM_ACCOUNT VM_ACCOUNT_BE,
+		OB.VM_ACCOUNT VM_ACCOUNT_AF,
+		OB.OUTSOURCE_TYPE OUTSOURCE_TYPE_BE,
+		OB.OUTSOURCE_TYPE OUTSOURCE_TYPE_AF,
+		OB.USER_TYPE USER_TYPE_BE,
+		OB.USER_TYPE USER_TYPE_AF,
+		OB.ENTRANCE_CARD ENTRANCE_CARD_BE,
+		OB.ENTRANCE_CARD ENTRANCE_CARD_AF,
+		OB.NEW_CONTRACT_ID NEW_CONTRACT_ID_BE,
+		VC.CONTRACT_NO     NEW_CONTRACT_ID_BE_NO,
+		VC.CONTRACT_NAME   NEW_CONTRACT_ID_BE_NAME,
+		OB.NEW_CONTRACT_ID NEW_CONTRACT_ID_AF,
+		VC.CONTRACT_NO   	 NEW_CONTRACT_ID_AF_NO,
+		VC.CONTRACT_NAME   NEW_CONTRACT_ID_AF_NAME,
+		OB.CENERAL_OFFICE_MOTION CENERAL_OFFICE_MOTION_BE,
+		AM.FILE_NO 			   CENERAL_OFFICE_MOTION_BE_NO,
+		AM.ATTACH_NAME 		   CENERAL_OFFICE_MOTION_BE_NAME,
+		OB.CENERAL_OFFICE_MOTION CENERAL_OFFICE_MOTION_AF,
+		AM.FILE_NO 			   CENERAL_OFFICE_MOTION_AF_NO,
+		AM.ATTACH_NAME 		   CENERAL_OFFICE_MOTION_AF_NAME,
+		OE.CREDIT_REPORT CREDIT_REPORT_BE,
+		OE.CREDIT_REPORT CREDIT_REPORT_AF,
+		OE.SOCIAI_SECRITY_PAYMENT_PROVE SS_PAYMENT_PROVE_BE,
+		OE.SOCIAI_SECRITY_PAYMENT_PROVE SS_PAYMENT_PROVE_AF,
+		OE.CONFIDENTIALITY_COMMITMENT CONFIDENT_COMMITMENT_BE,
+		OE.CONFIDENTIALITY_COMMITMENT CONFIDENT_COMMITMENT_AF,
+		OE.DUE_DILIGENCE_REPORT DUE_DILIGENCE_REPORT_BE,
+		OE.DUE_DILIGENCE_REPORT DUE_DILIGENCE_REPORT_AF,
+		OE.QT_FILE QT_FILE_BE,
+		OE.QT_FILE QT_FILE_AF,
+		OE.OTHER_FILE OTHER_FILE_BE,
+		OE.OTHER_FILE OTHER_FILE_AF,
+		OB.FACEIMAGE FACEIMAGE_BE,
+		OB.FACEIMAGE FACEIMAGE_AF
+		FROM PPM_OUTSOURCING_BASIC OB
+		LEFT JOIN PPM_OUTSOURCING_EXT OE ON OB.JOB_ID = OE.USER_ID
+		LEFT JOIN PPM_ATTATCH_MANAGEMENT AM ON OB.CENERAL_OFFICE_MOTION = AM.ID
+		LEFT JOIN PPM_VENDOR_CONTRACT VC ON VC.ID = OB.NEW_CONTRACT_ID
+		<trim prefix="WHERE" suffixOverrides="AND">
+			<if test="jobId != null  and jobId != '' ">OB.JOB_ID = #{jobId} AND</if>
+			<if test="presenceState != null and presenceState != '' ">OB.PRESENCE_STATE = #{presenceState} AND</if>
+			<if test="personInCharge != null and personInCharge != '' ">OB.PERSON_IN_CHARGE = #{personInCharge} AND</if>
+		</trim>
+	</select>
+
+
+	<select id="getExpenseCaseList" parameterType="ppmOutsourcUpdateInfoView" resultMap="PPMOUTSOURCUPDATEINFO_ALL_EXT">
+		SELECT
+		JOB_ID
+		FROM
+		PPM.PPM_OUTSOURCING_BASIC
+		WHERE NEW_CONTRACT_ID IN
+		(SELECT
+		ID
+		FROM
+		PPM.PPM_VENDOR_CONTRACT
+		WHERE CONTRACT_NO IN
+		(SELECT
+		CONTRACT_NO
+		FROM
+		PPM.PPM_PAYMENT_CONFIRM
+		WHERE
+		ID IN (${payConfirmId})))
+		AND JOB_ID = #{jobId}
+	</select>
+
+	<select id="getConfirmCaseList" parameterType="ppmOutsourcUpdateInfoView" resultMap="PPMOUTSOURCUPDATEINFO_ALL_EXT">
+		SELECT
+		JOB_ID
+		FROM
+		PPM.PPM_OUTSOURCING_BASIC
+		WHERE
+		NEW_CONTRACT_ID IN
+		(SELECT ID
+		FROM PPM.PPM_VENDOR_CONTRACT
+		WHERE CONTRACT_NO = #{payConfirmNo}) AND
+		JOB_ID = #{jobId}
+	</select>
+
+
+
+</mapper>

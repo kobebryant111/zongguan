@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k6991 2021-01-06 -->
+<mapper namespace="com.work.ppm.application.model.othermanager.PpmSendMsgInfo">
+	 <resultMap type="ppmSendMsgInfo" id="PPMSENDMSGINFO_ALL">
+        <result property="id" column="ID" />
+		<result property="sender" column="SENDER" />
+		<result property="sendType" column="SEND_TYPE" />
+		<result property="sendTimes" column="SEND_TIMES" />
+		<result property="status" column="STATUS" />
+		<result property="createTime" column="CREATE_TIME" />
+		<result property="parameters" column="PARAMETERS" />
+		<result property="errorMsg" column="ERROR_MSG" />
+		<result property="modifyTime" column="MODIFY_TIME" />
+		
+     </resultMap>
+
+     <!-- 所有字段名称 -->
+        <sql id="sql_flied_all">
+        	ID,
+			SENDER,
+			SEND_TYPE,
+			SEND_TIMES,
+			STATUS,
+			CREATE_TIME,
+			PARAMETERS,
+			ERROR_MSG,
+			MODIFY_TIME
+        </sql>
+        <sql id="sql_select_condition">
+            <trim prefix="WHERE" suffixOverrides="AND">
+                <if test="id != null " > ID = #{id} AND </if>
+				<if test="sender != null  and sender != '' " > SENDER = #{sender} AND </if>
+				<if test="sendType != null  and sendType != '' " > SEND_TYPE = #{sendType} AND </if>
+				<if test="sendTimes != null " > SEND_TIMES = #{sendTimes} AND </if>
+				<if test="status != null  and status != '' " > STATUS = #{status} AND </if>
+				<if test="createTime != null  and createTime != '' " > CREATE_TIME = #{createTime} AND </if>
+				<if test="parameters != null  and parameters != '' " > PARAMETERS = #{parameters} AND </if>
+				<if test="errorMsg != null  and errorMsg != '' " > ERROR_MSG = #{errorMsg} AND </if>
+				<if test="modifyTime != null  and modifyTime != '' " > MODIFY_TIME = #{modifyTime} AND </if>
+				
+            </trim>
+        </sql>
+    	<!-- 查询分页  2021-01-06 k6991  -->
+        <select id="queryPagerList" parameterType="map" resultMap="PPMSENDMSGINFO_ALL">
+        	SELECT
+            <include refid="sql_flied_all" />
+            FROM PPM_SEND_MSG_INFO
+            <include refid="sql_select_condition" />
+        </select>
+
+        <!-- 新增  2021-01-06 k6991  -->
+        <insert id="addPojo" parameterType="ppmSendMsgInfo">
+    		INSERT INTO PPM_SEND_MSG_INFO (
+    		<trim suffixOverrides=",">
+    		 <if test="id != null " > ID , </if>
+				<if test="sender != null  and sender != '' " > SENDER , </if>
+				<if test="sendType != null  and sendType != '' " > SEND_TYPE , </if>
+				<if test="sendTimes != null " > SEND_TIMES , </if>
+				<if test="status != null  and status != '' " > STATUS , </if>
+				<if test="createTime != null  and createTime != '' " > CREATE_TIME , </if>
+				<if test="parameters != null  and parameters != '' " > PARAMETERS , </if>
+				<if test="errorMsg != null  and errorMsg != '' " > ERROR_MSG , </if>
+				<if test="modifyTime != null  and modifyTime != '' " > MODIFY_TIME , </if>
+				
+              </trim>
+    		)
+    		VALUES(
+    		<trim suffixOverrides=",">
+    		 <if test="id != null " > #{id} , </if>
+				<if test="sender != null  and sender != '' " > #{sender} , </if>
+				<if test="sendType != null  and sendType != '' " > #{sendType} , </if>
+				<if test="sendTimes != null " > #{sendTimes} , </if>
+				<if test="status != null  and status != '' " > #{status} , </if>
+				<if test="createTime != null  and createTime != '' " > #{createTime} , </if>
+				<if test="parameters != null  and parameters != '' " > #{parameters} , </if>
+				<if test="errorMsg != null  and errorMsg != '' " > #{errorMsg} , </if>
+				<if test="modifyTime != null  and modifyTime != '' " > #{modifyTime} , </if>
+				
+            </trim>
+    		)
+        </insert>
+
+        <!--通过id查询  k6991 2021-01-06 -->
+        <select id="queryDetail" parameterType="ppmSendMsgInfo" resultMap="PPMSENDMSGINFO_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_SEND_MSG_INFO  WHERE ID=#{id}
+        </select>
+
+         <!--查询集合  k6991 2021-01-06 -->
+        <select id="getList" parameterType="ppmSendMsgInfo" resultMap="PPMSENDMSGINFO_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_SEND_MSG_INFO
+        	<include refid="sql_select_condition" />
+        </select>
+        <!-- update sql -->
+        <sql id="update_pojo_sql">
+        	<trim prefix="SET" suffixOverrides=",">
+        		<if test="id != null " > ID=#{id} , </if>
+				<if test="sender != null  and sender != '' " > SENDER=#{sender} , </if>
+				<if test="sendType != null  and sendType != '' " > SEND_TYPE=#{sendType} , </if>
+				<if test="sendTimes != null " > SEND_TIMES=#{sendTimes} , </if>
+				<if test="status != null  and status != '' " > STATUS=#{status} , </if>
+				<if test="createTime != null  and createTime != '' " > CREATE_TIME=#{createTime} , </if>
+				<if test="parameters != null  and parameters != '' " > PARAMETERS=#{parameters} , </if>
+				<if test="errorMsg != null  and errorMsg != '' " > ERROR_MSG=#{errorMsg} , </if>
+				<if test="modifyTime != null  and modifyTime != '' " > MODIFY_TIME=#{modifyTime} , </if>
+				
+            </trim>
+        </sql>
+
+        <!--通过id编辑 k6991 2021-01-06 -->
+    	<update id="updatePojo" parameterType="ppmSendMsgInfo">
+        	UPDATE
+        	PPM_SEND_MSG_INFO
+        	<include refid="update_pojo_sql" />
+        	WHERE ID=#{id}
+        </update>
+
+        <!--通过id批量删除  k6991 2021-01-06 -->
+        <delete id="deleteById" parameterType="ppmSendMsgInfo">
+        	DELETE
+        	FROM
+        	PPM_SEND_MSG_INFO
+        	WHERE ID = #{id}
+        </delete>
+
+</mapper>

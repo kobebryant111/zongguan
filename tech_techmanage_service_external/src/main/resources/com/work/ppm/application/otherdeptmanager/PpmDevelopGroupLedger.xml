@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:ywwb905 2023-07-19 -->
+<!--  研发小组台账 查询脚本 -->
+<mapper namespace="com.work.ppm.application.model.otherdeptmanager.PpmDevelopGroupLedger">
+	 <resultMap type="ppmDevelopGroupLedger" id="PPMDEVELOPGROUPLEDGER_ALL">
+        <result property="id" column="ID" />
+		<result property="jobId" column="JOB_ID" />
+		<result property="groupId" column="GROUP_ID" />
+		<result property="ifStarPerson" column="IF_STAR_PERSON" />
+		<result property="remark" column="REMARK" />
+		<result property="createdBy" column="CREATED_BY" />
+		<result property="createdTime" column="CREATED_TIME" />
+		<result property="modifiedBy" column="MODIFIED_BY" />
+		<result property="modifiedTime" column="MODIFIED_TIME" />
+     </resultMap>
+	 <resultMap id="PPMDEVELOPGROUPLEDGER_ALL_EXT" type="ppmDevelopGroupLedgerExt" extends="PPMDEVELOPGROUPLEDGER_ALL">
+		<result property="userName" column="USER_NAME" />
+		<result property="outsourceNo" column="OUTSOURCE_NO" />
+		<result property="outsourceName" column="OUTSOURCE_NAME" />
+		<result property="vmAccount" column="VM_ACCOUNT" />
+		<result property="postId" column="POST_ID" />
+		<result property="postName" column="POST_NAME" />
+		<result property="entryTime" column="ENTRY_TIME" />
+		<result property="leavingTime" column="LEAVING_TIME" />
+		<result property="groupName" column="GROUP_NAME" />
+		<result property="groupLeaderId" column="GROUP_LEADER_ID" />
+		<result property="groupLeaderName" column="GROUP_LEADER_NAME" />
+		<result property="groupLeaderCard" column="GROUP_LEADER_CARD" />
+		<result property="grouType" column="GROUP_TYPE" />
+		<result property="deptId" column="DEPT_ID" />
+		<result property="deptName" column="DEPT_NAME" />
+		<result property="state" column="STATE" />
+		<result property="stateName" column="STATE_NAME" />
+		<result property="outsourceType" column="OUTSOURCE_TYPE" />
+		<result property="outsourceTypeName" column="OUTSOURCE_TYPE_NAME" />
+     </resultMap>
+	 
+     <!-- 所有字段名称 -->
+    <sql id="sql_flied_all">
+        ID,
+			JOB_ID,
+			GROUP_ID,
+			IF_STAR_PERSON,
+			REMARK,
+			CREATED_BY,
+			CREATED_TIME,
+			MODIFIED_BY,
+			MODIFIED_TIME
+    </sql>
+    <sql id="sql_select_condition">
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="id != null  and id != '' " > ID = #{id} AND </if>
+			<if test="jobId != null  and jobId != '' " > JOB_ID = #{jobId} AND </if>
+			<if test="groupId != null  and groupId != '' " > GROUP_ID = #{groupId} AND </if>
+			<if test="ifStarPerson != null  and ifStarPerson != '' " > IF_STAR_PERSON = #{ifStarPerson} AND </if>
+			<if test="remark != null  and remark != '' " > REMARK = #{remark} AND </if>
+			<if test="createdBy != null  and createdBy != '' " > CREATED_BY = #{createdBy} AND </if>
+			<if test="createdTime != null " > CREATED_TIME = #{createdTime} AND </if>
+			<if test="modifiedBy != null  and modifiedBy != '' " > MODIFIED_BY = #{modifiedBy} AND </if>
+			<if test="modifiedTime != null " > MODIFIED_TIME = #{modifiedTime} AND </if>
+        </trim>
+    </sql>
+    <!-- 查询分页  2023-07-19 ywwb905  -->
+    <select id="queryPagerList" parameterType="map" resultMap="PPMDEVELOPGROUPLEDGER_ALL">
+        SELECT
+        <include refid="sql_flied_all" />
+        FROM PPM_DEVELOP_GROUP_LEDGER
+        <include refid="sql_select_condition" />
+    </select>
+
+    <!-- 新增  2023-07-19 ywwb905  -->
+    <insert id="addPojo" parameterType="ppmDevelopGroupLedger">
+        INSERT INTO PPM_DEVELOP_GROUP_LEDGER (
+        <trim suffixOverrides=",">
+			<if test="id != null  and id != '' " > ID , </if>
+			<if test="jobId != null  and jobId != '' " > JOB_ID , </if>
+			<if test="groupId != null  and groupId != '' " > GROUP_ID , </if>
+			<if test="ifStarPerson != null  and ifStarPerson != '' " > IF_STAR_PERSON , </if>
+			<if test="remark != null  and remark != '' " > REMARK , </if>
+			<if test="createdBy != null  and createdBy != '' " > CREATED_BY , </if>
+			<if test="createdTime != null " > CREATED_TIME , </if>
+			<if test="modifiedBy != null  and modifiedBy != '' " > MODIFIED_BY , </if>
+			<if test="modifiedTime != null " > MODIFIED_TIME , </if>
+          </trim>
+        )
+        VALUES(
+        <trim suffixOverrides=",">
+			<if test="id != null  and id != '' " > #{id} , </if>
+			<if test="jobId != null  and jobId != '' " > #{jobId} , </if>
+			<if test="groupId != null  and groupId != '' " > #{groupId} , </if>
+			<if test="ifStarPerson != null  and ifStarPerson != '' " > #{ifStarPerson} , </if>
+			<if test="remark != null  and remark != '' " > #{remark} , </if>
+			<if test="createdBy != null  and createdBy != '' " > #{createdBy} , </if>
+			<if test="createdTime != null " > #{createdTime} , </if>
+			<if test="modifiedBy != null  and modifiedBy != '' " > #{modifiedBy} , </if>
+			<if test="modifiedTime != null " > #{modifiedTime} , </if>
+        </trim>
+        )
+    </insert>
+
+    <!--通过id查询  ywwb905 2023-07-19 -->
+    <select id="queryDetail" parameterType="ppmDevelopGroupLedger" resultMap="PPMDEVELOPGROUPLEDGER_ALL">
+        SELECT
+        <include refid="sql_flied_all" />
+        FROM PPM_DEVELOP_GROUP_LEDGER  WHERE ID=#{id}
+    </select>
+
+     <!--查询集合  ywwb905 2023-07-19 -->
+    <select id="getList" parameterType="ppmDevelopGroupLedger" resultMap="PPMDEVELOPGROUPLEDGER_ALL">
+        SELECT
+        <include refid="sql_flied_all" />
+        FROM PPM_DEVELOP_GROUP_LEDGER
+        <include refid="sql_select_condition" />
+    </select>
+    <!-- update sql -->
+    <sql id="update_pojo_sql">
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="id != null  and id != '' " > ID=#{id} , </if>
+			<if test="jobId != null  and jobId != '' " > JOB_ID=#{jobId} , </if>
+			<if test="groupId != null  and groupId != '' " > GROUP_ID=#{groupId} , </if>
+			<if test="ifStarPerson != null  and ifStarPerson != '' " > IF_STAR_PERSON=#{ifStarPerson} , </if>
+			<if test="remark != null  and remark != '' " > REMARK=#{remark} , </if>
+			<if test="createdBy != null  and createdBy != '' " > CREATED_BY=#{createdBy} , </if>
+			<if test="createdTime != null " > CREATED_TIME=#{createdTime} , </if>
+			<if test="modifiedBy != null  and modifiedBy != '' " > MODIFIED_BY=#{modifiedBy} , </if>
+			<if test="modifiedTime != null " > MODIFIED_TIME=#{modifiedTime} , </if>
+        </trim>
+    </sql>
+
+    <!--通过id编辑 ywwb905 2023-07-19 -->
+    <update id="updatePojo" parameterType="ppmDevelopGroupLedger">
+        UPDATE
+        PPM_DEVELOP_GROUP_LEDGER
+        <include refid="update_pojo_sql" />
+        WHERE ID=#{id}
+    </update>
+
+    <!--通过id批量删除  ywwb905 2023-07-19 -->
+    <delete id="deleteById" parameterType="ppmDevelopGroupLedger">
+        DELETE
+        FROM
+        PPM_DEVELOP_GROUP_LEDGER
+        WHERE ID = #{id}
+    </delete>
+	
+	<select id="queryBaseInfoList" parameterType="ppmDevelopGroupLedgerExt" resultMap="PPMDEVELOPGROUPLEDGER_ALL_EXT">
+		SELECT 
+			T.ID,
+			T.JOB_ID,
+			T.GROUP_ID,
+			T.IF_STAR_PERSON,
+			T.REMARK,
+			T.CREATED_BY,
+			T.CREATED_TIME,
+			T.MODIFIED_BY,
+			T.MODIFIED_TIME,
+			U.USER_NAME,
+			U.OUTSOURCE_NO,
+			U.VM_ACCOUNT,
+			U.POST_ID,
+			U.OUTSOURCE_TYPE,
+			U.ENTRY_TIME,
+			U.LEAVING_TIME,
+			I.GROUP_NAME,
+			I.GROUP_LEADER_ID,
+			I.GROUP_LEADER_NAME,
+			I.GROUP_LEADER_CARD,
+			I.GROUP_TYPE,
+			U.STATE,
+			U.DEPT_ID,
+			D.LOCATION DEPT_NAME,
+			OI.OUTSOURCNAME OUTSOURCE_NAME,
+			E1.DICTNAME STATE_NAME,
+			E2.DICTNAME OUTSOURCE_TYPE_NAME,
+			E3.DICTNAME POST_NAME
+       FROM PPM.PPM_DEVELOP_GROUP_LEDGER T
+		   LEFT JOIN PPM.PPM_OUTSOURCING_BASIC U ON T.JOB_ID = U.JOB_ID
+		   LEFT JOIN PPM.PPM_DEVELOP_GROUP_INFO I ON T.GROUP_ID = I.ID
+		   LEFT JOIN PPM.COMM_DEPARTMENT D ON D.DEPID = U.DEPT_ID
+		   LEFT JOIN PPM.PPM_OUTSOURCING_INFO OI ON OI.ORGCODE = U.OUTSOURCE_NO
+		   LEFT JOIN PPM.EOS_DICT_ENTRY E1 ON E1.DICTID = U.STATE AND E1.DICTTYPEID = 'NEWKG_RYZT'
+		   LEFT JOIN PPM.EOS_DICT_ENTRY E2 ON E2.DICTID = U.OUTSOURCE_TYPE AND E2.DICTTYPEID = 'NEWKG_WBFS'
+		   LEFT JOIN PPM.EOS_DICT_ENTRY E3 ON E3.DICTID = U.POST_ID AND E3.DICTTYPEID = 'BUSI_OUTSOURCE_POSITION'
+		<trim prefix="WHERE" suffixOverrides="AND">
+            <if test="jobId != null and jobId != '' ">T.JOB_ID = #{jobId} AND</if>
+            <if test="userName != null and userName != '' ">U.USER_NAME like '%'||#{userName}||'%' AND</if>
+            <if test="outsourceType != null and outsourceType != '' ">U.OUTSOURCE_TYPE = #{outsourceType} AND</if>
+            <if test="groupLeaderName != null and groupLeaderName != '' ">I.GROUP_LEADER_NAME = '%'||#{groupLeaderName}||'%' AND</if>
+            <if test="state != null and state != '' "> U.STATE = #{state} AND </if>
+            <if test="groupName != null and groupName != '' "> I.GROUP_NAME like '%'||#{groupName}||'%' AND </if>
+            <if test="postId != null and postId != '' "> U.POST_ID = #{postId} AND </if>
+        </trim>
+		ORDER BY T.ID DESC
+	</select>
+
+</mapper>

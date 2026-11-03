@@ -1,0 +1,401 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tansun.wf.platform.mapper.WfAgentMapper">
+
+    <resultMap id="wfAgentMap" type="com.tansun.wf.platform.model.WfAgentEntity">
+        <result column="id" property="id" javaType="java.lang.String"/>
+        <result column="tenant_id" property="tenantId" javaType="java.lang.String"/>
+        <result column="create_by" property="createBy" javaType="java.lang.String"/>
+        <result column="create_date" property="createDate" javaType="java.util.Date"/>
+        <result column="start_date" property="startDate" javaType="java.util.Date"/>
+        <result column="end_date" property="endDate" javaType="java.util.Date"/>
+        <result column="process_def_name" property="processDefName" javaType="java.lang.String"/>
+        <result column="process_def_id" property="processDefId" javaType="java.lang.String"/>
+        <result column="task_def_key" property="taskDefKey" javaType="java.lang.String"/>
+        <result column="agent_user" property="agentUser" javaType="java.lang.String"/>
+        <result column="trust_user" property="trustUser" javaType="java.lang.String"/>
+        <result column="type" property="type" javaType="java.lang.String"/>
+        <result column="effect_ind" property="effectInd" javaType="java.lang.String"/>
+        <result column="remarks" property="remarks" javaType="java.lang.String"/>
+        <result column="trust_type" property="trustType" javaType="java.lang.String"/>
+    </resultMap>
+    <sql id="wfAgentColumns">
+	    a.id,
+		a.process_def_name,
+		a.process_def_id,
+		a.task_def_key,
+		a.start_date,
+		a.end_date,
+		a.agent_user,
+		a.trust_user,
+		a.type,
+		a.remarks,
+		a.effect_ind,
+		a.tenant_id,
+		a.create_by,
+		a.create_date,
+		a.agent_type,
+		a.trust_type
+	</sql>
+
+    <delete id="delete" parameterType="com.tansun.wf.platform.model.WfAgentEntity">
+        delete from wf_agent where id = #{id}
+    </delete>
+
+    <select id="findList" parameterType="com.tansun.wf.platform.query.WfAgentQuery" resultMap="wfAgentMap">
+        SELECT
+        <include refid="wfAgentColumns"/>
+        FROM wf_agent a
+        <where> 1=1
+            <if test="id != null and id != ''"  >
+                AND a.id = #{id}
+            </if>
+            <if test="tenantId != null and tenantId != ''">
+                AND a.tenant_id = #{tenantId}
+            </if>
+            <if test="processDefId != null and processDefId != ''"  >
+                AND a.process_def_id = #{processDefId}
+            </if>
+
+            <if test="taskDefKey != null and taskDefKey != ''"  >
+                AND a.task_def_key = #{taskDefKey}
+            </if>
+
+            <if test="effectInd != null and effectInd != ''"  >
+                AND a.effect_ind = #{effectInd}
+            </if>
+
+            <if test="type != null and type != ''"  >
+                AND a.type = #{type}
+            </if>
+            <if  test="trustUser !=null and trustUser !=''" >
+                AND a.trust_user = #{trustUser}
+            </if>
+
+            <if  test="agentUser !=null and agentUser !=''" >
+                AND a.agent_user =#{agentUser}
+            </if>
+
+            <if test="trustType !=null and trustType !=''" >
+                AND a.trust_type =#{trustType}
+            </if>
+
+            <if test="trustTypes != null  and trustTypes.size() > 0">
+                AND a.trust_type  IN
+                <foreach collection="trustTypes" item="itemType"  open="(" separator="," close=")">
+                    #{itemType}
+                </foreach>
+            </if>
+
+        </where>
+    </select>
+
+
+    <select id="selectById" parameterType="java.lang.String" resultType="com.tansun.wf.platform.model.WfAgentEntity">
+        SELECT
+        <include refid="wfAgentColumns"/>
+        FROM wf_agent a
+        where id = #{id}
+    </select>
+
+    <update id="update"  parameterType="com.tansun.wf.platform.model.WfAgentEntity">
+        UPDATE wf_agent
+        <set>
+            <if test="tenantId != null">
+                tenant_id = #{tenantId},
+            </if>
+            <if test="createBy != null">
+                create_by = #{createBy},
+            </if>
+            <if test="remarks != null">
+                remarks = #{remarks},
+            </if>
+            <if test="type != null">
+                type = #{type},
+            </if>
+            <if test="effectInd != null">
+                effect_ind = #{effectInd},
+            </if>
+            <if test="agentUser != null">
+                agent_user = #{agentUser},
+            </if>
+            <if test="processDefId != null">
+                process_def_id = #{processDefId},
+            </if>
+            <if test="taskDefKey != null">
+                task_def_key = #{taskDefKey},
+            </if>
+            <if test="trustUser != null">
+                trust_user = #{trustUser},
+            </if>
+            <if test="agentType != null">
+                agent_type = #{agentType},
+            </if>
+
+            <if test="startDate != null">
+                start_date = #{startDate},
+            </if>
+            <if test="endDate != null">
+                end_date = #{endDate},
+            </if>
+            <if  test ="processDefName !=null ">
+                PROCESS_DEF_NAME =#{processDefName},
+            </if>
+            <if test="trustType != null" >
+                trust_type =#{trustType}
+            </if>
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <insert id="insert" parameterType="com.tansun.wf.platform.model.WfAgentEntity">
+		 INSERT INTO  wf_agent (
+            id,
+			process_def_name,
+			process_def_id,
+			task_def_key,
+			start_date,
+			end_date,
+			agent_user,
+			trust_user,
+			type,
+			remarks,
+			effect_ind,
+			tenant_id,
+			create_by,
+			agent_type,
+			create_date,
+			trust_type
+        )
+        VALUES (
+          #{id},
+          #{processDefName},
+          #{processDefId},
+          #{taskDefKey},
+          #{startDate},
+          #{endDate},
+          #{agentUser},
+		  #{trustUser},
+		  #{type},
+		  #{remarks},
+		  #{effectInd},
+		  #{tenantId},
+		  #{createBy},
+		  #{agentType},
+		  #{createDate},
+		  #{trustType}
+		  
+        )
+	</insert>
+
+    <select  id='findTrustProcess'  resultType="hashMap">
+        SELECT
+        b.type,
+        b.TRUST_USER
+        FROM
+        ACT_RU_IDENTITYLINK a,
+        WF_AGENT b
+        WHERE
+        a.PROC_DEF_ID_ = b.PROCESS_DEF_ID
+        AND b.TASK_DEF_KEY IS NULL
+        AND (
+        (	a.USER_ID_ = b.TRUST_USER
+        <if  test="userId !=null  and userId !=''">
+            AND   b.type='user' and  b.agent_user =#{userId}
+        </if>
+        )
+        OR  ( b.TRUST_USER = a.ROLE_CODE
+        <if test=" roleList != null and roleList.size() >0">
+            AND b.agent_user  in
+            <foreach item="roleCd" index="index" collection="roleList" open="(" separator="," close=")">
+                #{roleCd}
+            </foreach>
+        </if>
+        )
+        OR  ( b.TRUST_USER = a.ORG_CODE
+        <if test=" orgList != null and orgList.size() >0">
+            AND  b.agent_user  in
+            <foreach item="orgCd" index="index" collection="orgList" open="(" separator="," close=")">
+                #{orgCd}
+            </foreach>
+        </if>
+        )
+        )
+        AND  b.AGENT_TYPE ='0'    AND  b.TENANT_ID =#{tenantId} and  a.TENANT_ID = b.TENANT_ID
+        <if test="_databaseId == 'oracle'">
+            AND trunc(b.START_DATE) &lt;= trunc(sysdate)  AND b.END_DATE > sysdate
+        </if>
+        <if test="_databaseId == 'mysql'">
+            AND STR_TO_DATE(b.START_DATE,'%Y-%m-%d %H:%i:%s') &lt;= STR_TO_DATE(CURDATE(),'%Y-%m-%d %H:%i:%s')  AND b.END_DATE > now()
+        </if>
+    </select>
+
+    <select  id='findTrustProcessTask'  resultType="hashMap">
+        SELECT
+        b.type,
+        b.TRUST_USER
+        FROM
+        ACT_RU_IDENTITYLINK a,
+        WF_AGENT b
+        WHERE
+        a.PROC_DEF_ID_ = b.PROCESS_DEF_ID
+        AND A.TASK_DEF_KEY = b.TASK_DEF_KEY
+        AND (
+        (	a.USER_ID_ = b.TRUST_USER
+        <if  test="userId !=null  and userId !=''">
+            AND  b.type='user'  and   b.agent_user =#{userId}
+        </if>
+        )
+        OR  ( b.TRUST_USER = a.ROLE_CODE
+        <if test=" roleList != null and roleList.size() >0">
+            AND b.agent_user  in
+            <foreach item="roleCd" index="index" collection="roleList" open="(" separator="," close=")">
+                #{roleCd}
+            </foreach>
+        </if>
+        )
+        OR  ( b.TRUST_USER = a.ORG_CODE
+        <if test=" orgList != null and orgList.size() >0">
+            AND  b.agent_user  in
+            <foreach item="orgCd" index="index" collection="orgList" open="(" separator="," close=")">
+                #{orgCd}
+            </foreach>
+        </if>
+        )
+        )
+        AND  b.AGENT_TYPE ='0'  AND  b.TENANT_ID =#{tenantId} and  a.TENANT_ID = b.TENANT_ID
+        <if test="_databaseId == 'oracle'">
+            AND trunc(B.START_DATE) &lt;= trunc(sysdate)  AND B.END_DATE > sysdate
+        </if>
+        <if test="_databaseId == 'mysql'">
+            AND STR_TO_DATE(B.START_DATE,'%Y-%m-%d %H:%i:%s') &lt;= STR_TO_DATE(CURDATE(),'%Y-%m-%d %H:%i:%s')  AND B.END_DATE > now()
+        </if>
+    </select>
+
+    <select  id='findTrust'  resultType="hashMap">
+        SELECT
+        b.type,
+        b.TRUST_USER
+        FROM
+        ACT_RU_IDENTITYLINK a,
+        WF_AGENT b
+        WHERE
+        b.AGENT_TYPE ='1'
+        AND (
+        (	a.USER_ID_ = b.TRUST_USER
+        <if  test="userId !=null  and userId !=''">
+            AND  b.type='user' and  b.agent_user =#{userId}
+        </if>
+        )
+        OR  ( b.TRUST_USER = a.ROLE_CODE and  b.type='role'
+        <if test=" roleList != null and roleList.size() >0">
+            AND b.agent_user  in
+            <foreach item="roleCd" index="index" collection="roleList" open="(" separator="," close=")">
+                #{roleCd}
+            </foreach>
+        </if>
+        )
+        OR  (   b.TRUST_USER = a.ORG_CODE  and  b.type='org'
+        <if test=" orgList != null and orgList.size() >0">
+            AND  b.agent_user  in
+            <foreach item="orgCd" index="index" collection="orgList" open="(" separator="," close=")">
+                #{orgCd}
+            </foreach>
+        </if>
+        )
+        )
+        AND  b.TENANT_ID =#{tenantId}  and  a.TENANT_ID = b.TENANT_ID
+        <if test="_databaseId == 'oracle'">
+            <![CDATA[
+		  AND  B.START_DATE < sysdate  AND B.END_DATE > sysdate
+		  ]]>
+        </if>
+        <if test="_databaseId == 'mysql'">
+            <![CDATA[
+              AND  B.START_DATE < now()  AND B.END_DATE > now()
+             ]]>
+        </if>
+    </select>
+
+    <select  id="findEffectAgent"  resultMap="wfAgentMap"   >
+        SELECT
+        a.PROCESS_DEF_ID,
+        a.TASK_DEF_KEY,
+        a.AGENT_USER,
+        a.TRUST_USER,
+        a.TYPE
+        FROM
+        WF_AGENT  a
+        where   a.TENANT_ID =#{tenantId}
+        DATE_FORMAT( NOW(), '%Y-%m-%d %h:%i %p' )
+        <if test="_databaseId == 'oracle'">
+            <![CDATA[
+               AND to_char(a.START_DATE,'yyyy-mm-dd') <= to_char(sysdate,'yyyy-mm-dd')  AND a.END_DATE > sysdate
+            ]]>
+        </if>
+        <if test="_databaseId == 'mysql'">
+            <![CDATA[
+               AND DATE_FORMAT(a.START_DATE, '%Y-%m-%d') <= DATE_FORMAT(now(), '%Y-%m-%d')  AND a.END_DATE > now()
+            ]]>
+        </if>
+
+        <if  test="agentUser !=null and agentUser !=''" >
+            AND a.agent_user =#{agentUser}
+        </if>
+
+        <if test=" users != null and  users.size() >0">
+            and  a.agent_user  in
+            <foreach item="user" index="index" collection="users" open="(" separator="," close=")">
+                #{user}
+            </foreach>
+        </if>
+
+        <if test="effectInd != null and effectInd != ''"  >
+            AND a.effect_ind = #{effectInd}
+        </if>
+
+        <if  test="trustUser !=null and trustUser !=''" >
+            AND a.trust_user =#{trustUser}
+        </if>
+
+        <if test="type != null and type != ''"  >
+            AND a.type = #{type}
+        </if>
+
+        <if test=" trustType!= null and trustType != ''"  >
+            AND a.trust_type = #{trustType}
+        </if>
+    </select>
+
+    <select  id="findAgent"  resultMap="wfAgentMap"   >
+        SELECT
+        a.id,
+        a.PROCESS_DEF_ID,
+        a.TASK_DEF_KEY,
+        a.AGENT_USER,
+        a.TRUST_USER,
+        a.effect_ind,
+        a.TYPE,
+        a.end_date
+        FROM
+        WF_AGENT  a
+        where   a.TENANT_ID =#{tenantId}
+        <if test="_databaseId == 'oracle'">
+            AND trunc(a.START_DATE) &lt;= trunc(sysdate)  AND a.END_DATE > sysdate
+        </if>
+        <if test="_databaseId == 'mysql'">
+            AND STR_TO_DATE(a.START_DATE,'%Y-%m-%d %H:%i:%s') &lt;= STR_TO_DATE(CURDATE(),'%Y-%m-%d %H:%i:%s')  AND a.END_DATE > now()
+        </if>
+        <if test="trustUser != null and trustUser != ''">
+            AND  a.TRUST_USER =#{trustUser}
+        </if>
+        <if  test ="processDefId !=null and processDefId !='' ">
+            AND a.PROCESS_DEF_ID =#{processDefId}
+        </if>
+        <if  test ="taskDefKey !=null and taskDefKey !='' ">
+            AND  a.TASK_DEF_KEY =#{taskDefKey}
+        </if>
+    </select>
+
+
+</mapper>

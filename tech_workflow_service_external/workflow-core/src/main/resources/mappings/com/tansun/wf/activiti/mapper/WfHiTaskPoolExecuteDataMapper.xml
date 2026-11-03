@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+  
+<mapper namespace="com.tansun.wf.activiti.mapper.WfHiTaskPoolExecuteDataMapper">
+
+  <resultMap id="HiTaskPoolExecuteDataResultMap" type="com.tansun.wf.activiti.model.HiTaskPoolExecuteDataEntity">
+    <id property="id" column="ID" jdbcType="VARCHAR" />
+    <result property="taskId" column="TASK_ID_" jdbcType="VARCHAR" />
+    <result property="sysId" column="SYS_ID_" jdbcType="VARCHAR" />
+    <result property="userId" column="USER_ID_" jdbcType="VARCHAR" />
+    <result property="isAllot" column="IS_ALLOT_" jdbcType="DECIMAL" />
+    <result property="createDate" column="CREATE_DATE_" jdbcType="TIMESTAMP" />
+    <result property="tenantId" column="TENANT_ID_" jdbcType="CHAR" />
+  </resultMap>
+
+
+  <select id="selectWfHiTaskPoolExecuteDataCountByQueryCriteria" parameterType="com.tansun.wf.activiti.model.HiTaskPoolExecuteDataEntity" resultType="long">
+    select count(distinct RES.ID)
+    <include refid="selectWfHiTaskPoolExecuteDataByQueryCriteriaSql"/>
+  </select>
+
+  <select id="selectWfHiTaskPoolExecuteDataByQueryCriteria" parameterType="com.tansun.wf.activiti.model.HiTaskPoolExecuteDataEntity" resultType="hashMap">
+    ${limitBefore}
+    select distinct
+      RES.ID id,
+      RES.TASK_ID_ "taskId",
+      RES.SYS_ID_ "sysId",
+      RES.IS_ALLOT_ "isAllot",
+      RES.CREATE_DATE_ "createTime",
+      RES.TENANT_ID_ "tenantId",
+      RES.USER_ID_  "userId",
+      RT.EXECUTION_ID_ "executionId",
+      RT.PROC_INST_ID_ "processInstanceId",
+      RT.PROC_DEF_ID_ "processDefinitionId",
+      RT.NAME_ "activityName",
+      RT.DESCRIPTION_ "description",
+      RT.TASK_DEF_KEY_ "activityId"
+      <if test="fieldMapping!=null and fieldMapping.size() > 0">
+          ,
+          <foreach collection="fieldMapping" item="field"  open="" separator="," close="">
+              ${field}
+          </foreach>
+      </if>
+      <if test="databaseType !='db2'">
+          ${limitBetween}
+      </if>
+      <if test="databaseType =='db2'">
+          , row_number() over (ORDER BY RES.ID ) rnk FROM ( select distinct RES.*
+      </if>
+    <include refid="selectWfHiTaskPoolExecuteDataByQueryCriteriaSql"/>
+
+    ${limitAfter}
+  </select>
+
+  <sql id="selectWfHiTaskPoolExecuteDataByQueryCriteriaSql">
+    from ${prefix}WF_HI_TASK_POOL_EXECUTE_DATA RES
+    INNER JOIN ACT_RU_TASK RT ON RES.TASK_ID_ = RT.ID_
+    LEFT JOIN WF_TASK_EXPAND_DATA W on RES.TASK_ID_ = W.TASK_ID
+    <where>
+      <if test="taskId != '' and taskId != null">
+      	AND RES.TASK_ID_ = #{taskId}
+      </if>
+      <if test="sysId != '' and sysId != null">
+      	AND RES.SYS_ID_ = #{sysId}
+      </if>
+      <if test="userId != '' and userId != null">
+      	AND RES.USER_ID_ = #{userId}
+      </if>
+      <if test="isAllot != '' and isAllot != null">
+      	AND RES.IS_ALLOT_ = #{isAllot}
+      </if>
+      <if test="tenantId != '' and tenantId != null">
+      	AND RES.TENANT_ID_ = #{tenantId}
+      </if>
+      <if test="fieldCondition != null and fieldCondition.size() > 0">
+          <foreach collection="fieldCondition" item="condition"  open="" separator="" close="">
+              AND ${condition}
+          </foreach>
+      </if>
+    </where>
+    ORDER BY RES.CREATE_DATE_ DESC
+  </sql>
+  
+  <insert id="insertHiTaskPoolExecuteData">
+  	INSERT INTO WF_HI_TASK_POOL_EXECUTE_DATA (
+			ID,
+			TASK_ID_,
+			SYS_ID_,
+			USER_ID_,
+			IS_ALLOT_,
+			TENANT_ID_,
+			CREATE_DATE_
+		)
+		VALUES
+			(
+				#{id,jdbcType=VARCHAR},
+				#{taskId,jdbcType=VARCHAR},
+				#{sysId,jdbcType=VARCHAR},
+				#{userId,jdbcType=VARCHAR},
+				#{isAllot,jdbcType=VARCHAR},
+				#{tenantId,jdbcType=VARCHAR},
+				#{createDate,jdbcType=TIMESTAMP}
+			)
+  </insert>
+ 
+ 
+</mapper>

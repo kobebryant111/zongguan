@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k1327 2021-01-27 -->
+<mapper namespace="com.work.ppm.application.model.integratedmanager.PpmOutsourcingSystemno">
+	 <resultMap type="ppmOutsourcingSystemno" id="PPMOUTSOURCINGSYSTEMNO_ALL">
+        <result property="username" column="USERNAME" />
+		<result property="jobid" column="JOBID" />
+		<result property="time" column="TIME" />
+		<result property="systemnos" column="SYSTEMNOS" />
+		<result property="systemname" column="SYSTEMNAME" />
+		
+     </resultMap>
+
+     <!-- 所有字段名称 -->
+        <sql id="sql_flied_all">
+        	USERNAME,
+			JOBID,
+			TIME,
+			SYSTEMNOS,
+			SYSTEMNAME
+        </sql>
+        <sql id="sql_select_condition">
+            <trim prefix="WHERE" suffixOverrides="AND">
+                <if test="username != null  and username != '' " > USERNAME = #{username} AND </if>
+				<if test="jobid != null  and jobid != '' " > JOBID = #{jobid} AND </if>
+				<if test="time != null  and time != '' " > TIME = #{time} AND </if>
+				<if test="systemnos != null  and systemnos != '' " > SYSTEMNOS = #{systemnos} AND </if>
+				<if test="systemname != null  and systemname != '' " > SYSTEMNAME = #{systemname} AND </if>
+				
+            </trim>
+        </sql>
+    	<!-- 查询分页  2021-01-27 k1327  -->
+        <select id="queryPagerList" parameterType="map" resultMap="PPMOUTSOURCINGSYSTEMNO_ALL">
+        	SELECT
+            <include refid="sql_flied_all" />
+            FROM PPM_OUTSOURCING_SYSTEMNO
+            <include refid="sql_select_condition" />
+        </select>
+
+        <!-- 新增  2021-01-27 k1327  -->
+        <insert id="addPojo" parameterType="ppmOutsourcingSystemno">
+    		INSERT INTO PPM_OUTSOURCING_SYSTEMNO (
+    		<trim suffixOverrides=",">
+    		 <if test="username != null  and username != '' " > USERNAME , </if>
+				<if test="jobid != null  and jobid != '' " > JOBID , </if>
+				<if test="time != null  and time != '' " > TIME , </if>
+				<if test="systemnos != null  and systemnos != '' " > SYSTEMNOS , </if>
+				<if test="systemname != null  and systemname != '' " > SYSTEMNAME , </if>
+				
+              </trim>
+    		)
+    		VALUES(
+    		<trim suffixOverrides=",">
+    		 <if test="username != null  and username != '' " > #{username} , </if>
+				<if test="jobid != null  and jobid != '' " > #{jobid} , </if>
+				<if test="time != null  and time != '' " > #{time} , </if>
+				<if test="systemnos != null  and systemnos != '' " > #{systemnos} , </if>
+				<if test="systemname != null  and systemname != '' " > #{systemname} , </if>
+				
+            </trim>
+    		)
+        </insert>
+
+        <!--通过id查询  k1327 2021-01-27 -->
+        <select id="queryDetail" parameterType="ppmOutsourcingSystemno" resultMap="PPMOUTSOURCINGSYSTEMNO_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_OUTSOURCING_SYSTEMNO  WHERE USERNAME=#{username}
+        </select>
+
+         <!--查询集合  k1327 2021-01-27 -->
+        <select id="getList" parameterType="ppmOutsourcingSystemno" resultMap="PPMOUTSOURCINGSYSTEMNO_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_OUTSOURCING_SYSTEMNO
+        	<include refid="sql_select_condition" />
+        </select>
+        <!-- update sql -->
+        <sql id="update_pojo_sql">
+        	<trim prefix="SET" suffixOverrides=",">
+        		<if test="username != null  and username != '' " > USERNAME=#{username} , </if>
+				<if test="jobid != null  and jobid != '' " > JOBID=#{jobid} , </if>
+				<if test="time != null  and time != '' " > TIME=#{time} , </if>
+				<if test="systemnos != null  and systemnos != '' " > SYSTEMNOS=#{systemnos} , </if>
+				<if test="systemname != null  and systemname != '' " > SYSTEMNAME=#{systemname} , </if>
+				
+            </trim>
+        </sql>
+
+        <!--通过id编辑 k1327 2021-01-27 -->
+    	<update id="updatePojo" parameterType="ppmOutsourcingSystemno">
+        	UPDATE
+        	PPM_OUTSOURCING_SYSTEMNO
+        	<include refid="update_pojo_sql" />
+        	WHERE USERNAME=#{username}
+        </update>
+
+        <!--通过id批量删除  k1327 2021-01-27 -->
+        <delete id="deleteById" parameterType="ppmOutsourcingSystemno">
+        	DELETE
+        	FROM
+        	PPM_OUTSOURCING_SYSTEMNO
+        	WHERE USERNAME = #{username}
+        </delete>
+
+</mapper>

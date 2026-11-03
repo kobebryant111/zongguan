@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k1327 2020-11-16 -->
+<mapper namespace="com.work.ppm.application.model.integratedmanager.PpmOutsourcingChangeApply">
+	 <resultMap type="ppmOutsourcingChangeApply" id="PPMOUTSOURCINGCHANGEAPPPLY_ALL">
+        <result property="id" column="ID" />
+		<result property="applyer" column="APPLYER" />
+		<result property="flowid" column="FLOWID" />
+		<result property="deptno" column="DEPTNO" />
+		<result property="applytime" column="APPLYTIME" />
+		<result property="applyid" column="APPLYID" />
+		<result property="deptname" column="DEPTNAME" />
+		<result property="instanceid" column="INSTANCEID" />
+		<result property="actChangetime" column="ACT_CHANGETIME" />
+		<result property="lastmoduserid" column="LASTMODUSERID" />
+		<result property="lastmodtime" column="LASTMODTIME" />
+		<result property="status" column="STATUS" />
+		<result property="changereason" column="CHANGEREASON" />
+		<result property="isfit" column="ISFIT" />
+		<result property="isinterview" column="ISINTERVIEW" />
+		
+     </resultMap>
+	<resultMap type="ppmEmpBaseInfo" id="PPMBASEINFO_ALL">
+		<result property="id" column="ID" />
+		<result property="applyer" column="APPLYER" />
+		<result property="flowid" column="FLOWID" />
+		<result property="deptno" column="DEPTNO" />
+		<result property="applytime" column="APPLYTIME" />
+		<result property="applyid" column="APPLYID" />
+		<result property="deptname" column="DEPTNAME" />
+		<result property="instanceid" column="INSTANCEID" />
+		<result property="actChangetime" column="ACT_CHANGETIME" />
+		<result property="lastmoduserid" column="LASTMODUSERID" />
+		<result property="lastmodtime" column="LASTMODTIME" />
+		<result property="status" column="STATUS" />
+		<result property="changereason" column="CHANGEREASON" />
+		<result property="isfit" column="ISFIT" />
+		<result property="isinterview" column="ISINTERVIEW" />
+
+	</resultMap>
+
+	<resultMap type="ppmOutsourcingChangeInfos" id="PPMOUTSOURCINGCHANGEINFOS_ALL">
+		<result property="id" column="ID" />
+		<result property="jobid" column="JOBID" />
+		<result property="username" column="USERNAME" />
+		<result property="certnumber" column="CERTNUMBER" />
+		<result property="companyid" column="COMPANYID" />
+		<result property="companyname" column="COMPANYNAME" />
+		<result property="oldDepid" column="OLD_DEPID" />
+		<result property="oldDepname" column="OLD_DEPNAME" />
+		<result property="newDepid" column="NEW_DEPID" />
+		<result property="newDepname" column="NEW_DEPNAME" />
+		<result property="oldOrganizers" column="OLD_ORGANIZERS" />
+		<result property="oldOrganizersname" column="OLD_ORGANIZERSNAME" />
+		<result property="newOrganizers" column="NEW_ORGANIZERS" />
+		<result property="newOrganizersname" column="NEW_ORGANIZERSNAME" />
+		<result property="oldGroupid" column="OLD_GROUPID" />
+		<result property="oldGroupname" column="OLD_GROUPNAME" />
+		<result property="newGroupid" column="NEW_GROUPID" />
+		<result property="newGroupname" column="NEW_GROUPNAME" />
+		<result property="oldProjectno" column="OLD_PROJECTNO" />
+		<result property="oldProjectname" column="OLD_PROJECTNAME" />
+		<result property="newProjectno" column="NEW_PROJECTNO" />
+		<result property="newProjectname" column="NEW_PROJECTNAME" />
+		<result property="oldSysno" column="OLD_SYSNO" />
+		<result property="oldSyaname" column="OLD_SYANAME" />
+		<result property="newSysno" column="NEW_SYSNO" />
+		<result property="newSysname" column="NEW_SYSNAME" />
+		<result property="oldOutsourcingtype" column="OLD_OUTSOURCINGTYPE" />
+		<result property="newOutsourcingtype" column="NEW_OUTSOURCINGTYPE" />
+		<result property="oldUsetype" column="OLD_USETYPE" />
+		<result property="newUsetype" column="NEW_USETYPE" />
+		<result property="oldPosition" column="OLD_POSITION" />
+		<result property="newPosition" column="NEW_POSITION" />
+		<result property="oldPrice" column="OLD_PRICE" />
+		<result property="newPrice" column="NEW_PRICE" />
+		<result property="oldContractid" column="OLD_CONTRACTID" />
+		<result property="oldContractname" column="OLD_CONTRACTNAME" />
+		<result property="newContractid" column="NEW_CONTRACTID" />
+		<result property="newContractname" column="NEW_CONTRACTNAME" />
+		<result property="instanceid" column="INSTANCEID" />
+		<result property="interviewtime" column="INTERVIEWTIME" />
+		<result property="professionscore" column="PROFESSIONSCORE" />
+		<result property="comprehensivescore" column="COMPREHENSIVESCORE" />
+		<result property="valuescore" column="VALUESCORE" />
+		<result property="imagescore" column="IMAGESCORE" />
+		<result property="comments" column="COMMENTS" />
+		<result property="years" column="YEARS" />
+		<result property="grade" column="GRADE" />
+		<result property="totalscore" column="TOTALSCORE" />
+		<result property="result" column="RESULT" />
+		<result property="recommendedPrice" column="RECOMMENDED_PRICE" />
+		<result property="reason" column="REASON" />
+		<result property="oldOutsourcingtypename" column="OLD_OUTSOURCINGTYPENAME" />
+		<result property="newOutsourcingtypename" column="NEW_OUTSOURCINGTYPENAME" />
+		<result property="oldPositionname" column="OLD_POSITIONNAME" />
+		<result property="newPositionname" column="NEW_POSITIONNAME" />
+		<result property="newUsetypename" column="NEW_USETYPENAME" />
+		<result property="oldUsetypename" column="OLD_USETYPENAME" />
+	</resultMap>
+
+	<!-- 所有字段名称 -->
+        <sql id="sql_flied_all">
+        	ID,
+			APPLYER,
+			FLOWID,
+			DEPTNO,
+			APPLYTIME,
+			APPLYID,
+			DEPTNAME,
+			INSTANCEID,
+			ACT_CHANGETIME,
+			LASTMODUSERID,
+			LASTMODTIME,
+			STATUS,
+			CHANGEREASON,
+			ISFIT,
+			ISINTERVIEW
+        </sql>
+        <sql id="sql_select_condition">
+            <trim prefix="WHERE" suffixOverrides="AND">
+                <if test="id != null " > ID = #{id} AND </if>
+				<if test="applyer != null  and applyer != '' " > APPLYER = #{applyer} AND </if>
+				<if test="flowid != null  and flowid != '' " > FLOWID = #{flowid} AND </if>
+				<if test="deptno != null  and deptno != '' " > DEPTNO = #{deptno} AND </if>
+				<if test="applytime != null " > APPLYTIME = #{applytime} AND </if>
+				<if test="applyid != null  and applyid != '' " > APPLYID = #{applyid} AND </if>
+				<if test="deptname != null  and deptname != '' " > DEPTNAME = #{deptname} AND </if>
+				<if test="instanceid != null  and instanceid != '' " > INSTANCEID = #{instanceid} AND </if>
+				<if test="actChangetime != null " > ACT_CHANGETIME = #{actChangetime} AND </if>
+				<if test="lastmoduserid != null  and lastmoduserid != '' " > LASTMODUSERID = #{lastmoduserid} AND </if>
+				<if test="lastmodtime != null " > LASTMODTIME = #{lastmodtime} AND </if>
+				<if test="status != null  and status != '' " > STATUS = #{status} AND </if>
+				<if test="changereason != null  and changereason != '' " > CHANGEREASON = #{changereason} AND </if>
+				<if test="isfit != null  and isfit != '' " > ISFIT = #{isfit} AND </if>
+				<if test="isinterview != null  and isinterview != '' " > ISINTERVIEW = #{isinterview} AND </if>
+				
+            </trim>
+        </sql>
+    	<!-- 查询分页  2020-11-16 k1327  -->
+        <select id="queryPagerList" parameterType="map" resultMap="PPMOUTSOURCINGCHANGEAPPPLY_ALL">
+        	SELECT
+            <include refid="sql_flied_all" />
+            FROM PPM_OUTSOURCING_CHANGE_APPLY
+            <include refid="sql_select_condition" />
+        </select>
+
+        <!-- 新增  2020-11-16 k1327  -->
+        <insert id="addPojo" parameterType="ppmOutsourcingChangeApply">
+    		INSERT INTO PPM_OUTSOURCING_CHANGE_APPLY (
+    		<trim suffixOverrides=",">
+    		 <if test="id != null " > ID , </if>
+				<if test="applyer != null  and applyer != '' " > APPLYER , </if>
+				<if test="flowid != null  and flowid != '' " > FLOWID , </if>
+				<if test="deptno != null  and deptno != '' " > DEPTNO , </if>
+				<if test="applytime != null " > APPLYTIME , </if>
+				<if test="applyid != null  and applyid != '' " > APPLYID , </if>
+				<if test="deptname != null  and deptname != '' " > DEPTNAME , </if>
+				<if test="instanceid != null  and instanceid != '' " > INSTANCEID , </if>
+				<if test="actChangetime != null " > ACT_CHANGETIME , </if>
+				<if test="lastmoduserid != null  and lastmoduserid != '' " > LASTMODUSERID , </if>
+				<if test="lastmodtime != null " > LASTMODTIME , </if>
+				<if test="status != null  and status != '' " > STATUS , </if>
+				<if test="changereason != null  and changereason != '' " > CHANGEREASON , </if>
+				<if test="isfit != null  and isfit != '' " > ISFIT , </if>
+				<if test="isinterview != null  and isinterview != '' " > ISINTERVIEW , </if>
+				
+              </trim>
+    		)
+    		VALUES(
+    		<trim suffixOverrides=",">
+    		 <if test="id != null " > #{id} , </if>
+				<if test="applyer != null  and applyer != '' " > #{applyer} , </if>
+				<if test="flowid != null  and flowid != '' " > #{flowid} , </if>
+				<if test="deptno != null  and deptno != '' " > #{deptno} , </if>
+				<if test="applytime != null " > #{applytime} , </if>
+				<if test="applyid != null  and applyid != '' " > #{applyid} , </if>
+				<if test="deptname != null  and deptname != '' " > #{deptname} , </if>
+				<if test="instanceid != null  and instanceid != '' " > #{instanceid} , </if>
+				<if test="actChangetime != null " > #{actChangetime} , </if>
+				<if test="lastmoduserid != null  and lastmoduserid != '' " > #{lastmoduserid} , </if>
+				<if test="lastmodtime != null " > #{lastmodtime} , </if>
+				<if test="status != null  and status != '' " > #{status} , </if>
+				<if test="changereason != null  and changereason != '' " > #{changereason} , </if>
+				<if test="isfit != null  and isfit != '' " > #{isfit} , </if>
+				<if test="isinterview != null  and isinterview != '' " > #{isinterview} , </if>
+				
+            </trim>
+    		)
+        </insert>
+
+        <!--通过id查询  k1327 2020-11-16 -->
+        <select id="queryDetail" parameterType="ppmOutsourcingChangeApply" resultMap="PPMOUTSOURCINGCHANGEAPPPLY_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_OUTSOURCING_CHANGE_APPLY  WHERE instanceid=#{instanceid}
+        </select>
+
+         <!--查询集合  k1327 2020-11-16 -->
+        <select id="getList" parameterType="ppmOutsourcingChangeApply" resultMap="PPMOUTSOURCINGCHANGEAPPPLY_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_OUTSOURCING_CHANGE_APPLY
+        	<include refid="sql_select_condition" />
+        </select>
+        <!-- update sql -->
+        <sql id="update_pojo_sql">
+        	<trim prefix="SET" suffixOverrides=",">
+        		<if test="id != null " > ID=#{id} , </if>
+				<if test="applyer != null  and applyer != '' " > APPLYER=#{applyer} , </if>
+				<if test="flowid != null  and flowid != '' " > FLOWID=#{flowid} , </if>
+				<if test="deptno != null  and deptno != '' " > DEPTNO=#{deptno} , </if>
+				<if test="applytime != null " > APPLYTIME=#{applytime} , </if>
+				<if test="applyid != null  and applyid != '' " > APPLYID=#{applyid} , </if>
+				<if test="deptname != null  and deptname != '' " > DEPTNAME=#{deptname} , </if>
+				<if test="instanceid != null  and instanceid != '' " > INSTANCEID=#{instanceid} , </if>
+				<if test="actChangetime != null " > ACT_CHANGETIME=#{actChangetime} , </if>
+				<if test="lastmoduserid != null  and lastmoduserid != '' " > LASTMODUSERID=#{lastmoduserid} , </if>
+				<if test="lastmodtime != null " > LASTMODTIME=#{lastmodtime} , </if>
+				<if test="status != null  and status != '' " > STATUS=#{status} , </if>
+				<if test="changereason != null  and changereason != '' " > CHANGEREASON=#{changereason} , </if>
+				<if test="isfit != null  and isfit != '' " > ISFIT=#{isfit} , </if>
+				<if test="isinterview != null  and isinterview != '' " > ISINTERVIEW=#{isinterview} , </if>
+				
+            </trim>
+        </sql>
+
+        <!--通过id编辑 k1327 2020-11-16 -->
+    	<update id="updatePojo" parameterType="ppmOutsourcingChangeApply">
+        	UPDATE
+        	PPM_OUTSOURCING_CHANGE_APPLY
+        	<include refid="update_pojo_sql" />
+        	WHERE ID=#{id}
+        </update>
+
+        <!--通过id批量删除  k1327 2020-11-16 -->
+        <delete id="deleteById" parameterType="ppmOutsourcingChangeApply">
+        	DELETE
+        	FROM
+        	PPM_OUTSOURCING_CHANGE_APPLY
+        	WHERE ID = #{id}
+        </delete>
+
+		<!--查询人员基本信息  k1327 2020-11-16 -->
+		<select id="getEmpBaseInfo" parameterType="ppmEmpBaseInfo" resultMap="PPMBASEINFO_ALL">
+            select v.badge,v.empname,v.compid,v.depid,d.location depname,v.jobid,v.headship,v.empauth,v.officephone,v.mobiletelphone,
+            v.eidhr,v.boardline,v.fullname,v.spellname,v.AUTHPROPERTY,v.EMPSTATUS
+            from ppm_emp_view v
+            left join comm_department d on v.depid=d.depid
+            where v.badge=#{badge}
+		</select>
+
+	<!--通过Instanceid批量删除  k1327 2020-09-08 -->
+	<delete id="deleteByInstanceid" parameterType="ppmOutsourcingChangeApply">
+		DELETE
+		FROM
+		PPM_OUTSOURCING_CHANGE_APPLY
+		WHERE INSTANCEID = #{instanceid}
+	</delete>
+
+	<!-- 中心部门树 k1327 2021-01-13 -->
+	<select id="queryCenterDepTree" parameterType="map" resultType="commTree">
+		select a.* from (
+		select 'dep' || t.depid id, t.depcode pcode,  replace(t.location,'总行金融科技部-') text, 'org' || t.compid pid, 'dep' attr, to_char(t.depid) textpy  ,0 ord
+		from comm_department t where t.adminid is null and t.isdisabled = '0' and t.depcode = '9000190000'
+		union all
+		select 'cen'||m.id id,to_char(m.id) pcode,m.centername text,'dep130' pid,'cen'attr,to_char(m.id) textpy,m.id ord from Ppm_Da_Center m where 1=1
+		union all
+		select 'dep' || t.depid id, t.depcode pcode, replace(t.location,'总行金融科技部-') text,
+		decode(m.centerid,null, 'dep' || t.adminid,'cen'||m.centerid) pid, 'dep' attr, to_char(t.depid) textpy ,o.ord
+		from comm_department t
+		left join ppm_da_dept_manager m on to_char(t.depid)=m.deptid
+		left join ppm_dept_ord o on to_char(o.depid)='dep'||to_char(t.depid)
+		where t.adminid is not null and t.isdisabled = '0' and t.adminid ='7004'
+		) a
+		<trim prefix="WHERE" suffixOverrides="AND">
+			<if test="deps != null  and deps != '' " > replace(a.id,'dep','') in (${deps}) AND </if>
+		</trim>
+		order by a.ord
+	</select>
+
+	<!-- 查询需要变更的人员信息 k1327 2021-01-13 -->
+	<select id="queryOutChanageInfos" parameterType="map" resultMap="PPMOUTSOURCINGCHANGEINFOS_ALL">
+		select i.* from ppm_outsourcing_change_infos i left join ppm_outsourcing_change_apply a on i.instanceid=a.instanceid
+		where a.status='1'
+		<trim prefix="AND" suffixOverrides="AND">
+			<if test="sysdate != null  and sysdate != '' " > to_date(#{sysdate},'yyyy-MM-dd')>= a.act_changetime AND </if>
+		</trim>
+		order by i.id desc
+	</select>
+</mapper>

@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:ywwb2216 2024-07-30 -->
+<mapper namespace="com.work.ppm.application.model.testmanager.TestApectaculars">
+    <resultMap type="testApectaculars" id="TESTAPECTACULARS_ALL">
+        <result property="id" column="ID"/>
+        <result property="storyNum" column="STORY_NUM"/>
+        <result property="storyName" column="STORY_NAME"/>
+        <result property="onLineDate" column="ON_LINE_DATE"/>
+        <result property="smokeCaseNum" column="SMOKE_CASE_NUM"/>
+        <result property="sitCaseNum" column="SIT_CASE_NUM"/>
+        <result property="uatCaseNum" column="UAT_CASE_NUM"/>
+        <result property="testCaseAmount" column="TEST_CASE_AMOUNT"/>
+        <result property="funProCaseNum" column="FUN_PRO_CASE_NUM"/>
+        <result property="entProCaseAmount" column="ENT_PRO_CASE_AMOUNT"/>
+        <result property="funContraCaseNum" column="FUN_CONTRA_CASE_NUM"/>
+        <result property="entContraCaseAmount" column="ENT_CONTRA_CASE_AMOUNT"/>
+        <result property="funProetCasescale" column="FUN_PROET_CASESCALE"/>
+        <result property="entProetCasescale" column="ENT_PROET_CASESCALE"/>
+        <result property="highDefectNum" column="HIGH_DEFECT_NUM"/>
+        <result property="midDefectNum" column="MID_DEFECT_NUM"/>
+        <result property="lowDefectNum" column="LOW_DEFECT_NUM"/>
+        <result property="sitDefectScale" column="SIT_DEFECT_SCALE"/>
+        <result property="uatDefectScale" column="UAT_DEFECT_SCALE"/>
+        <result property="forecastWorkload" column="FORECAST_WORKLOAD"/>
+        <result property="reaWorkload" column="REA_WORKLOAD"/>
+        <result property="deviationRatio" column="DEVIATION_RATIO"/>
+        <result property="planDeliveryDate" column="PLAN_DELIVERY_DATE"/>
+        <result property="reaDeliveryDate" column="REA_DELIVERY_DATE"/>
+        <result property="curTestProgress" column="CUR_TEST_PROGRESS"/>
+        <result property="creatUser" column="CREAT_USER"/>
+        <result property="creatTime" column="CREAT_TIME"/>
+        <result property="updateUser" column="UPDATE_USER"/>
+        <result property="planState" column="PLAN_STATE"/>
+        <result property="planOnLineDate" column="PLAN_ON_LINE_DATE"/>
+        <result property="reaOnLineDate" column="REA_ON_LINE_DATE"/>
+    </resultMap>
+
+    <!-- 所有字段名称 -->
+    <sql id="sql_flied_all">
+        ID,
+        STORY_NUM,
+        STORY_NAME,
+        ON_LINE_DATE,
+        SMOKE_CASE_NUM,
+        SIT_CASE_NUM,
+        UAT_CASE_NUM,
+        TEST_CASE_AMOUNT,
+        FUN_PRO_CASE_NUM,
+        ENT_PRO_CASE_AMOUNT,
+        FUN_CONTRA_CASE_NUM,
+        ENT_CONTRA_CASE_AMOUNT,
+        FUN_PROET_CASESCALE,
+        ENT_PROET_CASESCALE,
+        HIGH_DEFECT_NUM,
+        MID_DEFECT_NUM,
+        LOW_DEFECT_NUM,
+        SIT_DEFECT_SCALE,
+        UAT_DEFECT_SCALE,
+        FORECAST_WORKLOAD,
+        REA_WORKLOAD,
+        DEVIATION_RATIO,
+        PLAN_DELIVERY_DATE,
+        REA_DELIVERY_DATE,
+        CUR_TEST_PROGRESS,
+        CREAT_USER,
+        CREAT_TIME,
+        UPDATE_USER,
+        UPDATE_TIME,
+        PLAN_STATE,
+        PLAN_ON_LINE_DATE,
+        REA_ON_LINE_DATE
+    </sql>
+
+    <sql id="sql_select_condition">
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="id != null ">ID = #{id} AND</if>
+            <if test="storyNum != null  and storyNum != '' ">STORY_NUM like '%'||#{storyNum}||'%' AND</if>
+            <if test="storyName != null  and storyName != '' ">STORY_NAME like '%'||#{storyName}||'%' AND</if>
+            <if test="onLineDate != null ">ON_LINE_DATE = #{onLineDate} AND</if>
+            <if test="smokeCaseNum != null  and smokeCaseNum != '' ">SMOKE_CASE_NUM = #{smokeCaseNum} AND</if>
+            <if test="sitCaseNum != null  and sitCaseNum != '' ">SIT_CASE_NUM = #{sitCaseNum} AND</if>
+            <if test="uatCaseNum != null  and uatCaseNum != '' ">UAT_CASE_NUM = #{uatCaseNum} AND</if>
+            <if test="testCaseAmount != null  and testCaseAmount != '' ">TEST_CASE_AMOUNT = #{testCaseAmount} AND</if>
+            <if test="funProCaseNum != null and funProCaseNum != '' ">FUN_PRO_CASE_NUM = #{funProCaseNum} AND</if>
+            <if test="entProCaseAmount != null  and entProCaseAmount != '' ">ENT_PRO_CASE_AMOUNT = #{entProCaseAmount} AND</if>
+            <if test="funContraCaseNum != null  and funContraCaseNum != '' ">FUN_CONTRA_CASE_NUM = #{funContraCaseNum} AND</if>
+            <if test="entContraCaseAmount != null  and entContraCaseAmount != '' ">ENT_CONTRA_CASE_AMOUNT = #{entContraCaseAmount} AND</if>
+            <if test="funProetCasescale != null  and funProetCasescale != '' ">FUN_PROET_CASESCALE = #{funProetCasescale} AND</if>
+            <if test="entProetCasescale != null  and entProetCasescale != '' ">ENT_PROET_CASESCALE = #{entProetCasescale} AND</if>
+            <if test="highDefectNum != null  and highDefectNum != '' ">HIGH_DEFECT_NUM = #{highDefectNum} AND</if>
+            <if test="midDefectNum != null  and midDefectNum != '' ">MID_DEFECT_NUM = #{midDefectNum} AND</if>
+            <if test="lowDefectNum != null  and lowDefectNum != '' ">LOW_DEFECT_NUM = #{lowDefectNum} AND</if>
+            <if test="sitDefectScale != null  and sitDefectScale != '' ">SIT_DEFECT_SCALE = #{sitDefectScale} AND</if>
+            <if test="uatDefectScale != null  and uatDefectScale != '' ">UAT_DEFECT_SCALE = #{uatDefectScale} AND</if>
+            <if test="forecastWorkload != null  and forecastWorkload != '' ">FORECAST_WORKLOAD = #{forecastWorkload} AND</if>
+            <if test="reaWorkload != null  and reaWorkload != '' ">REA_WORKLOAD = #{reaWorkload} AND</if>
+            <if test="deviationRatio != null  and deviationRatio != '' ">DEVIATION_RATIO = #{deviationRatio} AND</if>
+            <if test="planDeliveryDate != null  and planDeliveryDate != '' ">PLAN_DELIVERY_DATE = #{planDeliveryDate} AND</if>
+            <if test="reaDeliveryDate != null  and reaDeliveryDate != '' ">REA_DELIVERY_DATE = #{reaDeliveryDate} AND</if>
+            <if test="curTestProgress != null  and curTestProgress != '' ">CUR_TEST_PROGRESS = #{curTestProgress} AND</if>
+            <if test="creatTime != null  ">CREAT_TIME = #{creatTime} AND</if>
+            <if test="updateTime != null  ">UPDATE_TIME = #{updateTime} AND</if>
+            <if test="creatUser != null  and creatUser != '' ">CREAT_USER = #{creatUser} AND</if>
+            <if test="updateUser != null  and updateUser != '' ">UPDATE_USER = #{updateUser} AND</if>
+            <if test="planState != null  and planState != '' ">PLAN_STATE = #{planState} AND</if>
+            <if test="planOnLineDate != null ">PLAN_ON_LINE_DATE = #{planOnLineDate} AND</if>
+            <if test="reaOnLineDate != null ">REA_ON_LINE_DATE = #{reaOnLineDate} AND</if>
+            <if test="entryStartDate != null and entryEndDate != null">ON_LINE_DATE between #{entryStartDate} and
+                #{entryEndDate} AND
+            </if>
+        </trim>
+    </sql>
+    <!-- 查询分页  2024-07-30 ywwb2216  -->
+    <select id="queryPagerList" parameterType="map" resultMap="TESTAPECTACULARS_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM TEST_APECTACULARS
+        <include refid="sql_select_condition"/>
+    </select>
+
+</mapper>

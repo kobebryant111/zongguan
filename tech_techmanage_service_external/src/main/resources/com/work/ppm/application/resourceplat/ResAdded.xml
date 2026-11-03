@@ -1,0 +1,1222 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.work.ppm.application.model.resourceplat.ResAdded">
+    <resultMap type="resAdded" id="RESADDED">
+        <result property="id" column="ID"/>
+        <result property="priceReqNo" column="PRICEREQNO"/>
+        <result property="appNo" column="APPNO"/>
+        <result property="appName" column="APPNAME"/>
+        <result property="projectNo" column="PROJECTNO"/>
+        <result property="projectName" column="PROJECTNAME"/>
+        <result property="reNewProcessNo" column="RENEWPROCESSNO"/>
+        <result property="expectedOnlineTime" column="EXPECTEDONLINETIME"/>
+        <result property="isCmdbUsed" column="ISCMDBUSED"/>
+        <result property="amount" column="AMOUNT"/>
+        <result property="status" column="STATUS"/>
+        <result property="statusTime" column="STATUSTIME"/>
+        <result property="creator" column="CREATOR"/>
+        <result property="createTime" column="CREATETIME"/>
+        <result property="sourceType" column="SOURCETYPE"/>
+        <result property="busiDeptId" column="BUSIDEPTID"/>
+        <result property="techDeptId" column="TECHDEPTID"/>
+        <result property="busiDeptName" column="BUSIDEPTNAME"/>
+        <result property="techDeptName" column="TECHDEPTNAME"/>
+        <result property="sysOperLevel" column="SYSOPERLEVEL"/>
+        <result property="isFundTrans" column="ISFUNDTRANS"/>
+        <result property="budgetNo" column="BUDGETNO"/>
+        <result property="processInstID" column="PROCESSINSTID"/>
+        <result property="ciid" column="CIID"/>
+        <result property="busiDeptId" column="BUSIDEPTID"/>
+        <result property="techDeptId" column="TECHDEPTID"/>
+        <result property="sysDealUser" column="SYSDEALUSER"/>
+    </resultMap>
+
+    <!-- 所有字段名称 -->
+    <sql id="sql_flied_all">
+        a.ID,
+        a.PRICEREQNO,
+        a.APPNO,
+        a.APPNAME,
+        a.PROJECTNAME,
+        a.RENEWPROCESSNO,
+        TO_CHAR(a.EXPECTEDONLINETIME,'YYYY-MM-DD') AS EXPECTEDONLINETIME,
+        a.ISCMDBUSED,
+        a.AMOUNT,
+        a.STATUS,
+        a.STATUSTIME,
+        a.CREATORNAME || '(' || a.CREATOR || ')' AS CREATOR,
+        TO_CHAR(a.CREATETIME,'YYYY-MM-DD') AS CREATETIME,
+        a.SOURCETYPE,
+        a.BUSIDEPTID,
+        a.TECHDEPTID,
+        a.BUSIDEPTNAME,
+        a.TECHDEPTNAME,
+        a.SYSOPERLEVEL,
+        a.ISFUNDTRANS,
+        a.PROJECTNO,
+        a.BUDGETNO,
+        a.PROCESSINSTID,
+        a.CIID,
+        a.DOCMID
+    </sql>
+
+    <!-- 所有字段名称 -->
+    <sql id="sql_flied_all2">
+        a.ID,
+        a.PRICEREQNO,
+        a.APPNO,
+        a.APPNAME,
+        a.PROJECTNAME,
+        a.RENEWPROCESSNO,
+        TO_CHAR(a.EXPECTEDONLINETIME,'YYYY-MM-DD') AS EXPECTEDONLINETIME,
+        a.ISCMDBUSED,
+        a.AMOUNT,
+        a.STATUS,
+        a.STATUSTIME,
+        a.CREATORNAME || '(' || a.CREATOR || ')' AS CREATOR,
+        TO_CHAR(a.CREATETIME,'YYYY-MM-DD HH24:MI:SS') AS CREATETIME,
+        a.SOURCETYPE,
+        a.BUSIDEPTID,
+        a.TECHDEPTID,
+        a.BUSIDEPTNAME,
+        a.TECHDEPTNAME,
+        a.SYSOPERLEVEL,
+        a.ISFUNDTRANS,
+        a.PROJECTNO,
+        a.BUDGETNO,
+        a.PROCESSINSTID,
+        a.CIID,
+        a.DOCMID
+    </sql>
+
+    <sql id="sql_select_condition">
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="id != null  and id != '' ">ID = #{id} AND</if>
+            <if test="priceReqNo != null  and priceReqNo != '' ">PRICEREQNO = #{priceReqNo} AND</if>
+            <if test="appNo != null  and appNo != '' ">APPNO = #{appNo} AND</if>
+            <if test="appName != null  and appName != '' ">APPNAME = #{appName} AND</if>
+            <if test="projectNo != null  and projectNo != '' ">PROJECTNO = #{projectNo} AND</if>
+            <if test="projectName != null  and projectName != '' ">PROJECTNAME = #{projectName} AND</if>
+            <if test="reNewProcessNo != null  and reNewProcessNo != '' ">RENEWPROCESSNO = #{reNewProcessNo} AND</if>
+            <if test="expectedOnlineTime != null  and expectedOnlineTime != '' ">EXPECTEDONLINETIME =
+                #{expectedOnlineTime} AND
+            </if>
+            <if test="isCmdbUsed != null  and isCmdbUsed != '' ">ISCMDBUSED = #{isCmdbUsed} AND</if>
+            <if test="amount != null  and amount != '' ">AMOUNT = #{amount} AND</if>
+            <if test="status != null  and status != '' ">STATUS = #{status} AND</if>
+            <if test="statusTime != null  and statusTime != '' ">STATUSTIME = #{statusTime} AND</if>
+            <if test="creator != null  and creator != '' ">CREATOR = #{creator} AND</if>
+            <if test="createtime != null  and createtime != '' ">CREATETIME = #{createtime} AND</if>
+        </trim>
+    </sql>
+
+    <!-- 分页查询资源新增列表 -->
+    <select id="queryResAddList" parameterType="map" resultMap="RESADDED">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM RES_ADDED a
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="priceReqNo !=null and priceReqNo !=''">a.PRICEREQNO LIKE '%'||#{priceReqNo}||'%' AND</if>
+            <if test="appName != null and appName != ''">a.APPNAME LIKE '%'||#{appName}||'%' AND</if>
+            <if test="appNo != null and appNo != ''">a.APPNO = #{appNo} AND</if>
+            <if test="projectName != null and projectName != ''">a.PROJECTNAME LIKE '%'|| #{projectName}||'%' AND</if>
+            <if test="busiDeptId != null  and busiDeptId != '' ">a.BUSIDEPTID = #{busiDeptId} AND</if>
+            <if test="techDeptId != null  and techDeptId != '' ">a.TECHDEPTID = #{techDeptId} AND</if>
+            <if test="status != null and status != ''">a.STATUS = #{status} AND</if>
+            <if test="creator != null  and creator != '' ">a.CREATORNAME || '(' || a.CREATOR || ')' LIKE
+                '%'||#{creator}||'%' AND
+            </if>
+            <if test="startTime != null and startTime !=''">
+                <![CDATA[ a.CREATETIME >=  TO_DATE(#{startTime},'YYYY-MM-DD HH24:MI:SS') AND ]]>
+            </if>
+            <if test="endTime != null and endTime!=''">
+                <![CDATA[ a.CREATETIME <  TO_DATE(#{endTime},'YYYY-MM-DD HH24:MI:SS')+1 AND ]]>
+            </if>
+            <if test="expectedOnlineStartTime != null and expectedOnlineStartTime !=''">
+                <![CDATA[ a.EXPECTEDONLINETIME >=  TO_DATE(#{expectedOnlineStartTime},'YYYY-MM-DD') AND ]]>
+            </if>
+            <if test="expectedOnlineEndTime != null and expectedOnlineEndTime!=''">
+                <![CDATA[ a.EXPECTEDONLINETIME <  TO_DATE(#{expectedOnlineEndTime},'YYYY-MM-DD')+1 AND ]]>
+            </if>
+            <if test="sourceType !=null and sourceType !=''">a.sourceType=#{sourceType}</if>
+        </trim>
+        ORDER BY A.CREATETIME DESC
+    </select>
+
+    <!-- 删除资源新增配置 -->
+    <delete id="deleteResourceAdded" parameterType="string">
+        DELETE FROM RES_ADDED WHERE ID = #{id}
+    </delete>
+
+    <!-- 查询关联系统数据 -->
+    <select id="queryRelaSysTree" resultType="commTree">
+        SELECT
+        DISTINCT t.*,
+        CASE WHEN PCODE = '9000000000' THEN 'order1'
+        ELSE 'order2' END ORDER_BY
+        FROM
+        (
+        SELECT a.* FROM
+        (
+        SELECT
+        'org' || t.COMPID ID,
+        t.COMPCODE PCODE,
+        t.LOCATION TEXT,
+        'org' || t.ADMINID PID,
+        'org' ATTR,
+        '' TEXTPY
+        FROM COMM_ORGANIZATION t
+        WHERE t.ISDISABLED = '0'
+        UNION ALL
+        SELECT
+        'dep' || t.DEPID ID,
+        t.DEPCODE PCODE,
+        t.LOCATION TEXT,
+        'org' || t.COMPID PID,
+        'dep' ATTR,
+        '' TEXTPY
+        FROM COMM_DEPARTMENT t
+        WHERE t.ADMINID IS NULL
+        AND t.ISDISABLED = '0'
+        UNION ALL
+        SELECT
+        'dep' || t.DEPID ID,
+        t.DEPCODE PCODE,
+        t.LOCATION TEXT,
+        'dep' || t.ADMINID PID,
+        'dep' ATTR,
+        '' TEXTPY
+        FROM COMM_DEPARTMENT t
+        WHERE t.ADMINID IS NOT NULL
+        AND t.ISDISABLED = '0'
+        UNION ALL
+        SELECT
+        'sys' || x.RES_ID,
+        x.SYSTEM_ID PCODE,
+        x.SYS_NAME TEXT,
+        CASE WHEN x.P_RES_ID IS NULL THEN 'dep' || x.TEC_DEP
+        ELSE 'sys' || x.P_RES_ID END PID,
+        'sys' ATTR,
+        '' TEXTPY
+        FROM
+        (
+        SELECT
+        a.RES_ID,
+        NVL(b.SYSTEM_ID, a.RES_ID) SYSTEM_ID,
+        b.SYS_NAME,
+        a.TEC_DEP,
+        c.LOCATION,
+        b.P_RES_ID
+        FROM AAP_SYSTEM_RESPONSIBILITY a
+        LEFT JOIN COMM_DEPARTMENT c ON a.TEC_DEP = c.DEPID
+        RIGHT JOIN AAP_SYSTEM b on a.RES_ID = b.RES_ID
+        AND b.SYS_NAME IS NOT NULL
+        WHERE 1 = 1 AND b.P_RES_ID IS NULL
+        AND b.SYS_STATUS = 1
+        ) x
+        ) a
+        ) t
+        START WITH t.ATTR = 'sys'
+        CONNECT BY PRIOR t.PID = t.ID
+        ORDER BY ORDER_BY, ID
+    </select>
+
+    <!-- 获取关联系统信息
+     TEC_DEP:科技部门编号
+     TEC_DEP_NAME：科技部门名称
+     BUS_DEP:业务部门编号
+     BUS_DEP_NAME:业务部门名称
+     OM_LEVEL:系统运维等级
+     REFMONEY:是否涉及资金交易
+     -->
+    <select id="queryRelaSysData" parameterType="String" resultType="Map">
+        SELECT
+        a.TEC_DEP,a.TEC_DEP_NAME,a.BUS_DEP,a.BUS_DEP_NAME,b.OM_LEVEL,b.REFMONEY,b.CIID
+        FROM AAP_SYSTEM_RESPONSIBILITY a
+        RIGHT JOIN AAP_SYSTEM b ON a.RES_ID = b.RES_ID AND b.SYS_NAME IS NOT NULL
+        WHERE NVL(b.SYSTEM_ID, a.RES_ID) = #{pcode}
+    </select>
+
+    <!-- 查询网络申请的网络位置 -->
+    <select id="queryIpApplyNetAddress" resultType="Map">
+        SELECT
+        (
+        SELECT
+        DICTNAME
+        FROM EOS_DICT_ENTRY s
+        WHERE s.dictid=t.PRODUCTIONNETWORK
+        AND s.DICTTYPEID='IPSQ_PRODUCTIONNETWORK'
+        ) AS PRODUCTIONNETWORK,
+        t.NETWORKAREA,
+        t.ID
+        FROM PPM_IPSQ_CONFIG_WLQY t
+        WHERE t.ISDEL='0'
+        ORDER BY t.PRODUCTIONNETWORK,t.NETWORKAREA ASC
+    </select>
+
+    <!-- 查询关联项目树 -->
+    <select id="queryRelaProgramTree" resultType="commTree">
+        SELECT * FROM (
+        SELECT
+        s.DEPTNO AS ID,
+        (SELECT LOCATION FROM COMM_DEPARTMENT WHERE DEPID = s.DEPTNO) AS TEXT,
+        '-1' AS PID,
+        '' BUSIUSERID,
+        '' MANAUSERID,
+        '' MANAUSERNAME,
+        '' EMPNAME,
+        TO_DATE('') EXPECTDATE,
+        '' SYSNO,
+        '' SYSNAME
+        FROM PPM_PROJECT_BUILD_SOFT s
+        WHERE s.STATUS IS NOT NULL
+        AND s.ISDEL = '0'
+
+        UNION
+
+        SELECT
+        PROJECTNO AS ID,
+        PROJECTNAME AS TEXT,
+        DEPTNO as PID,
+        BUSIUSERID,
+        MANAUSERID,
+        em.EMPNAME MANAUSERNAME,
+        e.EMPNAME,
+        EXPECTDATE,
+        p.SYSNO,
+        s.SYS_NAME SYSNAME
+        FROM PPM_PROJECT_BUILD_SOFT p
+        LEFT JOIN COMM_EMPLOYEE em ON p.MANAUSERID = em.BADGE
+        LEFT JOIN COMM_EMPLOYEE e ON p.BUSIUSERID = e.BADGE
+        LEFT JOIN AAP_SYSTEM s on p.SYSNO = s.SYSTEM_ID
+        WHERE STATUS IS NOT NULL
+        <![CDATA[
+                            AND STATUS <> '全部上线'
+                            AND STATUS <> '已关闭'
+                            AND STATUS <> '项目终止'
+            ]]>
+        AND ISDEL = '0'
+        ) WHERE PID IS NOT NULL AND ID IS NOT NULL
+    </select>
+
+    <!-- 获取预先配置好的选择情况 -->
+    <select id="querySelectionConfig" parameterType="Map" resultType="Map">
+        SELECT
+        a.NODETYPE,
+        a.MODELTYPE AS DICTID,
+        b.DICTNAME,
+        a.MODELCONFIGTYPE
+        FROM RES_SELECTION_CONFIG a
+        LEFT JOIN EOS_DICT_ENTRY b ON a.MODELTYPE = b.DICTID
+        WHERE b.DICTTYPEID = 'RES_MODELTYPE'
+        <if test="nodeType!=null and nodeType!=''">AND a.NODETYPE = #{nodeType}</if>
+        <if test="modelType!=null and modelType!=''">AND a.MODELTYPE = #{modelType}</if>
+    </select>
+
+    <!-- 配件关联关系表-->
+    <select id="queryHardWareRela" resultType="Map">
+        SELECT * FROM (
+        SELECT
+        b.ID,
+        a.DICTID,
+        b.APPLYSCENE,
+        b.DESCRIBE,
+        b.PRICE,
+        b.STATUS,
+        '1' AS CATEGORY,
+        b.ISCANCEL
+        FROM EOS_DICT_ENTRY a
+        LEFT JOIN RES_CONFIG_COMBO b ON a.DICTID = b.SUBCATEGORY
+        WHERE a.DICTTYPEID = 'RES_SUBCATEGORY'
+        AND a.PARENTID = '2'
+        UNION ALL
+        SELECT
+        ID,
+        TO_CHAR(TYPE) AS DICTID,
+        '' AS APPLYSCENE,
+        DESCRIBE,
+        PRICE,
+        STATUS,
+        '2' AS CATEGORY,
+        ISCANCEL
+        FROM RES_CONFIG_VM
+        )
+        WHERE STATUS = '2'
+    </select>
+
+    <!-- 软件关联关系表-->
+    <select id="querySoftWareRela" resultType="Map">
+        SELECT * FROM RES_CONFIG_SOFT t
+        WHERE t.STATUS='2'
+    </select>
+
+    <!-- 查询套餐数据 -->
+    <select id="queryRelaComboList" parameterType="Map" resultType="Map">
+        SELECT
+        t.ID,
+        s.DICTNAME AS CATEGORY,
+        t.APPLYSCENE,
+        t.DESCRIBE,
+        t.PRICE,
+        t.CPUNUM,
+        t.CPUCORE,
+        t.DISKCAPACITY,
+        t.ISCANCEL
+        FROM
+        RES_CONFIG_COMBO t
+        LEFT JOIN EOS_DICT_ENTRY s ON t.SUBCATEGORY=s.DICTID
+        WHERE t.CATEGORY = #{category}
+        <if test="category==6">AND t.SUBCATEGORY = #{subcategory}</if>
+        <if test="isSpecial !=null and isSpecial !=''">AND t.ISSPECIAL=#{isSpecial}</if>
+        AND t.STATUS='2'
+        AND s.DICTTYPEID='RES_SUBCATEGORY'
+    </select>
+
+    <!-- 根据ID查询套餐表中数据 -->
+    <select id="queryComboById" parameterType="String" resultType="Map">
+        SELECT * FROM RES_CONFIG_COMBO WHERE ID =#{id}
+    </select>
+
+    <insert id="addResource" parameterType="Resadded">
+        INSERT INTO RES_ADDED
+        (
+            ID
+            ,PRICEREQNO
+            <if test="appNo!=null and appNo!=''">,APPNO</if>
+            <if test="appName!=null and appName!=''">,APPNAME</if>
+            <if test="projectName!=null and projectName!=''">,PROJECTNAME</if>
+            <if test="projectNo!=null and projectNo!=''">,PROJECTNO</if>
+            <if test="expectedOnlineTime!=null and expectedOnlineTime!=''">,EXPECTEDONLINETIME</if>
+            <if test="amount!=null and amount!=''">,AMOUNT</if>
+            <if test="status!=null and status!=''">,STATUS</if>
+            <if test="creator!=null and creator!=''">,CREATOR</if>
+            <if test="createTime!=null and createTime!=''">,CREATETIME</if>
+            <if test="creatorName!=null and creatorName!=''">,CREATORNAME</if>
+            <if test="sourceType!=null and sourceType!=''">,SOURCETYPE</if>
+            <if test="busiDeptName!=null and busiDeptName!=''">,BUSIDEPTNAME</if>
+            <if test="techDeptName!=null and techDeptName!=''">,TECHDEPTNAME</if>
+            <if test="sysOperLevel !=null and sysOperLevel !=''">,SYSOPERLEVEL</if>
+            <if test="isFundTrans !=null and isFundTrans !=''">,ISFUNDTRANS</if>
+            <if test="ciid!=null and ciid!=''">,CIID</if>
+            <if test="busiDeptId!=null and busiDeptId!=''">,BUSIDEPTID</if>
+            <if test="techDeptId!=null and techDeptId!=''">,TECHDEPTID</if>
+            <if test="processInstID !=null and processInstID !=''">,PROCESSINSTID</if>
+            <if test="docmId !=null and docmId !=''">,DOCMID</if>
+            <if test="reNewProcessNo !=null and reNewProcessNo!=''">,RENEWPROCESSNO</if>
+        )
+        VALUES
+        (
+            #{id}
+            ,#{priceReqNo}
+            <if test="appNo!=null and appNo!=''">,#{appNo}</if>
+            <if test="appName!=null and appName!=''">,#{appName}</if>
+            <if test="projectName!=null and projectName!=''">,#{projectName}</if>
+            <if test="projectNo!=null and projectNo!=''">,#{projectNo}</if>
+            <if test="expectedOnlineTime!=null and expectedOnlineTime!=''">,TO_DATE(#{expectedOnlineTime},'YYYY-MM-DD')</if>
+            <if test="amount!=null and amount!=''">,#{amount}</if>
+            <if test="status!=null and status!=''">,#{status}</if>
+            <if test="creator!=null and creator!=''">,#{creator}</if>
+            <if test="createTime!=null and createTime!=''">,TO_DATE(#{createTime},'YYYY-MM-DD HH24:MI:SS')</if>
+            <if test="creatorName!=null and creatorName!=''">,#{creatorName}</if>
+            <if test="sourceType!=null and sourceType!=''">,#{sourceType}</if>
+            <if test="busiDeptName!=null and busiDeptName!=''">,#{busiDeptName}</if>
+            <if test="techDeptName!=null and techDeptName!=''">,#{techDeptName}</if>
+            <if test="sysOperLevel !=null and sysOperLevel !=''">,#{sysOperLevel}</if>
+            <if test="isFundTrans !=null and isFundTrans !=''">,#{isFundTrans}</if>
+            <if test="ciid!=null and ciid!=''">,#{ciid}</if>
+            <if test="busiDeptId!=null and busiDeptId!=''">,#{busiDeptId}</if>
+            <if test="techDeptId!=null and techDeptId!=''">,#{techDeptId}</if>
+            <if test="processInstID !=null and processInstID !=''">,#{processInstID}</if>
+            <if test="docmId !=null and docmId !=''">,#{docmId}</if>
+            <if test="reNewProcessNo !=null and reNewProcessNo!=''">,#{reNewProcessNo}</if>
+        )
+    </insert>
+
+    <insert id="addResItem" parameterType="ResaddedItem">
+        INSERT INTO RES_ADDED_ITEM
+        (
+            ID,
+            ADDEDID
+            <if test="nodeType != null and nodeType != ''">,NODETYPE</if>
+            <if test="modelType != null and modelType != ''">,MODELTYPE</if>
+            <if test="modelConfig != null and modelConfig != ''">,MODELCONFIG</if>
+            <if test="nodeName != null and nodeName != ''">,NODENAME</if>
+            <if test="ownCenter != null and ownCenter != ''">,OWNCENTER</if>
+            <if test="networkArea != null and networkArea !=''">,NETWORKAREA</if>
+            <if test="nodeArch != null and nodeArch !=''">,NODEARCH</if>
+            <if test="os != null and os != ''">,OS</if>
+            <if test="dbSize != null">,DBSIZE</if>
+            <if test="isStorage != null and isStorage != ''">,ISSTORAGE</if>
+            <if test="storageSize != null">,STORAGESIZE</if>
+            <if test="isNas != null and isNas != ''">,ISNAS</if>
+            <if test="nasSize != null">,NASSIZE</if>
+            <if test="mountType != null and mountType != ''">,MOUNTTYPE</if>
+            <if test="price != null">,PRICE</if>
+
+            <if test="modelConfigName != null and modelConfigName != ''">,MODELCONFIGNAME</if>
+            <if test="networkAreaName != null and networkAreaName != ''">,NETWORKAREANAME</if>
+            <if test="comboTotalPrice != null">,COMBOTOTALPRICE</if>
+            <if test="cpuNum != null">,CPUNUM</if>
+            <if test="cpuCode != null ">,CPUCODE</if>
+            <if test="osPrice != null">,OSPRICE</if>
+            <if test="osCountModel != null and osCountModel != ''">,OSCOUNTMODEL</if>
+            <if test="osTotalPrice != null">,OSTOTALPRICE</if>
+            <if test="nasPrice != null">,NASPRICE</if>
+            <if test="nasTotalPrice != null">,NASTOTALPRICE</if>
+            <if test="sanTotalPrice != null">,SANTOTALPRICE</if>
+            <if test="dbPrice != null">,DBPRICE</if>
+            <if test="dbTotalPrice != null">,DBTOTALPRICE</if>
+            <if test="hardWareTotalPrice != null">,HARDWARETOTALPRICE</if>
+            <if test="softWareTotalPrice != null">,SOFTWARETOTALPRICE</if>
+            <if test="sanSpecialId != null and sanSpecialId != ''">,SANSPECIALID</if>
+            <if test="sanSpecialPrice != null">,SANSPECIALPRICE</if>
+            <if test="sanSpecialRatio != null">,SANSPECIALRATIO</if>
+            <if test="sanSpecialSize != null">,SANSPECIALSIZE</if>
+            <if test="sanId!=null and sanId!=''">,SANID</if>
+            <if test="sanPrice!=null">,SANPRICE</if>
+            <if test="sanRatio!=null">,SANRATIO</if>
+            <if test="softId!=null">,SOFTID</if>
+        )
+        VALUES
+        (
+            #{id},
+            #{addedId}
+            <if test="nodeType != null and nodeType != ''">,#{nodeType}</if>
+            <if test="modelType != null and modelType != ''">,#{modelType}</if>
+            <if test="modelConfig != null and modelConfig != ''">,#{modelConfig}</if>
+            <if test="nodeName != null and nodeName != ''">,#{nodeName}</if>
+            <if test="ownCenter != null and ownCenter != ''">,#{ownCenter}</if>
+            <if test="networkArea != null and networkArea !=''">,#{networkArea}</if>
+            <if test="nodeArch != null and nodeArch !=''">,#{nodeArch}</if>
+            <if test="os != null and os != ''">,#{os}</if>
+            <if test="dbSize != null">,#{dbSize}</if>
+            <if test="isStorage != null and isStorage != ''">,#{isStorage}</if>
+            <if test="storageSize != null">,#{storageSize}</if>
+            <if test="isNas != null and isNas != ''">,#{isNas}</if>
+            <if test="nasSize != null">,#{nasSize}</if>
+            <if test="mountType != null and mountType != ''">,#{mountType}</if>
+            <if test="price != null">,#{price}</if>
+
+            <if test="modelConfigName != null and modelConfigName != ''">,#{modelConfigName}</if>
+            <if test="networkAreaName != null and networkAreaName != ''">,#{networkAreaName}</if>
+            <if test="comboTotalPrice != null">,#{comboTotalPrice}</if>
+            <if test="cpuNum != null">,#{cpuNum}</if>
+            <if test="cpuCode != null">,#{cpuCode}</if>
+            <if test="osPrice != null">,#{osPrice}</if>
+            <if test="osCountModel != null and osCountModel != ''">,#{osCountModel}</if>
+            <if test="osTotalPrice != null">,#{osTotalPrice}</if>
+            <if test="nasPrice != null">,#{nasPrice}</if>
+            <if test="nasTotalPrice != null">,#{nasTotalPrice}</if>
+            <if test="sanTotalPrice != null">,#{sanTotalPrice}</if>
+            <if test="dbPrice != null">,#{dbPrice}</if>
+            <if test="dbTotalPrice != null">,#{dbTotalPrice}</if>
+            <if test="hardWareTotalPrice != null">,#{hardWareTotalPrice}</if>
+            <if test="softWareTotalPrice != null">,#{softWareTotalPrice}</if>
+            <if test="sanSpecialId != null and sanSpecialId != ''">,#{sanSpecialId}</if>
+            <if test="sanSpecialPrice != null">,#{sanSpecialPrice}</if>
+            <if test="sanSpecialRatio != null">,#{sanSpecialRatio}</if>
+            <if test="sanSpecialSize != null">,#{sanSpecialSize}</if>
+            <if test="sanId!=null and sanId!=''">,#{sanId}</if>
+            <if test="sanPrice!=null">,#{sanPrice}</if>
+            <if test="sanRatio!=null">,#{sanRatio}</if>
+            <if test="softId!=null">,#{softId}</if>
+        )
+    </insert>
+
+    <insert id="addResItemParts" parameterType="ResaddedItemParts">
+        INSERT INTO RES_ADDED_ITEM_PARTS
+        (
+            ID
+            ,ADDEDITEMID
+            ,ADDEDID
+            <if test="resConfigId!=null and resConfigId!=''">,RESCONFIGID</if>
+            <if test="applyScene!=null and applyScene!=''" >,APPLYSCENE</if>
+            <if test="num!=null">,NUM</if>
+            <if test="price!=null">,PRICE</if>
+            <if test="partId!=null and partId!=''">,PARTID</if>
+            <if test="describe!=null and describe!=''">,DESCRIBE</if>
+            <if test="partCategory!=null and partCategory!=''">,PARTCATEGORY</if>
+            <if test="totalPrice!=null">,TOTALPRICE</if>
+
+        )
+        VALUES
+        (
+            #{id}
+            ,#{addedItemId}
+            ,#{addedId}
+            <if test="resConfigId!=null and resConfigId!=''">,#{resConfigId}</if>
+            <if test="applyScene!=null and applyScene!=''" >,#{applyScene}</if>
+            <if test="num!=null">,#{num}</if>
+            <if test="price!=null">,#{price}</if>
+            <if test="partId!=null and partId!=''">,#{partId}</if>
+            <if test="describe!=null and describe!=''">,#{describe}</if>
+            <if test="partCategory!=null and partCategory!=''">,#{partCategory}</if>
+            <if test="totalPrice!=null">,#{totalPrice}</if>
+        )
+    </insert>
+
+    <insert id="addResItemVersion" parameterType="ResaddedItemVersion">
+        INSERT INTO RES_ADDED_ITEM_VERSION
+        (
+            ID
+            ,ADDEDITEMID
+            ,ADDEDID
+            <if test="type!=null and type!=''">,TYPE</if>
+            <if test="name!=null and name!=''">,NAME</if>
+            <if test="version!=null and version!=''">,VERSION</if>
+            <if test="price!=null">,PRICE</if>
+            <if test="softId!=null and softId!=''">,SOFTID</if>
+            <if test="countModel!=null and countModel!=''">,COUNTMODEL</if>
+            <if test="softCategory!=null and softCategory!=''">,SOFTCATEGORY</if>
+            <if test="totalPrice!=null">,TOTALPRICE</if>
+        )
+        VALUES
+        (
+            #{id}
+            ,#{addedItemId}
+            ,#{addedId}
+            <if test="type!=null and type!=''">,#{type}</if>
+            <if test="name!=null and name!=''">,#{name}</if>
+            <if test="version!=null and version!=''">,#{version}</if>
+            <if test="price!=null">,#{price}</if>
+            <if test="softId!=null and softId!=''">,#{softId}</if>
+            <if test="countModel!=null and countModel!=''">,#{countModel}</if>
+            <if test="softCategory!=null and softCategory!=''">,#{softCategory}</if>
+            <if test="totalPrice!=null">,#{totalPrice}</if>
+        )
+    </insert>
+
+    <select id="queryResInfo" parameterType="String" resultMap="RESADDED">
+        SELECT
+        ID,PRICEREQNO,APPNO,APPNAME,PROJECTNAME,PROJECTNO,TO_CHAR(EXPECTEDONLINETIME,'YYYY-MM-DD') EXPECTEDONLINETIME,AMOUNT,
+        STATUS,CREATOR,TO_CHAR(CREATETIME,'YYYY-MM-DD') CREATETIME,CREATORNAME,SOURCETYPE,BUSIDEPTNAME,TECHDEPTNAME,SYSOPERLEVEL,
+        ISFUNDTRANS,ISCMDBUSED,BUDGETNO,RENEWPROCESSNO,CIID,BUSIDEPTID,TECHDEPTID,SYSDEALUSER,PROCESSINSTID,DOCMID FROM  RES_ADDED where id=#{id}
+    </select>
+
+    <update id="updateResource" parameterType="Resadded">
+        UPDATE RES_ADDED SET PRICEREQNO=#{priceReqNo},APPNO =#{appNo},APPNAME=#{appName},
+        <if test="projectName !=null and projectName !=''">PROJECTNAME=#{projectName},</if>
+        <if test="projectNo !=null and projectNo !=''">PROJECTNO=#{projectNo},</if>
+        EXPECTEDONLINETIME=TO_DATE(#{expectedOnlineTime},'YYYY-MM-DD'),
+        AMOUNT=#{amount},STATUS=#{status},SOURCETYPE=#{sourceType},BUSIDEPTNAME=#{busiDeptName},TECHDEPTNAME=#{techDeptName},
+        <if test="sysOperLevel !=null and sysOperLevel !=''">SYSOPERLEVEL=#{sysOperLevel},</if>
+        <if test="isFundTrans !=null and isFundTrans !=''">ISFUNDTRANS=#{isFundTrans},</if>
+        <if test="processInstID !=null and processInstID !=''">PROCESSINSTID=#{processInstID},</if>
+        CIID=#{ciid},BUSIDEPTID=#{busiDeptId},TECHDEPTID=#{techDeptId},
+        DOCMID=#{docmId} WHERE ID = #{id}
+    </update>
+    <!-- 根据流程实例ID，获取业务信息 -->
+    <select id="queryBusInfoByProcessInstId" parameterType="String" resultMap="RESADDED">
+        SELECT
+        ID,PRICEREQNO,APPNO,APPNAME,PROJECTNAME,PROJECTNO,TO_CHAR(EXPECTEDONLINETIME,'YYYY-MM-DD') EXPECTEDONLINETIME,AMOUNT,
+        STATUS,CREATOR,TO_CHAR(CREATETIME,'YYYY-MM-DD') CREATETIME,CREATORNAME,SOURCETYPE,BUSIDEPTNAME,TECHDEPTNAME,SYSOPERLEVEL,
+        ISFUNDTRANS,ISCMDBUSED,BUDGETNO,RENEWPROCESSNO from  RES_ADDED where PROCESSINSTID=#{processInstId}
+    </select>
+    <update id="updateWorkFlowRelateInfo" parameterType="Map">
+        UPDATE RES_ADDED SET STATUS=#{status}
+        <if test="budgetNo !=null and budgetNo !=''">,BUDGETNO=#{budgetNo}</if>
+        <if test="evaluateNo !=null and evaluateNo !=''">,EVALUATENO=#{evaluateNo}</if>
+        <if test="evaluateUrl !=null and evaluateUrl !=''">,EVALUATEURL=#{evaluateUrl}</if>
+        <if test="sysDealUser !=null and sysDealUser !=''">,SYSDEALUSER=#{sysDealUser}</if>
+        WHERE ID=#{id}
+    </update>
+
+    <!--获取存储套餐数据  -->
+    <select id="queryStorageComboData" parameterType="Map" resultType="Map">
+        SELECT
+        t.ID,
+         t.APPLYSCENE,
+        t.PRICE,
+        t.RATIO,
+        t.DEVOPSLEVEL,
+        t.ISRELATEFUND,
+        t.ISSPECIAL,
+        t.SUBCATEGORY,
+        t.ISCANCEL
+        FROM RES_CONFIG_COMBO t
+        WHERE t.STATUS='2'
+        <if test="id!=null and id!=''">AND t.ID=#{id}</if>
+    </select>
+
+    <!-- 获取需要通知的资源列表 -->
+    <select id="findListByNotice" parameterType="String" resultMap="RESADDED">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM RES_ADDED a
+        where a.EXPECTEDONLINETIME = TO_DATE(#{noticeDateStr},'YYYY-MM-DD')
+    </select>
+
+    <select id="queryResource" parameterType="String" resultMap="RESADDED">
+        SELECT
+        <include refid="sql_flied_all2"/>
+        FROM RES_ADDED a
+        WHERE a.ID =#{id}
+    </select>
+
+    <select id="queryResItem" parameterType="String" resultType="ResAddedItem">
+        SELECT *
+        FROM RES_ADDED_ITEM
+        WHERE ADDEDID= #{addedId}
+        ORDER BY SOFTID
+    </select>
+
+    <select id="queryResItemParts" parameterType="String" resultType="ResAddedItemParts">
+        SELECT * FROM RES_ADDED_ITEM_PARTS
+        WHERE ADDEDITEMID =#{addedItemId}
+    </select>
+
+    <select id="queryResItemVersion" parameterType="String" resultType="ResAddedItemVersion">
+        SELECT * FROM RES_ADDED_ITEM_VERSION
+        WHERE ADDEDITEMID =#{addedItemId}
+    </select>
+
+    <delete id="delResource" parameterType="String">
+        DELETE FROM RES_ADDED WHERE ID =#{id}
+    </delete>
+
+    <delete id="delResItem" parameterType="String">
+        DELETE FROM RES_ADDED_ITEM WHERE ADDEDID = #{id}
+    </delete>
+
+    <delete id="delResItemParts" parameterType="String">
+        DELETE FROM  RES_ADDED_ITEM_PARTS WHERE ADDEDID = #{id}
+    </delete>
+
+    <delete id="delResItemVersion" parameterType="String">
+        DELETE FROM  RES_ADDED_ITEM_VERSION WHERE ADDEDID = #{id}
+    </delete>
+
+    <select id="querySanCombo" parameterType="Map" resultType="Map">
+        SELECT * FROM RES_CONFIG_COMBO t
+        WHERE t.DEVOPSLEVEL =#{sysOperLevel}
+        AND t.ISRELATEFUND = #{isFundTrans}
+        AND t.STATUS = 2
+    </select>
+
+    <select id="querydbPrice" parameterType="String" resultType="Map">
+        SELECT DISKCAPACITY FROM RES_CONFIG_COMBO WHERE ID=#{id}
+    </select>
+
+    <!-- 查询补录数据 -->
+    <select id="queryAdditionalList" parameterType="Map" resultType="Map">
+        SELECT APPLYCODE, FLOWTITLE, FLOWSTATUS
+        FROM (SELECT T.APPLYCODE, PPF.FLOWTITLE, PPF.FLOWSTATUS
+        FROM PPM_DEMAND_CHANGE T
+        LEFT JOIN PPM_PROJECT_FLOW PPF
+        ON T.INSTANCEID = PPF.INSTANCEID
+        WHERE T.APPLYCODE IS NOT NULL
+        AND PPF.INSTANCEID IS NOT NULL
+        AND PPF.FLOWSTATUS  != '已删除'
+        UNION
+        SELECT T.FAULTNO, PPF.FLOWTITLE, PPF.FLOWSTATUS
+        FROM PPM_SCIFAULT_INFO T
+        LEFT JOIN PPM_PROJECT_FLOW PPF
+        ON T.INSTANCEID = PPF.INSTANCEID
+        WHERE PPF.INSTANCEID IS NOT NULL
+        AND PPF.FLOWSTATUS  != '已删除') a
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="applyCode != null  and applyCode != '' " > a.applycode like  '%'||#{applyCode}||'%' AND </if>
+            <if test="flowTitle != null  and flowTitle != '' " > a.flowtitle like  '%'||#{flowTitle}||'%' AND </if>
+        </trim>
+    </select>
+
+    <!-- 【总办报表】 虚拟机资源汇总 -->
+    <select id="virtualResReportZb" parameterType="Map" resultType="ReportZb">
+        SELECT
+            #{ownCenterName} || '中心' AS OWNCENTERNAME,
+            '虚拟机资源' AS TYPE,
+            SUM(cpu) || 'C' || SUM(memory) || 'G' || SUM(disk) || 'G' AS DESCRIPTION,
+            '/' AS COUNT,
+            '/' AS PRICE,
+            SUM(totalPrice) AS TOTALPRICE
+        FROM (
+            SELECT
+                SUM(CPU) AS CPU ,
+                SUM(MEMORY) AS MEMORY,
+                SUM(DISK) As DISK,
+                SUM(TOTALPRICE) AS TOTALPRICE
+            FROM
+            (SELECT
+                NVL((SELECT SUM(a.num)
+                FROM RES_ADDED_ITEM_PARTS a
+                WHERE a.RESCONFIGID = 1 and a.ADDEDITEMID = m.ID
+                GROUP BY a.PARTID,a.NUM),0) AS CPU,
+
+                NVL((SELECT SUM(a.num)
+                FROM RES_ADDED_ITEM_PARTS a
+                WHERE a.RESCONFIGID = 2 and a.ADDEDITEMID = m.ID
+                GROUP BY a.PARTID,a.NUM),0) AS MEMORY,
+
+                NVL((SELECT SUM(a.num)
+                FROM RES_ADDED_ITEM_PARTS a
+                WHERE a.RESCONFIGID = 3 AND a.ADDEDITEMID = m.ID
+                GROUP BY a.PARTID,a.NUM),0) AS DISK,
+
+                m.HARDWARETOTALPRICE AS TOTALPRICE
+            FROM RES_ADDED_ITEM m
+            WHERE m.ADDEDID = #{id}
+            AND m.OWNCENTER = #{ownCenter}
+            AND m.MODELTYPE = 2)
+
+            UNION ALL
+
+            SELECT
+                NVL(SUM(b.CPUNUM),0) AS CPU,
+                NVL(sum(b.MEMORY),0) AS MEMORY,
+                NVL(SUM(B.DISKCAPACITY),0) AS DISK,
+                NVL(SUM(A.COMBOTOTALPRICE),0) AS TOTALPRICE
+            FROM RES_ADDED_ITEM a
+            LEFT JOIN RES_CONFIG_COMBO b ON a.MODELCONFIG = b.ID
+            WHERE a.ADDEDID = #{id}
+            AND a.OWNCENTER = #{ownCenter} AND a.MODELTYPE = 2
+        )
+    </select>
+
+    <!-- 【总办报表】 物理机套餐 -->
+    <select id="physicalResReportZb" parameterType="Map" resultType="ReportZb">
+        SELECT
+            #{ownCenterName} || '中心' AS OWNCENTERNAME,
+            '物理机套餐' AS TYPE,
+            a.MODELCONFIGNAME AS DESCRIPTION,
+            COUNT(a.MODELCONFIG) AS COUNT,
+            a.COMBOTOTALPRICE AS PRICE,
+            SUM(a.COMBOTOTALPRICE) AS TOTALPRICE
+        FROM RES_ADDED_ITEM a
+        WHERE a.ADDEDID = #{id}
+        AND a.OWNCENTER = #{ownCenter}
+        AND a.MODELTYPE = 1
+        GROUP BY a.MODELCONFIG,a.MODELCONFIGNAME,a.COMBOTOTALPRICE
+    </select>
+
+    <!-- 【总办报表】 Paas套餐 -->
+    <select id="paasResReportZb" parameterType="Map" resultType="ReportZb">
+        SELECT
+            #{ownCenterName} || '中心' AS OWNCENTERNAME,
+            'Paas套餐' AS TYPE,
+            a.MODELCONFIGNAME AS DESCRIPTION,
+            COUNT(a.MODELCONFIG) AS COUNT,
+            a.COMBOTOTALPRICE AS PRICE,
+            SUM(a.COMBOTOTALPRICE) AS TOTALPRICE
+        FROM RES_ADDED_ITEM a
+        WHERE a.ADDEDID = #{id}
+        AND a.OWNCENTER = #{ownCenter}
+        AND a.MODELTYPE = 3 AND a.NODETYPE in ('2','3','5')
+        GROUP BY a.MODELCONFIG,a.MODELCONFIGNAME,a.COMBOTOTALPRICE
+    </select>
+
+    <!-- 【总办报表】 专用设备套餐 -->
+    <select id="specialResReport" parameterType="Map" resultType="ReportZb">
+        SELECT
+            #{ownCenterName} || '中心' AS OWNCENTERNAME,
+            '专用设备套餐' AS TYPE,
+            a.MODELCONFIGNAME AS DESCRIPTION,
+            COUNT(a.MODELCONFIG) AS COUNT,
+            a.COMBOTOTALPRICE AS PRICE,
+            SUM(a.COMBOTOTALPRICE) AS TOTALPRICE
+        FROM RES_ADDED_ITEM a
+        WHERE a.ADDEDID = #{id}
+        AND a.OWNCENTER = #{ownCenter}
+        AND a.MODELTYPE = 4
+        GROUP BY a.MODELCONFIG,a.MODELCONFIGNAME,a.COMBOTOTALPRICE
+    </select>
+
+    <!-- 【总办报表】 物理机配件 -->
+    <select id="physicalPartReportZb" parameterType="Map" resultType="ReportZb">
+        SELECT
+            #{ownCenterName} || '中心' AS OWNCENTERNAME,
+            '物理机配件' AS TYPE,
+            a.DESCRIBE AS DESCRIPTION,
+            sum(a.num) AS COUNT,
+            a.price,
+            sum(a.totalprice) AS TOTALPRICE
+        FROM RES_ADDED_ITEM_PARTS a
+        LEFT JOIN RES_ADDED_ITEM b ON a.ADDEDITEMID = b.ID
+        WHERE a.ADDEDID = #{id}
+        AND b.OWNCENTER = #{ownCenter}
+        AND b.MODELTYPE = 1
+        GROUP BY a.PARTID,a.DESCRIBE,a.PRICE
+    </select>
+
+    <!-- 【总办报表】 SAN -->
+    <select id="sanReportZb" parameterType="Map" resultType="ReportZb">
+        SELECT
+            #{ownCenterName} || '中心' AS OWNCENTERNAME,
+            'SAN' AS TYPE,
+            b.APPLYSCENE AS DESCRIPTION,
+            SUM(a.STORAGESIZE) AS COUNT,
+            a.sanprice AS PRICE,
+            0 AS TOTALPRICE
+        FROM RES_ADDED_ITEM a
+        LEFT JOIN RES_CONFIG_COMBO b ON a.SANID = b.ID
+        WHERE a.ADDEDID = #{id}
+        AND a.OWNCENTER = #{ownCenter}
+        GROUP BY a.SANID,a.SANPRICE,b.APPLYSCENE
+    </select>
+
+    <!-- 【总办报表】 归档SAN -->
+    <select id="specailSanReportZb" parameterType="Map" resultType="ReportZb">
+        SELECT
+            #{ownCenterName} || '中心' AS OWNCENTERNAME,
+            '归档SAN' AS TYPE,
+            b.APPLYSCENE AS DESCRIPTION,
+            SUM(a.SANSPECIALSIZE) AS COUNT,
+            a.SANSPECIALPRICE AS PRICE,
+            0 AS TOTALPRICE
+        FROM RES_ADDED_ITEM a
+        LEFT JOIN RES_CONFIG_COMBO b ON a.SANSPECIALID = b.ID
+        WHERE a.ADDEDID = #{id}
+        and a.OWNCENTER = #{ownCenter}
+        GROUP BY a.SANSPECIALID,a.SANSPECIALPRICE,b.APPLYSCENE
+    </select>
+
+    <!-- 【总办报表】 NAS -->
+    <select id="nasReportZb" parameterType="Map" resultType="ReportZb">
+        SELECT
+            #{ownCenterName} || '中心' AS OWNCENTERNAME,
+            'NAS' AS TYPE,
+            b.APPLYSCENE AS DESCRIPTION,
+            SUM(a.NASSIZE) AS COUNT,
+            a.NASPRICE AS PRICE,
+            SUM(a.NASTOTALPRICE) AS TOTALPRICE
+        FROM RES_ADDED_ITEM a
+        LEFT JOIN RES_CONFIG_COMBO b ON a.MOUNTTYPE = b.ID
+        WHERE a.ADDEDID = #{id}
+        AND a.OWNCENTER = #{ownCenter}
+        GROUP BY a.MOUNTTYPE,a.NASPRICE,a.NASTOTALPRICE,b.APPLYSCENE
+    </select>
+
+    <!-- 【总办报表】 数据库容量 -->
+    <select id="dbReportZb" parameterType="Map" resultType="ReportZb">
+        SELECT
+            #{ownCenterName} || '中心' AS OWNCENTERNAME,
+            'db云' AS TYPE,
+            '数据库容量' AS DESCRIPTION,
+            sum(a.DBSIZE) AS COUNT,
+            a.DBPRICE AS PRICE,
+            sum(a.DBTOTALPRICE) AS TOTALPRICE
+        FROM RES_ADDED_ITEM a
+        WHERE a.ADDEDID = #{id}
+        AND a.OWNCENTER = #{ownCenter}
+        AND a.MODELTYPE = 3
+        AND a.NODETYPE = 3
+        GROUP BY a.MODELCONFIG,a.DBPRICE
+    </select>
+
+    <!-- 【总办报表】 软件版本 -->
+    <select id="softWareReportZb" parameterType="Map" resultType="ReportZb">
+        SELECT
+            #{ownCenterName} || '中心' AS OWNCENTERNAME,
+            NAME AS TYPE,
+            VERSION AS DESCRIPTION,
+            NUM AS COUNT,
+            PRICE,
+            TOTALPRICE
+        FROM (
+            SELECT
+                b.SOFTNAME AS NAME,
+                b.SOFTVERSION AS VERSION,
+                a.OSPRICE AS PRICE,
+                SUM(a.OSTOTALPRICE) AS TOTALPRICE,
+                COUNT(a.OS) AS NUM
+            FROM RES_ADDED_ITEM a
+            LEFT JOIN res_config_soft b ON a.OS = b.ID
+            WHERE a.ADDEDID = #{id}
+            AND a.owncenter = #{ownCenter}
+            GROUP BY a.os,b.SOFTNAME,b.SOFTVERSION,a.OSPRICE
+
+            UNION ALL
+
+            SELECT
+                a.NAME,
+                a.VERSION,
+                a.PRICE,
+                SUM(a.TOTALPRICE) AS TOTALPRICE,
+                COUNT(a.SOFTID) AS NUM
+            FROM RES_ADDED_ITEM_VERSION a
+            LEFT JOIN RES_ADDED_ITEM b ON a.ADDEDITEMID=b.ID
+            WHERE a.ADDEDID = #{id}
+            AND b.OWNCENTER = #{ownCenter}
+            AND a.PRICE != 0
+            GROUP BY a.SOFTID,a.NAME,a.VERSION,a.PRICE
+        )
+    </select>
+
+    <!--【技评报表】 存储资源成本-->
+    <select id="storageRepoetJp" parameterType="String" resultType="ReportJp">
+        SELECT
+            n.DICTNAME || '中心' AS OWNCENTERNAME,
+            m.NODENAME AS NODENAME,
+            n1.DICTNAME AS NODETYPENAME,
+            n2.DICTNAME AS MODELTYPENAME,
+            '/' AS MODELCONFIG,
+            m.NASSIZE,
+            m.SANSIZE,
+            m.SANSPECIALSIZE,
+            m.DBSIZE
+        FROM (
+            SELECT
+                a.OWNCENTER,
+                a.NODETYPE,
+                a.MODELTYPE,
+                a.NODENAME,
+                SUM(a.NASSIZE) AS NASSIZE,
+                SUM(a.STORAGESIZE) AS SANSIZE,
+                SUM(a.SANSPECIALSIZE) AS SANSPECIALSIZE,
+                SUM(a.DBSIZE) AS DBSIZE
+            FROM RES_ADDED_ITEM a
+            WHERE a.ADDEDID = #{id}
+            GROUP BY a.NODETYPE,a.MODELTYPE,a.NODENAME,a.ID,a.OWNCENTER,a.OS,a.MODELCONFIG,a.DBSIZE
+        ) m
+        LEFT JOIN EOS_DICT_ENTRY n ON m.OWNCENTER = n.DICTID
+        LEFT JOIN EOS_DICT_ENTRY n1 ON m.NODETYPE = n1.DICTID
+        LEFT JOIN EOS_DICT_ENTRY n2 on m.MODELTYPE = n2.DICTID
+        WHERE n.DICTTYPEID = 'RES_OWNCENTER'
+        AND n1.DICTTYPEID = 'RES_NODETYPE'
+        AND n2.DICTTYPEID = 'RES_MODELTYPE'
+    </select>
+
+    <!-- 查询技评维度统计的附表数据 -->
+    <select id="resConfigMain" parameterType="String" resultType="ReportJp">
+        SELECT
+            a.ID,
+            a.NODENAME,
+            b.DICTNAME || '中心' AS OWNCENTERNAME,
+            c.DICTNAME AS NODETYPENAME,
+            d.DICTNAME as MODELTYPENAME
+        FROM
+        (
+            SELECT ID,NODENAME,OWNCENTER,NODETYPE,MODELTYPE FROM RES_ADDED_ITEM
+            WHERE ADDEDID = #{id}
+            ORDER BY OWNCENTER
+        ) a
+        LEFT JOIN EOS_DICT_ENTRY b ON a.OWNCENTER = b.DICTID
+        LEFT JOIN EOS_DICT_ENTRY c ON a.NODETYPE = c.DICTID
+        LEFT JOIN EOS_DICT_ENTRY d on a.MODELTYPE = d.DICTID
+        WHERE b.DICTTYPEID = 'RES_OWNCENTER'
+        AND c.DICTTYPEID = 'RES_NODETYPE'
+        AND d.DICTTYPEID = 'RES_MODELTYPE'
+        GROUP BY a.ID,a.NODENAME,b.DICTNAME,c.DICTNAME,d.DICTNAME
+    </select>
+
+    <!-- 技评维度根据附表获取软件资源 -->
+    <select id="resConfigSoft" parameterType="String" resultType="String">
+        SELECT
+            TO_CHAR(WM_CONCAT(SOFT)) AS SOFT
+        FROM (
+            SELECT
+                WM_CONCAT(b.NAME || ' ' || b.VERSION || '*' || COUNT(b.ID)) AS SOFT
+            FROM RES_ADDED_ITEM_VERSION b
+            WHERE b.ADDEDITEMID = #{id}
+            GROUP BY b.VERSION,b.NAME
+            UNION All
+            SELECT
+                WM_CONCAT(n.SOFTNAME || ' ' || n.SOFTVERSION || '*1') AS SOFT
+            FROM RES_ADDED_ITEM m
+            LEFT JOIN RES_CONFIG_SOFT n ON m.OS = n.ID
+            WHERE m.ID=#{id}
+        )
+    </select>
+
+    <!-- 技评维度根据附表获取硬件资源 -->
+    <select id="resConfigPart" parameterType="String" resultType="String">
+        SELECT
+            TO_CHAR(WM_CONCAT(PART)) AS PART
+        FROM
+        (
+            SELECT
+                WM_CONCAT(m.MODELCONFIGNAME || '*1') AS PART
+            FROM RES_ADDED_ITEM m
+            WHERE m.ID = #{id}
+            UNION ALL
+            SELECT
+                WM_CONCAT(b.APPLYSCENE || '*' || SUM(b.NUM)) AS PART
+            FROM RES_ADDED_ITEM_PARTS b
+            WHERE b.ADDEDITEMID = #{id}
+            AND b.applyscene IS NOT NULL
+            GROUP BY b.PARTID,b.APPLYSCENE,b.NUM
+            UNION ALL
+            SELECT
+                WM_CONCAT( Upper( c.dictname) || '(' || b.describe || ')*' || SUM(b.NUM)) AS PART
+            FROM RES_ADDED_ITEM_PARTS b
+            LEFT JOIN EOS_DICT_ENTRY c ON b.RESCONFIGID = c.DICTID
+            WHERE b.ADDEDITEMID = #{id}
+            AND b.APPLYSCENE IS NULL
+            AND c.DICTTYPEID = 'RES_VM_TYPE'
+            GROUP BY b.PARTID,b.DESCRIBE,b.NUM,c.DICTNAME
+        )
+    </select>
+
+    <!-- 存在补录编号,流转完成之后修改为CMDB已使用 -->
+    <update id="setCmdbUsed" parameterType="String">
+        UPDATE
+            RES_ADDED_ITEM
+        SET
+            ISCMDBUSED = '1'
+        WHERE ADDEDID =
+        (SELECT ID FROM RES_ADDED WHERE id = #{id} AND
+        RENEWPROCESSNO IS NOT NULL)
+    </update>
+
+    <select id="getCompid" parameterType="String" resultType="String">
+        SELECT t.compid FROM comm_employee t WHERE t.badge =#{userid}
+    </select>
+
+    <!-- 根据Id查询资源新增配置的详情 -->
+    <select id="showItemDetailById" parameterType="String" resultType="ResAddedItem">
+        SELECT * FROM RES_ADDED_ITEM where id=#{id}
+    </select>
+
+    <!-- 根据ItemId删除对应的Item表数据 -->
+    <delete id="deleteItemByItemId" parameterType="String">
+        DELETE FROM RES_ADDED_ITEM WHERE ID = #{addedItemId}
+    </delete>
+
+    <!-- 根据ItemId删除关联的parts表数据 -->
+    <delete id="deletePartsByItemId" parameterType="String">
+        DELETE FROM RES_ADDED_ITEM_PARTS WHERE ADDEDITEMID = #{addedItemId}
+    </delete>
+
+    <!-- 根据ItemId删除对应的version表数据 -->
+    <delete id="deleteVersionByItemId" parameterType="String">
+        DELETE FROM RES_ADDED_ITEM_VERSION WHERE ADDEDITEMID = #{addedItemId}
+    </delete>
+
+    <update id="saveSubmit" parameterType="ResAdded">
+        UPDATE RES_ADDED
+        SET
+            PROCESSINSTID = #{processInstID},
+            STATUS = #{status},
+            AMOUNT = (
+                SELECT
+                    SUM(a.PRICE)
+                FROM RES_ADDED_ITEM a
+                WHERE a.ADDEDID= #{id}
+            )
+        WHERE ID = #{id}
+    </update>
+
+    <!-- 根据主表ID查询所有的子表数据以及子表的拼接好的名称（节点类型名称-选型类型-节点名称） -->
+    <select id="validOutofDateMain" parameterType="String" resultType="Map">
+        SELECT
+            a.ID,
+            b.DICTNAME || '-' || c.dictname || '-' || a.NODENAME AS NAME
+        FROM RES_ADDED_ITEM a
+        LEFT JOIN EOS_DICT_ENTRY b ON a.NODETYPE = b.DICTID
+        LEFT JOIN EOS_DICT_ENTRY c ON a.MODELTYPE = c.DICTID
+        WHERE a.ADDEDID=#{id}
+        AND b.DICTTYPEID = 'RES_NODETYPE'
+        AND c.DICTTYPEID = 'RES_MODELTYPE'
+    </select>
+
+    <!-- 根据资源子表ID查询已经作废的资源描述-->
+    <select id="validOutofDateData" parameterType="String" resultType="Map">
+        SELECT * FROM
+        (
+        SELECT
+            m.SOFTID AS CONFIGID,
+            m.NAME || ' ' || m.VERSION AS DESCRIPTION
+        FROM RES_ADDED_ITEM_VERSION m
+        LEFT JOIN RES_CONFIG_SOFT n ON  m.SOFTID = n.ID
+        WHERE m.ADDEDITEMID = #{id}
+        AND n.ISCANCEL = 1
+        UNION
+        SELECT
+            m.PARTID AS CONFIGID,
+            n.APPLYSCENE AS DESCRIPTION
+        FROM RES_ADDED_ITEM_PARTS m
+        LEFT JOIN
+        (
+            SELECT
+                m.ISCANCEL,
+                m.ID,
+                '【' || n.DICTNAME || '】' || m.APPLYSCENE AS APPLYSCENE
+            FROM RES_CONFIG_COMBO m
+            LEFT JOIN EOS_DICT_ENTRY n ON m.SUBCATEGORY = n.DICTID
+            WHERE n.DICTTYPEID = 'RES_SUBCATEGORY'
+            UNION
+            SELECT
+                m.ISCANCEL,
+                m.ID,
+                n.DICTNAME || '(' || m.DESCRIBE || ')' AS APPLYSCENE
+            FROM RES_CONFIG_VM m
+            LEFT JOIN EOS_DICT_ENTRY n ON m.TYPE = n.dictid
+            WHERE n.DICTTYPEID = 'RES_VM_TYPE'
+        ) n ON m.PARTID = n.id
+        WHERE m.ADDEDITEMID = #{id}
+        AND n.ISCANCEL =1
+        UNION
+        SELECT
+            m.MOUNTTYPE AS CONFIGID,
+            n.APPLYSCENE AS DESCRIPTION
+        FROM RES_ADDED_ITEM m
+        LEFT JOIN RES_CONFIG_COMBO n ON m.MOUNTTYPE = n.id
+        WHERE m.ID = #{id}
+        AND n.ISCANCEL = 1
+        UNION
+        SELECT
+            m.OS AS CONFIGID,
+            n.sOFTNAME || ' ' || n.SOFTVERSION AS DESCRIPTION
+        FROM RES_ADDED_ITEM m
+        LEFT JOIN RES_CONFIG_SOFT n ON m.OS = n.ID
+        WHERE m.ID = #{id}
+        AND n.ISCANCEL = 1
+        UNION
+        SELECT
+            m.MODELCONFIG AS CONFIGID,
+            m.MODELCONFIGNAME AS DESCRIPTION
+        FROM RES_ADDED_ITEM m
+        LEFT JOIN RES_CONFIG_COMBO n ON m.MODELCONFIG = n.id
+        WHERE m.ID = #{id}
+        AND n.ISCANCEL = 1
+        UNION
+        SELECT
+            m.SANID AS CONFIGID,
+            n.APPLYSCENE AS DESCRIPTION
+        FROM RES_ADDED_ITEM m
+        LEFT JOIN RES_CONFIG_COMBO n ON m.SANID = n.ID
+        WHERE m.ID = #{id}
+        AND n.ISCANCEL = 1
+        UNION
+        SELECT
+            m.SANSPECIALID AS CONFIGID,
+            n.APPLYSCENE AS DESCRIPTION
+        FROM RES_ADDED_ITEM m
+        LEFT JOIN RES_CONFIG_COMBO n ON m.SANSPECIALID = n.ID
+        WHERE m.ID = #{id}
+        AND n.ISCANCEL = 1
+        )
+    </select>
+
+    <select id="validOutofDateDataResubmit" parameterType="String" resultType="Map">
+        SELECT
+            CASE WHEN m.CATEGORY = '2'
+                    THEN '【' || n.DICTNAME || '】' || m.APPLYSCENE
+                WHEN m.CATEGORY = '5'
+                    THEN m.APPLYSCENE
+            ELSE m.DESCRIBE END AS DESCRIPTION
+        FROM RES_CONFIG_COMBO m
+        LEFT JOIN EOS_DICT_ENTRY n ON m.SUBCATEGORY = n.DICTID
+        WHERE n.DICTTYPEID = 'RES_SUBCATEGORY'
+        AND m.ISCANCEL = 1
+        AND m.ID = #{id}
+
+        UNION
+
+        SELECT
+            m.SOFTNAME || ' ' || m.SOFTVERSION AS DESCRIPTION
+        FROM RES_CONFIG_SOFT m
+        WHERE m.ISCANCEL = 1
+        AND m.ID = #{id}
+
+        UNION
+
+        SELECT
+            n.DICTNAME || '(' || m.DESCRIBE || ')' AS DESCRIPTION
+        FROM RES_CONFIG_VM m
+        LEFT JOIN EOS_DICT_ENTRY n ON m.TYPE = n.DICTID
+        WHERE n.DICTTYPEID = 'RES_VM_TYPE'
+        AND m.ISCANCEL =1
+        AND m.ID = #{id}
+    </select>
+</mapper>
+

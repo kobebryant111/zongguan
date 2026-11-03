@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:ywwb905 2023-05-19 -->
+<!--  外包人员监保部台账 查询脚本 -->
+<mapper namespace="com.work.ppm.application.model.otherdeptmanager.PpmAccessCardLedger">
+	 <resultMap type="ppmAccessCardLedger" id="PPMACCESSCARDLEDGER_ALL">
+		<result property="id" column="ID" />
+		<result property="pid" column="PID" />
+		<result property="jobId" column="JOB_ID" />
+		<result property="ifCreateReturn" column="IF_CREATE_RETURN" />
+		<result property="ifMakeCard" column="IF_MAKE_CARD" />
+		<result property="virtualMachineId" column="VIRTUAL_MACHINE_ID" />
+		<result property="accessCardNumber" column="ACCESS_CARD_NUMBER" />
+		<result property="ifReceiveCard" column="IF_RECEIVE_CARD" />
+		<result property="receiveTime" column="RECEIVE_TIME" />
+		<result property="ifReturnCard" column="IF_RETURN_CARD" />
+		<result property="returnTime" column="RETURN_TIME" />
+		<result property="creditCardNumbers" column="CREDIT_CARD_NUMBERS" />
+		<result property="accountNumber" column="ACCOUNT_NUMBER" />
+		<result property="placeOfAccount" column="PLACE_OF_ACCOUNT" />
+		<result property="outBankName" column="OUT_BANK_NAME" />
+		<result property="remarkYgb" column="REMARK_YGB" />
+		<result property="remarkJbb" column="REMARK_JBB" />
+		<result property="isDel" column="IS_DEL" />
+		<result property="state" column="STATE" />
+		<result property="createdTime" column="CREATED_TIME" />
+		<result property="createdBy" column="CREATED_BY" />
+		<result property="modifiedTime" column="MODIFIED_TIME" />
+		<result property="modifiedBy" column="MODIFIED_BY" />
+     </resultMap>
+	<resultMap id="PPMACCESSCARDLEDGER_ALL_EXT" type="ppmAccessCardLedgerExt" extends="PPMACCESSCARDLEDGER_ALL">
+		<result property="userName" column="USER_NAME" />
+		<result property="deptName" column="DEPT_NAME" />
+		<result property="idCardNo" column="ID_CARD_NO" />
+		<result property="telephone" column="TELEPHONE" />
+		<result property="outsourceName" column="OUTSOURCE_NAME" />
+		<result property="idList" column="ID_LIST" />
+		<result property="sex" column="SEX" />
+     </resultMap>
+     <!-- 所有字段名称 -->
+    <sql id="sql_flied_all">
+		ID,
+		PID,
+		JOB_ID,
+		IF_CREATE_RETURN,
+		IF_MAKE_CARD,
+		VIRTUAL_MACHINE_ID,
+		ACCESS_CARD_NUMBER,
+		IF_RECEIVE_CARD,
+		RECEIVE_TIME,
+		IF_RETURN_CARD,
+		RETURN_TIME,
+		CREDIT_CARD_NUMBERS,
+		ACCOUNT_NUMBER,
+		PLACE_OF_ACCOUNT,
+		OUT_BANK_NAME,
+		REMARK_YGB,
+		REMARK_JBB,
+		IS_DEL,
+		STATE,
+		CREATED_TIME,
+		CREATED_BY,
+		MODIFIED_TIME,
+		MODIFIED_BY
+    </sql>
+    <sql id="sql_select_condition">
+        <trim prefix="WHERE" suffixOverrides="AND">
+			<if test="id != null and id != '' " > ID = #{id} AND </if>
+			<if test="pid != null and pid != '' " > PID = #{pid} AND </if>
+			<if test="jobId != null and jobId != '' " > JOB_ID = #{jobId} AND </if>
+			<if test="ifCreateReturn != null and ifCreateReturn != '' " > IF_CREATE_RETURN = #{ifCreateReturn} AND </if>
+			<if test="ifMakeCard != null and ifMakeCard != '' " > IF_MAKE_CARD = #{ifMakeCard} AND </if>
+			<if test="virtualMachineId != null and virtualMachineId != '' " > VIRTUAL_MACHINE_ID = #{virtualMachineId} AND </if>
+			<if test="accessCardNumber != null and accessCardNumber != '' " > ACCESS_CARD_NUMBER = #{accessCardNumber} AND </if>
+			<if test="ifReceiveCard != null and ifReceiveCard != '' " > IF_RECEIVE_CARD = #{ifReceiveCard} AND </if>
+			<if test="receiveTime != null " > RECEIVE_TIME = #{receiveTime} AND </if>
+			<if test="ifReturnCard != null  and ifReturnCard != '' " > IF_RETURN_CARD = #{ifReturnCard} AND </if>
+			<if test="returnTime != null " > RETURN_TIME = #{returnTime} AND </if>
+			<if test="creditCardNumbers != null and creditCardNumbers != '' " > CREDIT_CARD_NUMBERS = #{creditCardNumbers} AND </if>
+			<if test="accountNumber != null and accountNumber != '' " > ACCOUNT_NUMBER = #{accountNumber} AND </if>
+			<if test="placeOfAccount != null and placeOfAccount != '' " > PLACE_OF_ACCOUNT = #{placeOfAccount} AND </if>
+			<if test="outBankName != null and outBankName != '' " > OUT_BANK_NAME = #{outBankName} AND </if>
+			<if test="remarkYgb != null and remarkYgb != '' " > REMARK_YGB = #{remarkYgb} AND </if>
+			<if test="remarkJbb != null and remarkJbb != '' " > REMARK_JBB = #{remarkJbb} AND </if>
+			<if test="isDel != null and isDel != '' " > IS_DEL = #{isDel} AND </if>
+			<if test="state != null  and state != '' " > STATE = #{state} AND </if>
+			<if test="createdTime != null " > CREATED_TIME = #{createdTime} AND </if>
+			<if test="createdBy != null and createdBy != '' " > CREATED_BY = #{createdBy} AND </if>
+			<if test="modifiedTime != null " > MODIFIED_TIME = #{modifiedTime} AND </if>
+			<if test="modifiedBy != null and modifiedBy != '' " > MODIFIED_BY = #{modifiedBy} AND </if>
+        </trim>
+    </sql>
+    <!-- 查询分页  2023-05-19 ywwb905  -->
+    <select id="queryPagerList" parameterType="map" resultMap="PPMACCESSCARDLEDGER_ALL">
+        SELECT
+        <include refid="sql_flied_all" />
+        FROM PPM_ACCESS_CARD_LEDGER
+        <include refid="sql_select_condition" />
+    </select>
+
+    <!-- 新增  2023-05-19 ywwb905  -->
+    <insert id="addPojo" parameterType="ppmAccessCardLedger">
+        INSERT INTO PPM_ACCESS_CARD_LEDGER (
+        <trim suffixOverrides=",">
+			<if test="id != null and id != '' " > ID , </if>
+			<if test="pid != null and pid != '' " > PID , </if>
+			<if test="jobId != null and jobId != '' " > JOB_ID , </if>
+			<if test="ifCreateReturn != null and ifCreateReturn != '' " > IF_CREATE_RETURN , </if>
+			<if test="ifMakeCard != null and ifMakeCard != '' " > IF_MAKE_CARD , </if>
+			<if test="virtualMachineId != null and virtualMachineId != '' " > VIRTUAL_MACHINE_ID , </if>
+			<if test="accessCardNumber != null and accessCardNumber != '' " > ACCESS_CARD_NUMBER , </if>
+			<if test="ifReceiveCard != null and ifReceiveCard != '' " > IF_RECEIVE_CARD , </if>
+			<if test="receiveTime != null " > RECEIVE_TIME , </if>
+			<if test="ifReturnCard != null and ifReturnCard != '' " > IF_RETURN_CARD , </if>
+			<if test="returnTime != null " > RETURN_TIME , </if>
+			<if test="creditCardNumbers != null  and creditCardNumbers != '' " > CREDIT_CARD_NUMBERS , </if>
+			<if test="accountNumber != null  and accountNumber != '' " > ACCOUNT_NUMBER , </if>
+			<if test="placeOfAccount != null  and placeOfAccount != '' " > PLACE_OF_ACCOUNT , </if>
+			<if test="outBankName != null  and outBankName != '' " > OUT_BANK_NAME , </if>
+			<if test="remarkYgb != null  and remarkYgb != '' " > REMARK_YGB , </if>
+			<if test="remarkJbb != null  " > REMARK_JBB , </if>
+			<if test="isDel != null  " > IS_DEL , </if>
+			<if test="state != null  and state != '' " > STATE , </if>
+			<if test="createdTime != null " > CREATED_TIME , </if>
+			<if test="createdBy != null  and createdBy != '' " > CREATED_BY , </if>
+			<if test="modifiedTime != null " > MODIFIED_TIME , </if>
+			<if test="modifiedBy != null  and modifiedBy != '' " > MODIFIED_BY , </if>
+          </trim>
+        )
+        VALUES(
+        <trim suffixOverrides=",">
+			<if test="id != null  and id != '' " > #{id} , </if>
+			<if test="pid != null  and pid != '' " > #{pid} , </if>
+			<if test="jobId != null  and jobId != '' " > #{jobId} , </if>
+			<if test="ifCreateReturn != null and ifCreateReturn != '' " > #{ifCreateReturn} , </if>
+			<if test="ifMakeCard != null  and ifMakeCard != '' " > #{ifMakeCard} , </if>
+			<if test="virtualMachineId != null  and virtualMachineId != '' " > #{virtualMachineId} , </if>
+			<if test="accessCardNumber != null  and accessCardNumber != '' " > #{accessCardNumber} , </if>
+			<if test="ifReceiveCard != null and ifReceiveCard != '' " > #{ifReceiveCard} , </if>
+			<if test="receiveTime != null " > #{receiveTime} , </if>
+			<if test="ifReturnCard != null and ifReturnCard != '' " > #{ifReturnCard} , </if>
+			<if test="returnTime != null " > #{returnTime} , </if>
+			<if test="creditCardNumbers != null  and creditCardNumbers != '' " > #{creditCardNumbers} , </if>
+			<if test="accountNumber != null  and accountNumber != '' " > #{accountNumber} , </if>
+			<if test="placeOfAccount != null  and placeOfAccount != '' " > #{placeOfAccount} , </if>
+			<if test="outBankName != null  and outBankName != '' " > #{outBankName} , </if>
+			<if test="remarkYgb != null  and remarkYgb != '' " > #{remarkYgb} , </if>
+			<if test="remarkJbb != null " > #{remarkJbb} , </if>
+			<if test="isDel != null " > #{isDel} , </if>
+			<if test="state != null  and state != '' " > #{state} , </if>
+			<if test="createdTime != null " > #{createdTime} , </if>
+			<if test="createdBy != null  and createdBy != '' " > #{createdBy} , </if>
+			<if test="modifiedTime != null " > #{modifiedTime} , </if>
+			<if test="modifiedBy != null  and modifiedBy != '' " > #{modifiedBy} , </if>
+        </trim>
+        )
+    </insert>
+
+    <!--通过id查询  ywwb905 2023-05-19 -->
+    <select id="queryDetail" parameterType="ppmAccessCardLedger" resultMap="PPMACCESSCARDLEDGER_ALL">
+        SELECT
+        <include refid="sql_flied_all" />
+        FROM PPM_ACCESS_CARD_LEDGER 
+		<trim prefix="WHERE" suffixOverrides="AND">
+			<if test="id != null  and id != '' " > ID = #{id} AND </if>
+			<if test="jobId != null  and jobId != '' " > JOB_ID = #{jobId} AND IF_RETURN_CARD IS NULL AND IS_DEL = '0' AND </if>
+			<if test="id == null  and jobId == null " >ID = '' AND</if>
+        </trim>
+    </select>
+
+     <!--查询集合  ywwb905 2023-05-19 -->
+    <select id="getList" parameterType="ppmAccessCardLedger" resultMap="PPMACCESSCARDLEDGER_ALL">
+        SELECT
+        <include refid="sql_flied_all" />
+        FROM PPM_ACCESS_CARD_LEDGER
+        <include refid="sql_select_condition" />
+    </select>
+    <!-- update sql -->
+    <sql id="update_pojo_sql">
+        <trim prefix="SET" suffixOverrides=",">
+			<if test="id != null  and id != '' " > ID=#{id} , </if>
+			<if test="pid != null  and pid != '' " > PID=#{pid} , </if>
+			<if test="jobId != null  and jobId != '' " > JOB_ID=#{jobId} , </if>
+			<if test="ifCreateReturn != null  and ifCreateReturn != '' " > IF_CREATE_RETURN=#{ifCreateReturn} , </if>
+			<if test="ifMakeCard != null " > IF_MAKE_CARD=#{ifMakeCard} , </if>
+			<if test="virtualMachineId != null  and virtualMachineId != '' " > VIRTUAL_MACHINE_ID=#{virtualMachineId} , </if>
+			<if test="accessCardNumber != null  and accessCardNumber != '' " > ACCESS_CARD_NUMBER=#{accessCardNumber} , </if>
+			<if test="ifReceiveCard != null " > IF_RECEIVE_CARD=#{ifReceiveCard} , </if>
+			<if test="receiveTime != null " > RECEIVE_TIME=#{receiveTime} , </if>
+			<if test="ifReturnCard != null " > IF_RETURN_CARD=#{ifReturnCard} , </if>
+			<if test="returnTime != null " > RETURN_TIME=#{returnTime} , </if>
+			<if test="creditCardNumbers != null  and creditCardNumbers != '' " > CREDIT_CARD_NUMBERS=#{creditCardNumbers} , </if>
+			<if test="accountNumber != null  and accountNumber != '' " > ACCOUNT_NUMBER=#{accountNumber} , </if>
+			<if test="placeOfAccount != null  and placeOfAccount != '' " > PLACE_OF_ACCOUNT=#{placeOfAccount} , </if>
+			<if test="outBankName != null  and outBankName != '' " > OUT_BANK_NAME=#{outBankName} , </if>
+			<if test="remarkYgb != null  and remarkYgb != '' " > REMARK_YGB=#{remarkYgb} , </if>
+			<if test="remarkJbb != null  and remarkJbb != '' " > REMARK_JBB=#{remarkJbb} , </if>
+			<if test="isDel != null  and isDel != '' " > IS_DEL=#{isDel} , </if>
+			<if test="state != null  and state != '' " > STATE=#{state} , </if>
+			<if test="createdTime != null " > CREATED_TIME=#{createdTime} , </if>
+			<if test="createdBy != null  and createdBy != '' " > CREATED_BY=#{createdBy} , </if>
+			<if test="modifiedTime != null " > MODIFIED_TIME=#{modifiedTime} , </if>
+			<if test="modifiedBy != null  and modifiedBy != '' " > MODIFIED_BY=#{modifiedBy} , </if>
+        </trim>
+    </sql>
+
+    <!--通过id编辑 ywwb905 2023-05-19 -->
+    <update id="updatePojo" parameterType="ppmAccessCardLedger">
+        UPDATE
+        PPM_ACCESS_CARD_LEDGER
+        <include refid="update_pojo_sql" />
+        <trim prefix="WHERE" suffixOverrides="AND">
+		<if test="id != null  and id != '' " > ID = #{id} AND </if>
+		<if test="jobId != null  and jobId != '' " > JOB_ID = #{jobId} AND </if>
+		<if test="id == null  and jobId == null " >ID = '' AND</if>
+        </trim>
+    </update>
+	
+	<!--通过id编辑 ywwb905 2023-05-19 -->
+    <update id="updatePojos" parameterType="ppmAccessCardLedgerExt">
+        UPDATE
+        PPM_ACCESS_CARD_LEDGER
+        <trim prefix="SET" suffixOverrides=",">
+			<if test="accessCardNumber != null  and accessCardNumber != '' " > ACCESS_CARD_NUMBER=#{accessCardNumber} , </if>
+			<if test="receiveTime != null " > RECEIVE_TIME=#{receiveTime} , </if>
+			<if test="ifReturnCard != null and ifReturnCard != ''" > IF_RETURN_CARD=#{ifReturnCard} , </if>
+			<if test="returnTime != null " > RETURN_TIME=#{returnTime} , </if>
+			<if test="remarkJbb != null  and remarkJbb != '' " > REMARK_JBB=#{remarkJbb} , </if>
+			<if test="modifiedTime != null " > MODIFIED_TIME=#{modifiedTime} , </if>
+			<if test="modifiedBy != null  and modifiedBy != '' " > MODIFIED_BY=#{modifiedBy} , </if>
+        </trim>
+		<if test="idList != null and idList != ''">
+			WHERE ID IN 
+			<foreach collection="idList.split(',')" item="item" open="(" separator="," close=")" >
+				#{item}
+			</foreach>
+		</if>
+		<if test="idList == null"> 
+			WHERE ID = ''
+		</if>
+    </update>
+	
+    <!--通过id批量删除  ywwb905 2023-05-19 -->
+    <delete id="deleteById" parameterType="ppmAccessCardLedger">
+        DELETE
+        FROM
+        PPM_ACCESS_CARD_LEDGER
+        <trim prefix="WHERE" suffixOverrides="AND">
+		<if test="id != null  and id != '' " > ID = #{id} AND </if>
+		<if test="jobId != null  and jobId != '' " > JOB_ID = #{jobId} AND </if>
+		<if test="id == null  and jobId == null " >ID = '' AND</if>
+        </trim>
+    </delete>
+	
+	<select id="queryBaseInfoList" parameterType="ppmAccessCardLedgerExt" resultMap="PPMACCESSCARDLEDGER_ALL_EXT">
+		SELECT 
+			B.JOB_ID,
+			B.USER_NAME,
+			B.CERTIFICATE_NUMBER ID_CARD_NO,
+			B.MOBILE TELEPHONE,
+			B.OUTSOURCE_NO,
+			I.OUTSOURCNAME OUTSOURCE_NAME,
+			B.ENTRANCE_CARD VIRTUAL_MACHINE_ID,
+			B.DEPT_ID,
+			B.SEX,
+			D.LOCATION DEPT_NAME,
+			L.ID,
+			L.PID,
+			L.IF_CREATE_RETURN,
+			CASE WHEN L.IF_MAKE_CARD IS NULL THEN 'N' 
+				ELSE L.IF_MAKE_CARD 
+			END IF_MAKE_CARD,
+			L.ACCESS_CARD_NUMBER,
+			L.IF_RECEIVE_CARD,
+			L.RECEIVE_TIME,
+			CASE WHEN (L.IF_RETURN_CARD IS NULL AND L.IF_RECEIVE_CARD = 'Y' ) THEN 'W' 
+				ELSE L.IF_RETURN_CARD 
+			END IF_RETURN_CARD,
+			L.RETURN_TIME,
+			L.CREDIT_CARD_NUMBERS,
+			L.ACCOUNT_NUMBER,
+			L.PLACE_OF_ACCOUNT,
+			L.OUT_BANK_NAME,
+			L.IS_DEL,
+			L.STATE,
+			L.REMARK_YGB,
+			L.REMARK_JBB
+        FROM PPM_ACCESS_CARD_LEDGER L
+			LEFT JOIN PPM_OUTSOURCING_BASIC B ON B.JOB_ID = L.JOB_ID
+			LEFT JOIN COMM_DEPARTMENT D ON B.DEPT_ID = D.DEPID
+			LEFT JOIN PPM_OUTSOURCING_INFO I ON I.ORGCODE = B.OUTSOURCE_NO
+		<trim prefix="WHERE" suffixOverrides="AND">
+            <if test="jobId != null and jobId != '' ">B.JOB_ID = #{jobId} AND</if>
+            <if test="userName != null and userName != '' ">B.USER_NAME like '%'||#{userName}||'%' AND</if>
+            <if test="deptId != null and deptId != '' ">B.DEPT_ID = #{deptId} AND</if>
+            <if test="ifMakeCard != null and ifMakeCard != '' and ifMakeCard == 0 "> (L.IF_MAKE_CARD = #{ifMakeCard} OR L.IF_MAKE_CARD IS NULL) AND</if>
+            <if test="ifMakeCard != null and ifMakeCard != '' and ifMakeCard == 1 "> L.IF_MAKE_CARD IN ('W','Y') AND </if>
+			<if test="ifMakeCard != null and ifMakeCard != '' and ifMakeCard == 2 "> L.IF_MAKE_CARD = 'Y' AND </if>
+			<if test="ifMakeCard != null and ifMakeCard != '' and ifMakeCard == 3 "> L.IF_MAKE_CARD = '' AND </if>
+            <if test="ifReceiveCard != null and ifReceiveCard != ''">L.IF_RECEIVE_CARD = #{ifReceiveCard} AND </if>
+            <if test="ifReturnCard != null and ifReturnCard != ''">L.IF_RETURN_CARD = #{ifReturnCard} AND </if>
+            <if test="ifCreateReturn != null and ifCreateReturn != ''">L.IF_CREATE_RETURN = #{ifCreateReturn} AND </if>
+            <if test="isDel != null and isDel != ''">L.IS_DEL = #{isDel} AND </if>
+            <if test="state != null and state != ''">L.STATE = #{state} AND </if>
+            <if test="pid != null and pid != ''">L.PID = #{pid} AND </if>
+        </trim>
+		ORDER BY B.ID DESC
+	</select>
+	
+
+</mapper>

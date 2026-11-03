@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k6991 2020-01-15 -->
+<mapper namespace="com.work.ppm.application.model.rdmanager.RdEmployeeDto">
+    <update id="jobTransfer" parameterType="map">
+        UPDATE
+        COMM_RD_EMPLOYEE
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="badge != null  and badge != '' ">BADGE=#{badge},</if>
+            <if test="depid != null  ">DEPID=#{depid},</if>
+        </trim>
+        WHERE BADGE=#{badge}
+    </update>
+
+    <select id="currentAllYear" parameterType="map" resultType="string">
+        SELECT DISTINCT TO_CHAR(CALENDAR_DATE,'YYYY') AS yearDate FROM RD_PROJECT_ATTENDANCE_CONFIG
+    </select>
+
+    <select id="queryYearAttendce" parameterType="map" resultType="RdProjectAttendance">
+        select
+        TO_CHAR(CALENDAR_DATE, 'yyyy-MM') attendanceDate,
+        ATTENDANCE_STATUS
+        from RD_PROJECT_ATTENDANCE_CONFIG
+        WHERE to_char(CALENDAR_DATE,'yyyy') = #{yearOfCalendar}
+        ORDER BY CALENDAR_DATE
+    </select>
+
+
+    <select id="rdCase01Year" parameterType="map" resultType="HrProjectYear">
+        SELECT
+        C.EMPNAME USERNAME,
+        C.BADGE,
+        g.MONTH_OF_YEAR,
+        D.DEPID,
+        D.LOCATION CHARGENAME,
+        G.EID_CODE,
+        SUM(G.ATTENDANCE_TIME) AS sum_Month
+        FROM
+        PPM.COMM_RD_EMPLOYEE C
+        LEFT JOIN COMM_RD_DEPARTMENT D ON
+        C.DEPID = D.DEPID
+        LEFT JOIN (
+        SELECT
+        EID_CODE, PROJECT_CODE, EID, ISDISABLED , CREATE_DATE
+        FROM
+        PPM.RD_PROJECT_EMPLOYEE
+        WHERE
+        ISDISABLED = '0') E ON
+        C.EID = E.EID
+        LEFT JOIN RD_PROJECT T ON
+        E.PROJECT_CODE = T.PROJECT_CODE
+        LEFT JOIN RD_PROJECT_CONFIG G ON
+        G.EID_CODE = E.EID_CODE
+        WHERE
+        T.PROJECT_STATE IN ('1',
+        '2')
+        AND T.DELETED = '0'
+        AND <![CDATA[(c.ARRIVAL_TIME <= #{lastDay} or c.ARRIVAL_TIME is null)
+            and (c.LEAVE_TIME > #{firstDay}  or
+            (c.LEAVE_TIME is null and c.empstatus = '0'))]]>
+        <if test="attendanceDate != null  and attendanceDate != '' ">
+            AND TO_CHAR(g.CALENDAR_DATE,'yyyy-MM') = #{attendanceDate}
+        </if>
+        AND g.ATTENDANCE_ORNO = '1'
+        GROUP BY
+        C.EMPNAME,G.EID_CODE,C.BADGE，g.MONTH_OF_YEAR,
+        D.DEPID,
+        D.LOCATION
+        ORDER BY
+        C.BADGE
+    </select>
+
+    <select id="rdCase2Year" resultType="HrProjectYear" parameterType="map">
+
+        SELECT
+        cra.BADGE ,
+        cra.EMPNAME username,
+        D.DEPID ,
+        g.MONTH_OF_YEAR,
+        D.LOCATION CHARGENAME,
+        G.EID_CODE,
+        SUM(G.ATTENDANCE_TIME) AS sum_Month
+        FROM
+        COMM_RD_ATTENDANCE cra
+        LEFT JOIN COMM_RD_DEPARTMENT D ON
+        cra.DEPID = D.DEPID
+        LEFT JOIN RD_PROJECT_CONFIG G ON
+        G.EID_CODE = cra.EID_CODE
+        WHERE
+        TO_CHAR(cra.CALENDAR_DATE, 'yyyy-MM')= #{attendanceDate}
+        AND TO_CHAR(g.CALENDAR_DATE, 'yyyy-MM') = #{attendanceDate}
+        GROUP BY
+        CRA.BADGE,
+        CRA.EMPNAME,
+        D.DEPID,
+        G.MONTH_OF_YEAR,
+        D.LOCATION,
+        G.EID_CODE
+        ORDER BY
+        CRA.BADGE
+    </select>
+</mapper>

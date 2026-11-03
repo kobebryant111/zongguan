@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration>
+    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+    <springProperty scope="context" name="currentEnv" source="spring.profiles.active"/>
+    <springProperty scope="context" name="systemName" source="spring.system.name"/>
+    <springProperty scope="context" name="applicationName" source="spring.application.name"/>
+    <springProperty scope="context" name="serverPort" source="server.port"/>
+    <springProperty scope="context" name="kafkaServers" source="kafka.servers"/>
+    <conversionRule conversionWord="ip" converterClass="com.work.mercury.log.LocalIpLogConfig"/>
+
+    <!--kafka appender-->
+    <appender name="KAFKA" class="com.work.mercury.log.kafka.MercuryKafkaAppender">
+        <encoder>
+            <pattern>${systemName}|${applicationName}|${currentEnv}@%ip:${serverPort} %d{yyyy-MM-dd HH:mm:ss.SSS}
+                %X{X-B3-TraceId:-} %X{X-B3-SpanId:-} [%thread] %-5level %logger : %msg%n
+            </pattern>
+        </encoder>
+        <topic>test2</topic>
+        <keyingStrategy class="com.work.mercury.log.kafka.keystrategy.AverageNoKeyStrategy"/>
+        <deliveryStrategy class="com.work.mercury.log.kafka.deliverystrategy.AsynchronousDeliveryStrategy"/>
+        <appendTimestamp>true</appendTimestamp>
+        <!--kafka服务器地址和端口-->
+        <producerConfig>bootstrap.servers=${kafkaServers}</producerConfig>
+        <producerConfig>request.timeout.ms=5000</producerConfig>
+        <producerConfig>acks=0</producerConfig>
+        <producerConfig>max.block.ms=5</producerConfig>
+    </appender>
+
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>${systemName}|${applicationName}|${currentEnv}@%ip:${serverPort} %d{yyyy-MM-dd HH:mm:ss.SSS}
+                [%thread] [${currentEnv}-compnent] %-5level %logger : %msg%n
+            </pattern>
+        </encoder>
+    </appender>
+
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger : %msg%n</pattern>
+        </encoder>
+        <append>true</append>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>/home/logs/${applicationName}-${currentEnv}/compnent/%d{yyyy-MM-dd}.%i.log
+            </fileNamePattern>
+            <maxFileSize>50MB</maxFileSize>
+            <maxHistory>100</maxHistory>
+            <totalSizeCap>2GB</totalSizeCap>
+            <cleanHistoryOnStart>true</cleanHistoryOnStart>
+        </rollingPolicy>
+    </appender>
+    <appender name="ERROR_LOG" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger : %msg%n</pattern>
+        </encoder>
+        <append>true</append>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>/home/logs/${applicationName}-${currentEnv}/compnent/error/%d{yyyy-MM-dd}.%i.log
+            </fileNamePattern>
+            <maxFileSize>50MB</maxFileSize>
+            <maxHistory>100</maxHistory>
+            <totalSizeCap>2GB</totalSizeCap>
+            <cleanHistoryOnStart>true</cleanHistoryOnStart>
+        </rollingPolicy>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+    <appender name="ASYNC-FILE" class="ch.qos.logback.classic.AsyncAppender">
+        <discardingThreshold>0</discardingThreshold>
+        <queueSize>512</queueSize>
+        <appender-ref ref="FILE"></appender-ref>
+        <includeCallerData>true</includeCallerData>
+    </appender>
+    <appender name="ASYNC-ERROR" class="ch.qos.logback.classic.AsyncAppender">
+        <queueSize>512</queueSize>
+        <appender-ref ref="ERROR_LOG"></appender-ref>
+        <includeCallerData>true</includeCallerData>
+    </appender>
+    <appender name="ASYNC-KAFKA" class="ch.qos.logback.classic.AsyncAppender">
+        <discardingThreshold>0</discardingThreshold>
+        <queueSize>512</queueSize>
+        <appender-ref ref="KAFKA"></appender-ref>
+    </appender>
+
+    <springProfile name="local">
+        <root level="DEBUG">
+            <appender-ref ref="CONSOLE"/>
+        </root>
+    </springProfile>
+    <springProfile name="dev,sit">
+        <root level="DEBUG">
+            <appender-ref ref="ASYNC-FILE"/>
+            <appender-ref ref="ERROR_LOG"/>
+        </root>
+    </springProfile>
+    <springProfile name="uat1,uat2">
+        <root level="INFO">
+            <appender-ref ref="ASYNC-FILE"/>
+            <appender-ref ref="ERROR_LOG"/>
+        </root>
+    </springProfile>
+    <springProfile name="prod">
+        <root level="INFO">
+            <appender-ref ref="ASYNC-FILE"/>
+            <appender-ref ref="ERROR_LOG"/>
+        </root>
+    </springProfile>
+</configuration>

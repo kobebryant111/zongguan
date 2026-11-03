@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k6991 2021-04-21 -->
+<mapper namespace="com.work.ppm.application.model.integratedmanager.PpmDistributionMaster">
+    <resultMap type="ppmDistributionMaster" id="PPMDISTRIBUTIONMASTER_ALL">
+        <result property="id" column="ID"/>
+        <result property="initiateName" column="INITIATE_NAME"/>
+        <result property="initiateId" column="INITIATE_ID"/>
+        <result property="addDate" column="ADD_DATE"/>
+        <result property="isdel" column="ISDEL"/>
+        <result property="instanceId" column="INSTANCE_ID"/>
+        <result property="upcomBadge" column="UPCOM_BADGE"/>
+    </resultMap>
+
+    <!-- 所有字段名称 -->
+    <sql id="sql_flied_all">
+        ID,
+        INITIATE_NAME,
+        INITIATE_ID,
+        ADD_DATE,
+        ISDEL,
+        INSTANCE_ID,
+        UPCOM_BADGE
+    </sql>
+    <sql id="sql_select_condition">
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="id != null ">ID = #{id} AND</if>
+            <if test="initiateName != null  and initiateName != '' ">INITIATE_NAME = #{initiateName} AND</if>
+            <if test="initiateId != null  and initiateId != '' ">INITIATE_ID = #{initiateId} AND</if>
+            <if test="addDate != null ">ADD_DATE = #{addDate} AND</if>
+            <if test="isdel != null  and isdel != '' ">ISDEL = #{isdel} AND</if>
+            <if test="instanceId != null  and instanceId != '' ">INSTANCE_ID = #{instanceId} AND</if>
+            <if test="upcomBadge != null  and upcomBadge != '' ">UPCOM_BADGE = #{upcomBadge} AND</if>
+        </trim>
+    </sql>
+
+
+    <!-- 新增  2021-04-21 k6991  -->
+    <insert id="addPojo" parameterType="ppmDistributionMaster" >
+        INSERT INTO PPM_DISTRIBUTION_MASTER (
+        <trim suffixOverrides=",">
+            <if test="id != null ">ID ,</if>
+            <if test="initiateName != null  and initiateName != '' ">INITIATE_NAME ,</if>
+            <if test="initiateId != null  and initiateId != '' ">INITIATE_ID ,</if>
+            <if test="addDate != null ">ADD_DATE ,</if>
+            <if test="isdel != null  and isdel != '' ">ISDEL ,</if>
+            <if test="instanceId != null  and instanceId != '' ">INSTANCE_ID ,</if>
+            <if test="upcomBadge != null  and upcomBadge != '' ">UPCOM_BADGE ,</if>
+        </trim>
+        )
+        VALUES(
+        <trim suffixOverrides=",">
+            <if test="id != null ">#{id} ,</if>
+            <if test="initiateName != null  and initiateName != '' ">#{initiateName} ,</if>
+            <if test="initiateId != null  and initiateId != '' ">#{initiateId} ,</if>
+            <if test="addDate != null ">#{addDate} ,</if>
+            <if test="isdel != null  and isdel != '' ">#{isdel} ,</if>
+            <if test="instanceId != null  and instanceId != '' ">#{instanceId} ,</if>
+            <if test="upcomBadge != null  and upcomBadge != '' ">#{upcomBadge} ,</if>
+        </trim>
+        )
+    </insert>
+
+    <!--通过id查询  k6991 2021-04-21 -->
+    <select id="queryDetail" parameterType="ppmDistributionMaster" resultMap="PPMDISTRIBUTIONMASTER_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM PPM_DISTRIBUTION_MASTER
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="id != null ">ID=#{id} AND</if>
+            <if test="instanceId != null  and instanceId != '' ">INSTANCE_ID=#{instanceId} AND</if>
+            <if test="true">ROWNUM=1 AND</if>
+        </trim>
+
+    </select>
+
+    <!-- update sql -->
+    <sql id="update_pojo_sql">
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="id != null ">ID=#{id} ,</if>
+            <if test="initiateName != null  and initiateName != '' ">INITIATE_NAME=#{initiateName} ,</if>
+            <if test="initiateId != null  and initiateId != '' ">INITIATE_ID=#{initiateId} ,</if>
+            <if test="addDate != null ">ADD_DATE=#{addDate} ,</if>
+            <if test="isdel != null  and isdel != '' ">ISDEL=#{isdel} ,</if>
+            <if test="instanceId != null  and instanceId != '' ">INSTANCE_ID=#{instanceId} ,</if>
+            <if test="upcomBadge != null  and upcomBadge != '' ">UPCOM_BADGE=#{upcomBadge} ,</if>
+        </trim>
+    </sql>
+    <!--通过id编辑 k6991 2021-04-21 -->
+    <update id="updatePojo" parameterType="ppmDistributionMaster">
+        UPDATE
+        PPM_DISTRIBUTION_MASTER
+        <include refid="update_pojo_sql"/>
+
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="id != null ">ID=#{id} AND</if>
+            <if test="instanceId != null  and instanceId != '' ">INSTANCE_ID=#{instanceId} AND</if>
+        </trim>
+    </update>
+
+</mapper>

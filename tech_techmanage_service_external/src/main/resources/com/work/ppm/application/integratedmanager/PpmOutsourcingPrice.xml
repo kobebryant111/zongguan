@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k1327 2021-01-27 -->
+<mapper namespace="com.work.ppm.application.model.integratedmanager.PpmOutsourcingPrice">
+	 <resultMap type="ppmOutsourcingPrice" id="PPMOUTSOURCINGPRICE_ALL">
+        <result property="username" column="USERNAME" />
+		<result property="jobid" column="JOBID" />
+		<result property="time" column="TIME" />
+		<result property="price" column="PRICE" />
+		
+     </resultMap>
+
+     <!-- 所有字段名称 -->
+        <sql id="sql_flied_all">
+        	USERNAME,
+			JOBID,
+			TIME,
+			PRICE
+        </sql>
+        <sql id="sql_select_condition">
+            <trim prefix="WHERE" suffixOverrides="AND">
+                <if test="username != null  and username != '' " > USERNAME = #{username} AND </if>
+				<if test="jobid != null  and jobid != '' " > JOBID = #{jobid} AND </if>
+				<if test="time != null  and time != '' " > TIME = #{time} AND </if>
+				<if test="price != null  and price != '' " > PRICE = #{price} AND </if>
+				
+            </trim>
+        </sql>
+    	<!-- 查询分页  2021-01-27 k1327  -->
+        <select id="queryPagerList" parameterType="map" resultMap="PPMOUTSOURCINGPRICE_ALL">
+        	SELECT
+            <include refid="sql_flied_all" />
+            FROM PPM_OUTSOURCING_PRICE
+            <include refid="sql_select_condition" />
+        </select>
+
+        <!-- 新增  2021-01-27 k1327  -->
+        <insert id="addPojo" parameterType="ppmOutsourcingPrice">
+    		INSERT INTO PPM_OUTSOURCING_PRICE (
+    		<trim suffixOverrides=",">
+    		 <if test="username != null  and username != '' " > USERNAME , </if>
+				<if test="jobid != null  and jobid != '' " > JOBID , </if>
+				<if test="time != null  and time != '' " > TIME , </if>
+				<if test="price != null  and price != '' " > PRICE , </if>
+				
+              </trim>
+    		)
+    		VALUES(
+    		<trim suffixOverrides=",">
+    		 <if test="username != null  and username != '' " > #{username} , </if>
+				<if test="jobid != null  and jobid != '' " > #{jobid} , </if>
+				<if test="time != null  and time != '' " > #{time} , </if>
+				<if test="price != null  and price != '' " > #{price} , </if>
+				
+            </trim>
+    		)
+        </insert>
+
+        <!--通过id查询  k1327 2021-01-27 -->
+        <select id="queryDetail" parameterType="ppmOutsourcingPrice" resultMap="PPMOUTSOURCINGPRICE_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_OUTSOURCING_PRICE  WHERE USERNAME=#{username}
+        </select>
+
+         <!--查询集合  k1327 2021-01-27 -->
+        <select id="getList" parameterType="ppmOutsourcingPrice" resultMap="PPMOUTSOURCINGPRICE_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_OUTSOURCING_PRICE
+        	<include refid="sql_select_condition" />
+        </select>
+        <!-- update sql -->
+        <sql id="update_pojo_sql">
+        	<trim prefix="SET" suffixOverrides=",">
+        		<if test="username != null  and username != '' " > USERNAME=#{username} , </if>
+				<if test="jobid != null  and jobid != '' " > JOBID=#{jobid} , </if>
+				<if test="time != null  and time != '' " > TIME=#{time} , </if>
+				<if test="price != null  and price != '' " > PRICE=#{price} , </if>
+				
+            </trim>
+        </sql>
+
+        <!--通过id编辑 k1327 2021-01-27 -->
+    	<update id="updatePojo" parameterType="ppmOutsourcingPrice">
+        	UPDATE
+        	PPM_OUTSOURCING_PRICE
+        	<include refid="update_pojo_sql" />
+        	WHERE USERNAME=#{username}
+        </update>
+
+        <!--通过id批量删除  k1327 2021-01-27 -->
+        <delete id="deleteById" parameterType="ppmOutsourcingPrice">
+        	DELETE
+        	FROM
+        	PPM_OUTSOURCING_PRICE
+        	WHERE USERNAME = #{username}
+        </delete>
+
+</mapper>

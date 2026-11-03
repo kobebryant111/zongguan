@@ -1,0 +1,426 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k6991 2021-04-21 -->
+<mapper namespace="com.work.ppm.application.model.integratedmanager.PpmOnboardDistribution">
+	 <resultMap type="ppmOnboardDistribution" id="PPMONBOARDDISTRIBUTION_ALL">
+        <result property="id" column="ID" />
+		<result property="sequence" column="SEQUENCE" />
+		<result property="name" column="NAME" />
+		<result property="center" column="CENTER" />
+		<result property="deptId" column="DEPT_ID" />
+		<result property="direction" column="DIRECTION" />
+		<result property="grade" column="GRADE" />
+		<result property="resumeId" column="RESUME_ID" />
+		<result property="sex" column="SEX" />
+		<result property="totalScore" column="TOTAL_SCORE" />
+		<result property="technicalScore" column="TECHNICAL_SCORE" />
+		<result property="technicalScoring" column="TECHNICAL_SCORING" />
+		<result property="technicalComments" column="TECHNICAL_COMMENTS" />
+		<result property="administrativeScore" column="ADMINISTRATIVE_SCORE" />
+		<result property="administrativeScoring" column="ADMINISTRATIVE_SCORING" />
+		<result property="administrativeComments" column="ADMINISTRATIVE_COMMENTS" />
+		<result property="trainingScore" column="TRAINING_SCORE" />
+		<result property="trainingScoring" column="TRAINING_SCORING" />
+		<result property="writtenScore" column="WRITTEN_SCORE" />
+		<result property="writtenScoring" column="WRITTEN_SCORING" />
+		<result property="otherScore" column="OTHER_SCORE" />
+		<result property="otherScoring" column="OTHER_SCORING" />
+		<result property="note" column="NOTE" />
+		<result property="bornDate" column="BORN_DATE" />
+		<result property="natives" column="NATIVES" />
+		<result property="highest" column="HIGHEST" />
+		<result property="coursesCollege" column="COURSES_COLLEGE" />
+		<result property="coursesProfessional" column="COURSES_PROFESSIONAL" />
+		<result property="mastersCollege" column="MASTERS_COLLEGE" />
+		<result property="degreeProfessional" column="DEGREE_PROFESSIONAL" />
+		<result property="batch" column="BATCH" />
+		<result property="isdel" column="ISDEL" />
+         <result property="mid" column="MID" />
+     </resultMap>
+
+     <!-- 所有字段名称 -->
+        <sql id="sql_flied_all">
+        	ID,
+			SEQUENCE,
+			NAME,
+			CENTER,
+			DEPT_ID,
+			DIRECTION,
+			GRADE,
+			RESUME_ID,
+			SEX,
+			TOTAL_SCORE,
+			TECHNICAL_SCORE,
+			TECHNICAL_SCORING,
+			TECHNICAL_COMMENTS,
+			ADMINISTRATIVE_SCORE,
+			ADMINISTRATIVE_SCORING,
+			ADMINISTRATIVE_COMMENTS,
+			TRAINING_SCORE,
+			TRAINING_SCORING,
+			WRITTEN_SCORE,
+			WRITTEN_SCORING,
+			OTHER_SCORE,
+			OTHER_SCORING,
+			NOTE,
+			BORN_DATE,
+			NATIVES,
+			HIGHEST,
+			COURSES_COLLEGE,
+			COURSES_PROFESSIONAL,
+			MASTERS_COLLEGE,
+			DEGREE_PROFESSIONAL,
+			BATCH,
+			ISDEL,
+            MID
+        </sql>
+        <sql id="sql_select_condition">
+            <trim prefix="WHERE" suffixOverrides="AND">
+                <if test="id != null " > ID = #{id} AND </if>
+				<if test="sequence != null " > SEQUENCE = #{sequence} AND </if>
+				<if test="name != null  and name != '' " > NAME = #{name} AND </if>
+				<if test="center != null  and center != '' " > CENTER = #{center} AND </if>
+				<if test="deptId != null  and deptId != '' " > DEPT_ID = #{deptId} AND </if>
+				<if test="direction != null  and direction != '' " > DIRECTION = #{direction} AND </if>
+				<if test="grade != null  and grade != '' " > GRADE = #{grade} AND </if>
+				<if test="resumeId != null  and resumeId != '' " > RESUME_ID = #{resumeId} AND </if>
+				<if test="sex != null  and sex != '' " > SEX = #{sex} AND </if>
+				<if test="totalScore != null " > TOTAL_SCORE = #{totalScore} AND </if>
+				<if test="technicalScore != null " > TECHNICAL_SCORE = #{technicalScore} AND </if>
+				<if test="technicalScoring != null " > TECHNICAL_SCORING = #{technicalScoring} AND </if>
+				<if test="technicalComments != null  and technicalComments != '' " > TECHNICAL_COMMENTS = #{technicalComments} AND </if>
+				<if test="administrativeScore != null " > ADMINISTRATIVE_SCORE = #{administrativeScore} AND </if>
+				<if test="administrativeScoring != null " > ADMINISTRATIVE_SCORING = #{administrativeScoring} AND </if>
+				<if test="administrativeComments != null  and administrativeComments != '' " > ADMINISTRATIVE_COMMENTS = #{administrativeComments} AND </if>
+				<if test="trainingScore != null " > TRAINING_SCORE = #{trainingScore} AND </if>
+				<if test="trainingScoring != null " > TRAINING_SCORING = #{trainingScoring} AND </if>
+				<if test="writtenScore != null " > WRITTEN_SCORE = #{writtenScore} AND </if>
+				<if test="writtenScoring != null " > WRITTEN_SCORING = #{writtenScoring} AND </if>
+				<if test="otherScore != null " > OTHER_SCORE = #{otherScore} AND </if>
+				<if test="otherScoring != null " > OTHER_SCORING = #{otherScoring} AND </if>
+				<if test="note != null  and note != '' " > NOTE = #{note} AND </if>
+				<if test="bornDate != null " > BORN_DATE = #{bornDate} AND </if>
+				<if test="natives != null  and natives != '' " > NATIVES = #{natives} AND </if>
+				<if test="highest != null  and highest != '' " > HIGHEST = #{highest} AND </if>
+				<if test="coursesCollege != null  and coursesCollege != '' " > COURSES_COLLEGE = #{coursesCollege} AND </if>
+				<if test="coursesProfessional != null  and coursesProfessional != '' " > COURSES_PROFESSIONAL = #{coursesProfessional} AND </if>
+				<if test="mastersCollege != null  and mastersCollege != '' " > MASTERS_COLLEGE = #{mastersCollege} AND </if>
+				<if test="degreeProfessional != null  and degreeProfessional != '' " > DEGREE_PROFESSIONAL = #{degreeProfessional} AND </if>
+				<if test="batch != null  and batch != '' " > BATCH = #{batch} AND </if>
+				<if test="isdel != null " > ISDEL = #{isdel} AND </if>
+                <if test="mid != null " > MID=#{mid} AND </if>
+            </trim>
+        </sql>
+        <resultMap id="QUERYPAGERLIST_MAP" type="ppmOnboardDistributionInfo"
+                   extends="PPMONBOARDDISTRIBUTION_ALL">
+            <result column="SEX_NAME" property="sexName" />
+            <result column="CENTERNAME" property="centerName" />
+            <result column="LOCATION" property="depName" />
+            <result column="DIRECTION_NAME" property="directionName" />
+        </resultMap>
+    	<!-- 查询分页  2021-04-21 k6991  -->
+        <select id="queryPagerList" parameterType="map" resultMap="QUERYPAGERLIST_MAP">
+            SELECT
+            D.ID,
+            D.SEQUENCE,
+            D.NAME,
+            D.CENTER,
+            D.DEPT_ID,
+            D.DIRECTION,
+            D.GRADE,
+            D.RESUME_ID,
+            D.SEX,
+            D.TOTAL_SCORE,
+            D.TECHNICAL_SCORE,
+            D.TECHNICAL_SCORING,
+            D.TECHNICAL_COMMENTS,
+            D.ADMINISTRATIVE_SCORE,
+            D.ADMINISTRATIVE_SCORING,
+            D.ADMINISTRATIVE_COMMENTS,
+            D.TRAINING_SCORE,
+            D.TRAINING_SCORING,
+            D.WRITTEN_SCORE,
+            D.WRITTEN_SCORING,
+            D.OTHER_SCORE,
+            D.OTHER_SCORING,
+            D.NOTE,
+            D.BORN_DATE,
+            D.NATIVES,
+            D.HIGHEST,
+            D.COURSES_COLLEGE,
+            D.COURSES_PROFESSIONAL,
+            D.MASTERS_COLLEGE,
+            D.DEGREE_PROFESSIONAL,
+            D.BATCH,
+            D.ISDEL,
+            D.MID,
+            (SELECT E.DICTNAME FROM EOS_DICT_ENTRY E WHERE E.DICTTYPEID='BUSI_OUTSOURCE_GENFER' AND E.DICTID=D.SEX)
+            SEX_NAME,
+            (SELECT E.DICTNAME FROM EOS_DICT_ENTRY E WHERE E.DICTTYPEID='NEWKG_DIRECTION' AND E.DICTID=D.DIRECTION)
+            DIRECTION_NAME,
+
+            C.CENTERNAME,P.LOCATION FROM PPM_ONBOARD_DISTRIBUTION D
+            LEFT JOIN PPM_DA_CENTER C ON (D.CENTER = C.ID)
+            LEFT JOIN COMM_DEPARTMENT P ON(D.DEPT_ID=P.DEPID)
+			<trim prefix="WHERE" suffixOverrides="AND">
+				<if test="id != null " > ID = #{id} AND </if>
+				<if test="sequence != null " > SEQUENCE = #{sequence} AND </if>
+				<if test="name != null  and name != '' " > NAME = #{name} AND </if>
+				<if test="center != null  and center != '' " > CENTER = #{center} AND </if>
+				<if test="deptId != null  and deptId != '' " > DEPT_ID = #{deptId} AND </if>
+				<if test="direction != null  and direction != '' " > DIRECTION = #{direction} AND </if>
+				<if test="resumeId != null  and resumeId != '' " > RESUME_ID = #{resumeId} AND </if>
+				<if test="batch != null  and batch != '' " > BATCH = #{batch} AND </if>
+				<if test="mid != null " > MID=#{mid} AND </if>
+				<if test="centers != null  and centers != '' " > CENTER IN (${centers}) AND </if>
+				<if test="year != null  and year != '' " > TO_CHAR(TO_DATE(BATCH, 'YYYY-MM'),'YYYY') = #{year} AND
+				</if>
+				<if test="isdel != null " > D.ISDEL = #{isdel} AND </if>
+				<if test="resumeIds != null  and resumeIds != '' " > RESUME_ID IN (${resumeIds}) AND </if>
+			</trim>
+			ORDER BY SEQUENCE ASC
+        </select>
+
+	<!-- 新增  2021-04-21 k6991  -->
+	<insert id="addPojo" parameterType="ppmOnboardDistribution">
+		INSERT INTO PPM_ONBOARD_DISTRIBUTION (
+		<trim suffixOverrides=",">
+			<if test="id != null " > ID , </if>
+			<if test="sequence != null " > SEQUENCE , </if>
+			<if test="name != null  and name != '' " > NAME , </if>
+			<if test="center != null  and center != '' " > CENTER , </if>
+			<if test="deptId != null  and deptId != '' " > DEPT_ID , </if>
+			<if test="direction != null  and direction != '' " > DIRECTION , </if>
+			<if test="grade != null  and grade != '' " > GRADE , </if>
+			<if test="resumeId != null  and resumeId != '' " > RESUME_ID , </if>
+			<if test="sex != null  and sex != '' " > SEX , </if>
+			<if test="totalScore != null " > TOTAL_SCORE , </if>
+			<if test="technicalScore != null " > TECHNICAL_SCORE , </if>
+			<if test="technicalScoring != null " > TECHNICAL_SCORING , </if>
+			<if test="technicalComments != null  and technicalComments != '' " > TECHNICAL_COMMENTS , </if>
+			<if test="administrativeScore != null " > ADMINISTRATIVE_SCORE , </if>
+			<if test="administrativeScoring != null " > ADMINISTRATIVE_SCORING , </if>
+			<if test="administrativeComments != null  and administrativeComments != '' " > ADMINISTRATIVE_COMMENTS , </if>
+			<if test="trainingScore != null " > TRAINING_SCORE , </if>
+			<if test="trainingScoring != null " > TRAINING_SCORING , </if>
+			<if test="writtenScore != null " > WRITTEN_SCORE , </if>
+			<if test="writtenScoring != null " > WRITTEN_SCORING , </if>
+			<if test="otherScore != null " > OTHER_SCORE , </if>
+			<if test="otherScoring != null " > OTHER_SCORING , </if>
+			<if test="note != null  and note != '' " > NOTE , </if>
+			<if test="bornDate != null " > BORN_DATE , </if>
+			<if test="natives != null  and natives != '' " > NATIVES , </if>
+			<if test="highest != null  and highest != '' " > HIGHEST , </if>
+			<if test="coursesCollege != null  and coursesCollege != '' " > COURSES_COLLEGE , </if>
+			<if test="coursesProfessional != null  and coursesProfessional != '' " > COURSES_PROFESSIONAL , </if>
+			<if test="mastersCollege != null  and mastersCollege != '' " > MASTERS_COLLEGE , </if>
+			<if test="degreeProfessional != null  and degreeProfessional != '' " > DEGREE_PROFESSIONAL , </if>
+			<if test="batch != null  and batch != '' " > BATCH , </if>
+			<if test="isdel != null " > ISDEL , </if>
+
+		</trim>
+		)
+		VALUES(
+		<trim suffixOverrides=",">
+			<if test="id != null " > #{id} , </if>
+			<if test="sequence != null " > #{sequence} , </if>
+			<if test="name != null  and name != '' " > #{name} , </if>
+			<if test="center != null  and center != '' " > #{center} , </if>
+			<if test="deptId != null  and deptId != '' " > #{deptId} , </if>
+			<if test="direction != null  and direction != '' " > #{direction} , </if>
+			<if test="grade != null  and grade != '' " > #{grade} , </if>
+			<if test="resumeId != null  and resumeId != '' " > #{resumeId} , </if>
+			<if test="sex != null  and sex != '' " > #{sex} , </if>
+			<if test="totalScore != null " > #{totalScore} , </if>
+			<if test="technicalScore != null " > #{technicalScore} , </if>
+			<if test="technicalScoring != null " > #{technicalScoring} , </if>
+			<if test="technicalComments != null  and technicalComments != '' " > #{technicalComments} , </if>
+			<if test="administrativeScore != null " > #{administrativeScore} , </if>
+			<if test="administrativeScoring != null " > #{administrativeScoring} , </if>
+			<if test="administrativeComments != null  and administrativeComments != '' " > #{administrativeComments} , </if>
+			<if test="trainingScore != null " > #{trainingScore} , </if>
+			<if test="trainingScoring != null " > #{trainingScoring} , </if>
+			<if test="writtenScore != null " > #{writtenScore} , </if>
+			<if test="writtenScoring != null " > #{writtenScoring} , </if>
+			<if test="otherScore != null " > #{otherScore} , </if>
+			<if test="otherScoring != null " > #{otherScoring} , </if>
+			<if test="note != null  and note != '' " > #{note} , </if>
+			<if test="bornDate != null " > #{item.bornDate} , </if>
+			<if test="natives != null  and natives != '' " > #{natives} , </if>
+			<if test="highest != null  and highest != '' " > #{highest} , </if>
+			<if test="coursesCollege != null  and coursesCollege != '' " > #{coursesCollege} , </if>
+			<if test="coursesProfessional != null  and coursesProfessional != '' " > #{coursesProfessional} , </if>
+			<if test="mastersCollege != null  and mastersCollege != '' " > #{mastersCollege} , </if>
+			<if test="degreeProfessional != null  and degreeProfessional != '' " > #{degreeProfessional} , </if>
+			<if test="batch != null  and batch != '' " > #{batch} , </if>
+			<if test="isdel != null " > #{isdel} , </if>
+
+		</trim>
+		)
+	</insert>
+
+        <!-- 新增  2021-04-21 k6991  -->
+        <insert id="batchAdd" parameterType="list">
+    		INSERT ALL
+			<foreach collection="list" item="item" index="index">
+				INTO PPM_ONBOARD_DISTRIBUTION (
+				<trim suffixOverrides=",">
+					<if test="item.id != null " > ID , </if>
+					<if test="item.sequence != null " > SEQUENCE , </if>
+					<if test="item.name != null  and item.name != '' " > NAME , </if>
+					<if test="item.center != null  and item.center != '' " > CENTER , </if>
+					<if test="item.deptId != null  and item.deptId != '' " > DEPT_ID , </if>
+					<if test="item.direction != null  and item.direction != '' " > DIRECTION , </if>
+					<if test="item.grade != null  and item.grade != '' " > GRADE , </if>
+					<if test="item.resumeId != null  and item.resumeId != '' " > RESUME_ID , </if>
+					<if test="item.sex != null  and item.sex != '' " > SEX , </if>
+					<if test="item.totalScore != null " > TOTAL_SCORE , </if>
+					<if test="item.technicalScore != null " > TECHNICAL_SCORE , </if>
+					<if test="item.technicalScoring != null " > TECHNICAL_SCORING , </if>
+					<if test="item.technicalComments != null  and item.technicalComments != '' " > TECHNICAL_COMMENTS , </if>
+					<if test="item.administrativeScore != null " > ADMINISTRATIVE_SCORE , </if>
+					<if test="item.administrativeScoring != null " > ADMINISTRATIVE_SCORING , </if>
+					<if test="item.administrativeComments != null  and item.administrativeComments != '' " > ADMINISTRATIVE_COMMENTS , </if>
+					<if test="item.trainingScore != null " > TRAINING_SCORE , </if>
+					<if test="item.trainingScoring != null " > TRAINING_SCORING , </if>
+					<if test="item.writtenScore != null " > WRITTEN_SCORE , </if>
+					<if test="item.writtenScoring != null " > WRITTEN_SCORING , </if>
+					<if test="item.otherScore != null " > OTHER_SCORE , </if>
+					<if test="item.otherScoring != null " > OTHER_SCORING , </if>
+					<if test="item.note != null  and item.note != '' " > NOTE , </if>
+					<if test="item.bornDate != null " > BORN_DATE , </if>
+					<if test="item.natives != null  and item.natives != '' " > NATIVES , </if>
+					<if test="item.highest != null  and item.highest != '' " > HIGHEST , </if>
+					<if test="item.coursesCollege != null  and item.coursesCollege != '' " > COURSES_COLLEGE , </if>
+					<if test="item.coursesProfessional != null  and item.coursesProfessional != '' " > COURSES_PROFESSIONAL , </if>
+					<if test="item.mastersCollege != null  and item.mastersCollege != '' " > MASTERS_COLLEGE , </if>
+					<if test="item.degreeProfessional != null  and item.degreeProfessional != '' " > DEGREE_PROFESSIONAL , </if>
+					<if test="item.batch != null  and item.batch != '' " > BATCH , </if>
+					<if test="item.isdel != null " > ISDEL , </if>
+				</trim>
+				)
+				VALUES(
+				<trim suffixOverrides=",">
+					<if test="item.id != null " > #{item.id} , </if>
+					<if test="item.sequence != null " > #{item.sequence} , </if>
+					<if test="item.name != null  and item.name != '' " > #{item.name} , </if>
+					<if test="item.center != null  and item.center != '' " > #{item.center} , </if>
+					<if test="item.deptId != null  and item.deptId != '' " > #{item.deptId} , </if>
+					<if test="item.direction != null  and item.direction != '' " > #{item.direction} , </if>
+					<if test="item.grade != null  and item.grade != '' " > #{item.grade} , </if>
+					<if test="item.resumeId != null  and item.resumeId != '' " > #{item.resumeId} , </if>
+					<if test="item.sex != null  and item.sex != '' " > #{item.sex} , </if>
+					<if test="item.totalScore != null " > #{item.totalScore} , </if>
+					<if test="item.technicalScore != null " > #{item.technicalScore} , </if>
+					<if test="item.technicalScoring != null " > #{item.technicalScoring} , </if>
+					<if test="item.technicalComments != null  and item.technicalComments != '' " > #{item.technicalComments} , </if>
+					<if test="item.administrativeScore != null " > #{item.administrativeScore} , </if>
+					<if test="item.administrativeScoring != null " > #{item.administrativeScoring} , </if>
+					<if test="item.administrativeComments != null  and item.administrativeComments != '' " > #{item.administrativeComments} , </if>
+					<if test="item.trainingScore != null " > #{item.trainingScore} , </if>
+					<if test="item.trainingScoring != null " > #{item.trainingScoring} , </if>
+					<if test="item.writtenScore != null " > #{item.writtenScore} , </if>
+					<if test="item.writtenScoring != null " > #{item.writtenScoring} , </if>
+					<if test="item.otherScore != null " > #{item.otherScore} , </if>
+					<if test="item.otherScoring != null " > #{item.otherScoring} , </if>
+					<if test="item.note != null  and item.note != '' " > #{item.note} , </if>
+					<if test="item.bornDate != null " > #{item.bornDate} , </if>
+					<if test="item.natives != null  and item.natives != '' " > #{item.natives} , </if>
+					<if test="item.highest != null  and item.highest != '' " > #{item.highest} , </if>
+					<if test="item.coursesCollege != null  and item.coursesCollege != '' " > #{item.coursesCollege} , </if>
+					<if test="item.coursesProfessional != null  and item.coursesProfessional != '' " > #{item.coursesProfessional} , </if>
+					<if test="item.mastersCollege != null  and item.mastersCollege != '' " > #{item.mastersCollege} , </if>
+					<if test="item.degreeProfessional != null  and item.degreeProfessional != '' " > #{item.degreeProfessional} , </if>
+					<if test="item.batch != null  and item.batch != '' " > #{item.batch} , </if>
+					<if test="item.isdel != null " > #{item.isdel} , </if>
+				</trim>
+				)
+			</foreach>
+			select 1 from dual
+        </insert>
+
+        <!--通过id查询  k6991 2021-04-21 -->
+        <select id="queryDetail" parameterType="ppmOnboardDistribution" resultMap="PPMONBOARDDISTRIBUTION_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_ONBOARD_DISTRIBUTION
+			<trim prefix="WHERE" suffixOverrides="AND">
+				<if test="id != null " > ID = #{id} AND </if>
+				<if test="batch != null  and batch != '' " > BATCH = #{batch} AND </if>
+				<if test="resumeId != null  and resumeId != '' " > RESUME_ID=#{resumeId} AND </if>
+				<if test="true" > ROWNUM = 1 AND </if>
+			</trim>
+        </select>
+
+         <!--查询集合  k6991 2021-04-21 -->
+        <select id="getList" parameterType="ppmOnboardDistribution" resultMap="PPMONBOARDDISTRIBUTION_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_ONBOARD_DISTRIBUTION
+        	<include refid="sql_select_condition" />
+        </select>
+        <!-- update sql -->
+        <sql id="update_pojo_sql">
+        	<trim prefix="SET" suffixOverrides=",">
+        		<if test="id != null " > ID=#{id} , </if>
+				<if test="sequence != null " > SEQUENCE=#{sequence} , </if>
+				<if test="name != null  and name != '' " > NAME=#{name} , </if>
+				<if test="center != null  and center != '' " > CENTER=#{center} , </if>
+				<if test="deptId != null  and deptId != '' " > DEPT_ID=#{deptId} , </if>
+				<if test="direction != null  and direction != '' " > DIRECTION=#{direction} , </if>
+				<if test="grade != null  and grade != '' " > GRADE=#{grade} , </if>
+				<if test="resumeId != null  and resumeId != '' " > RESUME_ID=#{resumeId} , </if>
+				<if test="sex != null  and sex != '' " > SEX=#{sex} , </if>
+				<if test="totalScore != null " > TOTAL_SCORE=#{totalScore} , </if>
+				<if test="technicalScore != null " > TECHNICAL_SCORE=#{technicalScore} , </if>
+				<if test="technicalScoring != null " > TECHNICAL_SCORING=#{technicalScoring} , </if>
+				<if test="technicalComments != null  and technicalComments != '' " > TECHNICAL_COMMENTS=#{technicalComments} , </if>
+				<if test="administrativeScore != null " > ADMINISTRATIVE_SCORE=#{administrativeScore} , </if>
+				<if test="administrativeScoring != null " > ADMINISTRATIVE_SCORING=#{administrativeScoring} , </if>
+				<if test="administrativeComments != null  and administrativeComments != '' " > ADMINISTRATIVE_COMMENTS=#{administrativeComments} , </if>
+				<if test="trainingScore != null " > TRAINING_SCORE=#{trainingScore} , </if>
+				<if test="trainingScoring != null " > TRAINING_SCORING=#{trainingScoring} , </if>
+				<if test="writtenScore != null " > WRITTEN_SCORE=#{writtenScore} , </if>
+				<if test="writtenScoring != null " > WRITTEN_SCORING=#{writtenScoring} , </if>
+				<if test="otherScore != null " > OTHER_SCORE=#{otherScore} , </if>
+				<if test="otherScoring != null " > OTHER_SCORING=#{otherScoring} , </if>
+				<if test="note != null  and note != '' " > NOTE=#{note} , </if>
+				<if test="bornDate != null " > BORN_DATE=#{bornDate} , </if>
+				<if test="natives != null  and natives != '' " > NATIVES=#{natives} , </if>
+				<if test="highest != null  and highest != '' " > HIGHEST=#{highest} , </if>
+				<if test="coursesCollege != null  and coursesCollege != '' " > COURSES_COLLEGE=#{coursesCollege} , </if>
+				<if test="coursesProfessional != null  and coursesProfessional != '' " > COURSES_PROFESSIONAL=#{coursesProfessional} , </if>
+				<if test="mastersCollege != null  and mastersCollege != '' " > MASTERS_COLLEGE=#{mastersCollege} , </if>
+				<if test="degreeProfessional != null  and degreeProfessional != '' " > DEGREE_PROFESSIONAL=#{degreeProfessional} , </if>
+				<if test="batch != null  and batch != '' " > BATCH=#{batch} , </if>
+				<if test="isdel != null " > ISDEL=#{isdel} , </if>
+                <if test="mid != null " > MID=#{mid} , </if>
+            </trim>
+        </sql>
+
+        <!--通过id编辑 k6991 2021-04-21 -->
+    	<update id="updatePojo" parameterType="ppmOnboardDistributionInfo">
+        	UPDATE
+        	PPM_ONBOARD_DISTRIBUTION
+        	<include refid="update_pojo_sql" />
+			<trim prefix="WHERE" suffixOverrides="AND">
+				<if test="id != null " > ID=#{id} AND </if>
+				<if test="resumeId != null  and resumeId != '' " > RESUME_ID=#{resumeId} AND </if>
+				<if test="mid != null" > MID=#{mid} AND </if>
+				<if test="resumeIds != null and resumeIds != '' " > RESUME_ID IN (${resumeIds}) AND </if>
+			</trim>
+        </update>
+
+        <!--通过id批量删除  k6991 2021-04-21 -->
+        <delete id="deleteById" parameterType="ppmOnboardDistribution">
+        	DELETE
+        	FROM
+        	PPM_ONBOARD_DISTRIBUTION
+        	WHERE ID = #{id}
+        </delete>
+        <!-- 更新 入职部门分配主表id k6991 2021-04-22 -->
+        <update id="updateInfoForId" parameterType="map">
+            UPDATE PPM_ONBOARD_DISTRIBUTION SET MID=#{mid} WHERE RESUME_ID IN (${resumeId})
+        </update>
+
+</mapper>

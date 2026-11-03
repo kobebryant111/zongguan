@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k6991 2020-11-16 -->
+<mapper namespace="com.work.ppm.application.model.processmanager.PpmMsgTemplate">
+	 <resultMap type="ppmMsgTemplate" id="PPMMSGTEMPLATE_ALL">
+        <result property="id" column="ID" />
+		<result property="templateno" column="TEMPLATENO" />
+		<result property="templatename" column="TEMPLATENAME" />
+		<result property="flowname" column="FLOWNAME" />
+		<result property="templatetype" column="TEMPLATETYPE" />
+		<result property="content" column="CONTENT" />
+		<result property="isdel" column="ISDEL" />
+		<result property="createtime" column="CREATETIME" />
+		<result property="creators" column="CREATORS" />
+		<result property="lastmodtime" column="LASTMODTIME" />
+		<result property="lastmoduser" column="LASTMODUSER" />
+		
+     </resultMap>
+
+     <!-- 所有字段名称 -->
+        <sql id="sql_flied_all">
+        	ID,
+			TEMPLATENO,
+			TEMPLATENAME,
+			FLOWNAME,
+			TEMPLATETYPE,
+			CONTENT,
+			ISDEL,
+			CREATETIME,
+			CREATORS,
+			LASTMODTIME,
+			LASTMODUSER
+        </sql>
+        <sql id="sql_select_condition">
+            <trim prefix="WHERE" suffixOverrides="AND">
+                <if test="id != null " > ID = #{id} AND </if>
+				<if test="templateno != null  and templateno != '' " > TEMPLATENO = #{templateno} AND </if>
+				<if test="templatename != null  and templatename != '' " > INSTR(TEMPLATENAME , #{templatename}) > 0 AND </if>
+				<if test="flowname != null  and flowname != '' " > FLOWNAME = #{flowname} AND </if>
+				<if test="templatetype != null  and templatetype != '' " > TEMPLATETYPE = #{templatetype} AND </if>
+				<if test="content != null  and content != '' " > CONTENT = #{content} AND </if>
+				<if test="isdel != null " > ISDEL = #{isdel} AND </if>
+				<if test="createtime != null " > CREATETIME = #{createtime} AND </if>
+				<if test="creators != null  and creators != '' " > CREATORS = #{creators} AND </if>
+				<if test="lastmodtime != null " > LASTMODTIME = #{lastmodtime} AND </if>
+				<if test="lastmoduser != null  and lastmoduser != '' " > LASTMODUSER = #{lastmoduser} AND </if>
+				
+            </trim>
+        </sql>
+    	<!-- 查询分页  2020-11-16 k6991  -->
+        <select id="queryPagerList" parameterType="map" resultMap="PPMMSGTEMPLATE_ALL">
+        	SELECT
+            <include refid="sql_flied_all" />
+            FROM PPM_MSG_TEMPLATE
+            <include refid="sql_select_condition" />
+			ORDER BY ID DESC
+        </select>
+
+        <!-- 新增  2020-11-16 k6991  -->
+        <insert id="addPojo" parameterType="ppmMsgTemplate">
+    		INSERT INTO PPM_MSG_TEMPLATE (
+    		<trim suffixOverrides=",">
+    		 <if test="id != null " > ID , </if>
+				<if test="templateno != null  and templateno != '' " > TEMPLATENO , </if>
+				<if test="templatename != null  and templatename != '' " > TEMPLATENAME , </if>
+				<if test="flowname != null  and flowname != '' " > FLOWNAME , </if>
+				<if test="templatetype != null  and templatetype != '' " > TEMPLATETYPE , </if>
+				<if test="content != null  and content != '' " > CONTENT , </if>
+				<if test="isdel != null " > ISDEL , </if>
+				<if test="createtime != null " > CREATETIME , </if>
+				<if test="creators != null  and creators != '' " > CREATORS , </if>
+				<if test="lastmodtime != null " > LASTMODTIME , </if>
+				<if test="lastmoduser != null  and lastmoduser != '' " > LASTMODUSER , </if>
+				
+              </trim>
+    		)
+    		VALUES(
+    		<trim suffixOverrides=",">
+    		 <if test="id != null " > #{id} , </if>
+				<if test="templateno != null  and templateno != '' " > #{templateno} , </if>
+				<if test="templatename != null  and templatename != '' " > #{templatename} , </if>
+				<if test="flowname != null  and flowname != '' " > #{flowname} , </if>
+				<if test="templatetype != null  and templatetype != '' " > #{templatetype} , </if>
+				<if test="content != null  and content != '' " > #{content} , </if>
+				<if test="isdel != null " > #{isdel} , </if>
+				<if test="createtime != null " > #{createtime} , </if>
+				<if test="creators != null  and creators != '' " > #{creators} , </if>
+				<if test="lastmodtime != null " > #{lastmodtime} , </if>
+				<if test="lastmoduser != null  and lastmoduser != '' " > #{lastmoduser} , </if>
+				
+            </trim>
+    		)
+        </insert>
+
+        <!--通过id查询  k6991 2020-11-16 -->
+        <select id="queryDetail" parameterType="ppmMsgTemplate" resultMap="PPMMSGTEMPLATE_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_MSG_TEMPLATE  WHERE ID=#{id}
+        </select>
+
+         <!--查询集合  k6991 2020-11-16 -->
+        <select id="getList" parameterType="ppmMsgTemplate" resultMap="PPMMSGTEMPLATE_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_MSG_TEMPLATE
+        	<include refid="sql_select_condition" />
+        </select>
+        <!-- update sql -->
+        <sql id="update_pojo_sql">
+        	<trim prefix="SET" suffixOverrides=",">
+        		<if test="id != null " > ID=#{id} , </if>
+				<if test="templateno != null  and templateno != '' " > TEMPLATENO=#{templateno} , </if>
+				<if test="templatename != null  and templatename != '' " > TEMPLATENAME=#{templatename} , </if>
+				<if test="flowname != null  and flowname != '' " > FLOWNAME=#{flowname} , </if>
+				<if test="templatetype != null  and templatetype != '' " > TEMPLATETYPE=#{templatetype} , </if>
+				<if test="content != null  and content != '' " > CONTENT=#{content} , </if>
+				<if test="isdel != null " > ISDEL=#{isdel} , </if>
+				<if test="createtime != null " > CREATETIME=#{createtime} , </if>
+				<if test="creators != null  and creators != '' " > CREATORS=#{creators} , </if>
+				<if test="lastmodtime != null " > LASTMODTIME=#{lastmodtime} , </if>
+				<if test="lastmoduser != null  and lastmoduser != '' " > LASTMODUSER=#{lastmoduser} , </if>
+				
+            </trim>
+        </sql>
+
+        <!--通过id编辑 k6991 2020-11-16 -->
+    	<update id="updatePojo" parameterType="ppmMsgTemplate">
+        	UPDATE
+        	PPM_MSG_TEMPLATE
+        	<include refid="update_pojo_sql" />
+        	WHERE ID=#{id}
+        </update>
+
+        <!--通过id批量删除  k6991 2020-11-16 -->
+        <delete id="deleteById" parameterType="ppmMsgTemplate">
+        	DELETE
+        	FROM
+        	PPM_MSG_TEMPLATE
+        	WHERE ID = #{id}
+        </delete>
+
+</mapper>

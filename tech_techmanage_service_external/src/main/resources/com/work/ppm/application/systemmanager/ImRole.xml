@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k6991 2020-02-21 -->
+<mapper namespace="com.work.ppm.application.model.systemmanager.ImRole">
+    <resultMap type="imRole" id="IMROLE_ALL">
+        <result property="rolLevel" column="ROL_LEVEL"/>
+        <result property="rolParentId" column="ROL_PARENT_ID"/>
+        <result property="rolId" column="ROL_ID"/>
+        <result property="rolName" column="ROL_NAME"/>
+        <result property="rolDesc" column="ROL_DESC"/>
+        <result property="rolGroupId" column="ROL_GROUP_ID"/>
+        <result property="rolCreateUser" column="ROL_CREATE_USER"/>
+        <result property="rolCreateTime" column="ROL_CREATE_TIME"/>
+        <result property="sysType" column="SYS_TYPE"/>
+        <result property="falgSpecialRole" column="FALG_SPECIAL_ROLE"/>
+    </resultMap>
+
+    <!-- 所有字段名称 -->
+    <sql id="sql_flied_all">
+        ROL_LEVEL,
+        ROL_PARENT_ID,
+        ROL_ID,
+        ROL_NAME,
+        ROL_DESC,
+        ROL_GROUP_ID,
+        ROL_CREATE_USER,
+        ROL_CREATE_TIME,
+        SYS_TYPE,
+        FALG_SPECIAL_ROLE
+    </sql>
+    <!-- 查询分页  2020-02-21 k6991  -->
+    <select id="queryPagerList" parameterType="map" resultMap="IMROLE_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM IM_ROLE
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="rolLevel != null ">ROL_LEVEL = #{rolLevel} AND</if>
+            <if test="rolParentId != null  and rolParentId != '' ">ROL_PARENT_ID = #{rolParentId} AND</if>
+            <if test="rolId != null  and rolId != '' ">ROL_ID = #{rolId} AND</if>
+            <if test="rolName != null  and rolName != '' ">ROL_NAME = #{rolName} AND</if>
+            <if test="rolDesc != null  and rolDesc != '' ">ROL_DESC = #{rolDesc} AND</if>
+            <if test="rolGroupId != null  and rolGroupId != '' ">ROL_GROUP_ID = #{rolGroupId} AND</if>
+            <if test="rolCreateUser != null  and rolCreateUser != '' ">ROL_CREATE_USER = #{rolCreateUser} AND</if>
+            <if test="rolCreateTime != null ">ROL_CREATE_TIME = #{rolCreateTime} AND</if>
+            <if test="sysType != null ">SYS_TYPE = #{sysType} AND</if>
+            <if test="falgSpecialRole != null ">FALG_SPECIAL_ROLE = #{falgSpecialRole} AND</if>
+        </trim>
+    </select>
+
+    <!-- 新增  2020-02-21 k6991  -->
+    <insert id="addPojo" parameterType="imRole">
+        INSERT INTO IM_ROLE (
+        ROL_LEVEL,
+        ROL_PARENT_ID,
+        ROL_ID,
+        ROL_NAME,
+        ROL_DESC,
+        ROL_GROUP_ID,
+        ROL_CREATE_USER,
+        ROL_CREATE_TIME,
+        SYS_TYPE,
+        FALG_SPECIAL_ROLE
+        )
+        VALUES(
+        #{rolLevel},
+        #{rolParentId},
+        #{rolId},
+        #{rolName},
+        #{rolDesc},
+        #{rolGroupId},
+        #{rolCreateUser},
+        #{rolCreateTime},
+        #{sysType},
+        #{falgSpecialRole}
+        )
+    </insert>
+
+    <!--通过id查询  k6991 2020-02-21 -->
+    <select id="queryById" parameterType="map" resultMap="IMROLE_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM IM_ROLE WHERE ROL_LEVEL=#{rolLevel} AND SYS_TYPE=#{sysType}
+    </select>
+
+    <!--查询集合  k6991 2020-02-21 -->
+    <select id="getList" parameterType="map" resultMap="IMROLE_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM IM_ROLE
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="rolLevel != null ">ROL_LEVEL=#{rolLevel} AND</if>
+            <if test="rolParentId != null  and rolParentId != '' ">ROL_PARENT_ID=#{rolParentId} AND</if>
+            <if test="rolId != null  and rolId != '' ">ROL_ID=#{rolId} AND</if>
+            <if test="rolName != null  and rolName != '' ">ROL_NAME=#{rolName} AND</if>
+            <if test="rolDesc != null  and rolDesc != '' ">ROL_DESC=#{rolDesc} AND</if>
+            <if test="rolGroupId != null  and rolGroupId != '' ">ROL_GROUP_ID=#{rolGroupId} AND</if>
+            <if test="rolCreateUser != null  and rolCreateUser != '' ">ROL_CREATE_USER=#{rolCreateUser} AND</if>
+            <if test="rolCreateTime != null ">ROL_CREATE_TIME=#{rolCreateTime} AND</if>
+            <if test="sysType != null ">SYS_TYPE=#{sysType} AND</if>
+            <if test="falgSpecialRole != null ">FALG_SPECIAL_ROLE=#{falgSpecialRole} AND</if>
+        </trim>
+    </select>
+    <!-- update sql -->
+    <sql id="update_pojo_sql">
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="rolLevel != null ">ROL_LEVEL=#{rolLevel} ,</if>
+            <if test="rolParentId != null  and rolParentId != '' ">ROL_PARENT_ID=#{rolParentId} ,</if>
+            <if test="rolId != null  and rolId != '' ">ROL_ID=#{rolId} ,</if>
+            <if test="rolName != null  and rolName != '' ">ROL_NAME=#{rolName} ,</if>
+            <if test="rolDesc != null  and rolDesc != '' ">ROL_DESC=#{rolDesc} ,</if>
+            <if test="rolGroupId != null  and rolGroupId != '' ">ROL_GROUP_ID=#{rolGroupId} ,</if>
+            <if test="rolCreateUser != null  and rolCreateUser != '' ">ROL_CREATE_USER=#{rolCreateUser} ,</if>
+            <if test="rolCreateTime != null ">ROL_CREATE_TIME=#{rolCreateTime} ,</if>
+            <if test="sysType != null ">SYS_TYPE=#{sysType} ,</if>
+            <if test="falgSpecialRole != null ">FALG_SPECIAL_ROLE=#{falgSpecialRole} ,</if>
+
+        </trim>
+    </sql>
+
+    <!--通过id编辑 k6991 2020-02-21 -->
+    <update id="updatePojo" parameterType="imRole">
+        UPDATE
+        IM_ROLE
+        <include refid="update_pojo_sql"/>
+        WHERE ROL_ID=#{rolId} AND SYS_TYPE=#{sysType}
+    </update>
+
+    <!--通过id批量删除  k6991 2020-02-21 -->
+    <delete id="deleteById" parameterType="imRole">
+        DELETE
+        FROM
+        IM_ROLE
+        WHERE ROL_ID = #{rolId} AND SYS_TYPE=#{sysType}
+    </delete>
+
+    <!-- 根据用户id查询用户拥有几个角色 k6991 2020-02-21 -->
+    <select id="getImRoleForUserid" parameterType="map" resultMap="IMROLE_ALL">
+        SELECT ROL_ID,ROL_NAME,FALG_SPECIAL_ROLE FROM IM_USER_ROLE_REL R
+        LEFT JOIN IM_ROLE T ON(R.URR_ROLEID=T.ROL_ID)
+        WHERE R.URR_USERID=#{userId} AND T.SYS_TYPE=#{sysType}
+    </select>
+    <!-- 查找详情 2020-10-22 k6991-->
+    <select id="queryDetail" parameterType="imRole" resultMap="IMROLE_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM IM_ROLE
+        WHERE ROL_ID = #{rolId} AND SYS_TYPE=#{sysType}
+    </select>
+    <select id="queryOperaRoleList" parameterType="map" resultMap="IMROLE_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM OPERA_AUTH_ROLE
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="rolLevel != null ">ROL_LEVEL=#{rolLevel} AND</if>
+            <if test="rolParentId != null  and rolParentId != '' ">ROL_PARENT_ID=#{rolParentId} AND</if>
+            <if test="rolId != null  and rolId != '' ">ROL_ID=#{rolId} AND</if>
+            <if test="rolName != null  and rolName != '' ">ROL_NAME=#{rolName} AND</if>
+            <if test="rolDesc != null  and rolDesc != '' ">ROL_DESC=#{rolDesc} AND</if>
+            <if test="rolGroupId != null  and rolGroupId != '' ">ROL_GROUP_ID=#{rolGroupId} AND</if>
+            <if test="rolCreateUser != null  and rolCreateUser != '' ">ROL_CREATE_USER=#{rolCreateUser} AND</if>
+            <if test="rolCreateTime != null ">ROL_CREATE_TIME=#{rolCreateTime} AND</if>
+            <if test="sysType != null ">SYS_TYPE=#{sysType} AND</if>
+            <if test="falgSpecialRole != null ">FALG_SPECIAL_ROLE=#{falgSpecialRole} AND</if>
+        </trim>
+    </select>
+</mapper>

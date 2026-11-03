@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!-- author:k6991 2020-08-24 -->
+<mapper namespace="com.work.ppm.application.model.integratedmanager.PpmInterviewApply">
+	<resultMap type="ppmInterviewApply" id="PPMINTERVIEWAPPLY_ALL">
+		<result property="id" column="ID" />
+		<result property="deptno" column="DEPTNO" />
+		<result property="deptname" column="DEPTNAME" />
+		<result property="instanceid" column="INSTANCEID" />
+		<result property="applyer" column="APPLYER" />
+		<result property="createtime" column="CREATETIME" />
+		<result property="rlId" column="RL_ID" />
+		<result property="meet" column="MEET" />
+		<result property="remarks" column="REMARKS" />
+	</resultMap>
+
+	<!-- 所有字段名称 -->
+	<sql id="sql_flied_all">
+		ID,
+		DEPTNO,
+		DEPTNAME,
+		INSTANCEID,
+		APPLYER,
+		CREATETIME,
+		RL_ID,
+		MEET,
+		REMARKS
+	</sql>
+	<sql id="sql_select_condition">
+		<trim prefix="WHERE" suffixOverrides="AND">
+			<if test="id != null  and id != '' " > ID = #{id} AND </if>
+			<if test="deptno != null  and deptno != '' " > DEPTNO = #{deptno} AND </if>
+			<if test="deptname != null  and deptname != '' " > DEPTNAME = #{deptname} AND </if>
+			<if test="instanceid != null  and instanceid != '' " > INSTANCEID = #{instanceid} AND </if>
+			<if test="applyer != null  and applyer != '' " > APPLYER = #{applyer} AND </if>
+			<if test="createtime != null  and createtime != '' " > CREATETIME = #{createtime} AND </if>
+			<if test="rlId != null" > RL_ID = #{rlId} AND </if>
+			<if test="meet != null" > MEET = #{meet} AND </if>
+		</trim>
+	</sql>
+	<resultMap id="QUERYPAGERLIST_MAP" type="ppmInterviewApplyInfo" extends="PPMINTERVIEWAPPLY_ALL">
+		<result property="deptname" column="DEPTNAME"/>
+		<result property="msname" column="MSNAME"/>
+		<result property="idcard" column="IDCARD"/>
+		<result property="interviewresult" column="INTERVIEWRESULT"/>
+		<result property="sex" column="SEX"/>
+		<result property="birthday" column="BIRTHDAY"/>
+		<result property="suggestlevel" column="SUGGESTLEVEL"/>
+		<result property="workyears" column="WORKYEARS"/>
+		<result property="position" column="POSITION"/>
+		<result property="suggestprice" column="SUGGESTPRICE"/>
+		<result property="isrz" column="ISRZ"/>
+		<result property="jl" column="JL"/>
+		<result property="score" column="SCORE"/>
+		<result property="wbsid" column="WBSID"/>
+		<result property="deptno" column="DEPTNO"/>
+		<result property="outsourcname" column="OUTSOURCNAME"/>
+		<result property="researchers" column="RESEARCHERS"/>
+	</resultMap>
+	<!-- 查询分页  2020-08-24 k6991  -->
+	<select id="queryPagerList" parameterType="map" resultMap="QUERYPAGERLIST_MAP">
+		SELECT TEP.*,T.OUTSOURCNAME FROM (
+			SELECT
+			MAX(T6.MSGDEPTNAME) DEPTNAME,MAX(T1.CREATETIME) CREATETIME,
+			MAX(T2.WBSID) WBSID,MAX(T2.MSNAME)MSNAME,MAX(T2.IDCARD)IDCARD,
+			MAX(T2.INTERVIEWRESULT)INTERVIEWRESULT, MAX(T2.SEX)SEX,MAX(T2.BIRTHDAY)BIRTHDAY,
+			MAX(T2.SUGGESTLEVEL)SUGGESTLEVEL,
+			MAX(T2.WORKYEARS)WORKYEARS,MAX(T2.POSITION)POSITION,MAX(T2.SUGGESTPRICE) SUGGESTPRICE,
+			MAX(T3.ISRZ)ISRZ,MAX(T2.JL) JL,MAX(T2.SCORE)SCORE, MAX(T6.MSGDEPTNO) DEPTNO,
+			MAX(T1.APPLYER)APPLYER , MAX(T1.INSTANCEID)INSTANCEID,MAX(T1.RL_ID)RL_ID,
+			MAX(T2.RESEARCHERS)RESEARCHERS
+			FROM PPM_INTERVIEW_APPLY T1
+			INNER JOIN PPM_INTERVIEWEE_INFO T2 ON(T1.INSTANCEID=T2.INSTANCEID)
+			left join PPM_INTERVIEWER_INFO T6 ON(T1.INSTANCEID=T6.INSTANCEID)
+			LEFT JOIN PPM_INTERVIEWEE_OVERINFO T3 ON(T1.INSTANCEID=T3.INSTANCEID)
+			GROUP BY T2.ID HAVING COUNT(T2.ID) >= 1
+		) TEP
+		LEFT JOIN PPM_OUTSOURCING_INFO T  ON(TEP.WBSID = T.ID)
+		<trim prefix="WHERE" suffixOverrides="AND">
+			<if test="true"> MSNAME is not null AND </if>
+			<if test="msname != null  and msname != '' " > INSTR(MSNAME, #{msname})>0 AND </if>
+			<if test="deptno != null  and deptno != '' " > DEPTNO in (${deptno}) AND </if>
+			<if test="wbsid != null  and wbsid != '' " > WBSID = #{wbsid} AND </if>
+			<if test="applyer != null  and applyer != '' " > APPLYER = #{applyer} AND </if>
+		</trim>
+		ORDER BY TEP.CREATETIME DESC
+	</select>
+	<!-- 新增  2020-08-24 k6991  -->
+	<insert id="addPojo" parameterType="ppmInterviewApply">
+		INSERT INTO PPM_INTERVIEW_APPLY (
+		<trim suffixOverrides=",">
+			<if test="id != null  and id != '' " > ID , </if>
+			<if test="deptno != null  and deptno != '' " > DEPTNO , </if>
+			<if test="deptname != null  and deptname != '' " > DEPTNAME , </if>
+			<if test="instanceid != null  and instanceid != '' " > INSTANCEID , </if>
+			<if test="applyer != null  and applyer != '' " > APPLYER , </if>
+			<if test="createtime != null  and createtime != '' " > CREATETIME , </if>
+			<if test="rlId != null" > RL_ID , </if>
+			<if test="meet != null" > MEET , </if>
+			<if test="remarks != null  and remarks != ''" > REMARKS , </if>
+		</trim>
+		)
+		VALUES(
+		<trim suffixOverrides=",">
+			<if test="id != null  and id != '' " > #{id} , </if>
+			<if test="deptno != null  and deptno != '' " > #{deptno} , </if>
+			<if test="deptname != null  and deptname != '' " > #{deptname} , </if>
+			<if test="instanceid != null  and instanceid != '' " > #{instanceid} , </if>
+			<if test="applyer != null  and applyer != '' " > #{applyer} , </if>
+			<if test="createtime != null  and createtime != '' " > #{createtime} , </if>
+			<if test="rlId != null" > #{rlId} , </if>
+			<if test="meet != null" > #{meet} , </if>
+			<if test="remarks != null and remarks != '' " > #{remarks} , </if>
+		</trim>
+		)
+	</insert>
+
+	<!--通过id查询  k6991 2020-08-24 -->
+	<select id="queryDetail" parameterType="ppmInterviewApply" resultMap="PPMINTERVIEWAPPLY_ALL">
+		SELECT
+		<include refid="sql_flied_all" />
+		FROM PPM_INTERVIEW_APPLY  WHERE INSTANCEID=#{instanceid} AND ROWNUM=1
+	</select>
+	<!--查询集合  k6991 2020-08-24 -->
+	<select id="getList" parameterType="ppmInterviewApply" resultMap="PPMINTERVIEWAPPLY_ALL">
+		SELECT
+		<include refid="sql_flied_all" />
+		FROM PPM_INTERVIEW_APPLY
+		<include refid="sql_select_condition" />
+	</select>
+	<!-- update sql -->
+	<sql id="update_pojo_sql">
+		<trim prefix="SET" suffixOverrides=",">
+			<if test="deptno != null  and deptno != '' " > DEPTNO=#{deptno} , </if>
+			<if test="deptname != null  and deptname != '' " > DEPTNAME=#{deptname} , </if>
+			<if test="instanceid != null  and instanceid != '' " > INSTANCEID=#{instanceid} , </if>
+			<if test="applyer != null  and applyer != '' " > APPLYER=#{applyer} , </if>
+			<if test="createtime != null  and createtime != '' " > CREATETIME=#{createtime} , </if>
+			<if test="rlId != null" > RL_ID = #{rlId} , </if>
+			<if test="meet != null" > MEET = #{meet} , </if>
+			<if test="remarks != null and remarks != ''" > REMARKS = #{remarks} , </if>
+		</trim>
+	</sql>
+
+	<!--通过id编辑 k6991 2020-08-24 -->
+	<update id="updatePojo" parameterType="ppmInterviewApply">
+		UPDATE
+		PPM_INTERVIEW_APPLY
+		<include refid="update_pojo_sql" />
+		<trim prefix="WHERE" suffixOverrides="AND">
+			<if test="id != null  and id != '' " > ID = #{id} AND </if>
+			<if test="instanceid != null  and instanceid != '' " > INSTANCEID = #{instanceid} AND </if>
+		</trim>
+	</update>
+
+	<delete id="deleteById" parameterType="ppmInterviewApply">
+		DELETE FROM PPM_INTERVIEW_APPLY WHERE ID = #{id}
+	</delete>
+
+	<delete id="deleteByInstanceId" parameterType="ppmInterviewApply">
+		DELETE FROM PPM_INTERVIEW_APPLY WHERE INSTANCEID = #{instanceid}
+	</delete>
+
+	<!-- 面试同步老应用 主表 k6991 2021-02-19 -->
+	<insert id="newAndOldDataSysnc1" >
+		INSERT INTO PPM.PPM_RLWBXQ_PERSON_INFO(ID,IDCARD,FILEID,DEPTNAME,DEPTNO,
+		COMPANYID,COMPANY,POSITION,EXAMNUM,EXAMRESULT,REMARK,
+		CREATETIME,STATUS,SEX,BIRTHDAY,WORKYEARS,SUGGESTLEVEL,
+		SUGGESTPRICE)
+		SELECT -ID , O.IDCARD,
+		(SELECT D.OBJECTNO FROM PPM.PPM_DOCUMENT D WHERE D.DOCUMENTNO= O.JL  ) FILEID,
+		(SELECT SUBSTR(T.LOCATION, INSTR(T.LOCATION,'-')+1) LOCATION FROM PPM.COMM_DEPARTMENT T WHERE T.DEPID=
+		(SELECT MSGDEPTNO FROM PPM.PPM_INTERVIEWER_INFO T3 WHERE T3.INSTANCEID=O.INSTANCEID AND ROWNUM=1) )DEPTNAME,
+		(SELECT MSGDEPTNO FROM PPM.PPM_INTERVIEWER_INFO T3 WHERE T3.INSTANCEID=O.INSTANCEID AND ROWNUM=1) DEPTNO ,
+		WBSID,
+		(SELECT T1.OUTSOURCNAME FROM PPM.PPM_OUTSOURCING_INFO T1 WHERE T1.ID=O.WBSID)COMPANY,
+		POSITION, SCORE , '通过' AS EXAMRESULT, 'NEW' REMARK,CREATETIME ,2,
+		CASE SEX
+		WHEN '0' THEN '女'
+		WHEN '1' THEN '男'
+		END SEX,
+		BIRTHDAY ,WORKYEARS ,SUGGESTLEVEL ,SUGGESTPRICE
+		FROM PPM.PPM_INTERVIEWEE_OVERINFO O
+		RIGHT JOIN ( SELECT DISTINCT Y.IDCARD,MAX(Y.ID) YID FROM PPM.PPM_INTERVIEWEE_OVERINFO Y WHERE INTERVIEWRESULT=1 GROUP BY Y.IDCARD) T5 ON (T5.YID=O.ID)
+		WHERE O.INTERVIEWRESULT=1 AND NOT EXISTS(SELECT 1 FROM PPM.PPM_RLWBXQ_PERSON_INFO T2 WHERE O.IDCARD=T2.IDCARD )
+	</insert>
+	<!-- 面试同步老应用 关联表 k6991 2021-02-19 -->
+	<insert id="newAndOldDataSysnc2">
+		INSERT INTO PPM.PPM_RLWBXQ_EXAMPERSON_INFO(ID,IDCARD,NAME,ZCJ,ISPASS,CONTENT, PRICE)
+		SELECT -ID,O.IDCARD, MSNAME,SCORE,'1' ISPASS,'NEW' CONTENT,SUGGESTPRICE    FROM PPM.PPM_INTERVIEWEE_OVERINFO O
+		RIGHT JOIN ( SELECT DISTINCT Y.IDCARD,MAX(Y.ID) YID FROM PPM.PPM_INTERVIEWEE_OVERINFO Y WHERE INTERVIEWRESULT=1 GROUP BY Y.IDCARD) T5 ON (T5.YID=O.ID)
+		WHERE O.INTERVIEWRESULT=1 AND NOT EXISTS(SELECT 1 FROM PPM.PPM_RLWBXQ_EXAMPERSON_INFO T2 WHERE O.IDCARD=T2.IDCARD )
+	</insert>
+	<!-- 面试同步老应用 面试官打分表 k6991 2021-02-19 -->
+	<insert id="newAndOldDataSysnc3">
+		INSERT INTO PPM.PPM_RLWBXQ_GRADE_INFO(ID,TEACHERID,TEACHERNAME,TEACHERDEPT,
+		TEACHERDEPTNO,GRADEZY,GRADEZH,GRADEJJ,GRADEXX,REMARK,PID)
+		SELECT  -T1.ID AS AID,
+		T3.MSGID,
+		T3.MSGNAME,
+		(SELECT MSGDEPTNAME FROM PPM.PPM_INTERVIEWER_INFO T WHERE T.MSGID=T3.MSGID AND T.INSTANCEID=T1.INSTANCEID  )MSGDEPTNAME,
+		(SELECT MSGDEPTNO FROM PPM.PPM_INTERVIEWER_INFO T WHERE T.MSGID=T3.MSGID AND T.INSTANCEID=T1.INSTANCEID )MSGDEPTNO,
+		T3.TECHNOLOGY,T3.COMPREHENSIVE,T3.EDUCATION,T3.EXPERIENCE,T3.REMARK,-T1.ID
+		FROM PPM.PPM_INTERVIEWEE_OVERINFO T1
+		LEFT JOIN PPM.PPM_INTERVIEWEE_SCOREINFO T3 ON(T1.INSTANCEID=T3.INSTANCEID)
+		RIGHT JOIN ( SELECT DISTINCT Y.IDCARD,MAX(Y.ID) YID FROM PPM.PPM_INTERVIEWEE_OVERINFO Y WHERE INTERVIEWRESULT=1 GROUP BY Y.IDCARD) T5 ON (T5.YID=T1.ID)
+		WHERE T1.INTERVIEWRESULT=1 AND NOT EXISTS(SELECT 1 FROM PPM.PPM_RLWBXQ_GRADE_INFO T5 WHERE T5.ID=-T1.ID )
+	</insert>
+</mapper>

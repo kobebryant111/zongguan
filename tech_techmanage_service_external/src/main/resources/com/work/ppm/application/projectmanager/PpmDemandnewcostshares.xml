@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k6991 2021-08-31 -->
+<mapper namespace="com.work.ppm.application.model.projectmanager.PpmDemandnewcostshares">
+	 <resultMap type="ppmDemandnewcostshares" id="PPMDEMANDNEWCOSTSHARES_ALL">
+        <result property="id" column="ID" />
+		<result property="demandno" column="DEMANDNO" />
+		<result property="deptno" column="DEPTNO" />
+		<result property="proportion" column="PROPORTION" />
+		<result property="orgdep" column="ORGDEP" />
+		<result property="manageruser" column="MANAGERUSER" />
+		
+     </resultMap>
+
+     <!-- 所有字段名称 -->
+        <sql id="sql_flied_all">
+        	ID,
+			DEMANDNO,
+			DEPTNO,
+			PROPORTION,
+			ORGDEP,
+			MANAGERUSER
+        </sql>
+        <sql id="sql_select_condition">
+            <trim prefix="WHERE" suffixOverrides="AND">
+                <if test="id != null " > ID = #{id} AND </if>
+				<if test="demandno != null  and demandno != '' " > DEMANDNO = #{demandno} AND </if>
+				<if test="deptno != null  and deptno != '' " > DEPTNO = #{deptno} AND </if>
+				<if test="proportion != null " > PROPORTION = #{proportion} AND </if>
+				<if test="orgdep != null  and orgdep != '' " > ORGDEP = #{orgdep} AND </if>
+				<if test="manageruser != null  and manageruser != '' " > MANAGERUSER = #{manageruser} AND </if>
+				
+            </trim>
+        </sql>
+
+
+        <!-- 新增  2021-08-31 k6991  -->
+        <insert id="addPojo" parameterType="list">
+    		INSERT ALL
+			<foreach collection="list" item="item" index="index">
+			INTO PPM_DEMANDNEWCOSTSHARES (
+    		<trim suffixOverrides=",">
+    		 <if test="item.id != null " > ID , </if>
+				<if test="item.demandno != null  and item.demandno != '' " > DEMANDNO , </if>
+				<if test="item.deptno != null  and item.deptno != '' " > DEPTNO , </if>
+				<if test="item.proportion != null " > PROPORTION , </if>
+				<if test="item.orgdep != null  and item.orgdep != '' " > ORGDEP , </if>
+				<if test="item.manageruser != null  and item.manageruser != '' " > MANAGERUSER , </if>
+              </trim>
+    		)
+    		VALUES(
+    		<trim suffixOverrides=",">
+    		 <if test="item.id != null " > #{item.id} , </if>
+				<if test="item.demandno != null  and item.demandno != '' " > #{item.demandno} , </if>
+				<if test="item.deptno != null  and item.deptno != '' " > #{item.deptno} , </if>
+				<if test="item.proportion != null " > #{item.proportion} , </if>
+				<if test="item.orgdep != null  and item.orgdep != '' " > #{item.orgdep} , </if>
+				<if test="item.manageruser != null  and item.manageruser != '' " > #{item.manageruser} , </if>
+            </trim>
+    		)
+			</foreach>
+			select 1 from dual
+        </insert>
+		<resultMap id="GETLIST_MAP" type="ppmDemandnewcostsharesInfo" extends="PPMDEMANDNEWCOSTSHARES_ALL">
+			<result property="deptName" column="DEPT_NAME" />
+			<result property="managerUserName" column="MANAGER_USER_NAME" />
+		</resultMap>
+         <!--查询集合  k6991 2021-08-31 -->
+        <select id="getList" parameterType="ppmDemandnewcostshares" resultMap="GETLIST_MAP">
+        	SELECT
+        	<include refid="sql_flied_all" />
+			,
+			(select d.location from comm_department d where d.depid=ds.deptno) DEPT_NAME,
+			(select e.empname from comm_employee e where e.badge=ds.manageruser) MANAGER_USER_NAME
+        	FROM PPM_DEMANDNEWCOSTSHARES ds
+        	<include refid="sql_select_condition" />
+        </select>
+        <!-- update sql -->
+        <sql id="update_pojo_sql">
+        	<trim prefix="SET" suffixOverrides=",">
+        		<if test="id != null " > ID=#{id} , </if>
+				<if test="demandno != null  and demandno != '' " > DEMANDNO=#{demandno} , </if>
+				<if test="deptno != null  and deptno != '' " > DEPTNO=#{deptno} , </if>
+				<if test="proportion != null " > PROPORTION=#{proportion} , </if>
+				<if test="orgdep != null  and orgdep != '' " > ORGDEP=#{orgdep} , </if>
+				<if test="manageruser != null  and manageruser != '' " > MANAGERUSER=#{manageruser} , </if>
+				
+            </trim>
+        </sql>
+</mapper>

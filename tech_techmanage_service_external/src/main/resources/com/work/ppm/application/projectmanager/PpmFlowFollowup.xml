@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k6991 2021-10-27 -->
+<mapper namespace="com.work.ppm.application.model.projectmanager.PpmFlowFollowup">
+	 <resultMap type="ppmFlowFollowup" id="PPMFLOWFOLLOWUP_ALL">
+        <result property="id" column="ID" />
+		<result property="flowid" column="FLOWID" />
+		<result property="instanceid" column="INSTANCEID" />
+		<result property="truedealtime" column="TRUEDEALTIME" />
+		<result property="status" column="STATUS" />
+		<result property="istimeout" column="ISTIMEOUT" />
+		<result property="starttime" column="STARTTIME" />
+		<result property="endtime" column="ENDTIME" />
+		<result property="dealdeptid" column="DEALDEPTID" />
+		<result property="dealerid" column="DEALERID" />
+		<result property="remindtype" column="REMINDTYPE" />
+		<result property="isstart" column="ISSTART" />
+		<result property="affectqr" column="AFFECTQR" />
+		<result property="truestartdealtime" column="TRUESTARTDEALTIME" />
+		<result property="systemid" column="SYSTEMID" />
+		
+     </resultMap>
+
+     <!-- 所有字段名称 -->
+        <sql id="sql_flied_all">
+        	ID,
+			FLOWID,
+			INSTANCEID,
+			TRUEDEALTIME,
+			STATUS,
+			ISTIMEOUT,
+			STARTTIME,
+			ENDTIME,
+			DEALDEPTID,
+			DEALERID,
+			REMINDTYPE,
+			ISSTART,
+			AFFECTQR,
+			TRUESTARTDEALTIME,
+			SYSTEMID
+        </sql>
+        <sql id="sql_select_condition">
+            <trim prefix="WHERE" suffixOverrides="AND">
+                <if test="id != null  and id != '' " > ID = #{id} AND </if>
+				<if test="flowid != null  and flowid != '' " > FLOWID = #{flowid} AND </if>
+				<if test="instanceid != null  and instanceid != '' " > INSTANCEID = #{instanceid} AND </if>
+				<if test="truedealtime != null " > TRUEDEALTIME = #{truedealtime} AND </if>
+				<if test="status != null  and status != '' " > STATUS = #{status} AND </if>
+				<if test="istimeout != null  and istimeout != '' " > ISTIMEOUT = #{istimeout} AND </if>
+				<if test="starttime != null " > STARTTIME = #{starttime} AND </if>
+				<if test="endtime != null " > ENDTIME = #{endtime} AND </if>
+				<if test="dealdeptid != null  and dealdeptid != '' " > DEALDEPTID = #{dealdeptid} AND </if>
+				<if test="dealerid != null  and dealerid != '' " > DEALERID = #{dealerid} AND </if>
+				<if test="remindtype != null  and remindtype != '' " > REMINDTYPE = #{remindtype} AND </if>
+				<if test="isstart != null  and isstart != '' " > ISSTART = #{isstart} AND </if>
+				<if test="affectqr != null  and affectqr != '' " > AFFECTQR = #{affectqr} AND </if>
+				<if test="truestartdealtime != null " > TRUESTARTDEALTIME = #{truestartdealtime} AND </if>
+				<if test="systemid != null  and systemid != '' " > SYSTEMID = #{systemid} AND </if>
+				
+            </trim>
+        </sql>
+    	<!-- 查询分页  2021-10-27 k6991  -->
+        <select id="queryPagerList" parameterType="map" resultMap="PPMFLOWFOLLOWUP_ALL">
+        	SELECT
+            <include refid="sql_flied_all" />
+            FROM PPM_FLOW_FOLLOWUP
+            <include refid="sql_select_condition" />
+        </select>
+
+        <!-- 新增  2021-10-27 k6991  -->
+        <insert id="addPojo" parameterType="ppmFlowFollowup">
+    		INSERT INTO PPM_FLOW_FOLLOWUP (
+    		<trim suffixOverrides=",">
+    		 <if test="id != null  and id != '' " > ID , </if>
+				<if test="flowid != null  and flowid != '' " > FLOWID , </if>
+				<if test="instanceid != null  and instanceid != '' " > INSTANCEID , </if>
+				<if test="truedealtime != null " > TRUEDEALTIME , </if>
+				<if test="status != null  and status != '' " > STATUS , </if>
+				<if test="istimeout != null  and istimeout != '' " > ISTIMEOUT , </if>
+				<if test="starttime != null " > STARTTIME , </if>
+				<if test="endtime != null " > ENDTIME , </if>
+				<if test="dealdeptid != null  and dealdeptid != '' " > DEALDEPTID , </if>
+				<if test="dealerid != null  and dealerid != '' " > DEALERID , </if>
+				<if test="remindtype != null  and remindtype != '' " > REMINDTYPE , </if>
+				<if test="isstart != null  and isstart != '' " > ISSTART , </if>
+				<if test="affectqr != null  and affectqr != '' " > AFFECTQR , </if>
+				<if test="truestartdealtime != null " > TRUESTARTDEALTIME , </if>
+				<if test="systemid != null  and systemid != '' " > SYSTEMID , </if>
+				
+              </trim>
+    		)
+    		VALUES(
+    		<trim suffixOverrides=",">
+    		 <if test="id != null  and id != '' " > #{id} , </if>
+				<if test="flowid != null  and flowid != '' " > #{flowid} , </if>
+				<if test="instanceid != null  and instanceid != '' " > #{instanceid} , </if>
+				<if test="truedealtime != null " > #{truedealtime} , </if>
+				<if test="status != null  and status != '' " > #{status} , </if>
+				<if test="istimeout != null  and istimeout != '' " > #{istimeout} , </if>
+				<if test="starttime != null " > #{starttime} , </if>
+				<if test="endtime != null " > #{endtime} , </if>
+				<if test="dealdeptid != null  and dealdeptid != '' " > #{dealdeptid} , </if>
+				<if test="dealerid != null  and dealerid != '' " > #{dealerid} , </if>
+				<if test="remindtype != null  and remindtype != '' " > #{remindtype} , </if>
+				<if test="isstart != null  and isstart != '' " > #{isstart} , </if>
+				<if test="affectqr != null  and affectqr != '' " > #{affectqr} , </if>
+				<if test="truestartdealtime != null " > #{truestartdealtime} , </if>
+				<if test="systemid != null  and systemid != '' " > #{systemid} , </if>
+				
+            </trim>
+    		)
+        </insert>
+
+        <!--通过id查询  k6991 2021-10-27 -->
+        <select id="queryDetail" parameterType="ppmFlowFollowup" resultMap="PPMFLOWFOLLOWUP_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_FLOW_FOLLOWUP  WHERE INSTANCEID=#{instanceid}
+        </select>
+
+         <!--查询集合  k6991 2021-10-27 -->
+        <select id="getList" parameterType="ppmFlowFollowup" resultMap="PPMFLOWFOLLOWUP_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_FLOW_FOLLOWUP
+        	<include refid="sql_select_condition" />
+        </select>
+        <!-- update sql -->
+        <sql id="update_pojo_sql">
+        	<trim prefix="SET" suffixOverrides=",">
+        		<if test="id != null  and id != '' " > ID=#{id} , </if>
+				<if test="flowid != null  and flowid != '' " > FLOWID=#{flowid} , </if>
+				<if test="instanceid != null  and instanceid != '' " > INSTANCEID=#{instanceid} , </if>
+				<if test="truedealtime != null " > TRUEDEALTIME=#{truedealtime} , </if>
+				<if test="status != null  and status != '' " > STATUS=#{status} , </if>
+				<if test="istimeout != null  and istimeout != '' " > ISTIMEOUT=#{istimeout} , </if>
+				<if test="starttime != null " > STARTTIME=#{starttime} , </if>
+				<if test="endtime != null " > ENDTIME=#{endtime} , </if>
+				<if test="dealdeptid != null  and dealdeptid != '' " > DEALDEPTID=#{dealdeptid} , </if>
+				<if test="dealerid != null  and dealerid != '' " > DEALERID=#{dealerid} , </if>
+				<if test="remindtype != null  and remindtype != '' " > REMINDTYPE=#{remindtype} , </if>
+				<if test="isstart != null  and isstart != '' " > ISSTART=#{isstart} , </if>
+				<if test="affectqr != null  and affectqr != '' " > AFFECTQR=#{affectqr} , </if>
+				<if test="truestartdealtime != null " > TRUESTARTDEALTIME=#{truestartdealtime} , </if>
+				<if test="systemid != null  and systemid != '' " > SYSTEMID=#{systemid} , </if>
+				
+            </trim>
+        </sql>
+
+        <!--通过id编辑 k6991 2021-10-27 -->
+    	<update id="updatePojo" parameterType="ppmFlowFollowup">
+        	UPDATE
+        	PPM_FLOW_FOLLOWUP
+        	<include refid="update_pojo_sql" />
+        	WHERE ID=#{id}
+        </update>
+
+        <!--通过id批量删除  k6991 2021-10-27 -->
+        <delete id="deleteById" parameterType="ppmFlowFollowup">
+        	DELETE
+        	FROM
+        	PPM_FLOW_FOLLOWUP
+        	WHERE ID = #{id}
+        </delete>
+
+</mapper>

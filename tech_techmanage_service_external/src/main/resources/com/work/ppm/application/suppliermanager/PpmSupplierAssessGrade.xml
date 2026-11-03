@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:ywwb905 2023-02-09 -->
+<!--  供应商考核评分表 查询脚本 -->
+<mapper namespace="com.work.ppm.application.model.suppliermanager.PpmSupplierAssessGrade">
+	 <resultMap type="ppmSupplierAssessGrade" id="PPMSUPPLIERASSESSGRADE_ALL">
+        <result property="id" column="ID" />
+		<result property="assessType" column="ASSESS_TYPE" />
+		<result property="deptId" column="DEPT_ID" />
+		<result property="supplierCode" column="SUPPLIER_CODE" />
+		<result property="outsourceType" column="OUTSOURCE_TYPE" />
+		<result property="projectId" column="PROJECT_ID" />
+		<result property="assessYear" column="ASSESS_YEAR" />
+		<result property="assessResult" column="ASSESS_RESULT" />
+		<result property="createdTime" column="CREATED_TIME" />
+		<result property="createdBy" column="CREATED_BY" />
+		<result property="modifiedTime" column="MODIFIED_TIME" />
+		<result property="modifiedBy" column="MODIFIED_BY" />
+		
+     </resultMap>
+
+     <!-- 所有字段名称 -->
+    <sql id="sql_flied_all">
+        ID,
+			ASSESS_TYPE,
+			DEPT_ID,
+			SUPPLIER_CODE,
+			OUTSOURCE_TYPE,
+			PROJECT_ID,
+			ASSESS_YEAR,
+			ASSESS_RESULT,
+			CREATED_TIME,
+			CREATED_BY,
+			MODIFIED_TIME,
+			MODIFIED_BY
+    </sql>
+    <sql id="sql_select_condition">
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="id != null " > ID = #{id} AND </if>
+				<if test="assessType != null  and assessType != '' " > ASSESS_TYPE = #{assessType} AND </if>
+				<if test="deptId != null  and deptId != '' " > DEPT_ID = #{deptId} AND </if>
+				<if test="supplierCode != null  and supplierCode != '' " > SUPPLIER_CODE = #{supplierCode} AND </if>
+				<if test="outsourceType != null  and outsourceType != '' " > OUTSOURCE_TYPE = #{outsourceType} AND </if>
+				<if test="projectId != null  and projectId != '' " > PROJECT_ID = #{projectId} AND </if>
+				<if test="assessYear != null  and assessYear != '' " > ASSESS_YEAR = #{assessYear} AND </if>
+				<if test="assessResult != null " > ASSESS_RESULT = #{assessResult} AND </if>
+				<if test="createdTime != null " > CREATED_TIME = #{createdTime} AND </if>
+				<if test="createdBy != null  and createdBy != '' " > CREATED_BY = #{createdBy} AND </if>
+				<if test="modifiedTime != null " > MODIFIED_TIME = #{modifiedTime} AND </if>
+				<if test="modifiedBy != null  and modifiedBy != '' " > MODIFIED_BY = #{modifiedBy} AND </if>
+				
+        </trim>
+    </sql>
+    <!-- 查询分页  2023-02-09 ywwb905  -->
+    <select id="queryPagerList" parameterType="map" resultMap="PPMSUPPLIERASSESSGRADE_ALL">
+        SELECT
+        <include refid="sql_flied_all" />
+        FROM PPM_SUPPLIER_ASSESS_GRADE
+        <include refid="sql_select_condition" />
+    </select>
+
+    <!-- 新增  2023-02-09 ywwb905  -->
+    <insert id="addPojo" parameterType="ppmSupplierAssessGrade">
+        INSERT INTO PPM_SUPPLIER_ASSESS_GRADE (
+        <trim suffixOverrides=",">
+         <if test="id != null " > ID , </if>
+				<if test="assessType != null  and assessType != '' " > ASSESS_TYPE , </if>
+				<if test="deptId != null  and deptId != '' " > DEPT_ID , </if>
+				<if test="supplierCode != null  and supplierCode != '' " > SUPPLIER_CODE , </if>
+				<if test="outsourceType != null  and outsourceType != '' " > OUTSOURCE_TYPE , </if>
+				<if test="projectId != null  and projectId != '' " > PROJECT_ID , </if>
+				<if test="assessYear != null  and assessYear != '' " > ASSESS_YEAR , </if>
+				<if test="assessResult != null " > ASSESS_RESULT , </if>
+				<if test="createdTime != null " > CREATED_TIME , </if>
+				<if test="createdBy != null  and createdBy != '' " > CREATED_BY , </if>
+				<if test="modifiedTime != null " > MODIFIED_TIME , </if>
+				<if test="modifiedBy != null  and modifiedBy != '' " > MODIFIED_BY , </if>
+				
+          </trim>
+        )
+        VALUES(
+        <trim suffixOverrides=",">
+         <if test="id != null " > #{id} , </if>
+				<if test="assessType != null  and assessType != '' " > #{assessType} , </if>
+				<if test="deptId != null  and deptId != '' " > #{deptId} , </if>
+				<if test="supplierCode != null  and supplierCode != '' " > #{supplierCode} , </if>
+				<if test="outsourceType != null  and outsourceType != '' " > #{outsourceType} , </if>
+				<if test="projectId != null  and projectId != '' " > #{projectId} , </if>
+				<if test="assessYear != null  and assessYear != '' " > #{assessYear} , </if>
+				<if test="assessResult != null " > #{assessResult} , </if>
+				<if test="createdTime != null " > #{createdTime} , </if>
+				<if test="createdBy != null  and createdBy != '' " > #{createdBy} , </if>
+				<if test="modifiedTime != null " > #{modifiedTime} , </if>
+				<if test="modifiedBy != null  and modifiedBy != '' " > #{modifiedBy} , </if>
+				
+        </trim>
+        )
+    </insert>
+
+    <!--通过id查询  ywwb905 2023-02-09 -->
+    <select id="queryDetail" parameterType="ppmSupplierAssessGrade" resultMap="PPMSUPPLIERASSESSGRADE_ALL">
+        SELECT
+        <include refid="sql_flied_all" />
+        FROM PPM_SUPPLIER_ASSESS_GRADE  WHERE ID=#{id}
+    </select>
+	
+	<select id="queryDetailQt" parameterType="ppmSupplierAssessGrade" resultMap="PPMSUPPLIERASSESSGRADE_ALL">
+        SELECT
+        <include refid="sql_flied_all" />
+        FROM PPM_SUPPLIER_ASSESS_GRADE 
+			<trim prefix="WHERE" suffixOverrides="AND">
+				<if test="projectId != null and projectId != ''" > PROJECT_ID = #{projectId} AND </if>
+				<if test="deptId != null  and deptId != '' " > DEPT_ID = #{deptId} AND </if>
+				<if test="supplierCode != null  and supplierCode != '' " > SUPPLIER_CODE = #{supplierCode} AND </if>
+				<if test="outsourceType != null  and outsourceType != '' " > OUTSOURCE_TYPE = #{outsourceType} AND </if>
+				<if test="assessYear != null  and assessYear != '' " > ASSESS_YEAR = #{assessYear} AND </if>
+			</trim>
+    </select>
+
+     <!--查询集合  ywwb905 2023-02-09 -->
+    <select id="getList" parameterType="ppmSupplierAssessGrade" resultMap="PPMSUPPLIERASSESSGRADE_ALL">
+        SELECT
+        <include refid="sql_flied_all" />
+        FROM PPM_SUPPLIER_ASSESS_GRADE
+        <include refid="sql_select_condition" />
+    </select>
+    <!-- update sql -->
+    <sql id="update_pojo_sql">
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="id != null " > ID=#{id} , </if>
+				<if test="assessType != null  and assessType != '' " > ASSESS_TYPE=#{assessType} , </if>
+				<if test="deptId != null  and deptId != '' " > DEPT_ID=#{deptId} , </if>
+				<if test="supplierCode != null  and supplierCode != '' " > SUPPLIER_CODE=#{supplierCode} , </if>
+				<if test="outsourceType != null  and outsourceType != '' " > OUTSOURCE_TYPE=#{outsourceType} , </if>
+				<if test="projectId != null  and projectId != '' " > PROJECT_ID=#{projectId} , </if>
+				<if test="assessYear != null  and assessYear != '' " > ASSESS_YEAR=#{assessYear} , </if>
+				<if test="assessResult != null " > ASSESS_RESULT=#{assessResult} , </if>
+				<if test="createdTime != null " > CREATED_TIME=#{createdTime} , </if>
+				<if test="createdBy != null  and createdBy != '' " > CREATED_BY=#{createdBy} , </if>
+				<if test="modifiedTime != null " > MODIFIED_TIME=#{modifiedTime} , </if>
+				<if test="modifiedBy != null  and modifiedBy != '' " > MODIFIED_BY=#{modifiedBy} , </if>
+				
+        </trim>
+    </sql>
+
+    <!--通过id编辑 ywwb905 2023-02-09 -->
+    <update id="updatePojo" parameterType="ppmSupplierAssessGrade">
+        UPDATE
+        PPM_SUPPLIER_ASSESS_GRADE
+        <include refid="update_pojo_sql" />
+        WHERE ID=#{id}
+    </update>
+
+    <!--通过id批量删除  ywwb905 2023-02-09 -->
+    <delete id="deleteById" parameterType="ppmSupplierAssessGrade">
+        DELETE
+        FROM
+        PPM_SUPPLIER_ASSESS_GRADE
+        WHERE ID = #{id}
+    </delete>
+
+</mapper>

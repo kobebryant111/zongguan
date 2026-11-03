@@ -1,0 +1,421 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k1327 2020-11-16 -->
+<mapper namespace="com.work.ppm.application.model.integratedmanager.PpmOutsourcingChangeInfos">
+	 <resultMap type="ppmOutsourcingChangeInfos" id="PPMOUTSOURCINGCHANGEINFOS_ALL">
+        <result property="id" column="ID" />
+		<result property="jobid" column="JOBID" />
+		<result property="username" column="USERNAME" />
+		<result property="certnumber" column="CERTNUMBER" />
+		<result property="companyid" column="COMPANYID" />
+		<result property="companyname" column="COMPANYNAME" />
+		<result property="oldDepid" column="OLD_DEPID" />
+		<result property="oldDepname" column="OLD_DEPNAME" />
+		<result property="newDepid" column="NEW_DEPID" />
+		<result property="newDepname" column="NEW_DEPNAME" />
+		<result property="oldOrganizers" column="OLD_ORGANIZERS" />
+		<result property="oldOrganizersname" column="OLD_ORGANIZERSNAME" />
+		<result property="newOrganizers" column="NEW_ORGANIZERS" />
+		<result property="newOrganizersname" column="NEW_ORGANIZERSNAME" />
+		<result property="oldGroupid" column="OLD_GROUPID" />
+		<result property="oldGroupname" column="OLD_GROUPNAME" />
+		<result property="newGroupid" column="NEW_GROUPID" />
+		<result property="newGroupname" column="NEW_GROUPNAME" />
+		<result property="oldProjectno" column="OLD_PROJECTNO" />
+		<result property="oldProjectname" column="OLD_PROJECTNAME" />
+		<result property="newProjectno" column="NEW_PROJECTNO" />
+		<result property="newProjectname" column="NEW_PROJECTNAME" />
+		<result property="oldSysno" column="OLD_SYSNO" />
+		<result property="oldSyaname" column="OLD_SYANAME" />
+		<result property="newSysno" column="NEW_SYSNO" />
+		<result property="newSysname" column="NEW_SYSNAME" />
+		<result property="oldOutsourcingtype" column="OLD_OUTSOURCINGTYPE" />
+		<result property="newOutsourcingtype" column="NEW_OUTSOURCINGTYPE" />
+		<result property="oldUsetype" column="OLD_USETYPE" />
+		<result property="newUsetype" column="NEW_USETYPE" />
+		<result property="oldPosition" column="OLD_POSITION" />
+		<result property="newPosition" column="NEW_POSITION" />
+		<result property="oldPrice" column="OLD_PRICE" />
+		<result property="newPrice" column="NEW_PRICE" />
+		<result property="oldContractid" column="OLD_CONTRACTID" />
+		<result property="oldContractname" column="OLD_CONTRACTNAME" />
+		<result property="newContractid" column="NEW_CONTRACTID" />
+		<result property="newContractname" column="NEW_CONTRACTNAME" />
+		<result property="instanceid" column="INSTANCEID" />
+		<result property="interviewtime" column="INTERVIEWTIME" />
+		<result property="professionscore" column="PROFESSIONSCORE" />
+		<result property="comprehensivescore" column="COMPREHENSIVESCORE" />
+		<result property="valuescore" column="VALUESCORE" />
+		<result property="imagescore" column="IMAGESCORE" />
+		<result property="comments" column="COMMENTS" />
+		<result property="years" column="YEARS" />
+		<result property="grade" column="GRADE" />
+		<result property="totalscore" column="TOTALSCORE" />
+		<result property="result" column="RESULT" />
+		<result property="recommendedPrice" column="RECOMMENDED_PRICE" />
+		<result property="reason" column="REASON" />
+		 <result property="oldOutsourcingtypename" column="OLD_OUTSOURCINGTYPENAME" />
+		 <result property="newOutsourcingtypename" column="NEW_OUTSOURCINGTYPENAME" />
+		 <result property="oldPositionname" column="OLD_POSITIONNAME" />
+		 <result property="newPositionname" column="NEW_POSITIONNAME" />
+		 <result property="newUsetypename" column="NEW_USETYPENAME" />
+		 <result property="oldUsetypename" column="OLD_USETYPENAME" />
+     </resultMap>
+
+     <!-- 所有字段名称 -->
+        <sql id="sql_flied_all">
+        	ID,
+			JOBID,
+			USERNAME,
+			CERTNUMBER,
+			COMPANYID,
+			COMPANYNAME,
+			OLD_DEPID,
+			OLD_DEPNAME,
+			NEW_DEPID,
+			NEW_DEPNAME,
+			OLD_ORGANIZERS,
+			OLD_ORGANIZERSNAME,
+			NEW_ORGANIZERS,
+			NEW_ORGANIZERSNAME,
+			OLD_GROUPID,
+			OLD_GROUPNAME,
+			NEW_GROUPID,
+			NEW_GROUPNAME,
+			OLD_PROJECTNO,
+			OLD_PROJECTNAME,
+			NEW_PROJECTNO,
+			NEW_PROJECTNAME,
+			OLD_SYSNO,
+			OLD_SYANAME,
+			NEW_SYSNO,
+			NEW_SYSNAME,
+			OLD_OUTSOURCINGTYPE,
+			NEW_OUTSOURCINGTYPE,
+			OLD_USETYPE,
+			NEW_USETYPE,
+			OLD_POSITION,
+			NEW_POSITION,
+			OLD_PRICE,
+			NEW_PRICE,
+			OLD_CONTRACTID,
+			OLD_CONTRACTNAME,
+			NEW_CONTRACTID,
+			NEW_CONTRACTNAME,
+			INSTANCEID,
+			INTERVIEWTIME,
+			PROFESSIONSCORE,
+			COMPREHENSIVESCORE,
+			VALUESCORE,
+			IMAGESCORE,
+			COMMENTS,
+			YEARS,
+			GRADE,
+			TOTALSCORE,
+			RESULT,
+			RECOMMENDED_PRICE,
+			REASON,
+			OLD_OUTSOURCINGTYPENAME,
+			NEW_OUTSOURCINGTYPENAME,
+			OLD_POSITIONNAME,
+			NEW_POSITIONNAME,
+			NEW_USETYPENAME,
+			OLD_USETYPENAME
+        </sql>
+        <sql id="sql_select_condition">
+            <trim prefix="WHERE" suffixOverrides="AND">
+                <if test="id != null " > ID = #{id} AND </if>
+				<if test="jobid != null  and jobid != '' " > JOBID = #{jobid} AND </if>
+				<if test="username != null  and username != '' " > USERNAME = #{username} AND </if>
+				<if test="certnumber != null  and certnumber != '' " > CERTNUMBER = #{certnumber} AND </if>
+				<if test="companyid != null  and companyid != '' " > COMPANYID = #{companyid} AND </if>
+				<if test="companyname != null  and companyname != '' " > COMPANYNAME = #{companyname} AND </if>
+				<if test="oldDepid != null  and oldDepid != '' " > OLD_DEPID = #{oldDepid} AND </if>
+				<if test="oldDepname != null  and oldDepname != '' " > OLD_DEPNAME = #{oldDepname} AND </if>
+				<if test="newDepid != null  and newDepid != '' " > NEW_DEPID = #{newDepid} AND </if>
+				<if test="newDepname != null  and newDepname != '' " > NEW_DEPNAME = #{newDepname} AND </if>
+				<if test="oldOrganizers != null  and oldOrganizers != '' " > OLD_ORGANIZERS = #{oldOrganizers} AND </if>
+				<if test="oldOrganizersname != null  and oldOrganizersname != '' " > OLD_ORGANIZERSNAME = #{oldOrganizersname} AND </if>
+				<if test="newOrganizers != null  and newOrganizers != '' " > NEW_ORGANIZERS = #{newOrganizers} AND </if>
+				<if test="newOrganizersname != null  and newOrganizersname != '' " > NEW_ORGANIZERSNAME = #{newOrganizersname} AND </if>
+				<if test="oldGroupid != null  and oldGroupid != '' " > OLD_GROUPID = #{oldGroupid} AND </if>
+				<if test="oldGroupname != null  and oldGroupname != '' " > OLD_GROUPNAME = #{oldGroupname} AND </if>
+				<if test="newGroupid != null  and newGroupid != '' " > NEW_GROUPID = #{newGroupid} AND </if>
+				<if test="newGroupname != null  and newGroupname != '' " > NEW_GROUPNAME = #{newGroupname} AND </if>
+				<if test="oldProjectno != null  and oldProjectno != '' " > OLD_PROJECTNO = #{oldProjectno} AND </if>
+				<if test="oldProjectname != null  and oldProjectname != '' " > OLD_PROJECTNAME = #{oldProjectname} AND </if>
+				<if test="newProjectno != null  and newProjectno != '' " > NEW_PROJECTNO = #{newProjectno} AND </if>
+				<if test="newProjectname != null  and newProjectname != '' " > NEW_PROJECTNAME = #{newProjectname} AND </if>
+				<if test="oldSysno != null  and oldSysno != '' " > OLD_SYSNO = #{oldSysno} AND </if>
+				<if test="oldSyaname != null  and oldSyaname != '' " > OLD_SYANAME = #{oldSyaname} AND </if>
+				<if test="newSysno != null  and newSysno != '' " > NEW_SYSNO = #{newSysno} AND </if>
+				<if test="newSysname != null  and newSysname != '' " > NEW_SYSNAME = #{newSysname} AND </if>
+				<if test="oldOutsourcingtype != null  and oldOutsourcingtype != '' " > OLD_OUTSOURCINGTYPE = #{oldOutsourcingtype} AND </if>
+				<if test="newOutsourcingtype != null  and newOutsourcingtype != '' " > NEW_OUTSOURCINGTYPE = #{newOutsourcingtype} AND </if>
+				<if test="oldUsetype != null  and oldUsetype != '' " > OLD_USETYPE = #{oldUsetype} AND </if>
+				<if test="newUsetype != null  and newUsetype != '' " > NEW_USETYPE = #{newUsetype} AND </if>
+				<if test="oldPosition != null  and oldPosition != '' " > OLD_POSITION = #{oldPosition} AND </if>
+				<if test="newPosition != null  and newPosition != '' " > NEW_POSITION = #{newPosition} AND </if>
+				<if test="oldPrice != null  and oldPrice != '' " > OLD_PRICE = #{oldPrice} AND </if>
+				<if test="newPrice != null  and newPrice != '' " > NEW_PRICE = #{newPrice} AND </if>
+				<if test="oldContractid != null  and oldContractid != '' " > OLD_CONTRACTID = #{oldContractid} AND </if>
+				<if test="oldContractname != null  and oldContractname != '' " > OLD_CONTRACTNAME = #{oldContractname} AND </if>
+				<if test="newContractid != null  and newContractid != '' " > NEW_CONTRACTID = #{newContractid} AND </if>
+				<if test="newContractname != null  and newContractname != '' " > NEW_CONTRACTNAME = #{newContractname} AND </if>
+				<if test="instanceid != null  and instanceid != '' " > INSTANCEID = #{instanceid} AND </if>
+				<if test="interviewtime != null  and interviewtime != '' " > INTERVIEWTIME = #{interviewtime} AND </if>
+				<if test="professionscore != null " > PROFESSIONSCORE = #{professionscore} AND </if>
+				<if test="comprehensivescore != null " > COMPREHENSIVESCORE = #{comprehensivescore} AND </if>
+				<if test="valuescore != null " > VALUESCORE = #{valuescore} AND </if>
+				<if test="imagescore != null " > IMAGESCORE = #{imagescore} AND </if>
+				<if test="comments != null  and comments != '' " > COMMENTS = #{comments} AND </if>
+				<if test="years != null " > YEARS = #{years} AND </if>
+				<if test="grade != null  and grade != '' " > GRADE = #{grade} AND </if>
+				<if test="totalscore != null " > TOTALSCORE = #{totalscore} AND </if>
+				<if test="result != null  and result != '' " > RESULT = #{result} AND </if>
+				<if test="recommendedPrice != null " > RECOMMENDED_PRICE = #{recommendedPrice} AND </if>
+				<if test="reason != null  and reason != '' " > REASON = #{reason} AND </if>
+				<if test="oldOutsourcingtypename != null  and oldOutsourcingtypename != '' " > OLD_OUTSOURCINGTYPENAME = #{oldOutsourcingtypename} AND </if>
+				<if test="newOutsourcingtypename != null  and newOutsourcingtypename != '' " > NEW_OUTSOURCINGTYPENAME = #{newOutsourcingtypename} AND </if>
+				<if test="oldPositionname != null  and oldPositionname != '' " > OLD_POSITIONNAME = #{oldPositionname} AND </if>
+				<if test="newPositionname != null  and newPositionname != '' " > NEW_POSITIONNAME = #{newPositionname} AND </if>
+				<if test="newUsetypename != null  and newUsetypename != '' " > NEW_USETYPENAME = #{newUsetypename} AND </if>
+				<if test="oldUsetypename != null  and oldUsetypename != '' " > OLD_USETYPENAME = #{oldUsetypename} AND </if>
+            </trim>
+        </sql>
+    	<!-- 查询分页  2020-11-16 k1327  -->
+        <select id="queryPagerList" parameterType="map" resultMap="PPMOUTSOURCINGCHANGEINFOS_ALL">
+        	SELECT
+            <include refid="sql_flied_all" />
+            FROM PPM_OUTSOURCING_CHANGE_INFOS
+            <include refid="sql_select_condition" />
+        </select>
+
+        <!-- 新增  2020-11-16 k1327  -->
+        <insert id="addPojo" parameterType="ppmOutsourcingChangeInfos">
+    		INSERT INTO PPM_OUTSOURCING_CHANGE_INFOS (
+    		<trim suffixOverrides=",">
+    		 <if test="id != null " > ID , </if>
+				<if test="jobid != null  and jobid != '' " > JOBID , </if>
+				<if test="username != null  and username != '' " > USERNAME , </if>
+				<if test="certnumber != null  and certnumber != '' " > CERTNUMBER , </if>
+				<if test="companyid != null  and companyid != '' " > COMPANYID , </if>
+				<if test="companyname != null  and companyname != '' " > COMPANYNAME , </if>
+				<if test="oldDepid != null  and oldDepid != '' " > OLD_DEPID , </if>
+				<if test="oldDepname != null  and oldDepname != '' " > OLD_DEPNAME , </if>
+				<if test="newDepid != null  and newDepid != '' " > NEW_DEPID , </if>
+				<if test="newDepname != null  and newDepname != '' " > NEW_DEPNAME , </if>
+				<if test="oldOrganizers != null  and oldOrganizers != '' " > OLD_ORGANIZERS , </if>
+				<if test="oldOrganizersname != null  and oldOrganizersname != '' " > OLD_ORGANIZERSNAME , </if>
+				<if test="newOrganizers != null  and newOrganizers != '' " > NEW_ORGANIZERS , </if>
+				<if test="newOrganizersname != null  and newOrganizersname != '' " > NEW_ORGANIZERSNAME , </if>
+				<if test="oldGroupid != null  and oldGroupid != '' " > OLD_GROUPID , </if>
+				<if test="oldGroupname != null  and oldGroupname != '' " > OLD_GROUPNAME , </if>
+				<if test="newGroupid != null  and newGroupid != '' " > NEW_GROUPID , </if>
+				<if test="newGroupname != null  and newGroupname != '' " > NEW_GROUPNAME , </if>
+				<if test="oldProjectno != null  and oldProjectno != '' " > OLD_PROJECTNO , </if>
+				<if test="oldProjectname != null  and oldProjectname != '' " > OLD_PROJECTNAME , </if>
+				<if test="newProjectno != null  and newProjectno != '' " > NEW_PROJECTNO , </if>
+				<if test="newProjectname != null  and newProjectname != '' " > NEW_PROJECTNAME , </if>
+				<if test="oldSysno != null  and oldSysno != '' " > OLD_SYSNO , </if>
+				<if test="oldSyaname != null  and oldSyaname != '' " > OLD_SYANAME , </if>
+				<if test="newSysno != null  and newSysno != '' " > NEW_SYSNO , </if>
+				<if test="newSysname != null  and newSysname != '' " > NEW_SYSNAME , </if>
+				<if test="oldOutsourcingtype != null  and oldOutsourcingtype != '' " > OLD_OUTSOURCINGTYPE , </if>
+				<if test="newOutsourcingtype != null  and newOutsourcingtype != '' " > NEW_OUTSOURCINGTYPE , </if>
+				<if test="oldUsetype != null  and oldUsetype != '' " > OLD_USETYPE , </if>
+				<if test="newUsetype != null  and newUsetype != '' " > NEW_USETYPE , </if>
+				<if test="oldPosition != null  and oldPosition != '' " > OLD_POSITION , </if>
+				<if test="newPosition != null  and newPosition != '' " > NEW_POSITION , </if>
+				<if test="oldPrice != null  and oldPrice != '' " > OLD_PRICE , </if>
+				<if test="newPrice != null  and newPrice != '' " > NEW_PRICE , </if>
+				<if test="oldContractid != null  and oldContractid != '' " > OLD_CONTRACTID , </if>
+				<if test="oldContractname != null  and oldContractname != '' " > OLD_CONTRACTNAME , </if>
+				<if test="newContractid != null  and newContractid != '' " > NEW_CONTRACTID , </if>
+				<if test="newContractname != null  and newContractname != '' " > NEW_CONTRACTNAME , </if>
+				<if test="instanceid != null  and instanceid != '' " > INSTANCEID , </if>
+				<if test="interviewtime != null  and interviewtime != '' " > INTERVIEWTIME , </if>
+				<if test="professionscore != null " > PROFESSIONSCORE , </if>
+				<if test="comprehensivescore != null " > COMPREHENSIVESCORE , </if>
+				<if test="valuescore != null " > VALUESCORE , </if>
+				<if test="imagescore != null " > IMAGESCORE , </if>
+				<if test="comments != null  and comments != '' " > COMMENTS , </if>
+				<if test="years != null " > YEARS , </if>
+				<if test="grade != null  and grade != '' " > GRADE , </if>
+				<if test="totalscore != null " > TOTALSCORE , </if>
+				<if test="result != null  and result != '' " > RESULT , </if>
+				<if test="recommendedPrice != null " > RECOMMENDED_PRICE , </if>
+				<if test="reason != null  and reason != '' " > REASON , </if>
+				<if test="newOutsourcingtypename != null  and newOutsourcingtypename != '' " > NEW_OUTSOURCINGTYPENAME , </if>
+				<if test="oldOutsourcingtypename != null  and oldOutsourcingtypename != '' " > OLD_OUTSOURCINGTYPENAME , </if>
+				<if test="oldPositionname != null  and oldPositionname != '' " > OLD_POSITIONNAME , </if>
+				<if test="newPositionname != null  and newPositionname != '' " > NEW_POSITIONNAME , </if>
+				<if test="newUsetypename != null  and newUsetypename != '' " > NEW_USETYPENAME , </if>
+				<if test="oldUsetypename != null  and oldUsetypename != '' " > OLD_USETYPENAME , </if>
+              </trim>
+    		)
+    		VALUES(
+    		<trim suffixOverrides=",">
+    		 <if test="id != null " > #{id} , </if>
+				<if test="jobid != null  and jobid != '' " > #{jobid} , </if>
+				<if test="username != null  and username != '' " > #{username} , </if>
+				<if test="certnumber != null  and certnumber != '' " > #{certnumber} , </if>
+				<if test="companyid != null  and companyid != '' " > #{companyid} , </if>
+				<if test="companyname != null  and companyname != '' " > #{companyname} , </if>
+				<if test="oldDepid != null  and oldDepid != '' " > #{oldDepid} , </if>
+				<if test="oldDepname != null  and oldDepname != '' " > #{oldDepname} , </if>
+				<if test="newDepid != null  and newDepid != '' " > #{newDepid} , </if>
+				<if test="newDepname != null  and newDepname != '' " > #{newDepname} , </if>
+				<if test="oldOrganizers != null  and oldOrganizers != '' " > #{oldOrganizers} , </if>
+				<if test="oldOrganizersname != null  and oldOrganizersname != '' " > #{oldOrganizersname} , </if>
+				<if test="newOrganizers != null  and newOrganizers != '' " > #{newOrganizers} , </if>
+				<if test="newOrganizersname != null  and newOrganizersname != '' " > #{newOrganizersname} , </if>
+				<if test="oldGroupid != null  and oldGroupid != '' " > #{oldGroupid} , </if>
+				<if test="oldGroupname != null  and oldGroupname != '' " > #{oldGroupname} , </if>
+				<if test="newGroupid != null  and newGroupid != '' " > #{newGroupid} , </if>
+				<if test="newGroupname != null  and newGroupname != '' " > #{newGroupname} , </if>
+				<if test="oldProjectno != null  and oldProjectno != '' " > #{oldProjectno} , </if>
+				<if test="oldProjectname != null  and oldProjectname != '' " > #{oldProjectname} , </if>
+				<if test="newProjectno != null  and newProjectno != '' " > #{newProjectno} , </if>
+				<if test="newProjectname != null  and newProjectname != '' " > #{newProjectname} , </if>
+				<if test="oldSysno != null  and oldSysno != '' " > #{oldSysno} , </if>
+				<if test="oldSyaname != null  and oldSyaname != '' " > #{oldSyaname} , </if>
+				<if test="newSysno != null  and newSysno != '' " > #{newSysno} , </if>
+				<if test="newSysname != null  and newSysname != '' " > #{newSysname} , </if>
+				<if test="oldOutsourcingtype != null  and oldOutsourcingtype != '' " > #{oldOutsourcingtype} , </if>
+				<if test="newOutsourcingtype != null  and newOutsourcingtype != '' " > #{newOutsourcingtype} , </if>
+				<if test="oldUsetype != null  and oldUsetype != '' " > #{oldUsetype} , </if>
+				<if test="newUsetype != null  and newUsetype != '' " > #{newUsetype} , </if>
+				<if test="oldPosition != null  and oldPosition != '' " > #{oldPosition} , </if>
+				<if test="newPosition != null  and newPosition != '' " > #{newPosition} , </if>
+				<if test="oldPrice != null  and oldPrice != '' " > #{oldPrice} , </if>
+				<if test="newPrice != null  and newPrice != '' " > #{newPrice} , </if>
+				<if test="oldContractid != null  and oldContractid != '' " > #{oldContractid} , </if>
+				<if test="oldContractname != null  and oldContractname != '' " > #{oldContractname} , </if>
+				<if test="newContractid != null  and newContractid != '' " > #{newContractid} , </if>
+				<if test="newContractname != null  and newContractname != '' " > #{newContractname} , </if>
+				<if test="instanceid != null  and instanceid != '' " > #{instanceid} , </if>
+				<if test="interviewtime != null  and interviewtime != '' " > #{interviewtime} , </if>
+				<if test="professionscore != null " > #{professionscore} , </if>
+				<if test="comprehensivescore != null " > #{comprehensivescore} , </if>
+				<if test="valuescore != null " > #{valuescore} , </if>
+				<if test="imagescore != null " > #{imagescore} , </if>
+				<if test="comments != null  and comments != '' " > #{comments} , </if>
+				<if test="years != null " > #{years} , </if>
+				<if test="grade != null  and grade != '' " > #{grade} , </if>
+				<if test="totalscore != null " > #{totalscore} , </if>
+				<if test="result != null  and result != '' " > #{result} , </if>
+				<if test="recommendedPrice != null " > #{recommendedPrice} , </if>
+				<if test="reason != null  and reason != '' " > #{reason} , </if>
+				<if test="newOutsourcingtypename != null  and newOutsourcingtypename != '' " > #{newOutsourcingtypename} , </if>
+				<if test="oldOutsourcingtypename != null  and oldOutsourcingtypename != '' " > #{oldOutsourcingtypename} , </if>
+				<if test="oldPositionname != null  and oldPositionname != '' " > #{oldPositionname} , </if>
+				<if test="newPositionname != null  and newPositionname != '' " > #{newPositionname} , </if>
+				<if test="newUsetypename != null  and newUsetypename != '' " > #{newUsetypename} , </if>
+				<if test="oldUsetypename != null  and oldUsetypename != '' " > #{oldUsetypename} , </if>
+            </trim>
+    		)
+        </insert>
+
+        <!--通过id查询  k1327 2020-11-16 -->
+        <select id="queryDetail" parameterType="ppmOutsourcingChangeInfos" resultMap="PPMOUTSOURCINGCHANGEINFOS_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_OUTSOURCING_CHANGE_INFOS  WHERE ID=#{id}
+        </select>
+
+         <!--查询集合  k1327 2020-11-16 -->
+        <select id="getList" parameterType="ppmOutsourcingChangeInfos" resultMap="PPMOUTSOURCINGCHANGEINFOS_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_OUTSOURCING_CHANGE_INFOS
+        	<include refid="sql_select_condition" />
+        </select>
+        <!-- update sql -->
+        <sql id="update_pojo_sql">
+        	<trim prefix="SET" suffixOverrides=",">
+        		<if test="id != null " > ID=#{id} , </if>
+				<if test="jobid != null  and jobid != '' " > JOBID=#{jobid} , </if>
+				<if test="username != null  and username != '' " > USERNAME=#{username} , </if>
+				<if test="certnumber != null  and certnumber != '' " > CERTNUMBER=#{certnumber} , </if>
+				<if test="companyid != null  and companyid != '' " > COMPANYID=#{companyid} , </if>
+				<if test="companyname != null  and companyname != '' " > COMPANYNAME=#{companyname} , </if>
+				<if test="oldDepid != null  and oldDepid != '' " > OLD_DEPID=#{oldDepid} , </if>
+				<if test="oldDepname != null  and oldDepname != '' " > OLD_DEPNAME=#{oldDepname} , </if>
+				<if test="newDepid != null  and newDepid != '' " > NEW_DEPID=#{newDepid} , </if>
+				<if test="newDepname != null  and newDepname != '' " > NEW_DEPNAME=#{newDepname} , </if>
+				<if test="oldOrganizers != null  and oldOrganizers != '' " > OLD_ORGANIZERS=#{oldOrganizers} , </if>
+				<if test="oldOrganizersname != null  and oldOrganizersname != '' " > OLD_ORGANIZERSNAME=#{oldOrganizersname} , </if>
+				<if test="newOrganizers != null  and newOrganizers != '' " > NEW_ORGANIZERS=#{newOrganizers} , </if>
+				<if test="newOrganizersname != null  and newOrganizersname != '' " > NEW_ORGANIZERSNAME=#{newOrganizersname} , </if>
+				<if test="oldGroupid != null  and oldGroupid != '' " > OLD_GROUPID=#{oldGroupid} , </if>
+				<if test="oldGroupname != null  and oldGroupname != '' " > OLD_GROUPNAME=#{oldGroupname} , </if>
+				<if test="newGroupid != null  and newGroupid != '' " > NEW_GROUPID=#{newGroupid} , </if>
+				<if test="newGroupname != null  and newGroupname != '' " > NEW_GROUPNAME=#{newGroupname} , </if>
+				<if test="oldProjectno != null  and oldProjectno != '' " > OLD_PROJECTNO=#{oldProjectno} , </if>
+				<if test="oldProjectname != null  and oldProjectname != '' " > OLD_PROJECTNAME=#{oldProjectname} , </if>
+				<if test="newProjectno != null  and newProjectno != '' " > NEW_PROJECTNO=#{newProjectno} , </if>
+				<if test="newProjectname != null  and newProjectname != '' " > NEW_PROJECTNAME=#{newProjectname} , </if>
+				<if test="oldSysno != null  and oldSysno != '' " > OLD_SYSNO=#{oldSysno} , </if>
+				<if test="oldSyaname != null  and oldSyaname != '' " > OLD_SYANAME=#{oldSyaname} , </if>
+				<if test="newSysno != null  and newSysno != '' " > NEW_SYSNO=#{newSysno} , </if>
+				<if test="newSysname != null  and newSysname != '' " > NEW_SYSNAME=#{newSysname} , </if>
+				<if test="oldOutsourcingtype != null  and oldOutsourcingtype != '' " > OLD_OUTSOURCINGTYPE=#{oldOutsourcingtype} , </if>
+				<if test="newOutsourcingtype != null  and newOutsourcingtype != '' " > NEW_OUTSOURCINGTYPE=#{newOutsourcingtype} , </if>
+				<if test="oldUsetype != null  and oldUsetype != '' " > OLD_USETYPE=#{oldUsetype} , </if>
+				<if test="newUsetype != null  and newUsetype != '' " > NEW_USETYPE=#{newUsetype} , </if>
+				<if test="oldPosition != null  and oldPosition != '' " > OLD_POSITION=#{oldPosition} , </if>
+				<if test="newPosition != null  and newPosition != '' " > NEW_POSITION=#{newPosition} , </if>
+				<if test="oldPrice != null  and oldPrice != '' " > OLD_PRICE=#{oldPrice} , </if>
+				<if test="newPrice != null  and newPrice != '' " > NEW_PRICE=#{newPrice} , </if>
+				<if test="oldContractid != null  and oldContractid != '' " > OLD_CONTRACTID=#{oldContractid} , </if>
+				<if test="oldContractname != null  and oldContractname != '' " > OLD_CONTRACTNAME=#{oldContractname} , </if>
+				<if test="newContractid != null  and newContractid != '' " > NEW_CONTRACTID=#{newContractid} , </if>
+				<if test="newContractname != null  and newContractname != '' " > NEW_CONTRACTNAME=#{newContractname} , </if>
+				<if test="instanceid != null  and instanceid != '' " > INSTANCEID=#{instanceid} , </if>
+				<if test="interviewtime != null  and interviewtime != '' " > INTERVIEWTIME=#{interviewtime} , </if>
+				<if test="professionscore != null " > PROFESSIONSCORE=#{professionscore} , </if>
+				<if test="comprehensivescore != null " > COMPREHENSIVESCORE=#{comprehensivescore} , </if>
+				<if test="valuescore != null " > VALUESCORE=#{valuescore} , </if>
+				<if test="imagescore != null " > IMAGESCORE=#{imagescore} , </if>
+				<if test="comments != null  and comments != '' " > COMMENTS=#{comments} , </if>
+				<if test="years != null " > YEARS=#{years} , </if>
+				<if test="grade != null  and grade != '' " > GRADE=#{grade} , </if>
+				<if test="totalscore != null " > TOTALSCORE=#{totalscore} , </if>
+				<if test="result != null  and result != '' " > RESULT=#{result} , </if>
+				<if test="recommendedPrice != null " > RECOMMENDED_PRICE=#{recommendedPrice} , </if>
+				<if test="reason != null  and reason != '' " > REASON=#{reason} , </if>
+				<if test="oldOutsourcingtypename != null  and oldOutsourcingtypename != '' " > OLD_OUTSOURCINGTYPENAME=#{oldOutsourcingtypename} , </if>
+				<if test="newOutsourcingtypename != null  and newOutsourcingtypename != '' " > NEW_OUTSOURCINGTYPENAME=#{newOutsourcingtypename} , </if>
+				<if test="oldPositionname != null  and oldPositionname != '' " > OLD_POSITIONNAME=#{oldPositionname} , </if>
+				<if test="newPositionname != null  and newPositionname != '' " > NEW_POSITIONNAME=#{newPositionname} , </if>
+				<if test="newUsetypename != null  and newUsetypename != '' " > NEW_USETYPENAME=#{newUsetypename} , </if>
+				<if test="oldUsetypename != null  and oldUsetypename != '' " > OLD_USETYPENAME=#{oldUsetypename} , </if>
+            </trim>
+        </sql>
+
+        <!--通过id编辑 k1327 2020-11-16 -->
+    	<update id="updatePojo" parameterType="ppmOutsourcingChangeInfos">
+        	UPDATE
+        	PPM_OUTSOURCING_CHANGE_INFOS
+        	<include refid="update_pojo_sql" />
+        	WHERE ID=#{id}
+        </update>
+
+        <!--通过id批量删除  k1327 2020-11-16 -->
+        <delete id="deleteById" parameterType="ppmOutsourcingChangeInfos">
+        	DELETE
+        	FROM
+        	PPM_OUTSOURCING_CHANGE_INFOS
+        	WHERE ID = #{id}
+        </delete>
+
+	<!--通过Instanceid批量删除  k1327 2020-09-08 -->
+	<delete id="deleteByInstanceid" parameterType="ppmOutsourcingChangeInfos">
+		DELETE
+		FROM
+		PPM_OUTSOURCING_CHANGE_INFOS
+		WHERE Instanceid = #{instanceid}
+	</delete>
+
+</mapper>

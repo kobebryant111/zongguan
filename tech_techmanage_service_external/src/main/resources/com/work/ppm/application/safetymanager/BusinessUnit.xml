@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k6991 2020-06-30 -->
+<mapper namespace="com.work.ppm.application.model.safetymanager.BusinessUnit">
+    <resultMap type="businessUnit" id="BUSINESSUNIT_ALL">
+        <result property="id" column="ID"/>
+        <result property="depcode" column="DEPCODE"/>
+        <result property="location" column="LOCATION"/>
+        <result property="firstLevelManager" column="FIRST_LEVEL_MANAGER"/>
+        <result property="safetySpecialist" column="SAFETY_SPECIALIST"/>
+        <result property="badge" column="BADGE"/>
+        <result property="phoneNum" column="PHONE_NUM"/>
+        <result property="businessUnitDepcode" column="BUSINESS_UNIT_DEPCODE"/>
+        <result property="businessUnit" column="BUSINESS_UNIT"/>
+        <result property="areaManager" column="AREA_MANAGER"/>
+        <result property="businessBadge" column="BUSINESS_BADGE"/>
+        <result property="areaSafetySpecialist" column="AREA_SAFETY_SPECIALIST"/>
+        <result property="areaBadge" column="AREA_BADGE"/>
+        <result property="areaPhoneNum" column="AREA_PHONE_NUM"/>
+        <result property="businessUnitDepcode" column="BUSINESS_UNIT_DEPCODE"/>
+        <result property="createUser" column="CREATE_USER"/>
+        <result property="createTime" column="CREATE_TIME"/>
+        <result property="updateUser" column="UPDATE_USER"/>
+        <result property="updateTime" column="UPDATE_TIME"/>
+        <result property="safetyBadge" column="SAFETY_BADGE"/>
+        <result property="businessBadge" column="BUSINESS_BADGE"/>
+        <result property="safetyStatus" column="SAFETY_STATUS"/>
+        <result property="areaSafetyStatus" column="AREA_SAFETY_STATUS"/>
+    </resultMap>
+
+    <!-- 所有字段名称 -->
+    <sql id="sql_flied_all">
+        ID,
+        DEPCODE,
+        LOCATION,
+        FIRST_LEVEL_MANAGER,
+        SAFETY_SPECIALIST,
+        BADGE,
+        PHONE_NUM,
+        BUSINESS_UNIT_DEPCODE,
+        BUSINESS_UNIT,
+        AREA_MANAGER,
+        AREA_SAFETY_SPECIALIST,
+        AREA_BADGE,
+        AREA_PHONE_NUM,
+        CREATE_USER,
+        CREATE_TIME,
+        UPDATE_USER,
+        UPDATE_TIME,
+        SAFETY_BADGE,
+        BUSINESS_BADGE,
+        SAFETY_STATUS,
+        AREA_SAFETY_STATUS
+    </sql>
+
+    <sql id="sql_select_condition">
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="id != null ">ID = #{id} AND</if>
+            <if test="depcode != null  and depcode != '' ">DEPCODE = #{depcode} AND</if>
+            <if test="location != null and location != '' ">LOCATION = #{location} AND</if>
+            <if test="firstLevelManager != null and firstLevelManager != '' ">FIRST_LEVEL_MANAGER = #{firstLevelManager} AND</if>
+            <if test="safetySpecialist != null  and safetySpecialist != '' ">SAFETY_SPECIALIST = #{safetySpecialist}
+                AND
+            </if>
+            <if test="badge != null  and badge != '' ">BADGE = #{badge} AND</if>
+            <if test="phoneNum != null  and phoneNum != '' ">PHONE_NUM = #{phoneNum} AND</if>
+            <if test="businessUnitDepcode != null  and businessUnitDepcode != '' ">BUSINESS_UNIT_DEPCODE = #{businessUnitDepcode} AND</if>
+            <if test="businessUnit != null  and businessUnit != '' ">BUSINESS_UNIT = #{businessUnit} AND</if>
+            <if test="areaManager != null  and areaManager != '' ">AREA_MANAGER = #{areaManager} AND</if>
+            <if test="areaSafetySpecialist != null  and areaSafetySpecialist != '' ">
+                AREA_SAFETY_SPECIALIST = #{areaSafetySpecialist} AND
+            </if>
+            <if test="areaBadge != null  and areaBadge != '' ">AREA_BADGE = #{areaBadge} AND</if>
+            <if test="areaPhoneNum != null  and areaPhoneNum != '' ">AREA_PHONE_NUM = #{areaPhoneNum} AND</if>
+        </trim>
+    </sql>
+
+    <sql id="update_pojo_sql">
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="depcode != null and depcode != 'undefined'">DEPCODE = #{depcode} ,</if>
+            <if test="location != null and location != 'undefined'">LOCATION = #{location} ,</if>
+            <if test="firstLevelManager != null and firstLevelManager != '' ">FIRST_LEVEL_MANAGER = #{firstLevelManager} ,</if>
+            <if test="safetySpecialist != null and safetySpecialist != 'undefined'">SAFETY_SPECIALIST = #{safetySpecialist} ,
+            </if>
+            <if test="badge != null and badge != 'undefined'">BADGE = #{badge} ,</if>
+            <if test="phoneNum != null and phoneNum != 'undefined'">PHONE_NUM = #{phoneNum} ,</if>
+            <if test="businessUnitDepcode != null and businessUnitDepcode != 'undefined'">BUSINESS_UNIT_DEPCODE = #{businessUnitDepcode} ,</if>
+            <if test="businessUnit != null and businessUnit != 'undefined'">BUSINESS_UNIT = #{businessUnit} ,</if>
+            <if test="areaManager != null and areaManager != 'undefined'">AREA_MANAGER = #{areaManager} ,</if>
+            <if test="areaSafetySpecialist != null and areaSafetySpecialist != 'undefined'">
+                AREA_SAFETY_SPECIALIST = #{areaSafetySpecialist} ,
+            </if>
+            <if test="areaBadge != null and areaBadge != 'undefined'">AREA_BADGE = #{areaBadge} ,</if>
+            <if test="areaPhoneNum != null and areaPhoneNum != 'undefined'">AREA_PHONE_NUM = #{areaPhoneNum} ,</if>
+        </trim>
+    </sql>
+
+    <update id="updateMsg" parameterType="businessUnit">
+        UPDATE
+        COMM_BUSINESS_SAFETYSPECIALIST
+        <include refid="update_pojo_sql"/>
+        WHERE ID = #{id}
+    </update>
+
+    <select id="queryPagerList" parameterType="map" resultMap="BUSINESSUNIT_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM COMM_BUSINESS_SAFETYSPECIALIST
+        <include refid="sql_select_condition"/>
+        ORDER BY DEPCODE ASC
+    </select>
+
+    <update id="updateAll" parameterType="businessUnit">
+        UPDATE COMM_BUSINESS_SAFETYSPECIALIST
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="location != null">LOCATION = #{location} ,</if>
+            <if test="firstLevelManager != null">FIRST_LEVEL_MANAGER = #{firstLevelManager} ,</if>
+            <if test="safetySpecialist != null">SAFETY_SPECIALIST = #{safetySpecialist},</if>
+            <if test="badge != null">BADGE = #{badge},</if>
+            <if test="phoneNum != null">PHONE_NUM = #{phoneNum},</if>
+        </trim>
+        WHERE
+        DEPCODE = #{depcode}
+    </update>
+    <select id="queryByewub" parameterType="map" resultMap="BUSINESSUNIT_ALL">
+        SELECT T2.DEPCODE,
+        T2.LOCATION,
+        E2.BADGE SAFETY_BADGE,
+        E2.EMPNAME FIRST_LEVEL_MANAGER,
+        T1.DEPCODE  BUSINESS_UNIT_DEPCODE,
+        T1.LOCATION BUSINESS_UNIT,
+        E1.BADGE    BUSINESS_BADGE,
+        E1.EMPNAME  AREA_MANAGER
+        FROM COMM_DEPARTMENT T1
+        LEFT JOIN COMM_EMPLOYEE E1
+        ON T1.DIRECTOR = E1.EID
+        LEFT JOIN COMM_DEPARTMENT T2
+        ON T1.ADMINID = T2.DEPID
+        LEFT JOIN COMM_EMPLOYEE E2
+        ON T2.DIRECTOR = E2.EID
+        WHERE T1.DEPGRADE = '011'
+        AND T1.LOCATION LIKE '%业务部'
+        AND T2.LOCATION Like '宁银消金消费金融%'
+        AND T1.DEPCODE != '3540002136'
+        ORDER BY T1.DEPCODE
+    </select>
+
+    <!--depcode存在则更新不存在则插入-->
+    <insert id="upsert" parameterType="List">
+        MERGE INTO COMM_BUSINESS_SAFETYSPECIALIST u
+        USING (
+        <foreach item="item" collection="list" separator=" UNION ALL ">
+            SELECT
+            sys_guid() AS id,
+            #{item.depcode} AS depcode,
+            #{item.location} AS location,
+            #{item.safetyBadge} AS SAFETY_BADGE,
+            #{item.firstLevelManager} AS FIRST_LEVEL_MANAGER,
+            #{item.businessUnitDepcode} AS BUSINESS_UNIT_DEPCODE,
+            #{item.businessUnit} AS BUSINESS_UNIT,
+            #{item.businessBadge} AS BUSINESS_BADGE,
+            #{item.areaManager} AS AREA_MANAGER
+            FROM dual
+        </foreach>
+        ) src
+        ON (u.BUSINESS_UNIT_DEPCODE = src.BUSINESS_UNIT_DEPCODE)
+        <!--数据存在则更新-->
+        WHEN MATCHED THEN
+        UPDATE SET
+        u.depcode = src.depcode,
+        u.location = src.location,
+        u.SAFETY_BADGE= src.SAFETY_BADGE,
+        u.FIRST_LEVEL_MANAGER = src.FIRST_LEVEL_MANAGER,
+        u.BUSINESS_UNIT = src.BUSINESS_UNIT,
+        u.BUSINESS_BADGE = src.BUSINESS_BADGE,
+        u.AREA_MANAGER = src.AREA_MANAGER
+        <!--数据不存在则插入-->
+        WHEN NOT MATCHED THEN
+        INSERT (ID,DEPCODE, LOCATION, SAFETY_BADGE,
+        FIRST_LEVEL_MANAGER,BUSINESS_UNIT_DEPCODE,BUSINESS_UNIT,BUSINESS_BADGE,AREA_MANAGER)
+        VALUES (src.ID,src.DEPCODE, src.LOCATION, src.SAFETY_BADGE, src.FIRST_LEVEL_MANAGER,
+        src.BUSINESS_UNIT_DEPCODE,src.BUSINESS_UNIT,src.BUSINESS_BADGE,src.AREA_MANAGER)
+    </insert>
+
+    <update id="updateEmployeeMsg" parameterType="map">
+        UPDATE COMM_BUSINESS_SAFETYSPECIALIST
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="safetySpecialist != null and safetySpecialist != 'undefined'">SAFETY_SPECIALIST = #{safetySpecialist} ,</if>
+            <if test="badge != null and badge != 'undefined'">BADGE = #{badge} ,</if>
+            <if test="phoneNum != null and phoneNum != 'undefined'">PHONE_NUM = #{phoneNum} ,</if>
+            <if test="areaSafetySpecialist != null and areaSafetySpecialist != 'undefined'">
+                AREA_SAFETY_SPECIALIST = #{areaSafetySpecialist} , </if>
+            <if test="areaBadge != null and areaBadge != 'undefined'">AREA_BADGE = #{areaBadge} ,</if>
+            <if test="areaPhoneNum != null and areaPhoneNum != 'undefined'">AREA_PHONE_NUM = #{areaPhoneNum} ,</if>
+            <if test="safetyStatus != null and safetyStatus != 'undefined'">SAFETY_STATUS = #{safetyStatus} ,</if>
+            <if test="areaSafetyStatus != null and areaSafetyStatus != 'undefined'">AREA_SAFETY_STATUS = #{areaSafetyStatus} ,</if>
+        </trim>
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="oldBadge != null  and oldBadge != '' ">BADGE = #{oldBadge} AND</if>
+            <if test="depcode != null  and depcode != '' ">DEPCODE = #{depcode} AND</if>
+            <if test="oldAreaBadge != null  and oldAreaBadge != '' ">AREA_BADGE = #{oldAreaBadge} AND</if>
+            <if test="businessUnitDepcode != null  and businessUnitDepcode != '' ">BUSINESS_UNIT_DEPCODE = #{businessUnitDepcode} AND</if>
+        </trim>
+    </update>
+
+    <select id="queryBusinessunitInfo" parameterType="map" resultMap="BUSINESSUNIT_ALL">
+        SELECT * FROM COMM_BUSINESS_SAFETYSPECIALIST
+        WHERE BADGE = #{badge}
+    </select>
+
+    <select id="queryBusinessunitAreaInfo" parameterType="map" resultMap="BUSINESSUNIT_ALL">
+        SELECT * FROM COMM_BUSINESS_SAFETYSPECIALIST
+        WHERE AREA_BADGE = #{areaBadge}
+    </select>
+
+    <delete id="deletert" parameterType="list">
+        <!--删除list中不存在的-->
+        DELETE FROM COMM_BUSINESS_SAFETYSPECIALIST WHERE BUSINESS_UNIT_DEPCODE NOT IN
+        <foreach collection="list" item="item" separator="," open="(" close=")">
+            #{item.businessUnitDepcode}
+        </foreach>
+    </delete>
+</mapper>

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tansun.wf.platform.mapper.WfProcessVariableConfigMapper">
+	<resultMap type="com.tansun.wf.platform.model.WfProcessVariableConfigEntity" id="wfProcessVariableConfigMap">
+		<result column="classifyId" property="classifyId" javaType="java.lang.String"/>
+		<result column="classifyName" property="classifyName" javaType="java.lang.String"/>
+		<result column="varCode" property="varCode" javaType="java.lang.String"/>
+		<result column="varName" property="varName" javaType="java.lang.String"/>
+		<result column="varType" property="varType" javaType="java.lang.String"/>
+		<result column="varClass" property="varClass" javaType="java.lang.String"/>
+		<result column="useable" property="useable" javaType="java.lang.String"/>
+	    <result column="id" property="id" javaType="java.lang.String"/>
+        <result column="tenantId" property="tenantId" javaType="java.lang.String"/>
+	</resultMap>
+
+
+	<sql id="wfProcessVariableConfigColumns">
+		a.ID AS "id",
+		a.CLASSIFY_ID AS "classifyId",
+		a.CLASSIFY_NAME AS "classifyName",
+		a.VAR_CODE AS "varCode",
+		a.VAR_NAME AS "varName",
+		a.VAR_TYPE AS "varType",
+		a.VAR_CLASS AS "varClass",
+		a.USEABLE AS "useable",
+		a.TENANT_ID AS "tenantId"
+	</sql>
+
+	
+    <sql id="where_filters">
+        <where>
+		<if test="classifyId!=null and classifyId!=''">
+			AND CLASSIFY_ID = #{classifyId}
+		</if>
+		<if test="varCode!=null and varCode!=''">
+			AND VAR_CODE = #{varCode}
+		</if>
+		
+		<if test="tenantId!=null and tenantId!=''">
+			AND TENANT_ID = #{tenantId}
+		</if>
+		
+		<if test="varName!=null and varName!=''">
+			<bind name="varName" value="'%'+_parameter.varName + '%'"/>
+			AND VAR_NAME  like #{varName}
+		</if>
+		<if test="classifyName!=null and classifyName!=''">
+			<bind name="classifyName" value=" '%'+_parameter.classifyName + '%'"/>
+			AND CLASSIFY_NAME  like #{classifyName}
+		</if>
+        </where>
+    </sql>
+
+    <select id="findList"
+			parameterType="com.tansun.wf.platform.query.WfActHiTaskinstQuery"
+			resultMap="wfProcessVariableConfigMap">
+		SELECT 
+        <include refid="wfProcessVariableConfigColumns"/> 
+        FROM wf_process_variable_config a
+         <include refid="where_filters"/>
+         ORDER BY ID DESC
+    </select>
+
+
+    <insert id="insert"
+			parameterType="com.tansun.wf.platform.model.WfProcessVariableConfigEntity" >
+    	INSERT INTO wf_process_variable_config(
+			ID,
+			CLASSIFY_ID,
+			CLASSIFY_NAME,
+			VAR_CODE,
+			VAR_NAME,
+			VAR_TYPE,
+			VAR_CLASS,
+			USEABLE,
+			TENANT_ID
+		) VALUES (
+			#{id,jdbcType=VARCHAR},
+			#{classifyId,jdbcType=VARCHAR},
+			#{classifyName,jdbcType=VARCHAR},
+			#{varCode,jdbcType=VARCHAR},
+			#{varName,jdbcType=VARCHAR},
+			#{varType,jdbcType=VARCHAR},
+			#{varClass,jdbcType=VARCHAR},
+			#{useable,jdbcType=VARCHAR},
+			#{tenantId,jdbcType=VARCHAR}
+		)
+    </insert>
+    
+    <update id="update" parameterType="com.tansun.wf.platform.model.WfProcessVariableConfigEntity" >
+		UPDATE wf_process_variable_config SET 	
+			CLASSIFY_ID = #{classifyId},
+			CLASSIFY_NAME = #{classifyName},
+			VAR_CODE = #{varCode},
+			VAR_NAME = #{varName},
+			VAR_TYPE = #{varType},
+			VAR_CLASS = #{varClass},
+			USEABLE = #{useable},
+			TENANT_ID = #{tenantId}
+		WHERE ID = #{id}
+	</update>
+	
+	<delete id="delete">
+		DELETE  from wf_process_variable_config
+		WHERE ID = #{id}
+	</delete>
+
+</mapper>

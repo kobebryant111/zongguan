@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k6991 2020-06-08 -->
+<mapper namespace="com.work.ppm.application.model.flowmanager.PpmProjectFlow">
+	 <resultMap type="ppmProjectFlow" id="PPMPROJECTFLOW_ALL">
+        <result property="id" column="ID" />
+		<result property="projectno" column="PROJECTNO" />
+		<result property="flowtitle" column="FLOWTITLE" />
+		<result property="flowname" column="FLOWNAME" />
+		<result property="instanceid" column="INSTANCEID" />
+		<result property="flowid" column="FLOWID" />
+		<result property="flowurl" column="FLOWURL" />
+		<result property="flowcreateuserid" column="FLOWCREATEUSERID" />
+		<result property="startdate" column="STARTDATE" />
+		<result property="enddate" column="ENDDATE" />
+		<result property="flowstatus" column="FLOWSTATUS" />
+		<result property="isdel" column="ISDEL" />
+		<result property="createtime" column="CREATETIME" />
+		<result property="creators" column="CREATORS" />
+		<result property="lastmodtime" column="LASTMODTIME" />
+		<result property="lastmoduser" column="LASTMODUSER" />
+		<result property="clr" column="CLR" />
+		<result property="activityname" column="ACTIVITYNAME" />
+		<result property="clrid" column="CLRID" />
+		 <result property="activityid" column="ACTIVITYID" />
+     </resultMap>
+
+     <!-- 所有字段名称 -->
+        <sql id="sql_flied_all">
+        	ID,
+			PROJECTNO,
+			FLOWTITLE,
+			FLOWNAME,
+			INSTANCEID,
+			FLOWID,
+			FLOWURL,
+			FLOWCREATEUSERID,
+			STARTDATE,
+			ENDDATE,
+			FLOWSTATUS,
+			ISDEL,
+			CREATETIME,
+			CREATORS,
+			LASTMODTIME,
+			LASTMODUSER,
+			CLR,
+			ACTIVITYNAME,
+			CLRID,
+			ACTIVITYID
+        </sql>
+    	<!-- 查询分页  2020-06-08 k6991  -->
+        <select id="queryPagerList" parameterType="map" resultMap="PPMPROJECTFLOW_ALL">
+        	SELECT
+            <include refid="sql_flied_all" />
+            FROM PPM_PROJECT_FLOW
+            <trim prefix="WHERE" suffixOverrides="AND">
+                <if test="id != null " > ID = #{id} AND </if>
+				<if test="projectno != null  and projectno != '' " > PROJECTNO = #{projectno} AND </if>
+				<if test="flowtitle != null  and flowtitle != '' " > INSTR(FLOWTITLE , #{flowtitle}) > 0 AND </if>
+				<if test="flowname != null  and flowname != '' " > FLOWNAME = #{flowname} AND </if>
+				<if test="instanceid != null  and instanceid != '' " > INSTANCEID = #{instanceid} AND </if>
+				<if test="flowid != null  and flowid != '' " > FLOWID in( ${flowid}) AND </if>
+				<if test="flowurl != null  and flowurl != '' " > FLOWURL = #{flowurl} AND </if>
+				<if test="flowcreateuserid != null  and flowcreateuserid != '' " > FLOWCREATEUSERID = #{flowcreateuserid} AND </if>
+				<if test="startdate != null " > STARTDATE = #{startdate} AND </if>
+				<if test="enddate != null " > ENDDATE = #{enddate} AND </if>
+				<if test="flowstatus != null  and flowstatus != '' " > FLOWSTATUS = #{flowstatus} AND </if>
+				<if test="isdel != null " > ISDEL = #{isdel} AND </if>
+				<if test="createtime != null " > CREATETIME = #{createtime} AND </if>
+				<if test="creators != null  and creators != '' " > INSTR( CREATORS , #{creators} ) > 0 AND </if>
+				<if test="lastmodtime != null " > LASTMODTIME = #{lastmodtime} AND </if>
+				<if test="lastmoduser != null  and lastmoduser != '' " > INSTR( LASTMODUSER , #{lastmoduser} ) > 0 AND </if>
+				<if test="clr != null  and clr != '' " > CLR = #{clr} AND </if>
+				<if test="activityname != null  and activityname != '' " > ACTIVITYNAME = #{activityname} AND </if>
+				<if test="clrid != null  and clrid != '' " > CLRID = #{clrid} AND </if>
+				<if test="activityid != null  and activityid != '' " > ACTIVITYID = #{activityid} AND </if>
+                <if test="dateBegin != null and dateBegin != ''">
+                    CREATETIME BETWEEN
+                    to_date(#{dateBegin},'YYYY-MM-DD hh24:mi:ss') AND
+                    to_date(#{dateEnd},'YYYY-MM-DD hh24:mi:ss') AND
+                </if>
+            </trim>
+			ORDER BY CREATETIME DESC
+        </select>
+
+        <!-- 新增  2020-06-08 k6991  -->
+        <insert id="addPojo" parameterType="ppmProjectFlow">
+    		INSERT INTO PPM_PROJECT_FLOW (
+    		<trim suffixOverrides=",">
+    		 <if test="id != null " > ID , </if>
+				<if test="projectno != null  and projectno != '' " > PROJECTNO , </if>
+				<if test="flowtitle != null  and flowtitle != '' " > FLOWTITLE , </if>
+				<if test="flowname != null  and flowname != '' " > FLOWNAME , </if>
+				<if test="instanceid != null  and instanceid != '' " > INSTANCEID , </if>
+				<if test="flowid != null  and flowid != '' " > FLOWID , </if>
+				<if test="flowurl != null  and flowurl != '' " > FLOWURL , </if>
+				<if test="flowcreateuserid != null  and flowcreateuserid != '' " > FLOWCREATEUSERID , </if>
+				<if test="startdate != null " > STARTDATE , </if>
+				<if test="enddate != null " > ENDDATE , </if>
+				<if test="flowstatus != null  and flowstatus != '' " > FLOWSTATUS , </if>
+				<if test="isdel != null " > ISDEL , </if>
+				<if test="createtime != null " > CREATETIME , </if>
+				<if test="creators != null  and creators != '' " > CREATORS , </if>
+				<if test="lastmodtime != null " > LASTMODTIME , </if>
+				<if test="lastmoduser != null  and lastmoduser != '' " > LASTMODUSER , </if>
+				<if test="clr != null  and clr != '' " > CLR , </if>
+				<if test="activityname != null  and activityname != '' " > ACTIVITYNAME , </if>
+				<if test="clrid != null  and clrid != '' " > CLRID , </if>
+				<if test="activityid != null  and activityid != '' " > ACTIVITYID , </if>
+              </trim>
+    		)
+    		VALUES(
+    		<trim suffixOverrides=",">
+    		 <if test="id != null " > #{id} , </if>
+				<if test="projectno != null  and projectno != '' " > #{projectno} , </if>
+				<if test="flowtitle != null  and flowtitle != '' " > #{flowtitle} , </if>
+				<if test="flowname != null  and flowname != '' " > #{flowname} , </if>
+				<if test="instanceid != null  and instanceid != '' " > #{instanceid} , </if>
+				<if test="flowid != null  and flowid != '' " > #{flowid} , </if>
+				<if test="flowurl != null  and flowurl != '' " > #{flowurl} , </if>
+				<if test="flowcreateuserid != null  and flowcreateuserid != '' " > #{flowcreateuserid} , </if>
+				<if test="startdate != null " > #{startdate} , </if>
+				<if test="enddate != null " > #{enddate} , </if>
+				<if test="flowstatus != null  and flowstatus != '' " > #{flowstatus} , </if>
+				<if test="isdel != null " > #{isdel} , </if>
+				<if test="createtime != null " > #{createtime} , </if>
+				<if test="creators != null  and creators != '' " > #{creators} , </if>
+				<if test="lastmodtime != null " > #{lastmodtime} , </if>
+				<if test="lastmoduser != null  and lastmoduser != '' " > #{lastmoduser} , </if>
+				<if test="clr != null  and clr != '' " > #{clr} , </if>
+				<if test="activityname != null  and activityname != '' " > #{activityname} , </if>
+				<if test="clrid != null  and clrid != '' " > #{clrid} , </if>
+				<if test="activityid != null  and activityid != '' " > #{activityid} , </if>
+
+            </trim>
+    		)
+        </insert>
+
+        <!--通过id查询  k6991 2020-06-08 -->
+        <select id="queryDetail" parameterType="map" resultMap="PPMPROJECTFLOW_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_PROJECT_FLOW
+			<trim prefix="WHERE" suffixOverrides="AND">
+				<if test="id != null " > ID=#{id} AND </if>
+				<if test="projectno != null  and projectno != '' " > PROJECTNO=#{projectno} AND </if>
+				<if test="flowtitle != null  and flowtitle != '' " > FLOWTITLE=#{flowtitle} AND </if>
+				<if test="flowname != null  and flowname != '' " > FLOWNAME=#{flowname} AND </if>
+				<if test="instanceid != null  and instanceid != '' " > INSTANCEID=#{instanceid} AND </if>
+				<if test="flowid != null  and flowid != '' " > FLOWID=#{flowid} AND </if>
+				<if test="flowurl != null  and flowurl != '' " > FLOWURL=#{flowurl} AND </if>
+				<if test="flowcreateuserid != null  and flowcreateuserid != '' " > FLOWCREATEUSERID=#{flowcreateuserid} AND </if>
+				<if test="startdate != null " > STARTDATE=#{startdate} AND </if>
+				<if test="enddate != null " > ENDDATE=#{enddate} AND </if>
+				<if test="flowstatus != null  and flowstatus != '' " > FLOWSTATUS=#{flowstatus} AND </if>
+				<if test="isdel != null " > ISDEL=#{isdel} AND </if>
+				<if test="createtime != null " > CREATETIME=#{createtime} AND </if>
+				<if test="creators != null  and creators != '' " > CREATORS=#{creators} AND </if>
+				<if test="lastmodtime != null " > LASTMODTIME=#{lastmodtime} AND </if>
+				<if test="lastmoduser != null  and lastmoduser != '' " > LASTMODUSER=#{lastmoduser} AND </if>
+				<if test="clr != null  and clr != '' " > CLR=#{clr} AND </if>
+				<if test="activityname != null  and activityname != '' " > ACTIVITYNAME=#{activityname} AND </if>
+				<if test="clrid != null  and clrid != '' " > CLRID=#{clrid} AND </if>
+				<if test="activityid != null  and activityid != '' " > ACTIVITYID = #{activityid} , </if>
+				<if test="true" > ROWNUM = 1  AND </if>
+			</trim>
+
+        </select>
+
+         <!--查询集合  k6991 2020-06-08 -->
+        <select id="getList" parameterType="map" resultMap="PPMPROJECTFLOW_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_PROJECT_FLOW
+        	<trim prefix="WHERE" suffixOverrides="AND">
+        		<if test="id != null " > ID=#{id} AND </if>
+				<if test="projectno != null  and projectno != '' " > PROJECTNO=#{projectno} AND </if>
+				<if test="flowtitle != null  and flowtitle != '' " > FLOWTITLE=#{flowtitle} AND </if>
+				<if test="flowname != null  and flowname != '' " > FLOWNAME=#{flowname} AND </if>
+				<if test="instanceid != null  and instanceid != '' " > INSTANCEID=#{instanceid} AND </if>
+				<if test="flowid != null  and flowid != '' " > FLOWID=#{flowid} AND </if>
+				<if test="flowurl != null  and flowurl != '' " > FLOWURL=#{flowurl} AND </if>
+				<if test="flowcreateuserid != null  and flowcreateuserid != '' " > FLOWCREATEUSERID=#{flowcreateuserid} AND </if>
+				<if test="startdate != null " > STARTDATE=#{startdate} AND </if>
+				<if test="enddate != null " > ENDDATE=#{enddate} AND </if>
+				<if test="flowstatus != null  and flowstatus != '' " > FLOWSTATUS=#{flowstatus} AND </if>
+				<if test="isdel != null " > ISDEL=#{isdel} AND </if>
+				<if test="createtime != null " > CREATETIME=#{createtime} AND </if>
+				<if test="creators != null  and creators != '' " > CREATORS=#{creators} AND </if>
+				<if test="lastmodtime != null " > LASTMODTIME=#{lastmodtime} AND </if>
+				<if test="lastmoduser != null  and lastmoduser != '' " > LASTMODUSER=#{lastmoduser} AND </if>
+				<if test="clr != null  and clr != '' " > CLR=#{clr} AND </if>
+				<if test="activityname != null  and activityname != '' " > ACTIVITYNAME=#{activityname} AND </if>
+				<if test="clrid != null  and clrid != '' " > CLRID=#{clrid} AND </if>
+				<if test="activityid != null  and activityid != '' " > ACTIVITYID = #{activityid} AND </if>
+            </trim>
+        </select>
+        <!-- update sql -->
+        <sql id="update_pojo_sql">
+        	<trim prefix="SET" suffixOverrides=",">
+        		<if test="id != null " > ID=#{id} , </if>
+				<if test="projectno != null  and projectno != '' " > PROJECTNO=#{projectno} , </if>
+				<if test="flowtitle != null  and flowtitle != '' " > FLOWTITLE=#{flowtitle} , </if>
+				<if test="flowname != null  and flowname != '' " > FLOWNAME=#{flowname} , </if>
+				<if test="instanceid != null  and instanceid != '' " > INSTANCEID=#{instanceid} , </if>
+				<if test="flowid != null  and flowid != '' " > FLOWID=#{flowid} , </if>
+				<if test="flowurl != null  and flowurl != '' " > FLOWURL=#{flowurl} , </if>
+				<if test="flowcreateuserid != null  and flowcreateuserid != '' " > FLOWCREATEUSERID=#{flowcreateuserid} , </if>
+				<if test="startdate != null " > STARTDATE=#{startdate} , </if>
+				<if test="enddate != null " > ENDDATE=#{enddate} , </if>
+				<if test="flowstatus != null  and flowstatus != '' " > FLOWSTATUS=#{flowstatus} , </if>
+				<if test="isdel != null " > ISDEL=#{isdel} , </if>
+				<if test="createtime != null " > CREATETIME=#{createtime} , </if>
+				<if test="creators != null  and creators != '' " > CREATORS=#{creators} , </if>
+				<if test="lastmodtime != null " > LASTMODTIME=#{lastmodtime} , </if>
+				<if test="lastmoduser != null  and lastmoduser != '' " > LASTMODUSER=#{lastmoduser} , </if>
+				<if test="clr != null " > CLR=#{clr} , </if>
+				<if test="activityname != null" > ACTIVITYNAME=#{activityname} , </if>
+				<if test="clrid != null" > CLRID=#{clrid} , </if>
+				<if test="activityid != null  and activityid != '' " > ACTIVITYID = #{activityid} , </if>
+            </trim>
+        </sql>
+
+        <!--通过id编辑 k6991 2020-06-08 -->
+    	<update id="updatePojo" parameterType="ppmProjectFlow">
+        	UPDATE
+        	PPM_PROJECT_FLOW
+        	<include refid="update_pojo_sql" />
+        	WHERE INSTANCEID=#{instanceid}
+        </update>
+
+        <!--通过id批量删除  k6991 2020-06-08 -->
+        <delete id="deleteById" parameterType="ppmProjectFlow">
+        	DELETE
+        	FROM
+        	PPM_PROJECT_FLOW
+        	WHERE ID = #{id}
+        </delete>
+
+        <!-- 获取主键id -->
+        <select id="getPrimaryKey" parameterType="map" resultType="long">
+            SELECT MAX(ID) FROM PPM_PROJECT_FLOW
+        </select>
+</mapper>

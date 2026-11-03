@@ -1,0 +1,875 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k1327 2021-06-07 -->
+<mapper namespace="com.work.ppm.application.model.kpi.PpmKpiPmDetail">
+	 <resultMap type="ppmKpiPmDetail" id="PPMKPIPMDETAIL_ALL">
+        <result property="halfyearevalself" column="HALFYEAREVALSELF" />
+		<result property="firsteval" column="FIRSTEVAL" />
+		<result property="secondeval" column="SECONDEVAL" />
+		<result property="firstevaltime" column="FIRSTEVALTIME" />
+		<result property="secondevaltime" column="SECONDEVALTIME" />
+		<result property="itemstatus" column="ITEMSTATUS" />
+		<result property="evaluserid" column="EVALUSERID" />
+		<result property="weight" column="WEIGHT" />
+		<result property="mainpart" column="MAINPART" />
+		<result property="id" column="ID" />
+		<result property="pid" column="PID" />
+		<result property="tyear" column="TYEAR" />
+		<result property="term" column="TERM" />
+		<result property="eid" column="EID" />
+		<result property="kpitype" column="KPITYPE" />
+		<result property="item" column="ITEM" />
+		<result property="itemdescribe" column="ITEMDESCRIBE" />
+		<result property="plan" column="PLAN" />
+		<result property="plandescribe" column="PLANDESCRIBE" />
+		<result property="value" column="VALUE" />
+		<result property="finishdate" column="FINISHDATE" />
+		<result property="regby" column="REGBY" />
+		<result property="regtime" column="REGTIME" />
+		<result property="isedit" column="ISEDIT" />
+		<result property="evalself" column="EVALSELF" />
+		<result property="workremark" column="WORKREMARK" />
+		<result property="firstevalscore" column="FIRSTEVALSCORE" />
+		<result property="firstevalgoal" column="FIRSTEVALGOAL" />
+		<result property="firstevalcomment" column="FIRSTEVALCOMMENT" />
+		<result property="secondevalscore" column="SECONDEVALSCORE" />
+		<result property="secondevalgoal" column="SECONDEVALGOAL" />
+		<result property="secondevalcomment" column="SECONDEVALCOMMENT" />
+		<result property="remark1" column="REMARK1" />
+		<result property="remark2" column="REMARK2" />
+		<result property="tscore" column="TSCORE" />
+		 <result property="evalselftime" column="EVALSELFTIME" />
+     </resultMap>
+	<resultMap type="ppmKpiPmDetailInfo" id="PPMKPIPMDETAIL_ALL_EXT" extends="PPMKPIPMDETAIL_ALL">
+		<result property="itemstatusname" column="ITEMSTATUSNAME" />
+		<result property="firstevalname" column="FIRSTEVALNAME" />
+		<result property="secondevalname" column="SECONDEVALNAME" />
+		<result property="firstevalavgscore" column="FIRSTEVALAVGSCORE" />
+		<result property="secondevalavgscore" column="SECONDEVALAVGSCORE" />
+
+		<result property="status" column="STATUS" />
+		<result property="statusname" column="STATUSNAME" />
+
+		<result property="centerid" column="CENTERID" />
+		<result property="centername" column="CENTERNAME" />
+		<result property="depid" column="DEPID" />
+		<result property="depname" column="DEPNAME" />
+
+		<result property="eidname" column="EIDNAME" />
+
+		<result property="evalitems" column="EVALITEMS" />
+
+	</resultMap>
+
+     <!-- 所有字段名称 -->
+        <sql id="sql_flied_all">
+        	HALFYEAREVALSELF,
+			FIRSTEVAL,
+			SECONDEVAL,
+			FIRSTEVALTIME,
+			SECONDEVALTIME,
+			ITEMSTATUS,
+			EVALUSERID,
+			WEIGHT,
+			MAINPART,
+			ID,
+			PID,
+			TYEAR,
+			TERM,
+			EID,
+			KPITYPE,
+			ITEM,
+			ITEMDESCRIBE,
+			PLAN,
+			PLANDESCRIBE,
+			VALUE,
+			FINISHDATE,
+			REGBY,
+			REGTIME,
+			ISEDIT,
+			EVALSELF,
+			WORKREMARK,
+			FIRSTEVALSCORE,
+			FIRSTEVALGOAL,
+			FIRSTEVALCOMMENT,
+			SECONDEVALSCORE,
+			SECONDEVALGOAL,
+			SECONDEVALCOMMENT,
+			REMARK1,
+			REMARK2,
+			TSCORE,
+			EVALSELFTIME
+        </sql>
+        <sql id="sql_select_condition">
+            <trim prefix="WHERE" suffixOverrides="AND">
+                <if test="halfyearevalself != null  and halfyearevalself != '' " > HALFYEAREVALSELF = #{halfyearevalself} AND </if>
+				<if test="firsteval != null  and firsteval != '' " > FIRSTEVAL = #{firsteval} AND </if>
+				<if test="secondeval != null  and secondeval != '' " > SECONDEVAL = #{secondeval} AND </if>
+				<if test="firstevaltime != null " > FIRSTEVALTIME = #{firstevaltime} AND </if>
+				<if test="secondevaltime != null " > SECONDEVALTIME = #{secondevaltime} AND </if>
+				<if test="itemstatus != null " > ITEMSTATUS = #{itemstatus} AND </if>
+				<if test="evaluserid != null  and evaluserid != '' " > EVALUSERID = #{evaluserid} AND </if>
+				<if test="weight != null " > WEIGHT = #{weight} AND </if>
+				<if test="mainpart != null  and mainpart != '' " > MAINPART = #{mainpart} AND </if>
+				<if test="id != null " > ID = #{id} AND </if>
+				<if test="pid != null " > PID = #{pid} AND </if>
+				<if test="tyear != null  and tyear != '' " > TYEAR = #{tyear} AND </if>
+				<if test="term != null  and term != '' " > TERM = #{term} AND </if>
+				<if test="eid != null  and eid != '' " > EID = #{eid} AND </if>
+				<if test="kpitype != null " > KPITYPE = #{kpitype} AND </if>
+				<if test="item != null  and item != '' " > ITEM = #{item} AND </if>
+				<if test="itemdescribe != null  and itemdescribe != '' " > ITEMDESCRIBE = #{itemdescribe} AND </if>
+				<if test="plan != null  and plan != '' " > PLAN = #{plan} AND </if>
+				<if test="plandescribe != null  and plandescribe != '' " > PLANDESCRIBE = #{plandescribe} AND </if>
+				<if test="value != null " > VALUE = #{value} AND </if>
+				<if test="finishdate != null " > FINISHDATE = #{finishdate} AND </if>
+				<if test="regby != null  and regby != '' " > REGBY = #{regby} AND </if>
+				<if test="regtime != null " > REGTIME = #{regtime} AND </if>
+				<if test="isedit != null " > ISEDIT = #{isedit} AND </if>
+				<if test="evalself != null  and evalself != '' " > EVALSELF = #{evalself} AND </if>
+				<if test="workremark != null  and workremark != '' " > WORKREMARK = #{workremark} AND </if>
+				<if test="firstevalscore != null " > FIRSTEVALSCORE = #{firstevalscore} AND </if>
+				<if test="firstevalgoal != null " > FIRSTEVALGOAL = #{firstevalgoal} AND </if>
+				<if test="firstevalcomment != null  and firstevalcomment != '' " > FIRSTEVALCOMMENT = #{firstevalcomment} AND </if>
+				<if test="secondevalscore != null " > SECONDEVALSCORE = #{secondevalscore} AND </if>
+				<if test="secondevalgoal != null " > SECONDEVALGOAL = #{secondevalgoal} AND </if>
+				<if test="secondevalcomment != null  and secondevalcomment != '' " > SECONDEVALCOMMENT = #{secondevalcomment} AND </if>
+				<if test="remark1 != null  and remark1 != '' " > REMARK1 = #{remark1} AND </if>
+				<if test="remark2 != null  and remark2 != '' " > REMARK2 = #{remark2} AND </if>
+				<if test="tscore != null " > TSCORE = #{tscore} AND </if>
+				<if test="evalselftime != null " > EVALSELFTIME = #{evalselftime} AND </if>
+            </trim>
+        </sql>
+    	<!-- 查询分页  2021-06-07 k1327  -->
+        <select id="queryPagerList" parameterType="map" resultMap="PPMKPIPMDETAIL_ALL">
+        	SELECT
+            <include refid="sql_flied_all" />
+            FROM PPM_KPI_PM_DETAIL
+            <include refid="sql_select_condition" />
+        </select>
+
+        <!-- 新增  2021-06-07 k1327  -->
+        <insert id="addPojo" parameterType="ppmKpiPmDetail">
+    		INSERT INTO PPM_KPI_PM_DETAIL (
+    		<trim suffixOverrides=",">
+    		 <if test="halfyearevalself != null  and halfyearevalself != '' " > HALFYEAREVALSELF , </if>
+				<if test="firsteval != null  and firsteval != '' " > FIRSTEVAL , </if>
+				<if test="secondeval != null  and secondeval != '' " > SECONDEVAL , </if>
+				<if test="firstevaltime != null " > FIRSTEVALTIME , </if>
+				<if test="secondevaltime != null " > SECONDEVALTIME , </if>
+				<if test="itemstatus != null " > ITEMSTATUS , </if>
+				<if test="evaluserid != null  and evaluserid != '' " > EVALUSERID , </if>
+				<if test="weight != null " > WEIGHT , </if>
+				<if test="mainpart != null  and mainpart != '' " > MAINPART , </if>
+				<if test="id != null " > ID , </if>
+				<if test="pid != null " > PID , </if>
+				<if test="tyear != null  and tyear != '' " > TYEAR , </if>
+				<if test="term != null  and term != '' " > TERM , </if>
+				<if test="eid != null  and eid != '' " > EID , </if>
+				<if test="kpitype != null " > KPITYPE , </if>
+				<if test="item != null  and item != '' " > ITEM , </if>
+				<if test="itemdescribe != null  and itemdescribe != '' " > ITEMDESCRIBE , </if>
+				<if test="plan != null  and plan != '' " > PLAN , </if>
+				<if test="plandescribe != null  and plandescribe != '' " > PLANDESCRIBE , </if>
+				<if test="value != null " > VALUE , </if>
+				<if test="finishdate != null " > FINISHDATE , </if>
+				<if test="regby != null  and regby != '' " > REGBY , </if>
+				<if test="regtime != null " > REGTIME , </if>
+				<if test="isedit != null " > ISEDIT , </if>
+				<if test="evalself != null  and evalself != '' " > EVALSELF , </if>
+				<if test="workremark != null  and workremark != '' " > WORKREMARK , </if>
+				<if test="firstevalscore != null " > FIRSTEVALSCORE , </if>
+				<if test="firstevalgoal != null " > FIRSTEVALGOAL , </if>
+				<if test="firstevalcomment != null  and firstevalcomment != '' " > FIRSTEVALCOMMENT , </if>
+				<if test="secondevalscore != null " > SECONDEVALSCORE , </if>
+				<if test="secondevalgoal != null " > SECONDEVALGOAL , </if>
+				<if test="secondevalcomment != null  and secondevalcomment != '' " > SECONDEVALCOMMENT , </if>
+				<if test="remark1 != null  and remark1 != '' " > REMARK1 , </if>
+				<if test="remark2 != null  and remark2 != '' " > REMARK2 , </if>
+				<if test="tscore != null " > TSCORE , </if>
+				<if test="evalselftime != null " > EVALSELFTIME , </if>
+              </trim>
+    		)
+    		VALUES(
+    		<trim suffixOverrides=",">
+    		 <if test="halfyearevalself != null  and halfyearevalself != '' " > #{halfyearevalself} , </if>
+				<if test="firsteval != null  and firsteval != '' " > #{firsteval} , </if>
+				<if test="secondeval != null  and secondeval != '' " > #{secondeval} , </if>
+				<if test="firstevaltime != null " > #{firstevaltime} , </if>
+				<if test="secondevaltime != null " > #{secondevaltime} , </if>
+				<if test="itemstatus != null " > #{itemstatus} , </if>
+				<if test="evaluserid != null  and evaluserid != '' " > #{evaluserid} , </if>
+				<if test="weight != null " > #{weight} , </if>
+				<if test="mainpart != null  and mainpart != '' " > #{mainpart} , </if>
+				<if test="id != null " > #{id} , </if>
+				<if test="pid != null " > #{pid} , </if>
+				<if test="tyear != null  and tyear != '' " > #{tyear} , </if>
+				<if test="term != null  and term != '' " > #{term} , </if>
+				<if test="eid != null  and eid != '' " > #{eid} , </if>
+				<if test="kpitype != null " > #{kpitype} , </if>
+				<if test="item != null  and item != '' " > #{item} , </if>
+				<if test="itemdescribe != null  and itemdescribe != '' " > #{itemdescribe} , </if>
+				<if test="plan != null  and plan != '' " > #{plan} , </if>
+				<if test="plandescribe != null  and plandescribe != '' " > #{plandescribe} , </if>
+				<if test="value != null " > #{value} , </if>
+				<if test="finishdate != null " > #{finishdate} , </if>
+				<if test="regby != null  and regby != '' " > #{regby} , </if>
+				<if test="regtime != null " > #{regtime} , </if>
+				<if test="isedit != null " > #{isedit} , </if>
+				<if test="evalself != null  and evalself != '' " > #{evalself} , </if>
+				<if test="workremark != null  and workremark != '' " > #{workremark} , </if>
+				<if test="firstevalscore != null " > #{firstevalscore} , </if>
+				<if test="firstevalgoal != null " > #{firstevalgoal} , </if>
+				<if test="firstevalcomment != null  and firstevalcomment != '' " > #{firstevalcomment} , </if>
+				<if test="secondevalscore != null " > #{secondevalscore} , </if>
+				<if test="secondevalgoal != null " > #{secondevalgoal} , </if>
+				<if test="secondevalcomment != null  and secondevalcomment != '' " > #{secondevalcomment} , </if>
+				<if test="remark1 != null  and remark1 != '' " > #{remark1} , </if>
+				<if test="remark2 != null  and remark2 != '' " > #{remark2} , </if>
+				<if test="tscore != null " > #{tscore} , </if>
+				<if test="evalselftime != null " > #{evalselftime} , </if>
+            </trim>
+    		)
+        </insert>
+
+        <!--通过id查询  k1327 2021-06-07 -->
+        <select id="queryDetail" parameterType="ppmKpiPmDetail" resultMap="PPMKPIPMDETAIL_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_KPI_PM_DETAIL  WHERE ID=#{id}
+        </select>
+
+         <!--查询集合  k1327 2021-06-07 -->
+        <select id="getList" parameterType="ppmKpiPmDetail" resultMap="PPMKPIPMDETAIL_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_KPI_PM_DETAIL
+        	<include refid="sql_select_condition" />
+        </select>
+        <!-- update sql -->
+        <sql id="update_pojo_sql">
+        	<trim prefix="SET" suffixOverrides=",">
+        		<if test="halfyearevalself != null  and halfyearevalself != '' " > HALFYEAREVALSELF=#{halfyearevalself} , </if>
+				<if test="firsteval != null  and firsteval != '' " > FIRSTEVAL=#{firsteval} , </if>
+				<if test="secondeval != null  and secondeval != '' " > SECONDEVAL=#{secondeval} , </if>
+				<if test="firstevaltime != null " > FIRSTEVALTIME=#{firstevaltime} , </if>
+				<if test="secondevaltime != null " > SECONDEVALTIME=#{secondevaltime} , </if>
+				<if test="itemstatus != null " > ITEMSTATUS=#{itemstatus} , </if>
+				<if test="evaluserid != null  and evaluserid != '' " > EVALUSERID=#{evaluserid} , </if>
+				<if test="weight != null " > WEIGHT=#{weight} , </if>
+				<if test="mainpart != null  and mainpart != '' " > MAINPART=#{mainpart} , </if>
+				<if test="id != null " > ID=#{id} , </if>
+				<if test="pid != null " > PID=#{pid} , </if>
+				<if test="tyear != null  and tyear != '' " > TYEAR=#{tyear} , </if>
+				<if test="term != null  and term != '' " > TERM=#{term} , </if>
+				<if test="eid != null  and eid != '' " > EID=#{eid} , </if>
+				<if test="kpitype != null " > KPITYPE=#{kpitype} , </if>
+				<if test="item != null  and item != '' " > ITEM=#{item} , </if>
+				<if test="itemdescribe != null  and itemdescribe != '' " > ITEMDESCRIBE=#{itemdescribe} , </if>
+				<if test="plan != null  and plan != '' " > PLAN=#{plan} , </if>
+				<if test="plandescribe != null  and plandescribe != '' " > PLANDESCRIBE=#{plandescribe} , </if>
+				<if test="value != null " > VALUE=#{value} , </if>
+				<if test="finishdate != null " > FINISHDATE=#{finishdate} , </if>
+				<if test="regby != null  and regby != '' " > REGBY=#{regby} , </if>
+				<if test="regtime != null " > REGTIME=#{regtime} , </if>
+				<if test="isedit != null " > ISEDIT=#{isedit} , </if>
+				<if test="evalself != null  and evalself != '' " > EVALSELF=#{evalself} , </if>
+				<if test="workremark != null  and workremark != '' " > WORKREMARK=#{workremark} , </if>
+				<if test="firstevalscore != null " > FIRSTEVALSCORE=#{firstevalscore} , </if>
+				<if test="firstevalgoal != null " > FIRSTEVALGOAL=#{firstevalgoal} , </if>
+				<if test="firstevalcomment != null  and firstevalcomment != '' " > FIRSTEVALCOMMENT=#{firstevalcomment} , </if>
+				<if test="secondevalscore != null " > SECONDEVALSCORE=#{secondevalscore} , </if>
+				<if test="secondevalgoal != null " > SECONDEVALGOAL=#{secondevalgoal} , </if>
+				<if test="secondevalcomment != null  and secondevalcomment != '' " > SECONDEVALCOMMENT=#{secondevalcomment} , </if>
+				<if test="remark1 != null  and remark1 != '' " > REMARK1=#{remark1} , </if>
+				<if test="remark2 != null  and remark2 != '' " > REMARK2=#{remark2} , </if>
+				<if test="tscore != null " > TSCORE=#{tscore} , </if>
+				<if test="evalselftime != null " > EVALSELFTIME=#{evalselftime} , </if>
+            </trim>
+        </sql>
+
+        <!--通过id编辑 k1327 2021-06-07 -->
+    	<update id="updatePojo" parameterType="ppmKpiPmDetail">
+        	UPDATE
+        	PPM_KPI_PM_DETAIL
+        	<include refid="update_pojo_sql" />
+        	WHERE ID=#{id}
+        </update>
+
+        <!--通过id批量删除  k1327 2021-06-07 -->
+        <delete id="deleteById" parameterType="ppmKpiPmDetail">
+        	DELETE
+        	FROM
+        	PPM_KPI_PM_DETAIL
+        	WHERE ID=#{id}
+        </delete>
+	<!--查询集合  k1327 2021-05-31 -->
+	<select id="getPpmKpiPmDetails" parameterType="map"  resultMap="PPMKPIPMDETAIL_ALL">
+		select d.* from ppm_kpi_pm p
+		left join ppm_kpi_pm_detail d on p.id=d.pid
+		<trim prefix="WHERE" suffixOverrides="AND">
+			<if test=" true " > d.ISEDIT = 0 AND </if>
+			<if test="kpitype != null " >  d.KPITYPE = #{kpitype} AND </if>
+			<if test="eid != null  and eid != '' " > p.EID = #{eid} AND </if>
+			<if test="tyear != null  and tyear != '' " > p.TYEAR = #{tyear} AND </if>
+			<if test="term != null  and term != '' " >
+				p.TERM = #{term} AND
+			</if>
+			<if test="status != null  and status != '' " > p.status in (${status}) AND </if>
+			<if test="kpitypes != null and kpitypes != ''" >  d.KPITYPE in (${kpitypes}) AND </if>
+
+			<if test="firsteval != null  and firsteval != '' " > FIRSTEVAL = #{firsteval} AND </if>
+			<if test="secondeval != null  and secondeval != '' " > SECONDEVAL = #{secondeval} AND </if>
+			<if test="itemstatus != null " > d.ITEMSTATUS = #{itemstatus} AND </if>
+			<if test="weight != null " > WEIGHT = #{weight} AND </if>
+			<if test="mainpart != null  and mainpart != '' " > MAINPART = #{mainpart} AND </if>
+			<if test="id != null " > ID = #{id} AND </if>
+			<if test="pid != null " > PID = #{pid} AND </if>
+			<if test="item != null  and item != '' " > ITEM = #{item} AND </if>
+			<if test="plan != null  and plan != '' " > PLAN = #{plan} AND </if>
+			<if test="finishdate != null " > FINISHDATE = #{finishdate} AND </if>
+		</trim>
+	</select>
+
+	<!-- 查询数据  2021-06-07 k1327  -->
+	<select id="getItemList"  parameterType="ppmKpiPmDetailInfo" resultMap="PPMKPIPMDETAIL_ALL_EXT">
+		SELECT d.id,
+		d.pid,
+		d.tyear,
+		d.term,
+		d.eid,
+		d.kpitype,
+		d.item,
+		d.itemdescribe,
+		d.plan,
+		d.plandescribe,
+		d.value,
+		d.finishdate,
+		d.regby,
+		d.regtime,
+		d.isedit,
+		d.evalself,
+		d.workremark,
+		d.firstevalscore,
+		d.firstevalgoal,
+		d.firstevalcomment,
+		d.secondevalscore,
+		d.secondevalgoal,
+		d.secondevalcomment,
+		d.remark1,
+		d.remark2,
+		d.tscore,
+		d.halfyearevalself,
+		d.firsteval,
+		d.secondeval,
+		d.firstevaltime,
+		d.secondevaltime,
+		d.itemstatus,
+		d.evaluserid,
+		d.weight,
+		d.mainpart,
+		e.dictname itemstatusname,
+		e1.empname firstevalname,
+		e2.empname secondevalname,
+		d.evalselftime
+		FROM PPM_KPI_PM_DETAIL d
+		left join eos_dict_entry e on d.itemstatus=e.dictid and e.dicttypeid='KPI_ITEM_STATUS'
+		left join comm_employee e1 on d.firsteval=e1.badge
+		left join comm_employee e2 on d.secondeval=e2.badge
+		<trim prefix="WHERE" suffixOverrides="AND">
+			<if test="halfyearevalself != null  and halfyearevalself != '' " > d.HALFYEAREVALSELF = #{halfyearevalself} AND </if>
+			<if test="firsteval != null  and firsteval != '' " > d.FIRSTEVAL = #{firsteval} AND </if>
+			<if test="secondeval != null  and secondeval != '' " > d.SECONDEVAL = #{secondeval} AND </if>
+			<if test="firstevaltime != null " > d.FIRSTEVALTIME = #{firstevaltime} AND </if>
+			<if test="secondevaltime != null " > d.SECONDEVALTIME = #{secondevaltime} AND </if>
+			<if test="itemstatus != null " > d.ITEMSTATUS = #{itemstatus} AND </if>
+			<if test="evaluserid != null  and evaluserid != '' " > d.EVALUSERID = #{evaluserid} AND </if>
+			<if test="weight != null " > d.WEIGHT = #{weight} AND </if>
+			<if test="mainpart != null  and mainpart != '' " > d.MAINPART = #{mainpart} AND </if>
+			<if test="id != null " > d.ID = #{id} AND </if>
+			<if test="pid != null " > d.PID = #{pid} AND </if>
+			<if test="tyear != null  and tyear != '' " > d.TYEAR = #{tyear} AND </if>
+			<if test="term != null  and term != '' " > d.TERM = #{term} AND </if>
+			<if test="eid != null  and eid != '' " > d.EID = #{eid} AND </if>
+			<if test="kpitype != null " > d.KPITYPE = #{kpitype} AND </if>
+			<if test="item != null  and item != '' " > d.ITEM = #{item} AND </if>
+			<if test="itemdescribe != null  and itemdescribe != '' " > d.ITEMDESCRIBE = #{itemdescribe} AND </if>
+			<if test="plan != null  and plan != '' " > d.PLAN = #{plan} AND </if>
+			<if test="plandescribe != null  and plandescribe != '' " > d.PLANDESCRIBE = #{plandescribe} AND </if>
+			<if test="value != null " > d.VALUE = #{value} AND </if>
+			<if test="finishdate != null " > d.FINISHDATE = #{finishdate} AND </if>
+			<if test="regby != null  and regby != '' " > d.REGBY = #{regby} AND </if>
+			<if test="regtime != null " > d.REGTIME = #{regtime} AND </if>
+			<if test="isedit != null " > d.ISEDIT = #{isedit} AND </if>
+			<if test="evalself != null  and evalself != '' " > d.EVALSELF = #{evalself} AND </if>
+			<if test="workremark != null  and workremark != '' " > d.WORKREMARK = #{workremark} AND </if>
+			<if test="firstevalscore != null " > d.FIRSTEVALSCORE = #{firstevalscore} AND </if>
+			<if test="firstevalgoal != null " > d.FIRSTEVALGOAL = #{firstevalgoal} AND </if>
+			<if test="firstevalcomment != null  and firstevalcomment != '' " > d.FIRSTEVALCOMMENT = #{firstevalcomment} AND </if>
+			<if test="secondevalscore != null " > d.SECONDEVALSCORE = #{secondevalscore} AND </if>
+			<if test="secondevalgoal != null " > d.SECONDEVALGOAL = #{secondevalgoal} AND </if>
+			<if test="secondevalcomment != null  and secondevalcomment != '' " > d.SECONDEVALCOMMENT = #{secondevalcomment} AND </if>
+			<if test="remark1 != null  and remark1 != '' " > d.REMARK1 = #{remark1} AND </if>
+			<if test="remark2 != null  and remark2 != '' " > d.REMARK2 = #{remark2} AND </if>
+			<if test="tscore != null " > d.TSCORE = #{tscore} AND </if>
+
+		</trim>
+		order by d.REGTIME asc
+	</select>
+
+
+	<!--查询需要待处理的考核项集合  k1327 2021-05-31 -->
+	<select id="queryPpmKpiPmDetails" parameterType="map"  resultMap="PPMKPIPMDETAIL_ALL">
+		select d.* from ppm_kpi_pm_detail d left join ppm_kpi_pm p on d.pid=p.id
+		<trim prefix="WHERE" suffixOverrides="AND">
+			<if test="itemstatus != null " > d.ITEMSTATUS = #{itemstatus} AND </if>
+			<if test="status != null " >  p.STATUS = #{status} AND </if>
+			<if test="kpitype != null " >  d.KPITYPE = #{kpitype} AND </if>
+			<if test="eid != null  and eid != '' " > d.EID = #{eid} AND </if>
+			<if test="tyear != null  and tyear != '' " > d.TYEAR = #{tyear} AND </if>
+			<if test="term != null  and term != '' " > d.TERM = #{term} AND </if>
+			<if test="status != null  and status != '' " > p.status in (${status}) AND </if>
+			<if test="pid != null " > d.PID = #{pid} AND </if>
+			<if test="finishdate != null and finishdate != ''" > d.FINISHDATE &lt;=to_date( #{finishdate},'yyyy-MM-dd') AND </if>
+			<if test="item != null  and item != '' " > d.ITEM = #{item} AND </if>
+			<if test="plan != null  and plan != '' " > d.PLAN = #{plan} AND </if>
+			<if test="firsteval != null  and firsteval != '' " > d.FIRSTEVAL = #{firsteval} AND </if>
+			<if test="secondeval != null  and secondeval != '' " > d.SECONDEVAL = #{secondeval} AND </if>
+			<if test="kpitypes != null  and kpitypes != '' " > d.KPITYPE in (${kpitypes}) AND </if>
+			<if test="statuss != null " >  p.STATUS in (${statuss}) AND </if>
+			<if test="itemstatuss != null " >  d.ITEMSTATUS in (${itemstatuss}) AND </if>
+			<if test="kpitypes != null " >  d.KPITYPE in (${kpitypes}) AND </if>
+			<if test="roles != null and roles != '' " >  p.role in (${roles}) AND </if>
+			<if test="notFinish != null and notFinish != '' " >  d.ITEMSTATUS != 7 AND </if>
+			<if test="mainpart != null and mainpart != '' " >  d.mainpart = #{mainpart} AND </if>
+			<if test="mainparts != null and mainparts != '' " >  (d.mainpart = #{mainparts} or d.mainpart is null) AND </if>
+			<if test="check != null  and check != '' " >
+				(( d.FIRSTEVAL = #{check} and  d.itemstatus=5)
+				or
+				( d.SECONDEVAL = #{check} and  d.itemstatus=6))
+			</if>
+
+		</trim>
+	</select>
+    <!--通过pid更新子项状态 k1327 2021-06-07 -->
+    <update id="updateItemStatus" parameterType="map">
+        UPDATE  PPM_KPI_PM_DETAIL d set d.itemstatus=#{itemstatus} where d.pid=#{pid} and d.kpitype in (${kpitypes})
+		and d.itemstatus in (${itemstatuss})
+    </update>
+	<!--查询需要待处理的考核项集合  k1327 2021-05-31 -->
+	<select id="querySumValue" parameterType="map"  resultMap="PPMKPIPMDETAIL_ALL">
+		select sum(d.value) value from ppm_kpi_pm_detail d where d.pid=#{pid} and d.kpitype=#{kpitype}
+	</select>
+
+	<!--根据主表pid查询综合能力评价页面 k1327 2021-06-07 -->
+	<select id="getPpmKpiPmComprehensiveAbilityEvalInfo"  parameterType="ppmKpiPmDetailInfo"  resultMap="PPMKPIPMDETAIL_ALL_EXT">
+		select d.item,max(d.itemdescribe) itemdescribe,to_char(wm_concat(d.plandescribe)) plandescribe,
+		max(d.weight) weight,max(d.itemstatus) itemstatus,round(sum(d.firstevalscore)/count(*)*max(d.weight),2) firstevalavgscore,
+		round(sum(d.secondevalscore)/count(*)*max(d.weight),2) secondevalavgscore
+		from ppm_kpi_pm_detail d
+		where d.pid=#{pid} and d.kpitype=2
+		<if test="itemstatus != null " > AND d.ITEMSTATUS = #{itemstatus}  </if>
+		group by d.item order by d.item asc
+	</select>
+
+
+	<!--查询Kpi和平衡计分统计分数  k1327 2021-05-31 -->
+	<select id="queryKpiOrBalanceSumScore" parameterType="map"  resultMap="PPMKPIPMDETAIL_ALL">
+		select sum(d.tscore) tscore from ppm_kpi_pm_detail d
+		<trim prefix="WHERE" suffixOverrides="AND">
+			<if test="kpitype != null " >  d.KPITYPE = #{kpitype} AND </if>
+			<if test="eid != null  and eid != '' " > d.EID = #{eid} AND </if>
+			<if test="tyear != null  and tyear != '' " > d.TYEAR = #{tyear} AND </if>
+			<if test="term != null  and term != '' " > d.TERM = #{term} AND </if>
+			<if test="pid != null " > d.PID = #{pid} AND </if>
+		</trim>
+		group by d.pid
+	</select>
+
+	<!--查询综合能力和履职评估统计分数  k1327 2021-05-31 -->
+	<select id="queryComprehensiveAbilityOrPostEvaluationSumScore" parameterType="map"  resultMap="PPMKPIPMDETAIL_ALL">
+		select sum(round((sum(d.tscore)/count(*))*max(d.weight),2)) tscore from ppm_kpi_pm_detail d
+		where d.pid=#{pid} and d.kpitype=#{kpitype} group by d.item
+	</select>
+	<!--查询考核项目表里面平衡计分项  k1327 2021-05-31 -->
+	<select id="getBalanceItem" parameterType="ppmKpiPmDetail"  resultMap="PPMKPIPMDETAIL_ALL">
+		select d.item,max(d.itemdescribe) itemdescribe  from ppm_kpi_pm_detail d where d.tyear=#{tyear} and d.eid=#{eid} and d.kpitype=4 group by d.item order by  d.item asc
+	</select>
+
+	<!--查询考核项目表里面平衡计分项描述  k1327 2021-05-31 -->
+	<select id="getBalancePlan" parameterType="ppmKpiPmDetail"  resultMap="PPMKPIPMDETAIL_ALL">
+		select  d.plan,d.plandescribe,d.workremark from ppm_kpi_pm_detail d where d.tyear=#{tyear} and d.eid=#{eid} and d.kpitype=4 and d.item=#{item}
+	</select>
+
+	<!--通过条件查询  k1327 2021-06-07 -->
+	<select id="queryPpmKpiPmDetailByCondition" parameterType="ppmKpiPmDetail" resultMap="PPMKPIPMDETAIL_ALL">
+		SELECT
+		<include refid="sql_flied_all" />
+		FROM PPM_KPI_PM_DETAIL
+		<include refid="sql_select_condition" />
+	</select>
+
+	<!--查询综合能力，履职评估，平衡计分统计数据  k1327 2021-06-07 -->
+	<select id="queryPpmKpiPmDetailEvalGroup" parameterType="ppmKpiPmDetail" resultMap="PPMKPIPMDETAIL_ALL">
+		select d.item ,max(d.itemdescribe) itemdescribe ,wm_concat(d.plandescribe) plandescribe,max(d.weight) weight ,
+		min(d.itemstatus)  itemstatus,round((sum(d.firstevalscore)/count(*))*max(d.weight),2) firstevalscore,round((sum(d.secondevalscore)/count(*))*max(d.weight),2) secondevalscore
+		from ppm_kpi_pm_detail d where d.pid=#{pid} and d.kpitype=#{kpitype} group by d.item order by d.item asc
+	</select>
+
+
+	<!--通过pid批量删除  k1327 2021-06-07 -->
+	<delete id="deleteByPid" parameterType="ppmKpiPmDetail">
+		DELETE
+		FROM
+		PPM_KPI_PM_DETAIL
+		WHERE PID=#{pid}
+	</delete>
+
+
+
+
+
+	<!-- 查询员工考核状态修改数据  2021-06-07 k1327  -->
+	<select id="getDetailItemList"  parameterType="ppmKpiPmDetailInfo" resultMap="PPMKPIPMDETAIL_ALL_EXT">
+		SELECT d.id,
+		d.pid,
+		d.tyear,
+		d.term,
+		d.eid,
+		d.kpitype,
+		d.item,
+		d.itemdescribe,
+		d.plan,
+		d.plandescribe,
+		d.value,
+		d.finishdate,
+		d.regby,
+		d.regtime,
+		d.isedit,
+		d.evalself,
+		d.workremark,
+		d.firstevalscore,
+		d.firstevalgoal,
+		d.firstevalcomment,
+		d.secondevalscore,
+		d.secondevalgoal,
+		d.secondevalcomment,
+		d.remark1,
+		d.remark2,
+		d.tscore,
+		d.halfyearevalself,
+		d.firsteval,
+		d.secondeval,
+		d.firstevaltime,
+		d.secondevaltime,
+		d.itemstatus,
+		d.evaluserid,
+		d.weight,
+		d.mainpart,
+		e.dictname itemstatusname,
+		e1.empname firstevalname,
+		e2.empname secondevalname,
+		p.status,
+		e3.dictname statusname,
+		d.evalselftime
+		FROM PPM_KPI_PM_DETAIL d
+		left join ppm_kpi_pm p on d.pid=p.id
+		left join eos_dict_entry e on d.itemstatus=e.dictid and e.dicttypeid='KPI_ITEM_STATUS'
+		left join eos_dict_entry e3 on p.status=e3.dictid and e3.dicttypeid='KPI_MAIN_STATUS'
+		left join comm_employee e1 on d.firsteval=e1.badge
+		left join comm_employee e2 on d.secondeval=e2.badge
+		<trim prefix="WHERE" suffixOverrides="AND">
+			<if test="halfyearevalself != null  and halfyearevalself != '' " > d.HALFYEAREVALSELF = #{halfyearevalself} AND </if>
+			<if test="firsteval != null  and firsteval != '' " > d.FIRSTEVAL = #{firsteval} AND </if>
+			<if test="secondeval != null  and secondeval != '' " > d.SECONDEVAL = #{secondeval} AND </if>
+			<if test="firstevaltime != null " > d.FIRSTEVALTIME = #{firstevaltime} AND </if>
+			<if test="secondevaltime != null " > d.SECONDEVALTIME = #{secondevaltime} AND </if>
+			<if test="itemstatus != null " > d.ITEMSTATUS = #{itemstatus} AND </if>
+			<if test="evaluserid != null  and evaluserid != '' " > d.EVALUSERID = #{evaluserid} AND </if>
+			<if test="weight != null " > d.WEIGHT = #{weight} AND </if>
+			<if test="mainpart != null  and mainpart != '' " > d.MAINPART = #{mainpart} AND </if>
+			<if test="id != null " > d.ID = #{id} AND </if>
+			<if test="pid != null " > d.PID = #{pid} AND </if>
+			<if test="tyear != null  and tyear != '' " > d.TYEAR = #{tyear} AND </if>
+			<if test="term != null  and term != '' " > d.TERM = #{term} AND </if>
+			<if test="eid != null  and eid != '' " > d.EID = #{eid} AND </if>
+			<if test="kpitype != null " > d.KPITYPE = #{kpitype} AND </if>
+			<if test="item != null  and item != '' " > d.ITEM = #{item} AND </if>
+			<if test="itemdescribe != null  and itemdescribe != '' " > d.ITEMDESCRIBE = #{itemdescribe} AND </if>
+			<if test="plan != null  and plan != '' " > d.PLAN = #{plan} AND </if>
+			<if test="plandescribe != null  and plandescribe != '' " > d.PLANDESCRIBE = #{plandescribe} AND </if>
+			<if test="value != null " > d.VALUE = #{value} AND </if>
+			<if test="finishdate != null " > d.FINISHDATE = #{finishdate} AND </if>
+			<if test="regby != null  and regby != '' " > d.REGBY = #{regby} AND </if>
+			<if test="regtime != null " > d.REGTIME = #{regtime} AND </if>
+			<if test="isedit != null " > d.ISEDIT = #{isedit} AND </if>
+			<if test="evalself != null  and evalself != '' " > d.EVALSELF = #{evalself} AND </if>
+			<if test="workremark != null  and workremark != '' " > d.WORKREMARK = #{workremark} AND </if>
+			<if test="firstevalscore != null " > d.FIRSTEVALSCORE = #{firstevalscore} AND </if>
+			<if test="firstevalgoal != null " > d.FIRSTEVALGOAL = #{firstevalgoal} AND </if>
+			<if test="firstevalcomment != null  and firstevalcomment != '' " > d.FIRSTEVALCOMMENT = #{firstevalcomment} AND </if>
+			<if test="secondevalscore != null " > d.SECONDEVALSCORE = #{secondevalscore} AND </if>
+			<if test="secondevalgoal != null " > d.SECONDEVALGOAL = #{secondevalgoal} AND </if>
+			<if test="secondevalcomment != null  and secondevalcomment != '' " > d.SECONDEVALCOMMENT = #{secondevalcomment} AND </if>
+			<if test="remark1 != null  and remark1 != '' " > d.REMARK1 = #{remark1} AND </if>
+			<if test="remark2 != null  and remark2 != '' " > d.REMARK2 = #{remark2} AND </if>
+			<if test="tscore != null " > d.TSCORE = #{tscore} AND </if>
+
+		</trim>
+		order by d.REGTIME asc
+	</select>
+	<!--查询综合能力，履职评估，平衡计分统计数据  k1327 2021-06-07 -->
+	<select id="queryPpmKpiPmDetailInfoGroup" parameterType="ppmKpiPmDetailInfo" resultMap="PPMKPIPMDETAIL_ALL_EXT">
+		select #{pid} pid,d.item ,max(d.itemdescribe) itemdescribe,to_char(wm_concat(d.plandescribe)) plandescribe,max(d.weight) weight  ,max(d.mainpart) mainpart,
+		min(p.status) status,min(d.itemstatus)  itemstatus,round((sum(d.firstevalscore)/count(*))*max(d.weight),2) firstevalscore,round((sum(d.secondevalscore)/count(*))*max(d.weight),2) secondevalscore
+		from ppm_kpi_pm_detail d left join ppm_kpi_pm p on d.pid=p.id where d.pid=#{pid} and d.kpitype=#{kpitype} group by d.item order by d.item asc
+	</select>
+    <!--查询最小子状态的数据  k1327 2021-05-31 -->
+    <select id="getMinStatusDetail" parameterType="map"  resultMap="PPMKPIPMDETAIL_ALL">
+        select min(d.itemstatus) itemstatus from ppm_kpi_pm_detail d where d.pid=#{pid}
+    </select>
+
+
+
+	<!--根据主表pid查询履职评估评价页面 k1327 2021-06-07 -->
+	<select id="getPpmKpiPmPostEvaluationEvalInfo"  parameterType="ppmKpiPmDetailInfo"  resultMap="PPMKPIPMDETAIL_ALL_EXT">
+		select d.item,max(d.itemdescribe) itemdescribe,to_char(wm_concat(d.plandescribe)) plandescribe,
+		max(d.weight) weight,max(d.itemstatus) itemstatus,round(sum(d.firstevalscore)/count(*)*max(d.weight),2) firstevalavgscore,
+		round(sum(d.secondevalscore)/count(*)*max(d.weight),2) secondevalavgscore, min(d.mainpart) mainpart
+		from ppm_kpi_pm_detail d
+		where d.pid=#{pid} and d.kpitype=3
+		<if test="itemstatus != null " > AND d.ITEMSTATUS = #{itemstatus}  </if>
+		group by d.item order by d.item asc
+	</select>
+
+
+	<!--根据主表pid查询履职评估评价页面 k1327 2021-06-07 -->
+	<select id="getPpmKpiPmPostEvaluationInfo"  parameterType="map"  resultMap="PPMKPIPMDETAIL_ALL_EXT">
+		select d.item,max(d.itemdescribe) itemdescribe,to_char(wm_concat(d.plandescribe)) plandescribe,
+		max(d.weight) weight,min(d.itemstatus) itemstatus,round(sum(d.firstevalscore)/count(*)*max(d.weight),2) firstevalavgscore,
+		round(sum(d.secondevalscore)/count(*)*max(d.weight),2) secondevalavgscore,
+		max(d.firsteval) firsteval,max(d.secondeval) secondeval,min(d.mainpart) mainpart,count(*) evalitems
+		from ppm_kpi_pm_detail d
+		<trim prefix="WHERE" suffixOverrides="AND">
+			<if test="itemstatus != null " > AND d.ITEMSTATUS = #{itemstatus}  </if>
+			<if test="firsteval != null  and firsteval != '' " > d.FIRSTEVAL = #{firsteval} AND </if>
+			<if test="secondeval != null  and secondeval != '' " > d.SECONDEVAL = #{secondeval} AND </if>
+			<if test="firstevaltime != null " > d.FIRSTEVALTIME = #{firstevaltime} AND </if>
+			<if test="secondevaltime != null " > d.SECONDEVALTIME = #{secondevaltime} AND </if>
+			<if test="itemstatus != null " > d.ITEMSTATUS = #{itemstatus} AND </if>
+			<if test="evaluserid != null  and evaluserid != '' " > d.EVALUSERID = #{evaluserid} AND </if>
+			<if test="weight != null " > d.WEIGHT = #{weight} AND </if>
+			<if test="mainpart != null  and mainpart != '' " > d.MAINPART = #{mainpart} AND </if>
+			<if test="id != null " > d.ID = #{id} AND </if>
+			<if test="pid != null " > d.PID = #{pid} AND </if>
+			<if test="tyear != null  and tyear != '' " > d.TYEAR = #{tyear} AND </if>
+			<if test="term != null  and term != '' " > d.TERM = #{term} AND </if>
+			<if test="eid != null  and eid != '' " > d.EID = #{eid} AND </if>
+			<if test="kpitype != null " > d.KPITYPE = #{kpitype} AND </if>
+			<if test="item != null  and item != '' " > d.ITEM = #{item} AND </if>
+			<if test="itemdescribe != null  and itemdescribe != '' " > d.ITEMDESCRIBE = #{itemdescribe} AND </if>
+			<if test="plan != null  and plan != '' " > d.PLAN = #{plan} AND </if>
+			<if test="plandescribe != null  and plandescribe != '' " > d.PLANDESCRIBE = #{plandescribe} AND </if>
+			<if test="value != null " > d.VALUE = #{value} AND </if>
+			<if test="finishdate != null " > d.FINISHDATE = #{finishdate} AND </if>
+			<if test="regby != null  and regby != '' " > d.REGBY = #{regby} AND </if>
+			<if test="regtime != null " > d.REGTIME = #{regtime} AND </if>
+			<if test="isedit != null " > d.ISEDIT = #{isedit} AND </if>
+			<if test="evalself != null  and evalself != '' " > d.EVALSELF = #{evalself} AND </if>
+			<if test="workremark != null  and workremark != '' " > d.WORKREMARK = #{workremark} AND </if>
+			<if test="firstevalscore != null " > d.FIRSTEVALSCORE = #{firstevalscore} AND </if>
+			<if test="firstevalgoal != null " > d.FIRSTEVALGOAL = #{firstevalgoal} AND </if>
+			<if test="firstevalcomment != null  and firstevalcomment != '' " > d.FIRSTEVALCOMMENT = #{firstevalcomment} AND </if>
+			<if test="secondevalscore != null " > d.SECONDEVALSCORE = #{secondevalscore} AND </if>
+			<if test="secondevalgoal != null " > d.SECONDEVALGOAL = #{secondevalgoal} AND </if>
+			<if test="secondevalcomment != null  and secondevalcomment != '' " > d.SECONDEVALCOMMENT = #{secondevalcomment} AND </if>
+			<if test="remark1 != null  and remark1 != '' " > d.REMARK1 = #{remark1} AND </if>
+			<if test="remark2 != null  and remark2 != '' " > d.REMARK2 = #{remark2} AND </if>
+			<if test="tscore != null " > d.TSCORE = #{tscore} AND </if>
+			<if test="check != null  and check != '' " >
+				(( d.FIRSTEVAL = #{check} and  d.itemstatus=5)
+				or
+				( dSECONDEVAL = #{check} and  d.itemstatus=6))
+			</if>
+
+		</trim>
+		group by d.item order by d.item asc
+
+	</select>
+
+	<!-- 查询数据  2021-06-07 k1327  -->
+	<select id="getPostEvaluationList"  parameterType="ppmKpiPmDetailInfo" resultMap="PPMKPIPMDETAIL_ALL_EXT">
+		SELECT d.id,
+		d.pid,
+		d.tyear,
+		d.term,
+		d.eid,
+		d.kpitype,
+		d.item,
+		d.itemdescribe,
+		d.plan,
+		d.plandescribe,
+		d.value,
+		d.finishdate,
+		d.regby,
+		d.regtime,
+		d.isedit,
+		d.evalself,
+		d.workremark,
+		d.firstevalscore,
+		d.firstevalgoal,
+		d.firstevalcomment,
+		d.secondevalscore,
+		d.secondevalgoal,
+		d.secondevalcomment,
+		d.remark1,
+		d.remark2,
+		d.tscore,
+		d.halfyearevalself,
+		d.firsteval,
+		d.secondeval,
+		d.firstevaltime,
+		d.secondevaltime,
+		d.itemstatus,
+		d.evaluserid,
+		d.weight,
+		d.mainpart,
+		e.dictname itemstatusname,
+		e1.empname firstevalname,
+		e2.empname secondevalname,
+
+		p.centerid,
+		c.centername,
+		p.depid,
+		dep.location depname,
+		e3.empname eidname,
+		p.role,
+		en.dictname rolename,
+		d.evalselftime
+
+		FROM PPM_KPI_PM_DETAIL d
+		left join ppm_kpi_pm p on d.pid=p.id
+		left join ppm_da_center c on p.centerid=c.id
+		left join comm_department dep on p.depid=dep.depid
+		left join eos_dict_entry e on d.itemstatus=e.dictid and e.dicttypeid='KPI_ITEM_STATUS'
+
+		left join eos_dict_entry en on p.role=en.dictid and en.dicttypeid='KPI_ROLE'
+
+		left join comm_employee e1 on d.firsteval=e1.badge
+		left join comm_employee e2 on d.secondeval=e2.badge
+		left join comm_employee e3 on d.eid=e3.badge
+		<trim prefix="WHERE" suffixOverrides="AND">
+			<if test="halfyearevalself != null  and halfyearevalself != '' " > d.HALFYEAREVALSELF = #{halfyearevalself} AND </if>
+			<if test="firsteval != null  and firsteval != '' " > d.FIRSTEVAL = #{firsteval} AND </if>
+			<if test="secondeval != null  and secondeval != '' " > d.SECONDEVAL = #{secondeval} AND </if>
+			<if test="firstevaltime != null " > d.FIRSTEVALTIME = #{firstevaltime} AND </if>
+			<if test="secondevaltime != null " > d.SECONDEVALTIME = #{secondevaltime} AND </if>
+			<if test="itemstatus != null " > d.ITEMSTATUS = #{itemstatus} AND </if>
+			<if test="evaluserid != null  and evaluserid != '' " > d.EVALUSERID = #{evaluserid} AND </if>
+			<if test="weight != null " > d.WEIGHT = #{weight} AND </if>
+			<if test="mainpart != null  and mainpart != '' " > d.MAINPART = #{mainpart} AND </if>
+			<if test="id != null " > d.ID = #{id} AND </if>
+			<if test="pid != null " > d.PID = #{pid} AND </if>
+			<if test="tyear != null  and tyear != '' " > d.TYEAR = #{tyear} AND </if>
+			<if test="term != null  and term != '' " > d.TERM = #{term} AND </if>
+			<if test="eid != null  and eid != '' " > d.EID = #{eid} AND </if>
+			<if test="kpitype != null " > d.KPITYPE = #{kpitype} AND </if>
+			<if test="item != null  and item != '' " > d.ITEM = #{item} AND </if>
+			<if test="itemdescribe != null  and itemdescribe != '' " > d.ITEMDESCRIBE = #{itemdescribe} AND </if>
+			<if test="plan != null  and plan != '' " > d.PLAN = #{plan} AND </if>
+			<if test="plandescribe != null  and plandescribe != '' " > d.PLANDESCRIBE = #{plandescribe} AND </if>
+			<if test="value != null " > d.VALUE = #{value} AND </if>
+			<if test="finishdate != null " > d.FINISHDATE = #{finishdate} AND </if>
+			<if test="regby != null  and regby != '' " > d.REGBY = #{regby} AND </if>
+			<if test="regtime != null " > d.REGTIME = #{regtime} AND </if>
+			<if test="isedit != null " > d.ISEDIT = #{isedit} AND </if>
+			<if test="evalself != null  and evalself != '' " > d.EVALSELF = #{evalself} AND </if>
+			<if test="workremark != null  and workremark != '' " > d.WORKREMARK = #{workremark} AND </if>
+			<if test="firstevalscore != null " > d.FIRSTEVALSCORE = #{firstevalscore} AND </if>
+			<if test="firstevalgoal != null " > d.FIRSTEVALGOAL = #{firstevalgoal} AND </if>
+			<if test="firstevalcomment != null  and firstevalcomment != '' " > d.FIRSTEVALCOMMENT = #{firstevalcomment} AND </if>
+			<if test="secondevalscore != null " > d.SECONDEVALSCORE = #{secondevalscore} AND </if>
+			<if test="secondevalgoal != null " > d.SECONDEVALGOAL = #{secondevalgoal} AND </if>
+			<if test="secondevalcomment != null  and secondevalcomment != '' " > d.SECONDEVALCOMMENT = #{secondevalcomment} AND </if>
+			<if test="remark1 != null  and remark1 != '' " > d.REMARK1 = #{remark1} AND </if>
+			<if test="remark2 != null  and remark2 != '' " > d.REMARK2 = #{remark2} AND </if>
+			<if test="tscore != null " > d.TSCORE = #{tscore} AND </if>
+
+		</trim>
+		order by p.centerid asc,p.depid asc,p.eid asc
+	</select>
+
+	<!-- 查询履职评估_科技部评价_后台查询  2021-06-07 k1327  -->
+	<select id="getPostEvaluationListGroup"  parameterType="ppmKpiPmDetailInfo" resultMap="PPMKPIPMDETAIL_ALL_EXT">
+		SELECT
+		max(d.tyear) tyear,
+
+		max(d.eid) eid,
+
+		avg(d.tscore) tscore,
+
+		max(d.itemstatus) itemstatus,
+
+		max(e.dictname) itemstatusname,
+
+
+		max(p.centerid) centerid,
+		max(c.centername) centername,
+		max(p.depid) depid,
+		max(dep.location) depname,
+		max(e3.empname) eidname,
+		max(p.role) role,
+		max(en.dictname)  rolename
+
+		FROM PPM_KPI_PM_DETAIL d
+		left join ppm_kpi_pm p on d.pid=p.id
+		left join ppm_da_center c on p.centerid=c.id
+		left join comm_department dep on p.depid=dep.depid
+		left join eos_dict_entry e on d.itemstatus=e.dictid and e.dicttypeid='KPI_ITEM_STATUS'
+
+		left join eos_dict_entry en on p.role=en.dictid and en.dicttypeid='KPI_ROLE'
+
+		left join comm_employee e1 on d.firsteval=e1.badge
+		left join comm_employee e2 on d.secondeval=e2.badge
+		left join comm_employee e3 on d.eid=e3.badge
+		<trim prefix="WHERE" suffixOverrides="AND">
+			<if test="firsteval != null  and firsteval != '' " > d.FIRSTEVAL = #{firsteval} AND </if>
+			<if test="secondeval != null  and secondeval != '' " > d.SECONDEVAL = #{secondeval} AND </if>
+			<if test="itemstatus != null " > d.ITEMSTATUS = #{itemstatus} AND </if>
+			<if test="weight != null " > d.WEIGHT = #{weight} AND </if>
+			<if test="mainpart != null  and mainpart != '' " > d.MAINPART = #{mainpart} AND </if>
+			<if test="id != null " > d.ID = #{id} AND </if>
+			<if test="pid != null " > d.PID = #{pid} AND </if>
+			<if test="tyear != null  and tyear != '' " > d.TYEAR = #{tyear} AND </if>
+			<if test="term != null  and term != '' " > d.TERM = #{term} AND </if>
+			<if test="eid != null  and eid != '' " > d.EID = #{eid} AND </if>
+			<if test="kpitype != null " > d.KPITYPE = #{kpitype} AND </if>
+			<if test="item != null  and item != '' " > d.ITEM = #{item} AND </if>
+			<if test="itemdescribe != null  and itemdescribe != '' " > d.ITEMDESCRIBE = #{itemdescribe} AND </if>
+			<if test="plan != null  and plan != '' " > d.PLAN = #{plan} AND </if>
+			<if test="plandescribe != null  and plandescribe != '' " > d.PLANDESCRIBE = #{plandescribe} AND </if>
+			<if test="value != null " > d.VALUE = #{value} AND </if>
+			<if test="finishdate != null " > d.FINISHDATE = #{finishdate} AND </if>
+			<if test="regby != null  and regby != '' " > d.REGBY = #{regby} AND </if>
+			<if test="regtime != null " > d.REGTIME = #{regtime} AND </if>
+			<if test="isedit != null " > d.ISEDIT = #{isedit} AND </if>
+			<if test="evalself != null  and evalself != '' " > d.EVALSELF = #{evalself} AND </if>
+			<if test="workremark != null  and workremark != '' " > d.WORKREMARK = #{workremark} AND </if>
+			<if test="firstevalscore != null " > d.FIRSTEVALSCORE = #{firstevalscore} AND </if>
+			<if test="firstevalgoal != null " > d.FIRSTEVALGOAL = #{firstevalgoal} AND </if>
+			<if test="firstevalcomment != null  and firstevalcomment != '' " > d.FIRSTEVALCOMMENT = #{firstevalcomment} AND </if>
+			<if test="secondevalscore != null " > d.SECONDEVALSCORE = #{secondevalscore} AND </if>
+			<if test="secondevalgoal != null " > d.SECONDEVALGOAL = #{secondevalgoal} AND </if>
+			<if test="secondevalcomment != null  and secondevalcomment != '' " > d.SECONDEVALCOMMENT = #{secondevalcomment} AND </if>
+			<if test="remark1 != null  and remark1 != '' " > d.REMARK1 = #{remark1} AND </if>
+			<if test="remark2 != null  and remark2 != '' " > d.REMARK2 = #{remark2} AND </if>
+			<if test="tscore != null " > d.TSCORE = #{tscore} AND </if>
+			<if test="role != null " > p.role = #{role} AND </if>
+
+			<if test="depid != null  and depid != '' " > p.DEPID = #{depid} AND </if>
+			<if test="eidname != null  and eidname != '' " > e3.empname like  '%'||#{eidname}||'%' AND </if>
+		</trim>
+		group by d.eid order by max(p.centerid) asc,max(p.depid) asc,max(p.role) asc
+	</select>
+
+</mapper>

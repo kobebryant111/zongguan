@@ -1,0 +1,757 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k6991 2021-01-12 -->
+<mapper namespace="com.work.ppm.application.model.flowmanager.PpmSlaSetinfo">
+    <resultMap type="ppmSlaSetinfo" id="PPMSLASETINFO_ALL">
+        <result property="id" column="ID"/>
+        <result property="flowdraftno" column="FLOWDRAFTNO"/>
+        <result property="flowdraftname" column="FLOWDRAFTNAME"/>
+        <result property="depno" column="DEPNO"/>
+        <result property="depname" column="DEPNAME"/>
+        <result property="flownodecode" column="FLOWNODECODE"/>
+        <result property="flownodename" column="FLOWNODENAME"/>
+        <result property="ispretimeout" column="ISPRETIMEOUT"/>
+        <result property="pretime" column="PRETIME"/>
+        <result property="ispretimesms" column="ISPRETIMESMS"/>
+        <result property="pretimesms" column="PRETIMESMS"/>
+        <result property="ispretimemail" column="ISPRETIMEMAIL"/>
+        <result property="pretimemail" column="PRETIMEMAIL"/>
+        <result property="ispretimework" column="ISPRETIMEWORK"/>
+        <result property="pretimework" column="PRETIMEWORK"/>
+        <result property="istimeout" column="ISTIMEOUT"/>
+        <result property="timeout" column="TIMEOUT"/>
+        <result property="istimeoutsms" column="ISTIMEOUTSMS"/>
+        <result property="timeoutsms" column="TIMEOUTSMS"/>
+        <result property="istimeoutmail" column="ISTIMEOUTMAIL"/>
+        <result property="timeoutmail" column="TIMEOUTMAIL"/>
+        <result property="istimeoutwork" column="ISTIMEOUTWORK"/>
+        <result property="timeoutwork" column="TIMEOUTWORK"/>
+        <result property="isurgent" column="ISURGENT"/>
+        <result property="isacturgent" column="ISACTURGENT"/>
+        <result property="urgenttime" column="URGENTTIME"/>
+        <result property="isupgradeone" column="ISUPGRADEONE"/>
+        <result property="upgradeone" column="UPGRADEONE"/>
+        <result property="ismanagerone" column="ISMANAGERONE"/>
+        <result property="upgradeoneusernos" column="UPGRADEONEUSERNOS"/>
+        <result property="upgradeoneusertype" column="UPGRADEONEUSERTYPE"/>
+        <result property="isupgradeonesms" column="ISUPGRADEONESMS"/>
+        <result property="upgradeonesms" column="UPGRADEONESMS"/>
+        <result property="isupgradeonemail" column="ISUPGRADEONEMAIL"/>
+        <result property="upgradeonemail" column="UPGRADEONEMAIL"/>
+        <result property="isupgradeonework" column="ISUPGRADEONEWORK"/>
+        <result property="upgradeonework" column="UPGRADEONEWORK"/>
+        <result property="isupgradeonecurrentsms" column="ISUPGRADEONECURRENTSMS"/>
+        <result property="upgradeonecurrentsms" column="UPGRADEONECURRENTSMS"/>
+        <result property="isupgradeonecurrentmail" column="ISUPGRADEONECURRENTMAIL"/>
+        <result property="upgradeonecurrentmail" column="UPGRADEONECURRENTMAIL"/>
+        <result property="isupgradeonecurrentwork" column="ISUPGRADEONECURRENTWORK"/>
+        <result property="upgradeonecurrentwork" column="UPGRADEONECURRENTWORK"/>
+        <result property="isupgradetwo" column="ISUPGRADETWO"/>
+        <result property="upgradetwo" column="UPGRADETWO"/>
+        <result property="ismanagertwo" column="ISMANAGERTWO"/>
+        <result property="upgradetwousernos" column="UPGRADETWOUSERNOS"/>
+        <result property="upgradetwousertype" column="UPGRADETWOUSERTYPE"/>
+        <result property="isupgradetwosms" column="ISUPGRADETWOSMS"/>
+        <result property="upgradetwosms" column="UPGRADETWOSMS"/>
+        <result property="isupgradetwomail" column="ISUPGRADETWOMAIL"/>
+        <result property="upgradetwomail" column="UPGRADETWOMAIL"/>
+        <result property="isupgradetwowork" column="ISUPGRADETWOWORK"/>
+        <result property="upgradetwowork" column="UPGRADETWOWORK"/>
+        <result property="isupgradetwocurrentsms" column="ISUPGRADETWOCURRENTSMS"/>
+        <result property="upgradetwocurrentsms" column="UPGRADETWOCURRENTSMS"/>
+        <result property="isupgradetwocurrentmail" column="ISUPGRADETWOCURRENTMAIL"/>
+        <result property="upgradetwocurrentmail" column="UPGRADETWOCURRENTMAIL"/>
+        <result property="isupgradetwocurrentwork" column="ISUPGRADETWOCURRENTWORK"/>
+        <result property="upgradetwocurrentwork" column="UPGRADETWOCURRENTWORK"/>
+        <result property="isupgradethree" column="ISUPGRADETHREE"/>
+        <result property="upgradethree" column="UPGRADETHREE"/>
+        <result property="ismanagerthree" column="ISMANAGERTHREE"/>
+        <result property="upgradethreeusernos" column="UPGRADETHREEUSERNOS"/>
+        <result property="upgradethreeusertype" column="UPGRADETHREEUSERTYPE"/>
+        <result property="isupgradethreesms" column="ISUPGRADETHREESMS"/>
+        <result property="upgradethreesms" column="UPGRADETHREESMS"/>
+        <result property="isupgradethreemail" column="ISUPGRADETHREEMAIL"/>
+        <result property="upgradethreemail" column="UPGRADETHREEMAIL"/>
+        <result property="isupgradethreework" column="ISUPGRADETHREEWORK"/>
+        <result property="upgradethreework" column="UPGRADETHREEWORK"/>
+        <result property="isupgradethreecurrentsms" column="ISUPGRADETHREECURRENTSMS"/>
+        <result property="upgradethreecurrentsms" column="UPGRADETHREECURRENTSMS"/>
+        <result property="isupgradethreecurrentmail" column="ISUPGRADETHREECURRENTMAIL"/>
+        <result property="upgradethreecurrentmail" column="UPGRADETHREECURRENTMAIL"/>
+        <result property="isupgradethreecurrentwork" column="ISUPGRADETHREECURRENTWORK"/>
+        <result property="upgradethreecurrentwork" column="UPGRADETHREECURRENTWORK"/>
+        <result property="upgradeoneusernames" column="UPGRADEONEUSERNAMES"/>
+        <result property="upgradetwousernames" column="UPGRADETWOUSERNAMES"/>
+        <result property="upgradethreeusernames" column="UPGRADETHREEUSERNAMES"/>
+        <result property="ispost" column="ISPOST"/>
+        <result property="issetplandate" column="ISSETPLANDATE"/>
+        <result property="days" column="DAYS"/>
+        <result property="daytype" column="DAYTYPE"/>
+        <result property="issp" column="ISSP"/>
+
+    </resultMap>
+
+    <!-- 所有字段名称 -->
+    <sql id="sql_flied_all">
+        ID,
+        FLOWDRAFTNO,
+        FLOWDRAFTNAME,
+        DEPNO,
+        DEPNAME,
+        FLOWNODECODE,
+        FLOWNODENAME,
+        ISPRETIMEOUT,
+        PRETIME,
+        ISPRETIMESMS,
+        PRETIMESMS,
+        ISPRETIMEMAIL,
+        PRETIMEMAIL,
+        ISPRETIMEWORK,
+        PRETIMEWORK,
+        ISTIMEOUT,
+        TIMEOUT,
+        ISTIMEOUTSMS,
+        TIMEOUTSMS,
+        ISTIMEOUTMAIL,
+        TIMEOUTMAIL,
+        ISTIMEOUTWORK,
+        TIMEOUTWORK,
+        ISURGENT,
+        ISACTURGENT,
+        URGENTTIME,
+        ISUPGRADEONE,
+        UPGRADEONE,
+        ISMANAGERONE,
+        UPGRADEONEUSERNOS,
+        UPGRADEONEUSERTYPE,
+        ISUPGRADEONESMS,
+        UPGRADEONESMS,
+        ISUPGRADEONEMAIL,
+        UPGRADEONEMAIL,
+        ISUPGRADEONEWORK,
+        UPGRADEONEWORK,
+        ISUPGRADEONECURRENTSMS,
+        UPGRADEONECURRENTSMS,
+        ISUPGRADEONECURRENTMAIL,
+        UPGRADEONECURRENTMAIL,
+        ISUPGRADEONECURRENTWORK,
+        UPGRADEONECURRENTWORK,
+        ISUPGRADETWO,
+        UPGRADETWO,
+        ISMANAGERTWO,
+        UPGRADETWOUSERNOS,
+        UPGRADETWOUSERTYPE,
+        ISUPGRADETWOSMS,
+        UPGRADETWOSMS,
+        ISUPGRADETWOMAIL,
+        UPGRADETWOMAIL,
+        ISUPGRADETWOWORK,
+        UPGRADETWOWORK,
+        ISUPGRADETWOCURRENTSMS,
+        UPGRADETWOCURRENTSMS,
+        ISUPGRADETWOCURRENTMAIL,
+        UPGRADETWOCURRENTMAIL,
+        ISUPGRADETWOCURRENTWORK,
+        UPGRADETWOCURRENTWORK,
+        ISUPGRADETHREE,
+        UPGRADETHREE,
+        ISMANAGERTHREE,
+        UPGRADETHREEUSERNOS,
+        UPGRADETHREEUSERTYPE,
+        ISUPGRADETHREESMS,
+        UPGRADETHREESMS,
+        ISUPGRADETHREEMAIL,
+        UPGRADETHREEMAIL,
+        ISUPGRADETHREEWORK,
+        UPGRADETHREEWORK,
+        ISUPGRADETHREECURRENTSMS,
+        UPGRADETHREECURRENTSMS,
+        ISUPGRADETHREECURRENTMAIL,
+        UPGRADETHREECURRENTMAIL,
+        ISUPGRADETHREECURRENTWORK,
+        UPGRADETHREECURRENTWORK,
+        UPGRADEONEUSERNAMES,
+        UPGRADETWOUSERNAMES,
+        UPGRADETHREEUSERNAMES,
+        ISPOST,
+        ISSETPLANDATE,
+        DAYS,
+        DAYTYPE,
+        ISSP
+    </sql>
+    <sql id="sql_select_condition">
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="id != null  and id != '' ">ID = #{id} AND</if>
+            <if test="flowdraftno != null  and flowdraftno != '' ">FLOWDRAFTNO = #{flowdraftno} AND</if>
+            <if test="flowdraftname != null  and flowdraftname != '' ">FLOWDRAFTNAME = #{flowdraftname} AND</if>
+            <if test="depno != null  and depno != '' ">DEPNO = #{depno} AND</if>
+            <if test="depname != null  and depname != '' ">DEPNAME = #{depname} AND</if>
+            <if test="flownodecode != null  and flownodecode != '' ">FLOWNODECODE = #{flownodecode} AND</if>
+            <if test="flownodename != null  and flownodename != '' ">FLOWNODENAME = #{flownodename} AND</if>
+            <if test="ispretimeout != null  and ispretimeout != '' ">ISPRETIMEOUT = #{ispretimeout} AND</if>
+            <if test="pretime != null  and pretime != '' ">PRETIME = #{pretime} AND</if>
+            <if test="ispretimesms != null  and ispretimesms != '' ">ISPRETIMESMS = #{ispretimesms} AND</if>
+            <if test="pretimesms != null  and pretimesms != '' ">PRETIMESMS = #{pretimesms} AND</if>
+            <if test="ispretimemail != null  and ispretimemail != '' ">ISPRETIMEMAIL = #{ispretimemail} AND</if>
+            <if test="pretimemail != null  and pretimemail != '' ">PRETIMEMAIL = #{pretimemail} AND</if>
+            <if test="ispretimework != null  and ispretimework != '' ">ISPRETIMEWORK = #{ispretimework} AND</if>
+            <if test="pretimework != null  and pretimework != '' ">PRETIMEWORK = #{pretimework} AND</if>
+            <if test="istimeout != null  and istimeout != '' ">ISTIMEOUT = #{istimeout} AND</if>
+            <if test="timeout != null  and timeout != '' ">TIMEOUT = #{timeout} AND</if>
+            <if test="istimeoutsms != null  and istimeoutsms != '' ">ISTIMEOUTSMS = #{istimeoutsms} AND</if>
+            <if test="timeoutsms != null  and timeoutsms != '' ">TIMEOUTSMS = #{timeoutsms} AND</if>
+            <if test="istimeoutmail != null  and istimeoutmail != '' ">ISTIMEOUTMAIL = #{istimeoutmail} AND</if>
+            <if test="timeoutmail != null  and timeoutmail != '' ">TIMEOUTMAIL = #{timeoutmail} AND</if>
+            <if test="istimeoutwork != null  and istimeoutwork != '' ">ISTIMEOUTWORK = #{istimeoutwork} AND</if>
+            <if test="timeoutwork != null  and timeoutwork != '' ">TIMEOUTWORK = #{timeoutwork} AND</if>
+            <if test="isurgent != null  and isurgent != '' ">ISURGENT = #{isurgent} AND</if>
+            <if test="isacturgent != null  and isacturgent != '' ">ISACTURGENT = #{isacturgent} AND</if>
+            <if test="urgenttime != null  and urgenttime != '' ">URGENTTIME = #{urgenttime} AND</if>
+            <if test="isupgradeone != null  and isupgradeone != '' ">ISUPGRADEONE = #{isupgradeone} AND</if>
+            <if test="upgradeone != null  and upgradeone != '' ">UPGRADEONE = #{upgradeone} AND</if>
+            <if test="ismanagerone != null  and ismanagerone != '' ">ISMANAGERONE = #{ismanagerone} AND</if>
+            <if test="upgradeoneusernos != null  and upgradeoneusernos != '' ">UPGRADEONEUSERNOS = #{upgradeoneusernos}
+                AND
+            </if>
+            <if test="upgradeoneusertype != null  and upgradeoneusertype != '' ">UPGRADEONEUSERTYPE =
+                #{upgradeoneusertype} AND
+            </if>
+            <if test="isupgradeonesms != null  and isupgradeonesms != '' ">ISUPGRADEONESMS = #{isupgradeonesms} AND</if>
+            <if test="upgradeonesms != null  and upgradeonesms != '' ">UPGRADEONESMS = #{upgradeonesms} AND</if>
+            <if test="isupgradeonemail != null  and isupgradeonemail != '' ">ISUPGRADEONEMAIL = #{isupgradeonemail}
+                AND
+            </if>
+            <if test="upgradeonemail != null  and upgradeonemail != '' ">UPGRADEONEMAIL = #{upgradeonemail} AND</if>
+            <if test="isupgradeonework != null  and isupgradeonework != '' ">ISUPGRADEONEWORK = #{isupgradeonework}
+                AND
+            </if>
+            <if test="upgradeonework != null  and upgradeonework != '' ">UPGRADEONEWORK = #{upgradeonework} AND</if>
+            <if test="isupgradeonecurrentsms != null  and isupgradeonecurrentsms != '' ">ISUPGRADEONECURRENTSMS =
+                #{isupgradeonecurrentsms} AND
+            </if>
+            <if test="upgradeonecurrentsms != null  and upgradeonecurrentsms != '' ">UPGRADEONECURRENTSMS =
+                #{upgradeonecurrentsms} AND
+            </if>
+            <if test="isupgradeonecurrentmail != null  and isupgradeonecurrentmail != '' ">ISUPGRADEONECURRENTMAIL =
+                #{isupgradeonecurrentmail} AND
+            </if>
+            <if test="upgradeonecurrentmail != null  and upgradeonecurrentmail != '' ">UPGRADEONECURRENTMAIL =
+                #{upgradeonecurrentmail} AND
+            </if>
+            <if test="isupgradeonecurrentwork != null  and isupgradeonecurrentwork != '' ">ISUPGRADEONECURRENTWORK =
+                #{isupgradeonecurrentwork} AND
+            </if>
+            <if test="upgradeonecurrentwork != null  and upgradeonecurrentwork != '' ">UPGRADEONECURRENTWORK =
+                #{upgradeonecurrentwork} AND
+            </if>
+            <if test="isupgradetwo != null  and isupgradetwo != '' ">ISUPGRADETWO = #{isupgradetwo} AND</if>
+            <if test="upgradetwo != null  and upgradetwo != '' ">UPGRADETWO = #{upgradetwo} AND</if>
+            <if test="ismanagertwo != null  and ismanagertwo != '' ">ISMANAGERTWO = #{ismanagertwo} AND</if>
+            <if test="upgradetwousernos != null  and upgradetwousernos != '' ">UPGRADETWOUSERNOS = #{upgradetwousernos}
+                AND
+            </if>
+            <if test="upgradetwousertype != null  and upgradetwousertype != '' ">UPGRADETWOUSERTYPE =
+                #{upgradetwousertype} AND
+            </if>
+            <if test="isupgradetwosms != null  and isupgradetwosms != '' ">ISUPGRADETWOSMS = #{isupgradetwosms} AND</if>
+            <if test="upgradetwosms != null  and upgradetwosms != '' ">UPGRADETWOSMS = #{upgradetwosms} AND</if>
+            <if test="isupgradetwomail != null  and isupgradetwomail != '' ">ISUPGRADETWOMAIL = #{isupgradetwomail}
+                AND
+            </if>
+            <if test="upgradetwomail != null  and upgradetwomail != '' ">UPGRADETWOMAIL = #{upgradetwomail} AND</if>
+            <if test="isupgradetwowork != null  and isupgradetwowork != '' ">ISUPGRADETWOWORK = #{isupgradetwowork}
+                AND
+            </if>
+            <if test="upgradetwowork != null  and upgradetwowork != '' ">UPGRADETWOWORK = #{upgradetwowork} AND</if>
+            <if test="isupgradetwocurrentsms != null  and isupgradetwocurrentsms != '' ">ISUPGRADETWOCURRENTSMS =
+                #{isupgradetwocurrentsms} AND
+            </if>
+            <if test="upgradetwocurrentsms != null  and upgradetwocurrentsms != '' ">UPGRADETWOCURRENTSMS =
+                #{upgradetwocurrentsms} AND
+            </if>
+            <if test="isupgradetwocurrentmail != null  and isupgradetwocurrentmail != '' ">ISUPGRADETWOCURRENTMAIL =
+                #{isupgradetwocurrentmail} AND
+            </if>
+            <if test="upgradetwocurrentmail != null  and upgradetwocurrentmail != '' ">UPGRADETWOCURRENTMAIL =
+                #{upgradetwocurrentmail} AND
+            </if>
+            <if test="isupgradetwocurrentwork != null  and isupgradetwocurrentwork != '' ">ISUPGRADETWOCURRENTWORK =
+                #{isupgradetwocurrentwork} AND
+            </if>
+            <if test="upgradetwocurrentwork != null  and upgradetwocurrentwork != '' ">UPGRADETWOCURRENTWORK =
+                #{upgradetwocurrentwork} AND
+            </if>
+            <if test="isupgradethree != null  and isupgradethree != '' ">ISUPGRADETHREE = #{isupgradethree} AND</if>
+            <if test="upgradethree != null  and upgradethree != '' ">UPGRADETHREE = #{upgradethree} AND</if>
+            <if test="ismanagerthree != null  and ismanagerthree != '' ">ISMANAGERTHREE = #{ismanagerthree} AND</if>
+            <if test="upgradethreeusernos != null  and upgradethreeusernos != '' ">UPGRADETHREEUSERNOS =
+                #{upgradethreeusernos} AND
+            </if>
+            <if test="upgradethreeusertype != null  and upgradethreeusertype != '' ">UPGRADETHREEUSERTYPE =
+                #{upgradethreeusertype} AND
+            </if>
+            <if test="isupgradethreesms != null  and isupgradethreesms != '' ">ISUPGRADETHREESMS = #{isupgradethreesms}
+                AND
+            </if>
+            <if test="upgradethreesms != null  and upgradethreesms != '' ">UPGRADETHREESMS = #{upgradethreesms} AND</if>
+            <if test="isupgradethreemail != null  and isupgradethreemail != '' ">ISUPGRADETHREEMAIL =
+                #{isupgradethreemail} AND
+            </if>
+            <if test="upgradethreemail != null  and upgradethreemail != '' ">UPGRADETHREEMAIL = #{upgradethreemail}
+                AND
+            </if>
+            <if test="isupgradethreework != null  and isupgradethreework != '' ">ISUPGRADETHREEWORK =
+                #{isupgradethreework} AND
+            </if>
+            <if test="upgradethreework != null  and upgradethreework != '' ">UPGRADETHREEWORK = #{upgradethreework}
+                AND
+            </if>
+            <if test="isupgradethreecurrentsms != null  and isupgradethreecurrentsms != '' ">ISUPGRADETHREECURRENTSMS =
+                #{isupgradethreecurrentsms} AND
+            </if>
+            <if test="upgradethreecurrentsms != null  and upgradethreecurrentsms != '' ">UPGRADETHREECURRENTSMS =
+                #{upgradethreecurrentsms} AND
+            </if>
+            <if test="isupgradethreecurrentmail != null  and isupgradethreecurrentmail != '' ">ISUPGRADETHREECURRENTMAIL
+                = #{isupgradethreecurrentmail} AND
+            </if>
+            <if test="upgradethreecurrentmail != null  and upgradethreecurrentmail != '' ">UPGRADETHREECURRENTMAIL =
+                #{upgradethreecurrentmail} AND
+            </if>
+            <if test="isupgradethreecurrentwork != null  and isupgradethreecurrentwork != '' ">ISUPGRADETHREECURRENTWORK
+                = #{isupgradethreecurrentwork} AND
+            </if>
+            <if test="upgradethreecurrentwork != null  and upgradethreecurrentwork != '' ">UPGRADETHREECURRENTWORK =
+                #{upgradethreecurrentwork} AND
+            </if>
+            <if test="upgradeoneusernames != null  and upgradeoneusernames != '' ">UPGRADEONEUSERNAMES =
+                #{upgradeoneusernames} AND
+            </if>
+            <if test="upgradetwousernames != null  and upgradetwousernames != '' ">UPGRADETWOUSERNAMES =
+                #{upgradetwousernames} AND
+            </if>
+            <if test="upgradethreeusernames != null  and upgradethreeusernames != '' ">UPGRADETHREEUSERNAMES =
+                #{upgradethreeusernames} AND
+            </if>
+            <if test="ispost != null  and ispost != '' ">ISPOST = #{ispost} AND</if>
+            <if test="issetplandate != null  and issetplandate != '' ">ISSETPLANDATE = #{issetplandate} AND</if>
+            <if test="days != null  and days != '' ">DAYS = #{days} AND</if>
+            <if test="daytype != null  and daytype != '' ">DAYTYPE = #{daytype} AND</if>
+            <if test="issp != null  and issp != '' ">ISSP = #{issp} AND</if>
+
+        </trim>
+    </sql>
+    <!-- 查询分页  2021-01-12 k6991  -->
+    <select id="queryPagerList" parameterType="map" resultMap="PPMSLASETINFO_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM PPM_SLA_SETINFO
+        <include refid="sql_select_condition"/>
+    </select>
+
+    <!-- 新增  2021-01-12 k6991  -->
+    <insert id="addPojo" parameterType="ppmSlaSetinfo">
+        INSERT INTO PPM_SLA_SETINFO (
+        <trim suffixOverrides=",">
+            <if test="id != null  and id != '' ">ID ,</if>
+            <if test="flowdraftno != null  and flowdraftno != '' ">FLOWDRAFTNO ,</if>
+            <if test="flowdraftname != null  and flowdraftname != '' ">FLOWDRAFTNAME ,</if>
+            <if test="depno != null  and depno != '' ">DEPNO ,</if>
+            <if test="depname != null  and depname != '' ">DEPNAME ,</if>
+            <if test="flownodecode != null  and flownodecode != '' ">FLOWNODECODE ,</if>
+            <if test="flownodename != null  and flownodename != '' ">FLOWNODENAME ,</if>
+            <if test="ispretimeout != null  and ispretimeout != '' ">ISPRETIMEOUT ,</if>
+            <if test="pretime != null  and pretime != '' ">PRETIME ,</if>
+            <if test="ispretimesms != null  and ispretimesms != '' ">ISPRETIMESMS ,</if>
+            <if test="pretimesms != null  and pretimesms != '' ">PRETIMESMS ,</if>
+            <if test="ispretimemail != null  and ispretimemail != '' ">ISPRETIMEMAIL ,</if>
+            <if test="pretimemail != null  and pretimemail != '' ">PRETIMEMAIL ,</if>
+            <if test="ispretimework != null  and ispretimework != '' ">ISPRETIMEWORK ,</if>
+            <if test="pretimework != null  and pretimework != '' ">PRETIMEWORK ,</if>
+            <if test="istimeout != null  and istimeout != '' ">ISTIMEOUT ,</if>
+            <if test="timeout != null  and timeout != '' ">TIMEOUT ,</if>
+            <if test="istimeoutsms != null  and istimeoutsms != '' ">ISTIMEOUTSMS ,</if>
+            <if test="timeoutsms != null  and timeoutsms != '' ">TIMEOUTSMS ,</if>
+            <if test="istimeoutmail != null  and istimeoutmail != '' ">ISTIMEOUTMAIL ,</if>
+            <if test="timeoutmail != null  and timeoutmail != '' ">TIMEOUTMAIL ,</if>
+            <if test="istimeoutwork != null  and istimeoutwork != '' ">ISTIMEOUTWORK ,</if>
+            <if test="timeoutwork != null  and timeoutwork != '' ">TIMEOUTWORK ,</if>
+            <if test="isurgent != null  and isurgent != '' ">ISURGENT ,</if>
+            <if test="isacturgent != null  and isacturgent != '' ">ISACTURGENT ,</if>
+            <if test="urgenttime != null  and urgenttime != '' ">URGENTTIME ,</if>
+            <if test="isupgradeone != null  and isupgradeone != '' ">ISUPGRADEONE ,</if>
+            <if test="upgradeone != null  and upgradeone != '' ">UPGRADEONE ,</if>
+            <if test="ismanagerone != null  and ismanagerone != '' ">ISMANAGERONE ,</if>
+            <if test="upgradeoneusernos != null  and upgradeoneusernos != '' ">UPGRADEONEUSERNOS ,</if>
+            <if test="upgradeoneusertype != null  and upgradeoneusertype != '' ">UPGRADEONEUSERTYPE ,</if>
+            <if test="isupgradeonesms != null  and isupgradeonesms != '' ">ISUPGRADEONESMS ,</if>
+            <if test="upgradeonesms != null  and upgradeonesms != '' ">UPGRADEONESMS ,</if>
+            <if test="isupgradeonemail != null  and isupgradeonemail != '' ">ISUPGRADEONEMAIL ,</if>
+            <if test="upgradeonemail != null  and upgradeonemail != '' ">UPGRADEONEMAIL ,</if>
+            <if test="isupgradeonework != null  and isupgradeonework != '' ">ISUPGRADEONEWORK ,</if>
+            <if test="upgradeonework != null  and upgradeonework != '' ">UPGRADEONEWORK ,</if>
+            <if test="isupgradeonecurrentsms != null  and isupgradeonecurrentsms != '' ">ISUPGRADEONECURRENTSMS ,</if>
+            <if test="upgradeonecurrentsms != null  and upgradeonecurrentsms != '' ">UPGRADEONECURRENTSMS ,</if>
+            <if test="isupgradeonecurrentmail != null  and isupgradeonecurrentmail != '' ">ISUPGRADEONECURRENTMAIL ,
+            </if>
+            <if test="upgradeonecurrentmail != null  and upgradeonecurrentmail != '' ">UPGRADEONECURRENTMAIL ,</if>
+            <if test="isupgradeonecurrentwork != null  and isupgradeonecurrentwork != '' ">ISUPGRADEONECURRENTWORK ,
+            </if>
+            <if test="upgradeonecurrentwork != null  and upgradeonecurrentwork != '' ">UPGRADEONECURRENTWORK ,</if>
+            <if test="isupgradetwo != null  and isupgradetwo != '' ">ISUPGRADETWO ,</if>
+            <if test="upgradetwo != null  and upgradetwo != '' ">UPGRADETWO ,</if>
+            <if test="ismanagertwo != null  and ismanagertwo != '' ">ISMANAGERTWO ,</if>
+            <if test="upgradetwousernos != null  and upgradetwousernos != '' ">UPGRADETWOUSERNOS ,</if>
+            <if test="upgradetwousertype != null  and upgradetwousertype != '' ">UPGRADETWOUSERTYPE ,</if>
+            <if test="isupgradetwosms != null  and isupgradetwosms != '' ">ISUPGRADETWOSMS ,</if>
+            <if test="upgradetwosms != null  and upgradetwosms != '' ">UPGRADETWOSMS ,</if>
+            <if test="isupgradetwomail != null  and isupgradetwomail != '' ">ISUPGRADETWOMAIL ,</if>
+            <if test="upgradetwomail != null  and upgradetwomail != '' ">UPGRADETWOMAIL ,</if>
+            <if test="isupgradetwowork != null  and isupgradetwowork != '' ">ISUPGRADETWOWORK ,</if>
+            <if test="upgradetwowork != null  and upgradetwowork != '' ">UPGRADETWOWORK ,</if>
+            <if test="isupgradetwocurrentsms != null  and isupgradetwocurrentsms != '' ">ISUPGRADETWOCURRENTSMS ,</if>
+            <if test="upgradetwocurrentsms != null  and upgradetwocurrentsms != '' ">UPGRADETWOCURRENTSMS ,</if>
+            <if test="isupgradetwocurrentmail != null  and isupgradetwocurrentmail != '' ">ISUPGRADETWOCURRENTMAIL ,
+            </if>
+            <if test="upgradetwocurrentmail != null  and upgradetwocurrentmail != '' ">UPGRADETWOCURRENTMAIL ,</if>
+            <if test="isupgradetwocurrentwork != null  and isupgradetwocurrentwork != '' ">ISUPGRADETWOCURRENTWORK ,
+            </if>
+            <if test="upgradetwocurrentwork != null  and upgradetwocurrentwork != '' ">UPGRADETWOCURRENTWORK ,</if>
+            <if test="isupgradethree != null  and isupgradethree != '' ">ISUPGRADETHREE ,</if>
+            <if test="upgradethree != null  and upgradethree != '' ">UPGRADETHREE ,</if>
+            <if test="ismanagerthree != null  and ismanagerthree != '' ">ISMANAGERTHREE ,</if>
+            <if test="upgradethreeusernos != null  and upgradethreeusernos != '' ">UPGRADETHREEUSERNOS ,</if>
+            <if test="upgradethreeusertype != null  and upgradethreeusertype != '' ">UPGRADETHREEUSERTYPE ,</if>
+            <if test="isupgradethreesms != null  and isupgradethreesms != '' ">ISUPGRADETHREESMS ,</if>
+            <if test="upgradethreesms != null  and upgradethreesms != '' ">UPGRADETHREESMS ,</if>
+            <if test="isupgradethreemail != null  and isupgradethreemail != '' ">ISUPGRADETHREEMAIL ,</if>
+            <if test="upgradethreemail != null  and upgradethreemail != '' ">UPGRADETHREEMAIL ,</if>
+            <if test="isupgradethreework != null  and isupgradethreework != '' ">ISUPGRADETHREEWORK ,</if>
+            <if test="upgradethreework != null  and upgradethreework != '' ">UPGRADETHREEWORK ,</if>
+            <if test="isupgradethreecurrentsms != null  and isupgradethreecurrentsms != '' ">ISUPGRADETHREECURRENTSMS
+                ,
+            </if>
+            <if test="upgradethreecurrentsms != null  and upgradethreecurrentsms != '' ">UPGRADETHREECURRENTSMS ,</if>
+            <if test="isupgradethreecurrentmail != null  and isupgradethreecurrentmail != '' ">ISUPGRADETHREECURRENTMAIL
+                ,
+            </if>
+            <if test="upgradethreecurrentmail != null  and upgradethreecurrentmail != '' ">UPGRADETHREECURRENTMAIL ,
+            </if>
+            <if test="isupgradethreecurrentwork != null  and isupgradethreecurrentwork != '' ">ISUPGRADETHREECURRENTWORK
+                ,
+            </if>
+            <if test="upgradethreecurrentwork != null  and upgradethreecurrentwork != '' ">UPGRADETHREECURRENTWORK ,
+            </if>
+            <if test="upgradeoneusernames != null  and upgradeoneusernames != '' ">UPGRADEONEUSERNAMES ,</if>
+            <if test="upgradetwousernames != null  and upgradetwousernames != '' ">UPGRADETWOUSERNAMES ,</if>
+            <if test="upgradethreeusernames != null  and upgradethreeusernames != '' ">UPGRADETHREEUSERNAMES ,</if>
+            <if test="ispost != null  and ispost != '' ">ISPOST ,</if>
+            <if test="issetplandate != null  and issetplandate != '' ">ISSETPLANDATE ,</if>
+            <if test="days != null  and days != '' ">DAYS ,</if>
+            <if test="daytype != null  and daytype != '' ">DAYTYPE ,</if>
+            <if test="issp != null  and issp != '' ">ISSP ,</if>
+
+        </trim>
+        )
+        VALUES(
+        <trim suffixOverrides=",">
+            <if test="id != null  and id != '' ">#{id} ,</if>
+            <if test="flowdraftno != null  and flowdraftno != '' ">#{flowdraftno} ,</if>
+            <if test="flowdraftname != null  and flowdraftname != '' ">#{flowdraftname} ,</if>
+            <if test="depno != null  and depno != '' ">#{depno} ,</if>
+            <if test="depname != null  and depname != '' ">#{depname} ,</if>
+            <if test="flownodecode != null  and flownodecode != '' ">#{flownodecode} ,</if>
+            <if test="flownodename != null  and flownodename != '' ">#{flownodename} ,</if>
+            <if test="ispretimeout != null  and ispretimeout != '' ">#{ispretimeout} ,</if>
+            <if test="pretime != null  and pretime != '' ">#{pretime} ,</if>
+            <if test="ispretimesms != null  and ispretimesms != '' ">#{ispretimesms} ,</if>
+            <if test="pretimesms != null  and pretimesms != '' ">#{pretimesms} ,</if>
+            <if test="ispretimemail != null  and ispretimemail != '' ">#{ispretimemail} ,</if>
+            <if test="pretimemail != null  and pretimemail != '' ">#{pretimemail} ,</if>
+            <if test="ispretimework != null  and ispretimework != '' ">#{ispretimework} ,</if>
+            <if test="pretimework != null  and pretimework != '' ">#{pretimework} ,</if>
+            <if test="istimeout != null  and istimeout != '' ">#{istimeout} ,</if>
+            <if test="timeout != null  and timeout != '' ">#{timeout} ,</if>
+            <if test="istimeoutsms != null  and istimeoutsms != '' ">#{istimeoutsms} ,</if>
+            <if test="timeoutsms != null  and timeoutsms != '' ">#{timeoutsms} ,</if>
+            <if test="istimeoutmail != null  and istimeoutmail != '' ">#{istimeoutmail} ,</if>
+            <if test="timeoutmail != null  and timeoutmail != '' ">#{timeoutmail} ,</if>
+            <if test="istimeoutwork != null  and istimeoutwork != '' ">#{istimeoutwork} ,</if>
+            <if test="timeoutwork != null  and timeoutwork != '' ">#{timeoutwork} ,</if>
+            <if test="isurgent != null  and isurgent != '' ">#{isurgent} ,</if>
+            <if test="isacturgent != null  and isacturgent != '' ">#{isacturgent} ,</if>
+            <if test="urgenttime != null  and urgenttime != '' ">#{urgenttime} ,</if>
+            <if test="isupgradeone != null  and isupgradeone != '' ">#{isupgradeone} ,</if>
+            <if test="upgradeone != null  and upgradeone != '' ">#{upgradeone} ,</if>
+            <if test="ismanagerone != null  and ismanagerone != '' ">#{ismanagerone} ,</if>
+            <if test="upgradeoneusernos != null  and upgradeoneusernos != '' ">#{upgradeoneusernos} ,</if>
+            <if test="upgradeoneusertype != null  and upgradeoneusertype != '' ">#{upgradeoneusertype} ,</if>
+            <if test="isupgradeonesms != null  and isupgradeonesms != '' ">#{isupgradeonesms} ,</if>
+            <if test="upgradeonesms != null  and upgradeonesms != '' ">#{upgradeonesms} ,</if>
+            <if test="isupgradeonemail != null  and isupgradeonemail != '' ">#{isupgradeonemail} ,</if>
+            <if test="upgradeonemail != null  and upgradeonemail != '' ">#{upgradeonemail} ,</if>
+            <if test="isupgradeonework != null  and isupgradeonework != '' ">#{isupgradeonework} ,</if>
+            <if test="upgradeonework != null  and upgradeonework != '' ">#{upgradeonework} ,</if>
+            <if test="isupgradeonecurrentsms != null  and isupgradeonecurrentsms != '' ">#{isupgradeonecurrentsms} ,
+            </if>
+            <if test="upgradeonecurrentsms != null  and upgradeonecurrentsms != '' ">#{upgradeonecurrentsms} ,</if>
+            <if test="isupgradeonecurrentmail != null  and isupgradeonecurrentmail != '' ">#{isupgradeonecurrentmail}
+                ,
+            </if>
+            <if test="upgradeonecurrentmail != null  and upgradeonecurrentmail != '' ">#{upgradeonecurrentmail} ,</if>
+            <if test="isupgradeonecurrentwork != null  and isupgradeonecurrentwork != '' ">#{isupgradeonecurrentwork}
+                ,
+            </if>
+            <if test="upgradeonecurrentwork != null  and upgradeonecurrentwork != '' ">#{upgradeonecurrentwork} ,</if>
+            <if test="isupgradetwo != null  and isupgradetwo != '' ">#{isupgradetwo} ,</if>
+            <if test="upgradetwo != null  and upgradetwo != '' ">#{upgradetwo} ,</if>
+            <if test="ismanagertwo != null  and ismanagertwo != '' ">#{ismanagertwo} ,</if>
+            <if test="upgradetwousernos != null  and upgradetwousernos != '' ">#{upgradetwousernos} ,</if>
+            <if test="upgradetwousertype != null  and upgradetwousertype != '' ">#{upgradetwousertype} ,</if>
+            <if test="isupgradetwosms != null  and isupgradetwosms != '' ">#{isupgradetwosms} ,</if>
+            <if test="upgradetwosms != null  and upgradetwosms != '' ">#{upgradetwosms} ,</if>
+            <if test="isupgradetwomail != null  and isupgradetwomail != '' ">#{isupgradetwomail} ,</if>
+            <if test="upgradetwomail != null  and upgradetwomail != '' ">#{upgradetwomail} ,</if>
+            <if test="isupgradetwowork != null  and isupgradetwowork != '' ">#{isupgradetwowork} ,</if>
+            <if test="upgradetwowork != null  and upgradetwowork != '' ">#{upgradetwowork} ,</if>
+            <if test="isupgradetwocurrentsms != null  and isupgradetwocurrentsms != '' ">#{isupgradetwocurrentsms} ,
+            </if>
+            <if test="upgradetwocurrentsms != null  and upgradetwocurrentsms != '' ">#{upgradetwocurrentsms} ,</if>
+            <if test="isupgradetwocurrentmail != null  and isupgradetwocurrentmail != '' ">#{isupgradetwocurrentmail}
+                ,
+            </if>
+            <if test="upgradetwocurrentmail != null  and upgradetwocurrentmail != '' ">#{upgradetwocurrentmail} ,</if>
+            <if test="isupgradetwocurrentwork != null  and isupgradetwocurrentwork != '' ">#{isupgradetwocurrentwork}
+                ,
+            </if>
+            <if test="upgradetwocurrentwork != null  and upgradetwocurrentwork != '' ">#{upgradetwocurrentwork} ,</if>
+            <if test="isupgradethree != null  and isupgradethree != '' ">#{isupgradethree} ,</if>
+            <if test="upgradethree != null  and upgradethree != '' ">#{upgradethree} ,</if>
+            <if test="ismanagerthree != null  and ismanagerthree != '' ">#{ismanagerthree} ,</if>
+            <if test="upgradethreeusernos != null  and upgradethreeusernos != '' ">#{upgradethreeusernos} ,</if>
+            <if test="upgradethreeusertype != null  and upgradethreeusertype != '' ">#{upgradethreeusertype} ,</if>
+            <if test="isupgradethreesms != null  and isupgradethreesms != '' ">#{isupgradethreesms} ,</if>
+            <if test="upgradethreesms != null  and upgradethreesms != '' ">#{upgradethreesms} ,</if>
+            <if test="isupgradethreemail != null  and isupgradethreemail != '' ">#{isupgradethreemail} ,</if>
+            <if test="upgradethreemail != null  and upgradethreemail != '' ">#{upgradethreemail} ,</if>
+            <if test="isupgradethreework != null  and isupgradethreework != '' ">#{isupgradethreework} ,</if>
+            <if test="upgradethreework != null  and upgradethreework != '' ">#{upgradethreework} ,</if>
+            <if test="isupgradethreecurrentsms != null  and isupgradethreecurrentsms != '' ">#{isupgradethreecurrentsms}
+                ,
+            </if>
+            <if test="upgradethreecurrentsms != null  and upgradethreecurrentsms != '' ">#{upgradethreecurrentsms} ,
+            </if>
+            <if test="isupgradethreecurrentmail != null  and isupgradethreecurrentmail != '' ">
+                #{isupgradethreecurrentmail} ,
+            </if>
+            <if test="upgradethreecurrentmail != null  and upgradethreecurrentmail != '' ">#{upgradethreecurrentmail}
+                ,
+            </if>
+            <if test="isupgradethreecurrentwork != null  and isupgradethreecurrentwork != '' ">
+                #{isupgradethreecurrentwork} ,
+            </if>
+            <if test="upgradethreecurrentwork != null  and upgradethreecurrentwork != '' ">#{upgradethreecurrentwork}
+                ,
+            </if>
+            <if test="upgradeoneusernames != null  and upgradeoneusernames != '' ">#{upgradeoneusernames} ,</if>
+            <if test="upgradetwousernames != null  and upgradetwousernames != '' ">#{upgradetwousernames} ,</if>
+            <if test="upgradethreeusernames != null  and upgradethreeusernames != '' ">#{upgradethreeusernames} ,</if>
+            <if test="ispost != null  and ispost != '' ">#{ispost} ,</if>
+            <if test="issetplandate != null  and issetplandate != '' ">#{issetplandate} ,</if>
+            <if test="days != null  and days != '' ">#{days} ,</if>
+            <if test="daytype != null  and daytype != '' ">#{daytype} ,</if>
+            <if test="issp != null  and issp != '' ">#{issp} ,</if>
+
+        </trim>
+        )
+    </insert>
+
+    <!--通过id查询  k6991 2021-01-12 -->
+    <select id="queryDetail" parameterType="ppmSlaSetinfo" resultMap="PPMSLASETINFO_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM PPM_SLA_SETINFO
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="id != null  and id != '' ">ID = #{id} AND</if>
+            <if test="flowdraftno != null  and flowdraftno != '' ">FLOWDRAFTNO = #{flowdraftno} AND</if>
+            <if test="flownodecode != null  and flownodecode != '' ">FLOWNODECODE=#{flownodecode} AND</if>
+            <if test="true">ROWNUM=1 AND</if>
+        </trim>
+    </select>
+
+    <!--查询集合  k6991 2021-01-12 -->
+    <select id="getList" parameterType="ppmSlaSetinfo" resultMap="PPMSLASETINFO_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM PPM_SLA_SETINFO
+        <include refid="sql_select_condition"/>
+    </select>
+    <!-- update sql -->
+    <sql id="update_pojo_sql">
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="id != null  and id != '' ">ID=#{id} ,</if>
+            <if test="flowdraftno != null  and flowdraftno != '' ">FLOWDRAFTNO=#{flowdraftno} ,</if>
+            <if test="flowdraftname != null  and flowdraftname != '' ">FLOWDRAFTNAME=#{flowdraftname} ,</if>
+            <if test="depno != null  and depno != '' ">DEPNO=#{depno} ,</if>
+            <if test="depname != null  and depname != '' ">DEPNAME=#{depname} ,</if>
+            <if test="flownodecode != null  and flownodecode != '' ">FLOWNODECODE=#{flownodecode} ,</if>
+            <if test="flownodename != null  and flownodename != '' ">FLOWNODENAME=#{flownodename} ,</if>
+            <if test="ispretimeout != null  and ispretimeout != '' ">ISPRETIMEOUT=#{ispretimeout} ,</if>
+            <if test="pretime != null  and pretime != '' ">PRETIME=#{pretime} ,</if>
+            <if test="ispretimesms != null  and ispretimesms != '' ">ISPRETIMESMS=#{ispretimesms} ,</if>
+            <if test="pretimesms != null  and pretimesms != '' ">PRETIMESMS=#{pretimesms} ,</if>
+            <if test="ispretimemail != null  and ispretimemail != '' ">ISPRETIMEMAIL=#{ispretimemail} ,</if>
+            <if test="pretimemail != null  and pretimemail != '' ">PRETIMEMAIL=#{pretimemail} ,</if>
+            <if test="ispretimework != null  and ispretimework != '' ">ISPRETIMEWORK=#{ispretimework} ,</if>
+            <if test="pretimework != null  and pretimework != '' ">PRETIMEWORK=#{pretimework} ,</if>
+            <if test="istimeout != null  and istimeout != '' ">ISTIMEOUT=#{istimeout} ,</if>
+            <if test="timeout != null  and timeout != '' ">TIMEOUT=#{timeout} ,</if>
+            <if test="istimeoutsms != null  and istimeoutsms != '' ">ISTIMEOUTSMS=#{istimeoutsms} ,</if>
+            <if test="timeoutsms != null  and timeoutsms != '' ">TIMEOUTSMS=#{timeoutsms} ,</if>
+            <if test="istimeoutmail != null  and istimeoutmail != '' ">ISTIMEOUTMAIL=#{istimeoutmail} ,</if>
+            <if test="timeoutmail != null  and timeoutmail != '' ">TIMEOUTMAIL=#{timeoutmail} ,</if>
+            <if test="istimeoutwork != null  and istimeoutwork != '' ">ISTIMEOUTWORK=#{istimeoutwork} ,</if>
+            <if test="timeoutwork != null  and timeoutwork != '' ">TIMEOUTWORK=#{timeoutwork} ,</if>
+            <if test="isurgent != null  and isurgent != '' ">ISURGENT=#{isurgent} ,</if>
+            <if test="isacturgent != null  and isacturgent != '' ">ISACTURGENT=#{isacturgent} ,</if>
+            <if test="urgenttime != null  and urgenttime != '' ">URGENTTIME=#{urgenttime} ,</if>
+            <if test="isupgradeone != null  and isupgradeone != '' ">ISUPGRADEONE=#{isupgradeone} ,</if>
+            <if test="upgradeone != null  and upgradeone != '' ">UPGRADEONE=#{upgradeone} ,</if>
+            <if test="ismanagerone != null  and ismanagerone != '' ">ISMANAGERONE=#{ismanagerone} ,</if>
+            <if test="upgradeoneusernos != null  and upgradeoneusernos != '' ">UPGRADEONEUSERNOS=#{upgradeoneusernos}
+                ,
+            </if>
+            <if test="upgradeoneusertype != null  and upgradeoneusertype != '' ">
+                UPGRADEONEUSERTYPE=#{upgradeoneusertype} ,
+            </if>
+            <if test="isupgradeonesms != null  and isupgradeonesms != '' ">ISUPGRADEONESMS=#{isupgradeonesms} ,</if>
+            <if test="upgradeonesms != null  and upgradeonesms != '' ">UPGRADEONESMS=#{upgradeonesms} ,</if>
+            <if test="isupgradeonemail != null  and isupgradeonemail != '' ">ISUPGRADEONEMAIL=#{isupgradeonemail} ,</if>
+            <if test="upgradeonemail != null  and upgradeonemail != '' ">UPGRADEONEMAIL=#{upgradeonemail} ,</if>
+            <if test="isupgradeonework != null  and isupgradeonework != '' ">ISUPGRADEONEWORK=#{isupgradeonework} ,</if>
+            <if test="upgradeonework != null  and upgradeonework != '' ">UPGRADEONEWORK=#{upgradeonework} ,</if>
+            <if test="isupgradeonecurrentsms != null  and isupgradeonecurrentsms != '' ">
+                ISUPGRADEONECURRENTSMS=#{isupgradeonecurrentsms} ,
+            </if>
+            <if test="upgradeonecurrentsms != null  and upgradeonecurrentsms != '' ">
+                UPGRADEONECURRENTSMS=#{upgradeonecurrentsms} ,
+            </if>
+            <if test="isupgradeonecurrentmail != null  and isupgradeonecurrentmail != '' ">
+                ISUPGRADEONECURRENTMAIL=#{isupgradeonecurrentmail} ,
+            </if>
+            <if test="upgradeonecurrentmail != null  and upgradeonecurrentmail != '' ">
+                UPGRADEONECURRENTMAIL=#{upgradeonecurrentmail} ,
+            </if>
+            <if test="isupgradeonecurrentwork != null  and isupgradeonecurrentwork != '' ">
+                ISUPGRADEONECURRENTWORK=#{isupgradeonecurrentwork} ,
+            </if>
+            <if test="upgradeonecurrentwork != null  and upgradeonecurrentwork != '' ">
+                UPGRADEONECURRENTWORK=#{upgradeonecurrentwork} ,
+            </if>
+            <if test="isupgradetwo != null  and isupgradetwo != '' ">ISUPGRADETWO=#{isupgradetwo} ,</if>
+            <if test="upgradetwo != null  and upgradetwo != '' ">UPGRADETWO=#{upgradetwo} ,</if>
+            <if test="ismanagertwo != null  and ismanagertwo != '' ">ISMANAGERTWO=#{ismanagertwo} ,</if>
+            <if test="upgradetwousernos != null  and upgradetwousernos != '' ">UPGRADETWOUSERNOS=#{upgradetwousernos}
+                ,
+            </if>
+            <if test="upgradetwousertype != null  and upgradetwousertype != '' ">
+                UPGRADETWOUSERTYPE=#{upgradetwousertype} ,
+            </if>
+            <if test="isupgradetwosms != null  and isupgradetwosms != '' ">ISUPGRADETWOSMS=#{isupgradetwosms} ,</if>
+            <if test="upgradetwosms != null  and upgradetwosms != '' ">UPGRADETWOSMS=#{upgradetwosms} ,</if>
+            <if test="isupgradetwomail != null  and isupgradetwomail != '' ">ISUPGRADETWOMAIL=#{isupgradetwomail} ,</if>
+            <if test="upgradetwomail != null  and upgradetwomail != '' ">UPGRADETWOMAIL=#{upgradetwomail} ,</if>
+            <if test="isupgradetwowork != null  and isupgradetwowork != '' ">ISUPGRADETWOWORK=#{isupgradetwowork} ,</if>
+            <if test="upgradetwowork != null  and upgradetwowork != '' ">UPGRADETWOWORK=#{upgradetwowork} ,</if>
+            <if test="isupgradetwocurrentsms != null  and isupgradetwocurrentsms != '' ">
+                ISUPGRADETWOCURRENTSMS=#{isupgradetwocurrentsms} ,
+            </if>
+            <if test="upgradetwocurrentsms != null  and upgradetwocurrentsms != '' ">
+                UPGRADETWOCURRENTSMS=#{upgradetwocurrentsms} ,
+            </if>
+            <if test="isupgradetwocurrentmail != null  and isupgradetwocurrentmail != '' ">
+                ISUPGRADETWOCURRENTMAIL=#{isupgradetwocurrentmail} ,
+            </if>
+            <if test="upgradetwocurrentmail != null  and upgradetwocurrentmail != '' ">
+                UPGRADETWOCURRENTMAIL=#{upgradetwocurrentmail} ,
+            </if>
+            <if test="isupgradetwocurrentwork != null  and isupgradetwocurrentwork != '' ">
+                ISUPGRADETWOCURRENTWORK=#{isupgradetwocurrentwork} ,
+            </if>
+            <if test="upgradetwocurrentwork != null  and upgradetwocurrentwork != '' ">
+                UPGRADETWOCURRENTWORK=#{upgradetwocurrentwork} ,
+            </if>
+            <if test="isupgradethree != null  and isupgradethree != '' ">ISUPGRADETHREE=#{isupgradethree} ,</if>
+            <if test="upgradethree != null  and upgradethree != '' ">UPGRADETHREE=#{upgradethree} ,</if>
+            <if test="ismanagerthree != null  and ismanagerthree != '' ">ISMANAGERTHREE=#{ismanagerthree} ,</if>
+            <if test="upgradethreeusernos != null  and upgradethreeusernos != '' ">
+                UPGRADETHREEUSERNOS=#{upgradethreeusernos} ,
+            </if>
+            <if test="upgradethreeusertype != null  and upgradethreeusertype != '' ">
+                UPGRADETHREEUSERTYPE=#{upgradethreeusertype} ,
+            </if>
+            <if test="isupgradethreesms != null  and isupgradethreesms != '' ">ISUPGRADETHREESMS=#{isupgradethreesms}
+                ,
+            </if>
+            <if test="upgradethreesms != null  and upgradethreesms != '' ">UPGRADETHREESMS=#{upgradethreesms} ,</if>
+            <if test="isupgradethreemail != null  and isupgradethreemail != '' ">
+                ISUPGRADETHREEMAIL=#{isupgradethreemail} ,
+            </if>
+            <if test="upgradethreemail != null  and upgradethreemail != '' ">UPGRADETHREEMAIL=#{upgradethreemail} ,</if>
+            <if test="isupgradethreework != null  and isupgradethreework != '' ">
+                ISUPGRADETHREEWORK=#{isupgradethreework} ,
+            </if>
+            <if test="upgradethreework != null  and upgradethreework != '' ">UPGRADETHREEWORK=#{upgradethreework} ,</if>
+            <if test="isupgradethreecurrentsms != null  and isupgradethreecurrentsms != '' ">
+                ISUPGRADETHREECURRENTSMS=#{isupgradethreecurrentsms} ,
+            </if>
+            <if test="upgradethreecurrentsms != null  and upgradethreecurrentsms != '' ">
+                UPGRADETHREECURRENTSMS=#{upgradethreecurrentsms} ,
+            </if>
+            <if test="isupgradethreecurrentmail != null  and isupgradethreecurrentmail != '' ">
+                ISUPGRADETHREECURRENTMAIL=#{isupgradethreecurrentmail} ,
+            </if>
+            <if test="upgradethreecurrentmail != null  and upgradethreecurrentmail != '' ">
+                UPGRADETHREECURRENTMAIL=#{upgradethreecurrentmail} ,
+            </if>
+            <if test="isupgradethreecurrentwork != null  and isupgradethreecurrentwork != '' ">
+                ISUPGRADETHREECURRENTWORK=#{isupgradethreecurrentwork} ,
+            </if>
+            <if test="upgradethreecurrentwork != null  and upgradethreecurrentwork != '' ">
+                UPGRADETHREECURRENTWORK=#{upgradethreecurrentwork} ,
+            </if>
+            <if test="upgradeoneusernames != null  and upgradeoneusernames != '' ">
+                UPGRADEONEUSERNAMES=#{upgradeoneusernames} ,
+            </if>
+            <if test="upgradetwousernames != null  and upgradetwousernames != '' ">
+                UPGRADETWOUSERNAMES=#{upgradetwousernames} ,
+            </if>
+            <if test="upgradethreeusernames != null  and upgradethreeusernames != '' ">
+                UPGRADETHREEUSERNAMES=#{upgradethreeusernames} ,
+            </if>
+            <if test="ispost != null  and ispost != '' ">ISPOST=#{ispost} ,</if>
+            <if test="issetplandate != null  and issetplandate != '' ">ISSETPLANDATE=#{issetplandate} ,</if>
+            <if test="days != null  and days != '' ">DAYS=#{days} ,</if>
+            <if test="daytype != null  and daytype != '' ">DAYTYPE=#{daytype} ,</if>
+            <if test="issp != null  and issp != '' ">ISSP=#{issp} ,</if>
+
+        </trim>
+    </sql>
+
+    <!--通过id编辑 k6991 2021-01-12 -->
+    <update id="updatePojo" parameterType="ppmSlaSetinfo">
+        UPDATE
+        PPM_SLA_SETINFO
+        <include refid="update_pojo_sql"/>
+        WHERE ID=#{id}
+    </update>
+
+    <!--通过id批量删除  k6991 2021-01-12 -->
+    <delete id="deleteById" parameterType="ppmSlaSetinfo">
+        DELETE
+        FROM
+        PPM_SLA_SETINFO
+        WHERE ID = #{id}
+    </delete>
+
+</mapper>

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k6991 2020-08-14 -->
+<mapper namespace="com.work.ppm.application.model.basismanager.PpmKqDutyPlan">
+	 <resultMap type="ppmKqDutyPlan" id="PPMKQDUTYPLAN_ALL">
+        <result property="id" column="ID" />
+		<result property="kqType" column="KQ_TYPE" />
+		<result property="code" column="CODE" />
+		<result property="name" column="NAME" />
+		<result property="createDate" column="CREATE_DATE" />
+		<result property="startDate1" column="START_DATE1" />
+		<result property="endDate1" column="END_DATE1" />
+		<result property="startDate2" column="START_DATE2" />
+		<result property="endDate2" column="END_DATE2" />
+		<result property="overtime" column="OVERTIME" />
+		<result property="overHour" column="OVER_HOUR" />
+		<result property="workHour" column="WORK_HOUR" />
+		<result property="isOvettime" column="IS_OVETTIME" />
+		<result property="isXiujia" column="IS_XIUJIA" />
+		<result property="isOutdate" column="IS_OUTDATE" />
+		<result property="isFract" column="IS_FRACT" />
+		<result property="isLunban" column="IS_LUNBAN" />
+
+     </resultMap>
+
+     <!-- 所有字段名称 -->
+        <sql id="sql_flied_all">
+        	ID,
+			KQ_TYPE,
+			CODE,
+			NAME,
+			CREATE_DATE,
+			START_DATE1,
+			END_DATE1,
+			START_DATE2,
+			END_DATE2,
+			OVERTIME,
+			OVER_HOUR,
+			WORK_HOUR,
+			IS_OVETTIME,
+			IS_XIUJIA,
+			IS_OUTDATE,
+			IS_FRACT,
+			IS_LUNBAN
+        </sql>
+        <sql id="sql_select_condition">
+            <trim prefix="WHERE" suffixOverrides="AND">
+                <if test="id != null " > ID = #{id} AND </if>
+				<if test="kqType != null  and kqType != '' " > KQ_TYPE = #{kqType} AND </if>
+				<if test="code != null  and code != '' " > CODE = #{code} AND </if>
+				<if test="name != null  and name != '' " > NAME = #{name} AND </if>
+				<if test="createDate != null " > CREATE_DATE = #{createDate} AND </if>
+				<if test="startDate1 != null  and startDate1 != '' " > START_DATE1 = #{startDate1} AND </if>
+				<if test="endDate1 != null  and endDate1 != '' " > END_DATE1 = #{endDate1} AND </if>
+				<if test="startDate2 != null  and startDate2 != '' " > START_DATE2 = #{startDate2} AND </if>
+				<if test="endDate2 != null  and endDate2 != '' " > END_DATE2 = #{endDate2} AND </if>
+				<if test="overtime != null  and overtime != '' " > OVERTIME = #{overtime} AND </if>
+				<if test="overHour != null " > OVER_HOUR = #{overHour} AND </if>
+				<if test="workHour != null " > WORK_HOUR = #{workHour} AND </if>
+				<if test="isOvettime != null  and isOvettime != '' " > IS_OVETTIME = #{isOvettime} AND </if>
+				<if test="isXiujia != null  and isXiujia != '' " > IS_XIUJIA = #{isXiujia} AND </if>
+				<if test="isOutdate != null  and isOutdate != '' " > IS_OUTDATE = #{isOutdate} AND </if>
+				<if test="isFract != null  and isFract != '' " > IS_FRACT = #{isFract} AND </if>
+				<if test="isLunban != null  and isLunban != '' " > IS_LUNBAN = #{isLunban} AND </if>
+            </trim>
+        </sql>
+
+         <!--查询考勤类型集合  k6991 2020-08-14 -->
+        <select id="getKqTypeList" parameterType="ppmKqDutyPlan" resultMap="PPMKQDUTYPLAN_ALL">
+			select kq_type KQ_TYPE,( case when instr(trim(t.name),'周')>0 then substr(t.name,3)
+			when instr(trim(t.name),'星期')>0 then substr(t.name,4)
+			else t.name end
+			)||'('||kq_type||')' name from ppm_kq_duty_plan t where (t.is_lunban is null or t.is_lunban='0' ) group by t.kq_type,
+			( case when instr(trim(t.name),'周')>0 then substr(t.name,3)
+			when instr(trim(t.name),'星期')>0 then substr(t.name,4)
+			else t.name end
+			)
+			union
+			select 'XXXXXX' KQTYPE,'轮班制' name  from dual
+			union
+			select 'YYYYYY' KQYPE,'不考勤' name  from dual
+        </select>
+        <!-- 根据考勤类型查询考勤时间 2020-08-17 k6991 -->
+        <select id="getKqTime" parameterType="map" resultMap="PPMKQDUTYPLAN_ALL">
+            select t.start_date1||'-'||t.end_date1 START_DATE1,
+            ( case when t.start_date2 is null then ''
+            else  t.start_date2||'-'||t.end_date2  end
+            ) END_DATE1   from ppm_kq_duty_plan t
+            <if test="kqType != null and kqType != ''"> where t.kq_type =#{kqType} </if>
+            group by t.kq_type,
+            ( case when instr(trim(t.name),'周')>0 then substr(t.name,3)
+            when instr(trim(t.name),'星期')>0 then substr(t.name,4)
+            else t.name end
+            ),t.start_date1,t.end_date1,t.start_date2,t.end_date2
+        </select>
+</mapper>

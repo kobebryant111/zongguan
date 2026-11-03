@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+	   http://www.springframework.org/schema/beans/spring-beans.xsd
+	   http://code.alibabatech.com/schema/dubbo
+	   http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+    <dubbo:application name="${dubbo.application}"/>
+    <dubbo:registry address="${dubbo.address}"/>
+    <dubbo:protocol name="dubbo" port="${dubbo.port}"/>
+    <bean id="workflowServiceProvider" class="com.tansun.wf.activiti.service.WorkflowService"/>
+    <dubbo:service interface="com.tansun.workflow.api.IWorkflowService" ref="workflowServiceProvider"/>
+	
+	<dubbo:reference id="iworkflowController" interface="com.tansun.workflow.api.IWorkflowController" timeout="10000" check="false"/>
+	
+	<dubbo:reference id="iWorkflowEditorService" interface="com.tansun.workflow.api.IWorkflowEditorService" timeout="10000" check="false"/>
+</beans>

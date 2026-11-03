@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+  
+<mapper namespace="com.tansun.wf.activiti.mapper.WfClassifyMapper">
+
+  <resultMap id="classifyCompletedResultMap" type="com.tansun.wf.activiti.model.ClassifyEntity">
+    <id property="id" column="ID" jdbcType="VARCHAR" />
+    <result property="parent_id" column="PARENT_ID" jdbcType="VARCHAR" />
+    <result property="parent_ids" column="PARENT_IDS" jdbcType="VARCHAR" />
+    <result property="name" column="NAME" jdbcType="VARCHAR" />
+    <result property="sort" column="SORT" jdbcType="DECIMAL" />
+    <result property="code" column="CODE" jdbcType="VARCHAR" />
+    <result property="type" column="TYPE" jdbcType="CHAR" />
+    <result property="USEABLE" column="USEABLE" jdbcType="VARCHAR" />
+    <result property="create_by" column="CREATE_BY" jdbcType="VARCHAR" />
+    <result property="create_date" column="CREAT_DATE" jdbcType="DATE" />
+    <result property="update_by" column="UPDATE_BY" jdbcType="VARCHAR" />
+    <result property="update_date" column="UPDATE_DATE" jdbcType="DATE" />
+    <result property="remarks" column="REMARKS" jdbcType="VARCHAR" />
+    <result property="del_flag" column="DEL_FLAG" jdbcType="CHAR" />
+  </resultMap>
+
+
+  <select id="selectWfClassifyCompletedCountByQueryCriteria" parameterType="com.tansun.wf.activiti.model.ClassifyEntity" resultType="long">
+    select count(RES.id)
+    <include refid="selectWfClassifyCompletedByQueryCriteriaSql"/>
+  </select>
+
+  <select id="selectWfClassifyCompletedByQueryCriteria" parameterType="com.tansun.wf.activiti.model.ClassifyEntity" resultType="com.tansun.wf.activiti.model.ClassifyEntity">
+    ${limitBefore}
+      select
+      RES.id AS id,
+      RES.parent_id AS parent_id,
+      <if test="databaseType =='oracle'">
+          to_char(RES.parent_ids) AS parent_ids,
+      </if>
+      <if test="databaseType !='oracle'">
+          RES.parent_ids AS parent_ids,
+      </if>
+      RES.name AS name,
+      RES.sort AS sort,
+      RES.code AS code,
+      RES.type AS type,
+      RES.USEABLE AS USEABLE,
+      RES.create_by AS create_by,
+      RES.create_date AS create_date ,
+      RES.update_by AS update_by ,
+      RES.update_date AS update_date,
+      RES.remarks AS remarks,
+      RES.del_flag AS del_flag,
+      COUNT(*) AS total
+      ${limitBetween}
+    <include refid="selectWfClassifyCompletedByQueryCriteriaSql"/>
+
+    ${limitAfter}
+  </select>
+
+  <sql id="selectWfClassifyCompletedByQueryCriteriaSql">
+    from 
+    (SELECT wpc.* FROM WF_PROCESS_CLASSIFY wpc , ACT_RE_PROCDEF arp 
+    <if test="isEnd != null and isEnd !=''">
+     ,ACT_HI_PROCINST ahp
+    </if>
+    ,ACT_HI_TASKINST aht
+      <!-- 已办任务去重 1 = 每条流程实例只显示每个节点最后处理的任务，2  只显示流程最后处理的已办任务 -->
+      <if test="singleHiTaskStatus == 1 || singleHiTaskStatus == 2">
+          INNER JOIN (
+          SELECT DISTINCT
+          htk.PROC_INST_ID_,
+          <if test="singleHiTaskStatus == 1">
+              htk.TASK_DEF_KEY_,
+          </if>
+          MAX( htk.END_TIME_ ) AS END_TIME_
+          FROM
+          act_hi_taskinst htk
+          <where>
+              htk.DELETE_REASON_ != 'delete'
+              AND htk.DELETE_REASON_ != 'reback'
+              AND htk.DELETE_REASON_ != 'TansunBackDelete'
+              <if test="userId != null  and userId!=''">
+                  AND htk.ASSIGNEE_ = #{userId}
+              </if>
+          </where>
+          GROUP BY
+          <if test="singleHiTaskStatus == 1">
+              htk.TASK_DEF_KEY_,
+          </if>
+          htk.PROC_INST_ID_
+          ORDER BY
+          htk.PROC_INST_ID_) singleHi ON aht.PROC_INST_ID_ = singleHi.PROC_INST_ID_
+          AND aht.END_TIME_ = singleHi.END_TIME_
+      </if>
+    <where>
+        aht.DELETE_REASON_ != 'delete'
+        AND aht.DELETE_REASON_ != 'reback'
+        AND aht.DELETE_REASON_ != 'TansunBackDelete'
+        AND wpc.id = arp.CATEGORY_
+        AND arp.ID_ = aht.PROC_DEF_ID_
+
+      <if test="userId != null">
+      	AND aht.ASSIGNEE_ = #{userId}
+      </if>
+      <if test="isTerminateProcess != null and isTerminateProcess!=''">
+      	AND aht.DELETE_REASON_ != #{isTerminateProcess}
+      </if>
+      <if test="code != null and code != ''">
+      	AND wpc.code = #{code}
+      </if>
+      <if test="isEnd == 0">
+      	AND ahp.proc_inst_id_ = aht.proc_inst_id_ AND ahp.END_TIME_ is not null
+      </if>
+      <if test="isEnd == 1">
+      	AND ahp.proc_inst_id_ = aht.proc_inst_id_ AND ahp.END_TIME_ is  null
+      </if>
+        <if test="databaseType =='oracle'">
+            <if test="createTimeBefore != null and createTimeBefore!=''">
+                AND aht.START_TIME_ &lt;= to_timestamp(#{createTimeBefore}||'.999','YYYY-MM-DD HH24:MI:ss.ff3')
+            </if>
+            <if test="createTimeAfter != null and createTimeAfter!=''">
+                AND aht.START_TIME_ &gt;= to_timestamp(#{createTimeAfter}||'.999','YYYY-MM-DD HH24:MI:ss.ff3')
+            </if>
+        </if>
+        <if test="databaseType !='oracle'">
+            <if test="createTimeBefore != null and createTimeBefore!=''">
+                AND aht.START_TIME_ &lt;= #{createTimeBefore}
+            </if>
+            <if test="createTimeAfter != null and createTimeAfter!=''">
+                AND aht.START_TIME_ &gt;= #{createTimeAfter}
+            </if>
+        </if>
+      AND aht.END_TIME_ is not null
+    </where>
+    ) RES
+      GROUP BY
+      RES.id,
+      RES.parent_id,
+      <if test="databaseType =='oracle'">
+          to_char(RES.parent_ids),
+      </if>
+      <if test="databaseType !='oracle'">
+          RES.parent_ids,
+      </if>
+      RES.name,
+      RES.sort,
+      RES.code,
+      RES.type,
+      RES.USEABLE,
+      RES.create_by,
+      RES.create_date,
+      RES.update_by,
+      RES.update_date,
+      RES.remarks,
+      RES.del_flag
+  </sql>
+
+</mapper>

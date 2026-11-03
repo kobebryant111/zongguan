@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k6991 2021-04-16 -->
+<mapper namespace="com.work.ppm.application.model.integratedmanager.PpmAttendanceModify">
+    <resultMap type="ppmAttendanceModify" id="PPMATTENDANCEMODIFY_ALL">
+        <result property="id" column="ID"/>
+        <result property="instanceId" column="INSTANCE_ID"/>
+        <result property="depId" column="DEP_ID"/>
+        <result property="badge" column="BADGE"/>
+        <result property="reasonDes" column="REASON_DES"/>
+        <result property="contentDes" column="CONTENT_DES"/>
+        <result property="addDate" column="ADD_DATE"/>
+        <result property="isdel" column="ISDEL"/>
+        <result property="userName" column="USER_NAME"/>
+    </resultMap>
+
+    <!-- 所有字段名称 -->
+    <sql id="sql_flied_all">
+        ID,
+        INSTANCE_ID,
+        DEP_ID,
+        BADGE,
+        REASON_DES,
+        CONTENT_DES,
+        ADD_DATE,
+        ISDEL,
+        USER_NAME
+    </sql>
+    <sql id="sql_select_condition">
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="id != null ">ID = #{id} AND</if>
+            <if test="instanceId != null  and instanceId != '' ">INSTANCE_ID = #{instanceId} AND</if>
+            <if test="depId != null  and depId != '' ">DEP_ID = #{depId} AND</if>
+            <if test="badge != null  and badge != '' ">BADGE = #{badge} AND</if>
+            <if test="reasonDes != null  and reasonDes != '' ">REASON_DES = #{reasonDes} AND</if>
+            <if test="contentDes != null  and contentDes != '' ">CONTENT_DES = #{contentDes} AND</if>
+            <if test="addDate != null ">ADD_DATE = #{addDate} AND</if>
+            <if test="isdel != null ">ISDEL = #{isdel} AND</if>
+            <if test="userName != null and userName != '' ">USER_NAME = #{userName} AND</if>
+        </trim>
+    </sql>
+
+    <!-- 查询分页  2021-04-16 k6991  -->
+    <select id="queryPagerList" parameterType="map" resultMap="QUERYDETAIL_MAP">
+        SELECT
+        <include refid="sql_flied_all"/>,
+        (SELECT D.LOCATION FROM COMM_DEPARTMENT D WHERE D.DEPID= PPM_ATTENDANCE_MODIFY.DEP_ID) DEPT_NAME
+        FROM PPM_ATTENDANCE_MODIFY
+        <include refid="sql_select_condition"/>
+    </select>
+
+    <!-- 新增  2021-04-16 k6991  -->
+    <insert id="addPojo" parameterType="ppmAttendanceModify">
+        INSERT INTO PPM_ATTENDANCE_MODIFY (
+        <trim suffixOverrides=",">
+            <if test="id != null ">ID ,</if>
+            <if test="instanceId != null  and instanceId != '' ">INSTANCE_ID ,</if>
+            <if test="depId != null  and depId != '' ">DEP_ID ,</if>
+            <if test="badge != null  and badge != '' ">BADGE ,</if>
+            <if test="reasonDes != null  and reasonDes != '' ">REASON_DES ,</if>
+            <if test="contentDes != null  and contentDes != '' ">CONTENT_DES ,</if>
+            <if test="addDate != null ">ADD_DATE ,</if>
+            <if test="isdel != null ">ISDEL ,</if>
+            <if test="userName != null and userName != '' ">USER_NAME ,</if>
+        </trim>
+        )
+        VALUES(
+        <trim suffixOverrides=",">
+            <if test="id != null ">#{id} ,</if>
+            <if test="instanceId != null  and instanceId != '' ">#{instanceId} ,</if>
+            <if test="depId != null  and depId != '' ">#{depId} ,</if>
+            <if test="badge != null  and badge != '' ">#{badge} ,</if>
+            <if test="reasonDes != null  and reasonDes != '' ">#{reasonDes} ,</if>
+            <if test="contentDes != null  and contentDes != '' ">#{contentDes} ,</if>
+            <if test="addDate != null ">#{addDate} ,</if>
+            <if test="isdel != null ">#{isdel} ,</if>
+            <if test="userName != null and userName != '' ">#{userName} ,</if>
+        </trim>
+        )
+    </insert>
+
+    <resultMap id="QUERYDETAIL_MAP" type="ppmAttendanceModifyInfo" extends="PPMATTENDANCEMODIFY_ALL">
+        <result property="deptName" column="DEPT_NAME" />
+    </resultMap>
+
+    <!--通过id查询  k6991 2021-04-16 -->
+    <select id="queryDetail" parameterType="ppmAttendanceModify" resultMap="QUERYDETAIL_MAP">
+        SELECT
+        <include refid="sql_flied_all"/>,
+        (SELECT D.LOCATION FROM COMM_DEPARTMENT D WHERE D.DEPID= PPM_ATTENDANCE_MODIFY.DEP_ID) DEPT_NAME
+
+        FROM PPM_ATTENDANCE_MODIFY WHERE INSTANCE_ID=#{instanceId} AND ROWNUM=1
+    </select>
+
+    <!--查询集合  k6991 2021-04-16 -->
+    <select id="getList" parameterType="ppmAttendanceModify" resultMap="PPMATTENDANCEMODIFY_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM PPM_ATTENDANCE_MODIFY
+        <include refid="sql_select_condition"/>
+    </select>
+    <!-- update sql -->
+    <sql id="update_pojo_sql">
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="id != null ">ID=#{id} ,</if>
+            <if test="instanceId != null  and instanceId != '' ">INSTANCE_ID=#{instanceId} ,</if>
+            <if test="depId != null  and depId != '' ">DEP_ID=#{depId} ,</if>
+            <if test="badge != null  and badge != '' ">BADGE=#{badge} ,</if>
+            <if test="reasonDes != null  and reasonDes != '' ">REASON_DES=#{reasonDes} ,</if>
+            <if test="contentDes != null  and contentDes != '' ">CONTENT_DES=#{contentDes} ,</if>
+            <if test="addDate != null ">ADD_DATE=#{addDate} ,</if>
+            <if test="isdel != null ">ISDEL=#{isdel} ,</if>
+            <if test="userName != null and userName != '' ">USER_NAME = #{userName} ,</if>
+        </trim>
+    </sql>
+
+    <!--通过id编辑 k6991 2021-04-16 -->
+    <update id="updatePojo" parameterType="ppmAttendanceModify">
+        UPDATE
+        PPM_ATTENDANCE_MODIFY
+        <include refid="update_pojo_sql"/>
+        WHERE INSTANCE_ID=#{instanceId}
+    </update>
+
+</mapper>

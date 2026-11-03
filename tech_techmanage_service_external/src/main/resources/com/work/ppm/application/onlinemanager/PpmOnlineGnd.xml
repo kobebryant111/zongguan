@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k4038 2021-11-03 -->
+<mapper namespace="com.work.ppm.application.model.onlinemanager.PpmOnlineGnd">
+	 <resultMap type="ppmOnlineGnd" id="PPMONLINEGND_ALL">
+        <result property="id" column="ID" />
+		<result property="onlineno" column="ONLINENO" />
+		<result property="planeonline" column="PLANEONLINE" />
+		<result property="projectno" column="PROJECTNO" />
+		<result property="subprojectno" column="SUBPROJECTNO" />
+		<result property="userid" column="USERID" />
+		<result property="wkgnd" column="WKGND" />
+		<result property="workload" column="WORKLOAD" />
+		
+     </resultMap>
+
+     <!-- 所有字段名称 -->
+        <sql id="sql_flied_all">
+        	ID,
+			ONLINENO,
+			PLANEONLINE,
+			PROJECTNO,
+			SUBPROJECTNO,
+			USERID,
+			WKGND,
+			WORKLOAD
+        </sql>
+        <sql id="sql_select_condition">
+            <trim prefix="WHERE" suffixOverrides="AND">
+                <if test="id != null " > ID = #{id} AND </if>
+				<if test="onlineno != null  and onlineno != '' " > ONLINENO = #{onlineno} AND </if>
+				<if test="planeonline != null " > PLANEONLINE = #{planeonline} AND </if>
+				<if test="projectno != null  and projectno != '' " > PROJECTNO = #{projectno} AND </if>
+				<if test="subprojectno != null  and subprojectno != '' " > SUBPROJECTNO = #{subprojectno} AND </if>
+				<if test="userid != null  and userid != '' " > USERID = #{userid} AND </if>
+				<if test="wkgnd != null " > WKGND = #{wkgnd} AND </if>
+				<if test="workload != null  and workload != '' " > WORKLOAD = #{workload} AND </if>
+				
+            </trim>
+        </sql>
+    	<!-- 查询分页  2021-11-03 k4038  -->
+        <select id="queryPagerList" parameterType="map" resultMap="PPMONLINEGND_ALL">
+        	SELECT
+            <include refid="sql_flied_all" />
+            FROM PPM_ONLINE_GND
+            <include refid="sql_select_condition" />
+        </select>
+
+        <!-- 新增  2021-11-03 k4038  -->
+        <insert id="addPojo" parameterType="ppmOnlineGnd">
+    		INSERT INTO PPM_ONLINE_GND (
+    		<trim suffixOverrides=",">
+    		 <if test="id != null " > ID , </if>
+				<if test="onlineno != null  and onlineno != '' " > ONLINENO , </if>
+				<if test="planeonline != null " > PLANEONLINE , </if>
+				<if test="projectno != null  and projectno != '' " > PROJECTNO , </if>
+				<if test="subprojectno != null  and subprojectno != '' " > SUBPROJECTNO , </if>
+				<if test="userid != null  and userid != '' " > USERID , </if>
+				<if test="wkgnd != null " > WKGND , </if>
+				<if test="workload != null  and workload != '' " > WORKLOAD , </if>
+				
+              </trim>
+    		)
+    		VALUES(
+    		<trim suffixOverrides=",">
+    		 <if test="id != null " > #{id} , </if>
+				<if test="onlineno != null  and onlineno != '' " > #{onlineno} , </if>
+				<if test="planeonline != null " > #{planeonline} , </if>
+				<if test="projectno != null  and projectno != '' " > #{projectno} , </if>
+				<if test="subprojectno != null  and subprojectno != '' " > #{subprojectno} , </if>
+				<if test="userid != null  and userid != '' " > #{userid} , </if>
+				<if test="wkgnd != null " > #{wkgnd} , </if>
+				<if test="workload != null  and workload != '' " > #{workload} , </if>
+				
+            </trim>
+    		)
+        </insert>
+
+        <!--通过id查询  k4038 2021-11-03 -->
+        <select id="queryDetail" parameterType="ppmOnlineGnd" resultMap="PPMONLINEGND_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_ONLINE_GND  WHERE ID=#{id}
+        </select>
+
+         <!--查询集合  k4038 2021-11-03 -->
+        <select id="getList" parameterType="ppmOnlineGnd" resultMap="PPMONLINEGND_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_ONLINE_GND
+        	<include refid="sql_select_condition" />
+        </select>
+        <!-- update sql -->
+        <sql id="update_pojo_sql">
+        	<trim prefix="SET" suffixOverrides=",">
+        		<if test="id != null " > ID=#{id} , </if>
+				<if test="onlineno != null  and onlineno != '' " > ONLINENO=#{onlineno} , </if>
+				<if test="planeonline != null " > PLANEONLINE=#{planeonline} , </if>
+				<if test="projectno != null  and projectno != '' " > PROJECTNO=#{projectno} , </if>
+				<if test="subprojectno != null  and subprojectno != '' " > SUBPROJECTNO=#{subprojectno} , </if>
+				<if test="userid != null  and userid != '' " > USERID=#{userid} , </if>
+				<if test="wkgnd != null " > WKGND=#{wkgnd} , </if>
+				<if test="workload != null  and workload != '' " > WORKLOAD=#{workload} , </if>
+				
+            </trim>
+        </sql>
+
+        <!--通过id编辑 k4038 2021-11-03 -->
+    	<update id="updatePojo" parameterType="ppmOnlineGnd">
+        	UPDATE
+        	PPM_ONLINE_GND
+        	<include refid="update_pojo_sql" />
+        	WHERE ID=#{id}
+        </update>
+
+        <!--通过id批量删除  k4038 2021-11-03 -->
+        <delete id="deleteById" parameterType="ppmOnlineGnd">
+        	DELETE
+        	FROM
+        	PPM_ONLINE_GND
+        	WHERE ID = #{id}
+        </delete>
+
+</mapper>

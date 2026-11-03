@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:ywwb905 2023-01-16 -->
+<!--  同步采购数据 - 项目供应商信息附件表 查询脚本 -->
+<mapper namespace="com.work.ppm.application.model.suppliermanager.PpmSuppliersSyncFile">
+	 <resultMap type="ppmSuppliersSyncFile" id="PPMSUPPLIERSSYNCFILE_ALL">
+        <result property="id" column="ID" />
+		<result property="xmid" column="XMID" />
+		<result property="xmbh" column="XMBH" />
+		<result property="objectId" column="OBJECT_ID" />
+		<result property="fileNo" column="FILE_NO" />
+		<result property="fileName" column="FILE_NAME" />
+		<result property="isDel" column="IS_DEL" />
+		<result property="createdTime" column="CREATED_TIME" />
+		<result property="modifiedTime" column="MODIFIED_TIME" />
+		
+     </resultMap>
+
+     <!-- 所有字段名称 -->
+    <sql id="sql_flied_all">
+        ID,
+			XMID,
+			XMBH,
+			OBJECT_ID,
+			FILE_NO,
+			FILE_NAME,
+			IS_DEL,
+			CREATED_TIME,
+			MODIFIED_TIME
+    </sql>
+    <sql id="sql_select_condition">
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="id != null " > ID = #{id} AND </if>
+				<if test="xmid != null  and xmid != '' " > XMID = #{xmid} AND </if>
+				<if test="xmbh != null  and xmbh != '' " > XMBH = #{xmbh} AND </if>
+				<if test="objectId != null  and objectId != '' " > OBJECT_ID = #{objectId} AND </if>
+				<if test="fileNo != null  and fileNo != '' " > FILE_NO = #{fileNo} AND </if>
+				<if test="fileName != null  and fileName != '' " > FILE_NAME = #{fileName} AND </if>
+				<if test="isDel != null  and isDel != '' " > IS_DEL = #{isDel} AND </if>
+				<if test="createdTime != null " > CREATED_TIME = #{createdTime} AND </if>
+				<if test="modifiedTime != null " > MODIFIED_TIME = #{modifiedTime} AND </if>
+				
+        </trim>
+    </sql>
+    <!-- 查询分页  2023-01-16 ywwb905  -->
+    <select id="queryPagerList" parameterType="map" resultMap="PPMSUPPLIERSSYNCFILE_ALL">
+        SELECT
+        <include refid="sql_flied_all" />
+        FROM PPM_SUPPLIERS_SYNC_FILE
+        <include refid="sql_select_condition" />
+    </select>
+
+    <!-- 新增  2023-01-16 ywwb905  -->
+    <insert id="addPojo" parameterType="ppmSuppliersSyncFile">
+        INSERT INTO PPM_SUPPLIERS_SYNC_FILE (
+        <trim suffixOverrides=",">
+         <if test="id != null " > ID , </if>
+				<if test="xmid != null  and xmid != '' " > XMID , </if>
+				<if test="xmbh != null  and xmbh != '' " > XMBH , </if>
+				<if test="objectId != null  and objectId != '' " > OBJECT_ID , </if>
+				<if test="fileNo != null  and fileNo != '' " > FILE_NO , </if>
+				<if test="fileName != null  and fileName != '' " > FILE_NAME , </if>
+				<if test="isDel != null  and isDel != '' " > IS_DEL , </if>
+				<if test="createdTime != null " > CREATED_TIME , </if>
+				<if test="modifiedTime != null " > MODIFIED_TIME , </if>
+				
+          </trim>
+        )
+        VALUES(
+        <trim suffixOverrides=",">
+         <if test="id != null " > #{id} , </if>
+				<if test="xmid != null  and xmid != '' " > #{xmid} , </if>
+				<if test="xmbh != null  and xmbh != '' " > #{xmbh} , </if>
+				<if test="objectId != null  and objectId != '' " > #{objectId} , </if>
+				<if test="fileNo != null  and fileNo != '' " > #{fileNo} , </if>
+				<if test="fileName != null  and fileName != '' " > #{fileName} , </if>
+				<if test="isDel != null  and isDel != '' " > #{isDel} , </if>
+				<if test="createdTime != null " > #{createdTime} , </if>
+				<if test="modifiedTime != null " > #{modifiedTime} , </if>
+				
+        </trim>
+        )
+    </insert>
+
+    <!--通过id查询  ywwb905 2023-01-16 -->
+    <select id="queryDetail" parameterType="ppmSuppliersSyncFile" resultMap="PPMSUPPLIERSSYNCFILE_ALL">
+        SELECT
+        <include refid="sql_flied_all" />
+        FROM PPM_SUPPLIERS_SYNC_FILE  WHERE ID=#{id}
+		<trim prefix="WHERE" suffixOverrides="AND">
+            <if test="id != null " > ID = #{id} AND </if>
+				<if test="xmid != null  and xmid != '' " > XMID = #{xmid} AND </if>
+				<if test="xmbh != null  and xmbh != '' " > XMBH = #{xmbh} AND </if>
+				<if test="objectId != null  and objectId != '' " > OBJECT_ID = #{objectId} AND </if>
+				<if test="fileNo != null  and fileNo != '' " > FILE_NO = #{fileNo} AND </if>
+				<if test="fileName != null  and fileName != '' " > FILE_NAME = #{fileName} AND </if>
+				<if test="isDel != null  and isDel != '' " > IS_DEL = #{isDel} AND </if>
+				<if test="createdTime != null " > CREATED_TIME = #{createdTime} AND </if>
+				<if test="modifiedTime != null " > MODIFIED_TIME = #{modifiedTime} AND </if>
+				
+        </trim>
+    </select>
+
+     <!--查询集合  ywwb905 2023-01-16 -->
+    <select id="getList" parameterType="ppmSuppliersSyncFile" resultMap="PPMSUPPLIERSSYNCFILE_ALL">
+        SELECT
+        <include refid="sql_flied_all" />
+        FROM PPM_SUPPLIERS_SYNC_FILE
+        <include refid="sql_select_condition" />
+    </select>
+    <!-- update sql -->
+    <sql id="update_pojo_sql">
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="id != null " > ID=#{id} , </if>
+				<if test="xmid != null  and xmid != '' " > XMID=#{xmid} , </if>
+				<if test="xmbh != null  and xmbh != '' " > XMBH=#{xmbh} , </if>
+				<if test="objectId != null  and objectId != '' " > OBJECT_ID=#{objectId} , </if>
+				<if test="fileNo != null  and fileNo != '' " > FILE_NO=#{fileNo} , </if>
+				<if test="fileName != null  and fileName != '' " > FILE_NAME=#{fileName} , </if>
+				<if test="isDel != null  and isDel != '' " > IS_DEL=#{isDel} , </if>
+				<if test="createdTime != null " > CREATED_TIME=#{createdTime} , </if>
+				<if test="modifiedTime != null " > MODIFIED_TIME=#{modifiedTime} , </if>
+				
+        </trim>
+    </sql>
+
+    <!--通过id编辑 ywwb905 2023-01-16 -->
+    <update id="updatePojo" parameterType="ppmSuppliersSyncFile">
+        UPDATE
+        PPM_SUPPLIERS_SYNC_FILE
+        <include refid="update_pojo_sql" />
+        WHERE ID=#{id}
+    </update>
+	
+	<!--通过id编辑 ywwb905 2023-01-16 -->
+    <update id="updatePojoIsDel" parameterType="ppmSuppliersSyncFile">
+        UPDATE
+        PPM_SUPPLIERS_SYNC_FILE
+        SET IS_DEL = '1'
+        WHERE XMBH=#{xmbh} AND XMID = #{xmid}
+    </update>
+
+    <!--通过id批量删除  ywwb905 2023-01-16 -->
+    <delete id="deleteById" parameterType="ppmSuppliersSyncFile">
+        DELETE
+        FROM
+        PPM_SUPPLIERS_SYNC_FILE
+        WHERE ID = #{id}
+    </delete>
+
+</mapper>

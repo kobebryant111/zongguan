@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k6991 2021-05-06 -->
+<mapper namespace="com.work.ppm.application.model.integratedmanager.PpmOutsourcingBlacklist">
+	 <resultMap type="ppmOutsourcingBlacklist" id="PPMOUTSOURCINGBLACKLIST_ALL">
+        <result property="userName" column="USER_NAME" />
+		<result property="icard" column="ICARD" />
+		<result property="depId" column="DEP_ID" />
+		<result property="orgCode" column="ORG_CODE" />
+		<result property="officeDate" column="OFFICE_DATE" />
+		<result property="why" column="WHY" />
+		<result property="addDate" column="ADD_DATE" />
+		<result property="addUserId" column="ADD_USER_ID" />
+		<result property="addUserName" column="ADD_USER_NAME" />
+		<result property="isdel" column="ISDEL" />
+		<result property="id" column="ID" />
+		
+     </resultMap>
+
+     <!-- 所有字段名称 -->
+        <sql id="sql_flied_all">
+        	USER_NAME,
+			ICARD,
+			DEP_ID,
+			ORG_CODE,
+			OFFICE_DATE,
+			WHY,
+			ADD_DATE,
+			ADD_USER_ID,
+			ADD_USER_NAME,
+			ISDEL,
+			ID
+        </sql>
+        <sql id="sql_select_condition">
+            <trim prefix="WHERE" suffixOverrides="AND">
+                <if test="userName != null  and userName != '' " > USER_NAME = #{userName} AND </if>
+				<if test="icard != null  and icard != '' " > ICARD = #{icard} AND </if>
+				<if test="depId != null  and depId != '' " > DEP_ID = #{depId} AND </if>
+				<if test="orgCode != null " > ORG_CODE = #{orgCode} AND </if>
+				<if test="officeDate != null " > OFFICE_DATE = #{officeDate} AND </if>
+				<if test="why != null  and why != '' " > WHY = #{why} AND </if>
+				<if test="addDate != null " > ADD_DATE = #{addDate} AND </if>
+				<if test="addUserId != null  and addUserId != '' " > ADD_USER_ID = #{addUserId} AND </if>
+				<if test="addUserName != null  and addUserName != '' " > ADD_USER_NAME = #{addUserName} AND </if>
+				<if test="isdel != null " > ISDEL = #{isdel} AND </if>
+				<if test="id != null " > ID = #{id} AND </if>
+            </trim>
+        </sql>
+	<resultMap id="QUERYPAGERLIST_MAP" type="ppmOutsourcingBlacklistInfo" extends="PPMOUTSOURCINGBLACKLIST_ALL">
+		<result property="depName" column="LOCATION"/>
+		<result property="supplier" column="OUTSOURCNAME"/>
+	</resultMap>
+    	<!-- 查询分页  2021-05-06 k6991  -->
+        <select id="queryPagerList" parameterType="map" resultMap="QUERYPAGERLIST_MAP">
+			SELECT
+			USER_NAME,
+			ICARD,
+			DEP_ID,
+			ORG_CODE,
+			OFFICE_DATE,
+			WHY,
+			ADD_DATE,
+			ADD_USER_ID,
+			ADD_USER_NAME,
+			B.ISDEL,
+			B.ID,
+			D.LOCATION,O.OUTSOURCNAME FROM PPM_OUTSOURCING_BLACKLIST B
+			LEFT JOIN COMM_DEPARTMENT D ON(B.DEP_ID=D.DEPID)
+			LEFT JOIN PPM_OUTSOURCING_INFO O ON(B.ORG_CODE=O.ORGCODE)
+			<trim prefix="WHERE" suffixOverrides="AND">
+				<if test="userName != null  and userName != '' " > INSTR(USER_NAME, #{userName}) > 0 AND </if>
+				<if test="icard != null  and icard != '' " > INSTR(ICARD , #{icard}) > 0 AND </if>
+				<if test="depId != null  and depId != '' " > DEP_ID = #{depId} AND </if>
+				<if test="orgCode != null " > ORG_CODE = #{orgCode} AND </if>
+				<if test="officeDate != null " > OFFICE_DATE = #{officeDate} AND </if>
+				<if test="why != null  and why != '' " > WHY = #{why} AND </if>
+				<if test="addDate != null " > ADD_DATE = #{addDate} AND </if>
+				<if test="addUserId != null  and addUserId != '' " > ADD_USER_ID = #{addUserId} AND </if>
+				<if test="addUserName != null  and addUserName != '' " > ADD_USER_NAME = #{addUserName} AND </if>
+				<if test="isdel != null " > B.ISDEL = #{isdel} AND </if>
+				<if test="id != null " > B.ID = #{id} AND </if>
+			</trim>
+		</select>
+
+        <!-- 新增  2021-05-06 k6991  -->
+        <insert id="addPojo" parameterType="ppmOutsourcingBlacklist">
+    		INSERT INTO PPM_OUTSOURCING_BLACKLIST (
+    		<trim suffixOverrides=",">
+    		 <if test="userName != null  and userName != '' " > USER_NAME , </if>
+				<if test="icard != null  and icard != '' " > ICARD , </if>
+				<if test="depId != null  and depId != '' " > DEP_ID , </if>
+				<if test="orgCode != null " > ORG_CODE , </if>
+				<if test="officeDate != null " > OFFICE_DATE , </if>
+				<if test="why != null  and why != '' " > WHY , </if>
+				<if test="addDate != null " > ADD_DATE , </if>
+				<if test="addUserId != null  and addUserId != '' " > ADD_USER_ID , </if>
+				<if test="addUserName != null  and addUserName != '' " > ADD_USER_NAME , </if>
+				<if test="isdel != null " > ISDEL , </if>
+				<if test="id != null " > ID , </if>
+				
+              </trim>
+    		)
+    		VALUES(
+    		<trim suffixOverrides=",">
+    		 <if test="userName != null  and userName != '' " > #{userName} , </if>
+				<if test="icard != null  and icard != '' " > #{icard} , </if>
+				<if test="depId != null  and depId != '' " > #{depId} , </if>
+				<if test="orgCode != null " > #{orgCode} , </if>
+				<if test="officeDate != null " > #{officeDate} , </if>
+				<if test="why != null  and why != '' " > #{why} , </if>
+				<if test="addDate != null " > #{addDate} , </if>
+				<if test="addUserId != null  and addUserId != '' " > #{addUserId} , </if>
+				<if test="addUserName != null  and addUserName != '' " > #{addUserName} , </if>
+				<if test="isdel != null " > #{isdel} , </if>
+				<if test="id != null " > #{id} , </if>
+				
+            </trim>
+    		)
+        </insert>
+
+        <!--通过id查询  k6991 2021-05-06 -->
+        <select id="queryDetail" parameterType="ppmOutsourcingBlacklist" resultMap="PPMOUTSOURCINGBLACKLIST_ALL">
+        	SELECT * FROM (
+				SELECT
+				<include refid="sql_flied_all" />
+				FROM PPM_OUTSOURCING_BLACKLIST
+				<trim prefix="WHERE" suffixOverrides="AND">
+					<if test="icard != null  and icard != '' " > ICARD = #{icard} AND </if>
+					<if test="true" > ISDEL = 0 AND </if>
+					<if test="id != null " > ID = #{id} AND </if>
+				</trim>
+				ORDER BY ID DESC
+			) TEPM WHERE ROWNUM = 1
+        </select>
+
+         <!--查询集合  k6991 2021-05-06 -->
+        <select id="getList" parameterType="ppmOutsourcingBlacklist" resultMap="PPMOUTSOURCINGBLACKLIST_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_OUTSOURCING_BLACKLIST
+        	<include refid="sql_select_condition" />
+        </select>
+        <!-- update sql -->
+        <sql id="update_pojo_sql">
+        	<trim prefix="SET" suffixOverrides=",">
+        		<if test="userName != null  and userName != '' " > USER_NAME=#{userName} , </if>
+				<if test="icard != null  and icard != '' " > ICARD=#{icard} , </if>
+				<if test="depId != null  and depId != '' " > DEP_ID=#{depId} , </if>
+				<if test="orgCode != null " > ORG_CODE=#{orgCode} , </if>
+				<if test="officeDate != null " > OFFICE_DATE=#{officeDate} , </if>
+				<if test="why != null  and why != '' " > WHY=#{why} , </if>
+				<if test="addDate != null " > ADD_DATE=#{addDate} , </if>
+				<if test="addUserId != null  and addUserId != '' " > ADD_USER_ID=#{addUserId} , </if>
+				<if test="addUserName != null  and addUserName != '' " > ADD_USER_NAME=#{addUserName} , </if>
+				<if test="isdel != null " > ISDEL=#{isdel} , </if>
+				<if test="id != null " > ID=#{id} , </if>
+				
+            </trim>
+        </sql>
+
+        <!--通过id编辑 k6991 2021-05-06 -->
+    	<update id="updatePojo" parameterType="ppmOutsourcingBlacklist">
+        	UPDATE
+        	PPM_OUTSOURCING_BLACKLIST
+        	<include refid="update_pojo_sql" />
+        	WHERE ID=#{id}
+        </update>
+</mapper>

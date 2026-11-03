@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.work.ppm.application.dao.rdManager.RdProjectContractMapper">
+
+    <select id="queryPager" resultType="com.work.ppm.application.dto.rdmanager.RdProjectContractQueryResultDto">
+        select t.pk_id,
+        t.rd_project_id,
+        t.budget_code,
+        t.budget_name,
+        t.contract_code,
+        t.contract_start_date,
+        t.contract_end_date,
+        t.maintenance_start_date,
+        t.maintenance_end_date,
+        t.contract_amount,
+        t.payment_sche,
+        t.project_allocation_ratio,
+        t.create_by,
+        t.create_date,
+        t.update_by,
+        t.update_date,
+        t.contract_name,
+        t.type,
+        t.budget_amount,
+        t.supplier,
+        t.approved_date,
+        t.is_research_project,
+        t.tech_inno_point,
+        t.contract_tax_points,
+        t.supplier_name,
+        t.expense_type,
+        t.reimbursement_item,
+        t.account_subject,
+        t.is_invoice,
+        t.remark_lan,
+        t.payment_scheduling,
+        t.invoice_Type,
+        t.contract_Start_Date_Flag,
+        t.contract_end_Date_Flag,
+        (select listagg(p.project_name, ',') WITHIN group(order by r.create_date)
+        from ppm.rd_project_contract_relation r
+        inner join ppm.rd_project p
+        on r.rd_project_id = p.pk_id
+        where r.rd_project_contract_id = t.pk_id) project_name,
+        t.software_manpower,
+        t.assist_manpower,
+        t.risk_management_manpower
+        from rd_project_contract t
+        where t.DELETED='0'
+        <if test="contractCode != null  and contractCode != '' ">and t.contract_code like '%'||#{contractCode}||'%'</if>
+        <if test="projectName != null  and projectName != '' ">
+            and exists(select 1 from ppm.rd_project p inner join ppm.rd_project_contract_relation r on
+            r.rd_project_id=p.pk_id where r.rd_project_contract_id=t.pk_id and p.project_name like
+            '%'||#{projectName}||'%')
+        </if>
+        <if test="contractName != null  and contractName != '' ">and t.contract_name like '%'||#{contractName}||'%'</if>
+        <if test="budgetCode != null  and budgetCode != '' ">and t.budget_code like '%'||#{budgetCode}||'%'</if>
+        <if test="budgetName != null  and budgetName != '' ">and t.budget_name like '%'||#{budgetName}||'%'</if>
+
+        <if test="prop != null  and  prop != '' and prop != 'contract_Amount' and
+        prop != 'project_Name' and order != null and order != ''  ">
+            order by t.${prop} ${order}
+        </if>
+        <if test=" prop == 'contract_Amount' and order != null and order != ''  ">
+            order by to_number(t.${prop}) ${order}
+        </if>
+        <if test=" prop == 'project_Name' and order != null and order != ''  ">
+            order by ${prop} ${order}
+        </if>
+        <if test="prop == null  or prop == '' or order == null  or order == ''">
+            order by t.budget_code desc
+        </if>
+
+    </select>
+
+    <select id="queryByRdProjectId" resultType="com.work.ppm.application.dto.rdmanager.RdProjectContractQueryResultDto">
+        select t.pk_id,
+        t.rd_project_id,
+        t.budget_code,
+        t.budget_name,
+        t.contract_code,
+        t.contract_start_date,
+        t.contract_end_date,
+        t.contract_amount,
+        t.payment_sche,
+        r.RATIO project_allocation_ratio,
+        t.create_by,
+        t.create_date,
+        t.update_by,
+        t.update_date,
+        t.contract_name,
+        t.type,
+        t.budget_amount,
+        t.supplier,
+        t.approved_date,
+        t.is_research_project,
+        t.tech_inno_point,
+        t.contract_tax_points,
+        t.supplier_name,
+        t.expense_type,
+        t.reimbursement_item,
+        t.account_subject,
+        t.is_invoice,
+        t.payment_scheduling,
+        t.invoice_Type,
+        t.contract_Start_Date_Flag,
+        t.contract_end_Date_Flag
+        from rd_project_contract t
+        inner join ppm.rd_project_contract_relation r on r.rd_project_contract_id=t.pk_id
+        where r.rd_project_id =#{rdProjectId} and t.DELETED='0'
+        order by t.create_date desc
+    </select>
+
+    <select id="queryPagerExcel" resultType="RdProjectContractExcel">
+        select r.BUDGET_CODE,
+        r.BUDGET_NAME,
+        r.TYPE type,
+        r.SUPPLIER,
+        r.BUDGET_AMOUNT,
+        r.APPROVED_DATE,
+        t.PROJECT_CODE,
+        t.PROJECT_NAME,
+        p.RATIO,
+        r.IS_RESEARCH_PROJECT ,
+        r.PAYMENT_SCHEDULING,
+        r.CONTRACT_CODE,
+        r.CONTRACT_NAME,
+        r.CONTRACT_START_DATE,
+        r.CONTRACT_END_DATE,
+        r.CONTRACT_AMOUNT,
+        r.CONTRACT_TAX_POINTS,
+        r.INVOICE_TYPE,
+        r.SUPPLIER_NAME,
+        r.PAYMENT_SCHE,
+        r.ACCEPTANCE_PHASE,
+        r.EXPENSE_TYPE,
+        r.REIMBURSEMENT_ITEM,
+        r.ACCOUNT_SUBJECT,
+        r.IS_INVOICE,
+        r.MAINTENANCE_START_DATE,
+        r.MAINTENANCE_END_DATE
+        FROM ppm.rd_project_contract r
+        LEFT JOIN rd_project_contract_relation p on
+        (p.rd_project_contract_id = r.pk_id)
+        LEFT JOIN (SELECT * FROM rd_project WHERE DELETED = '0') t ON
+        (t.pk_id = p.rd_project_id)
+        LEFT JOIN ppm.COMM_RD_DEPARTMENT d ON
+        (d.depid = t.competent_dept)
+        ORDER BY
+        r.BUDGET_CODE DESC,
+        r.CONTRACT_END_DATE DESC
+    </select>
+
+</mapper>

@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k6991 2020-06-15 -->
+<mapper namespace="com.work.ppm.application.model.flowmanager.PpmFlowGrant">
+	 <resultMap type="ppmFlowGrant" id="PPMFLOWGRANT_ALL">
+        <result property="id" column="ID" />
+		<result property="flowdraftno" column="FLOWDRAFTNO" />
+		<result property="flowname" column="FLOWNAME" />
+		<result property="sourceuserid" column="SOURCEUSERID" />
+		<result property="targetuserid" column="TARGETUSERID" />
+		<result property="startdate" column="STARTDATE" />
+		<result property="enddate" column="ENDDATE" />
+		<result property="iseffect" column="ISEFFECT" />
+		<result property="isdel" column="ISDEL" />
+		<result property="createtime" column="CREATETIME" />
+		<result property="creators" column="CREATORS" />
+		<result property="lastmodtime" column="LASTMODTIME" />
+		<result property="lastmoduser" column="LASTMODUSER" />
+		<result property="sourceusername" column="SOURCEUSERNAME" />
+		<result property="targetusername" column="TARGETUSERNAME" />
+		<result property="note" column="NOTE" />
+		<result property="isqy" column="ISQY" />
+		
+     </resultMap>
+
+     <!-- 所有字段名称 -->
+        <sql id="sql_flied_all">
+        	ID,
+			FLOWDRAFTNO,
+			FLOWNAME,
+			SOURCEUSERID,
+			TARGETUSERID,
+			STARTDATE,
+			ENDDATE,
+			ISEFFECT,
+			ISDEL,
+			CREATETIME,
+			CREATORS,
+			LASTMODTIME,
+			LASTMODUSER,
+			SOURCEUSERNAME,
+			TARGETUSERNAME,
+			NOTE,
+			ISQY
+        </sql>
+    	<!-- 查询分页  2020-06-15 k6991  -->
+        <select id="queryPagerList" parameterType="map" resultMap="PPMFLOWGRANT_ALL">
+        	SELECT
+            <include refid="sql_flied_all" />
+            FROM PPM_FLOW_GRANT
+            <trim prefix="WHERE" suffixOverrides="AND">
+                <if test="id != null " > ID = #{id} AND </if>
+				<if test="flowdraftno != null  and flowdraftno != '' " > FLOWDRAFTNO = #{flowdraftno} AND </if>
+				<if test="flowname != null  and flowname != '' " > FLOWNAME = #{flowname} AND </if>
+				<if test="sourceuserid != null  and sourceuserid != '' " > SOURCEUSERID = #{sourceuserid} AND </if>
+				<if test="targetuserid != null  and targetuserid != '' " > TARGETUSERID = #{targetuserid} AND </if>
+				<if test="startdate != null " > STARTDATE = #{startdate} AND </if>
+				<if test="enddate != null " > ENDDATE = #{enddate} AND </if>
+				<if test="iseffect != null  and iseffect != '' " > ISEFFECT = #{iseffect} AND </if>
+				<if test="isdel != null " > ISDEL = #{isdel} AND </if>
+				<if test="createtime != null " > CREATETIME = #{createtime} AND </if>
+				<if test="creators != null  and creators != '' " > CREATORS = #{creators} AND </if>
+				<if test="lastmodtime != null " > LASTMODTIME = #{lastmodtime} AND </if>
+				<if test="lastmoduser != null  and lastmoduser != '' " > LASTMODUSER = #{lastmoduser} AND </if>
+				<if test="sourceusername != null  and sourceusername != '' " > SOURCEUSERNAME = #{sourceusername} AND </if>
+				<if test="targetusername != null  and targetusername != '' " > TARGETUSERNAME = #{targetusername} AND </if>
+				<if test="note != null  and note != '' " > NOTE = #{note} AND </if>
+				<if test="isqy != null " > ISQY = #{isqy} AND </if>
+				
+            </trim>
+        </select>
+
+        <!-- 新增  2020-06-15 k6991  -->
+        <insert id="addPojo" parameterType="ppmFlowGrant">
+    		INSERT INTO PPM_FLOW_GRANT (
+    		<trim suffixOverrides=",">
+    		 <if test="id != null " > ID , </if>
+				<if test="flowdraftno != null  and flowdraftno != '' " > FLOWDRAFTNO , </if>
+				<if test="flowname != null  and flowname != '' " > FLOWNAME , </if>
+				<if test="sourceuserid != null  and sourceuserid != '' " > SOURCEUSERID , </if>
+				<if test="targetuserid != null  and targetuserid != '' " > TARGETUSERID , </if>
+				<if test="startdate != null " > STARTDATE , </if>
+				<if test="enddate != null " > ENDDATE , </if>
+				<if test="iseffect != null  and iseffect != '' " > ISEFFECT , </if>
+				<if test="isdel != null " > ISDEL , </if>
+				<if test="createtime != null " > CREATETIME , </if>
+				<if test="creators != null  and creators != '' " > CREATORS , </if>
+				<if test="lastmodtime != null " > LASTMODTIME , </if>
+				<if test="lastmoduser != null  and lastmoduser != '' " > LASTMODUSER , </if>
+				<if test="sourceusername != null  and sourceusername != '' " > SOURCEUSERNAME , </if>
+				<if test="targetusername != null  and targetusername != '' " > TARGETUSERNAME , </if>
+				<if test="note != null  and note != '' " > NOTE , </if>
+				<if test="isqy != null " > ISQY , </if>
+				
+              </trim>
+    		)
+    		VALUES(
+    		<trim suffixOverrides=",">
+    		 <if test="id != null " > #{id} , </if>
+				<if test="flowdraftno != null  and flowdraftno != '' " > #{flowdraftno} , </if>
+				<if test="flowname != null  and flowname != '' " > #{flowname} , </if>
+				<if test="sourceuserid != null  and sourceuserid != '' " > #{sourceuserid} , </if>
+				<if test="targetuserid != null  and targetuserid != '' " > #{targetuserid} , </if>
+				<if test="startdate != null " > #{startdate} , </if>
+				<if test="enddate != null " > #{enddate} , </if>
+				<if test="iseffect != null  and iseffect != '' " > #{iseffect} , </if>
+				<if test="isdel != null " > #{isdel} , </if>
+				<if test="createtime != null " > #{createtime} , </if>
+				<if test="creators != null  and creators != '' " > #{creators} , </if>
+				<if test="lastmodtime != null " > #{lastmodtime} , </if>
+				<if test="lastmoduser != null  and lastmoduser != '' " > #{lastmoduser} , </if>
+				<if test="sourceusername != null  and sourceusername != '' " > #{sourceusername} , </if>
+				<if test="targetusername != null  and targetusername != '' " > #{targetusername} , </if>
+				<if test="note != null  and note != '' " > #{note} , </if>
+				<if test="isqy != null " > #{isqy} , </if>
+				
+            </trim>
+    		)
+        </insert>
+
+        <!--通过id查询  k6991 2020-06-15 -->
+        <select id="queryDetail" parameterType="map" resultMap="PPMFLOWGRANT_ALL">
+			SELECT T1.FLOWDRAFTNO,T1.FLOWNAME,F.TARGETUSERID FROM PPM_FLOW_GRANT F
+			LEFT JOIN PPM_FLOW_GRANT_FLOWTYPE T1 ON(F.FLOWNAME=T1.FLOWNAME)
+			<trim prefix="WHERE" suffixOverrides="AND">
+				<if test="id != null " > ID = #{F.id} AND </if>
+				<if test="flowdraftno != null  and flowdraftno != '' " >  INSTR(T1.FLOWDRAFTNO , #{flowdraftno}) > 0 AND </if>
+				<if test="date != null " >
+					<![CDATA[
+					#{date} <= to_char(F.enddate,'yyyy-MM-dd') and #{date} >= to_char(F.startdate,'yyyy-MM-dd') AND
+					]]>
+					 </if>
+				<if test="isqy != null " > F.ISQY = #{isqy} AND </if>
+				<if test="isdel != null " > F.ISDEL = #{isdel} AND </if>
+				<if test="sourceuserid != null  and sourceuserid != '' " > F.SOURCEUSERID = #{sourceuserid} AND </if>
+			</trim>
+        </select>
+
+         <!--查询集合  k6991 2020-06-15 -->
+        <select id="getList" parameterType="map" resultMap="PPMFLOWGRANT_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_FLOW_GRANT
+        	<trim prefix="WHERE" suffixOverrides="AND">
+        		<if test="id != null " > ID=#{id} AND </if>
+				<if test="flowdraftno != null  and flowdraftno != '' " > FLOWDRAFTNO=#{flowdraftno} AND </if>
+				<if test="flowname != null  and flowname != '' " > FLOWNAME=#{flowname} AND </if>
+				<if test="sourceuserid != null  and sourceuserid != '' " > SOURCEUSERID=#{sourceuserid} AND </if>
+				<if test="targetuserid != null  and targetuserid != '' " > TARGETUSERID=#{targetuserid} AND </if>
+				<if test="startdate != null " > STARTDATE=#{startdate} AND </if>
+				<if test="enddate != null " > ENDDATE=#{enddate} AND </if>
+				<if test="iseffect != null  and iseffect != '' " > ISEFFECT=#{iseffect} AND </if>
+				<if test="isdel != null " > ISDEL=#{isdel} AND </if>
+				<if test="createtime != null " > CREATETIME=#{createtime} AND </if>
+				<if test="creators != null  and creators != '' " > CREATORS=#{creators} AND </if>
+				<if test="lastmodtime != null " > LASTMODTIME=#{lastmodtime} AND </if>
+				<if test="lastmoduser != null  and lastmoduser != '' " > LASTMODUSER=#{lastmoduser} AND </if>
+				<if test="sourceusername != null  and sourceusername != '' " > SOURCEUSERNAME=#{sourceusername} AND </if>
+				<if test="targetusername != null  and targetusername != '' " > TARGETUSERNAME=#{targetusername} AND </if>
+				<if test="note != null  and note != '' " > NOTE=#{note} AND </if>
+				<if test="isqy != null " > ISQY=#{isqy} AND </if>
+				
+            </trim>
+        </select>
+        <!-- update sql -->
+        <sql id="update_pojo_sql">
+        	<trim prefix="SET" suffixOverrides=",">
+        		<if test="id != null " > ID=#{id} , </if>
+				<if test="flowdraftno != null  and flowdraftno != '' " > FLOWDRAFTNO=#{flowdraftno} , </if>
+				<if test="flowname != null  and flowname != '' " > FLOWNAME=#{flowname} , </if>
+				<if test="sourceuserid != null  and sourceuserid != '' " > SOURCEUSERID=#{sourceuserid} , </if>
+				<if test="targetuserid != null  and targetuserid != '' " > TARGETUSERID=#{targetuserid} , </if>
+				<if test="startdate != null " > STARTDATE=#{startdate} , </if>
+				<if test="enddate != null " > ENDDATE=#{enddate} , </if>
+				<if test="iseffect != null  and iseffect != '' " > ISEFFECT=#{iseffect} , </if>
+				<if test="isdel != null " > ISDEL=#{isdel} , </if>
+				<if test="createtime != null " > CREATETIME=#{createtime} , </if>
+				<if test="creators != null  and creators != '' " > CREATORS=#{creators} , </if>
+				<if test="lastmodtime != null " > LASTMODTIME=#{lastmodtime} , </if>
+				<if test="lastmoduser != null  and lastmoduser != '' " > LASTMODUSER=#{lastmoduser} , </if>
+				<if test="sourceusername != null  and sourceusername != '' " > SOURCEUSERNAME=#{sourceusername} , </if>
+				<if test="targetusername != null  and targetusername != '' " > TARGETUSERNAME=#{targetusername} , </if>
+				<if test="note != null  and note != '' " > NOTE=#{note} , </if>
+				<if test="isqy != null " > ISQY=#{isqy} , </if>
+				
+            </trim>
+        </sql>
+
+        <!--通过id编辑 k6991 2020-06-15 -->
+    	<update id="updatePojo" parameterType="ppmFlowGrant">
+        	UPDATE
+        	PPM_FLOW_GRANT
+        	<include refid="update_pojo_sql" />
+        	WHERE ID=#{id}
+        </update>
+
+        <!--通过id批量删除  k6991 2020-06-15 -->
+        <delete id="deleteById" parameterType="ppmFlowGrant">
+        	DELETE
+        	FROM
+        	PPM_FLOW_GRANT
+        	WHERE ID = #{id}
+        </delete>
+
+        <!-- 获取主键id -->
+        <select id="getPrimaryKey" parameterType="map" resultType="long">
+            SELECT MAX(ID) FROM PPM_FLOW_GRANT
+        </select>
+</mapper>

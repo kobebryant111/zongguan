@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k1327 2021-03-16 -->
+<mapper namespace="com.work.ppm.application.model.integratedmanager.PpmKhOutsourceperson">
+	 <resultMap type="ppmKhOutsourceperson" id="PPMKHOUTSOURCEPERSON_ALL">
+        <result property="id" column="ID" />
+		<result property="jobid" column="JOBID" />
+		<result property="username" column="USERNAME" />
+		<result property="outsourceno" column="OUTSOURCENO" />
+		<result property="deptno" column="DEPTNO" />
+		<result property="organizers" column="ORGANIZERS" />
+		<result property="workday" column="WORKDAY" />
+		<result property="lvworkday" column="LVWORKDAY" />
+		<result property="overtime" column="OVERTIME" />
+		<result property="firstlevel" column="FIRSTLEVEL" />
+		<result property="remark" column="REMARK" />
+		<result property="secondlevel" column="SECONDLEVEL" />
+		<result property="gznr" column="GZNR" />
+		<result property="tyear" column="TYEAR" />
+		<result property="tmonth" column="TMONTH" />
+		<result property="manageuserid" column="MANAGEUSERID" />
+		<result property="by1" column="BY1" />
+		<result property="by2" column="BY2" />
+		<result property="status" column="STATUS" />
+		<result property="appltbegtime" column="APPLTBEGTIME" />
+		<result property="yeartotalscore" column="YEARTOTALSCORE" />
+		<result property="yearavgscore" column="YEARAVGSCORE" />
+		<result property="personstatus" column="PERSONSTATUS" />
+		<result property="totalmonth" column="TOTALMONTH" />
+		<result property="tscore" column="TSCORE" />
+		<result property="tlevel" column="TLEVEL" />
+		<result property="fgmanageuserid" column="FGMANAGEUSERID" />
+		
+     </resultMap>
+
+     <!-- 所有字段名称 -->
+        <sql id="sql_flied_all">
+        	ID,
+			JOBID,
+			USERNAME,
+			OUTSOURCENO,
+			DEPTNO,
+			ORGANIZERS,
+			WORKDAY,
+			LVWORKDAY,
+			OVERTIME,
+			FIRSTLEVEL,
+			REMARK,
+			SECONDLEVEL,
+			GZNR,
+			TYEAR,
+			TMONTH,
+			MANAGEUSERID,
+			BY1,
+			BY2,
+			STATUS,
+			APPLTBEGTIME,
+			YEARTOTALSCORE,
+			YEARAVGSCORE,
+			PERSONSTATUS,
+			TOTALMONTH,
+			TSCORE,
+			TLEVEL,
+			FGMANAGEUSERID
+        </sql>
+        <sql id="sql_select_condition">
+            <trim prefix="WHERE" suffixOverrides="AND">
+                <if test="id != null " > ID = #{id} AND </if>
+				<if test="jobid != null  and jobid != '' " > JOBID = #{jobid} AND </if>
+				<if test="username != null  and username != '' " > USERNAME = #{username} AND </if>
+				<if test="outsourceno != null  and outsourceno != '' " > OUTSOURCENO = #{outsourceno} AND </if>
+				<if test="deptno != null  and deptno != '' " > DEPTNO = #{deptno} AND </if>
+				<if test="organizers != null  and organizers != '' " > ORGANIZERS = #{organizers} AND </if>
+				<if test="workday != null " > WORKDAY = #{workday} AND </if>
+				<if test="lvworkday != null " > LVWORKDAY = #{lvworkday} AND </if>
+				<if test="overtime != null " > OVERTIME = #{overtime} AND </if>
+				<if test="firstlevel != null  and firstlevel != '' " > FIRSTLEVEL = #{firstlevel} AND </if>
+				<if test="remark != null  and remark != '' " > REMARK = #{remark} AND </if>
+				<if test="secondlevel != null  and secondlevel != '' " > SECONDLEVEL = #{secondlevel} AND </if>
+				<if test="gznr != null  and gznr != '' " > GZNR = #{gznr} AND </if>
+				<if test="tyear != null  and tyear != '' " > TYEAR = #{tyear} AND </if>
+				<if test="tmonth != null  and tmonth != '' " > TMONTH = #{tmonth} AND </if>
+				<if test="manageuserid != null  and manageuserid != '' " > MANAGEUSERID = #{manageuserid} AND </if>
+				<if test="by1 != null  and by1 != '' " > BY1 = #{by1} AND </if>
+				<if test="by2 != null  and by2 != '' " > BY2 = #{by2} AND </if>
+				<if test="status != null " > STATUS = #{status} AND </if>
+				<if test="appltbegtime != null " > APPLTBEGTIME = #{appltbegtime} AND </if>
+				<if test="yeartotalscore != null " > YEARTOTALSCORE = #{yeartotalscore} AND </if>
+				<if test="yearavgscore != null " > YEARAVGSCORE = #{yearavgscore} AND </if>
+				<if test="personstatus != null " > PERSONSTATUS = #{personstatus} AND </if>
+				<if test="totalmonth != null " > TOTALMONTH = #{totalmonth} AND </if>
+				<if test="tscore != null " > TSCORE = #{tscore} AND </if>
+				<if test="tlevel != null  and tlevel != '' " > TLEVEL = #{tlevel} AND </if>
+				<if test="fgmanageuserid != null  and fgmanageuserid != '' " > FGMANAGEUSERID = #{fgmanageuserid} AND </if>
+				
+            </trim>
+        </sql>
+    	<!-- 查询分页  2021-03-16 k1327  -->
+        <select id="queryPagerList" parameterType="map" resultMap="PPMKHOUTSOURCEPERSON_ALL">
+        	SELECT
+            <include refid="sql_flied_all" />
+            FROM PPM_KH_OUTSOURCEPERSON
+            <include refid="sql_select_condition" />
+        </select>
+
+        <!-- 新增  2021-03-16 k1327  -->
+        <insert id="addPojo" parameterType="ppmKhOutsourceperson">
+    		INSERT INTO PPM_KH_OUTSOURCEPERSON (
+    		<trim suffixOverrides=",">
+    		 <if test="id != null " > ID , </if>
+				<if test="jobid != null  and jobid != '' " > JOBID , </if>
+				<if test="username != null  and username != '' " > USERNAME , </if>
+				<if test="outsourceno != null  and outsourceno != '' " > OUTSOURCENO , </if>
+				<if test="deptno != null  and deptno != '' " > DEPTNO , </if>
+				<if test="organizers != null  and organizers != '' " > ORGANIZERS , </if>
+				<if test="workday != null " > WORKDAY , </if>
+				<if test="lvworkday != null " > LVWORKDAY , </if>
+				<if test="overtime != null " > OVERTIME , </if>
+				<if test="firstlevel != null  and firstlevel != '' " > FIRSTLEVEL , </if>
+				<if test="remark != null  and remark != '' " > REMARK , </if>
+				<if test="secondlevel != null  and secondlevel != '' " > SECONDLEVEL , </if>
+				<if test="gznr != null  and gznr != '' " > GZNR , </if>
+				<if test="tyear != null  and tyear != '' " > TYEAR , </if>
+				<if test="tmonth != null  and tmonth != '' " > TMONTH , </if>
+				<if test="manageuserid != null  and manageuserid != '' " > MANAGEUSERID , </if>
+				<if test="by1 != null  and by1 != '' " > BY1 , </if>
+				<if test="by2 != null  and by2 != '' " > BY2 , </if>
+				<if test="status != null " > STATUS , </if>
+				<if test="appltbegtime != null " > APPLTBEGTIME , </if>
+				<if test="yeartotalscore != null " > YEARTOTALSCORE , </if>
+				<if test="yearavgscore != null " > YEARAVGSCORE , </if>
+				<if test="personstatus != null " > PERSONSTATUS , </if>
+				<if test="totalmonth != null " > TOTALMONTH , </if>
+				<if test="tscore != null " > TSCORE , </if>
+				<if test="tlevel != null  and tlevel != '' " > TLEVEL , </if>
+				<if test="fgmanageuserid != null  and fgmanageuserid != '' " > FGMANAGEUSERID , </if>
+				
+              </trim>
+    		)
+    		VALUES(
+    		<trim suffixOverrides=",">
+    		 <if test="id != null " > #{id} , </if>
+				<if test="jobid != null  and jobid != '' " > #{jobid} , </if>
+				<if test="username != null  and username != '' " > #{username} , </if>
+				<if test="outsourceno != null  and outsourceno != '' " > #{outsourceno} , </if>
+				<if test="deptno != null  and deptno != '' " > #{deptno} , </if>
+				<if test="organizers != null  and organizers != '' " > #{organizers} , </if>
+				<if test="workday != null " > #{workday} , </if>
+				<if test="lvworkday != null " > #{lvworkday} , </if>
+				<if test="overtime != null " > #{overtime} , </if>
+				<if test="firstlevel != null  and firstlevel != '' " > #{firstlevel} , </if>
+				<if test="remark != null  and remark != '' " > #{remark} , </if>
+				<if test="secondlevel != null  and secondlevel != '' " > #{secondlevel} , </if>
+				<if test="gznr != null  and gznr != '' " > #{gznr} , </if>
+				<if test="tyear != null  and tyear != '' " > #{tyear} , </if>
+				<if test="tmonth != null  and tmonth != '' " > #{tmonth} , </if>
+				<if test="manageuserid != null  and manageuserid != '' " > #{manageuserid} , </if>
+				<if test="by1 != null  and by1 != '' " > #{by1} , </if>
+				<if test="by2 != null  and by2 != '' " > #{by2} , </if>
+				<if test="status != null " > #{status} , </if>
+				<if test="appltbegtime != null " > #{appltbegtime} , </if>
+				<if test="yeartotalscore != null " > #{yeartotalscore} , </if>
+				<if test="yearavgscore != null " > #{yearavgscore} , </if>
+				<if test="personstatus != null " > #{personstatus} , </if>
+				<if test="totalmonth != null " > #{totalmonth} , </if>
+				<if test="tscore != null " > #{tscore} , </if>
+				<if test="tlevel != null  and tlevel != '' " > #{tlevel} , </if>
+				<if test="fgmanageuserid != null  and fgmanageuserid != '' " > #{fgmanageuserid} , </if>
+				
+            </trim>
+    		)
+        </insert>
+
+        <!--通过id查询  k1327 2021-03-16 -->
+        <select id="queryDetail" parameterType="ppmKhOutsourceperson" resultMap="PPMKHOUTSOURCEPERSON_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_KH_OUTSOURCEPERSON  WHERE ID=#{id}
+        </select>
+
+         <!--查询集合  k1327 2021-03-16 -->
+        <select id="getList" parameterType="ppmKhOutsourceperson" resultMap="PPMKHOUTSOURCEPERSON_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_KH_OUTSOURCEPERSON
+        	<include refid="sql_select_condition" />
+        </select>
+        <!-- update sql -->
+        <sql id="update_pojo_sql">
+        	<trim prefix="SET" suffixOverrides=",">
+        		<if test="id != null " > ID=#{id} , </if>
+				<if test="jobid != null  and jobid != '' " > JOBID=#{jobid} , </if>
+				<if test="username != null  and username != '' " > USERNAME=#{username} , </if>
+				<if test="outsourceno != null  and outsourceno != '' " > OUTSOURCENO=#{outsourceno} , </if>
+				<if test="deptno != null  and deptno != '' " > DEPTNO=#{deptno} , </if>
+				<if test="organizers != null  and organizers != '' " > ORGANIZERS=#{organizers} , </if>
+				<if test="workday != null " > WORKDAY=#{workday} , </if>
+				<if test="lvworkday != null " > LVWORKDAY=#{lvworkday} , </if>
+				<if test="overtime != null " > OVERTIME=#{overtime} , </if>
+				<if test="firstlevel != null  and firstlevel != '' " > FIRSTLEVEL=#{firstlevel} , </if>
+				<if test="remark != null  and remark != '' " > REMARK=#{remark} , </if>
+				<if test="secondlevel != null  and secondlevel != '' " > SECONDLEVEL=#{secondlevel} , </if>
+				<if test="gznr != null  and gznr != '' " > GZNR=#{gznr} , </if>
+				<if test="tyear != null  and tyear != '' " > TYEAR=#{tyear} , </if>
+				<if test="tmonth != null  and tmonth != '' " > TMONTH=#{tmonth} , </if>
+				<if test="manageuserid != null  and manageuserid != '' " > MANAGEUSERID=#{manageuserid} , </if>
+				<if test="by1 != null  and by1 != '' " > BY1=#{by1} , </if>
+				<if test="by2 != null  and by2 != '' " > BY2=#{by2} , </if>
+				<if test="status != null " > STATUS=#{status} , </if>
+				<if test="appltbegtime != null " > APPLTBEGTIME=#{appltbegtime} , </if>
+				<if test="yeartotalscore != null " > YEARTOTALSCORE=#{yeartotalscore} , </if>
+				<if test="yearavgscore != null " > YEARAVGSCORE=#{yearavgscore} , </if>
+				<if test="personstatus != null " > PERSONSTATUS=#{personstatus} , </if>
+				<if test="totalmonth != null " > TOTALMONTH=#{totalmonth} , </if>
+				<if test="tscore != null " > TSCORE=#{tscore} , </if>
+				<if test="tlevel != null  and tlevel != '' " > TLEVEL=#{tlevel} , </if>
+				<if test="fgmanageuserid != null  and fgmanageuserid != '' " > FGMANAGEUSERID=#{fgmanageuserid} , </if>
+				
+            </trim>
+        </sql>
+
+        <!--通过id编辑 k1327 2021-03-16 -->
+    	<update id="updatePojo" parameterType="ppmKhOutsourceperson">
+        	UPDATE
+        	PPM_KH_OUTSOURCEPERSON
+        	<include refid="update_pojo_sql" />
+        	WHERE ID=#{id}
+        </update>
+
+        <!--通过id批量删除  k1327 2021-03-16 -->
+        <delete id="deleteById" parameterType="ppmKhOutsourceperson">
+        	DELETE
+        	FROM
+        	PPM_KH_OUTSOURCEPERSON
+        	WHERE ID = #{id}
+        </delete>
+
+		<!--查询考核数据统计  k1327 2021-03-16 -->
+		<select id="getOutEvalMonthData" parameterType="map" resultType="outEvalMonthData">
+			select * from (
+			select o.jobid,o.tmonth,o.tlevel
+			from ppm.ppm_kh_outsourceperson o
+			where o.jobid=#{jobid} and o.tyear=#{year}
+			) pivot(
+			max(tlevel) for tmonth in ('01' as jan,'02' as feb,'03' as mar,'04' as apr,'05' as may,'06' as jun,'07' as jul,'08' as aug,'09' as sep,'10' as oct,'11' as nov,'12' as dec,'年度' as year )
+			)
+	    </select>
+		<!--查询考核数据统计根据部门  k1327 2021-03-16 -->
+		<select id="getOutEvalOrderByDep" parameterType="map" resultType="outEvalOrderData">
+		select o.jobid,count(*) counts,ROUND(sum(decode(O.TLEVEL,'A+',10,'A',9,'B+',8,'B',7,'C',6,0))/count(*),2) avgscore  from ppm_kh_outsourceperson o
+			where o.deptno=#{deptno} and o.tyear=#{year} group by o.jobid
+		order by  ROUND(sum(decode(O.TLEVEL,'A+',10,'A',9,'B+',8,'B',7,'C',6,0))/count(*),2) desc
+		</select>
+		<!--查询考核数据统计根据供应商 k1327 2021-03-16 -->
+		<select id="getOutEvalOrderByOutsourceno" parameterType="map" resultType="outEvalOrderData">
+			select o.jobid,count(*) counts,ROUND(sum(decode(O.TLEVEL,'A+',10,'A',9,'B+',8,'B',7,'C',6,0))/count(*),2) avgscore  from ppm_kh_outsourceperson o
+			where o.outsourceno=#{outsourceno} and o.tyear=#{year} group by o.jobid
+			order by  ROUND(sum(decode(O.TLEVEL,'A+',10,'A',9,'B+',8,'B',7,'C',6,0))/count(*),2) desc
+		</select>
+		<!--查询考核数据统计根据科技部 k1327 2021-03-16 -->
+		<select id="getOutEvalOrder" parameterType="map" resultType="outEvalOrderData">
+			select o.jobid,count(*) counts,ROUND(sum(decode(O.TLEVEL,'A+',10,'A',9,'B+',8,'B',7,'C',6,0))/count(*),2) avgscore  from ppm_kh_outsourceperson o
+			where  o.tyear=#{year} group by o.jobid
+			order by  ROUND(sum(decode(O.TLEVEL,'A+',10,'A',9,'B+',8,'B',7,'C',6,0))/count(*),2) desc
+		</select>
+</mapper>

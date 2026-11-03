@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k74879 2021-12-08 -->
+<mapper namespace="com.work.ppm.application.model.onlinemanager.PpmPostGovernor">
+	 <resultMap type="ppmPostGovernor" id="PPMPOSTGOVERNOR_ALL">
+        <result property="id" column="ID" />
+		<result property="title" column="TITLE" />
+		<result property="applyBy" column="APPLY_BY" />
+		<result property="applyDate" column="APPLY_DATE" />
+		<result property="psireNo" column="PSIRE_NO" />
+		<result property="relationUser" column="RELATION_USER" />
+		<result property="dept" column="DEPT" />
+		<result property="deptName" column="DEPT_NAME" />
+		<result property="problemType" column="PROBLEM_TYPE" />
+		<result property="problemDetail" column="PROBLEM_DETAIL" />
+		<result property="status" column="STATUS" />
+		<result property="processInstId" column="PROCESSINST_ID" />
+		<result property="feedbackContent" column="FEEDBACK_CONTENT" />
+		<result property="isCompliance" column="IS_COMPLIANCE" />
+		<result property="note" column="NOTE" />
+		<result property="psireFeedbackNo" column="PSIRE_FEEDBACK_NO" />
+		<result property="relationUserName" column="RELATION_USER_NAME" />
+		<result property="psireName" column="PSIRE_NAME" />
+		<result property="twoManagerSuggestion" column="TWO_MANAGER_SUGGESTION" />
+     </resultMap>
+
+	<resultMap id="PPMPOSTGOVERNORINFO_ALL" type="PpmPostGovernorInfo" extends="PPMPOSTGOVERNOR_ALL">
+		<result property="problemTypeName" column="dictname" />
+		<result property="instanceId" column="instanceid" />
+		<result property="flowUrl" column="flowurl" />
+	</resultMap>
+     <!-- 所有字段名称 -->
+        <sql id="sql_flied_all">
+			ed.dictname,
+			pg.ID,
+			pg.TITLE,
+			pg.APPLY_BY,
+			pg.APPLY_DATE,
+			pg.PSIRE_NO,
+			pg.RELATION_USER,
+			pg.DEPT,
+			pg.DEPT_NAME,
+			pg.PROBLEM_TYPE,
+			pg.PROBLEM_DETAIL,
+			pg.STATUS,
+			pg.PROCESSINST_ID,
+			pg.FEEDBACK_CONTENT,
+			pg.IS_COMPLIANCE,
+			pg.NOTE,
+			pg.PSIRE_FEEDBACK_NO,
+			pg.RELATION_USER_NAME,
+			pg.PSIRE_NAME,
+			pg.TWO_MANAGER_SUGGESTION,
+			pf1.flowurl,
+			pf1.instanceid
+        </sql>
+        <sql id="sql_select_condition">
+            <trim prefix="WHERE" suffixOverrides="AND">
+                <if test="id != null " > pg.ID = #{id} AND </if>
+				<if test="title != null  and title != '' " > pg.TITLE = #{title} AND </if>
+				<if test="applyBy != null  and applyBy != '' " > pg.APPLY_BY = #{applyBy} AND </if>
+				<if test="applyDate != null " > pg.APPLY_DATE = #{applyDate} AND </if>
+				<if test="psireNo != null  and psireNo != '' " > pg.PSIRE_NO = #{psireNo} AND </if>
+				<if test="relationUser != null  and relationUser != '' " > pg.RELATION_USER = #{relationUser} AND </if>
+				<if test="dept != null  and dept != '' " > pg.DEPT = #{dept} AND </if>
+				<if test="deptName != null  and deptName != '' " > pg.DEPT_NAME = #{deptName} AND </if>
+				<if test="problemType != null  and problemType != '' " > pg.PROBLEM_TYPE = #{problemType} AND </if>
+				<if test="problemDetail != null  and problemDetail != '' " > pg.PROBLEM_DETAIL = #{problemDetail} AND </if>
+				<if test="status != null  and status != '' " > pg.STATUS = #{status} AND </if>
+				<if test="processInstId != null  and processInstId != '' " > pg.PROCESSINST_ID = #{processInstId} AND </if>
+				<if test="feedbackContent != null  and feedbackContent != '' " > pg.FEEDBACK_CONTENT = #{feedbackContent} AND </if>
+				<if test="isCompliance != null  and isCompliance != '' " > pg.IS_COMPLIANCE = #{isCompliance} AND </if>
+				<if test="note != null  and note != '' " > pg.NOTE = #{note} AND </if>
+				<if test="psireFeedbackNo != null  and psireFeedbackNo != '' " > pg.PSIRE_FEEDBACK_NO = #{psireFeedbackNo} AND </if>
+				<if test="relationUserName != null  and relationUserName != '' " > pg.RELATION_USER_NAME = #{relationUserName} AND </if>
+				<if test="psireName != null  and psireName != '' " > pg.PSIRE_NAME = #{psireName} AND </if>
+				<if test="twoManagerSuggestion != null  and twoManagerSuggestion != '' " > pg.TWO_MANAGER_SUGGESTION = #{twoManagerSuggestion} AND </if>
+				<if test="startDate != null and startDate != ''">
+					to_char(APPLY_DATE, 'YYYY-MM-DD') BETWEEN
+					#{startDate}
+					AND
+					#{endDate}
+					AND
+				</if>
+				<if test="flowStatus != null  and flowStatus != '' " > pf.flowstatus = #{flowStatus} AND </if>
+				<if test="ids != null  and ids != '' " > pg.ID in (${ids}) AND </if>
+            </trim>
+        </sql>
+    	<!-- 查询分页  2021-12-08 k74879  -->
+        <select id="queryPagerList" parameterType="map" resultMap="PPMPOSTGOVERNORINFO_ALL">
+        	SELECT
+            <include refid="sql_flied_all" />
+            FROM PPM_POST_GOVERNOR pg
+			left join eos_dict_entry ed on ed.dicttypeid='NEWKG_WTFL' and ed.dictid=pg.PROBLEM_TYPE
+			left join PPM_PROJECT_FLOW pf on pg.processinst_id=pf.instanceid
+			left join PPM_PROJECT_FLOW pf1 on pg.psire_no=pf1.projectno
+			<include refid="sql_select_condition" />
+			order by pg.PSIRE_FEEDBACK_NO DESC
+        </select>
+
+        <!-- 新增  2021-12-08 k74879  -->
+        <insert id="addPojo" parameterType="ppmPostGovernor">
+    		INSERT INTO PPM_POST_GOVERNOR (
+    		<trim suffixOverrides=",">
+    		 <if test="id != null " > ID , </if>
+				<if test="title != null  and title != '' " > TITLE , </if>
+				<if test="applyBy != null  and applyBy != '' " > APPLY_BY , </if>
+				<if test="applyDate != null " > APPLY_DATE , </if>
+				<if test="psireNo != null  and psireNo != '' " > PSIRE_NO , </if>
+				<if test="relationUser != null  and relationUser != '' " > RELATION_USER , </if>
+				<if test="dept != null  and dept != '' " > DEPT , </if>
+				<if test="deptName != null  and deptName != '' " > DEPT_NAME , </if>
+				<if test="problemType != null  and problemType != '' " > PROBLEM_TYPE , </if>
+				<if test="problemDetail != null  and problemDetail != '' " > PROBLEM_DETAIL , </if>
+				<if test="status != null  and status != '' " > STATUS , </if>
+				<if test="processInstId != null  and processInstId != '' " > PROCESSINST_ID , </if>
+				<if test="feedbackContent != null  and feedbackContent != '' " > FEEDBACK_CONTENT , </if>
+				<if test="isCompliance != null  and isCompliance != '' " > IS_COMPLIANCE , </if>
+				<if test="note != null  and note != '' " > NOTE , </if>
+				<if test="psireFeedbackNo != null  and psireFeedbackNo != '' " > PSIRE_FEEDBACK_NO ,</if>
+				<if test="relationUserName != null  and relationUserName != '' " > RELATION_USER_NAME ,</if>
+				<if test="psireName != null  and psireName != '' " > PSIRE_NAME ,</if>
+				<if test="twoManagerSuggestion != null  and twoManagerSuggestion != '' " > TWO_MANAGER_SUGGESTION ,</if>
+              </trim>
+    		)
+    		VALUES(
+    		<trim suffixOverrides=",">
+    		 <if test="id != null " > #{id} , </if>
+				<if test="title != null  and title != '' " > #{title} , </if>
+				<if test="applyBy != null  and applyBy != '' " > #{applyBy} , </if>
+				<if test="applyDate != null " > #{applyDate} , </if>
+				<if test="psireNo != null  and psireNo != '' " > #{psireNo} , </if>
+				<if test="relationUser != null  and relationUser != '' " > #{relationUser} , </if>
+				<if test="dept != null  and dept != '' " > #{dept} , </if>
+				<if test="deptName != null  and deptName != '' " > #{deptName} , </if>
+				<if test="problemType != null  and problemType != '' " > #{problemType} , </if>
+				<if test="problemDetail != null  and problemDetail != '' " > #{problemDetail} , </if>
+				<if test="status != null  and status != '' " > #{status} , </if>
+				<if test="processInstId != null  and processInstId != '' " > #{processInstId} , </if>
+				<if test="feedbackContent != null  and feedbackContent != '' " > #{feedbackContent} , </if>
+				<if test="isCompliance != null  and isCompliance != '' " > #{isCompliance} , </if>
+				<if test="note != null  and note != '' " > #{note} , </if>
+				<if test="psireFeedbackNo != null  and psireFeedbackNo != '' " > #{psireFeedbackNo} , </if>
+				<if test="relationUserName != null  and relationUserName != '' " > #{relationUserName} , </if>
+				<if test="psireName != null  and psireName != '' " > #{psireName} , </if>
+				<if test="twoManagerSuggestion != null  and twoManagerSuggestion != '' " > #{twoManagerSuggestion} , </if>
+            </trim>
+    		)
+        </insert>
+
+        <!--通过id查询  k74879 2021-12-08 -->
+        <select id="queryDetail" parameterType="ppmPostGovernor" resultMap="PPMPOSTGOVERNORINFO_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_POST_GOVERNOR pg
+			left join eos_dict_entry ed on ed.dicttypeid='NEWKG_WTFL' and ed.dictid=pg.PROBLEM_TYPE
+			left join PPM_PROJECT_FLOW pf on pg.processinst_id=pf.instanceid
+			left join PPM_PROJECT_FLOW pf1 on pg.psire_no=pf1.projectno
+			<trim prefix="WHERE" suffixOverrides="AND">
+				<if test="id != null " > pg.ID = #{id} AND </if>
+				<if test="processInstId != null  and processInstId != '' " > pg.PROCESSINST_ID = #{processInstId} AND </if>
+			</trim>
+        </select>
+        <!-- update sql -->
+        <sql id="update_pojo_sql">
+        	<trim prefix="SET" suffixOverrides=",">
+				<if test="title != null  and title != '' " > TITLE=#{title} , </if>
+				<if test="applyBy != null  and applyBy != '' " > APPLY_BY=#{applyBy} , </if>
+				<if test="applyDate != null " > APPLY_DATE=#{applyDate} , </if>
+				<if test="psireNo != null  and psireNo != '' " > PSIRE_NO=#{psireNo} , </if>
+				<if test="relationUser != null  and relationUser != '' " > RELATION_USER=#{relationUser} , </if>
+				<if test="dept != null  and dept != '' " > DEPT=#{dept} , </if>
+				<if test="deptName != null  and deptName != '' " > DEPT_NAME=#{deptName} , </if>
+				<if test="problemType != null  and problemType != '' " > PROBLEM_TYPE=#{problemType} , </if>
+				<if test="problemDetail != null " > PROBLEM_DETAIL=#{problemDetail} , </if>
+				<if test="status != null  and status != '' " > STATUS=#{status} , </if>
+				<if test="processInstId != null  and processInstId != '' " > PROCESSINST_ID=#{processInstId} , </if>
+				<if test="feedbackContent != null " > FEEDBACK_CONTENT=#{feedbackContent} , </if>
+				<if test="isCompliance != null  and isCompliance != '' " > IS_COMPLIANCE=#{isCompliance} , </if>
+				<if test="note != null  and note != '' " > NOTE=#{note} , </if>
+				<if test="relationUserName != null  and relationUserName != '' " > RELATION_USER_NAME=#{relationUserName} , </if>
+				<if test="psireName != null  and psireName != '' " > PSIRE_NAME=#{psireName} , </if>
+				<if test="psireFeedbackNo != null  and psireFeedbackNo != '' " > PSIRE_FEEDBACK_NO=#{psireFeedbackNo} , </if>
+				<if test="twoManagerSuggestion != null  and twoManagerSuggestion != '' " > TWO_MANAGER_SUGGESTION=#{twoManagerSuggestion} , </if>
+            </trim>
+        </sql>
+
+        <!--通过id编辑 k74879 2021-12-08 -->
+    	<update id="updatePojo" parameterType="ppmPostGovernor">
+        	UPDATE
+        	PPM_POST_GOVERNOR
+        	<include refid="update_pojo_sql" />
+			WHERE ID=#{id}
+        </update>
+
+        <!--通过id批量删除  k74879 2021-12-08 -->
+        <delete id="deleteById" parameterType="ppmPostGovernor">
+        	DELETE
+        	FROM
+        	PPM_POST_GOVERNOR
+        	WHERE ID = #{id}
+        </delete>
+
+		<delete id="batchDeletePpmPostGovernor" parameterType="map" >
+			DELETE
+			FROM
+			PPM_POST_GOVERNOR
+			WHERE ID in (${ids})
+		</delete>
+</mapper>

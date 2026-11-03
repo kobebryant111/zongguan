@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tansun.wf.platform.mapper.WfBranchScenarioMapper">
+
+    <resultMap type="com.tansun.wf.platform.model.WfBranchScenarioEntity" id="branchScenarioEntity">
+        <result column="pathStr" property="pathStr" javaType="java.lang.String"/>
+        <result column="highlighted_node_id" property="highlightedNodeId" javaType="java.lang.String"/>
+        <result column="processDefinitionId" property="processDefinitionId" javaType="java.lang.String"/>
+        <result column="index" property="index" javaType="java.lang.String"/>
+        <result column="id" property="id" javaType="java.lang.String"/>
+    </resultMap>
+
+    <sql id="Columns">
+		id,
+		`index`,
+		processDefinitionId,
+		highlighted_node_id,
+		pathStr
+	</sql>
+
+
+    <select id="queryByEntity" resultMap="branchScenarioEntity" parameterType="com.tansun.wf.platform.model.WfBranchScenarioEntity">
+        SELECT
+        <include refid="Columns"/>
+        FROM wf_branch_scenario
+        <where>
+            <if test="processDefinitionId != null and processDefinitionId !=''">
+                AND processDefinitionId = #{processDefinitionId}
+            </if>
+            <if test="id != null and id !=''">
+                AND id = #{id}
+            </if>
+        </where>
+    </select>
+
+    <insert id="saveEntityList" >
+        INSERT INTO wf_branch_scenario(id,`index`,processDefinitionId,highlighted_node_id,pathStr)
+        VALUES
+        <foreach collection="list" item="entity" separator=",">
+            (#{entity.id},#{entity.index},#{entity.processDefinitionId},#{entity.highlightedNodeId},#{entity.pathStr})
+        </foreach>
+    </insert>
+
+</mapper>

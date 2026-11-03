@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k6991 2021-10-11 -->
+<mapper namespace="com.work.ppm.application.model.systemmanager.PpmFhpwdXq">
+	 <resultMap type="ppmFhpwdXq" id="PPMFHPWDXQ_ALL">
+        <result property="compid" column="COMPID" />
+		<result property="admindepid" column="ADMINDEPID" />
+		<result property="depid" column="DEPID" />
+		
+     </resultMap>
+
+     <!-- 所有字段名称 -->
+        <sql id="sql_flied_all">
+        	COMPID,
+			ADMINDEPID,
+			DEPID
+        </sql>
+        <sql id="sql_select_condition">
+            <trim prefix="WHERE" suffixOverrides="AND">
+                <if test="compid != null  and compid != '' " > COMPID = #{compid} AND </if>
+				<if test="admindepid != null  and admindepid != '' " > ADMINDEPID = #{admindepid} AND </if>
+				<if test="depid != null  and depid != '' " > DEPID = #{depid} AND </if>
+				
+            </trim>
+        </sql>
+
+        <!--通过id查询  k6991 2021-10-11 -->
+        <select id="queryDetail" parameterType="ppmFhpwdXq" resultMap="PPMFHPWDXQ_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_FHPWD_XQ  WHERE COMPID=#{compid} AND ROWNUM=1
+        </select>
+
+        <!-- update sql -->
+        <sql id="update_pojo_sql">
+        	<trim prefix="SET" suffixOverrides=",">
+        		<if test="compid != null  and compid != '' " > COMPID=#{compid} , </if>
+				<if test="admindepid != null  and admindepid != '' " > ADMINDEPID=#{admindepid} , </if>
+				<if test="depid != null  and depid != '' " > DEPID=#{depid} , </if>
+				
+            </trim>
+        </sql>
+
+        <!--通过id编辑 k6991 2021-10-11 -->
+    	<update id="updatePojo" parameterType="ppmFhpwdXq">
+        	UPDATE
+        	PPM_FHPWD_XQ
+        	<include refid="update_pojo_sql" />
+        	WHERE COMPID=#{compid}
+        </update>
+
+</mapper>

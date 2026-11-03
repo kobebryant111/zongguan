@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k4038 2021-11-15 -->
+<mapper namespace="com.work.ppm.application.model.onlinemanager.PpmTaskplan">
+	 <resultMap type="ppmTaskplan" id="PPMTASKPLAN_ALL">
+        <result property="id" column="ID" />
+		<result property="plannoPpm" column="PLANNO_PPM" />
+		<result property="planno" column="PLANNO" />
+		<result property="planname" column="PLANNAME" />
+		<result property="sysno" column="SYSNO" />
+		<result property="planuser" column="PLANUSER" />
+		<result property="createuser" column="CREATEUSER" />
+		<result property="createtime" column="CREATETIME" />
+		<result property="plandate" column="PLANDATE" />
+		<result property="actualdate" column="ACTUALDATE" />
+		<result property="detail" column="DETAIL" />
+		<result property="state" column="STATE" />
+		<result property="plantype" column="PLANTYPE" />
+		
+     </resultMap>
+
+     <!-- 所有字段名称 -->
+        <sql id="sql_flied_all">
+        	ID,
+			PLANNO_PPM,
+			PLANNO,
+			PLANNAME,
+			SYSNO,
+			PLANUSER,
+			CREATEUSER,
+			CREATETIME,
+			PLANDATE,
+			ACTUALDATE,
+			DETAIL,
+			STATE,
+			PLANTYPE
+        </sql>
+        <sql id="sql_select_condition">
+            <trim prefix="WHERE" suffixOverrides="AND">
+                <if test="id != null " > ID = #{id} AND </if>
+				<if test="plannoPpm != null  and plannoPpm != '' " > PLANNO_PPM = #{plannoPpm} AND </if>
+				<if test="planno != null  and planno != '' " > PLANNO = #{planno} AND </if>
+				<if test="planname != null  and planname != '' " > PLANNAME = #{planname} AND </if>
+				<if test="sysno != null  and sysno != '' " > SYSNO = #{sysno} AND </if>
+				<if test="planuser != null  and planuser != '' " > PLANUSER = #{planuser} AND </if>
+				<if test="createuser != null  and createuser != '' " > CREATEUSER = #{createuser} AND </if>
+				<if test="createtime != null " > CREATETIME = #{createtime} AND </if>
+				<if test="plandate != null " > PLANDATE = #{plandate} AND </if>
+				<if test="actualdate != null " > ACTUALDATE = #{actualdate} AND </if>
+				<if test="detail != null  and detail != '' " > DETAIL = #{detail} AND </if>
+				<if test="state != null  and state != '' " > STATE = #{state} AND </if>
+				<if test="plantype != null  and plantype != '' " > PLANTYPE = #{plantype} AND </if>
+				
+            </trim>
+        </sql>
+    	<!-- 查询分页  2021-11-15 k4038  -->
+        <select id="queryPagerList" parameterType="map" resultMap="PPMTASKPLAN_ALL">
+        	SELECT
+            <include refid="sql_flied_all" />
+            FROM PPM_TASKPLAN
+            <include refid="sql_select_condition" />
+        </select>
+
+        <!-- 新增  2021-11-15 k4038  -->
+        <insert id="addPojo" parameterType="ppmTaskplan">
+    		INSERT INTO PPM_TASKPLAN (
+    		<trim suffixOverrides=",">
+    		 <if test="id != null " > ID , </if>
+				<if test="plannoPpm != null  and plannoPpm != '' " > PLANNO_PPM , </if>
+				<if test="planno != null  and planno != '' " > PLANNO , </if>
+				<if test="planname != null  and planname != '' " > PLANNAME , </if>
+				<if test="sysno != null  and sysno != '' " > SYSNO , </if>
+				<if test="planuser != null  and planuser != '' " > PLANUSER , </if>
+				<if test="createuser != null  and createuser != '' " > CREATEUSER , </if>
+				<if test="createtime != null " > CREATETIME , </if>
+				<if test="plandate != null " > PLANDATE , </if>
+				<if test="actualdate != null " > ACTUALDATE , </if>
+				<if test="detail != null  and detail != '' " > DETAIL , </if>
+				<if test="state != null  and state != '' " > STATE , </if>
+				<if test="plantype != null  and plantype != '' " > PLANTYPE , </if>
+				
+              </trim>
+    		)
+    		VALUES(
+    		<trim suffixOverrides=",">
+    		 <if test="id != null " > #{id} , </if>
+				<if test="plannoPpm != null  and plannoPpm != '' " > #{plannoPpm} , </if>
+				<if test="planno != null  and planno != '' " > #{planno} , </if>
+				<if test="planname != null  and planname != '' " > #{planname} , </if>
+				<if test="sysno != null  and sysno != '' " > #{sysno} , </if>
+				<if test="planuser != null  and planuser != '' " > #{planuser} , </if>
+				<if test="createuser != null  and createuser != '' " > #{createuser} , </if>
+				<if test="createtime != null " > #{createtime} , </if>
+				<if test="plandate != null " > #{plandate} , </if>
+				<if test="actualdate != null " > #{actualdate} , </if>
+				<if test="detail != null  and detail != '' " > #{detail} , </if>
+				<if test="state != null  and state != '' " > #{state} , </if>
+				<if test="plantype != null  and plantype != '' " > #{plantype} , </if>
+				
+            </trim>
+    		)
+        </insert>
+
+        <!--通过id查询  k4038 2021-11-15 -->
+        <select id="queryDetail" parameterType="ppmTaskplan" resultMap="PPMTASKPLAN_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_TASKPLAN  WHERE ID=#{id}
+        </select>
+
+         <!--查询集合  k4038 2021-11-15 -->
+        <select id="getList" parameterType="ppmTaskplan" resultMap="PPMTASKPLAN_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_TASKPLAN
+        	<include refid="sql_select_condition" />
+        </select>
+        <!-- update sql -->
+        <sql id="update_pojo_sql">
+        	<trim prefix="SET" suffixOverrides=",">
+        		<if test="id != null " > ID=#{id} , </if>
+				<if test="plannoPpm != null  and plannoPpm != '' " > PLANNO_PPM=#{plannoPpm} , </if>
+				<if test="planno != null  and planno != '' " > PLANNO=#{planno} , </if>
+				<if test="planname != null  and planname != '' " > PLANNAME=#{planname} , </if>
+				<if test="sysno != null  and sysno != '' " > SYSNO=#{sysno} , </if>
+				<if test="planuser != null  and planuser != '' " > PLANUSER=#{planuser} , </if>
+				<if test="createuser != null  and createuser != '' " > CREATEUSER=#{createuser} , </if>
+				<if test="createtime != null " > CREATETIME=#{createtime} , </if>
+				<if test="plandate != null " > PLANDATE=#{plandate} , </if>
+				<if test="actualdate != null " > ACTUALDATE=#{actualdate} , </if>
+				<if test="detail != null  and detail != '' " > DETAIL=#{detail} , </if>
+				<if test="state != null  and state != '' " > STATE=#{state} , </if>
+				<if test="plantype != null  and plantype != '' " > PLANTYPE=#{plantype} , </if>
+				
+            </trim>
+        </sql>
+
+        <!--通过id编辑 k4038 2021-11-15 -->
+    	<update id="updatePojo" parameterType="ppmTaskplan">
+        	UPDATE
+        	PPM_TASKPLAN
+        	<include refid="update_pojo_sql" />
+        	WHERE planno_ppm=#{plannoPpm}
+        </update>
+
+        <!--通过id批量删除  k4038 2021-11-15 -->
+        <delete id="deleteById" parameterType="ppmTaskplan">
+        	DELETE
+        	FROM
+        	PPM_TASKPLAN
+        	WHERE ID = #{id}
+        </delete>
+
+	<resultMap id="PPMTASKPLANINFO_ALL" type="ppmTaskplanInfo" extends="PPMTASKPLAN_ALL">
+		<result property="sysname" column="SYSNAME" />
+		<result property="planusername" column="PLANUSERNAME" />
+		<result property="createusername" column="CREATEUSERNAME" />
+
+	</resultMap>
+
+	<select id="queryTaskPlan" parameterType="map" resultMap="PPMTASKPLANINFO_ALL">
+		select a.sys_name as sysname,
+		( CASE WHEN (t.planuser='' or t.planuser is NULL )  THEN '' ELSE e1.empname || '(' || t.planuser || ')'   END ) as planusername,
+		( CASE WHEN (t.createuser='' or t.createuser is NULL )  THEN '' ELSE e2.empname || '(' || t.createuser || ')'   END ) as createusername,
+		t.* from ppm_taskplan t
+		left join aap_system a on a.system_id=t.sysno
+		left join ppm_emp_view e1 on e1.badge=t.planuser
+		left join ppm_emp_view e2 on e2.badge=t.createuser
+		where 1=1
+		and	t.planno_ppm=#{plannoppm}
+	</select>
+
+</mapper>

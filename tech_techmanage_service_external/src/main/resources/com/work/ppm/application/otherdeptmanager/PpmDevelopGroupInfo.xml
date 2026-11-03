@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:ywwb905 2023-07-19 -->
+<!--  对接手机平台信息 查询脚本 -->
+<mapper namespace="com.work.ppm.application.model.otherdeptmanager.PpmDevelopGroupInfo">
+	 <resultMap type="ppmDevelopGroupInfo" id="PPMDEVELOPGROUPINFO_ALL">
+        <result property="id" column="ID" />
+		<result property="deptId" column="DEPT_ID" />
+		<result property="deptName" column="DEPT_NAME" />
+		<result property="groupName" column="GROUP_NAME" />
+		<result property="groupLeaderId" column="GROUP_LEADER_ID" />
+		<result property="groupLeaderName" column="GROUP_LEADER_NAME" />
+		<result property="groupLeaderCard" column="GROUP_LEADER_CARD" />
+		<result property="groupType" column="GROUP_TYPE" />
+		<result property="createdBy" column="CREATED_BY" />
+		<result property="createdTime" column="CREATED_TIME" />
+		<result property="modifiedBy" column="MODIFIED_BY" />
+		<result property="modifiedTime" column="MODIFIED_TIME" />
+     </resultMap>
+
+     <!-- 所有字段名称 -->
+    <sql id="sql_flied_all">
+        ID,
+		DEPT_ID,
+		DEPT_NAME,
+		GROUP_NAME,
+		GROUP_LEADER_ID,
+		GROUP_LEADER_NAME,
+		GROUP_LEADER_CARD,
+		GROUP_TYPE,
+		CREATED_BY,
+		CREATED_TIME,
+		MODIFIED_BY,
+		MODIFIED_TIME
+    </sql>
+    <sql id="sql_select_condition">
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="id != null  and id != '' " > ID = #{id} AND </if>
+			<if test="deptId != null  and deptId != '' " > DEPT_ID = #{deptId} AND </if>
+			<if test="deptName != null  and deptName != '' " > DEPT_NAME = #{deptName} AND </if>
+			<if test="groupName != null  and groupName != '' " > GROUP_NAME like '%'||#{groupName}||'%' AND </if>
+			<if test="groupLeaderId != null  and groupLeaderId != '' " > GROUP_LEADER_ID = #{groupLeaderId} AND </if>
+			<if test="groupLeaderName != null  and groupLeaderName != '' " > GROUP_LEADER_NAME = #{groupLeaderName} AND </if>
+			<if test="groupLeaderCard != null  and groupLeaderCard != '' " > GROUP_LEADER_CARD = #{groupLeaderCard} AND </if>
+			<if test="groupType != null  and groupType != '' " > GROUP_TYPE = #{groupType} AND </if>
+			<if test="createdBy != null  and createdBy != '' " > CREATED_BY = #{createdBy} AND </if>
+			<if test="createdTime != null " > CREATED_TIME = #{createdTime} AND </if>
+			<if test="modifiedBy != null  and modifiedBy != '' " > MODIFIED_BY = #{modifiedBy} AND </if>
+			<if test="modifiedTime != null " > MODIFIED_TIME = #{modifiedTime} AND </if>
+				
+        </trim>
+    </sql>
+    <!-- 查询分页  2023-07-19 ywwb905  -->
+    <select id="queryPagerList" parameterType="map" resultMap="PPMDEVELOPGROUPINFO_ALL">
+        SELECT
+        <include refid="sql_flied_all" />
+        FROM PPM_DEVELOP_GROUP_INFO
+        <include refid="sql_select_condition" />
+    </select>
+
+    <!-- 新增  2023-07-19 ywwb905  -->
+    <insert id="addPojo" parameterType="ppmDevelopGroupInfo">
+        INSERT INTO PPM_DEVELOP_GROUP_INFO (
+        <trim suffixOverrides=",">
+			<if test="id != null  and id != '' " > ID , </if>
+			<if test="deptId != null  and deptId != '' " > DEPT_ID , </if>
+			<if test="deptName != null  and deptName != '' " > DEPT_NAME , </if>
+			<if test="groupName != null  and groupName != '' " > GROUP_NAME , </if>
+			<if test="groupLeaderId != null  and groupLeaderId != '' " > GROUP_LEADER_ID , </if>
+			<if test="groupLeaderName != null  and groupLeaderName != '' " > GROUP_LEADER_NAME , </if>
+			<if test="groupLeaderCard != null  and groupLeaderCard != '' " > GROUP_LEADER_CARD , </if>
+			<if test="groupType != null  and groupType != '' " > GROUP_TYPE , </if>
+			<if test="createdBy != null  and createdBy != '' " > CREATED_BY , </if>
+			<if test="createdTime != null " > CREATED_TIME , </if>
+			<if test="modifiedBy != null  and modifiedBy != '' " > MODIFIED_BY , </if>
+			<if test="modifiedTime != null " > MODIFIED_TIME , </if>
+				
+          </trim>
+        )
+        VALUES(
+        <trim suffixOverrides=",">
+			<if test="id != null  and id != '' " > #{id} , </if>
+			<if test="deptId != null  and deptId != '' " > #{deptId} , </if>
+			<if test="deptName != null  and deptName != '' " > #{deptName} , </if>
+			<if test="groupName != null  and groupName != '' " > #{groupName} , </if>
+			<if test="groupLeaderId != null  and groupLeaderId != '' " > #{groupLeaderId} , </if>
+			<if test="groupLeaderName != null  and groupLeaderName != '' " > #{groupLeaderName} , </if>
+			<if test="groupLeaderCard != null  and groupLeaderCard != '' " > #{groupLeaderCard} , </if>
+			<if test="groupType != null  and groupType != '' " > #{groupType} , </if>
+			<if test="createdBy != null  and createdBy != '' " > #{createdBy} , </if>
+			<if test="createdTime != null " > #{createdTime} , </if>
+			<if test="modifiedBy != null  and modifiedBy != '' " > #{modifiedBy} , </if>
+			<if test="modifiedTime != null " > #{modifiedTime} , </if>
+				
+        </trim>
+        )
+    </insert>
+
+    <!--通过id查询  ywwb905 2023-07-19 -->
+    <select id="queryDetail" parameterType="ppmDevelopGroupInfo" resultMap="PPMDEVELOPGROUPINFO_ALL">
+        SELECT
+        <include refid="sql_flied_all" />
+        FROM PPM_DEVELOP_GROUP_INFO  WHERE ID=#{id}
+    </select>
+
+     <!--查询集合  ywwb905 2023-07-19 -->
+    <select id="getList" parameterType="ppmDevelopGroupInfo" resultMap="PPMDEVELOPGROUPINFO_ALL">
+        SELECT
+        <include refid="sql_flied_all" />
+        FROM PPM_DEVELOP_GROUP_INFO
+        <include refid="sql_select_condition" />
+    </select>
+    <!-- update sql -->
+    <sql id="update_pojo_sql">
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="id != null  and id != '' " > ID=#{id} , </if>
+			<if test="deptId != null  and deptId != '' " > DEPT_ID=#{deptId} , </if>
+			<if test="deptName != null  and deptName != '' " > DEPT_NAME=#{deptName} , </if>
+			<if test="groupName != null  and groupName != '' " > GROUP_NAME=#{groupName} , </if>
+			<if test="groupLeaderId != null  and groupLeaderId != '' " > GROUP_LEADER_ID=#{groupLeaderId} , </if>
+			<if test="groupLeaderName != null  and groupLeaderName != '' " > GROUP_LEADER_NAME=#{groupLeaderName} , </if>
+			<if test="groupLeaderCard != null  and groupLeaderCard != '' " > GROUP_LEADER_CARD=#{groupLeaderCard} , </if>
+			<if test="groupType != null  and groupType != '' " > GROUP_TYPE=#{groupType} , </if>
+			<if test="createdBy != null  and createdBy != '' " > CREATED_BY=#{createdBy} , </if>
+			<if test="createdTime != null " > CREATED_TIME=#{createdTime} , </if>
+			<if test="modifiedBy != null  and modifiedBy != '' " > MODIFIED_BY=#{modifiedBy} , </if>
+			<if test="modifiedTime != null " > MODIFIED_TIME=#{modifiedTime} , </if>
+				
+        </trim>
+    </sql>
+
+    <!--通过id编辑 ywwb905 2023-07-19 -->
+    <update id="updatePojo" parameterType="ppmDevelopGroupInfo">
+        UPDATE
+        PPM_DEVELOP_GROUP_INFO
+        <include refid="update_pojo_sql" />
+        WHERE ID=#{id}
+    </update>
+
+    <!--通过id批量删除  ywwb905 2023-07-19 -->
+    <delete id="deleteById" parameterType="ppmDevelopGroupInfo">
+        DELETE
+        FROM
+        PPM_DEVELOP_GROUP_INFO
+        WHERE ID = #{id}
+    </delete>
+
+</mapper>

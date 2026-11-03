@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:ywwb905 2022-11-8 -->
+<!--  提前入场申请查询脚本 -->
+<mapper namespace="com.work.ppm.application.model.integratedmanager.PpmEarlyCourseApply">
+	 <resultMap type="ppmEarlyCourseApply" id="PPMEARLYCOURSEAPPLY_ALL">
+        <result property="id" column="ID" />
+		<result property="deptNo" column="DEPT_NO" />
+		<result property="instanceid" column="INSTANCEID" />
+		<result property="applyer" column="APPLYER" />
+		<result property="state" column="STATE" />
+		<result property="stateName" column="STATE_NAME" />
+		<result property="currentId" column="CURRENT_ID" />
+		<result property="currentName" column="CURRENT_NAME" />
+		<result property="createdTime" column="CREATED_TIME" />
+		<result property="createdBy" column="CREATED_BY" />
+		<result property="modifiedTime" column="MODIFIED_TIME" />
+		<result property="modifiedBy" column="MODIFIED_BY" />
+     </resultMap>
+
+     <!-- 所有字段名称 -->
+    <sql id="sql_flied_all">
+        ID,
+		DEPT_NO,
+        INSTANCEID,
+        APPLYER,
+        STATE,
+        STATE_NAME,
+        CURRENT_ID,
+        CURRENT_NAME,
+        CREATED_TIME,
+        CREATED_BY,
+        MODIFIED_TIME,
+        MODIFIED_BY
+    </sql>
+    <sql id="sql_select_condition">
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="id != null " > ID = #{id} AND </if>
+            <if test="deptNo != null " > DEPT_NO = #{deptNo} AND </if>
+            <if test="instanceid != null " > INSTANCEID = #{instanceid} AND </if>
+            <if test="applyer != null " > APPLYER = #{applyer} AND </if>
+            <if test="state != null " > STATE = #{state} AND </if>
+            <if test="stateName != null " > STATE_NAME = #{stateName} AND </if>
+            <if test="currentId != null " > CURRENT_ID = #{currentId} AND </if>
+            <if test="currentName != null " > CURRENT_NAME = #{currentName} AND </if>
+            <if test="createdTime != null " > CREATED_TIME = #{createdTime} AND </if>
+            <if test="createdBy != null " > CREATED_BY = #{createdBy} AND </if>
+            <if test="modifiedTime != null " > MODIFIED_TIME = #{modifiedTime} AND </if>
+            <if test="modifiedBy != null " > MODIFIED_BY = #{modifiedBy} AND </if>
+        </trim>
+    </sql>
+
+    <!-- 新增  2022-11-08 ywwb905  -->
+    <insert id="addPojo" parameterType="ppmEarlyCourseApply">
+        INSERT INTO PPM_EARLY_COURSE_APPLY (
+        <trim suffixOverrides=",">
+			<if test="id != null " > ID , </if>
+			<if test="deptNo != null " > DEPT_NO , </if>
+			<if test="instanceid != null " > INSTANCEID , </if>
+			<if test="applyer != null " > APPLYER , </if>
+			<if test="state != null " > STATE , </if>
+			<if test="stateName != null " > STATE_NAME , </if>
+			<if test="currentId != null " > CURRENT_ID , </if>
+			<if test="currentName != null " > CURRENT_NAME , </if>
+			<if test="createdTime != null " > CREATED_TIME , </if>
+			<if test="createdBy != null " > CREATED_BY , </if>
+			<if test="modifiedTime != null " > MODIFIED_TIME , </if>
+			<if test="modifiedBy != null " > MODIFIED_BY , </if>
+        </trim>
+        )
+        VALUES(
+        <trim suffixOverrides=",">
+			<if test="id != null " > #{id} , </if>
+			<if test="deptNo != null " > #{deptNo} , </if>
+			<if test="instanceid != null " > #{instanceid} , </if>
+			<if test="applyer != null " > #{applyer} , </if>
+			<if test="state != null " > #{state} , </if>
+			<if test="stateName != null " > #{stateName} , </if>
+			<if test="currentId != null " > #{currentId} , </if>
+			<if test="currentName != null " > #{currentName} , </if>
+			<if test="createdTime != null " > #{createdTime} , </if>
+			<if test="createdBy != null " > #{createdBy} , </if>
+			<if test="modifiedTime != null " > #{modifiedTime} , </if>
+			<if test="modifiedBy != null " > #{modifiedBy} , </if>
+        </trim>
+        )
+    </insert>
+
+    <!--通过id查询  ywwb905 2022-11-08 -->
+    <select id="queryDetail" parameterType="ppmEarlyCourseApply" resultMap="PPMEARLYCOURSEAPPLY_ALL">
+        SELECT
+        <include refid="sql_flied_all" />
+        FROM PPM_EARLY_COURSE_APPLY
+		<trim prefix="WHERE" suffixOverrides="AND">
+            <if test="id != null " > ID = #{id} AND </if>
+            <if test="instanceid != null " > INSTANCEID = #{instanceid} AND </if>
+			<if test="id == null and instanceid == null" > ID = '' AND </if>
+        </trim>
+    </select>
+
+     <!--查询集合  ywwb905 2022-11-08 -->
+    <select id="getList" parameterType="ppmEarlyCourseApply" resultMap="PPMEARLYCOURSEAPPLY_ALL">
+        SELECT
+        <include refid="sql_flied_all" />
+        FROM PPM_EARLY_COURSE_APPLY
+        <include refid="sql_select_condition" />
+    </select>
+    <!-- update sql -->
+    <sql id="update_pojo_sql">
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="deptNo != null " > DEPT_NO = #{deptNo} , </if>
+            <if test="instanceid != null " > INSTANCEID = #{instanceid} , </if>
+            <if test="applyer != null " > APPLYER = #{applyer} , </if>
+            <if test="state != null " > STATE = #{state} , </if>
+            <if test="stateName != null " > STATE_NAME = #{stateName} , </if>
+            <if test="currentId != null " > CURRENT_ID = #{currentId} , </if>
+            <if test="currentName != null " > CURRENT_NAME = #{currentName} , </if>
+            <if test="createdTime != null " > CREATED_TIME = #{createdTime} , </if>
+            <if test="createdBy != null " > CREATED_BY = #{createdBy} , </if>
+            <if test="modifiedTime != null " > MODIFIED_TIME = #{modifiedTime} , </if>
+            <if test="modifiedBy != null " > MODIFIED_BY = #{modifiedBy} , </if>
+        </trim>
+    </sql>
+
+    <!--通过id编辑 ywwb905 2022-11-08 -->
+    <update id="updatePojo" parameterType="ppmEarlyCourseApply">
+        UPDATE
+        PPM_EARLY_COURSE_APPLY
+        <include refid="update_pojo_sql" />
+        WHERE ID = #{id}
+    </update>
+
+
+    <!--通过id批量删除  ywwb905 2022-11-8 -->
+    <delete id="deleteById" parameterType="ppmEarlyCourseApply">
+        DELETE
+        FROM
+        PPM_EARLY_COURSE_APPLY
+        WHERE ID = #{id}
+    </delete>
+	
+	<!--通过id批量删除  ywwb905 2022-11-8 -->
+    <delete id="deleteByInstanceId" parameterType="ppmEarlyCourseApply">
+        DELETE
+        FROM
+        PPM_EARLY_COURSE_APPLY
+        WHERE INSTANCEID=#{instanceid}
+    </delete>
+
+</mapper>

@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.work.ppm.application.services.integratedmanager.IPpmSupplierContractMapper">
+    <resultMap type="ppmSupplierContract" id="PpmSupplierContract_ALL">
+        <result property="id" column="ID"/>
+        <result property="supplierId" column="SUPPLIER_ID"/>
+        <result property="contractNo" column="CONTRACT_NO"/>
+        <result property="contractName" column="CONTRACT_NAME"/>
+        <result property="contractAmt" column="CONTRACT_AMT"/>
+        <result property="contractBeginDate" column="CONTRACT_BEGIN_DATE"/>
+        <result property="contractEndDate" column="CONTRACT_END_DATE"/>
+        <result property="contractState" column="CONTRACT_STATE"/>
+        <result property="juniorNum" column="JUNIOR_NUM"/>
+        <result property="intermediateNum" column="INTERMEDIATE_NUM"/>
+        <result property="seniorNum" column="SENIOR_NUM"/>
+        <result property="expertNum" column="EXPERT_NUM"/>
+        <result property="juniorPrice" column="JUNIOR_PRICE"/>
+        <result property="intermediatePrice" column="INTERMEDIATE_PRICE"/>
+        <result property="seniorPrice" column="SENIOR_PRICE"/>
+        <result property="expertPrice" column="EXPERT_PRICE"/>
+        <result property="createDate" column="CREATE_DATE"/>
+        <result property="updateDate" column="UPDATE_DATE"/>
+    </resultMap>
+
+
+    <!-- 所有字段名称 -->
+    <sql id="sql_flied_all">
+        ID,
+        SUPPLIER_ID,
+        CONTRACT_NO,
+        CONTRACT_NAME,
+        CONTRACT_AMT,
+        CONTRACT_BEGIN_DATE,
+        CONTRACT_END_DATE,
+        CONTRACT_STATE,
+        JUNIOR_NUM,
+        INTERMEDIATE_NUM,
+        SENIOR_NUM,
+        EXPERT_NUM,
+        JUNIOR_PRICE,
+        INTERMEDIATE_PRICE,
+        SENIOR_PRICE,
+        EXPERT_PRICE,
+        CREATE_DATE,
+        UPDATE_DATE
+    </sql>
+    <sql id="sql_select_condition">
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="id != null ">E.ID = #{id} AND</if>
+            <if test="supplierId != null  and supplierId != '' ">SUPPLIER_ID = #{supplierId} AND</if>
+            <if test="contractNo != null  and contractNo != '' ">CONTRACT_NO = #{contractNo} AND</if>
+            <if test="contractName != null  and contractName != '' ">CONTRACT_NAME = #{contractName} AND</if>
+            <if test="contractState != null  and contractState != '' ">CONTRACT_STATE = #{contractState} AND</if>
+        </trim>
+    </sql>
+
+    <resultMap type="com.work.ppm.application.model.integratedmanager.PpmSupplierContractResponse" id="CREWPAGELIST_MAP"
+               extends="PpmSupplierContract_ALL">
+        <result property="supplierName" column="OUTSOURCNAME"/>
+    </resultMap>
+    <!-- 查询分页 -->
+    <select id="queryPagerList" parameterType="map" resultMap="CREWPAGELIST_MAP">
+        SELECT
+        E.ID,
+        E.SUPPLIER_ID,
+        E.CONTRACT_NO,
+        E.CONTRACT_NAME,
+        E.CONTRACT_BEGIN_DATE,
+        E.CONTRACT_END_DATE,
+        E.CONTRACT_STATE,
+        U.OUTSOURCNAME
+        FROM ppm.PPM_SUPPLIER_CONTRACT E
+        left join ppm.PPM_OUTSOURCING_INFO U ON(U.ORGCODE = E.SUPPLIER_ID)
+        <include refid="sql_select_condition"/>
+        order by E.CREATE_DATE desc
+    </select>
+
+    <!-- 查询详情 -->
+    <select id="queryDetail" parameterType="com.work.ppm.application.model.integratedmanager.PpmSupplierContract"
+            resultMap="CREWPAGELIST_MAP">
+        SELECT
+        E.ID,
+        E.SUPPLIER_ID,
+        E.CONTRACT_NO,
+        E.CONTRACT_NAME,
+        E.CONTRACT_AMT,
+        E.CONTRACT_BEGIN_DATE,
+        E.CONTRACT_END_DATE,
+        E.CONTRACT_STATE,
+        E.JUNIOR_NUM,
+        E.INTERMEDIATE_NUM,
+        E.SENIOR_NUM,
+        E.EXPERT_NUM,
+        E.JUNIOR_PRICE,
+        E.INTERMEDIATE_PRICE,
+        E.SENIOR_PRICE,
+        E.EXPERT_PRICE,
+        E.CREATE_DATE,
+        U.OUTSOURCNAME
+        FROM ppm.PPM_SUPPLIER_CONTRACT E
+        left join ppm.PPM_OUTSOURCING_INFO U ON(U.ORGCODE = E.SUPPLIER_ID)
+        <include refid="sql_select_condition"/>
+    </select>
+
+
+</mapper>

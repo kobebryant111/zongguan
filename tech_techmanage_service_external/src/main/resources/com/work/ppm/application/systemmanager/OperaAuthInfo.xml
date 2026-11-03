@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k6991 2020-03-10 -->
+<mapper namespace="com.work.ppm.application.model.systemmanager.OperaAuthInfo">
+	 <resultMap type="OperaAuthInfo" id="OPERAAUTHINFO_ALL">
+        <result property="authId" column="AUTH_ID" />
+		<result property="authName" column="AUTH_NAME" />
+		<result property="rolId" column="ROL_ID" />
+		<result property="authEncoding" column="AUTH_ENCODING" />
+		<result property="creatTime" column="CREAT_TIME" />
+		<result property="creatName" column="CREAT_NAME" />
+		<result property="updateTime" column="UPDATE_TIME" />
+		<result property="updateName" column="UPDATE_NAME" />
+     </resultMap>
+
+     <!-- 所有字段名称 -->
+        <sql id="sql_flied_all">
+			AUTH_ID,
+			AUTH_NAME,
+			ROL_ID,
+			AUTH_ENCODING,
+			CREAT_TIME,
+			CREAT_NAME,
+			UPDATE_TIME,
+			UPDATE_NAME
+        </sql>
+
+
+	<insert id="addOperaAuthInfo" parameterType="map">
+		INSERT INTO OPERA_AUTH_INFO (AUTH_ID, AUTH_NAME, ROL_ID, AUTH_ENCODING, CREAT_TIME)
+		SELECT #{authId},#{authName},#{rolId},#{authEncoding},#{creatTime}
+		FROM dual
+		WHERE NOT EXISTS (
+		SELECT 1
+		FROM OPERA_AUTH_INFO
+		WHERE ROL_ID=#{rolId} AND AUTH_ENCODING=#{authEncoding}
+		)
+	</insert>
+
+	<select id="queryAuthEnCodingList" parameterType="map" resultMap="OPERAAUTHINFO_ALL">
+		SELECT <include refid="sql_flied_all" />
+		FROM OPERA_AUTH_INFO
+		WHERE ROL_ID=#{rolId}
+	</select>
+
+	<delete id="deleteAuthEncoding" parameterType="map">
+		DELETE
+		FROM
+		OPERA_AUTH_INFO
+		<trim prefix="WHERE" suffixOverrides="AND">
+			<if test="rolId != null  and rolId != '' " > ROL_ID=#{rolId} AND </if>
+		</trim>
+	</delete>
+
+</mapper>

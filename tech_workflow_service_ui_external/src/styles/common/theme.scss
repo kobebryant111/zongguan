@@ -1,0 +1,191 @@
+/**
+ * @Author: liuyang
+ * @Date: 2020-04-29
+ * @LastEditors: liuyang
+ * @LastEditTime: 2020-04-29
+ * @Description: 头部样式
+ */
+
+//二级菜单里的颜色样式
+$submenu-color: #ff8d00;
+$submeun-unselect-color: #323232;
+//标签样式
+$tag-color: #ff8d00;
+$tag-select-color: #ff8d00;
+
+//橙色主题
+$orange-theme: (
+  //文字颜色
+        text-color:#ffffff,
+  //背景颜色
+        top-background:#ff8d00,
+  //菜单搜索框样式
+        menu-input:#F2F8FF,
+        menu-input-text:#000000,
+        menu-input-border:1px solid #F2F8FF,
+        menu-input-icon: #ff8d00,
+        menu-input-placehoder: #999999,
+  //菜单选择样式
+        menu-select-color: #ffffff,
+        menu-select-background: #ff8d00,
+  //标签选择样式
+        tag-select-color: #ffffff,
+        tag-select-background: #ff8d00,
+  //分割线颜色
+        split-color: #ff8d00
+);
+
+//白色主题
+$white-theme: (
+  //文字颜色
+        text-color:#4A4A4A,
+  //背景颜色
+        top-background:#ffffff,
+  //菜单搜索框样式
+        menu-input:#F2F8FF,
+        menu-input-text:#000000,
+        menu-input-border:1px solid #F2F8FF,
+        menu-input-icon: #ff8d00,
+        menu-input-placehoder: #999999,
+  //菜单选择样式
+        menu-select-color: #ffffff,
+        menu-select-background: #ff8d00,
+  //标签选择样式
+        tag-select-color: #ffffff,
+        tag-select-background: #ff8d00,
+  //分割线颜色
+        split-color: #ff8d00
+);
+
+////二级菜单里的颜色样式
+//$submenu-color:#3395FF;
+//$submeun-unselect-color:#323232;
+////标签样式
+//$tag-color:#3395FF;
+//$tag-select-color:#007BFF;
+//
+////白色主题
+//$white-theme: (
+//        //文字颜色
+//        text-color:#4A4A4A,
+//        //背景颜色
+//        top-background:#ffffff,
+//        //菜单搜索框样式
+//        menu-input:#F2F8FF,
+//        menu-input-text:#000000,
+//        menu-input-border:1px solid #F2F8FF,
+//        menu-input-icon: #3395FF,
+//        menu-input-placehoder: #999999,
+//        //菜单选择样式
+//        menu-select-color: #ffffff,
+//        menu-select-background: #3395FF,
+//        //标签选择样式
+//        tag-select-color: #ffffff,
+//        tag-select-background: #3395FF,
+//);
+
+//黑色主题
+$black-theme: (
+        text-color:#ffffff,
+        top-background:#24394a,
+        menu-input:#2f485d,
+        menu-input-text:#ffffff,
+        menu-input-border:1px solid #2f485d,
+        menu-input-icon: #3395FF,
+        menu-input-placehoder: #dbdbdb,
+        menu-select-color: #ffffff,
+        menu-select-background: #3395FF,
+        tag-select-color: #ffffff,
+        tag-select-background: #3395FF,
+);
+
+//定义映射集合
+$themes: (
+        white-theme: $white-theme,
+        black-theme: $black-theme,
+);
+
+@mixin top-background() {
+  @each $themename, $theme in $themes {
+    [data-theme = '#{$themename}'] & {
+      background: map-get($map: $theme, $key: top-background)
+    }
+  }
+}
+
+@mixin top-text-color() {
+  @each $themename, $theme in $themes {
+    [data-theme = '#{$themename}'] & {
+      color: map-get($map: $theme, $key: text-color)
+    }
+  }
+}
+
+@mixin menu-input() {
+  @each $themename, $theme in $themes {
+    [data-theme = '#{$themename}'] & {
+      /*border-radius: 14px;*/
+      background: map-get($map: $theme, $key: menu-input);
+      color: map-get($map: $theme, $key: menu-input-text);
+      border: map-get($map: $theme, $key: menu-input-border);
+    }
+  }
+}
+
+@mixin menu-input-icon() {
+  @each $themename, $theme in $themes {
+    [data-theme = '#{$themename}'] & {
+      color: map-get($map: $theme, $key: menu-input-icon);
+    }
+  }
+}
+
+@mixin menu-input-placehoder() {
+  @each $themename, $theme in $themes {
+    [data-theme = '#{$themename}'] & {
+      color: map-get($map: $theme, $key: menu-input-placehoder);
+    }
+  }
+}
+
+@mixin menu-list-style() {
+  @each $themename, $theme in $themes {
+    [data-theme = '#{$themename}'] & {
+      border:1px solid map-get($map: $theme, $key: top-background);
+    }
+  }
+}
+
+@mixin menu-list-select-style() {
+  @each $themename, $theme in $themes {
+    [data-theme = '#{$themename}'] & {
+      background:map-get($map: $theme, $key: menu-select-background);
+      border:1px solid map-get($map: $theme, $key: menu-select-background);
+      //border-radius:8px 8px 0 0;
+    }
+  }
+}
+
+@mixin menu-select-color() {
+  @each $themename, $theme in $themes {
+    [data-theme = '#{$themename}'] & {
+      color: map-get($map: $theme, $key: menu-select-color);
+    }
+  }
+}
+
+@mixin menu-select-background() {
+  @each $themename, $theme in $themes {
+    [data-theme = '#{$themename}'] & {
+      background: map-get($map: $theme, $key: menu-select-background);
+    }
+  }
+}
+
+@mixin tag-select-style() {
+  @each $themename, $theme in $themes {
+    [data-theme = '#{$themename}'] & {
+      background: map-get($map: $theme, $key: tag-select-background);
+    }
+  }
+}

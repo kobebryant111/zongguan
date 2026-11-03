@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k1327 2020-09-28 -->
+<mapper namespace="com.work.ppm.application.model.integratedmanager.PpmFacemachineConfig">
+	 <resultMap type="ppmFacemachineConfig" id="PPMFACEMACHINECONFIG_ALL">
+        <result property="id" column="ID" />
+		<result property="name" column="NAME" />
+		<result property="location" column="LOCATION" />
+		<result property="deviceip" column="DEVICEIP" />
+		<result property="deviceport" column="DEVICEPORT" />
+		<result property="iuserid" column="IUSERID" />
+		<result property="deviceid" column="DEVICEID" />
+		<result property="status" column="STATUS" />
+		<result property="isuse" column="ISUSE" />
+		
+     </resultMap>
+
+     <!-- 所有字段名称 -->
+        <sql id="sql_flied_all">
+        	ID,
+			NAME,
+			LOCATION,
+			DEVICEIP,
+			DEVICEPORT,
+			IUSERID,
+			DEVICEID,
+			STATUS,
+			ISUSE
+        </sql>
+        <sql id="sql_select_condition">
+            <trim prefix="WHERE" suffixOverrides="AND">
+                <if test="id != null  and id != '' " > ID = #{id} AND </if>
+				<if test="name != null  and name != '' " > NAME = #{name} AND </if>
+				<if test="location != null  and location != '' " > LOCATION = #{location} AND </if>
+				<if test="deviceip != null  and deviceip != '' " > DEVICEIP = #{deviceip} AND </if>
+				<if test="deviceport != null  and deviceport != '' " > DEVICEPORT = #{deviceport} AND </if>
+				<if test="iuserid != null  and iuserid != '' " > IUSERID = #{iuserid} AND </if>
+				<if test="deviceid != null  and deviceid != '' " > DEVICEID = #{deviceid} AND </if>
+				<if test="status != null  and status != '' " > STATUS = #{status} AND </if>
+				<if test="isuse != null  and isuse != '' " > ISUSE = #{isuse} AND </if>
+				
+            </trim>
+        </sql>
+    	<!-- 查询分页  2020-09-28 k1327  -->
+        <select id="queryPagerList" parameterType="map" resultMap="PPMFACEMACHINECONFIG_ALL">
+        	SELECT
+            <include refid="sql_flied_all" />
+            FROM PPM_FACEMACHINE_CONFIG
+            <include refid="sql_select_condition" />
+        </select>
+
+        <!-- 新增  2020-09-28 k1327  -->
+        <insert id="addPojo" parameterType="ppmFacemachineConfig">
+    		INSERT INTO PPM_FACEMACHINE_CONFIG (
+    		<trim suffixOverrides=",">
+    		 <if test="id != null  and id != '' " > ID , </if>
+				<if test="name != null  and name != '' " > NAME , </if>
+				<if test="location != null  and location != '' " > LOCATION , </if>
+				<if test="deviceip != null  and deviceip != '' " > DEVICEIP , </if>
+				<if test="deviceport != null  and deviceport != '' " > DEVICEPORT , </if>
+				<if test="iuserid != null  and iuserid != '' " > IUSERID , </if>
+				<if test="deviceid != null  and deviceid != '' " > DEVICEID , </if>
+				<if test="status != null  and status != '' " > STATUS , </if>
+				<if test="isuse != null  and isuse != '' " > ISUSE , </if>
+				
+              </trim>
+    		)
+    		VALUES(
+    		<trim suffixOverrides=",">
+    		 <if test="id != null  and id != '' " > #{id} , </if>
+				<if test="name != null  and name != '' " > #{name} , </if>
+				<if test="location != null  and location != '' " > #{location} , </if>
+				<if test="deviceip != null  and deviceip != '' " > #{deviceip} , </if>
+				<if test="deviceport != null  and deviceport != '' " > #{deviceport} , </if>
+				<if test="iuserid != null  and iuserid != '' " > #{iuserid} , </if>
+				<if test="deviceid != null  and deviceid != '' " > #{deviceid} , </if>
+				<if test="status != null  and status != '' " > #{status} , </if>
+				<if test="isuse != null  and isuse != '' " > #{isuse} , </if>
+				
+            </trim>
+    		)
+        </insert>
+
+        <!--通过id查询  k1327 2020-09-28 -->
+        <select id="queryDetail" parameterType="ppmFacemachineConfig" resultMap="PPMFACEMACHINECONFIG_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_FACEMACHINE_CONFIG  WHERE ID=#{id}
+        </select>
+
+         <!--查询集合  k1327 2020-09-28 -->
+        <select id="getList" parameterType="ppmFacemachineConfig" resultMap="PPMFACEMACHINECONFIG_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_FACEMACHINE_CONFIG
+        	<include refid="sql_select_condition" />
+        </select>
+        <!-- update sql -->
+        <sql id="update_pojo_sql">
+        	<trim prefix="SET" suffixOverrides=",">
+        		<if test="id != null  and id != '' " > ID=#{id} , </if>
+				<if test="name != null  and name != '' " > NAME=#{name} , </if>
+				<if test="location != null  and location != '' " > LOCATION=#{location} , </if>
+				<if test="deviceip != null  and deviceip != '' " > DEVICEIP=#{deviceip} , </if>
+				<if test="deviceport != null  and deviceport != '' " > DEVICEPORT=#{deviceport} , </if>
+				<if test="iuserid != null  and iuserid != '' " > IUSERID=#{iuserid} , </if>
+				<if test="deviceid != null  and deviceid != '' " > DEVICEID=#{deviceid} , </if>
+				<if test="status != null  and status != '' " > STATUS=#{status} , </if>
+				<if test="isuse != null  and isuse != '' " > ISUSE=#{isuse} , </if>
+				
+            </trim>
+        </sql>
+
+        <!--通过id编辑 k1327 2020-09-28 -->
+    	<update id="updatePojo" parameterType="ppmFacemachineConfig">
+        	UPDATE
+        	PPM_FACEMACHINE_CONFIG
+        	<include refid="update_pojo_sql" />
+        	WHERE ID=#{id}
+        </update>
+
+        <!--通过id批量删除  k1327 2020-09-28 -->
+        <delete id="deleteById" parameterType="ppmFacemachineConfig">
+        	DELETE
+        	FROM
+        	PPM_FACEMACHINE_CONFIG
+        	WHERE ID = #{id}
+        </delete>
+		<!-- 照片下放，查询配置表数据-->
+		<select id="getDeviceMessage" parameterType="map" resultMap="PPMFACEMACHINECONFIG_ALL">
+			select
+			<include refid="sql_flied_all" />
+			from ppm_facemachine_config a where a.status='1' and a.isuse='1'
+		</select>
+</mapper>

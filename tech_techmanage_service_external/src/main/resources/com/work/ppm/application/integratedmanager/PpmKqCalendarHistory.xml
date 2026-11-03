@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:ywwb436 2022-07-01 -->
+<!--  考勤日历修改记录 查询脚本 -->
+<mapper namespace="com.work.ppm.application.model.integratedmanager.PpmKqCalendarHistory">
+	 <resultMap type="ppmKqCalendarHistory" id="PPMKQCALENDARHISTORY_ALL">
+        <result property="id" column="ID" />
+		<result property="content" column="CONTENT" />
+		<result property="userId" column="USER_ID" />
+		<result property="userName" column="USER_NAME" />
+		<result property="updateDate" column="UPDATE_DATE" />
+		
+     </resultMap>
+
+     <!-- 所有字段名称 -->
+    <sql id="sql_flied_all">
+        ID,
+			CONTENT,
+			USER_ID,
+			USER_NAME,
+			UPDATE_DATE
+    </sql>
+    <sql id="sql_select_condition">
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="id != null " > ID = #{id} AND </if>
+				<if test="content != null  and content != '' " > CONTENT = #{content} AND </if>
+				<if test="userId != null  and userId != '' " > USER_ID = #{userId} AND </if>
+				<if test="userName != null  and userName != '' " > USER_NAME = #{userName} AND </if>
+				<if test="updateDate != null " > UPDATE_DATE = #{updateDate} AND </if>
+				
+        </trim>
+    </sql>
+    <!-- 查询分页  2022-07-01 ywwb436  -->
+    <select id="queryPagerList" parameterType="map" resultMap="PPMKQCALENDARHISTORY_ALL">
+        SELECT
+        <include refid="sql_flied_all" />
+        FROM PPM_KQ_CALENDAR_HISTORY
+        <include refid="sql_select_condition" />
+    </select>
+
+    <!-- 新增  2022-07-01 ywwb436  -->
+    <insert id="addPojo" parameterType="ppmKqCalendarHistory">
+        INSERT INTO PPM_KQ_CALENDAR_HISTORY (
+        <trim suffixOverrides=",">
+         <if test="id != null " > ID , </if>
+				<if test="content != null  and content != '' " > CONTENT , </if>
+				<if test="userId != null  and userId != '' " > USER_ID , </if>
+				<if test="userName != null  and userName != '' " > USER_NAME , </if>
+				<if test="updateDate != null " > UPDATE_DATE , </if>
+				
+          </trim>
+        )
+        VALUES(
+        <trim suffixOverrides=",">
+         <if test="id != null " > #{id} , </if>
+				<if test="content != null  and content != '' " > #{content} , </if>
+				<if test="userId != null  and userId != '' " > #{userId} , </if>
+				<if test="userName != null  and userName != '' " > #{userName} , </if>
+				<if test="updateDate != null " > #{updateDate} , </if>
+				
+        </trim>
+        )
+    </insert>
+
+    <!--通过id查询  ywwb436 2022-07-01 -->
+    <select id="queryDetail" parameterType="ppmKqCalendarHistory" resultMap="PPMKQCALENDARHISTORY_ALL">
+        SELECT
+        <include refid="sql_flied_all" />
+        FROM PPM_KQ_CALENDAR_HISTORY  WHERE ID=#{id}
+    </select>
+
+     <!--查询集合  ywwb436 2022-07-01 -->
+    <select id="getList" parameterType="ppmKqCalendarHistory" resultMap="PPMKQCALENDARHISTORY_ALL">
+        SELECT
+        <include refid="sql_flied_all" />
+        FROM PPM_KQ_CALENDAR_HISTORY
+        <include refid="sql_select_condition" />
+    </select>
+    <!-- update sql -->
+    <sql id="update_pojo_sql">
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="id != null " > ID=#{id} , </if>
+				<if test="content != null  and content != '' " > CONTENT=#{content} , </if>
+				<if test="userId != null  and userId != '' " > USER_ID=#{userId} , </if>
+				<if test="userName != null  and userName != '' " > USER_NAME=#{userName} , </if>
+				<if test="updateDate != null " > UPDATE_DATE=#{updateDate} , </if>
+				
+        </trim>
+    </sql>
+
+    <!--通过id编辑 ywwb436 2022-07-01 -->
+    <update id="updatePojo" parameterType="ppmKqCalendarHistory">
+        UPDATE
+        PPM_KQ_CALENDAR_HISTORY
+        <include refid="update_pojo_sql" />
+        WHERE ID=#{id}
+    </update>
+
+    <!--通过id批量删除  ywwb436 2022-07-01 -->
+    <delete id="deleteById" parameterType="ppmKqCalendarHistory">
+        DELETE
+        FROM
+        PPM_KQ_CALENDAR_HISTORY
+        WHERE ID = #{id}
+    </delete>
+
+</mapper>

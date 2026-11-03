@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.work.ppm.application.model.resourceplat.ResNoticeConfig">
+    <resultMap type="resNoticeConfig" id="resNoticeConfig">
+        <result property="id" column="ID"/>
+        <result property="userId" column="USERID"/>
+        <result property="userName" column="USERNAME"/>
+        <result property="msg" column="MSG"/>
+        <result property="webchat" column="WEBCHAT"/>
+        <result property="email" column="EMAIL"/>
+        <result property="createUser" column="CREATEUSER"/>
+        <result property="createName" column="CREATENAME"/>
+        <result property="createTime" column="CREATETIME"/>
+        <result property="updateUser" column="UPDATEUSER"/>
+        <result property="updateName" column="UPDATENAME"/>
+        <result property="updateTime" column="UPDATETIME"/>
+    </resultMap>
+
+    <!-- 所有字段名称 -->
+    <sql id="sql_flied_all">
+        a.ID,
+        a.USERID,
+        a.USERNAME,
+        a.MSG,
+        a.WEBCHAT,
+        a.EMAIL,
+        a.CREATEUSER,
+        a.CREATENAME,
+        a.CREATETIME,
+        a.UPDATEUSER,
+        a.UPDATENAME,
+        a.UPDATETIME
+    </sql>
+
+    <!-- 分页查询 -->
+    <select id="queryList" parameterType="map" resultMap="resNoticeConfig">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM RE_NITICE_CONFIG a
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="id !=null and id !=''"> a.ID = #{id} AND </if>
+            <if test="userId !=null and userId !=''"> a.USERID = #{userId} AND </if>
+            <if test="userName !=null and userName !=''">a.USERNAME LIKE '%'||#{userName}||'%' AND</if>
+            <if test="msg != null and msg != ''">a.MSG = #{msg} AND</if>
+            <if test="webchat != null and webchat != ''">a.WEBCHAT = #{webchat} AND</if>
+            <if test="email != null and email != ''">a.EMAIL = #{email} AND</if>
+        </trim>
+        order by a.UPDATETIME DESC
+    </select>
+
+    <!-- 新增 -->
+    <insert id="add" parameterType="ResNoticeConfig">
+        INSERT INTO RE_NITICE_CONFIG
+        (
+            ID,
+            USERID,
+            USERNAME,
+            MSG,
+            WEBCHAT,
+            EMAIL,
+            CREATEUSER,
+            CREATENAME,
+            CREATETIME,
+            UPDATEUSER,
+            UPDATENAME,
+            UPDATETIME
+        )
+        values
+        (
+            #{id},
+            #{userId},
+            #{userName},
+            #{msg},
+            #{webchat},
+            #{email},
+            #{createUser},
+            #{createName},
+            #{createTime},
+            #{updateUser},
+            #{updateName},
+            #{updateTime}
+        )
+    </insert>
+
+    <!-- 更新 -->
+    <update id="update" parameterType="ResNoticeConfig">
+        UPDATE RE_NITICE_CONFIG SET
+        ID = #{id},
+        <if test="userId != null  and userId != '' ">USERID = #{userId},</if>
+        <if test="userName != null  and userName != '' ">USERNAME = #{userName},</if>
+        <if test="msg != null  and msg != '' ">MSG = #{msg},</if>
+        <if test="webchat != null  and webchat != '' ">WEBCHAT = #{webchat},</if>
+        <if test="email != null  and email != '' ">EMAIL = #{email},</if>
+        <if test="createUser != null  and createUser != '' ">CREATEUSER = #{createUser},</if>
+        <if test="createName != null  and createName != '' ">CREATENAME = #{createName},</if>
+        <if test="createTime != null">CREATETIME = #{createTime},</if>
+        <if test="updateUser != null  and updateUser != '' ">UPDATEUSER = #{updateUser},</if>
+        <if test="updateName != null  and updateName != '' ">UPDATENAME = #{updateName},</if>
+        <if test="updateTime != null">UPDATETIME = #{updateTime}</if>
+        WHERE ID = #{id}
+    </update>
+
+    <!-- 删除 -->
+    <delete id="delete" parameterType="string">
+        DELETE FROM RE_NITICE_CONFIG WHERE ID = #{id}
+    </delete>
+</mapper>
+

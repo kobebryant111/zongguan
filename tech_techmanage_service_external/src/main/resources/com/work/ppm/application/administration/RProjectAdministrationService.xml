@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:ywwb2082 2024-12-24 -->
+<mapper namespace="com.work.ppm.application.model.rdmanager.HrProject">
+
+    <resultMap type="HrProject" id="HRPROJECT_ALL">
+        <result property="eid" column="EID"/>
+        <result property="badge" column="BADGE"/>
+        <result property="depid" column="DEPID"/>
+        <result property="chargeName" column="CHARGE_NAME"/>
+        <result property="username" column="USERNAME"/>
+        <result property="nature" column="NATURE"/>
+        <result property="empstatus" column="EMPSTATUS"/>
+        <result property="pkId" column="PK_ID"/>
+        <result property="projectCode" column="PROJECT_CODE"/>
+        <result property="projectName" column="PROJECT_NAME"/>
+        <result property="competentDept" column="COMPETENT_DEPT"/>
+        <result property="sysNo" column="SYS_NO"/>
+        <result property="sysName" column="SYS_NAME"/>
+        <result property="startDate" column="START_DATE"/>
+        <result property="endDate" column="END_DATE"/>
+        <result property="createBy" column="CREATE_BY"/>
+        <result property="createDate" column="CREATE_DATE"/>
+        <result property="updateBy" column="UPDATE_BY"/>
+        <result property="updateDate" column="UPDATE_DATE"/>
+        <result property="projectState" column="PROJECT_STATE"/>
+        <result property="headUser" column="HEAD_USER"/>
+        <result property="devUser" column="DEV_USER"/>
+        <result property="deleted" column="DELETED"/>
+        <result property="participatingDept" column="PARTICIPATING_DEPT"/>
+        <result property="busInnova" column="BUS_INNOVA"/>
+        <result property="contractAmount" column="CONTRACT_AMOUNT"/>
+        <result property="contractName" column="CONTRACT_NAME"/>
+        <result property="techInnova" column="TECH_INNOVA"/>
+        <result property="no" column="NO"/>
+    </resultMap>
+
+    <resultMap type="ExportResearchFile" id="EXPORTRESEARCHFILE_ALL">
+        <result property="deptName" column="DEPT_NAME"/>
+        <result property="userName" column="USER_NAME"/>
+        <result property="badge" column="BADGE"/>
+        <result property="projectName" column="PROJECT_NAME"/>
+        <result property="projectState" column="PROJECT_STATE"/>
+        <result property="uploadState" column="UPLOAD_STATE"/>
+        <result property="fileName" column="FILE_NAME"/>
+        <result property="uploadTime" column="UPLOAD_TIME"/>
+    </resultMap>
+
+    <select id="userProjectMess" parameterType="map" resultMap="HRPROJECT_ALL">
+        select
+        c.eid,
+        c.badge,
+        c.depid,
+        w.location CHARGE_NAME,
+        c.empname username,
+        c.nature,
+        c.empstatus,
+        t.pk_id,
+        t.project_code,
+        t.project_name,
+        t.competent_dept,
+        t.sys_no,
+        t.sys_name,
+        t.start_date,
+        t.end_date,
+        t.create_by,
+        t.create_date,
+        t.update_by,
+        t.update_date,
+        t.project_state,
+        t.head_user,
+        t.dev_user,
+        t.deleted,
+        t.participating_dept,
+        t.bus_innova,
+        (select sum(CONTRACT_AMOUNT) from rd_project_contract r where t.PK_ID=r.RD_PROJECT_ID)
+        CONTRACT_AMOUNT,
+        (select LISTAGG(CONTRACT_NAME,',') within group(order by CONTRACT_NAME) from rd_project_contract r where
+        t.PK_ID=r.RD_PROJECT_ID)
+        CONTRACT_NAME,
+        t.tech_innova,
+        (select count(E.EID)
+        from ppm.RD_PROJECT_EMPLOYEE g
+        where g.PROJECT_CODE = E.PROJECT_CODE
+        and g.isdisabled = '0'
+        ) as no
+        from ppm.COMM_RD_EMPLOYEE C
+        left join ppm.RD_PROJECT_EMPLOYEE E
+        on c.eid = e.eid
+        left join ppm.rd_project t
+        on e.project_code = t.project_code
+        left join ppm.comm_rd_department w
+        on (c.depid = w.depid)
+        where t.DELETED = '0'
+        and t.project_state in ('1', '2','9')
+        and e.isdisabled = '0'
+        <if test="eid != null and eid != '' ">AND c.eid =#{eid}</if>
+    </select>
+
+    <select id="rdProjectFiles" parameterType="map" resultType="WorkResearchFile">
+        SELECT
+        PK_ID,
+        RD_PROJECT_ID,
+        FILE_NAME,
+        FILE_PATH,
+        CREATE_BY,
+        CREATE_DATE,
+        DELETED,
+        TYPE,
+        SOURCE_FILE_NAME,
+        BELONG_USER
+        FROM WORK_RESEARCH_FILE
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="pkId != null and pkId != '' ">RD_PROJECT_ID =#{pkId} AND</if>
+            <if test="badge != null and badge != '' ">BELONG_USER =#{badge} AND</if>
+        </trim>
+        ORDER BY CREATE_DATE DESC
+    </select>
+    <update id="documentsChanged" parameterType="map">
+        UPDATE WORK_RESEARCH_FILE
+        <trim prefix="SET" suffixOverrides=",">
+            FILE_NAME=#{fileName} ,
+            TYPE=#{type} ,
+        </trim>
+        WHERE PK_ID=#{pkId}
+    </update>
+
+    <delete id="documentsDelete" parameterType="map">
+        DELETE FROM WORK_RESEARCH_FILE WHERE PK_ID=#{pkId}
+    </delete>
+
+    <select id="rdQueryDeptTree" parameterType="map" resultType="CommRdEmployeeDto">
+        SELECT
+        C.EMPNAME,
+        T.LOCATION CHARGE_NAME,
+        C.EID,
+        C.BADGE,
+        C.EMPSTATUS,
+        C.LEAVE_TIME,
+        C.DEPID,
+        C.NATURE,
+        (SELECT
+        CASE
+        when (select count(*)
+        from rd_project t
+        left join ppm.RD_PROJECT_EMPLOYEE e
+        on (e.project_code = t.project_code)
+        where e.eid = c.eid
+        and e.isdisabled = '0'
+        and t.PROJECT_STATE = '9') = 0 then 0
+        WHEN
+        (select count(*)
+        from rd_project t
+        left join ppm.RD_PROJECT_EMPLOYEE e
+        on (e.project_code = t.project_code)
+        where e.eid = c.eid
+        and e.isdisabled = '0'
+        and t.PROJECT_STATE = '9') >
+        (select count(distinct RD_PROJECT_ID)
+        from rd_project R
+        left join ppm.RD_PROJECT_EMPLOYEE e
+        on (e.project_code = R.project_code)
+        left join WORK_RESEARCH_FILE w
+        on (R.pk_id = w.rd_project_id)
+        where e.eid = c.eid
+        and w.rd_project_id = r.pk_id
+        and w.belong_user = c.badge
+        and e.isdisabled = '0'
+        and R.PROJECT_STATE = '9') then 1
+        WHEN
+        (select count(*)
+        from rd_project t
+        left join ppm.RD_PROJECT_EMPLOYEE e
+        on (e.project_code = t.project_code)
+        where e.eid = c.eid
+        and e.isdisabled = '0'
+        and t.PROJECT_STATE = '9') =
+        (select count(distinct RD_PROJECT_ID)
+        from rd_project R
+        left join ppm.RD_PROJECT_EMPLOYEE e
+        on (e.project_code = R.project_code)
+        left join WORK_RESEARCH_FILE w
+        on (R.pk_id = w.rd_project_id)
+        where e.eid = c.eid
+        and w.rd_project_id = r.pk_id
+        and e.isdisabled = '0'
+        and w.belong_user = c.badge
+        and R.PROJECT_STATE = '9') then 2
+        end
+        FROM dual
+        ) as fin_doc_state,
+        (SELECT
+        CASE
+        when (select count(*)
+        from rd_project t
+        left join ppm.RD_PROJECT_EMPLOYEE e
+        on (e.project_code = t.project_code)
+        where e.eid = c.eid
+        and e.isdisabled = '0'
+        and t.PROJECT_STATE in ('1', '2')) = 0 then 0
+
+        WHEN
+        (select count(*)
+        from rd_project t
+        left join ppm.RD_PROJECT_EMPLOYEE e
+        on (e.project_code = t.project_code)
+        where e.eid = c.eid
+        and e.isdisabled = '0'
+        and t.PROJECT_STATE in ('1', '2')) >
+        (select count(distinct RD_PROJECT_ID)
+        from rd_project R
+        left join ppm.RD_PROJECT_EMPLOYEE e
+        on (e.project_code = R.project_code)
+        left join WORK_RESEARCH_FILE w
+        on (R.pk_id = w.rd_project_id)
+        where e.eid = c.eid
+        and w.rd_project_id = r.pk_id
+        and w.belong_user = c.badge
+        and e.isdisabled = '0'
+        and R.PROJECT_STATE in ('1', '2')) then 1
+        WHEN
+        (select count(*)
+        from rd_project t
+        left join ppm.RD_PROJECT_EMPLOYEE e
+        on (e.project_code = t.project_code)
+        where e.eid = c.eid
+        and e.isdisabled = '0'
+        and t.PROJECT_STATE in ('1', '2')) =
+        (select count(distinct RD_PROJECT_ID)
+        from rd_project R
+        left join ppm.RD_PROJECT_EMPLOYEE e
+        on (e.project_code = R.project_code)
+        left join WORK_RESEARCH_FILE w
+        on (R.pk_id = w.rd_project_id)
+        where e.eid = c.eid
+        and w.rd_project_id = r.pk_id
+        and w.belong_user = c.badge
+        and e.isdisabled = '0'
+        and R.PROJECT_STATE in ('1', '2')) then 2
+        end
+        FROM dual
+        ) as unfin_doc_state
+        from COMM_RD_EMPLOYEE C
+        left join PPM.COMM_RD_DEPARTMENT T
+        ON (C.DEPID = T.DEPID)
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="depid != null and depid != '' "> C.DEPID = #{depid} AND</if>
+            <if test="badge != null and badge != '' "> C.BADGE = #{badge} AND</if>
+        </trim>
+
+    </select>
+
+    <select id="exportFileMsg" parameterType="java.util.Map" resultType="ExportResearchFile">
+        SELECT
+        resu.LOCATION AS DEPT_NAME,
+        resu.EMPNAME AS USER_NAME,
+        resu.BADGE ,
+        resu.PROJECT_NAME,
+        resu.PROJECT_STATE,
+        CASE
+        WHEN FILE_NAME IS NULL THEN '未上传'
+        WHEN FILE_NAME IS NOT NULL THEN '已上传'
+        END AS UPLOAD_STATE ,
+        wrfi.FILE_NAME,
+        wrfi."TYPE",
+        wrfi.CREATE_DATE
+        FROM
+        (
+        SELECT
+        crd.LOCATION , cre.EMPNAME , cre.BADGE , rp.PROJECT_NAME, rp.PK_ID, rp.PROJECT_STATE
+        FROM
+        COMM_RD_EMPLOYEE cre
+        LEFT JOIN RD_PROJECT_EMPLOYEE rpe ON
+        rpe.EID = cre.EID
+        LEFT JOIN RD_PROJECT rp ON
+        rp.PROJECT_CODE = rpe.PROJECT_CODE
+        LEFT JOIN COMM_RD_DEPARTMENT crd ON
+        cre.DEPID = crd.DEPID
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="competentDept != null and competentDept.size > 0">
+                crd.DEPID IN
+                <foreach item="item" index="index" collection="competentDept" open="(" separator="," close=")">
+                    TO_NUMBER(#{item})
+                </foreach>
+                AND
+            </if>
+            <if test="projectCode != null and projectCode.size > 0">
+                rp.PROJECT_CODE IN
+                <foreach item="item" index="index" collection="projectCode" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+                AND
+            </if>
+            <if test="entryStartDate != null and entryEndDate != null">
+                rp.START_DATE between #{entryStartDate} and #{entryEndDate} AND
+            </if>
+            <if test="badge != null and badge != ''">cre.BADGE = #{badge} AND</if>
+<!--            cre.EMPSTATUS = '0' AND-->
+        </trim>
+        ) resu
+        LEFT JOIN WORK_RESEARCH_FILE wrfi ON
+        wrfi.RD_PROJECT_ID = resu.PK_ID
+        AND wrfi.BELONG_USER = resu.BADGE
+        ORDER BY resu.LOCATION , resu.EMPNAME
+    </select>
+
+    <select id="queryDepartment" parameterType="map" resultType="CommRdDepartment">
+        SELECT T.DEPID,
+        T.LOCATION,
+        T.ISDISABLED,
+        T.REMARK,
+        T.LASTUPDATEDATE
+        FROM PPM.COMM_RD_DEPARTMENT T
+        WHERE T.ISDISABLED = '0'
+        <if test="depid != null and depid != ''">
+            AND DEPID = #{depid}
+        </if>
+        ORDER BY T.SORTED
+    </select>
+
+    <select id="queryProject" parameterType="map" resultType="RdProject">
+        SELECT
+        rp.PROJECT_CODE AS projectCode,
+        rp.PROJECT_NAME AS projectName
+        FROM
+        PPM.RD_PROJECT rp
+        ORDER BY PROJECT_CODE DESC
+    </select>
+
+
+</mapper>

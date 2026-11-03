@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.work.ppm.application.dto.personnelinterview.PersonnelInterviewPageDto">
+
+    <select id="pageList" resultType="com.work.ppm.application.dto.personnelinterview.PersonnelInterviewPageDto">
+        SELECT
+            ppi.PK_ID personnelInterviewId,
+            ppi.TITLE title,
+            picf.PK_ID picId,
+            wordf.PK_ID wordId
+        FROM PPM.PPM_PERSONNEL_INTERVIEW ppi
+            LEFT JOIN PPM.PPM_PERSONNEL_INTERVIEW_FILE picf
+                ON picf.PERSONNEL_INTERVIEW_ID = ppi.PK_ID
+                AND picf."TYPE" = '0'
+                AND picf.DELETED != '1'
+            LEFT JOIN PPM.PPM_PERSONNEL_INTERVIEW_FILE wordf
+                ON wordf.PERSONNEL_INTERVIEW_ID = ppi.PK_ID
+                AND wordf."TYPE" = '1'
+                AND wordf.DELETED != '1'
+        WHERE ppi.DELETED != '1'
+        ORDER BY ppi.CREATE_DATE DESC
+    </select>
+
+</mapper>

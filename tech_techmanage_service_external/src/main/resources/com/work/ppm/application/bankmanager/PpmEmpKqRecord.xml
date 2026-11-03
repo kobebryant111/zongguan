@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:ywwb905 2022-09-22 -->
+<!--  考勤记录表 查询脚本 -->
+<mapper namespace="com.work.ppm.application.model.bankmanager.PpmEmpKqRecord">
+    <resultMap type="ppmEmpKqRecord" id="PPMEMPKQRECORD_ALL">
+        <result property="id" column="ID" />
+        <result property="infoId" column="INFO_ID" />
+        <result property="jobId" column="JOB_ID" />
+        <result property="userName" column="USER_NAME" />
+        <result property="attendanceDate" column="ATTENDANCE_DATE" />
+        <result property="workingTime" column="WORKING_TIME" />
+        <result property="closingTime" column="CLOSING_TIME" />
+        <result property="overtimeHours" column="OVERTIME_HOURS" />
+        <result property="whetherOvernight" column="WHETHER_OVERNIGHT" />
+		<result property="overtimeStartTime" column="OVERTIME_START_TIME" />
+        <result property="dataEntryType" column="DATA_ENTRY_TYPE" />
+        <result property="isHoliday" column="IS_HOLIDAY" />
+        <result property="isCalOvertime" column="IS_CAL_OVERTIME" />
+        <result property="whetherDaysOff" column="WHETHER_DAYS_OFF" />
+        <result property="createdTime" column="CREATED_TIME" />
+        <result property="createdBy" column="CREATED_BY" />
+        <result property="modifiedTime" column="MODIFIED_TIME" />
+        <result property="modifiedBy" column="MODIFIED_BY" />
+        <result property="worktimeHours" column="WORKTIME_HOURS" />
+        <result property="whetherAbnormal" column="WHETHER_ABNORMAL" />
+
+    </resultMap>
+	<resultMap id="PPMEMPKQRECORD_ALL_EXT" type="ppmKqRecordView" extends="PPMEMPKQRECORD_ALL">
+		<result property="deptId" column="DEPT_ID" />
+		<result property="deptName" column="DEPT_NAME" />
+		<result property="pmId" column="PM_ID" />
+		<result property="pmName" column="PM_NAME" />
+		<result property="punchTime" column="PUNCH_TIME" />
+		<result property="abnormalReason" column="ABNORMAL_REASON" />
+		<result property="autoAbnormalReason" column="AUTO_ABNORMAL_REASON" />
+		<result property="whetherAbnormal" column="WHETHER_ABNORMAL" />
+		<result property="whetherHandle" column="WHETHER_HANDLE" />
+		<result property="whetherKeyOne" column="WHETHER_KEY_ONE" />
+		<result property="whetherKeyTwo" column="WHETHER_KEY_TWO" />
+		<result property="dataType" column="DATA_TYPE" />
+		<result property="attendanceDateValue" column="ATTENDANCE_DATE_VALUE" />
+		<result property="attendanceDateSt" column="ATTENDANCE_DATE_START" />
+		<result property="attendanceDateEnd" column="ATTENDANCE_DATE_END" />
+		<result property="remark" column="REMARK" />
+		<result property="annualVacationDays" column="ANNUAL_VACATION_DAYS" />
+		<result property="annualVacationSurplus" column="ANNUAL_VACATION_SURPLUS" />
+		<result property="annualVacationDate" column="ANNUAL_VACATION_DATE" />
+     </resultMap>
+
+    <!-- 所有字段名称 -->
+    <sql id="sql_flied_all">
+        ID,
+        INFO_ID,
+        JOB_ID,
+        USER_NAME,
+        ATTENDANCE_DATE,
+        WORKING_TIME,
+        CLOSING_TIME,
+        OVERTIME_HOURS,
+        WORKTIME_HOURS,
+        WHETHER_OVERNIGHT,
+		OVERTIME_START_TIME,
+        DATA_ENTRY_TYPE,
+        IS_HOLIDAY,
+        IS_CAL_OVERTIME,
+		WHETHER_DAYS_OFF,
+        CREATED_TIME,
+        CREATED_BY,
+        MODIFIED_TIME,
+        MODIFIED_BY,
+        WHETHER_ABNORMAL
+    </sql>
+    <sql id="sql_select_condition">
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="id != null " > ID = #{id} AND </if>
+            <if test="infoId != null " > INFO_ID = #{infoId} AND </if>
+            <if test="jobId != null " > JOB_ID = #{jobId} AND </if>
+            <if test="userName != null " > USER_NAME = #{userName} AND </if>
+            <if test="attendanceDate != null " > ATTENDANCE_DATE = #{attendanceDate} AND </if>
+            <if test="workingTime != null " > WORKING_TIME = #{workingTime} AND </if>
+            <if test="closingTime != null " > CLOSING_TIME = #{closingTime} AND </if>
+            <if test="overtimeHours != null " > OVERTIME_HOURS = #{overtimeHours} AND </if>
+            <if test="whetherOvernight != null " > WHETHER_OVERNIGHT = #{whetherOvernight} AND </if>
+            <if test="overtimeStartTime != null " > OVERTIME_START_TIME = #{overtimeStartTime} AND </if>
+            <if test="dataEntryType != null " > DATA_ENTRY_TYPE = #{dataEntryType} AND </if>
+            <if test="isHoliday != null " > IS_HOLIDAY = #{isHoliday} AND </if>
+            <if test="isCalOvertime != null " > IS_CAL_OVERTIME = #{isCalOvertime} AND </if>
+            <if test="whetherDaysOff != null and whetherDaysOff != ''" > WHETHER_DAYS_OFF = #{whetherDaysOff} AND </if>
+            <if test="createdTime != null " > CREATED_TIME = #{createdTime} AND </if>
+            <if test="createdBy != null " > CREATED_BY = #{createdBy} AND </if>
+            <if test="modifiedTime != null " > MODIFIED_TIME = #{modifiedTime} AND </if>
+            <if test="modifiedBy != null " > MODIFIED_BY = #{modifiedBy} AND </if>
+            <if test="worktimeHours != null " > WORKTIME_HOURS = #{worktimeHours} AND </if>
+            <if test="whetherAbnormal != null " > WHETHER_ABNORMAL = #{whetherAbnormal} AND </if>
+        </trim>
+    </sql>
+    <!-- 查询分页  2022-09-22 ywwb905  -->
+    <select id="queryPagerList" parameterType="map" resultMap="PPMEMPKQRECORD_ALL">
+        SELECT
+        <include refid="sql_flied_all" />
+        FROM PPM_EMP_KQ_RECORD
+        <include refid="sql_select_condition" />
+        order by ATTENDANCE_DATE asc
+    </select>
+
+    <!-- 新增  2022-09-22 ywwb905  -->
+    <insert id="addEmpPojo" parameterType="ppmEmpKqRecord">
+        INSERT INTO PPM_EMP_KQ_RECORD (
+        <trim suffixOverrides=",">
+            <if test="id != null " > ID , </if>
+            <if test="infoId != null " > INFO_ID , </if>
+            <if test="jobId != null " > JOB_ID , </if>
+            <if test="userName != null " > USER_NAME , </if>
+            <if test="attendanceDate != null " > ATTENDANCE_DATE , </if>
+            <if test="workingTime != null " > WORKING_TIME , </if>
+            <if test="closingTime != null " > CLOSING_TIME , </if>
+            <if test="overtimeHours != null " > OVERTIME_HOURS , </if>
+            <if test="whetherOvernight != null " > WHETHER_OVERNIGHT , </if>
+            <if test="overtimeStartTime != null " > OVERTIME_START_TIME , </if>
+            <if test="dataEntryType != null " > DATA_ENTRY_TYPE , </if>
+            <if test="isHoliday != null " > IS_HOLIDAY , </if>
+            <if test="isCalOvertime != null " > IS_CAL_OVERTIME , </if>
+            <if test="whetherDaysOff != null and whetherDaysOff != ''" > WHETHER_DAYS_OFF , </if>
+            <if test="createdTime != null " > CREATED_TIME , </if>
+            <if test="createdBy != null " > CREATED_BY , </if>
+            <if test="modifiedTime != null " > MODIFIED_TIME , </if>
+            <if test="modifiedBy != null " > MODIFIED_BY , </if>
+            <if test="worktimeHours != null " > WORKTIME_HOURS , </if>
+            <if test="whetherAbnormal != null " > WHETHER_ABNORMAL , </if>
+        </trim>
+        )
+        VALUES(
+        <trim suffixOverrides=",">
+            <if test="id != null " > #{id} , </if>
+            <if test="infoId != null " > #{infoId} , </if>
+            <if test="jobId != null " > #{jobId} , </if>
+            <if test="userName != null " > #{userName} , </if>
+            <if test="attendanceDate != null " > #{attendanceDate} , </if>
+            <if test="workingTime != null " > #{workingTime} , </if>
+            <if test="closingTime != null " > #{closingTime} , </if>
+            <if test="overtimeHours != null " > #{overtimeHours} , </if>
+            <if test="whetherOvernight != null " > #{whetherOvernight} , </if>
+            <if test="overtimeStartTime != null " > #{overtimeStartTime} , </if>
+            <if test="dataEntryType != null " > #{dataEntryType} , </if>
+            <if test="isHoliday != null " > #{isHoliday} , </if>
+            <if test="isCalOvertime != null " > #{isCalOvertime} , </if>
+            <if test="whetherDaysOff != null and whetherDaysOff != ''" > #{whetherDaysOff} , </if>
+            <if test="createdTime != null " > #{createdTime} , </if>
+            <if test="createdBy != null " > #{createdBy} , </if>
+            <if test="modifiedTime != null " > #{modifiedTime} , </if>
+            <if test="modifiedBy != null " > #{modifiedBy} , </if>
+            <if test="worktimeHours != null " > #{worktimeHours} , </if>
+            <if test="whetherAbnormal != null " > #{whetherAbnormal} , </if>
+        </trim>
+        )
+    </insert>
+
+    <!--通过id查询  ywwb905 2022-09-22 -->
+    <select id="queryDetail" parameterType="ppmEmpKqRecord" resultMap="PPMEMPKQRECORD_ALL">
+        SELECT
+        <include refid="sql_flied_all" />
+        FROM PPM_EMP_KQ_RECORD
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="id != null " > ID = #{id} AND </if>
+			<if test="attendanceDate != null and jobId != null and jobId != '' and isHoliday != null and isHoliday != '' and whetherDaysOff != null and whetherDaysOff != ''" >
+			ATTENDANCE_DATE = #{attendanceDate} AND JOB_ID = #{jobId} AND IS_HOLIDAY = #{isHoliday} AND WHETHER_DAYS_OFF = #{whetherDaysOff} AND </if>
+        </trim>
+    </select>
+
+    <!--查询集合  ywwb905 2022-09-22 -->
+    <select id="getEmpList" parameterType="ppmEmpKqRecord" resultMap="PPMEMPKQRECORD_ALL">
+        SELECT
+        <include refid="sql_flied_all" />
+        FROM PPM_EMP_KQ_RECORD
+        <include refid="sql_select_condition" />
+		ORDER BY ATTENDANCE_DATE ASC
+    </select>
+
+
+    <!--通过id编辑 ywwb905 2022-09-22 -->
+    <update id="updateEmpPojo" parameterType="ppmEmpKqRecord">
+        UPDATE
+        PPM_EMP_KQ_RECORD
+        <include refid="update_pojo_sql" />
+        WHERE ID=#{id}
+    </update>
+
+    <!-- update sql -->
+    <sql id="update_pojo_sql">
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="infoId != null " > INFO_ID=#{infoId} , </if>
+            <if test="jobId != null " > JOB_ID=#{jobId} , </if>
+            <if test="userName != null " > USER_NAME=#{userName} , </if>
+            <if test="attendanceDate != null " > ATTENDANCE_DATE = #{attendanceDate}, </if>
+            <if test="workingTime != null " > WORKING_TIME=#{workingTime} , </if>
+            <if test="closingTime != null " > CLOSING_TIME=#{closingTime} , </if>
+            <if test="overtimeHours != null " > OVERTIME_HOURS=#{overtimeHours} , </if>
+            <if test="worktimeHours != null " > WORKTIME_HOURS=#{worktimeHours} , </if>
+            <if test="whetherOvernight != null " > WHETHER_OVERNIGHT=#{whetherOvernight} , </if>
+            <if test="overtimeStartTime != null " > OVERTIME_START_TIME=#{overtimeStartTime} , </if>
+            <if test="dataEntryType != null " > DATA_ENTRY_TYPE=#{dataEntryType} , </if>
+            <if test="isHoliday != null " > IS_HOLIDAY=#{isHoliday} , </if>
+            <if test="isCalOvertime != null " > IS_CAL_OVERTIME=#{isCalOvertime} , </if>
+            <if test="whetherDaysOff != null and whetherDaysOff != ''" > WHETHER_DAYS_OFF = #{whetherDaysOff} , </if>
+            <if test="createdTime != null " > CREATED_TIME=#{createdTime} , </if>
+            <if test="createdBy != null " > CREATED_BY=#{createdBy} , </if>
+            <if test="modifiedTime != null " > MODIFIED_TIME=#{modifiedTime} , </if>
+            <if test="modifiedBy != null " > MODIFIED_BY=#{modifiedBy} , </if>
+            <if test="whetherAbnormal != null " > WHETHER_ABNORMAL=#{whetherAbnormal} , </if>
+        </trim>
+    </sql>
+
+	<!-- update sql -->
+    <sql id="update_pojo_import_sql">
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="infoId != null " > INFO_ID=#{infoId} , </if>
+            <if test="jobId != null " > JOB_ID=#{jobId} , </if>
+            <if test="userName != null " > USER_NAME=#{userName} , </if>
+            <if test="attendanceDate != null " > ATTENDANCE_DATE = #{attendanceDate}, </if>
+            <if test="workingTime != null " > WORKING_TIME=#{workingTime} , </if>
+            <if test="workingTime == null " > WORKING_TIME=null , </if>
+            <if test="closingTime != null " > CLOSING_TIME=#{closingTime} , </if>
+            <if test="closingTime == null " > CLOSING_TIME=null , </if>
+            <if test="overtimeHours != null " > OVERTIME_HOURS=#{overtimeHours} , </if>
+            <if test="whetherOvernight != null " > WHETHER_OVERNIGHT=#{whetherOvernight} , </if>
+            <if test="overtimeStartTime != null " > OVERTIME_START_TIME=#{overtimeStartTime} , </if>
+            <if test="dataEntryType != null " > DATA_ENTRY_TYPE=#{dataEntryType} , </if>
+            <if test="isHoliday != null " > IS_HOLIDAY=#{isHoliday} , </if>
+            <if test="isCalOvertime != null " > IS_CAL_OVERTIME=#{isCalOvertime} , </if>
+            <if test="whetherDaysOff != null and whetherDaysOff != ''" > WHETHER_DAYS_OFF=#{whetherDaysOff} , </if>
+            <if test="createdTime != null " > CREATED_TIME=#{createdTime} , </if>
+            <if test="createdBy != null " > CREATED_BY=#{createdBy} , </if>
+            <if test="modifiedTime != null " > MODIFIED_TIME=#{modifiedTime} , </if>
+            <if test="modifiedBy != null " > MODIFIED_BY=#{modifiedBy} , </if>
+            <if test="worktimeHours != null " > WORKTIME_HOURS=#{worktimeHours} , </if>
+            <if test="whetherAbnormal != null " > WHETHER_ABNORMAL=#{whetherAbnormal} , </if>
+        </trim>
+    </sql>
+
+	<update id="updatePojoImport" parameterType="ppmEmpKqRecord">
+        UPDATE
+        PPM_EMP_KQ_RECORD
+        <include refid="update_pojo_import_sql" />
+        WHERE ID=#{id}
+    </update>
+
+    <!--通过id批量删除  ywwb436 2022-06-30 -->
+    <delete id="deleteById" parameterType="ppmEmpKqRecord">
+        DELETE
+        FROM
+        PPM_EMP_KQ_RECORD
+        WHERE ID = #{id}
+    </delete>
+
+	<!-- 指定查询  2022-09-22 ywwb905  -->
+    <select id="empQueryDetailObject" parameterType="map" resultMap="PPMEMPKQRECORD_ALL">
+        SELECT
+        <include refid="sql_flied_all" />
+        FROM PPM_EMP_KQ_RECORD
+        WHERE
+        USER_NAME = #{userName} AND JOB_ID = #{jobId} AND INFO_ID = #{infoId} AND ATTENDANCE_DATE = TO_DATE(#{attendanceDate},'yyyy-MM-dd')
+    </select>
+
+    <select id="getEmpKqList" parameterType="map" resultMap="PPMEMPKQRECORD_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM PPM.PPM_EMP_KQ_RECORD
+        WHERE
+        TO_CHAR(ATTENDANCE_DATE , 'yyyy-MM-dd') LIKE #{attendanceDate}
+    </select>
+
+
+</mapper>

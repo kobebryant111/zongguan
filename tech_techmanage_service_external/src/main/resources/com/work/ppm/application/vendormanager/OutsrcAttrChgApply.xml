@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.work.ppm.application.model.vendormanager.OutsrcAttrChgApply">
+
+    <resultMap type="outsrcAttrChgApply" id="OUTSRCATTRCHGAPPLY_ALL">
+      <result property="id" column="ID"/>
+      <result property="instanceId" column="INSTANCE_ID"/>
+      <result property="flowId" column="FLOW_ID"/>
+      <result property="deptId" column="DEPT_ID"/>
+      <result property="deptName" column="DEPT_NAME"/>
+      <result property="applier" column="APPLIER"/>
+      <result property="isDel" column="IS_DEL"/>
+      <result property="createDate" column="CREATE_DATE"/>
+      <result property="createUser" column="CREATE_USER"/>
+      <result property="updateDate" column="UPDATE_DATE"/>
+      <result property="updateUser" column="UPDATE_USER"/>
+    </resultMap>
+
+    <resultMap type="com.work.ppm.application.dto.vendormanager.OutsrcAttrChgApplyDto" id="OUTSRCATTRCHGAPPLY_ALL_EXT" extends="OUTSRCATTRCHGAPPLY_ALL">
+       <result property="deptName" column="DEPT_NAME"/>
+    </resultMap>
+
+    <!-- 所有字段 -->
+    <sql id="sql_flied_all">
+        ID
+        ,INSTANCE_ID
+        ,FLOW_ID
+        ,DEPT_ID
+        ,(select location from comm_department where depid = dept_id and isdisabled = '0' and rownum =1) dept_name
+        ,DEPT_NAME
+        ,APPLIER
+        ,IS_DEL
+        ,CREATE_USER
+        ,UPDATE_USER
+    </sql>
+
+    <sql id="sql_flied_basic">
+        ID
+        ,INSTANCE_ID
+        ,FLOW_ID
+        ,DEPT_ID
+        ,(select location from comm_department where depid = dept_id and isdisabled = '0' and rownum =1) dept_name
+        ,DEPT_NAME
+        ,APPLIER
+        ,IS_DEL
+        ,CREATE_USER
+        ,UPDATE_USER
+    </sql>
+
+    <sql id="sql_flied_small">
+          ID
+          ,INSTANCE_ID
+          ,FLOW_ID
+          ,DEPT_ID
+          ,DEPT_NAME
+          ,APPLIER
+          ,IS_DEL
+          ,CREATE_USER
+          ,UPDATE_USER
+    </sql>
+
+    <!--  查询条件  -->
+    <sql id="sql_select_condition">
+       <trim prefix="WHERE" suffixOverrides="AND">
+           <if test="id != null and id != '' "> ID = #{id} AND </if>
+           <if test="instanceId != null and instanceId != '' "> INSTANCE_ID = #{instanceId} AND </if>
+           <if test="flowId != null and flowId != '' "> FLOW_ID = #{flowId} AND </if>
+           <if test="deptId != null and deptId != '' "> DEPT_ID = #{deptId} AND </if>
+           <if test="deptName != null and deptName != '' "> DEPT_NAME = #{deptName} AND </if>
+           <if test="applier != null and applier != '' "> APPLIER = #{applier} AND </if>
+           <if test="isDel != null and isDel != '' "> IS_DEL = #{isDel} AND </if>
+           <if test="createUser != null and createUser != '' "> CREATE_USER = #{createUser} AND </if>
+           <if test="updateUser != null and updateUser != '' "> UPDATE_USER = #{updateUser} AND </if>
+       </trim>
+    </sql>
+
+    <!-- 查询条件 自定义 -->
+    <sql id="sql_select_condition_cus">
+       <trim prefix="WHERE" suffixOverrides="AND">
+           <if test="id != null and id != '' "> ID = #{id} AND </if>
+           <if test="instanceId != null and instanceId != '' "> INSTANCE_ID = #{instanceId} AND </if>
+           <if test="flowId != null and flowId != '' "> FLOW_ID = #{flowId} AND </if>
+           <if test="deptId != null and deptId != '' "> DEPT_ID = #{deptId} AND </if>
+           <if test="deptName != null and deptName != '' "> DEPT_NAME = #{deptName} AND </if>
+           <if test="applier != null and applier != '' "> APPLIER = #{applier} AND </if>
+           <if test="isDel != null and isDel != '' "> IS_DEL = #{isDel} AND </if>
+           <if test="createUser != null and createUser != '' "> CREATE_USER = #{createUser} AND </if>
+           <if test="updateUser != null and updateUser != '' "> UPDATE_USER = #{updateUser} AND </if>
+       </trim>
+    </sql>
+
+    <!-- 更新字段 -->
+    <sql id="update_pojo_sql">
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="instanceId != null and instanceId != '' " > INSTANCE_ID = #{instanceId},</if>
+            <if test="flowId != null and flowId != '' " > FLOW_ID = #{flowId},</if>
+            <if test="deptId != null and deptId != '' " > DEPT_ID = #{deptId},</if>
+            <if test="deptName != null and deptName != '' " > DEPT_NAME = #{deptName},</if>
+            <if test="applier != null and applier != '' " > APPLIER = #{applier},</if>
+            <if test="isDel != null and isDel != '' " > IS_DEL = #{isDel},</if>
+            <if test="createUser != null and createUser != '' " > CREATE_USER = #{createUser},</if>
+            <if test="updateUser != null and updateUser != '' " > UPDATE_USER = #{updateUser},</if>
+        </trim>
+    </sql>
+
+    <!--  查询  -->
+    <!-- pager query 2022-12-08 ywwb903  -->
+    <select id="queryPagerList" parameterType="map" resultMap="OUTSRCATTRCHGAPPLY_ALL">
+        SELECT
+            <include refid="sql_flied_basic"/>
+            FROM PPM_OUTSRC_ATTR_CHG_APPLY
+            <include refid="sql_select_condition"/>
+    </select>
+
+    <!-- list query 2022-12-08 ywwb903  -->
+    <select id="getList" parameterType="outsrcAttrChgApply" resultMap="OUTSRCATTRCHGAPPLY_ALL">
+        SELECT
+        <include refid="sql_flied_basic"/>
+        FROM PPM_OUTSRC_ATTR_CHG_APPLY
+        <include refid="sql_select_condition"/>
+    </select>
+
+    <!-- select one by instanceId, conditions: id  2022-11-06 ywwb903  -->
+    <select id="selectOneByInstanceId" parameterType="map" resultMap="OUTSRCATTRCHGAPPLY_ALL">
+        SELECT
+        <include refid="sql_flied_all" />
+        FROM PPM_OUTSRC_ATTR_CHG_APPLY
+        WHERE instance_id = #{instanceId}
+          AND is_del = '0'
+          AND rownum = 1
+    </select>
+
+    <!-- select one by id  2022-12-08 ywwb903  -->
+    <select id="selectOneById" resultMap="OUTSRCATTRCHGAPPLY_ALL">
+        SELECT
+        <include refid="sql_flied_all" />
+        FROM PPM_OUTSRC_ATTR_CHG_APPLY WHERE id = #{id}
+    </select>
+
+    <!-- select many By ids  2022-12-08 ywwb903 -->
+    <select id="selectListByIds" resultMap="OUTSRCATTRCHGAPPLY_ALL">
+        SELECT
+        <include refid="sql_flied_small" />
+        FROM PPM_OUTSRC_ATTR_CHG_APPLY WHERE ID IN
+        <foreach collection="list" item="ids" open="(" separator=", " close=")">
+            #{ids}
+        </foreach>
+    </select>
+
+   <!-- select by map  2022-12-08 ywwb903  -->
+    <select id="selectByMapBasic" parameterType="map" resultMap="OUTSRCATTRCHGAPPLY_ALL">
+        SELECT
+        <include refid="sql_flied_basic" />
+        FROM PPM_OUTSRC_ATTR_CHG_APPLY
+        <include refid="sql_select_condition_cus"/>
+    </select>
+
+    <select id="selectByMapSmall" parameterType="map" resultMap="OUTSRCATTRCHGAPPLY_ALL">
+        SELECT
+        <include refid="sql_flied_small" />
+        FROM PPM_OUTSRC_ATTR_CHG_APPLY
+        <include refid="sql_select_condition_cus"/>
+    </select>
+
+    <select id="selectByMap" parameterType="map" resultMap="OUTSRCATTRCHGAPPLY_ALL">
+        SELECT
+        <include refid="sql_flied_all" />
+        FROM PPM_OUTSRC_ATTR_CHG_APPLY
+        <include refid="sql_select_condition"/>
+    </select>
+
+   <!-- selectCount  2022-12-08 ywwb903  -->
+    <select id="selectCount" parameterType="map" resultType="Long">
+        SELECT COUNT(1)
+        FROM PPM_OUTSRC_ATTR_CHG_APPLY
+        <include refid="sql_select_condition_cus"/>
+    </select>
+
+    <select id="selectOrgName" parameterType="map" resultType="String">
+        select outsourcname from PPM_OUTSOURCING_INFO where  orgcode = #{orgCode} and rownum =1
+    </select>
+
+    <!--  新增  -->
+    <!-- insert 2022-12-08 ywwb903  -->
+    <insert id="addPojo" parameterType="outsrcAttrChgApply">
+    	INSERT INTO PPM_OUTSRC_ATTR_CHG_APPLY (
+    	<trim suffixOverrides=",">
+    	    <if test="id != null and id != '' ">  ID ,</if>
+    	    <if test="instanceId != null and instanceId != '' ">  INSTANCE_ID ,</if>
+    	    <if test="flowId != null and flowId != '' ">  FLOW_ID ,</if>
+    	    <if test="deptId != null and deptId != '' ">  DEPT_ID ,</if>
+    	    <if test="deptName != null and deptName != '' ">  DEPT_NAME ,</if>
+    	    <if test="applier != null and applier != '' ">  APPLIER ,</if>
+    	    <if test="isDel != null and isDel != '' ">  IS_DEL ,</if>
+    	    <if test="createDate != null and createDate != '' ">  CREATE_DATE ,</if>
+    	    <if test="createUser != null and createUser != '' ">  CREATE_USER ,</if>
+    	    <if test="updateDate != null and updateDate != '' ">  UPDATE_DATE ,</if>
+    	    <if test="updateUser != null and updateUser != '' ">  UPDATE_USER ,</if>
+    	</trim>
+    	)
+    	VALUES(
+    	<trim suffixOverrides=",">
+            <if test="id != null and id != '' "> #{id} ,</if>
+            <if test="instanceId != null and instanceId != '' "> #{instanceId} ,</if>
+            <if test="flowId != null and flowId != '' "> #{flowId} ,</if>
+            <if test="deptId != null and deptId != '' "> #{deptId} ,</if>
+            <if test="deptName != null and deptName != '' "> #{deptName} ,</if>
+            <if test="applier != null and applier != '' "> #{applier} ,</if>
+            <if test="isDel != null and isDel != '' "> #{isDel} ,</if>
+            <if test="createDate != null and createDate != '' "> #{createDate} ,</if>
+            <if test="createUser != null and createUser != '' "> #{createUser} ,</if>
+            <if test="updateDate != null and updateDate != '' "> #{updateDate} ,</if>
+            <if test="updateUser != null and updateUser != '' "> #{updateUser} ,</if>
+    	</trim>
+    	)
+    </insert>
+
+    <!-- batch insert 2022-12-08 ywwb903  -->
+    <insert id="batchAdd" parameterType="list">
+        INSERT ALL
+        <foreach collection="list" item="item" index="index">
+            INTO PPM_OUTSRC_ATTR_CHG_APPLY (
+            <trim suffixOverrides=",">
+                <if test="item.id != null" > ID ,</if>
+                <if test="item.instanceId != null and item.instanceId != '' ">  INSTANCE_ID ,</if>
+                <if test="item.flowId != null and item.flowId != '' ">  FLOW_ID ,</if>
+                <if test="item.deptId != null and item.deptId != '' ">  DEPT_ID ,</if>
+                <if test="item.deptName != null and item.deptName != '' ">  DEPT_NAME ,</if>
+                <if test="item.applier != null and item.applier != '' ">  APPLIER ,</if>
+                <if test="item.isDel != null and item.isDel != '' ">  IS_DEL ,</if>
+                <if test="item.createDate != null and item.createDate != '' ">  CREATE_DATE ,</if>
+                <if test="item.createUser != null and item.createUser != '' ">  CREATE_USER ,</if>
+                <if test="item.updateDate != null and item.updateDate != '' ">  UPDATE_DATE ,</if>
+                <if test="item.updateUser != null and item.updateUser != '' ">  UPDATE_USER ,</if>
+            </trim>
+            )
+            VALUES(
+            <trim suffixOverrides=",">
+                <if test="item.id != null" > #{item.id} ,</if>
+                <if test="item.instanceId != null and item.instanceId != '' " > #{item.instanceId} ,</if>
+                <if test="item.flowId != null and item.flowId != '' " > #{item.flowId} ,</if>
+                <if test="item.deptId != null and item.deptId != '' " > #{item.deptId} ,</if>
+                <if test="item.deptName != null and item.deptName != '' " > #{item.deptName} ,</if>
+                <if test="item.applier != null and item.applier != '' " > #{item.applier} ,</if>
+                <if test="item.isDel != null and item.isDel != '' " > #{item.isDel} ,</if>
+                <if test="item.createDate != null and item.createDate != '' " > #{item.createDate} ,</if>
+                <if test="item.createUser != null and item.createUser != '' " > #{item.createUser} ,</if>
+                <if test="item.updateDate != null and item.updateDate != '' " > #{item.updateDate} ,</if>
+                <if test="item.updateUser != null and item.updateUser != '' " > #{item.updateUser} ,</if>
+            </trim>
+            )
+        </foreach>
+        select 1 from dual
+    </insert>
+
+    <!--  更新  -->
+	<!-- update by id 2022-12-08 ywwb903  -->
+	<update id="updatePojo" parameterType="outsrcAttrChgApply">
+		UPDATE
+		PPM_OUTSRC_ATTR_CHG_APPLY
+		<include refid="update_pojo_sql" />
+		WHERE is_del = '0' and id = #{id}
+	</update>
+
+    <!-- update by instanceId 2022-12-08 ywwb903  -->
+    <update id="updateByInstanceId" parameterType="outsrcAttrChgApply">
+        UPDATE
+		PPM_OUTSRC_ATTR_CHG_APPLY
+        <include refid="update_pojo_sql" />
+        WHERE is_del = '0' and instance_id = #{instanceId}
+    </update>
+
+	<!--  删除  -->
+	<!-- delete by pojo 2022-12-08 ywwb903  -->
+    <delete id="deletePojo" parameterType="outsrcAttrChgApply">
+        DELETE FROM PPM_OUTSRC_ATTR_CHG_APPLY WHERE ID = #{id}
+    </delete>
+</mapper>

@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k4895 2021-11-17 -->
+<mapper namespace="com.work.ppm.application.model.integratedmanager.PpmWbbljzhdqqrinfos">
+	 <resultMap type="ppmWbbljzhdqqrinfos" id="PPMWBBLJZHDQQRINFOS_ALL">
+        <result property="id" column="ID" />
+		<result property="userid" column="USERID" />
+		<result property="username" column="USERNAME" />
+		<result property="userclass" column="USERCLASS" />
+		<result property="deptno" column="DEPTNO" />
+		<result property="deptname" column="DEPTNAME" />
+		<result property="status" column="STATUS" />
+		<result property="createtime" column="CREATETIME" />
+		<result property="zhsyqx" column="ZHSYQX" />
+		
+     </resultMap>
+
+     <!-- 所有字段名称 -->
+        <sql id="sql_flied_all">
+        	ID,
+			USERID,
+			USERNAME,
+			USERCLASS,
+			DEPTNO,
+			DEPTNAME,
+			STATUS,
+			CREATETIME,
+			ZHSYQX
+        </sql>
+        <sql id="sql_select_condition">
+            <trim prefix="WHERE" suffixOverrides="AND">
+                <if test="id != null " > ID = #{id} AND </if>
+				<if test="userid != null  and userid != '' " > USERID = #{userid} AND </if>
+				<if test="username != null  and username != '' " > USERNAME = #{username} AND </if>
+				<if test="userclass != null  and userclass != '' " > USERCLASS = #{userclass} AND </if>
+				<if test="deptno != null  and deptno != '' " > DEPTNO = #{deptno} AND </if>
+				<if test="deptname != null  and deptname != '' " > DEPTNAME = #{deptname} AND </if>
+				<if test="status != null  and status != '' " > STATUS = #{status} AND </if>
+				<if test="createtime != null " > CREATETIME = #{createtime} AND </if>
+				<if test="zhsyqx != null " > ZHSYQX = #{zhsyqx} AND </if>
+				
+            </trim>
+        </sql>
+    	<!-- 查询分页  2021-11-17 k4895  -->
+        <select id="queryPagerList" parameterType="map" resultMap="PPMWBBLJZHDQQRINFOS_ALL">
+        	SELECT
+            <include refid="sql_flied_all" />
+            FROM PPM_WBBLJZHDQQRINFOS
+            <include refid="sql_select_condition" />
+        </select>
+
+        <!-- 新增  2021-11-17 k4895  -->
+        <insert id="addPojo" parameterType="ppmWbbljzhdqqrinfos">
+    		INSERT INTO PPM_WBBLJZHDQQRINFOS (
+    		<trim suffixOverrides=",">
+    		 <if test="id != null " > ID , </if>
+				<if test="userid != null  and userid != '' " > USERID , </if>
+				<if test="username != null  and username != '' " > USERNAME , </if>
+				<if test="userclass != null  and userclass != '' " > USERCLASS , </if>
+				<if test="deptno != null  and deptno != '' " > DEPTNO , </if>
+				<if test="deptname != null  and deptname != '' " > DEPTNAME , </if>
+				<if test="status != null  and status != '' " > STATUS , </if>
+				<if test="createtime != null " > CREATETIME , </if>
+				<if test="zhsyqx != null " > ZHSYQX , </if>
+				
+              </trim>
+    		)
+    		VALUES(
+    		<trim suffixOverrides=",">
+    		 <if test="id != null " > #{id} , </if>
+				<if test="userid != null  and userid != '' " > #{userid} , </if>
+				<if test="username != null  and username != '' " > #{username} , </if>
+				<if test="userclass != null  and userclass != '' " > #{userclass} , </if>
+				<if test="deptno != null  and deptno != '' " > #{deptno} , </if>
+				<if test="deptname != null  and deptname != '' " > #{deptname} , </if>
+				<if test="status != null  and status != '' " > #{status} , </if>
+				<if test="createtime != null " > #{createtime} , </if>
+				<if test="zhsyqx != null " > #{zhsyqx} , </if>
+				
+            </trim>
+    		)
+        </insert>
+
+        <!--通过id查询  k4895 2021-11-17 -->
+        <select id="queryDetail" parameterType="ppmWbbljzhdqqrinfos" resultMap="PPMWBBLJZHDQQRINFOS_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_WBBLJZHDQQRINFOS  WHERE ID=#{id}
+        </select>
+
+         <!--查询集合  k4895 2021-11-17 -->
+        <select id="getList" parameterType="ppmWbbljzhdqqrinfos" resultMap="PPMWBBLJZHDQQRINFOS_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_WBBLJZHDQQRINFOS
+        	<include refid="sql_select_condition" />
+        </select>
+        <!-- update sql -->
+        <sql id="update_pojo_sql">
+        	<trim prefix="SET" suffixOverrides=",">
+        		<if test="id != null " > ID=#{id} , </if>
+				<if test="userid != null  and userid != '' " > USERID=#{userid} , </if>
+				<if test="username != null  and username != '' " > USERNAME=#{username} , </if>
+				<if test="userclass != null  and userclass != '' " > USERCLASS=#{userclass} , </if>
+				<if test="deptno != null  and deptno != '' " > DEPTNO=#{deptno} , </if>
+				<if test="deptname != null  and deptname != '' " > DEPTNAME=#{deptname} , </if>
+				<if test="status != null  and status != '' " > STATUS=#{status} , </if>
+				<if test="createtime != null " > CREATETIME=#{createtime} , </if>
+				<if test="zhsyqx != null " > ZHSYQX=#{zhsyqx} , </if>
+				
+            </trim>
+        </sql>
+
+        <!--通过id编辑 k4895 2021-11-17 -->
+    	<update id="updatePojo" parameterType="ppmWbbljzhdqqrinfos">
+        	UPDATE
+        	PPM_WBBLJZHDQQRINFOS
+        	<include refid="update_pojo_sql" />
+        	WHERE ID=#{id}
+        </update>
+
+        <!--通过id批量删除  k4895 2021-11-17 -->
+        <delete id="deleteById" parameterType="ppmWbbljzhdqqrinfos">
+        	DELETE
+        	FROM
+        	PPM_WBBLJZHDQQRINFOS
+        	WHERE ID = #{id}
+        </delete>
+
+		<!--修改状态为注销-->
+		<update id="updateUseState" parameterType="map">
+			update PPM_WBBLJZHDQQRINFOS t set t.status = '0' where t.userid = #{userid}
+		</update>
+
+</mapper>

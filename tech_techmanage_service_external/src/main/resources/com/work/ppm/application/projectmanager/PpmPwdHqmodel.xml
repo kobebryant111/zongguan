@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k6991 2021-10-27 -->
+<mapper namespace="com.work.ppm.application.model.projectmanager.PpmPwdHqmodel">
+	 <resultMap type="ppmPwdHqmodel" id="PPMPWDHQMODEL_ALL">
+        <result property="flowid" column="FLOWID" />
+		<result property="spmodel" column="SPMODEL" />
+		<result property="gxrissp" column="GXRISSP" />
+		<result property="status" column="STATUS" />
+		
+     </resultMap>
+
+     <!-- 所有字段名称 -->
+        <sql id="sql_flied_all">
+        	FLOWID,
+			SPMODEL,
+			GXRISSP,
+			STATUS
+        </sql>
+        <sql id="sql_select_condition">
+            <trim prefix="WHERE" suffixOverrides="AND">
+                <if test="flowid != null  and flowid != '' " > FLOWID = #{flowid} AND </if>
+				<if test="spmodel != null  and spmodel != '' " > SPMODEL = #{spmodel} AND </if>
+				<if test="gxrissp != null  and gxrissp != '' " > GXRISSP = #{gxrissp} AND </if>
+				<if test="status != null  and status != '' " > STATUS = #{status} AND </if>
+				
+            </trim>
+        </sql>
+    	<!-- 查询分页  2021-10-27 k6991  -->
+        <select id="queryPagerList" parameterType="map" resultMap="PPMPWDHQMODEL_ALL">
+        	SELECT
+            <include refid="sql_flied_all" />
+            FROM PPM_PWD_HQMODEL
+            <include refid="sql_select_condition" />
+        </select>
+
+        <!-- 新增  2021-10-27 k6991  -->
+        <insert id="addPojo" parameterType="ppmPwdHqmodel">
+    		INSERT INTO PPM_PWD_HQMODEL (
+    		<trim suffixOverrides=",">
+    		 <if test="flowid != null  and flowid != '' " > FLOWID , </if>
+				<if test="spmodel != null  and spmodel != '' " > SPMODEL , </if>
+				<if test="gxrissp != null  and gxrissp != '' " > GXRISSP , </if>
+				<if test="status != null  and status != '' " > STATUS , </if>
+				
+              </trim>
+    		)
+    		VALUES(
+    		<trim suffixOverrides=",">
+    		 <if test="flowid != null  and flowid != '' " > #{flowid} , </if>
+				<if test="spmodel != null  and spmodel != '' " > #{spmodel} , </if>
+				<if test="gxrissp != null  and gxrissp != '' " > #{gxrissp} , </if>
+				<if test="status != null  and status != '' " > #{status} , </if>
+				
+            </trim>
+    		)
+        </insert>
+
+        <!--通过id查询  k6991 2021-10-27 -->
+        <select id="queryDetail" parameterType="ppmPwdHqmodel" resultMap="PPMPWDHQMODEL_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_PWD_HQMODEL
+			WHERE FLOWID=#{flowid} AND STATUS='0'
+        </select>
+
+         <!--查询集合  k6991 2021-10-27 -->
+        <select id="getList" parameterType="ppmPwdHqmodel" resultMap="PPMPWDHQMODEL_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_PWD_HQMODEL
+        	<include refid="sql_select_condition" />
+        </select>
+        <!-- update sql -->
+        <sql id="update_pojo_sql">
+        	<trim prefix="SET" suffixOverrides=",">
+        		<if test="flowid != null  and flowid != '' " > FLOWID=#{flowid} , </if>
+				<if test="spmodel != null  and spmodel != '' " > SPMODEL=#{spmodel} , </if>
+				<if test="gxrissp != null  and gxrissp != '' " > GXRISSP=#{gxrissp} , </if>
+				<if test="status != null  and status != '' " > STATUS=#{status} , </if>
+				
+            </trim>
+        </sql>
+
+        <!--通过id编辑 k6991 2021-10-27 -->
+    	<update id="updatePojo" parameterType="ppmPwdHqmodel">
+        	UPDATE
+        	PPM_PWD_HQMODEL
+        	<include refid="update_pojo_sql" />
+        	WHERE FLOWID=#{flowid}
+        </update>
+
+        <!--通过id批量删除  k6991 2021-10-27 -->
+        <delete id="deleteById" parameterType="ppmPwdHqmodel">
+        	DELETE
+        	FROM
+        	PPM_PWD_HQMODEL
+        	WHERE FLOWID = #{flowid}
+        </delete>
+
+</mapper>

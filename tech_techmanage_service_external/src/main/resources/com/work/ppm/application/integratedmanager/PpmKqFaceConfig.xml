@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:ywwb905 2022-10-8 -->
+<!--  加班开始时间配置 查询脚本 -->
+<mapper namespace="com.work.ppm.application.model.integratedmanager.PpmKqFaceConfig">
+	 <resultMap type="ppmKqFaceConfig" id="PPMKQFACECONFIG_ALL">
+        <result property="id" column="ID" />
+		<result property="jobId" column="JOB_ID" />
+		<result property="picture" column="PICTURE" />
+		<result property="issueState" column="ISSUE_STATE" />
+		<result property="issueTime" column="ISSUE_TIME" />
+		<result property="issueMachine" column="ISSUE_MACHINE" />
+		<result property="type" column="TYPE" />
+     </resultMap>
+	 <resultMap id="PPMKQFACECONFIG_ALL_EXT" type="ppmKqFaceConfigView" extends="PPMKQFACECONFIG_ALL">
+		<result property="deptId" column="DEPT_ID" />
+		<result property="deptName" column="DEPT_NAME" />
+		<result property="userName" column="USER_NAME" />
+		<result property="presenceState" column="PRESENCE_STATE" />
+		<result property="state" column="STATE" />
+		<result property="adminId" column="ADMINID" />
+     </resultMap>
+
+     <!-- 所有字段名称 -->
+    <sql id="sql_flied_all">
+        ID,
+		JOB_ID,
+		PICTURE,
+		ISSUE_STATE,
+		ISSUE_MACHINE,
+		ISSUE_TIME,
+		TYPE
+    </sql>
+    <sql id="sql_select_condition">
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="id != null " > ID = #{id} AND </if>
+			<if test="jobId != null and jobId != ''" > JOB_ID = #{jobId} AND </if>
+			<if test="picture != null and picture != ''" > PICTURE = #{picture} AND </if>
+			<if test="issueState != null and issueState != ''" > ISSUE_STATE = #{issueState} AND </if>
+			<if test="issueMachine != null and issueMachine != ''" > ISSUE_MACHINE = #{issueMachine} AND </if>
+			<if test="issueTime != null" > ISSUE_TIME = #{issueTime} AND </if>
+			<if test="type != null and type != ''" > TYPE = #{type} AND </if>
+        </trim>
+    </sql>
+	
+	<!-- 查询分页  2022-09-22 ywwb905  -->
+    <select id="queryPagerList" parameterType="map" resultMap="PPMKQFACECONFIG_ALL">
+        SELECT
+        <include refid="sql_flied_all" />
+        FROM PPM_KQ_FACE_CONFIG
+        <include refid="sql_select_condition" />
+        
+    </select>
+
+    <!-- 新增  2022-10-08 ywwb905  -->
+    <insert id="addPojo" parameterType="ppmKqFaceConfig">
+        INSERT INTO PPM_KQ_FACE_CONFIG (
+        <trim suffixOverrides=",">
+			<if test="id != null " > ID , </if>
+			<if test="jobId != null and jobId != ''" > JOB_ID , </if>
+			<if test="picture != null and picture != ''" > PICTURE , </if>
+			<if test="issueState != null and issueState != ''" > ISSUE_STATE , </if>
+			<if test="issueMachine != null and issueMachine != ''" > ISSUE_MACHINE , </if>
+			<if test="issueTime != null " > ISSUE_TIME , </if>
+			<if test="type != null and type != ''" > TYPE , </if>
+          </trim>
+        )
+        VALUES(
+        <trim suffixOverrides=",">
+			<if test="id != null " > #{id} , </if>
+			<if test="jobId != null and jobId != ''" > #{jobId} , </if>
+			<if test="picture != null and picture != ''" > #{picture} , </if>
+			<if test="issueState != null and issueState != ''" > #{issueState} , </if>
+			<if test="issueMachine != null and issueMachine != ''" > #{issueMachine} , </if>
+			<if test="issueTime != null" > #{issueTime} , </if>
+			<if test="type != null and type != ''" > #{type} , </if>
+        </trim>
+        )
+    </insert>
+
+    <!--通过id查询  ywwb905 2022-10-08 -->
+    <select id="queryDetail" parameterType="ppmKqFaceConfig" resultMap="PPMKQFACECONFIG_ALL">
+        SELECT
+        <include refid="sql_flied_all" />
+        FROM PPM_KQ_FACE_CONFIG
+		<trim prefix="WHERE" suffixOverrides="AND">
+            <if test="jobId != null and jobId != '' ">JOB_ID = #{jobId} AND</if>
+            <if test="id != null ">ID = #{id} AND</if>
+        </trim>
+    </select>
+
+     <!--查询集合  ywwb905 2022-10-08 -->
+    <select id="getList" parameterType="ppmKqFaceConfig" resultMap="PPMKQFACECONFIG_ALL">
+        SELECT
+        <include refid="sql_flied_all" />
+        FROM PPM_KQ_FACE_CONFIG
+        <include refid="sql_select_condition" />
+    </select>
+    <!-- update sql -->
+    <sql id="update_pojo_sql">
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="id != null " > ID=#{id} , </if>
+			<if test="jobId != null and jobId != ''" > JOB_ID=#{jobId} , </if>
+			<if test="picture != null and picture != ''" > PICTURE=#{picture} , </if>
+			<if test="issueState != null and issueState != ''" > ISSUE_STATE=#{issueState} , </if>
+			<if test="issueMachine != null and issueMachine != ''" > ISSUE_MACHINE=#{issueMachine} , </if>
+			<if test="issueTime != null " > ISSUE_TIME=#{issueTime} , </if>
+			<if test="type != null and type != ''" > TYPE=#{type} , </if>
+        </trim>
+    </sql>
+
+    <!--通过id编辑 ywwb905 2022-10-08 -->
+    <update id="updatePojo" parameterType="ppmKqFaceConfig">
+        UPDATE
+        PPM_KQ_FACE_CONFIG
+        <include refid="update_pojo_sql" />
+        WHERE ID = #{id}
+    </update>
+	
+
+    <!--通过id批量删除  ywwb436 2022-06-30 -->
+    <delete id="deleteById" parameterType="ppmKqFaceConfig">
+        DELETE
+        FROM
+        PPM_KQ_FACE_CONFIG
+        WHERE ID = #{id}
+    </delete>
+	
+	<select id="queryBaseInfo" parameterType="ppmKqFaceConfigView" resultMap="PPMKQFACECONFIG_ALL_EXT">
+		SELECT 
+			FC.ID,
+			OB.DEPT_ID,
+			CD.LOCATION DEPT_NAME,
+			CD.ADMINID,
+			OB.USER_NAME,
+			OB.JOB_ID,
+			CASE 
+				WHEN FC.PICTURE IS NULL THEN OB.FACEIMAGE
+				ELSE FC.PICTURE
+			END PICTURE,
+			FC.ISSUE_MACHINE,
+			CASE
+				WHEN FC.ISSUE_STATE IS NULL THEN '0'
+				ELSE FC.ISSUE_STATE
+			END ISSUE_STATE,
+			OB.PRESENCE_STATE,
+			FC.ISSUE_TIME,
+			OB.STATE,
+			'CADRE' TYPE
+		FROM PPM_OUTSOURCING_BASIC OB 
+			LEFT JOIN PPM_KQ_FACE_CONFIG FC ON OB.JOB_ID = FC.JOB_ID 
+			LEFT JOIN COMM_EMPLOYEE CE ON OB.PERSON_IN_CHARGE = CE.BADGE
+			LEFT JOIN COMM_DEPARTMENT CD ON OB.DEPT_ID = CD.DEPID
+		<trim prefix="WHERE" suffixOverrides="AND">
+            <if test="jobId != null and jobId != '' ">OB.JOB_ID = #{jobId} AND</if>
+        </trim>
+		ORDER BY OB.ID DESC
+	</select>
+	
+	<select id="queryBaseInfoList" parameterType="ppmKqFaceConfigView" resultMap="PPMKQFACECONFIG_ALL_EXT">
+		SELECT 
+			FC.ID,
+			OB.DEPT_ID,
+			CD.LOCATION DEPT_NAME,
+			CD.ADMINID,
+			OB.USER_NAME,
+			OB.JOB_ID,
+			CASE 
+				WHEN FC.PICTURE IS NULL THEN OB.FACEIMAGE
+				ELSE FC.PICTURE
+			END PICTURE,
+			FC.ISSUE_MACHINE,
+			CASE
+				WHEN FC.ISSUE_STATE IS NULL THEN '0'
+				ELSE FC.ISSUE_STATE
+			END ISSUE_STATE,
+			OB.PRESENCE_STATE,
+			FC.ISSUE_TIME,
+			OB.STATE,
+			'CADRE' TYPE
+		FROM PPM_OUTSOURCING_BASIC OB 
+			LEFT JOIN PPM_KQ_FACE_CONFIG FC ON OB.JOB_ID = FC.JOB_ID 
+			LEFT JOIN COMM_EMPLOYEE CE ON OB.PERSON_IN_CHARGE = CE.BADGE
+			LEFT JOIN COMM_DEPARTMENT CD ON OB.DEPT_ID = CD.DEPID
+		<trim prefix="WHERE" suffixOverrides="AND">
+            <if test="jobId != null and jobId != '' ">OB.JOB_ID = #{jobId} AND</if>
+            <if test="userName != null and userName != '' ">OB.USER_NAME like '%'||#{userName}||'%' AND</if>
+            <if test="deptId != null and deptId != '' ">OB.DEPT_ID = #{deptId} AND</if>
+            <if test="issueState != null and issueState != '' and issueState == 0">(FC.ISSUE_STATE = #{issueState} OR FC.ISSUE_STATE IS NULL ) AND </if>
+            <if test="issueState != null and issueState != '' and issueState == 1">FC.ISSUE_STATE = #{issueState} AND </if>
+            <if test="presenceState != null and presenceState != ''">OB.PRESENCE_STATE = #{presenceState} AND </if>
+            <if test="state != null and state != ''">OB.STATE = #{state} AND </if>
+            <if test="adminId != null ">CD.ADMINID = #{adminId} AND </if>
+        </trim>
+		ORDER BY OB.ID DESC
+	</select>
+	
+	<select id="queryPersonLedgeInfo" parameterType="ppmKqFaceConfigView" resultMap="PPMKQFACECONFIG_ALL_EXT">
+		SELECT
+			FC.ID,
+			OP.DEPT_ID,
+			CD.LOCATION DEPT_NAME,
+			OP.USER_NAME,
+			OP.JOB_ID,
+			CASE
+			WHEN FC.PICTURE IS NULL THEN OP.IMAGE_NO
+			ELSE FC.PICTURE
+			END PICTURE,
+			FC.ISSUE_MACHINE,
+			CASE
+			WHEN FC.ISSUE_STATE IS NULL THEN '0'
+			ELSE FC.ISSUE_STATE
+			END ISSUE_STATE,
+			OP.STATE,
+			FC.ISSUE_TIME,
+			'OTHER' TYPE
+        FROM PPM_OUTSOURCE_PERSONLEDGE OP
+        LEFT JOIN PPM_KQ_FACE_CONFIG FC ON OP.JOB_ID = FC.JOB_ID
+        LEFT JOIN COMM_EMPLOYEE CE ON OP.PRO_PERSON = CE.BADGE
+        LEFT JOIN COMM_DEPARTMENT CD ON OP.DEPT_ID = CD.DEPID
+		<trim prefix="WHERE" suffixOverrides="AND">
+            <if test="jobId != null and jobId != '' ">OP.JOB_ID = #{jobId} AND</if>
+        </trim>
+		ORDER BY OP.ID DESC
+	</select>
+
+    <select id="queryPersonLedgeListForJob" parameterType="ppmKqFaceConfigView" resultMap="PPMKQFACECONFIG_ALL_EXT">
+        SELECT
+			FC.ID,
+			OP.DEPT_ID,
+			CD.LOCATION DEPT_NAME,
+			OP.USER_NAME,
+			OP.JOB_ID,
+			CASE
+			WHEN FC.PICTURE IS NULL THEN OP.IMAGE_NO
+			ELSE FC.PICTURE
+			END PICTURE,
+			FC.ISSUE_MACHINE,
+			CASE
+			WHEN FC.ISSUE_STATE IS NULL THEN '0'
+			ELSE FC.ISSUE_STATE
+			END ISSUE_STATE,
+			OP.STATE,
+			FC.ISSUE_TIME,
+			'OTHER' TYPE
+        FROM PPM_OUTSOURCE_PERSONLEDGE OP
+        LEFT JOIN PPM_KQ_FACE_CONFIG FC ON OP.JOB_ID = FC.JOB_ID
+        LEFT JOIN COMM_EMPLOYEE CE ON OP.PRO_PERSON = CE.BADGE
+        LEFT JOIN COMM_DEPARTMENT CD ON OP.DEPT_ID = CD.DEPID
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="jobId != null and jobId != '' ">OP.JOB_ID = #{jobId} AND</if>
+            <if test="userName != null and userName != '' ">OP.USER_NAME like '%${userName}%' AND</if>
+            <if test="deptName != null and deptName != '' ">CD.LOCATION like '%${deptName}%' AND</if>
+            <if test="issueState != null and issueState != '' and issueState == 0">(FC.ISSUE_STATE = #{issueState} OR FC.ISSUE_STATE IS NULL ) AND </if>
+            <if test="issueState != null and issueState != '' and issueState == 1">FC.ISSUE_STATE = #{issueState} AND </if>
+			<if test="state != null and state != ''">OP.STATE = #{state} AND </if>
+			<if test="adminId != null ">CD.ADMINID = #{adminId} AND </if>
+        </trim>
+        ORDER BY OP.ID DESC
+    </select>
+	
+</mapper>

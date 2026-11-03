@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k6991 2021-01-13 -->
+<mapper namespace="com.work.ppm.application.model.othermanager.PpmProcessWorkday">
+	 <resultMap type="ppmProcessWorkday" id="PPMPROCESSWORKDAY_ALL">
+        <result property="id" column="ID" />
+		<result property="year" column="YEAR" />
+		<result property="unworkdate" column="UNWORKDATE" />
+		<result property="isdel" column="ISDEL" />
+		<result property="createtime" column="CREATETIME" />
+		<result property="creators" column="CREATORS" />
+		<result property="lastmodtime" column="LASTMODTIME" />
+		<result property="lastmoduser" column="LASTMODUSER" />
+		<result property="holdayflag" column="HOLDAYFLAG" />
+		
+     </resultMap>
+
+     <!-- 所有字段名称 -->
+        <sql id="sql_flied_all">
+        	ID,
+			YEAR,
+			UNWORKDATE,
+			ISDEL,
+			CREATETIME,
+			CREATORS,
+			LASTMODTIME,
+			LASTMODUSER,
+			HOLDAYFLAG
+        </sql>
+        <sql id="sql_select_condition">
+            <trim prefix="WHERE" suffixOverrides="AND">
+                <if test="id != null " > ID = #{id} AND </if>
+				<if test="year != null  and year != '' " > YEAR = #{year} AND </if>
+				<if test="unworkdate != null  and unworkdate != '' " > UNWORKDATE = #{unworkdate} AND </if>
+				<if test="isdel != null " > ISDEL = #{isdel} AND </if>
+				<if test="createtime != null " > CREATETIME = #{createtime} AND </if>
+				<if test="creators != null  and creators != '' " > CREATORS = #{creators} AND </if>
+				<if test="lastmodtime != null " > LASTMODTIME = #{lastmodtime} AND </if>
+				<if test="lastmoduser != null  and lastmoduser != '' " > LASTMODUSER = #{lastmoduser} AND </if>
+				<if test="holdayflag != null  and holdayflag != '' " > HOLDAYFLAG = #{holdayflag} AND </if>
+				
+            </trim>
+        </sql>
+
+
+        <!--通过id查询  k6991 2021-01-13 -->
+        <select id="queryDetail" parameterType="ppmProcessWorkday" resultMap="PPMPROCESSWORKDAY_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_PROCESS_WORKDAY
+			<trim prefix="WHERE" suffixOverrides="AND">
+				<if test="id != null " > ID = #{id} AND </if>
+				<if test="unworkdate != null  and unworkdate != '' " > UNWORKDATE = #{unworkdate} AND </if>
+				<if test="true" > ISDEL = 0 AND </if>
+				<if test="true" > ROWNUM = 1 AND </if>
+			</trim>
+        </select>
+
+         <!--查询集合  k6991 2021-01-13 -->
+        <select id="getList" parameterType="ppmProcessWorkday" resultMap="PPMPROCESSWORKDAY_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_PROCESS_WORKDAY
+        	<include refid="sql_select_condition" />
+        </select>
+
+
+</mapper>

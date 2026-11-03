@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k1327 2021-11-18 -->
+<mapper namespace="com.work.ppm.application.model.depkpi.PpmDepkpiDepRel">
+	 <resultMap type="ppmDepkpiDepRel" id="PPMDEPKPIDEPREL_ALL">
+        <result property="id" column="ID" />
+		<result property="depid" column="DEPID" />
+		<result property="director" column="DIRECTOR" />
+		<result property="depcharge" column="DEPCHARGE" />
+		<result property="centercharge" column="CENTERCHARGE" />
+		<result property="centerid" column="CENTERID" />
+		<result property="tyear" column="TYEAR" />
+		<result property="isdel" column="ISDEL" />
+		<result property="lastmoduserid" column="LASTMODUSERID" />
+		<result property="lastmodtime" column="LASTMODTIME" />
+		<result property="sign" column="SIGN" />
+		<result property="firstcheck" column="FIRSTCHECK" />
+		<result property="secondcheck" column="SECONDCHECK" />
+		<result property="marker" column="MARKER" />
+		
+     </resultMap>
+	<resultMap type="ppmDepkpiDepRelInfo" id="PPMDEPKPIDEPREL_ALL_EXT" extends="PPMDEPKPIDEPREL_ALL">
+		<result property="centerchargename" column="CENTERCHARGENAME" />
+		<result property="depname" column="DEPNAME" />
+		<result property="centername" column="CENTERNAME" />
+		<result property="directorname" column="DIRECTORNAME" />
+		<result property="depchargename" column="DEPCHARGENAME" />
+		<result property="signname" column="SIGNNAME" />
+		<result property="firstcheckname" column="FIRSTCHECKNAME" />
+		<result property="secondcheckname" column="SECONDCHECKNAME" />
+		<result property="markername" column="MARKERNAME" />
+		<result property="modelid" column="MODELID" />
+		<result property="commitflag" column="COMMITFLAG" />
+		<result property="modelname" column="MODELNAME"/>
+	</resultMap>
+
+     <!-- 所有字段名称 -->
+        <sql id="sql_flied_all">
+        	ID,
+			DEPID,
+			DIRECTOR,
+			DEPCHARGE,
+			CENTERCHARGE,
+			CENTERID,
+			TYEAR,
+			ISDEL,
+			LASTMODUSERID,
+			LASTMODTIME,
+			SIGN,
+			FIRSTCHECK,
+			SECONDCHECK,
+			MARKER
+        </sql>
+        <sql id="sql_select_condition">
+            <trim prefix="WHERE" suffixOverrides="AND">
+                <if test="id != null " > ID = #{id} AND </if>
+				<if test="depid != null  and depid != '' " > DEPID = #{depid} AND </if>
+				<if test="director != null  and director != '' " > DIRECTOR = #{director} AND </if>
+				<if test="depcharge != null  and depcharge != '' " > DEPCHARGE = #{depcharge} AND </if>
+				<if test="centercharge != null  and centercharge != '' " > CENTERCHARGE = #{centercharge} AND </if>
+				<if test="centerid != null  and centerid != '' " > CENTERID = #{centerid} AND </if>
+				<if test="tyear != null  and tyear != '' " > TYEAR = #{tyear} AND </if>
+				<if test="isdel != null " > ISDEL = #{isdel} AND </if>
+				<if test="lastmoduserid != null  and lastmoduserid != '' " > LASTMODUSERID = #{lastmoduserid} AND </if>
+				<if test="lastmodtime != null " > LASTMODTIME = #{lastmodtime} AND </if>
+				<if test="sign != null " > SIGN = #{sign} AND </if>
+				<if test="firstcheck != null  and firstcheck != '' " > FIRSTCHECK = #{firstcheck} AND </if>
+				<if test="secondcheck != null  and secondcheck != '' " > SECONDCHECK = #{secondcheck} AND </if>
+				<if test="marker != null  and marker != '' " > MARKER = #{marker} AND </if>
+				
+            </trim>
+        </sql>
+    	<!-- 查询分页  2021-11-18 k1327  -->
+        <select id="queryPagerList" parameterType="map" resultMap="PPMDEPKPIDEPREL_ALL">
+        	SELECT
+            <include refid="sql_flied_all" />
+            FROM PPM_DEPKPI_DEP_REL
+            <include refid="sql_select_condition" />
+        </select>
+
+        <!-- 新增  2021-11-18 k1327  -->
+        <insert id="addPojo" parameterType="ppmDepkpiDepRel">
+    		INSERT INTO PPM_DEPKPI_DEP_REL (
+    		<trim suffixOverrides=",">
+    		 <if test="id != null " > ID , </if>
+				<if test="depid != null  and depid != '' " > DEPID , </if>
+				<if test="director != null  and director != '' " > DIRECTOR , </if>
+				<if test="depcharge != null  and depcharge != '' " > DEPCHARGE , </if>
+				<if test="centercharge != null  and centercharge != '' " > CENTERCHARGE , </if>
+				<if test="centerid != null  and centerid != '' " > CENTERID , </if>
+				<if test="tyear != null  and tyear != '' " > TYEAR , </if>
+				<if test="isdel != null " > ISDEL , </if>
+				<if test="lastmoduserid != null  and lastmoduserid != '' " > LASTMODUSERID , </if>
+				<if test="lastmodtime != null " > LASTMODTIME , </if>
+				<if test="sign != null " > SIGN , </if>
+				<if test="firstcheck != null  and firstcheck != '' " > FIRSTCHECK , </if>
+				<if test="secondcheck != null  and secondcheck != '' " > SECONDCHECK , </if>
+				<if test="marker != null  and marker != '' " > MARKER , </if>
+				
+              </trim>
+    		)
+    		VALUES(
+    		<trim suffixOverrides=",">
+    		 <if test="id != null " > #{id} , </if>
+				<if test="depid != null  and depid != '' " > #{depid} , </if>
+				<if test="director != null  and director != '' " > #{director} , </if>
+				<if test="depcharge != null  and depcharge != '' " > #{depcharge} , </if>
+				<if test="centercharge != null  and centercharge != '' " > #{centercharge} , </if>
+				<if test="centerid != null  and centerid != '' " > #{centerid} , </if>
+				<if test="tyear != null  and tyear != '' " > #{tyear} , </if>
+				<if test="isdel != null " > #{isdel} , </if>
+				<if test="lastmoduserid != null  and lastmoduserid != '' " > #{lastmoduserid} , </if>
+				<if test="lastmodtime != null " > #{lastmodtime} , </if>
+				<if test="sign != null " > #{sign} , </if>
+				<if test="firstcheck != null  and firstcheck != '' " > #{firstcheck} , </if>
+				<if test="secondcheck != null  and secondcheck != '' " > #{secondcheck} , </if>
+				<if test="marker != null  and marker != '' " > #{marker} , </if>
+				
+            </trim>
+    		)
+        </insert>
+
+        <!--通过id查询  k1327 2021-11-18 -->
+        <select id="queryDetail" parameterType="ppmDepkpiDepRel" resultMap="PPMDEPKPIDEPREL_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_DEPKPI_DEP_REL  WHERE ID=#{id}
+        </select>
+
+         <!--查询集合  k1327 2021-11-18 -->
+        <select id="getList" parameterType="ppmDepkpiDepRel" resultMap="PPMDEPKPIDEPREL_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_DEPKPI_DEP_REL
+        	<include refid="sql_select_condition" />
+        </select>
+        <!-- update sql -->
+        <sql id="update_pojo_sql">
+        	<trim prefix="SET" suffixOverrides=",">
+        		<if test="id != null " > ID=#{id} , </if>
+				<if test="depid != null  and depid != '' " > DEPID=#{depid} , </if>
+				<if test="director != null  and director != '' " > DIRECTOR=#{director} , </if>
+				<if test="depcharge != null  and depcharge != '' " > DEPCHARGE=#{depcharge} , </if>
+				<if test="centercharge != null  and centercharge != '' " > CENTERCHARGE=#{centercharge} , </if>
+				<if test="centerid != null  and centerid != '' " > CENTERID=#{centerid} , </if>
+				<if test="tyear != null  and tyear != '' " > TYEAR=#{tyear} , </if>
+				<if test="isdel != null " > ISDEL=#{isdel} , </if>
+				<if test="lastmoduserid != null  and lastmoduserid != '' " > LASTMODUSERID=#{lastmoduserid} , </if>
+				<if test="lastmodtime != null " > LASTMODTIME=#{lastmodtime} , </if>
+				<if test="sign != null " > SIGN=#{sign} , </if>
+				<if test="firstcheck != null  and firstcheck != '' " > FIRSTCHECK=#{firstcheck} , </if>
+				<if test="secondcheck != null  and secondcheck != '' " > SECONDCHECK=#{secondcheck} , </if>
+				<if test="secondcheck == 'null' " > SECONDCHECK=null , </if>
+				<if test="marker != null  and marker != '' " > MARKER=#{marker} , </if>
+				
+            </trim>
+        </sql>
+
+        <!--通过id编辑 k1327 2021-11-18 -->
+    	<update id="updatePojo" parameterType="ppmDepkpiDepRel">
+        	UPDATE
+        	PPM_DEPKPI_DEP_REL
+        	<include refid="update_pojo_sql" />
+        	WHERE ID=#{id}
+        </update>
+
+        <!--通过id批量删除  k1327 2021-11-18 -->
+        <delete id="deleteById" parameterType="ppmDepkpiDepRel">
+        	DELETE
+        	FROM
+        	PPM_DEPKPI_DEP_REL
+        	WHERE ID = #{id}
+        </delete>
+
+		<!--删除所有数据  k1327 2021-11-18 -->
+		<delete id="deleteAll" parameterType="ppmDepkpiDepRel">
+			DELETE
+			FROM
+			PPM_DEPKPI_DEP_REL
+		</delete>
+		<!--查询集合  k1327 2021-11-18 -->
+		<select id="getDepCenList" parameterType="ppmDepkpiDepRel" resultMap="PPMDEPKPIDEPREL_ALL">
+			select to_char(d.depid) depid,m.centerid,e.badge director,m.userid depcharge,
+			c.resuserid centercharge,'1' sign
+			from comm_department d
+			left join comm_employee e on d.director=e.eidhr
+			left join ppm_da_dept_manager m on to_char(d.depid)=m.deptid
+			left join ppm_da_center c on m.centerid=to_char(c.id)
+			where d.adminid='7004' and d.isdisabled='0' and d.depid>0
+			union
+			select '' depid,to_char(c.id) centerid,'' director,'' depcharge,c.resuserid centercharge,'2' sign
+			from ppm_da_center c
+			union
+			select to_char(d.depid) depid,m.centerid,e.badge director,m.userid depcharge,
+			c.resuserid centercharge,'3' sign
+			from comm_department d
+			left join comm_employee e on d.director=e.eidhr
+			left join ppm_da_dept_manager m on to_char(d.depid)=m.deptid
+			left join ppm_da_center c on m.centerid=to_char(c.id)
+			where d.depid='7004' and d.isdisabled='0'
+		</select>
+
+		<!--查询集合  k1327 2021-05-20 -->
+		<select id="getDepKpiDepRelList" parameterType="ppmDepkpiDepRelInfo" resultMap="PPMDEPKPIDEPREL_ALL_EXT">
+			select r.id,
+			r.depid,
+			r.director,
+			r.depcharge,
+			r.centercharge,
+			r.centerid,
+			r.tyear,
+			r.isdel,
+			r.lastmoduserid,
+			r.lastmodtime,
+			r.sign,
+			en.dictname signname,
+			d.location depname,
+			c.centername,
+			e.empname directorname,
+			e1.empname depchargename,
+			e2.empname centerchargename,
+			r.marker,
+			r.firstcheck,
+			r.secondcheck,
+			e3.empname markername,
+			e4.empname firstcheckname,
+			e5.empname secondcheckname
+			from PPM_DEPKPI_DEP_REL r left join comm_department d on r.depid=d.depid
+			left join ppm_da_center c on r.centerid=c.id
+			left join comm_employee e on e.badge=r.director
+			left join comm_employee e1 on e1.badge=r.depcharge
+			left join comm_employee e2 on e2.badge=r.centercharge
+			left join comm_employee e3 on e3.badge=r.marker
+			left join comm_employee e4 on e4.badge=r.firstcheck
+			left join comm_employee e5 on e5.badge=r.secondcheck
+			left join eos_dict_entry en on en.dictid=r.sign and en.dicttypeid='KHBMJSBZ'
+			<trim prefix="WHERE" suffixOverrides="AND">
+				<if test="id != null " > r.ID = #{id} AND </if>
+				<if test="depid != null  and depid != '' " > r.DEPID = #{depid} AND </if>
+				<if test="director != null  and director != '' " > r.DIRECTOR = #{director} AND </if>
+				<if test="depcharge != null  and depcharge != '' " > r.DEPCHARGE = #{depcharge} AND </if>
+				<if test="centercharge != null  and centercharge != '' " > r.CENTERCHARGE = #{centercharge} AND </if>
+				<if test="centerid != null  and centerid != '' " > r.CENTERID = #{centerid} AND </if>
+				<if test="tyear != null  and tyear != '' " > r.TYEAR = #{tyear} AND </if>
+				<if test="isdel != null " > r.ISDEL = #{isdel} AND </if>
+				<if test="lastmoduserid != null  and lastmoduserid != '' " > r.LASTMODUSERID = #{lastmoduserid} AND </if>
+				<if test="lastmodtime != null " > r.LASTMODTIME = #{lastmodtime} AND </if>
+				<if test="sign != null " > r.SIGN = #{sign} AND </if>
+
+				<if test="depids != null  and depids != '' " > r.DEPID in (${depids}) AND </if>
+				<if test="centerids != null  and centerids != '' " > r.CENTERID in (${centerids}) AND </if>
+			</trim>
+			order by r.sign,r.centerid,r.depid
+		</select>
+
+	<!--模板分配首页查询  k76239 2021-11-22 -->
+	<select id="queryModouAndRelList" parameterType="map"  resultMap="PPMDEPKPIDEPREL_ALL_EXT">
+		select
+		b.modelid MODELID,
+		b.commitflag COMMITFLAG,
+		a.depid DEPID,
+		a.centerid CENTERID,
+		d.LOCATION DEPNAME,
+		e.centername CENTERNAME,
+		c.name MODELNAME
+		from PPM_DEPKPI_DEP_REL a
+		<choose>
+			<when test="sign ==2">
+				left join ppm_depkpi_dep_model b on (a.centerid = b.depid and b.isdel = 0)
+			</when>
+			<otherwise>
+				left join ppm_depkpi_dep_model b on (a.depid = b.depid and b.isdel = 0)
+			</otherwise>
+		</choose>
+		left join ppm_depkpi_model c on (b.modelid = c.id and c.isdel = 0)
+		left join comm_department d on a.depid=d.depid
+		left join ppm_da_center e on a.centerid=e.id
+		<trim prefix="WHERE" suffixOverrides="AND">
+			<if test="depid != null and depid != ''" >a.DEPID = #{depid} AND </if>
+			<if test="sign != null and sign != ''" >a.SIGN = #{sign} AND </if>
+			<if test="centerid != null and centerid != ''" >a.CENTERID = #{centerid} AND</if>
+			<if test="isdel != null and isdel != ''" > a.ISDEL = #{isdel} AND </if>
+		</trim>
+		order by a.centerid,a.depid
+	</select>
+
+
+	<!--通过depid 查询集合 修改初评终评人使用  k1327 2021-11-18 -->
+	<select id="selectRelByDepidOrCenterid" parameterType="ppmDepkpiDepRel" resultMap="PPMDEPKPIDEPREL_ALL">
+		SELECT
+		<include refid="sql_flied_all" />
+		FROM PPM_DEPKPI_DEP_REL
+		<trim prefix="WHERE" suffixOverrides="AND">
+			<if test="depid != null  and depid != '' " > DEPID = #{depid} AND </if>
+			<if test="centerid != null  and centerid != '' " > CENTERID = #{centerid} AND </if>
+			<if test="sign != null  and sign != '' " > SIGN = #{sign} AND </if>
+			<if test="isdel != null " > ISDEL = #{isdel} AND </if>
+		</trim>
+	</select>
+
+
+	<!--通过depid 查询集合   k76239 2021-11-18 -->
+	<select id="getRelFirstAndScende" parameterType="ppmDepkpiDepRelInfo" resultMap="PPMDEPKPIDEPREL_ALL">
+		select a.secondcheck, a.firstcheck
+		from PPM_DEPKPI_DEP_REL a where
+		<choose>
+			<when test="sign ==2">
+				a.secondid in(select b.MARKERDEPID  FROM PPM_DEPKPI_DEP_CHECK b where b.DEPID = #{depid} and b.SIGN = #{sign})
+			</when>
+			<otherwise>
+				a.depid in(select b.MARKERDEPID  FROM PPM_DEPKPI_DEP_CHECK b where b.DEPID = #{depid} and b.SIGN = #{sign})
+			</otherwise>
+		</choose>
+	</select>
+</mapper>

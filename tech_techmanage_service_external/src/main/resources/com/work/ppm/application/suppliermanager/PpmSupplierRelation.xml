@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:ywwb905 2022-12-07 -->
+<!--  供应商考核信息表 查询脚本 -->
+<mapper namespace="com.work.ppm.application.model.suppliermanager.PpmSupplierRelation">
+	 <resultMap type="ppmSupplierRelation" id="PPMSUPPLIERRELATION_ALL">
+        <result property="id" column="ID" />
+		<result property="key" column="KEY" />
+		<result property="code" column="CODE" />
+		<result property="name" column="NAME" />
+		<result property="type" column="TYPE" />
+		<result property="score" column="SCORE" />
+		<result property="arrays" column="ARRAYS" />
+		<result property="remark" column="REMARK" />
+		<result property="displaySeq" column="DISPLAY_SEQ" />
+		<result property="spare01" column="SPARE_01" />
+		<result property="spare02" column="SPARE_02" />
+		<result property="spare03" column="SPARE_03" />
+		
+     </resultMap>
+
+     <!-- 所有字段名称 -->
+    <sql id="sql_flied_all">
+        ID,
+			KEY,
+			CODE,
+			NAME,
+			TYPE,
+			SCORE,
+			ARRAYS,
+			REMARK,
+			DISPLAY_SEQ,
+			SPARE_01,
+			SPARE_02,
+			SPARE_03
+    </sql>
+	
+	<sql id="sql_flied_simple_kh">
+        ID,
+		KEY,
+		CODE,
+		NAME,
+		TYPE,
+		SCORE,
+		DISPLAY_SEQ
+    </sql>
+	
+	<sql id="sql_flied_simple_pg">
+        ID,
+		KEY,
+		CODE,
+		NAME,
+		TYPE,
+		ARRAYS,
+		DISPLAY_SEQ
+    </sql>
+	
+    <sql id="sql_select_condition">
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="id != null  and id != '' " > ID = #{id} AND </if>
+			<if test="key != null  and key != '' " > KEY = #{key} AND </if>
+			<if test="code != null  and code != '' " > CODE = #{code} AND </if>
+			<if test="name != null  and name != '' " > NAME = #{name} AND </if>
+			<if test="type != null  and type != '' " > TYPE = #{type} AND </if>
+			<if test="score != null  and score != '' " > SCORE = #{score} AND </if>
+			<if test="arrays != null  and arrays != '' " > ARRAYS = #{arrays} AND </if>
+			<if test="remark != null  and remark != '' " > REMARK = #{remark} AND </if>
+			<if test="displaySeq != null  and displaySeq != '' " > DISPLAY_SEQ = #{displaySeq} AND </if>
+			<if test="spare01 != null  and spare01 != '' " > SPARE_01 = #{spare01} AND </if>
+			<if test="spare02 != null  and spare02 != '' " > SPARE_02 = #{spare02} AND </if>
+			<if test="spare03 != null  and spare03 != '' " > SPARE_03 = #{spare03} AND </if>
+				
+        </trim>
+    </sql>
+    <!-- 查询分页  2022-12-07 ywwb905  -->
+    <select id="queryPagerList" parameterType="map" resultMap="PPMSUPPLIERRELATION_ALL">
+        SELECT
+        <include refid="sql_flied_all" />
+        FROM PPM_SUPPLIER_RELATION
+        <include refid="sql_select_condition" />
+    </select>
+
+    <!-- 新增  2022-12-07 ywwb905  -->
+    <insert id="addPojo" parameterType="ppmSupplierRelation">
+        INSERT INTO PPM_SUPPLIER_RELATION (
+        <trim suffixOverrides=",">
+			<if test="id != null  and id != '' " > ID , </if>
+			<if test="key != null  and key != '' " > KEY , </if>
+			<if test="code != null  and code != '' " > CODE , </if>
+			<if test="name != null  and name != '' " > NAME , </if>
+			<if test="type != null  and type != '' " > TYPE , </if>
+			<if test="score != null  and score != '' " > SCORE , </if>
+			<if test="arrays != null  and arrays != '' " > ARRAYS , </if>
+			<if test="remark != null  and remark != '' " > REMARK , </if>
+			<if test="displaySeq != null  and displaySeq != '' " > DISPLAY_SEQ , </if>
+			<if test="spare01 != null  and spare01 != '' " > SPARE_01 , </if>
+			<if test="spare02 != null  and spare02 != '' " > SPARE_02 , </if>
+			<if test="spare03 != null  and spare03 != '' " > SPARE_03 , </if>
+				
+          </trim>
+        )
+        VALUES(
+        <trim suffixOverrides=",">
+			<if test="id != null  and id != '' " > #{id} , </if>
+			<if test="key != null  and key != '' " > #{key} , </if>
+			<if test="code != null  and code != '' " > #{code} , </if>
+			<if test="name != null  and name != '' " > #{name} , </if>
+			<if test="type != null  and type != '' " > #{type} , </if>
+			<if test="score != null  and score != '' " > #{score} , </if>
+			<if test="arrays != null  and arrays != '' " > #{arrays} , </if>
+			<if test="remark != null  and remark != '' " > #{remark} , </if>
+			<if test="displaySeq != null  and displaySeq != '' " > #{displaySeq} , </if>
+			<if test="spare01 != null  and spare01 != '' " > #{spare01} , </if>
+			<if test="spare02 != null  and spare02 != '' " > #{spare02} , </if>
+			<if test="spare03 != null  and spare03 != '' " > #{spare03} , </if>
+				
+        </trim>
+        )
+    </insert>
+
+    <!--通过id查询  ywwb905 2022-12-07 -->
+    <select id="queryDetail" parameterType="ppmSupplierRelation" resultMap="PPMSUPPLIERRELATION_ALL">
+        SELECT
+        <include refid="sql_flied_all" />
+        FROM PPM_SUPPLIER_RELATION  
+		<trim prefix="WHERE" suffixOverrides="AND">
+			<if test="id == null and key == null " > ID = '' AND </if>
+            <if test="id != null and id != '' " > ID = #{id} AND </if>
+			<if test="key != null and key != '' " > KEY = #{key} AND </if>
+        </trim>
+    </select>
+
+     <!--查询集合  ywwb905 2022-12-07 -->
+    <select id="getList" parameterType="ppmSupplierRelation" resultMap="PPMSUPPLIERRELATION_ALL">
+        SELECT
+        <include refid="sql_flied_all" />
+        FROM PPM_SUPPLIER_RELATION
+        <include refid="sql_select_condition" />
+    </select>
+	
+	<select id="getSimpleKhList" parameterType="ppmSupplierRelation" resultMap="PPMSUPPLIERRELATION_ALL">
+        SELECT
+        <include refid="sql_flied_simple_kh" />
+        FROM PPM_SUPPLIER_RELATION
+        <include refid="sql_select_condition" />
+    </select>
+	
+	<select id="getSimplePgList" parameterType="ppmSupplierRelation" resultMap="PPMSUPPLIERRELATION_ALL">
+        SELECT
+        <include refid="sql_flied_simple_pg" />
+        FROM PPM_SUPPLIER_RELATION
+        <include refid="sql_select_condition" />
+    </select>
+	
+    <!-- update sql -->
+    <sql id="update_pojo_sql">
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="id != null  and id != '' " > ID=#{id} , </if>
+			<if test="key != null  and key != '' " > KEY=#{key} , </if>
+			<if test="code != null  and code != '' " > CODE=#{code} , </if>
+			<if test="name != null  and name != '' " > NAME=#{name} , </if>
+			<if test="type != null  and type != '' " > TYPE=#{type} , </if>
+			<if test="score != null  and score != '' " > SCORE=#{score} , </if>
+			<if test="arrays != null  and arrays != '' " > ARRAYS=#{arrays} , </if>
+			<if test="remark != null  and remark != '' " > REMARK=#{remark} , </if>
+			<if test="displaySeq != null  and displaySeq != '' " > DISPLAY_SEQ=#{displaySeq} , </if>
+			<if test="spare01 != null  and spare01 != '' " > SPARE_01=#{spare01} , </if>
+			<if test="spare02 != null  and spare02 != '' " > SPARE_02=#{spare02} , </if>
+			<if test="spare03 != null  and spare03 != '' " > SPARE_03=#{spare03} , </if>
+			
+        </trim>
+    </sql>
+
+    <!--通过id编辑 ywwb905 2022-12-07 -->
+    <update id="updatePojo" parameterType="ppmSupplierRelation">
+        UPDATE
+        PPM_SUPPLIER_RELATION
+        <include refid="update_pojo_sql" />
+        WHERE ID=#{id}
+    </update>
+
+    <!--通过id批量删除  ywwb905 2022-12-07 -->
+    <delete id="deleteById" parameterType="ppmSupplierRelation">
+        DELETE
+        FROM
+        PPM_SUPPLIER_RELATION
+        WHERE ID = #{id}
+    </delete>
+
+</mapper>

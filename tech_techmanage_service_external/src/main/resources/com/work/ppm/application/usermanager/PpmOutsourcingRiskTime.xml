@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k6991 2020-06-30 -->
+<mapper namespace="com.work.ppm.application.model.usermanager.PpmOutsourcingRiskTime">
+	 <resultMap type="ppmOutsourcingRiskTime" id="PPMOUTSOURCINGRISKTIME_ALL">
+        <result property="jobid" column="JOBID" />
+		<result property="specialinvestigationdate" column="SPECIALINVESTIGATIONDATE" />
+		<result property="riskdate" column="RISKDATE" />
+		<result property="regid" column="REGID" />
+		<result property="regtime" column="REGTIME" />
+		<result property="remark" column="REMARK" />
+		<result property="dailyriskdate" column="DAILYRISKDATE" />
+		<result property="joindate" column="JOINDATE" />
+		
+     </resultMap>
+
+     <!-- 所有字段名称 -->
+        <sql id="sql_flied_all">
+        	JOBID,
+			SPECIALINVESTIGATIONDATE,
+			RISKDATE,
+			REGID,
+			REGTIME,
+			REMARK,
+			DAILYRISKDATE,
+			JOINDATE
+        </sql>
+    	<!-- 查询分页  2020-06-30 k6991  -->
+        <select id="queryPagerList" parameterType="map" resultMap="PPMOUTSOURCINGRISKTIME_ALL">
+        	SELECT
+            <include refid="sql_flied_all" />
+            FROM PPM_OUTSOURCING_RISK_TIME
+            <trim prefix="WHERE" suffixOverrides="AND">
+                <if test="jobid != null  and jobid != '' " > JOBID = #{jobid} AND </if>
+				<if test="specialinvestigationdate != null " > SPECIALINVESTIGATIONDATE = #{specialinvestigationdate} AND </if>
+				<if test="riskdate != null " > RISKDATE = #{riskdate} AND </if>
+				<if test="regid != null  and regid != '' " > REGID = #{regid} AND </if>
+				<if test="regtime != null " > REGTIME = #{regtime} AND </if>
+				<if test="remark != null  and remark != '' " > REMARK = #{remark} AND </if>
+				<if test="dailyriskdate != null " > DAILYRISKDATE = #{dailyriskdate} AND </if>
+				<if test="joindate != null " > JOINDATE = #{joindate} AND </if>
+				
+            </trim>
+        </select>
+
+        <!-- 新增  2020-06-30 k6991  -->
+        <insert id="addPojo" parameterType="ppmOutsourcingRiskTime">
+    		INSERT INTO PPM_OUTSOURCING_RISK_TIME (
+    		<trim suffixOverrides=",">
+    		 <if test="jobid != null  and jobid != '' " > JOBID , </if>
+				<if test="specialinvestigationdate != null " > SPECIALINVESTIGATIONDATE , </if>
+				<if test="riskdate != null " > RISKDATE , </if>
+				<if test="regid != null  and regid != '' " > REGID , </if>
+				<if test="regtime != null " > REGTIME , </if>
+				<if test="remark != null  and remark != '' " > REMARK , </if>
+				<if test="dailyriskdate != null " > DAILYRISKDATE , </if>
+				<if test="joindate != null " > JOINDATE , </if>
+				
+              </trim>
+    		)
+    		VALUES(
+    		<trim suffixOverrides=",">
+    		 <if test="jobid != null  and jobid != '' " > #{jobid} , </if>
+				<if test="specialinvestigationdate != null " > #{specialinvestigationdate} , </if>
+				<if test="riskdate != null " > #{riskdate} , </if>
+				<if test="regid != null  and regid != '' " > #{regid} , </if>
+				<if test="regtime != null " > #{regtime} , </if>
+				<if test="remark != null  and remark != '' " > #{remark} , </if>
+				<if test="dailyriskdate != null " > #{dailyriskdate} , </if>
+				<if test="joindate != null " > #{joindate} , </if>
+				
+            </trim>
+    		)
+        </insert>
+
+        <!--通过id查询  k6991 2020-06-30 -->
+        <select id="queryDetail" parameterType="map" resultMap="PPMOUTSOURCINGRISKTIME_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_OUTSOURCING_RISK_TIME  WHERE JOBID=#{jobid}
+        </select>
+
+         <!--查询集合  k6991 2020-06-30 -->
+        <select id="getList" parameterType="map" resultMap="PPMOUTSOURCINGRISKTIME_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_OUTSOURCING_RISK_TIME
+        	<trim prefix="WHERE" suffixOverrides="AND">
+        		<if test="jobid != null  and jobid != '' " > JOBID=#{jobid} AND </if>
+				<if test="specialinvestigationdate != null " > SPECIALINVESTIGATIONDATE=#{specialinvestigationdate} AND </if>
+				<if test="riskdate != null " > RISKDATE=#{riskdate} AND </if>
+				<if test="regid != null  and regid != '' " > REGID=#{regid} AND </if>
+				<if test="regtime != null " > REGTIME=#{regtime} AND </if>
+				<if test="remark != null  and remark != '' " > REMARK=#{remark} AND </if>
+				<if test="dailyriskdate != null " > DAILYRISKDATE=#{dailyriskdate} AND </if>
+				<if test="joindate != null " > JOINDATE=#{joindate} AND </if>
+				
+            </trim>
+        </select>
+        <!-- update sql -->
+        <sql id="update_pojo_sql">
+        	<trim prefix="SET" suffixOverrides=",">
+        		<if test="jobid != null  and jobid != '' " > JOBID=#{jobid} , </if>
+				<if test="specialinvestigationdate != null " > SPECIALINVESTIGATIONDATE=#{specialinvestigationdate} , </if>
+				<if test="riskdate != null " > RISKDATE=#{riskdate} , </if>
+				<if test="regid != null  and regid != '' " > REGID=#{regid} , </if>
+				<if test="regtime != null " > REGTIME=#{regtime} , </if>
+				<if test="remark != null  and remark != '' " > REMARK=#{remark} , </if>
+				<if test="dailyriskdate != null " > DAILYRISKDATE=#{dailyriskdate} , </if>
+				<if test="joindate != null " > JOINDATE=#{joindate} , </if>
+				
+            </trim>
+        </sql>
+
+        <!--通过id编辑 k6991 2020-06-30 -->
+    	<update id="updatePojo" parameterType="ppmOutsourcingRiskTime">
+        	UPDATE
+        	PPM_OUTSOURCING_RISK_TIME
+        	<include refid="update_pojo_sql" />
+        	WHERE JOBID=#{jobid}
+        </update>
+
+        <!--通过id批量删除  k6991 2020-06-30 -->
+        <delete id="deleteById" parameterType="ppmOutsourcingRiskTime">
+        	DELETE
+        	FROM
+        	PPM_OUTSOURCING_RISK_TIME
+        	WHERE JOBID = #{jobid}
+        </delete>
+
+        <!-- 获取主键id -->
+        <select id="getPrimaryKey" parameterType="map" resultType="long">
+            SELECT MAX(JOBID) FROM PPM_OUTSOURCING_RISK_TIME
+        </select>
+</mapper>

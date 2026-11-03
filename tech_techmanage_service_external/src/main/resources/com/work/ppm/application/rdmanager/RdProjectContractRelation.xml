@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.work.ppm.application.dao.rdManager.RdProjectContractRelationMapper">
+
+    <select id="queryList" resultType="com.work.ppm.application.dto.rdmanager.RdProjectContractRelationDto">
+        select t.pk_id,
+        t.rd_project_contract_id,
+        t.rd_project_id,
+        t.ratio,
+        t.create_by,
+        t.create_date,
+        t.update_by,
+        t.update_date,
+        p.project_code,
+        p.project_name,
+        c.budget_code,
+        c.budget_name from ppm.rd_project_contract_relation t left join ppm.rd_project p on p.pk_id=t.rd_project_id
+        left join ppm.rd_project_contract c on c.pk_id = t.rd_project_contract_id where 1=1
+        <if test="req.rdProjectId != null  and req.rdProjectId != '' ">and t.rd_project_id  = #{req.rdProjectId}</if>
+        <if test="req.rdProjectContractId != null  and req.rdProjectContractId != '' ">and t.rd_project_contract_id =  #{req.rdProjectContractId}</if>
+        order by nvl(t.update_date,t.create_date) desc
+    </select>
+
+</mapper>

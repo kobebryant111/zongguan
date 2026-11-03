@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k1327 2021-06-23 -->
+<mapper namespace="com.work.ppm.application.model.kpi.PpmKpiParams">
+	 <resultMap type="ppmKpiParams" id="PPMKPIPARAMS_ALL">
+        <result property="id" column="ID" />
+		<result property="ptype" column="PTYPE" />
+		<result property="dicttype" column="DICTTYPE" />
+		<result property="dictid" column="DICTID" />
+		<result property="dictname" column="DICTNAME" />
+		<result property="sort" column="SORT" />
+		<result property="prule" column="PRULE" />
+		<result property="createuserid" column="CREATEUSERID" />
+		<result property="createdate" column="CREATEDATE" />
+		<result property="remark" column="REMARK" />
+		<result property="remark1" column="REMARK1" />
+		<result property="remark2" column="REMARK2" />
+		
+     </resultMap>
+
+     <!-- 所有字段名称 -->
+        <sql id="sql_flied_all">
+        	ID,
+			PTYPE,
+			DICTTYPE,
+			DICTID,
+			DICTNAME,
+			SORT,
+			PRULE,
+			CREATEUSERID,
+			CREATEDATE,
+			REMARK,
+			REMARK1,
+			REMARK2
+        </sql>
+        <sql id="sql_select_condition">
+            <trim prefix="WHERE" suffixOverrides="AND">
+                <if test="id != null " > ID = #{id} AND </if>
+				<if test="ptype != null  and ptype != '' " > PTYPE = #{ptype} AND </if>
+				<if test="dicttype != null  and dicttype != '' " > DICTTYPE = #{dicttype} AND </if>
+				<if test="dictid != null  and dictid != '' " > DICTID = #{dictid} AND </if>
+				<if test="dictname != null  and dictname != '' " > DICTNAME = #{dictname} AND </if>
+				<if test="sort != null " > SORT = #{sort} AND </if>
+				<if test="prule != null  and prule != '' " > PRULE = #{prule} AND </if>
+				<if test="createuserid != null  and createuserid != '' " > CREATEUSERID = #{createuserid} AND </if>
+				<if test="createdate != null " > CREATEDATE = #{createdate} AND </if>
+				<if test="remark != null  and remark != '' " > REMARK = #{remark} AND </if>
+				<if test="remark1 != null  and remark1 != '' " > REMARK1 = #{remark1} AND </if>
+				<if test="remark2 != null  and remark2 != '' " > REMARK2 = #{remark2} AND </if>
+				
+            </trim>
+        </sql>
+    	<!-- 查询分页  2021-06-23 k1327  -->
+        <select id="queryPagerList" parameterType="map" resultMap="PPMKPIPARAMS_ALL">
+        	SELECT
+            <include refid="sql_flied_all" />
+            FROM PPM_KPI_PARAMS
+            <include refid="sql_select_condition" />
+        </select>
+
+        <!-- 新增  2021-06-23 k1327  -->
+        <insert id="addPojo" parameterType="ppmKpiParams">
+    		INSERT INTO PPM_KPI_PARAMS (
+    		<trim suffixOverrides=",">
+    		 <if test="id != null " > ID , </if>
+				<if test="ptype != null  and ptype != '' " > PTYPE , </if>
+				<if test="dicttype != null  and dicttype != '' " > DICTTYPE , </if>
+				<if test="dictid != null  and dictid != '' " > DICTID , </if>
+				<if test="dictname != null  and dictname != '' " > DICTNAME , </if>
+				<if test="sort != null " > SORT , </if>
+				<if test="prule != null  and prule != '' " > PRULE , </if>
+				<if test="createuserid != null  and createuserid != '' " > CREATEUSERID , </if>
+				<if test="createdate != null " > CREATEDATE , </if>
+				<if test="remark != null  and remark != '' " > REMARK , </if>
+				<if test="remark1 != null  and remark1 != '' " > REMARK1 , </if>
+				<if test="remark2 != null  and remark2 != '' " > REMARK2 , </if>
+				
+              </trim>
+    		)
+    		VALUES(
+    		<trim suffixOverrides=",">
+    		 <if test="id != null " > #{id} , </if>
+				<if test="ptype != null  and ptype != '' " > #{ptype} , </if>
+				<if test="dicttype != null  and dicttype != '' " > #{dicttype} , </if>
+				<if test="dictid != null  and dictid != '' " > #{dictid} , </if>
+				<if test="dictname != null  and dictname != '' " > #{dictname} , </if>
+				<if test="sort != null " > #{sort} , </if>
+				<if test="prule != null  and prule != '' " > #{prule} , </if>
+				<if test="createuserid != null  and createuserid != '' " > #{createuserid} , </if>
+				<if test="createdate != null " > #{createdate} , </if>
+				<if test="remark != null  and remark != '' " > #{remark} , </if>
+				<if test="remark1 != null  and remark1 != '' " > #{remark1} , </if>
+				<if test="remark2 != null  and remark2 != '' " > #{remark2} , </if>
+				
+            </trim>
+    		)
+        </insert>
+
+        <!--通过id查询  k1327 2021-06-23 -->
+        <select id="queryDetail" parameterType="ppmKpiParams" resultMap="PPMKPIPARAMS_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_KPI_PARAMS  WHERE ID=#{id}
+        </select>
+
+         <!--查询集合  k1327 2021-06-23 -->
+        <select id="getList" parameterType="ppmKpiParams" resultMap="PPMKPIPARAMS_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_KPI_PARAMS
+        	<include refid="sql_select_condition" />
+        </select>
+        <!-- update sql -->
+        <sql id="update_pojo_sql">
+        	<trim prefix="SET" suffixOverrides=",">
+        		<if test="id != null " > ID=#{id} , </if>
+				<if test="ptype != null  and ptype != '' " > PTYPE=#{ptype} , </if>
+				<if test="dicttype != null  and dicttype != '' " > DICTTYPE=#{dicttype} , </if>
+				<if test="dictid != null  and dictid != '' " > DICTID=#{dictid} , </if>
+				<if test="dictname != null  and dictname != '' " > DICTNAME=#{dictname} , </if>
+				<if test="sort != null " > SORT=#{sort} , </if>
+				<if test="prule != null  and prule != '' " > PRULE=#{prule} , </if>
+				<if test="createuserid != null  and createuserid != '' " > CREATEUSERID=#{createuserid} , </if>
+				<if test="createdate != null " > CREATEDATE=#{createdate} , </if>
+				<if test="remark != null  and remark != '' " > REMARK=#{remark} , </if>
+				<if test="remark1 != null  and remark1 != '' " > REMARK1=#{remark1} , </if>
+				<if test="remark2 != null  and remark2 != '' " > REMARK2=#{remark2} , </if>
+				
+            </trim>
+        </sql>
+
+        <!--通过id编辑 k1327 2021-06-23 -->
+    	<update id="updatePojo" parameterType="ppmKpiParams">
+        	UPDATE
+        	PPM_KPI_PARAMS
+        	<include refid="update_pojo_sql" />
+        	WHERE ID=#{id}
+        </update>
+
+        <!--通过id批量删除  k1327 2021-06-23 -->
+        <delete id="deleteById" parameterType="ppmKpiParams">
+        	DELETE
+        	FROM
+        	PPM_KPI_PARAMS
+        	WHERE ID = #{id}
+        </delete>
+
+</mapper>

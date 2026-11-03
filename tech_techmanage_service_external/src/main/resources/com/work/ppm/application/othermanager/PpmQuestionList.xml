@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k6991 2020-04-09 -->
+<mapper namespace="com.work.ppm.application.model.othermanager.PpmQuestionList">
+	 <resultMap type="ppmQuestionList" id="PPMQUESTIONLIST_ALL">
+        <result property="id" column="ID" />
+		<result property="questionno" column="QUESTIONNO" />
+		<result property="content" column="CONTENT" />
+		<result property="description" column="DESCRIPTION" />
+		<result property="questiontype" column="QUESTIONTYPE" />
+		<result property="isdel" column="ISDEL" />
+		<result property="createtime" column="CREATETIME" />
+		<result property="creator" column="CREATOR" />
+		<result property="lastmodtime" column="LASTMODTIME" />
+		<result property="lastmoduser" column="LASTMODUSER" />
+		<result property="answer" column="ANSWER" />
+		<result property="answerexplain" column="ANSWEREXPLAIN" />
+		<result property="annotation" column="ANNOTATION" />
+		
+     </resultMap>
+
+     <!-- 所有字段名称 -->
+        <sql id="sql_flied_all">
+        	ID,
+			QUESTIONNO,
+			CONTENT,
+			DESCRIPTION,
+			QUESTIONTYPE,
+			ISDEL,
+			CREATETIME,
+			CREATOR,
+			LASTMODTIME,
+			LASTMODUSER,
+			ANSWER,
+			ANSWEREXPLAIN,
+			ANNOTATION
+        </sql>
+		<resultMap id="QUERYPAGERLIST_MAP" type="ppmQuestionListInfo" extends="PPMQUESTIONLIST_ALL" >
+			<result column="OPTIONS" property="options" />
+		</resultMap>
+    	<!-- 查询分页  2020-04-09 k6991  -->
+        <select id="queryPagerList" parameterType="map" resultMap="QUERYPAGERLIST_MAP">
+			select ql.id,ql.isdel,ql.questionno,
+			ql.content,
+			(select e.dictname from eos_dict_entry e where instr( e.dicttypeid, 'KJXX') > 0 and ql.questiontype=e.dictid and rownum=1) questiontype,
+			(select replace(wmsys.wm_concat(m.optioncode || ':' || m.optioncontent),',','|') from ppm_question_option m where m.questionno = ql.questionno and m.isdel=0 ) options,
+			ql.answer,
+			ql.answerexplain,
+			ql.annotation
+			from ppm_question_list ql
+            <trim prefix="WHERE" suffixOverrides="AND">
+                <if test="id != null " > ID = #{id} AND </if>
+				<if test="questionno != null  and questionno != '' " > QUESTIONNO = #{questionno} AND </if>
+				<if test="content != null  and content != '' " > INSTR(CONTENT , #{content}) > 0 AND </if>
+				<if test="description != null  and description != '' " > DESCRIPTION = #{description} AND </if>
+				<if test="questiontype != null  and questiontype != '' " > QUESTIONTYPE = #{questiontype} AND </if>
+				<if test="isdel != null " > ql.isdel = '0' or ql.isdel is null  AND </if>
+				<if test="createtime != null " > CREATETIME = #{createtime} AND </if>
+				<if test="creator != null  and creator != '' " > CREATOR = #{creator} AND </if>
+				<if test="lastmodtime != null " > LASTMODTIME = #{lastmodtime} AND </if>
+				<if test="lastmoduser != null  and lastmoduser != '' " > LASTMODUSER = #{lastmoduser} AND </if>
+				<if test="answer != null  and answer != '' " > ANSWER = #{answer} AND </if>
+				<if test="answerexplain != null  and answerexplain != '' " > ANSWEREXPLAIN = #{answerexplain} AND </if>
+				<if test="annotation != null  and annotation != '' " > ANNOTATION = #{annotation} AND </if>
+            </trim>
+			group by ql.id,
+			ql.questionno,
+			ql.content,
+			ql.description,
+			ql.questiontype,
+			ql.answer,
+			ql.answerexplain,
+			ql.annotation,
+			ql.isdel
+			order by ql.questionno desc
+        </select>
+
+        <!-- 新增  2020-04-09 k6991  -->
+        <insert id="addPojo" parameterType="ppmQuestionList">
+    		INSERT INTO PPM_QUESTION_LIST (
+    		<trim suffixOverrides=",">
+    		 <if test="id != null " > ID , </if>
+				<if test="questionno != null  and questionno != '' " > QUESTIONNO , </if>
+				<if test="content != null  and content != '' " > CONTENT , </if>
+				<if test="description != null  and description != '' " > DESCRIPTION , </if>
+				<if test="questiontype != null  and questiontype != '' " > QUESTIONTYPE , </if>
+				<if test="isdel != null " > ISDEL , </if>
+				<if test="createtime != null " > CREATETIME , </if>
+				<if test="creator != null  and creator != '' " > CREATOR , </if>
+				<if test="lastmodtime != null " > LASTMODTIME , </if>
+				<if test="lastmoduser != null  and lastmoduser != '' " > LASTMODUSER , </if>
+				<if test="answer != null  and answer != '' " > ANSWER , </if>
+				<if test="answerexplain != null  and answerexplain != '' " > ANSWEREXPLAIN , </if>
+				<if test="annotation != null  and annotation != '' " > ANNOTATION , </if>
+				
+              </trim>
+    		)
+    		VALUES(
+    		<trim suffixOverrides=",">
+    		 <if test="id != null " > #{id} , </if>
+				<if test="questionno != null  and questionno != '' " > #{questionno} , </if>
+				<if test="content != null  and content != '' " > #{content} , </if>
+				<if test="description != null  and description != '' " > #{description} , </if>
+				<if test="questiontype != null  and questiontype != '' " > #{questiontype} , </if>
+				<if test="isdel != null " > #{isdel} , </if>
+				<if test="createtime != null " > #{createtime} , </if>
+				<if test="creator != null  and creator != '' " > #{creator} , </if>
+				<if test="lastmodtime != null " > #{lastmodtime} , </if>
+				<if test="lastmoduser != null  and lastmoduser != '' " > #{lastmoduser} , </if>
+				<if test="answer != null  and answer != '' " > #{answer} , </if>
+				<if test="answerexplain != null  and answerexplain != '' " > #{answerexplain} , </if>
+				<if test="annotation != null  and annotation != '' " > #{annotation} , </if>
+            </trim>
+    		)
+        </insert>
+
+	<resultMap id="QUERYDETAIL_MAP" type="ppmQuestionListInfo" extends="PPMQUESTIONLIST_ALL">
+		<collection property="result"   column="{ questionno=questionno }" select="com.work.ppm.application.model.othermanager.PpmQuestionOption.getList" />
+	</resultMap>
+        <!--通过id查询  k6991 2020-04-09 -->
+        <select id="queryDetail" parameterType="map" resultMap="QUERYDETAIL_MAP">
+        	SELECT
+			ID ,
+			QUESTIONNO,
+			CONTENT,
+			DESCRIPTION,
+			QUESTIONTYPE,
+			ISDEL ,
+			CREATETIME,
+			CREATOR,
+			LASTMODTIME,
+			LASTMODUSER,
+			ANSWER,
+			ANSWEREXPLAIN,
+			ANNOTATION
+        	FROM PPM_QUESTION_LIST
+			WHERE QUESTIONNO=#{questionno} AND ISDEL=#{isdel}
+        </select>
+
+         <!--查询集合  k6991 2020-04-09 -->
+        <select id="getList" parameterType="map" resultMap="PPMQUESTIONLIST_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_QUESTION_LIST
+        	<trim prefix="WHERE" suffixOverrides="AND">
+        		<if test="id != null " > ID=#{id} AND </if>
+				<if test="questionno != null  and questionno != '' " > QUESTIONNO=#{questionno} AND </if>
+				<if test="content != null  and content != '' " > CONTENT=#{content} AND </if>
+				<if test="description != null  and description != '' " > DESCRIPTION=#{description} AND </if>
+				<if test="questiontype != null  and questiontype != '' " > QUESTIONTYPE=#{questiontype} AND </if>
+				<if test="isdel != null " > ISDEL=#{isdel} AND </if>
+				<if test="createtime != null " > CREATETIME=#{createtime} AND </if>
+				<if test="creator != null  and creator != '' " > CREATOR=#{creator} AND </if>
+				<if test="lastmodtime != null " > LASTMODTIME=#{lastmodtime} AND </if>
+				<if test="lastmoduser != null  and lastmoduser != '' " > LASTMODUSER=#{lastmoduser} AND </if>
+				<if test="answer != null  and answer != '' " > ANSWER=#{answer} AND </if>
+				<if test="answerexplain != null  and answerexplain != '' " > ANSWEREXPLAIN=#{answerexplain} AND </if>
+				<if test="annotation != null  and annotation != '' " > ANNOTATION=#{annotation} AND </if>
+				
+            </trim>
+        </select>
+        <!-- update sql -->
+        <sql id="update_pojo_sql">
+        	<trim prefix="SET" suffixOverrides=",">
+        		<if test="id != null " > ID=#{id} , </if>
+				<if test="questionno != null  and questionno != '' " > QUESTIONNO=#{questionno} , </if>
+				<if test="content != null  and content != '' " > CONTENT=#{content} , </if>
+				<if test="description != null  and description != '' " > DESCRIPTION=#{description} , </if>
+				<if test="questiontype != null  and questiontype != '' " > QUESTIONTYPE=#{questiontype} , </if>
+				<if test="isdel != null " > ISDEL=#{isdel} , </if>
+				<if test="createtime != null " > CREATETIME=#{createtime} , </if>
+				<if test="creator != null  and creator != '' " > CREATOR=#{creator} , </if>
+				<if test="lastmodtime != null " > LASTMODTIME=#{lastmodtime} , </if>
+				<if test="lastmoduser != null  and lastmoduser != '' " > LASTMODUSER=#{lastmoduser} , </if>
+				<if test="answer != null  and answer != '' " > ANSWER=#{answer} , </if>
+				<if test="answerexplain != null  and answerexplain != '' " > ANSWEREXPLAIN=#{answerexplain} , </if>
+				<if test="annotation != null  and annotation != '' " > ANNOTATION=#{annotation} , </if>
+				
+            </trim>
+        </sql>
+
+        <!--通过id编辑 k6991 2020-04-09 -->
+    	<update id="updatePojo" parameterType="ppmQuestionList">
+        	UPDATE
+        	PPM_QUESTION_LIST
+        	<include refid="update_pojo_sql" />
+        	WHERE
+			QUESTIONNO=#{questionno}
+			<if test="id != null " > AND ID=#{id}  </if>
+        </update>
+
+        <!-- 获取主键id -->
+        <select id="getPrimaryKey" parameterType="map" resultType="long">
+            SELECT MAX(ID) FROM PPM_QUESTION_LIST
+        </select>
+		<!-- 排序后第一条数据 k6991 2020-04-17-->
+		<select id="descTopOne" parameterType="map" resultType="ppmQuestionList">
+			select questionno as questionno  from (select questionno from ppm_question_list order by id desc) where rownum=1
+		</select>
+
+	<!--批量更新 k6991 2020-04-28 -->
+	<update id="batchDeletes" parameterType="map">
+		UPDATE
+		PPM_QUESTION_LIST
+		SET
+		ISDEL=#{isdel}
+		WHERE
+		QUESTIONNO in (${questionno})
+	</update>
+</mapper>

@@ -1,0 +1,70 @@
+/*
+@Author: amberself
+@Date: 2020-03-31 16:45:52
+ * @LastEditors: amberself
+ * @LastEditTime: 2020-04-18 14:16:10
+@Description: 重置浏览器样式
+*/
+
+html, body, div, span, h1, h2, h3, h4, h5, h6, p,
+a, code, img, dl, dt, dd, ol, ul, li,fieldset,
+footer, header, nav, section, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  font-weight: normal;
+  vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+  display: block;
+}
+ol, ul, li {
+  list-style: none;
+}
+
+blockquote, q {
+  quotes: none;
+}
+
+blockquote:before, blockquote:after,
+q:before, q:afte {
+  content: '';
+  content: none;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+  
+ /* custom */
+a {
+  text-decoration: none;
+  -webkit-backface-visibility: hidden;
+}
+
+html, body {
+  font-family: "Microsoft YaHei", "Arial", "黑体", "宋体", "微软雅黑", sans-serif;
+}
+  
+ /*清除浮动*/
+.clearfix:before,
+.clearfix:after {
+  content: " ";
+  display: inline-block;
+  height: 0;
+  clear: both;
+  visibility: hidden;
+ }
+.clearfix {
+  *zoom: 1;
+ }
+  
+ /*隐藏*/
+.hide {
+  display: none!important;
+}

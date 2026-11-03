@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tansun.wf.platform.mapper.WfUserOrgRoleMapper">
+    
+    <select id="findOrgTaskCount" parameterType="map"  resultType="hashMap">
+       SELECT
+	     count( * )  "taskTotal",
+	     td.ASSIGNEE_ORG_CODE  "orgCode",
+	     td.PROCESS_CLASSIFY_CODE "classifyCode"
+     FROM
+	   WF_TASK_EXPAND_DATA td 
+	  where  td.ASSIGNEE_ORG_CODE  is not  null and  td.TENANT_ID=#{tenantId}	
+     GROUP BY
+	   td.ASSIGNEE_ORG_CODE,td.PROCESS_CLASSIFY_CODE
+    
+    </select>
+</mapper>

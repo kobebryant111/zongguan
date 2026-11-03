@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+    <settings>
+        <setting name="lazyLoadingEnabled" value="false"/>
+    </settings>
+    <!--
+    <typeAliases>
+        <typeAlias type="org.camunda.bpm.engine.impl.persistence.ByteArrayRefTypeHandler" alias="ByteArrayRefTypeHandler"/>
+    </typeAliases>
+    <typeHandlers>
+        <typeHandler handler="ByteArrayRefTypeHandler"
+                     javaType="org.camunda.bpm.engine.impl.persistence.entity.ByteArrayRef"
+                     jdbcType="VARCHAR"/>
+    </typeHandlers>
+      -->
+<!--    <plugins>-->
+<!--        <plugin interceptor="com.tansun.wf.activiti.service.SliceInterceptor330" />-->
+<!--    </plugins>-->
+   <mappers>
+    <mapper resource="org/camunda/bpm/engine/impl/mapping/entity/Commons.xml" />
+    
+    <mapper resource="org/camunda/bpm/engine/impl/mapping/entity/Attachment.xml" />
+    <mapper resource="org/camunda/bpm/engine/impl/mapping/entity/Comment.xml" />
+
+    <mapper resource="org/camunda/bpm/engine/impl/mapping/entity/Deployment.xml" />
+
+    <mapper resource="org/camunda/bpm/engine/impl/mapping/entity/Execution.xml" />
+    <mapper resource="org/camunda/bpm/engine/impl/mapping/entity/Group.xml" />
+    <mapper resource="org/camunda/bpm/engine/impl/mapping/entity/HistoricActivityInstance.xml" />
+    <mapper resource="org/camunda/bpm/engine/impl/mapping/entity/HistoricCaseActivityInstance.xml" />
+    <mapper resource="org/camunda/bpm/engine/impl/mapping/entity/HistoricDetail.xml" />
+    <mapper resource="org/camunda/bpm/engine/impl/mapping/entity/HistoricIncident.xml" />
+    <mapper resource="org/camunda/bpm/engine/impl/mapping/entity/HistoricIdentityLinkLog.xml" />
+
+    <!--优化查询子流程SQL-->
+    <mapper resource="extendMapper/HistoricProcessInstance.xml" />
+    <mapper resource="org/camunda/bpm/engine/impl/mapping/entity/HistoricCaseInstance.xml" />
+    <mapper resource="org/camunda/bpm/engine/impl/mapping/entity/HistoricStatistics.xml" />
+    <mapper resource="org/camunda/bpm/engine/impl/mapping/entity/HistoricVariableInstance.xml" />
+<!--    <mapper resource="org/camunda/bpm/engine/impl/mapping/entity/HistoricTaskInstance.xml" />-->
+    <mapper resource="org/camunda/bpm/engine/impl/mapping/entity/HistoricTaskInstanceReport.xml" />
+    <mapper resource="org/camunda/bpm/engine/impl/mapping/entity/HistoricJobLog.xml" />
+    <mapper resource="org/camunda/bpm/engine/impl/mapping/entity/HistoricExternalTaskLog.xml" />
+    <mapper resource="org/camunda/bpm/engine/impl/mapping/entity/UserOperationLogEntry.xml" />
+    <mapper resource="org/camunda/bpm/engine/impl/mapping/entity/IdentityInfo.xml" />
+    <mapper resource="org/camunda/bpm/engine/impl/mapping/entity/IdentityLink.xml" />
+    <mapper resource="org/camunda/bpm/engine/impl/mapping/entity/Job.xml" />
+    <mapper resource="org/camunda/bpm/engine/impl/mapping/entity/JobDefinition.xml" />
+    <mapper resource="org/camunda/bpm/engine/impl/mapping/entity/Incident.xml" />
+    <mapper resource="org/camunda/bpm/engine/impl/mapping/entity/Membership.xml" />
+
+<!--    <mapper resource="org/camunda/bpm/engine/impl/mapping/entity/ProcessDefinition.xml" />-->
+
+    <mapper resource="org/camunda/bpm/engine/impl/mapping/entity/Property.xml" />
+    <mapper resource="org/camunda/bpm/engine/impl/mapping/entity/SchemaLogEntry.xml" />
+    <mapper resource="org/camunda/bpm/engine/impl/mapping/entity/Resource.xml" />
+    <mapper resource="org/camunda/bpm/engine/impl/mapping/entity/TableData.xml" />
+    <mapper resource="org/camunda/bpm/engine/impl/mapping/entity/Task.xml" />
+    <mapper resource="org/camunda/bpm/engine/impl/mapping/entity/User.xml" />
+    <mapper resource="org/camunda/bpm/engine/impl/mapping/entity/VariableInstance.xml" />
+    <mapper resource="org/camunda/bpm/engine/impl/mapping/entity/EventSubscription.xml" />
+    <mapper resource="org/camunda/bpm/engine/impl/mapping/entity/Statistics.xml" />
+    <mapper resource="org/camunda/bpm/engine/impl/mapping/entity/Authorization.xml" />
+    <mapper resource="org/camunda/bpm/engine/impl/mapping/entity/Filter.xml" />
+    <mapper resource="org/camunda/bpm/engine/impl/mapping/entity/Metrics.xml" />
+    <mapper resource="org/camunda/bpm/engine/impl/mapping/entity/ExternalTask.xml" />
+    <mapper resource="org/camunda/bpm/engine/impl/mapping/entity/Report.xml" />
+    <mapper resource="org/camunda/bpm/engine/impl/mapping/entity/Batch.xml" />
+    <mapper resource="org/camunda/bpm/engine/impl/mapping/entity/HistoricBatch.xml" />
+    <mapper resource="org/camunda/bpm/engine/impl/mapping/entity/Tenant.xml" />
+    <mapper resource="org/camunda/bpm/engine/impl/mapping/entity/TenantMembership.xml" />
+    
+    <!-- CMMN -->
+
+    <mapper resource="org/camunda/bpm/engine/impl/mapping/entity/CaseDefinition.xml" />
+    <mapper resource="org/camunda/bpm/engine/impl/mapping/entity/CaseExecution.xml" />
+    <mapper resource="org/camunda/bpm/engine/impl/mapping/entity/CaseSentryPart.xml" />
+
+    <!-- DMN -->
+
+    <mapper resource="org/camunda/bpm/engine/impl/mapping/entity/DecisionDefinition.xml" />
+    <mapper resource="org/camunda/bpm/engine/impl/mapping/entity/HistoricDecisionInstance.xml" />
+    <mapper resource="org/camunda/bpm/engine/impl/mapping/entity/HistoricDecisionInputInstance.xml" />
+    <mapper resource="org/camunda/bpm/engine/impl/mapping/entity/HistoricDecisionOutputInstance.xml" />
+    <mapper resource="org/camunda/bpm/engine/impl/mapping/entity/DecisionRequirementsDefinition.xml" />
+    <!--优化camunda源码中distinct导致查询效率问题-->
+    <mapper resource="extendMapper/HistoricTaskInstance.xml"/>
+    <!--增加根据多个分类查询流程图的功能-->
+    <mapper resource="extendMapper/ProcessDefinition.xml"/>
+    <mapper resource="mappings/com/tansun/wf/activiti/mapper/WfTaskExpandDataMapper.xml"/>
+
+    
+    <mapper resource="mappings/com/tansun/wf/activiti/mapper/ActHiTaskinstMapper.xml" />
+    <mapper resource="mappings/com/tansun/wf/activiti/mapper/ActRuTaskMapper.xml" />
+    <mapper resource="mappings/com/tansun/wf/activiti/mapper/WfProcessConfigMapper.xml" />
+    <mapper resource="mappings/com/tansun/wf/activiti/mapper/WfClassifyMapper.xml" />
+    <mapper resource="mappings/com/tansun/wf/activiti/mapper/WfTaskExpandPlanMapper.xml" />
+    <mapper resource="mappings/com/tansun/wf/activiti/mapper/WfTaskExpandDataMapper.xml" />
+    <mapper resource="mappings/com/tansun/wf/activiti/mapper/WfHiTaskExpandDataMapper.xml" />
+    <mapper resource="mappings/com/tansun/wf/activiti/mapper/WfClassifyPendMapper.xml" />
+    <mapper resource="mappings/com/tansun/wf/activiti/mapper/WfClassifyCompletedMapper.xml" />
+    <mapper resource="mappings/com/tansun/wf/activiti/mapper/WfLeaveTransferMapper.xml" />
+    <mapper resource="mappings/com/tansun/wf/activiti/mapper/WfTimerConfigMapper.xml" />
+    <mapper resource="mappings/com/tansun/wf/activiti/mapper/WfHiCarbonCopyMapper.xml" />
+    <mapper resource="mappings/com/tansun/wf/activiti/mapper/WfIdempotentMapper.xml" />
+    <mapper resource="mappings/com/tansun/wf/activiti/mapper/WfHiTaskPoolExecuteDataMapper.xml" />
+    <mapper resource="mappings/com/tansun/wf/activiti/mapper/MyIdentityLinkEntityMapper.xml" />
+    <mapper resource="mappings/com/tansun/wf/activiti/mapper/HiIdentityLinkMapper.xml" />
+    <mapper resource="mappings/com/tansun/wf/activiti/mapper/WfTenantMapper.xml" />
+    <mapper resource="mappings/com/tansun/wf/activiti/mapper/WfHistoricProcessInstanceMapper.xml" />
+    <mapper resource="mappings/com/tansun/wf/activiti/mapper/WfTaskCountsMapper.xml" />
+    <mapper resource="mappings/com/tansun/wf/activiti/mapper/WfHiTaskCountsMapper.xml" />
+    
+
+
+   </mappers>
+</configuration>
+

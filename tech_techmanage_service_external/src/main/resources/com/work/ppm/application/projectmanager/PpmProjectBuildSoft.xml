@@ -1,0 +1,786 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k6991 2020-08-05 -->
+<mapper namespace="com.work.ppm.application.model.projectmanager.PpmProjectBuildSoft">
+    <resultMap type="ppmProjectBuildSoft" id="PPMPROJECTBUILDSOFT_ALL">
+        <result property="issgyb" column="ISSGYB"/>
+        <result property="buildway" column="BUILDWAY"/>
+        <result property="priority" column="PRIORITY"/>
+        <result property="emerdegree" column="EMERDEGREE"/>
+        <result property="domain" column="DOMAIN"/>
+        <result property="isnew" column="ISNEW"/>
+        <result property="isarchchange" column="ISARCHCHANGE"/>
+        <result property="busiworkload" column="BUSIWORKLOAD"/>
+        <result property="outworkload" column="OUTWORKLOAD"/>
+        <result property="workload" column="WORKLOAD"/>
+        <result property="tworkload" column="TWORKLOAD"/>
+        <result property="manauserid" column="MANAUSERID"/>
+        <result property="busiuserid" column="BUSIUSERID"/>
+        <result property="testuserid" column="TESTUSERID"/>
+        <result property="docname" column="DOCNAME"/>
+        <result property="svnpath" column="SVNPATH"/>
+        <result property="svnname" column="SVNNAME"/>
+        <result property="qcname" column="QCNAME"/>
+        <result property="qcpath" column="QCPATH"/>
+        <result property="background" column="BACKGROUND"/>
+        <result property="inittarget" column="INITTARGET"/>
+        <result property="users" column="USERS"/>
+        <result property="hypothesis" column="HYPOTHESIS"/>
+        <result property="targetplan" column="TARGETPLAN"/>
+        <result property="costplan" column="COSTPLAN"/>
+        <result property="qualityplan" column="QUALITYPLAN"/>
+        <result property="personchange" column="PERSONCHANGE"/>
+        <result property="lifecycle" column="LIFECYCLE"/>
+        <result property="acceptance" column="ACCEPTANCE"/>
+        <result property="disclaimer" column="DISCLAIMER"/>
+        <result property="instanceid" column="INSTANCEID"/>
+        <result property="flowid" column="FLOWID"/>
+        <result property="applyno" column="APPLYNO"/>
+        <result property="demandno" column="DEMANDNO"/>
+        <result property="builddate" column="BUILDDATE"/>
+        <result property="startdate" column="STARTDATE"/>
+        <result property="status" column="STATUS"/>
+        <result property="isdelay" column="ISDELAY"/>
+        <result property="expectdate" column="EXPECTDATE"/>
+        <result property="actualdate" column="ACTUALDATE"/>
+        <result property="closedate" column="CLOSEDATE"/>
+        <result property="isdel" column="ISDEL"/>
+        <result property="createtime" column="CREATETIME"/>
+        <result property="creators" column="CREATORS"/>
+        <result property="lastmodtime" column="LASTMODTIME"/>
+        <result property="lastmoduser" column="LASTMODUSER"/>
+        <result property="isalone" column="ISALONE"/>
+        <result property="busiunit" column="BUSIUNIT"/>
+        <result property="outunit" column="OUTUNIT"/>
+        <result property="tecunit" column="TECUNIT"/>
+        <result property="sumunit" column="SUMUNIT"/>
+        <result property="busibudget" column="BUSIBUDGET"/>
+        <result property="tecbudget" column="TECBUDGET"/>
+        <result property="otherbudget" column="OTHERBUDGET"/>
+        <result property="researchno" column="RESEARCHNO"/>
+        <result property="researchstatus" column="RESEARCHSTATUS"/>
+        <result property="ispresident" column="ISPRESIDENT"/>
+        <result property="istecpresident" column="ISTECPRESIDENT"/>
+        <result property="tecaudit" column="TECAUDIT"/>
+        <result property="tecaudittext" column="TECAUDITTEXT"/>
+        <result property="exceptstartdate" column="EXCEPTSTARTDATE"/>
+        <result property="otherbudgetdesc" column="OTHERBUDGETDESC"/>
+        <result property="iscoordinated" column="ISCOORDINATED"/>
+        <result property="exceptclosedate" column="EXCEPTCLOSEDATE"/>
+        <result property="progress" column="PROGRESS"/>
+        <result property="exceptonlinedate" column="EXCEPTONLINEDATE"/>
+        <result property="orgarea" column="ORGAREA"/>
+        <result property="zyld" column="ZYLD"/>
+        <result property="ists" column="ISTS"/>
+        <result property="sumgnd" column="SUMGND"/>
+        <result property="stoptime" column="STOPTIME"/>
+        <result property="initTworkload" column="INIT_TWORKLOAD"/>
+        <result property="initProjectscale" column="INIT_PROJECTSCALE"/>
+        <result property="iseffectjkpt" column="ISEFFECTJKPT"/>
+        <result property="isfgn" column="ISFGN"/>
+        <result property="researchuserid" column="RESEARCHUSERID"/>
+        <result property="highriskpro" column="HIGHRISKPRO"/>
+        <result property="busPrin" column="BUS_PRIN"/>
+        <result property="testtotalworkload" column="TESTTOTALWORKLOAD"/>
+        <result property="testtotalworkloadunit" column="TESTTOTALWORKLOADUNIT"/>
+        <result property="testtecbudget" column="TESTTECBUDGET"/>
+        <result property="ishjtj" column="ISHJTJ"/>
+        <result property="majorprohgps" column="MAJORPROHGPS"/>
+        <result property="wyType" column="WY_TYPE"/>
+        <result property="sjType" column="SJ_TYPE"/>
+        <result property="id" column="ID"/>
+        <result property="projectno" column="PROJECTNO"/>
+        <result property="projectname" column="PROJECTNAME"/>
+        <result property="projecttype" column="PROJECTTYPE"/>
+        <result property="cause" column="CAUSE"/>
+        <result property="sysno" column="SYSNO"/>
+        <result property="purchasebal" column="PURCHASEBAL"/>
+        <result property="tbudget" column="TBUDGET"/>
+        <result property="deptno" column="DEPTNO"/>
+        <result property="busideptno" column="BUSIDEPTNO"/>
+        <result property="projectscale" column="PROJECTSCALE"/>
+        <result property="isroam" column="ISROAM"/>
+        <result property="proattrbutes" column="PROATTRBUTES"/>
+    </resultMap>
+
+    <!-- 所有字段名称 -->
+    <sql id="sql_flied_all">
+        ISSGYB,
+        BUILDWAY,
+        PRIORITY,
+        EMERDEGREE,
+        DOMAIN,
+        ISNEW,
+        ISARCHCHANGE,
+        BUSIWORKLOAD,
+        OUTWORKLOAD,
+        WORKLOAD,
+        TWORKLOAD,
+        MANAUSERID,
+        BUSIUSERID,
+        TESTUSERID,
+        DOCNAME,
+        SVNPATH,
+        SVNNAME,
+        QCNAME,
+        QCPATH,
+        BACKGROUND,
+        INITTARGET,
+        USERS,
+        HYPOTHESIS,
+        TARGETPLAN,
+        COSTPLAN,
+        QUALITYPLAN,
+        PERSONCHANGE,
+        LIFECYCLE,
+        ACCEPTANCE,
+        DISCLAIMER,
+        INSTANCEID,
+        FLOWID,
+        APPLYNO,
+        DEMANDNO,
+        BUILDDATE,
+        STARTDATE,
+        STATUS,
+        ISDELAY,
+        EXPECTDATE,
+        ACTUALDATE,
+        CLOSEDATE,
+        ISDEL,
+        CREATETIME,
+        CREATORS,
+        LASTMODTIME,
+        LASTMODUSER,
+        ISALONE,
+        BUSIUNIT,
+        OUTUNIT,
+        TECUNIT,
+        SUMUNIT,
+        BUSIBUDGET,
+        TECBUDGET,
+        OTHERBUDGET,
+        RESEARCHNO,
+        RESEARCHSTATUS,
+        ISPRESIDENT,
+        ISTECPRESIDENT,
+        TECAUDIT,
+        TECAUDITTEXT,
+        EXCEPTSTARTDATE,
+        OTHERBUDGETDESC,
+        ISCOORDINATED,
+        EXCEPTCLOSEDATE,
+        PROGRESS,
+        EXCEPTONLINEDATE,
+        ORGAREA,
+        ZYLD,
+        ISTS,
+        SUMGND,
+        STOPTIME,
+        INIT_TWORKLOAD,
+        INIT_PROJECTSCALE,
+        ISEFFECTJKPT,
+        ISFGN,
+        RESEARCHUSERID,
+        HIGHRISKPRO,
+        BUS_PRIN,
+        TESTTOTALWORKLOAD,
+        TESTTOTALWORKLOADUNIT,
+        TESTTECBUDGET,
+        ISHJTJ,
+        MAJORPROHGPS,
+        WY_TYPE,
+        SJ_TYPE,
+        ID,
+        PROJECTNO,
+        PROJECTNAME,
+        PROJECTTYPE,
+        CAUSE,
+        SYSNO,
+        PURCHASEBAL,
+        TBUDGET,
+        DEPTNO,
+        BUSIDEPTNO,
+        PROJECTSCALE,
+        ISROAM,
+        PROATTRBUTES
+    </sql>
+    <sql id="sql_select_condition">
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="issgyb != null  and issgyb != '' ">ISSGYB = #{issgyb} AND</if>
+            <if test="buildway != null  and buildway != '' ">BUILDWAY = #{buildway} AND</if>
+            <if test="priority != null  and priority != '' ">PRIORITY = #{priority} AND</if>
+            <if test="emerdegree != null  and emerdegree != '' ">EMERDEGREE = #{emerdegree} AND</if>
+            <if test="domain != null  and domain != '' ">DOMAIN = #{domain} AND</if>
+            <if test="isnew != null  and isnew != '' ">ISNEW = #{isnew} AND</if>
+            <if test="isarchchange != null  and isarchchange != '' ">ISARCHCHANGE = #{isarchchange} AND</if>
+            <if test="busiworkload != null ">BUSIWORKLOAD = #{busiworkload} AND</if>
+            <if test="outworkload != null ">OUTWORKLOAD = #{outworkload} AND</if>
+            <if test="workload != null ">WORKLOAD = #{workload} AND</if>
+            <if test="tworkload != null ">TWORKLOAD = #{tworkload} AND</if>
+            <if test="manauserid != null  and manauserid != '' ">MANAUSERID = #{manauserid} AND</if>
+            <if test="busiuserid != null  and busiuserid != '' ">BUSIUSERID = #{busiuserid} AND</if>
+            <if test="testuserid != null  and testuserid != '' ">TESTUSERID = #{testuserid} AND</if>
+            <if test="docname != null  and docname != '' ">DOCNAME = #{docname} AND</if>
+            <if test="svnpath != null  and svnpath != '' ">SVNPATH = #{svnpath} AND</if>
+            <if test="svnname != null  and svnname != '' ">SVNNAME = #{svnname} AND</if>
+            <if test="qcname != null  and qcname != '' ">QCNAME = #{qcname} AND</if>
+            <if test="qcpath != null  and qcpath != '' ">QCPATH = #{qcpath} AND</if>
+            <if test="background != null  and background != '' ">BACKGROUND = #{background} AND</if>
+            <if test="inittarget != null  and inittarget != '' ">INITTARGET = #{inittarget} AND</if>
+            <if test="users != null  and users != '' ">USERS = #{users} AND</if>
+            <if test="hypothesis != null  and hypothesis != '' ">HYPOTHESIS = #{hypothesis} AND</if>
+            <if test="targetplan != null  and targetplan != '' ">TARGETPLAN = #{targetplan} AND</if>
+            <if test="costplan != null  and costplan != '' ">COSTPLAN = #{costplan} AND</if>
+            <if test="qualityplan != null  and qualityplan != '' ">QUALITYPLAN = #{qualityplan} AND</if>
+            <if test="personchange != null  and personchange != '' ">PERSONCHANGE = #{personchange} AND</if>
+            <if test="lifecycle != null  and lifecycle != '' ">LIFECYCLE = #{lifecycle} AND</if>
+            <if test="acceptance != null  and acceptance != '' ">ACCEPTANCE = #{acceptance} AND</if>
+            <if test="disclaimer != null  and disclaimer != '' ">DISCLAIMER = #{disclaimer} AND</if>
+            <if test="instanceid != null  and instanceid != '' ">INSTANCEID = #{instanceid} AND</if>
+            <if test="flowid != null  and flowid != '' ">FLOWID = #{flowid} AND</if>
+            <if test="applyno != null  and applyno != '' ">APPLYNO = #{applyno} AND</if>
+            <if test="demandno != null  and demandno != '' ">DEMANDNO = #{demandno} AND</if>
+            <if test="builddate != null ">BUILDDATE = #{builddate} AND</if>
+            <if test="startdate != null ">STARTDATE = #{startdate} AND</if>
+            <if test="status != null  and status != '' ">STATUS = #{status} AND</if>
+            <if test="isdelay != null  and isdelay != '' ">ISDELAY = #{isdelay} AND</if>
+            <if test="expectdate != null ">EXPECTDATE = #{expectdate} AND</if>
+            <if test="actualdate != null ">ACTUALDATE = #{actualdate} AND</if>
+            <if test="closedate != null ">CLOSEDATE = #{closedate} AND</if>
+            <if test="isdel != null ">ISDEL = #{isdel} AND</if>
+            <if test="createtime != null ">CREATETIME = #{createtime} AND</if>
+            <if test="creators != null  and creators != '' ">CREATORS = #{creators} AND</if>
+            <if test="lastmodtime != null ">LASTMODTIME = #{lastmodtime} AND</if>
+            <if test="lastmoduser != null  and lastmoduser != '' ">LASTMODUSER = #{lastmoduser} AND</if>
+            <if test="isalone != null  and isalone != '' ">ISALONE = #{isalone} AND</if>
+            <if test="busiunit != null  and busiunit != '' ">BUSIUNIT = #{busiunit} AND</if>
+            <if test="outunit != null  and outunit != '' ">OUTUNIT = #{outunit} AND</if>
+            <if test="tecunit != null  and tecunit != '' ">TECUNIT = #{tecunit} AND</if>
+            <if test="sumunit != null  and sumunit != '' ">SUMUNIT = #{sumunit} AND</if>
+            <if test="busibudget != null ">BUSIBUDGET = #{busibudget} AND</if>
+            <if test="tecbudget != null ">TECBUDGET = #{tecbudget} AND</if>
+            <if test="otherbudget != null ">OTHERBUDGET = #{otherbudget} AND</if>
+            <if test="researchno != null  and researchno != '' ">RESEARCHNO = #{researchno} AND</if>
+            <if test="researchstatus != null  and researchstatus != '' ">RESEARCHSTATUS = #{researchstatus} AND</if>
+            <if test="ispresident != null  and ispresident != '' ">ISPRESIDENT = #{ispresident} AND</if>
+            <if test="istecpresident != null  and istecpresident != '' ">ISTECPRESIDENT = #{istecpresident} AND</if>
+            <if test="tecaudit != null  and tecaudit != '' ">TECAUDIT = #{tecaudit} AND</if>
+            <if test="tecaudittext != null  and tecaudittext != '' ">TECAUDITTEXT = #{tecaudittext} AND</if>
+            <if test="exceptstartdate != null ">EXCEPTSTARTDATE = #{exceptstartdate} AND</if>
+            <if test="otherbudgetdesc != null  and otherbudgetdesc != '' ">OTHERBUDGETDESC = #{otherbudgetdesc} AND</if>
+            <if test="iscoordinated != null  and iscoordinated != '' ">ISCOORDINATED = #{iscoordinated} AND</if>
+            <if test="exceptclosedate != null ">EXCEPTCLOSEDATE = #{exceptclosedate} AND</if>
+            <if test="progress != null ">PROGRESS = #{progress} AND</if>
+            <if test="exceptonlinedate != null ">EXCEPTONLINEDATE = #{exceptonlinedate} AND</if>
+            <if test="orgarea != null  and orgarea != '' ">ORGAREA = #{orgarea} AND</if>
+            <if test="zyld != null  and zyld != '' ">ZYLD = #{zyld} AND</if>
+            <if test="ists != null  and ists != '' ">ISTS = #{ists} AND</if>
+            <if test="sumgnd != null ">SUMGND = #{sumgnd} AND</if>
+            <if test="stoptime != null ">STOPTIME = #{stoptime} AND</if>
+            <if test="initTworkload != null ">INIT_TWORKLOAD = #{initTworkload} AND</if>
+            <if test="initProjectscale != null  and initProjectscale != '' ">INIT_PROJECTSCALE = #{initProjectscale}
+                AND
+            </if>
+            <if test="iseffectjkpt != null  and iseffectjkpt != '' ">ISEFFECTJKPT = #{iseffectjkpt} AND</if>
+            <if test="isfgn != null  and isfgn != '' ">ISFGN = #{isfgn} AND</if>
+            <if test="researchuserid != null  and researchuserid != '' ">RESEARCHUSERID = #{researchuserid} AND</if>
+            <if test="highriskpro != null  and highriskpro != '' ">HIGHRISKPRO = #{highriskpro} AND</if>
+            <if test="busPrin != null  and busPrin != '' ">BUS_PRIN = #{busPrin} AND</if>
+            <if test="testtotalworkload != null ">TESTTOTALWORKLOAD = #{testtotalworkload} AND</if>
+            <if test="testtotalworkloadunit != null  and testtotalworkloadunit != '' ">TESTTOTALWORKLOADUNIT =
+                #{testtotalworkloadunit} AND
+            </if>
+            <if test="testtecbudget != null ">TESTTECBUDGET = #{testtecbudget} AND</if>
+            <if test="ishjtj != null  and ishjtj != '' ">ISHJTJ = #{ishjtj} AND</if>
+            <if test="majorprohgps != null  and majorprohgps != '' ">MAJORPROHGPS = #{majorprohgps} AND</if>
+            <if test="wyType != null  and wyType != '' ">WY_TYPE = #{wyType} AND</if>
+            <if test="sjType != null  and sjType != '' ">SJ_TYPE = #{sjType} AND</if>
+            <if test="id != null ">ID = #{id} AND</if>
+            <if test="projectno != null  and projectno != '' ">PROJECTNO = #{projectno} AND</if>
+            <if test="projectname != null  and projectname != '' ">PROJECTNAME = #{projectname} AND</if>
+            <if test="projecttype != null  and projecttype != '' ">PROJECTTYPE = #{projecttype} AND</if>
+            <if test="cause != null  and cause != '' ">CAUSE = #{cause} AND</if>
+            <if test="sysno != null  and sysno != '' ">SYSNO = #{sysno} AND</if>
+            <if test="purchasebal != null ">PURCHASEBAL = #{purchasebal} AND</if>
+            <if test="tbudget != null ">TBUDGET = #{tbudget} AND</if>
+            <if test="deptno != null  and deptno != '' ">DEPTNO = #{deptno} AND</if>
+            <if test="busideptno != null  and busideptno != '' ">BUSIDEPTNO = #{busideptno} AND</if>
+            <if test="projectscale != null  and projectscale != '' ">PROJECTSCALE = #{projectscale} AND</if>
+            <if test="isroam != null  and isroam != '' ">ISROAM = #{isroam} AND</if>
+            <if test="proattrbutes != null  and proattrbutes != '' ">PROATTRBUTES = #{proattrbutes} AND</if>
+        </trim>
+    </sql>
+    <!-- 查询分页  2020-08-05 k6991  -->
+    <select id="queryPagerList" parameterType="map" resultMap="PPMPROJECTBUILDSOFT_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM PPM_PROJECT_BUILD_SOFT
+        <include refid="sql_select_condition"/>
+    </select>
+
+    <!-- 新增  2020-08-05 k6991  -->
+    <insert id="addPojo" parameterType="ppmProjectBuildSoft">
+        INSERT INTO PPM_PROJECT_BUILD_SOFT (
+        <trim suffixOverrides=",">
+            <if test="issgyb != null  and issgyb != '' ">ISSGYB ,</if>
+            <if test="buildway != null  and buildway != '' ">BUILDWAY ,</if>
+            <if test="priority != null  and priority != '' ">PRIORITY ,</if>
+            <if test="emerdegree != null  and emerdegree != '' ">EMERDEGREE ,</if>
+            <if test="domain != null  and domain != '' ">DOMAIN ,</if>
+            <if test="isnew != null  and isnew != '' ">ISNEW ,</if>
+            <if test="isarchchange != null  and isarchchange != '' ">ISARCHCHANGE ,</if>
+            <if test="busiworkload != null ">BUSIWORKLOAD ,</if>
+            <if test="outworkload != null ">OUTWORKLOAD ,</if>
+            <if test="workload != null ">WORKLOAD ,</if>
+            <if test="tworkload != null ">TWORKLOAD ,</if>
+            <if test="manauserid != null  and manauserid != '' ">MANAUSERID ,</if>
+            <if test="busiuserid != null  and busiuserid != '' ">BUSIUSERID ,</if>
+            <if test="testuserid != null  and testuserid != '' ">TESTUSERID ,</if>
+            <if test="docname != null  and docname != '' ">DOCNAME ,</if>
+            <if test="svnpath != null  and svnpath != '' ">SVNPATH ,</if>
+            <if test="svnname != null  and svnname != '' ">SVNNAME ,</if>
+            <if test="qcname != null  and qcname != '' ">QCNAME ,</if>
+            <if test="qcpath != null  and qcpath != '' ">QCPATH ,</if>
+            <if test="background != null  and background != '' ">BACKGROUND ,</if>
+            <if test="inittarget != null  and inittarget != '' ">INITTARGET ,</if>
+            <if test="users != null  and users != '' ">USERS ,</if>
+            <if test="hypothesis != null  and hypothesis != '' ">HYPOTHESIS ,</if>
+            <if test="targetplan != null  and targetplan != '' ">TARGETPLAN ,</if>
+            <if test="costplan != null  and costplan != '' ">COSTPLAN ,</if>
+            <if test="qualityplan != null  and qualityplan != '' ">QUALITYPLAN ,</if>
+            <if test="personchange != null  and personchange != '' ">PERSONCHANGE ,</if>
+            <if test="lifecycle != null  and lifecycle != '' ">LIFECYCLE ,</if>
+            <if test="acceptance != null  and acceptance != '' ">ACCEPTANCE ,</if>
+            <if test="disclaimer != null  and disclaimer != '' ">DISCLAIMER ,</if>
+            <if test="instanceid != null  and instanceid != '' ">INSTANCEID ,</if>
+            <if test="flowid != null  and flowid != '' ">FLOWID ,</if>
+            <if test="applyno != null  and applyno != '' ">APPLYNO ,</if>
+            <if test="demandno != null  and demandno != '' ">DEMANDNO ,</if>
+            <if test="builddate != null ">BUILDDATE ,</if>
+            <if test="startdate != null ">STARTDATE ,</if>
+            <if test="status != null  and status != '' ">STATUS ,</if>
+            <if test="isdelay != null  and isdelay != '' ">ISDELAY ,</if>
+            <if test="expectdate != null ">EXPECTDATE ,</if>
+            <if test="actualdate != null ">ACTUALDATE ,</if>
+            <if test="closedate != null ">CLOSEDATE ,</if>
+            <if test="isdel != null ">ISDEL ,</if>
+            <if test="createtime != null ">CREATETIME ,</if>
+            <if test="creators != null  and creators != '' ">CREATORS ,</if>
+            <if test="lastmodtime != null ">LASTMODTIME ,</if>
+            <if test="lastmoduser != null  and lastmoduser != '' ">LASTMODUSER ,</if>
+            <if test="isalone != null  and isalone != '' ">ISALONE ,</if>
+            <if test="busiunit != null  and busiunit != '' ">BUSIUNIT ,</if>
+            <if test="outunit != null  and outunit != '' ">OUTUNIT ,</if>
+            <if test="tecunit != null  and tecunit != '' ">TECUNIT ,</if>
+            <if test="sumunit != null  and sumunit != '' ">SUMUNIT ,</if>
+            <if test="busibudget != null ">BUSIBUDGET ,</if>
+            <if test="tecbudget != null ">TECBUDGET ,</if>
+            <if test="otherbudget != null ">OTHERBUDGET ,</if>
+            <if test="researchno != null  and researchno != '' ">RESEARCHNO ,</if>
+            <if test="researchstatus != null  and researchstatus != '' ">RESEARCHSTATUS ,</if>
+            <if test="ispresident != null  and ispresident != '' ">ISPRESIDENT ,</if>
+            <if test="istecpresident != null  and istecpresident != '' ">ISTECPRESIDENT ,</if>
+            <if test="tecaudit != null  and tecaudit != '' ">TECAUDIT ,</if>
+            <if test="tecaudittext != null  and tecaudittext != '' ">TECAUDITTEXT ,</if>
+            <if test="exceptstartdate != null ">EXCEPTSTARTDATE ,</if>
+            <if test="otherbudgetdesc != null  and otherbudgetdesc != '' ">OTHERBUDGETDESC ,</if>
+            <if test="iscoordinated != null  and iscoordinated != '' ">ISCOORDINATED ,</if>
+            <if test="exceptclosedate != null ">EXCEPTCLOSEDATE ,</if>
+            <if test="progress != null ">PROGRESS ,</if>
+            <if test="exceptonlinedate != null ">EXCEPTONLINEDATE ,</if>
+            <if test="orgarea != null  and orgarea != '' ">ORGAREA ,</if>
+            <if test="zyld != null  and zyld != '' ">ZYLD ,</if>
+            <if test="ists != null  and ists != '' ">ISTS ,</if>
+            <if test="sumgnd != null ">SUMGND ,</if>
+            <if test="stoptime != null ">STOPTIME ,</if>
+            <if test="initTworkload != null ">INIT_TWORKLOAD ,</if>
+            <if test="initProjectscale != null  and initProjectscale != '' ">INIT_PROJECTSCALE ,</if>
+            <if test="iseffectjkpt != null  and iseffectjkpt != '' ">ISEFFECTJKPT ,</if>
+            <if test="isfgn != null  and isfgn != '' ">ISFGN ,</if>
+            <if test="researchuserid != null  and researchuserid != '' ">RESEARCHUSERID ,</if>
+            <if test="highriskpro != null  and highriskpro != '' ">HIGHRISKPRO ,</if>
+            <if test="busPrin != null  and busPrin != '' ">BUS_PRIN ,</if>
+            <if test="testtotalworkload != null ">TESTTOTALWORKLOAD ,</if>
+            <if test="testtotalworkloadunit != null  and testtotalworkloadunit != '' ">TESTTOTALWORKLOADUNIT ,</if>
+            <if test="testtecbudget != null ">TESTTECBUDGET ,</if>
+            <if test="ishjtj != null  and ishjtj != '' ">ISHJTJ ,</if>
+            <if test="majorprohgps != null  and majorprohgps != '' ">MAJORPROHGPS ,</if>
+            <if test="wyType != null  and wyType != '' ">WY_TYPE ,</if>
+            <if test="sjType != null  and sjType != '' ">SJ_TYPE ,</if>
+            <if test="id != null ">ID ,</if>
+            <if test="projectno != null  and projectno != '' ">PROJECTNO ,</if>
+            <if test="projectname != null  and projectname != '' ">PROJECTNAME ,</if>
+            <if test="projecttype != null  and projecttype != '' ">PROJECTTYPE ,</if>
+            <if test="cause != null  and cause != '' ">CAUSE ,</if>
+            <if test="sysno != null  and sysno != '' ">SYSNO ,</if>
+            <if test="purchasebal != null ">PURCHASEBAL ,</if>
+            <if test="tbudget != null ">TBUDGET ,</if>
+            <if test="deptno != null  and deptno != '' ">DEPTNO ,</if>
+            <if test="busideptno != null  and busideptno != '' ">BUSIDEPTNO ,</if>
+            <if test="projectscale != null  and projectscale != '' ">PROJECTSCALE ,</if>
+            <if test="isroam != null  and isroam != '' ">ISROAM ,</if>
+            <if test="proattrbutes != null  and proattrbutes != '' ">PROATTRBUTES ,</if>
+        </trim>
+        )
+        VALUES(
+        <trim suffixOverrides=",">
+            <if test="issgyb != null  and issgyb != '' ">#{issgyb} ,</if>
+            <if test="buildway != null  and buildway != '' ">#{buildway} ,</if>
+            <if test="priority != null  and priority != '' ">#{priority} ,</if>
+            <if test="emerdegree != null  and emerdegree != '' ">#{emerdegree} ,</if>
+            <if test="domain != null  and domain != '' ">#{domain} ,</if>
+            <if test="isnew != null  and isnew != '' ">#{isnew} ,</if>
+            <if test="isarchchange != null  and isarchchange != '' ">#{isarchchange} ,</if>
+            <if test="busiworkload != null ">#{busiworkload} ,</if>
+            <if test="outworkload != null ">#{outworkload} ,</if>
+            <if test="workload != null ">#{workload} ,</if>
+            <if test="tworkload != null ">#{tworkload} ,</if>
+            <if test="manauserid != null  and manauserid != '' ">#{manauserid} ,</if>
+            <if test="busiuserid != null  and busiuserid != '' ">#{busiuserid} ,</if>
+            <if test="testuserid != null  and testuserid != '' ">#{testuserid} ,</if>
+            <if test="docname != null  and docname != '' ">#{docname} ,</if>
+            <if test="svnpath != null  and svnpath != '' ">#{svnpath} ,</if>
+            <if test="svnname != null  and svnname != '' ">#{svnname} ,</if>
+            <if test="qcname != null  and qcname != '' ">#{qcname} ,</if>
+            <if test="qcpath != null  and qcpath != '' ">#{qcpath} ,</if>
+            <if test="background != null  and background != '' ">#{background} ,</if>
+            <if test="inittarget != null  and inittarget != '' ">#{inittarget} ,</if>
+            <if test="users != null  and users != '' ">#{users} ,</if>
+            <if test="hypothesis != null  and hypothesis != '' ">#{hypothesis} ,</if>
+            <if test="targetplan != null  and targetplan != '' ">#{targetplan} ,</if>
+            <if test="costplan != null  and costplan != '' ">#{costplan} ,</if>
+            <if test="qualityplan != null  and qualityplan != '' ">#{qualityplan} ,</if>
+            <if test="personchange != null  and personchange != '' ">#{personchange} ,</if>
+            <if test="lifecycle != null  and lifecycle != '' ">#{lifecycle} ,</if>
+            <if test="acceptance != null  and acceptance != '' ">#{acceptance} ,</if>
+            <if test="disclaimer != null  and disclaimer != '' ">#{disclaimer} ,</if>
+            <if test="instanceid != null  and instanceid != '' ">#{instanceid} ,</if>
+            <if test="flowid != null  and flowid != '' ">#{flowid} ,</if>
+            <if test="applyno != null  and applyno != '' ">#{applyno} ,</if>
+            <if test="demandno != null  and demandno != '' ">#{demandno} ,</if>
+            <if test="builddate != null ">#{builddate} ,</if>
+            <if test="startdate != null ">#{startdate} ,</if>
+            <if test="status != null  and status != '' ">#{status} ,</if>
+            <if test="isdelay != null  and isdelay != '' ">#{isdelay} ,</if>
+            <if test="expectdate != null ">#{expectdate} ,</if>
+            <if test="actualdate != null ">#{actualdate} ,</if>
+            <if test="closedate != null ">#{closedate} ,</if>
+            <if test="isdel != null ">#{isdel} ,</if>
+            <if test="createtime != null ">#{createtime} ,</if>
+            <if test="creators != null  and creators != '' ">#{creators} ,</if>
+            <if test="lastmodtime != null ">#{lastmodtime} ,</if>
+            <if test="lastmoduser != null  and lastmoduser != '' ">#{lastmoduser} ,</if>
+            <if test="isalone != null  and isalone != '' ">#{isalone} ,</if>
+            <if test="busiunit != null  and busiunit != '' ">#{busiunit} ,</if>
+            <if test="outunit != null  and outunit != '' ">#{outunit} ,</if>
+            <if test="tecunit != null  and tecunit != '' ">#{tecunit} ,</if>
+            <if test="sumunit != null  and sumunit != '' ">#{sumunit} ,</if>
+            <if test="busibudget != null ">#{busibudget} ,</if>
+            <if test="tecbudget != null ">#{tecbudget} ,</if>
+            <if test="otherbudget != null ">#{otherbudget} ,</if>
+            <if test="researchno != null  and researchno != '' ">#{researchno} ,</if>
+            <if test="researchstatus != null  and researchstatus != '' ">#{researchstatus} ,</if>
+            <if test="ispresident != null  and ispresident != '' ">#{ispresident} ,</if>
+            <if test="istecpresident != null  and istecpresident != '' ">#{istecpresident} ,</if>
+            <if test="tecaudit != null  and tecaudit != '' ">#{tecaudit} ,</if>
+            <if test="tecaudittext != null  and tecaudittext != '' ">#{tecaudittext} ,</if>
+            <if test="exceptstartdate != null ">#{exceptstartdate} ,</if>
+            <if test="otherbudgetdesc != null  and otherbudgetdesc != '' ">#{otherbudgetdesc} ,</if>
+            <if test="iscoordinated != null  and iscoordinated != '' ">#{iscoordinated} ,</if>
+            <if test="exceptclosedate != null ">#{exceptclosedate} ,</if>
+            <if test="progress != null ">#{progress} ,</if>
+            <if test="exceptonlinedate != null ">#{exceptonlinedate} ,</if>
+            <if test="orgarea != null  and orgarea != '' ">#{orgarea} ,</if>
+            <if test="zyld != null  and zyld != '' ">#{zyld} ,</if>
+            <if test="ists != null  and ists != '' ">#{ists} ,</if>
+            <if test="sumgnd != null ">#{sumgnd} ,</if>
+            <if test="stoptime != null ">#{stoptime} ,</if>
+            <if test="initTworkload != null ">#{initTworkload} ,</if>
+            <if test="initProjectscale != null  and initProjectscale != '' ">#{initProjectscale} ,</if>
+            <if test="iseffectjkpt != null  and iseffectjkpt != '' ">#{iseffectjkpt} ,</if>
+            <if test="isfgn != null  and isfgn != '' ">#{isfgn} ,</if>
+            <if test="researchuserid != null  and researchuserid != '' ">#{researchuserid} ,</if>
+            <if test="highriskpro != null  and highriskpro != '' ">#{highriskpro} ,</if>
+            <if test="busPrin != null  and busPrin != '' ">#{busPrin} ,</if>
+            <if test="testtotalworkload != null ">#{testtotalworkload} ,</if>
+            <if test="testtotalworkloadunit != null  and testtotalworkloadunit != '' ">#{testtotalworkloadunit} ,</if>
+            <if test="testtecbudget != null ">#{testtecbudget} ,</if>
+            <if test="ishjtj != null  and ishjtj != '' ">#{ishjtj} ,</if>
+            <if test="majorprohgps != null  and majorprohgps != '' ">#{majorprohgps} ,</if>
+            <if test="wyType != null  and wyType != '' ">#{wyType} ,</if>
+            <if test="sjType != null  and sjType != '' ">#{sjType} ,</if>
+            <if test="id != null ">#{id} ,</if>
+            <if test="projectno != null  and projectno != '' ">#{projectno} ,</if>
+            <if test="projectname != null  and projectname != '' ">#{projectname} ,</if>
+            <if test="projecttype != null  and projecttype != '' ">#{projecttype} ,</if>
+            <if test="cause != null  and cause != '' ">#{cause} ,</if>
+            <if test="sysno != null  and sysno != '' ">#{sysno} ,</if>
+            <if test="purchasebal != null ">#{purchasebal} ,</if>
+            <if test="tbudget != null ">#{tbudget} ,</if>
+            <if test="deptno != null  and deptno != '' ">#{deptno} ,</if>
+            <if test="busideptno != null  and busideptno != '' ">#{busideptno} ,</if>
+            <if test="projectscale != null  and projectscale != '' ">#{projectscale} ,</if>
+            <if test="isroam != null  and isroam != '' ">#{isroam} ,</if>
+            <if test="proattrbutes != null  and proattrbutes != '' ">#{proattrbutes} ,</if>
+        </trim>
+        )
+    </insert>
+
+    <!--通过id查询  k6991 2020-08-05 -->
+    <select id="queryDetail" parameterType="ppmProjectBuildSoft" resultMap="PPMPROJECTBUILDSOFT_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM PPM_PROJECT_BUILD_SOFT
+        <include refid="sql_select_condition"/>
+        AND ROWNUM = 1
+    </select>
+
+    <!--查询集合  k6991 2020-08-05 -->
+    <select id="getList" parameterType="ppmProjectBuildSoft" resultMap="PPMPROJECTBUILDSOFT_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM PPM_PROJECT_BUILD_SOFT
+        <include refid="sql_select_condition"/>
+    </select>
+    <!-- update sql -->
+    <sql id="update_pojo_sql">
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="issgyb != null  and issgyb != '' ">ISSGYB=#{issgyb} ,</if>
+            <if test="buildway != null  and buildway != '' ">BUILDWAY=#{buildway} ,</if>
+            <if test="priority != null  and priority != '' ">PRIORITY=#{priority} ,</if>
+            <if test="emerdegree != null  and emerdegree != '' ">EMERDEGREE=#{emerdegree} ,</if>
+            <if test="domain != null  and domain != '' ">DOMAIN=#{domain} ,</if>
+            <if test="isnew != null  and isnew != '' ">ISNEW=#{isnew} ,</if>
+            <if test="isarchchange != null  and isarchchange != '' ">ISARCHCHANGE=#{isarchchange} ,</if>
+            <if test="busiworkload != null ">BUSIWORKLOAD=#{busiworkload} ,</if>
+            <if test="outworkload != null ">OUTWORKLOAD=#{outworkload} ,</if>
+            <if test="workload != null ">WORKLOAD=#{workload} ,</if>
+            <if test="tworkload != null ">TWORKLOAD=#{tworkload} ,</if>
+            <if test="manauserid != null  and manauserid != '' ">MANAUSERID=#{manauserid} ,</if>
+            <if test="busiuserid != null  and busiuserid != '' ">BUSIUSERID=#{busiuserid} ,</if>
+            <if test="testuserid != null  and testuserid != '' ">TESTUSERID=#{testuserid} ,</if>
+            <if test="docname != null  and docname != '' ">DOCNAME=#{docname} ,</if>
+            <if test="svnpath != null  and svnpath != '' ">SVNPATH=#{svnpath} ,</if>
+            <if test="svnname != null  and svnname != '' ">SVNNAME=#{svnname} ,</if>
+            <if test="qcname != null  and qcname != '' ">QCNAME=#{qcname} ,</if>
+            <if test="qcpath != null  and qcpath != '' ">QCPATH=#{qcpath} ,</if>
+            <if test="background != null  and background != '' ">BACKGROUND=#{background} ,</if>
+            <if test="inittarget != null  and inittarget != '' ">INITTARGET=#{inittarget} ,</if>
+            <if test="users != null  and users != '' ">USERS=#{users} ,</if>
+            <if test="hypothesis != null  and hypothesis != '' ">HYPOTHESIS=#{hypothesis} ,</if>
+            <if test="targetplan != null  and targetplan != '' ">TARGETPLAN=#{targetplan} ,</if>
+            <if test="costplan != null  and costplan != '' ">COSTPLAN=#{costplan} ,</if>
+            <if test="qualityplan != null  and qualityplan != '' ">QUALITYPLAN=#{qualityplan} ,</if>
+            <if test="personchange != null  and personchange != '' ">PERSONCHANGE=#{personchange} ,</if>
+            <if test="lifecycle != null  and lifecycle != '' ">LIFECYCLE=#{lifecycle} ,</if>
+            <if test="acceptance != null  and acceptance != '' ">ACCEPTANCE=#{acceptance} ,</if>
+            <if test="disclaimer != null  and disclaimer != '' ">DISCLAIMER=#{disclaimer} ,</if>
+            <if test="instanceid != null  and instanceid != '' ">INSTANCEID=#{instanceid} ,</if>
+            <if test="flowid != null  and flowid != '' ">FLOWID=#{flowid} ,</if>
+            <if test="applyno != null  and applyno != '' ">APPLYNO=#{applyno} ,</if>
+            <if test="demandno != null  and demandno != '' ">DEMANDNO=#{demandno} ,</if>
+            <if test="builddate != null ">BUILDDATE=#{builddate} ,</if>
+            <if test="startdate != null ">STARTDATE=#{startdate} ,</if>
+            <if test="status != null  and status != '' ">STATUS=#{status} ,</if>
+            <if test="isdelay != null  and isdelay != '' ">ISDELAY=#{isdelay} ,</if>
+            <if test="expectdate != null ">EXPECTDATE=#{expectdate} ,</if>
+            <if test="actualdate != null ">ACTUALDATE=#{actualdate} ,</if>
+            <if test="closedate != null ">CLOSEDATE=#{closedate} ,</if>
+            <if test="isdel != null ">ISDEL=#{isdel} ,</if>
+            <if test="createtime != null ">CREATETIME=#{createtime} ,</if>
+            <if test="creators != null  and creators != '' ">CREATORS=#{creators} ,</if>
+            <if test="lastmodtime != null ">LASTMODTIME=#{lastmodtime} ,</if>
+            <if test="lastmoduser != null  and lastmoduser != '' ">LASTMODUSER=#{lastmoduser} ,</if>
+            <if test="isalone != null  and isalone != '' ">ISALONE=#{isalone} ,</if>
+            <if test="busiunit != null  and busiunit != '' ">BUSIUNIT=#{busiunit} ,</if>
+            <if test="outunit != null  and outunit != '' ">OUTUNIT=#{outunit} ,</if>
+            <if test="tecunit != null  and tecunit != '' ">TECUNIT=#{tecunit} ,</if>
+            <if test="sumunit != null  and sumunit != '' ">SUMUNIT=#{sumunit} ,</if>
+            <if test="busibudget != null ">BUSIBUDGET=#{busibudget} ,</if>
+            <if test="tecbudget != null ">TECBUDGET=#{tecbudget} ,</if>
+            <if test="otherbudget != null ">OTHERBUDGET=#{otherbudget} ,</if>
+            <if test="researchno != null  and researchno != '' ">RESEARCHNO=#{researchno} ,</if>
+            <if test="researchstatus != null  and researchstatus != '' ">RESEARCHSTATUS=#{researchstatus} ,</if>
+            <if test="ispresident != null  and ispresident != '' ">ISPRESIDENT=#{ispresident} ,</if>
+            <if test="istecpresident != null  and istecpresident != '' ">ISTECPRESIDENT=#{istecpresident} ,</if>
+            <if test="tecaudit != null  and tecaudit != '' ">TECAUDIT=#{tecaudit} ,</if>
+            <if test="tecaudittext != null  and tecaudittext != '' ">TECAUDITTEXT=#{tecaudittext} ,</if>
+            <if test="exceptstartdate != null ">EXCEPTSTARTDATE=#{exceptstartdate} ,</if>
+            <if test="otherbudgetdesc != null  and otherbudgetdesc != '' ">OTHERBUDGETDESC=#{otherbudgetdesc} ,</if>
+            <if test="iscoordinated != null  and iscoordinated != '' ">ISCOORDINATED=#{iscoordinated} ,</if>
+            <if test="exceptclosedate != null ">EXCEPTCLOSEDATE=#{exceptclosedate} ,</if>
+            <if test="progress != null ">PROGRESS=#{progress} ,</if>
+            <if test="exceptonlinedate != null ">EXCEPTONLINEDATE=#{exceptonlinedate} ,</if>
+            <if test="orgarea != null  and orgarea != '' ">ORGAREA=#{orgarea} ,</if>
+            <if test="zyld != null  and zyld != '' ">ZYLD=#{zyld} ,</if>
+            <if test="ists != null  and ists != '' ">ISTS=#{ists} ,</if>
+            <if test="sumgnd != null ">SUMGND=#{sumgnd} ,</if>
+            <if test="stoptime != null ">STOPTIME=#{stoptime} ,</if>
+            <if test="initTworkload != null ">INIT_TWORKLOAD=#{initTworkload} ,</if>
+            <if test="initProjectscale != null  and initProjectscale != '' ">INIT_PROJECTSCALE=#{initProjectscale} ,
+            </if>
+            <if test="iseffectjkpt != null  and iseffectjkpt != '' ">ISEFFECTJKPT=#{iseffectjkpt} ,</if>
+            <if test="isfgn != null  and isfgn != '' ">ISFGN=#{isfgn} ,</if>
+            <if test="researchuserid != null  and researchuserid != '' ">RESEARCHUSERID=#{researchuserid} ,</if>
+            <if test="highriskpro != null  and highriskpro != '' ">HIGHRISKPRO=#{highriskpro} ,</if>
+            <if test="busPrin != null  and busPrin != '' ">BUS_PRIN=#{busPrin} ,</if>
+            <if test="testtotalworkload != null ">TESTTOTALWORKLOAD=#{testtotalworkload} ,</if>
+            <if test="testtotalworkloadunit != null  and testtotalworkloadunit != '' ">
+                TESTTOTALWORKLOADUNIT=#{testtotalworkloadunit} ,
+            </if>
+            <if test="testtecbudget != null ">TESTTECBUDGET=#{testtecbudget} ,</if>
+            <if test="ishjtj != null  and ishjtj != '' ">ISHJTJ=#{ishjtj} ,</if>
+            <if test="majorprohgps != null  and majorprohgps != '' ">MAJORPROHGPS=#{majorprohgps} ,</if>
+            <if test="wyType != null  and wyType != '' ">WY_TYPE=#{wyType} ,</if>
+            <if test="sjType != null  and sjType != '' ">SJ_TYPE=#{sjType} ,</if>
+            <if test="id != null ">ID=#{id} ,</if>
+            <if test="projectno != null  and projectno != '' ">PROJECTNO=#{projectno} ,</if>
+            <if test="projectname != null  and projectname != '' ">PROJECTNAME=#{projectname} ,</if>
+            <if test="projecttype != null  and projecttype != '' ">PROJECTTYPE=#{projecttype} ,</if>
+            <if test="cause != null  and cause != '' ">CAUSE=#{cause} ,</if>
+            <if test="sysno != null  and sysno != '' ">SYSNO=#{sysno} ,</if>
+            <if test="purchasebal != null ">PURCHASEBAL=#{purchasebal} ,</if>
+            <if test="tbudget != null ">TBUDGET=#{tbudget} ,</if>
+            <if test="deptno != null  and deptno != '' ">DEPTNO=#{deptno} ,</if>
+            <if test="busideptno != null  and busideptno != '' ">BUSIDEPTNO=#{busideptno} ,</if>
+            <if test="projectscale != null  and projectscale != '' ">PROJECTSCALE=#{projectscale} ,</if>
+            <if test="isroam != null  and isroam != '' ">ISROAM=#{isroam} ,</if>
+            <if test="proattrbutes != null  and proattrbutes != '' ">PROATTRBUTES=#{proattrbutes} ,</if>
+        </trim>
+    </sql>
+
+    <!--通过id编辑 k6991 2020-08-05 -->
+    <update id="updatePojo" parameterType="ppmProjectBuildSoft">
+        UPDATE
+        PPM_PROJECT_BUILD_SOFT
+        <include refid="update_pojo_sql"/>
+        WHERE ID=#{id}
+    </update>
+
+    <!--通过id批量删除  k6991 2020-08-05 -->
+    <delete id="deleteById" parameterType="ppmProjectBuildSoft">
+        DELETE
+        FROM
+        PPM_PROJECT_BUILD_SOFT
+        WHERE ID = #{id}
+    </delete>
+
+    <!-- 获取主键id -->
+    <select id="getPrimaryKey" parameterType="map" resultType="long">
+        SELECT MAX(ID) FROM PPM_PROJECT_BUILD_SOFT
+    </select>
+    <!-- 项目上线数 2020-08-05 k6991 -->
+    <select id="queryProjectTree" parameterType="map" resultType="ppmProjectBuildSoftTree">
+        select * from (
+        select s.deptno as projectno,
+        (select location from comm_department where depid = s.deptno) as projectname,
+        '-1' as pid,
+        '' busiuserid,
+        '' manauserid,
+        '' manausername,
+        '' empname,
+        to_date('') expectdate,
+        '' sysno,
+        '' sysname,
+        s.proattrbutes proattrbutes
+        from ppm_project_build_soft s
+        where s.status is not null
+        and s.isdel = '0'
+        union
+        select projectno,
+        projectname,
+        deptno as pid,
+        busiuserid,
+        manauserid,
+        em.empname manausername,
+        e.empname empname,
+        expectdate,
+        p.sysno,
+        s.sys_name sysname,
+        p.proattrbutes  proattrbutes
+        from ppm_project_build_soft p
+        left join comm_employee em
+        on p.manauserid = em.badge
+        left join comm_employee e
+        on p.busiuserid = e.badge
+        left join aap_system s
+        on p.sysno = s.system_id
+        where status is not null
+        <![CDATA[
+      and status <> '全部上线'
+      and status <> '已关闭'
+      and status <> '项目终止'
+      ]]>
+        and isdel = '0'
+        ) temp where proattrbutes is not null
+    </select>
+
+    <!-- 查询系统负责人 2020-08-06 k6991 -->
+    <select id="queryMAS" parameterType="map" resultType="ppmProjectBuildSoftInfo">
+        select s.sysno,a.sys_name sysname,ar.principala manauserid,ar.principala_name manausername from
+        ppm_project_build_soft s
+        left join aap_system a on a.system_id=s.sysno
+        left join aap_system_responsibility ar on a.res_id=ar.res_id
+        where s.projectno= #{projectno}
+    </select>
+
+    <!-- 查询系统负责人 2020-12-11 k6991 -->
+    <select id="querySystemPrincipal" parameterType="list" resultType="ppmProjectBuildSoftInfo">
+        SELECT S.SYSTEM_ID sysno,S.SYS_NAME sysname,R.PRINCIPALA manauserid, R.PRINCIPALA_NAME manausername
+        FROM AAP_SYSTEM S
+        LEFT JOIN AAP_SYSTEM_RESPONSIBILITY R
+        ON S.RES_ID = R.RES_ID
+        WHERE S.SYSTEM_ID IN
+        <foreach collection="list" item="item" separator="," open="(" close=")">
+            #{item}
+        </foreach>
+    </select>
+
+    <resultMap type="ppmProjectBuildSoftInfo" id="PPMPROJECTBUILDSOFTINFO_ALL" extends="PPMPROJECTBUILDSOFT_ALL">
+        <result property="sysname" column="SYSNAME" />
+        <result property="manausername" column="MANAUSERNAME" />
+        <result property="depname" column="DEPNAME" />
+        <result property="empname" column="EMPNAME" />
+        <result property="location" column="LOCATION" />
+    </resultMap>
+
+    <!--通过id查询  k6991 2020-08-05 -->
+    <select id="getProjectBuildSoftByDenamdID" parameterType="ppmProjectBuildSoft" resultMap="PPMPROJECTBUILDSOFTINFO_ALL">
+        select p.*,
+        s.sys_name sysname,
+        d.location,
+        e.empname,
+        em.empname manausername,
+        f.location depname
+        from ppm_project_build_soft p
+        left join aap_system s on p.sysno = s.system_id
+        left join comm_employee e on p.BUSIUSERID = e.badge
+        left join comm_employee em on p.manauserid = em.badge
+        left join comm_department d on p.busideptno = d.depid
+        left join comm_department f on f.depid = p.deptno
+        where p.status is not null
+        and p.status not in ('全部上线','已关闭','项目终止')
+        and p.demandno =#{demandno}
+    </select>
+
+    <select id="getProjectInfoByOnlineno" parameterType="ppmProjectBuildSoft" resultMap="PPMPROJECTBUILDSOFTINFO_ALL">
+        select p.*,
+        s.sys_name sysname,
+        d.location,
+        e.empname,
+        em.empname manausername,
+        f.location depname
+        from ppm_project_build_soft p
+        left join aap_system s on p.sysno = s.system_id
+        left join comm_employee e on p.BUSIUSERID = e.badge
+        left join comm_employee em on p.manauserid = em.badge
+        left join comm_department d on p.busideptno = d.depid
+        left join comm_department f on f.depid = p.deptno
+        where p.status is not null
+        and p.projectno in (select n.projectno
+                            from ppm_project_newonline n
+                            where n.onlineno = #{onlineno})
+
+    </select>
+
+</mapper>

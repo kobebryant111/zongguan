@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k6991 2021-04-22 -->
+<mapper namespace="com.work.ppm.application.model.systemmanager.PpmDaCenter">
+    <resultMap type="ppmDaCenter" id="PPMDACENTER_ALL">
+        <result property="centertype" column="CENTERTYPE"/>
+        <result property="id" column="ID"/>
+        <result property="centername" column="CENTERNAME"/>
+        <result property="regusrid" column="REGUSRID"/>
+        <result property="regtime" column="REGTIME"/>
+        <result property="resuserid" column="RESUSERID"/>
+        <result property="resname" column="RESNAME"/>
+        <result property="isdel" column="ISDEL"/>
+        <result property="ord" column="ORD"/>
+        <result property="type" column="TYPE"/>
+        <result property="zxjgsusrid" column="ZXJGSUSRID"/>
+        <result property="zxjgsusername" column="ZXJGSUSERNAME"/>
+
+    </resultMap>
+
+    <!-- 所有字段名称 -->
+    <sql id="sql_flied_all">
+        CENTERTYPE,
+        ID,
+        CENTERNAME,
+        REGUSRID,
+        REGTIME,
+        RESUSERID,
+        RESNAME,
+        ISDEL,
+        ORD,
+        TYPE,
+        ZXJGSUSRID,
+        ZXJGSUSERNAME
+    </sql>
+    <sql id="sql_select_condition">
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="centertype != null  and centertype != '' ">CENTERTYPE = #{centertype} AND</if>
+            <if test="id != null ">ID = #{id} AND</if>
+            <if test="centername != null  and centername != '' ">CENTERNAME = #{centername} AND</if>
+            <if test="regusrid != null  and regusrid != '' ">REGUSRID = #{regusrid} AND</if>
+            <if test="regtime != null ">REGTIME = #{regtime} AND</if>
+            <if test="resuserid != null  and resuserid != '' ">RESUSERID = #{resuserid} AND</if>
+            <if test="resname != null  and resname != '' ">RESNAME = #{resname} AND</if>
+            <if test="isdel != null ">ISDEL = #{isdel} AND</if>
+            <if test="ord != null ">ORD = #{ord} AND</if>
+            <if test="type != null  and type != '' ">TYPE = #{type} AND</if>
+            <if test="zxjgsusrid != null  and zxjgsusrid != '' ">ZXJGSUSRID = #{zxjgsusrid} AND</if>
+            <if test="zxjgsusername != null  and zxjgsusername != '' ">ZXJGSUSERNAME = #{zxjgsusername} AND</if>
+
+        </trim>
+    </sql>
+
+
+    <!--通过id查询  k6991 2021-04-22 -->
+    <select id="queryDetail" parameterType="ppmDaCenter" resultMap="PPMDACENTER_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM PPM_DA_CENTER WHERE CENTERTYPE=#{centertype}
+    </select>
+
+    <!--查询集合  k6991 2021-04-22 -->
+    <select id="getList" parameterType="ppmDaCenter" resultMap="PPMDACENTER_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM PPM_DA_CENTER
+        <include refid="sql_select_condition"/>
+    </select>
+
+    <resultMap id="QUERYDEPTLIST_MAP" type="ppmDaCenterInfo">
+        <result column="DEPID" property="depId" />
+        <result column="LOCATION" property="depName" />
+    </resultMap>
+    <!-- 根据中心id查询部门 k6991 2021-04-22 -->
+    <select id="queryDeptList" parameterType="ppmDaCenter" resultMap="QUERYDEPTLIST_MAP">
+        SELECT T1.DEPID,T1.LOCATION FROM PPM_DA_DEPT_MANAGER T
+        LEFT JOIN COMM_DEPARTMENT T1 ON(T.DEPTID=T1.DEPID)
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="id != null ">T.CENTERID = #{id} AND</if>
+            <if test="true">T1.adminid = '7004' AND</if>
+        </trim>
+    </select>
+
+    <!-- 根据中心id查询部门 k6991 2021-04-22 -->
+    <select id="queryDeptListByCenters" parameterType="Map" resultMap="QUERYDEPTLIST_MAP">
+        SELECT T1.DEPID,T1.LOCATION FROM PPM_DA_DEPT_MANAGER T
+        LEFT JOIN COMM_DEPARTMENT T1 ON(T.DEPTID=T1.DEPID)
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="centers != null ">T.CENTERID in  (${centers}) AND</if>
+            <if test="true">T1.adminid = '7004' AND</if>
+        </trim>
+    </select>
+    <!-- 根据部门id查询中心 2021-04-27 k6991 -->
+    <select id="queryCenter" parameterType="map" resultMap="PPMDACENTER_ALL">
+        SELECT C.CENTERNAME,C.ID FROM PPM_DA_DEPT_MANAGER D
+        LEFT JOIN PPM_DA_CENTER C ON (D.CENTERID=C.ID)  WHERE D.DEPTID=#{depId}
+    </select>
+</mapper>

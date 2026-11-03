@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:ywwb905 2022-10-8 -->
+<!--  加班开始时间配置 查询脚本 -->
+<mapper namespace="com.work.ppm.application.model.integratedmanager.FaceDeviceInfo">
+	 <resultMap type="faceDeviceInfo" id="FACEDEVICEINFO_ALL">
+        <result property="id" column="ID" />
+		<result property="deviceport" column="DEVICEPORT" />
+		<result property="deviceip" column="DEVICEIP" />
+		<result property="deviceaddress" column="DEVICEADDRESS" />
+		<result property="luserid" column="LUSERID" />
+		<result property="datasource" column="DATASOURCE" />
+		<result property="compcode" column="COMPCODE" />
+		<result property="isshare" column="ISSHARE" />
+		<result property="deleted" column="DELETED" />
+		<result property="memo" column="MEMO" />
+		<result property="memo2" column="MEMO2" />
+		<result property="memo3" column="MEMO3" />
+		<result property="shareobject" column="SHAREOBJECT" />
+     </resultMap>
+	 <resultMap id="FACEDEVICEINFO_ALL_EXT" type="faceDeviceInfoView" extends="FACEDEVICEINFO_ALL">
+		<result property="name" column="NAME" />
+		<result property="type" column="TYPE" />
+     </resultMap>
+
+     <!-- 所有字段名称 -->
+    <sql id="sql_flied_all">
+        ID,
+			DEVICEPORT,
+			DEVICEIP,
+			DEVICEADDRESS,
+			LUSERID,
+			DATASOURCE,
+			COMPCODE,
+			ISSHARE,
+			DELETED,
+			MEMO,
+			MEMO2,
+			MEMO3,
+			SHAREOBJECT
+    </sql>
+    <sql id="sql_select_condition">
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="id != null " > ID = #{id} AND </if>
+				<if test="deviceport != null " > DEVICEPORT = #{deviceport} AND </if>
+				<if test="deviceip != null " > DEVICEIP = #{deviceip} AND </if>
+				<if test="deviceaddress != null " > DEVICEADDRESS = #{deviceaddress} AND </if>
+				<if test="luserid != null" > LUSERID = #{luserid} AND </if>
+				<if test="datasource != null" > DATASOURCE = #{datasource} AND </if>
+				<if test="compcode != null" > COMPCODE = #{compcode} AND </if>
+				<if test="isshare != null" > ISSHARE = #{isshare} AND </if>
+				<if test="deleted != null" > DELETED = #{deleted} AND </if>
+				<if test="memo != null" > MEMO = #{memo} AND </if>
+				<if test="memo2 != null" > MEMO2 = #{memo2} AND </if>
+				<if test="memo3 != null" > MEMO3 = #{memo3} AND </if>
+				<if test="shareobject != null" > SHAREOBJECT = #{shareobject} AND </if>
+        </trim>
+    </sql>
+
+    <!-- 新增  2022-10-08 ywwb905  -->
+    <insert id="addPojo" parameterType="faceDeviceInfo">
+        INSERT INTO FACE_DEVICE_INFO (
+        <trim suffixOverrides=",">
+         <if test="id != null " > ID , </if>
+				<if test="deviceport != null " > DEVICEPORT , </if>
+				<if test="deviceip != null " > DEVICEIP , </if>
+				<if test="deviceaddress != null " > DEVICEADDRESS , </if>
+				<if test="luserid != null " > LUSERID , </if>
+				<if test="datasource != null " > DATASOURCE , </if>
+				<if test="compcode != null " > COMPCODE , </if>
+				<if test="isshare != null " > ISSHARE , </if>
+				<if test="deleted != null " > DELETED , </if>
+				<if test="memo != null " > MEMO , </if>
+				<if test="memo2 != null " > MEMO2 , </if>
+				<if test="memo3 != null " > MEMO3 , </if>
+				<if test="shareobject != null " > SHAREOBJECT , </if>
+          </trim>
+        )
+        VALUES(
+        <trim suffixOverrides=",">
+         <if test="id != null " > #{id} , </if>
+				<if test="deviceport != null " > #{deviceport} , </if>
+				<if test="deviceip != null " > #{deviceip} , </if>
+				<if test="deviceaddress != null " > #{deviceaddress} , </if>
+				<if test="luserid != null" > #{luserid} , </if>
+				<if test="datasource != null" > #{datasource} , </if>
+				<if test="compcode != null" > #{compcode} , </if>
+				<if test="isshare != null" > #{isshare} , </if>
+				<if test="deleted != null" > #{deleted} , </if>
+				<if test="memo != null" > #{memo} , </if>
+				<if test="memo2 != null" > #{memo2} , </if>
+				<if test="memo3 != null" > #{memo3} , </if>
+				<if test="shareobject != null" > #{shareobject} , </if>
+        </trim>
+        )
+    </insert>
+
+    <!--通过id查询  ywwb905 2022-10-08 -->
+    <select id="queryDetail" parameterType="faceDeviceInfo" resultMap="FACEDEVICEINFO_ALL">
+        SELECT
+        <include refid="sql_flied_all" />
+        FROM FACE_DEVICE_INFO
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="id != null " > ID = #{id} AND </if>
+        </trim>
+    </select>
+
+     <!--查询集合  ywwb905 2022-10-08 -->
+    <select id="getList" parameterType="faceDeviceInfo" resultMap="FACEDEVICEINFO_ALL">
+        SELECT
+        <include refid="sql_flied_all" />
+        FROM FACE_DEVICE_INFO
+        <include refid="sql_select_condition" />
+    </select>
+    <!-- update sql -->
+    <sql id="update_pojo_sql">
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="id != null " > ID=#{id} , </if>
+				<if test="deviceport != null " > DEVICEPORT = #{deviceport} , </if>
+				<if test="deviceip != null " > DEVICEIP = #{deviceip} , </if>
+				<if test="deviceaddress != null " > DEVICEADDRESS = #{deviceaddress} , </if>
+				<if test="luserid != null" > LUSERID = #{luserid} , </if>
+				<if test="datasource != null" > DATASOURCE = #{datasource} , </if>
+				<if test="compcode != null" > COMPCODE = #{compcode} , </if>
+				<if test="isshare != null" > ISSHARE = #{isshare} , </if>
+				<if test="deleted != null" > DELETED = #{deleted} , </if>
+				<if test="memo != null" > MEMO = #{memo} , </if>
+				<if test="memo2 != null" > MEMO2 = #{memo2} , </if>
+				<if test="memo3 != null" > MEMO3 = #{memo3} , </if>
+				<if test="shareobject != null" > SHAREOBJECT = #{shareobject} , </if>
+        </trim>
+    </sql>
+
+    <!--通过id编辑 ywwb905 2022-10-08 -->
+    <update id="updatePojo" parameterType="faceDeviceInfo">
+        UPDATE
+        FACE_DEVICE_INFO
+        <include refid="update_pojo_sql" />
+        WHERE ID = #{id}
+    </update>
+
+    <!--通过id批量删除  ywwb436 2022-06-30 
+    <delete id="deleteById" parameterType="faceDeviceInfo">
+        DELETE
+        FROM
+        FACE_DEVICE_INFO
+        WHERE ID = #{id}
+    </delete> -->
+	
+	<!--通过id批量删除  ywwb436 2022-06-30 -->
+    <delete id="deleteAll" parameterType="faceDeviceInfo">
+        DELETE
+        FROM
+        FACE_DEVICE_INFO
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="id != null and id != '' ">ID = #{id} AND</if>
+        </trim>
+    </delete>
+	
+	
+	<select id="queryBaseInfoList" parameterType="faceDeviceInfoView" resultMap="FACEDEVICEINFO_ALL_EXT">
+		SELECT 
+			DI.ID,
+			DN.NAME,
+			DN.TYPE,
+			DI.DEVICEPORT,
+			DI.DEVICEIP,
+			DI.DEVICEADDRESS,
+			DI.LUSERID,
+			DI.DATASOURCE,
+			DI.COMPCODE,
+			DI.ISSHARE,
+			DI.DELETED,
+			DI.MEMO,
+			DI.MEMO2,
+			DI.MEMO3,
+			DI.SHAREOBJECT
+		FROM (SELECT * FROM FACE_DEVICE_INFO T WHERE T.DELETED = '0' AND T.SHAREOBJECT = 'XJZG') DI
+			LEFT JOIN FACE_DEVICE_NAME DN ON DI.DEVICEIP = DN.DEVICEIP 
+		<trim prefix="WHERE" suffixOverrides="AND">
+            <if test="id != null and id != '' ">DI.ID = #{id} AND</if>
+            <if test="name != null and name != '' ">DN.NAME = #{name} AND</if>
+            <if test="type != null and type != '' ">DN.TYPE = #{type} AND</if>
+        </trim>
+	</select>
+
+</mapper>

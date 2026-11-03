@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tansun.wf.platform.mapper.WfLeaveTransferMapper">
+
+	<resultMap type="com.tansun.wf.platform.model.WfLeaveTransferEntity" id="wfLeaveTransferMap">
+		<result column="CLASSIFY_ID" property="classifyId" javaType="java.lang.String"/>
+		<result column="CLASSIFY_NAME" property="classifyName" javaType="java.lang.String"/>
+		<result column="USER_ID" property="userId" javaType="java.lang.String"/>
+		<result column="TRANSFER_ID" property="transferId" javaType="java.lang.String"/>
+		<result column="START_TIME" property="startTime" javaType="java.util.Date"/>
+		<result column="END_TIME" property="endTime" javaType="java.util.Date"/>
+		<result column="DESCRIBE_" property="describe" javaType="java.lang.String"/>
+		<result column="STATUS" property="status" javaType="java.lang.String"/>
+		<result column="START_STATUS" property="startStatus" javaType="java.lang.String"/>
+		<result column="ROOT_ID" property="rootId" javaType="java.lang.String"/>
+		<result column="TENANT_ID" property="tenantId" javaType="java.lang.String"/>
+		<result column="is_transfer" property="isTransfer" javaType="java.lang.String"/>
+		<result column="is_power" property="isPower" javaType="java.lang.String"/>
+		<result column="is_transfer_historical_tasks" property="isTransferHistoricalTasks" javaType="java.lang.String"/>
+		<result column="id" property="id" javaType="java.lang.String"/>
+		<result column="procInstId" property="procInstId" javaType="java.lang.String"/>
+	</resultMap>
+
+	<sql id="wfLeaveTransferColumns">
+		a.id,
+		a.classify_id,
+		a.classify_name,
+		a.root_id,
+		a.user_id,
+		a.PROC_INST_ID,
+		a.transfer_id,
+		a.start_time,
+		a.end_time,
+		a.status,
+		a.start_status,
+		a.describe_,
+		a.is_transfer,
+		a.is_power,
+		a.is_transfer_historical_tasks
+	</sql>
+
+	<select id="findList"  resultMap="wfLeaveTransferMap">
+		SELECT
+		<include refid="wfLeaveTransferColumns"/>
+		FROM wf_leave_transfer a
+		<where>
+			<if test="classifyId != null and classifyId !=''">
+				AND a.classify_id = #{classifyId}
+			</if>
+			<if test="transferId != null and transferId != ''">
+				AND a.transfer_id = #{transferId}
+			</if>
+			<if test="status != null and status != ''">
+				AND a.status = #{status}
+			</if>
+			<if test="tenantId != null and tenantId != ''">
+				AND a.TENANT_ID = #{tenantId}
+			</if>
+		</where>
+	</select>
+
+</mapper>

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k6991 2020-07-01 -->
+<mapper namespace="com.work.ppm.application.model.othermanager.PpmUtilCodegenerate">
+	 <resultMap type="ppmUtilCodegenerate" id="PPMUTILCODEGENERATE_ALL">
+        <result property="code" column="CODE" />
+		<result property="value" column="VALUE" />
+		
+     </resultMap>
+
+     <!-- 所有字段名称 -->
+        <sql id="sql_flied_all">
+        	CODE,
+			VALUE
+        </sql>
+    	<!-- 查询分页  2020-07-01 k6991  -->
+        <select id="queryPagerList" parameterType="map" resultMap="PPMUTILCODEGENERATE_ALL">
+        	SELECT
+            <include refid="sql_flied_all" />
+            FROM PPM_UTIL_CODEGENERATE
+            <trim prefix="WHERE" suffixOverrides="AND">
+                <if test="code != null  and code != '' " > CODE = #{code} AND </if>
+				<if test="value != null " > VALUE = #{value} AND </if>
+				
+            </trim>
+        </select>
+
+        <!-- 新增  2020-07-01 k6991  -->
+        <insert id="addPojo" parameterType="ppmUtilCodegenerate">
+    		INSERT INTO PPM_UTIL_CODEGENERATE (
+    		<trim suffixOverrides=",">
+    		 <if test="code != null  and code != '' " > CODE , </if>
+				<if test="value != null " > VALUE , </if>
+				
+              </trim>
+    		)
+    		VALUES(
+    		<trim suffixOverrides=",">
+    		 <if test="code != null  and code != '' " > #{code} , </if>
+				<if test="value != null " > #{value} , </if>
+				
+            </trim>
+    		)
+        </insert>
+
+        <!--通过id查询  k6991 2020-07-01 -->
+        <select id="queryDetail" parameterType="ppmUtilCodegenerate" resultMap="PPMUTILCODEGENERATE_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_UTIL_CODEGENERATE  WHERE CODE=#{code}
+        </select>
+
+         <!--查询集合  k6991 2020-07-01 -->
+        <select id="getList" parameterType="map" resultMap="PPMUTILCODEGENERATE_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_UTIL_CODEGENERATE
+        	<trim prefix="WHERE" suffixOverrides="AND">
+        		<if test="code != null  and code != '' " > CODE=#{code} AND </if>
+				<if test="value != null " > VALUE=#{value} AND </if>
+				
+            </trim>
+        </select>
+        <!-- update sql -->
+        <sql id="update_pojo_sql">
+        	<trim prefix="SET" suffixOverrides=",">
+        		<if test="code != null  and code != '' " > CODE=#{code} , </if>
+				<if test="value != null " > VALUE=#{value} , </if>
+				
+            </trim>
+        </sql>
+
+        <!--通过id编辑 k6991 2020-07-01 -->
+    	<update id="updatePojo" parameterType="ppmUtilCodegenerate">
+        	UPDATE
+        	PPM_UTIL_CODEGENERATE
+        	<include refid="update_pojo_sql" />
+        	WHERE CODE=#{code}
+        </update>
+
+        <!--通过id批量删除  k6991 2020-07-01 -->
+        <delete id="deleteById" parameterType="ppmUtilCodegenerate">
+        	DELETE
+        	FROM
+        	PPM_UTIL_CODEGENERATE
+        	WHERE CODE = #{code}
+        </delete>
+
+        <!-- 获取主键id -->
+        <select id="getPrimaryKey" parameterType="map" resultType="long">
+            SELECT MAX(CODE) FROM PPM_UTIL_CODEGENERATE
+        </select>
+</mapper>

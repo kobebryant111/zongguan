@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+  
+<mapper namespace="com.tansun.wf.activiti.mapper.WfUserMapper">
+
+    <select id="findUserByOrgList" resultType="java.lang.String">
+        SELECT
+            u.login_name loginName
+        FROM
+            sys_user u
+        WHERE
+            u.del_flag = '0'
+        <if test="orgList != null and orgList.size > 0">
+            AND (
+                EXISTS (
+                    SELECT
+                        1
+                    FROM
+                        sys_office f
+                    WHERE
+                        u.office_id = f. ID
+
+                        AND f. CODE IN
+                        <foreach collection="orgList" item="orgId" open="(" separator="," close=")">
+                            #{orgId}
+                        </foreach>
+
+                )
+            )
+        </if>
+
+    </select>
+    <select id="findUserByDeptList" resultType="java.lang.String">
+        SELECT
+            u.login_name loginName
+        FROM
+            sys_user u
+        WHERE
+            u.del_flag = '0'
+        <if test="deptList != null and deptList.size > 0">
+            AND (
+                EXISTS (
+                    SELECT
+                        1
+                    FROM
+                        sys_office f
+                    WHERE
+                        u.office_id = f. ID
+
+                        AND f. CODE IN
+                        <foreach collection="deptList" item="deptId" open="(" separator="," close=")">
+                            #{deptId}
+                        </foreach>
+
+                )
+            )
+        </if>
+
+    </select>
+
+  <select id="findUserByRoleList" resultType="java.lang.String">
+    SELECT
+        u.login_name loginName
+    FROM
+        sys_user u
+    WHERE
+        u.del_flag = '0'
+    AND EXISTS (
+        SELECT
+            1
+        FROM
+            sys_user_role ur,
+            sys_role r
+        WHERE
+            ur.user_id = u.id
+        AND ur.role_id = r.id
+        <if test="roleList != null and roleList.size() >0">
+            AND r.enname IN
+            <foreach collection="roleList" item="roleEnname" open="(" separator="," close=")">
+                #{roleEnname}
+            </foreach>
+        </if>
+    )
+  </select>
+
+  <select id="findMainOrgCodeByUser" resultType="java.lang.String">
+    SELECT
+	f.code
+    FROM
+        sys_office f
+    WHERE
+        f.del_flag = '0'
+    AND EXISTS (
+        SELECT
+            1
+        FROM
+            sys_user u
+        WHERE
+            u.company_id = f.id
+        AND u.login_name = #{loginName}
+    )
+  </select>
+
+    <select id="findHiCandidateUsers" resultType="java.lang.String">
+        SELECT DISTINCT
+            USER_ID_
+        FROM
+            act_hi_identitylink
+        WHERE
+            TYPE_ = 'candidate'
+        AND TASK_ID_ = #{taskId}
+        AND GROUP_ID_ IS NULL
+
+    </select>
+    
+     <select id="findOrgOfficeName" resultType="java.lang.String">
+        SELECT DISTINCT
+            name
+        FROM
+            sys_office
+        WHERE
+         	code = #{code}
+          AND del_flag = '0'
+    </select>
+     <select id="findUserName" resultType="java.lang.String">
+       SELECT DISTINCT
+            name
+        FROM
+            sys_user
+        WHERE
+         	login_name = #{userId}
+          AND del_flag = '0'
+    </select>
+    
+       <select id="findUserEmails" resultType="java.lang.String">
+        SELECT
+            email
+        FROM
+            sys_user 
+        WHERE
+            del_flag = '0'       
+		AND login_name IN 
+           <foreach collection="userList" item="userId" open="(" separator="," close=")">
+               #{userId}
+           </foreach>           
+    </select> 
+</mapper>

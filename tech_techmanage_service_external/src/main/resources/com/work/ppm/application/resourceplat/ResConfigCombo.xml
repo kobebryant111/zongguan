@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k9597 2021-08-12 -->
+<mapper namespace="com.work.ppm.application.model.resourceplat.ResConfigCombo">
+    <resultMap type="ResConfigCombo" id="RESCONFIGCOMBO_ALL">
+        <result property="id" column="ID"/>
+        <result property="category" column="CATEGORY"/>
+        <result property="subcategory" column="SUBCATEGORY"/>
+        <result property="applyscene" column="APPLYSCENE"/>
+        <result property="describe" column="DESCRIBE"/>
+        <result property="cpunum" column="CPUNUM"/>
+        <result property="cpucore" column="CPUCORE"/>
+        <result property="frequency" column="FREQUENCY"/>
+        <result property="memory" column="MEMORY"/>
+        <result property="diskcapacity" column="DISKCAPACITY"/>
+        <result property="disknum1" column="DISKNUM1"/>
+        <result property="diskconfig1" column="DISKCONFIG1"/>
+        <result property="diskconfigid1" column="DISKCONFIGID1"/>
+        <result property="disknum2" column="DISKNUM2"/>
+        <result property="diskconfig2" column="DISKCONFIG2"/>
+        <result property="diskconfigid2" column="DISKCONFIGID2"/>
+        <result property="disknum3" column="DISKNUM3"/>
+        <result property="diskconfig3" column="DISKCONFIG3"/>
+        <result property="diskconfigid3" column="DISKCONFIGID3"/>
+        <result property="netcardnum" column="NETCARDNUM"/>
+        <result property="fibercardnum" column="FIBERCARDNUM"/>
+        <result property="gpunum" column="GPUNUM"/>
+        <result property="gputype" column="GPUTYPE"/>
+        <result property="gpuid" column="gpuid"/>
+        <result property="devopslevel" column="DEVOPSLEVEL"/>
+        <result property="isrelatefund" column="ISRELATEFUND"/>
+        <result property="isspecial" column="ISSPECIAL"/>
+        <result property="price" column="PRICE"/>
+        <result property="status" column="STATUS"/>
+        <result property="creator" column="CREATOR"/>
+        <result property="createtime" column="CREATETIME"/>
+
+    </resultMap>
+
+    <!-- 获取套餐列表数据  -->
+    <select id="queryConfigComboList" parameterType="map" resultMap="RESCONFIGCOMBO_ALL">
+        SELECT T.*
+        FROM RES_CONFIG_COMBO T
+        WHERE T.STATUS IN ('1', '2')
+          AND T.CATEGORY =#{comboOneId}
+        ORDER BY T.ISCANCEL,T.STATUS,T.SUBCATEGORY,T.CREATETIME DESC
+    </select>
+
+    <!-- 获取套餐列表数据  -->
+    <select id="queryConfigComboViewList" parameterType="map" resultMap="RESCONFIGCOMBO_ALL">
+        SELECT T.*
+        FROM RES_CONFIG_COMBO T
+        WHERE T.STATUS ='2'
+          AND T.PRICE > 0
+          AND T.ISCANCEL ='0'
+          AND T.CATEGORY =#{comboOneId}
+        ORDER BY T.STATUS,T.SUBCATEGORY,T.CREATETIME DESC
+    </select>
+
+    <!-- 获取套餐明细 -->
+    <select id="queryConfigComboViewInfo" parameterType="String" resultMap="RESCONFIGCOMBO_ALL">
+        SELECT T.*
+        FROM RES_CONFIG_COMBO T
+        WHERE T.STATUS ='2'
+          AND T.ID=#{id}
+    </select>
+    <!-- 获取SAN归档数据 -->
+    <select id="querySanComboViewInfo"  resultMap="RESCONFIGCOMBO_ALL">
+        SELECT T.*
+        FROM RES_CONFIG_COMBO T
+        WHERE T.STATUS ='2'
+          AND T.SUBCATEGORY ='51'
+          AND T.ISSPECIAL='1'
+    </select>
+
+    <!-- 新增配置信息 -->
+    <insert id="addConfigComboData" parameterType="ResConfigCombo">
+        INSERT INTO RES_CONFIG_COMBO (
+                            ID,
+        <trim suffixOverrides=",">
+            <if test="category != null  and category != '' " > CATEGORY , </if>
+            <if test="subcategory != null  and subcategory != '' " > SUBCATEGORY , </if>
+            <if test="applyscene != null  and applyscene != '' " > APPLYSCENE , </if>
+            <if test="describe != null  and describe != '' " > DESCRIBE , </if>
+            <if test="cpunum != null " > CPUNUM , </if>
+            <if test="cpucore != null " > CPUCORE , </if>
+            <if test="frequency != null  " > FREQUENCY , </if>
+            <if test="memory != null  " > MEMORY, </if>
+            <if test="diskcapacity != null  " > DISKCAPACITY, </if>
+            <if test="disknum1 != null " > DISKNUM1, </if>
+            <if test="diskconfig1 != null  " > DISKCONFIG1, </if>
+            <if test="diskconfigid1 != null  " > DISKCONFIGID1, </if>
+            <if test="disknum2 != null " > DISKNUM2, </if>
+            <if test="diskconfig2 != null  " > DISKCONFIG2, </if>
+            <if test="diskconfigid2 != null  " > DISKCONFIGID2, </if>
+            <if test="disknum3 != null " > DISKNUM3, </if>
+            <if test="diskconfig3 != null  " > DISKCONFIG3, </if>
+            <if test="diskconfigid3 != null  " > DISKCONFIGID3, </if>
+            <if test="netcardnum != null " > NETCARDNUM, </if>
+            <if test="fibercardnum != null " > FIBERCARDNUM, </if>
+            <if test="gpunum != null " > GPUNUM, </if>
+            <if test="gputype != null " > GPUTYPE, </if>
+            <if test="gpuid != null " > GPUID, </if>
+            <if test="devopslevel != null  and devopslevel != '' " > DEVOPSLEVEL, </if>
+            <if test="isrelatefund != null  and isrelatefund != '' " > ISRELATEFUND, </if>
+            <if test="isspecial != null  and isspecial != '' " > ISSPECIAL, </if>
+            <if test="price != null  and price != '' " > PRICE, </if>
+            <if test="status != null  and status != '' " > STATUS, </if>
+            <if test="ratio != null  and ratio != '' " > RATIO, </if>
+            <if test="creator != null  and creator != '' " > CREATOR, </if>
+            <if test="createtime != null " > CREATETIME, </if>
+        </trim>
+        )
+        VALUES(
+        #{id},
+        <trim suffixOverrides=",">
+            <if test="category != null  and category != '' " > #{category} , </if>
+            <if test="subcategory != null  and subcategory != '' " > #{subcategory} , </if>
+            <if test="applyscene != null  and applyscene != '' " > #{applyscene} , </if>
+            <if test="describe != null  and describe != '' " > #{describe} , </if>
+            <if test="cpunum != null " > #{cpunum} , </if>
+            <if test="cpucore != null   " > #{cpucore} , </if>
+            <if test="frequency != null   " > #{frequency} , </if>
+            <if test="memory != null   " > #{memory}, </if>
+            <if test="diskcapacity != null   " > #{diskcapacity}, </if>
+            <if test="disknum1 != null   " > #{disknum1}, </if>
+            <if test="diskconfig1 != null   " > #{diskconfig1}, </if>
+            <if test="diskconfigid1 != null   " > #{diskconfigid1}, </if>
+            <if test="disknum2 != null   " > #{disknum2}, </if>
+            <if test="diskconfig2 != null   " > #{diskconfig2}, </if>
+            <if test="diskconfigid2 != null   " > #{diskconfigid2}, </if>
+            <if test="disknum3 != null   " > #{disknum3}, </if>
+            <if test="diskconfig3 != null   " > #{diskconfig3}, </if>
+            <if test="diskconfigid3 != null   " > #{diskconfigid3}, </if>
+            <if test="netcardnum != null   " > #{netcardnum}, </if>
+            <if test="fibercardnum != null   " > #{fibercardnum}, </if>
+            <if test="gpunum != null " > #{gpunum}, </if>
+            <if test="gputype != null " > #{gputype}, </if>
+            <if test="gpuid != null " > #{gpuid}, </if>
+            <if test="devopslevel != null  and devopslevel != '' " > #{devopslevel}, </if>
+            <if test="isrelatefund != null  and isrelatefund != '' " > #{isrelatefund}, </if>
+            <if test="isspecial != null  and isspecial != '' " > #{isspecial}, </if>
+            <if test="price != null  and price != '' " > #{price}, </if>
+            <if test="status != null  and status != '' " > #{status}, </if>
+            <if test="ratio != null  and ratio != '' " > #{ratio}, </if>
+            <if test="creator != null  and creator != '' " > #{creator}, </if>
+            <if test="createtime != null " > #{createtime}, </if>
+        </trim>
+        )
+    </insert>
+
+    <!-- 更新配置信息 -->
+    <update id="upConfigComboData" parameterType="ResConfigCombo">
+        UPDATE RES_CONFIG_COMBO
+
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="applyscene != null  and applyscene != '' " > APPLYSCENE=#{applyscene} , </if>
+            <if test="describe != null" > DESCRIBE =#{describe} , </if>
+            <if test="cpunum != null and cpunum != '' " > CPUNUM =#{cpunum} , </if>
+            <if test="cpucore != null and cpucore !='' " > CPUCORE =#{cpucore} , </if>
+            <if test="frequency != null  " >FREQUENCY = #{frequency} , </if>
+            <if test="memory != null  and memory != '' " > MEMORY =#{memory}, </if>
+            <if test="diskcapacity != null  and diskcapacity != '' " > DISKCAPACITY=#{diskcapacity}, </if>
+            <if test="disknum1 != null  and disknum1 != '' " > DISKNUM1=#{disknum1}, </if>
+            <if test="diskconfig1 != null " > DISKCONFIG1=#{diskconfig1}, </if>
+            <if test="diskconfigid1 != null  " > DISKCONFIGID1=#{diskconfigid1}, </if>
+            <if test="disknum2 != null  and disknum2 != '' " > DISKNUM2=#{disknum2}, </if>
+            <if test="diskconfig2 != null  " > DISKCONFIG2=#{diskconfig2}, </if>
+            <if test="diskconfigid2 != null  " > DISKCONFIGID2=#{diskconfigid2}, </if>
+            <if test="disknum3 != null  and disknum3 != '' " > DISKNUM3=#{disknum3}, </if>
+            <if test="diskconfig3 != null   " > DISKCONFIG3=#{diskconfig3}, </if>
+            <if test="diskconfigid3 != null " > DISKCONFIGID3=#{diskconfigid3}, </if>
+            <if test="netcardnum != null  and netcardnum != '' " > NETCARDNUM=#{netcardnum}, </if>
+            <if test="fibercardnum != null  and fibercardnum != '' " > FIBERCARDNUM=#{fibercardnum}, </if>
+            <if test="gpunum != null  and gpunum != '' " > GPUNUM=#{gpunum}, </if>
+            <if test="gputype != null" > GPUTYPE=#{gputype}, </if>
+            <if test="gpuid != null" > GPUID=#{gpuid}, </if>
+            <if test="devopslevel != null  and devopslevel != '' and devopslevel != 'undefined' " > DEVOPSLEVEL=#{devopslevel}, </if>
+            <if test="isrelatefund != null  and isrelatefund != '' and isrelatefund != 'undefined'  " > ISRELATEFUND=#{isrelatefund}, </if>
+            <if test="isspecial != null  and isspecial != '' " > ISSPECIAL=#{isspecial}, </if>
+            <if test="price != null  and price != '' " > PRICE=#{price}, </if>
+            <if test="status != null  and status != '' " > STATUS=#{status}, </if>
+            <if test="ratio != null  and ratio != '' and ratio != 'undefined' " > RATIO=#{ratio}, </if>
+        </trim>
+
+        WHERE ID =#{id}
+    </update>
+
+    <!-- 更新物理机套餐状态 -->
+    <update id ="upConfigComboStatus" parameterType="map">
+        UPDATE RES_CONFIG_COMBO
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="status != null  and status != '' " > STATUS=#{status} , </if>
+            <if test="iscancel != null  and iscancel != '' " > ISCANCEL=#{iscancel} , </if>
+        </trim>
+        WHERE ID in
+        <foreach collection="ids" index="index" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+
+    </update>
+
+    <!-- 校验是否有未完成的报价订单 -->
+    <select id="getConfigidCnt"  parameterType="map" resultType="long">
+        SELECT COUNT(1) FROM (
+             SELECT SOFTID configid, ADDEDID ADDEDID FROM RES_ADDED_ITEM_VERSION
+             UNION
+             SELECT PARTID configid, ADDEDID ADDEDID FROM RES_ADDED_ITEM_PARTS
+             UNION
+             SELECT MOUNTTYPE configid,ADDEDID ADDEDID FROM RES_ADDED_ITEM
+             UNION
+             SELECT OS configid,ADDEDID ADDEDID FROM RES_ADDED_ITEM
+             UNION
+             SELECT MODELCONFIG configid,ADDEDID ADDEDID FROM RES_ADDED_ITEM
+             UNION
+             SELECT RESCONFIGID configid,EXTENDITEMID ADDEDID FROM RES_EXTEND_ITEM_PARTS) c
+        LEFT JOIN RES_ADDED t ON t.id=c.addedid
+        WHERE t.status NOT IN('5','7')
+          and configid IN
+              <foreach collection="ids" index="index" item="id" open="(" close=")" separator=",">
+                #{id}
+              </foreach>
+    </select>
+
+    <!-- 存储套餐归档数据的唯一性 -->
+    <select id="getDdCnt"  parameterType="map" resultType="long">
+        SELECT COUNT(1)
+        FROM RES_CONFIG_COMBO
+        WHERE STATUS = '2'
+          AND ISSPECIAL = '1'
+          AND ISCANCEL ='0'
+          AND CATEGORY = #{category}
+    </select>
+
+    <!-- 查询是否发布SAN套餐 -->
+    <select id="getPublishCount"  parameterType="map" resultType="long">
+        SELECT COUNT(1)
+        FROM RES_CONFIG_COMBO
+        WHERE CATEGORY = '5'
+          AND STATUS = '2'
+          AND ISSPECIAL = '0'
+          AND SUBCATEGORY ='51'
+          AND ISCANCEL ='0'
+          AND DEVOPSLEVEL =#{devopslevel}
+          AND ISRELATEFUND =#{isrelatefund}
+
+    </select>
+
+    <!-- 获取物理机配件  -->
+    <select id="queryPhysicalParts" parameterType="map" resultMap="RESCONFIGCOMBO_ALL">
+        SELECT T.*
+        FROM RES_CONFIG_COMBO T
+        WHERE T.STATUS ='2'
+          AND T.CATEGORY ='2'
+          AND T.ISCANCEL ='0'
+        ORDER BY T.STATUS,T.SUBCATEGORY,T.CREATETIME DESC
+    </select>
+
+</mapper>

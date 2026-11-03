@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k6991 2020-06-12 -->
+<mapper namespace="com.work.ppm.application.model.flowmanager.PpmFlowShouquanLog">
+	 <resultMap type="ppmFlowShouquanLog" id="PPMFLOWSHOUQUANLOG_ALL">
+        <result property="id" column="ID" />
+		<result property="processinstid" column="PROCESSINSTID" />
+		<result property="workitemid" column="WORKITEMID" />
+		<result property="shouquanren" column="SHOUQUANREN" />
+		<result property="beishouquanren" column="BEISHOUQUANREN" />
+		<result property="processinstname" column="PROCESSINSTNAME" />
+		<result property="processdefname" column="PROCESSDEFNAME" />
+		<result property="activitydefid" column="ACTIVITYDEFID" />
+		<result property="isdel" column="ISDEL" />
+		<result property="createtime" column="CREATETIME" />
+		<result property="creators" column="CREATORS" />
+		<result property="lastmodtime" column="LASTMODTIME" />
+		<result property="lastmoduser" column="LASTMODUSER" />
+		
+     </resultMap>
+
+     <!-- 所有字段名称 -->
+        <sql id="sql_flied_all">
+        	ID,
+			PROCESSINSTID,
+			WORKITEMID,
+			SHOUQUANREN,
+			BEISHOUQUANREN,
+			PROCESSINSTNAME,
+			PROCESSDEFNAME,
+			ACTIVITYDEFID,
+			ISDEL,
+			CREATETIME,
+			CREATORS,
+			LASTMODTIME,
+			LASTMODUSER
+        </sql>
+    	<!-- 查询分页  2020-06-12 k6991  -->
+        <select id="queryPagerList" parameterType="map" resultMap="PPMFLOWSHOUQUANLOG_ALL">
+        	SELECT
+            <include refid="sql_flied_all" />
+            FROM PPM_FLOW_SHOUQUAN_LOG
+            <trim prefix="WHERE" suffixOverrides="AND">
+                <if test="id != null " > ID = #{id} AND </if>
+				<if test="processinstid != null  and processinstid != '' " > PROCESSINSTID = #{processinstid} AND </if>
+				<if test="workitemid != null  and workitemid != '' " > WORKITEMID = #{workitemid} AND </if>
+				<if test="shouquanren != null  and shouquanren != '' " > SHOUQUANREN = #{shouquanren} AND </if>
+				<if test="beishouquanren != null  and beishouquanren != '' " > BEISHOUQUANREN = #{beishouquanren} AND </if>
+				<if test="processinstname != null  and processinstname != '' " > PROCESSINSTNAME = #{processinstname} AND </if>
+				<if test="processdefname != null  and processdefname != '' " > PROCESSDEFNAME = #{processdefname} AND </if>
+				<if test="activitydefid != null  and activitydefid != '' " > ACTIVITYDEFID = #{activitydefid} AND </if>
+				<if test="isdel != null " > ISDEL = #{isdel} AND </if>
+				<if test="createtime != null " > CREATETIME = #{createtime} AND </if>
+				<if test="creators != null  and creators != '' " > CREATORS = #{creators} AND </if>
+				<if test="lastmodtime != null " > LASTMODTIME = #{lastmodtime} AND </if>
+				<if test="lastmoduser != null  and lastmoduser != '' " > LASTMODUSER = #{lastmoduser} AND </if>
+				
+            </trim>
+        </select>
+
+        <!-- 新增  2020-06-12 k6991  -->
+        <insert id="addPojo" parameterType="ppmFlowShouquanLog">
+    		INSERT INTO PPM_FLOW_SHOUQUAN_LOG (
+    		<trim suffixOverrides=",">
+    		 <if test="id != null " > ID , </if>
+				<if test="processinstid != null  and processinstid != '' " > PROCESSINSTID , </if>
+				<if test="workitemid != null  and workitemid != '' " > WORKITEMID , </if>
+				<if test="shouquanren != null  and shouquanren != '' " > SHOUQUANREN , </if>
+				<if test="beishouquanren != null  and beishouquanren != '' " > BEISHOUQUANREN , </if>
+				<if test="processinstname != null  and processinstname != '' " > PROCESSINSTNAME , </if>
+				<if test="processdefname != null  and processdefname != '' " > PROCESSDEFNAME , </if>
+				<if test="activitydefid != null  and activitydefid != '' " > ACTIVITYDEFID , </if>
+				<if test="isdel != null " > ISDEL , </if>
+				<if test="createtime != null " > CREATETIME , </if>
+				<if test="creators != null  and creators != '' " > CREATORS , </if>
+				<if test="lastmodtime != null " > LASTMODTIME , </if>
+				<if test="lastmoduser != null  and lastmoduser != '' " > LASTMODUSER , </if>
+				
+              </trim>
+    		)
+    		VALUES(
+    		<trim suffixOverrides=",">
+    		 <if test="id != null " > #{id} , </if>
+				<if test="processinstid != null  and processinstid != '' " > #{processinstid} , </if>
+				<if test="workitemid != null  and workitemid != '' " > #{workitemid} , </if>
+				<if test="shouquanren != null  and shouquanren != '' " > #{shouquanren} , </if>
+				<if test="beishouquanren != null  and beishouquanren != '' " > #{beishouquanren} , </if>
+				<if test="processinstname != null  and processinstname != '' " > #{processinstname} , </if>
+				<if test="processdefname != null  and processdefname != '' " > #{processdefname} , </if>
+				<if test="activitydefid != null  and activitydefid != '' " > #{activitydefid} , </if>
+				<if test="isdel != null " > #{isdel} , </if>
+				<if test="createtime != null " > #{createtime} , </if>
+				<if test="creators != null  and creators != '' " > #{creators} , </if>
+				<if test="lastmodtime != null " > #{lastmodtime} , </if>
+				<if test="lastmoduser != null  and lastmoduser != '' " > #{lastmoduser} , </if>
+				
+            </trim>
+    		)
+        </insert>
+
+        <!--通过id查询  k6991 2020-06-12 -->
+        <select id="queryDetail" parameterType="map" resultMap="PPMFLOWSHOUQUANLOG_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_FLOW_SHOUQUAN_LOG  WHERE ID=#{id}
+        </select>
+
+         <!--查询集合  k6991 2020-06-12 -->
+        <select id="getList" parameterType="map" resultMap="PPMFLOWSHOUQUANLOG_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_FLOW_SHOUQUAN_LOG
+        	<trim prefix="WHERE" suffixOverrides="AND">
+        		<if test="id != null " > ID=#{id} AND </if>
+				<if test="processinstid != null  and processinstid != '' " > PROCESSINSTID=#{processinstid} AND </if>
+				<if test="workitemid != null  and workitemid != '' " > WORKITEMID=#{workitemid} AND </if>
+				<if test="shouquanren != null  and shouquanren != '' " > SHOUQUANREN=#{shouquanren} AND </if>
+				<if test="beishouquanren != null  and beishouquanren != '' " > BEISHOUQUANREN=#{beishouquanren} AND </if>
+				<if test="processinstname != null  and processinstname != '' " > PROCESSINSTNAME=#{processinstname} AND </if>
+				<if test="processdefname != null  and processdefname != '' " > PROCESSDEFNAME=#{processdefname} AND </if>
+				<if test="activitydefid != null  and activitydefid != '' " > ACTIVITYDEFID=#{activitydefid} AND </if>
+				<if test="isdel != null " > ISDEL=#{isdel} AND </if>
+				<if test="createtime != null " > CREATETIME=#{createtime} AND </if>
+				<if test="creators != null  and creators != '' " > CREATORS=#{creators} AND </if>
+				<if test="lastmodtime != null " > LASTMODTIME=#{lastmodtime} AND </if>
+				<if test="lastmoduser != null  and lastmoduser != '' " > LASTMODUSER=#{lastmoduser} AND </if>
+				
+            </trim>
+        </select>
+        <!-- update sql -->
+        <sql id="update_pojo_sql">
+        	<trim prefix="SET" suffixOverrides=",">
+        		<if test="id != null " > ID=#{id} , </if>
+				<if test="processinstid != null  and processinstid != '' " > PROCESSINSTID=#{processinstid} , </if>
+				<if test="workitemid != null  and workitemid != '' " > WORKITEMID=#{workitemid} , </if>
+				<if test="shouquanren != null  and shouquanren != '' " > SHOUQUANREN=#{shouquanren} , </if>
+				<if test="beishouquanren != null  and beishouquanren != '' " > BEISHOUQUANREN=#{beishouquanren} , </if>
+				<if test="processinstname != null  and processinstname != '' " > PROCESSINSTNAME=#{processinstname} , </if>
+				<if test="processdefname != null  and processdefname != '' " > PROCESSDEFNAME=#{processdefname} , </if>
+				<if test="activitydefid != null  and activitydefid != '' " > ACTIVITYDEFID=#{activitydefid} , </if>
+				<if test="isdel != null " > ISDEL=#{isdel} , </if>
+				<if test="createtime != null " > CREATETIME=#{createtime} , </if>
+				<if test="creators != null  and creators != '' " > CREATORS=#{creators} , </if>
+				<if test="lastmodtime != null " > LASTMODTIME=#{lastmodtime} , </if>
+				<if test="lastmoduser != null  and lastmoduser != '' " > LASTMODUSER=#{lastmoduser} , </if>
+				
+            </trim>
+        </sql>
+
+        <!--通过id编辑 k6991 2020-06-12 -->
+    	<update id="updatePojo" parameterType="ppmFlowShouquanLog">
+        	UPDATE
+        	PPM_FLOW_SHOUQUAN_LOG
+        	<include refid="update_pojo_sql" />
+        	WHERE ID=#{id}
+        </update>
+
+        <!--通过id批量删除  k6991 2020-06-12 -->
+        <delete id="deleteById" parameterType="ppmFlowShouquanLog">
+        	DELETE
+        	FROM
+        	PPM_FLOW_SHOUQUAN_LOG
+        	WHERE ID = #{id}
+        </delete>
+
+        <!-- 获取主键id -->
+        <select id="getPrimaryKey" parameterType="map" resultType="long">
+            SELECT MAX(ID) FROM PPM_FLOW_SHOUQUAN_LOG
+        </select>
+</mapper>

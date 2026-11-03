@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:ywwb905 2023-05-19 -->
+<!--  监保部台账领用申请表 查询脚本 -->
+<mapper namespace="com.work.ppm.application.model.otherdeptmanager.PpmAccessCardApply">
+	 <resultMap type="ppmAccessCardApply" id="PPMACCESSCARDAPPLY_ALL">
+        <result property="id" column="ID" />
+		<result property="type" column="TYPE" />
+		<result property="instanceId" column="INSTANCE_ID" />
+		<result property="applyerId" column="APPLYER_ID" />
+		<result property="applyerDeptId" column="APPLYER_DEPT_ID" />
+		<result property="fileNo" column="FILE_NO" />
+		<result property="state" column="STATE" />
+		<result property="stateName" column="STATE_NAME" />
+		<result property="currentId" column="CURRENT_ID" />
+		<result property="currentName" column="CURRENT_NAME" />
+		<result property="isDel" column="IS_DEL" />
+		<result property="createdTime" column="CREATED_TIME" />
+		<result property="createdBy" column="CREATED_BY" />
+		<result property="modifiedTime" column="MODIFIED_TIME" />
+		<result property="modifiedBy" column="MODIFIED_BY" />
+     </resultMap>
+	 <resultMap type="ppmAccessCardApplyExt" id="PPMACCESSCARDAPPLY_ALL_EXT" extends="PPMACCESSCARDAPPLY_ALL">
+		<result property="applyerName" column="APPLYER_NAME" />
+		<result property="applyerDeptName" column="APPLYER_DEPT_NAME" />
+     </resultMap>
+
+     <!-- 所有字段名称 -->
+    <sql id="sql_flied_all">
+        ID,
+			TYPE,
+			INSTANCE_ID,
+			APPLYER_ID,
+			APPLYER_DEPT_ID,
+			FILE_NO,
+			STATE,
+			STATE_NAME,
+			CURRENT_ID,
+			CURRENT_NAME,
+			IS_DEL,
+			CREATED_TIME,
+			CREATED_BY,
+			MODIFIED_TIME,
+			MODIFIED_BY
+    </sql>
+    <sql id="sql_select_condition">
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="id != null  and id != '' " > ID = #{id} AND </if>
+				<if test="type != null  and type != '' " > TYPE = #{type} AND </if>
+				<if test="instanceId != null  and instanceId != '' " > INSTANCE_ID = #{instanceId} AND </if>
+				<if test="applyerId != null  and applyerId != '' " > APPLYER_ID = #{applyerId} AND </if>
+				<if test="applyerDeptId != null  and applyerDeptId != '' " > APPLYER_DEPT_ID = #{applyerDeptId} AND </if>
+				<if test="fileNo != null  and fileNo != '' " > FILE_NO = #{fileNo} AND </if>
+				<if test="state != null  and state != '' " > STATE = #{state} AND </if>
+				<if test="stateName != null  and stateName != '' " > STATE_NAME = #{stateName} AND </if>
+				<if test="currentId != null  and currentId != '' " > CURRENT_ID = #{currentId} AND </if>
+				<if test="currentName != null  and currentName != '' " > CURRENT_NAME = #{currentName} AND </if>
+				<if test="isDel != null  and isDel != '' " > ID_DEL = #{isDel} AND </if>
+				<if test="createdTime != null " > CREATED_TIME = #{createdTime} AND </if>
+				<if test="createdBy != null  and createdBy != '' " > CREATED_BY = #{createdBy} AND </if>
+				<if test="modifiedTime != null " > MODIFIED_TIME = #{modifiedTime} AND </if>
+				<if test="modifiedBy != null  and modifiedBy != '' " > MODIFIED_BY = #{modifiedBy} AND </if>
+				
+        </trim>
+    </sql>
+    <!-- 查询分页  2023-05-19 ywwb905  -->
+    <select id="queryPagerList" parameterType="map" resultMap="PPMACCESSCARDAPPLY_ALL">
+        SELECT
+        <include refid="sql_flied_all" />
+        FROM PPM_ACCESS_CARD_APPLY
+        <include refid="sql_select_condition" />
+    </select>
+
+    <!-- 新增  2023-05-19 ywwb905  -->
+    <insert id="addPojo" parameterType="ppmAccessCardApply">
+        INSERT INTO PPM_ACCESS_CARD_APPLY (
+        <trim suffixOverrides=",">
+         <if test="id != null  and id != '' " > ID , </if>
+				<if test="type != null  and type != '' " > TYPE , </if>
+				<if test="instanceId != null  and instanceId != '' " > INSTANCE_ID , </if>
+				<if test="applyerId != null  and applyerId != '' " > APPLYER_ID , </if>
+				<if test="applyerDeptId != null  and applyerDeptId != '' " > APPLYER_DEPT_ID , </if>
+				<if test="fileNo != null  and fileNo != '' " > FILE_NO , </if>
+				<if test="state != null  and state != '' " > STATE , </if>
+				<if test="stateName != null  and stateName != '' " > STATE_NAME , </if>
+				<if test="currentId != null " > CURRENT_ID , </if>
+				<if test="currentName != null " > CURRENT_NAME , </if>
+				<if test="isDel != null and isDel != ''" > IS_DEL , </if>
+				<if test="createdTime != null " > CREATED_TIME , </if>
+				<if test="createdBy != null  and createdBy != '' " > CREATED_BY , </if>
+				<if test="modifiedTime != null " > MODIFIED_TIME , </if>
+				<if test="modifiedBy != null  and modifiedBy != '' " > MODIFIED_BY , </if>
+				
+          </trim>
+        )
+        VALUES(
+        <trim suffixOverrides=",">
+         <if test="id != null  and id != '' " > #{id} , </if>
+				<if test="type != null  and type != '' " > #{type} , </if>
+				<if test="instanceId != null  and instanceId != '' " > #{instanceId} , </if>
+				<if test="applyerId != null  and applyerId != '' " > #{applyerId} , </if>
+				<if test="applyerDeptId != null  and applyerDeptId != '' " > #{applyerDeptId} , </if>
+				<if test="fileNo != null  and fileNo != '' " > #{fileNo} , </if>
+				<if test="state != null  and state != '' " > #{state} , </if>
+				<if test="stateName != null  and stateName != '' " > #{stateName} , </if>
+				<if test="currentId != null " > #{currentId} , </if>
+				<if test="currentName != null " > #{currentName} , </if>
+				<if test="isDel != null and isDel != ''" > #{isDel} , </if>
+				<if test="createdTime != null " > #{createdTime} , </if>
+				<if test="createdBy != null  and createdBy != '' " > #{createdBy} , </if>
+				<if test="modifiedTime != null " > #{modifiedTime} , </if>
+				<if test="modifiedBy != null  and modifiedBy != '' " > #{modifiedBy} , </if>
+				
+        </trim>
+        )
+    </insert>
+
+    <!--通过id查询  ywwb905 2023-05-19 -->
+    <select id="queryDetail" parameterType="ppmAccessCardApply" resultMap="PPMACCESSCARDAPPLY_ALL">
+        SELECT
+        <include refid="sql_flied_all" />
+        FROM PPM_ACCESS_CARD_APPLY  
+		<trim prefix="WHERE" suffixOverrides="AND">
+            <if test="id != null  and id != '' " > ID = #{id} AND </if>
+			<if test="instanceId != null  and instanceId != '' " > INSTANCE_ID = #{instanceId} AND </if>
+			<if test="id == null  and instanceId == null " >ID = '' AND</if>
+        </trim>
+    </select>
+
+     <!--查询集合  ywwb905 2023-05-19 -->
+    <select id="getList" parameterType="ppmAccessCardApply" resultMap="PPMACCESSCARDAPPLY_ALL">
+        SELECT
+        <include refid="sql_flied_all" />
+        FROM PPM_ACCESS_CARD_APPLY
+        <include refid="sql_select_condition" />
+    </select>
+    <!-- update sql -->
+    <sql id="update_pojo_sql">
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="id != null  and id != '' " > ID=#{id} , </if>
+				<if test="type != null  and type != '' " > TYPE=#{type} , </if>
+				<if test="instanceId != null  and instanceId != '' " > INSTANCE_ID=#{instanceId} , </if>
+				<if test="applyerId != null  and applyerId != '' " > APPLYER_ID=#{applyerId} , </if>
+				<if test="applyerDeptId != null  and applyerDeptId != '' " > APPLYER_DEPT_ID=#{applyerDeptId} , </if>
+				<if test="fileNo != null  and fileNo != '' " > FILE_NO=#{fileNo} , </if>
+				<if test="state != null  and state != '' " > STATE=#{state} , </if>
+				<if test="stateName != null  and stateName != '' " > STATE_NAME=#{stateName} , </if>
+				<if test="currentId != null " > CURRENT_ID=#{currentId} , </if>
+				<if test="currentName != null " > CURRENT_NAME=#{currentName} , </if>
+				<if test="isDel != null " > IS_DEL=#{isDel} , </if>
+				<if test="createdTime != null " > CREATED_TIME=#{createdTime} , </if>
+				<if test="createdBy != null  and createdBy != '' " > CREATED_BY=#{createdBy} , </if>
+				<if test="modifiedTime != null " > MODIFIED_TIME=#{modifiedTime} , </if>
+				<if test="modifiedBy != null  and modifiedBy != '' " > MODIFIED_BY=#{modifiedBy} , </if>
+				
+        </trim>
+    </sql>
+
+    <!--通过id编辑 ywwb905 2023-05-19 -->
+    <update id="updatePojo" parameterType="ppmAccessCardApply">
+        UPDATE
+        PPM_ACCESS_CARD_APPLY
+        <include refid="update_pojo_sql" />
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="id != null  and id != '' " > ID = #{id} AND </if>
+			<if test="instanceId != null  and instanceId != '' " > INSTANCE_ID = #{instanceId} AND </if>
+			<if test="id == null  and instanceId == null " >ID = '' AND</if>
+        </trim>
+    </update>
+
+    <!--通过id批量删除  ywwb905 2023-05-19 -->
+    <delete id="deleteById" parameterType="ppmAccessCardApply">
+        DELETE
+        FROM
+        PPM_ACCESS_CARD_APPLY
+        WHERE ID = #{id}
+    </delete>
+	
+	<!--通过id批量删除  ywwb905 2023-05-19 -->
+    <delete id="deleteByInstanceId" parameterType="ppmAccessCardApply">
+        DELETE
+        FROM
+        PPM_ACCESS_CARD_APPLY
+        WHERE INSTANCE_ID = #{instanceId}
+    </delete>
+	
+	<select id="queryDetailForInstanceId" parameterType="ppmAccessCardApplyExt" resultMap="PPMACCESSCARDAPPLY_ALL_EXT">
+        SELECT
+		  A.ID,
+		  A.TYPE,
+		  A.INSTANCE_ID,
+		  A.APPLYER_ID,
+		  A.APPLYER_DEPT_ID,
+		  A.STATE,
+		  A.STATE_NAME,
+		  A.CURRENT_ID,
+		  A.CURRENT_NAME,
+		  A.CREATED_TIME,
+		  A.CREATED_BY,
+		  A.MODIFIED_TIME,
+		  A.MODIFIED_BY,
+		  A.FILE_NO,
+		  A.IS_DEL,
+		  D.LOCATION APPLYER_DEPT_NAME,
+		  E.EMPNAME APPLYER_NAME
+		FROM PPM_ACCESS_CARD_APPLY A 
+			LEFT JOIN COMM_DEPARTMENT D ON A.APPLYER_DEPT_ID = D.DEPID
+			LEFT JOIN COMM_EMPLOYEE E ON E.BADGE = A.APPLYER_ID
+		WHERE INSTANCE_ID = #{instanceId}
+    </select>
+
+</mapper>

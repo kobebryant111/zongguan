@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:ywwb905 2022-12-07 -->
+<!--  风险评估表 查询脚本 -->
+<mapper namespace="com.work.ppm.application.model.suppliermanager.PpmSupplierRiskEval">
+	 <resultMap type="ppmSupplierRiskEval" id="PPMSUPPLIERRISKEVAL_ALL">
+        <result property="id" column="ID" />
+		<result property="instanceid" column="INSTANCEID" />
+		<result property="assessType" column="ASSESS_TYPE" />
+		<result property="assessYear" column="ASSESS_YEAR" />
+		<result property="busiName" column="BUSI_NAME" />
+		<result property="busiType" column="BUSI_TYPE" />
+		<result property="supplierId" column="SUPPLIER_ID" />
+		<result property="impInfo" column="IMP_INFO" />
+		<result property="executionMode" column="EXECUTION_MODE" />
+		<result property="affectBusiType" column="AFFECT_BUSI_TYPE" />
+		<result property="assessScores" column="ASSESS_SCORES" />
+		<result property="assessResult" column="ASSESS_RESULT" />
+		<result property="pmId" column="PM_ID" />
+		<result property="deptId" column="DEPT_ID" />
+		<result property="leaderPmId" column="LEADER_PM_ID" />
+		<result property="state" column="STATE" />
+		<result property="stateName" column="STATE_NAME" />
+		<result property="currentId" column="CURRENT_ID" />
+		<result property="currentName" column="CURRENT_NAME" />
+		<result property="createdTime" column="CREATED_TIME" />
+		<result property="createdBy" column="CREATED_BY" />
+		<result property="modifiedTime" column="MODIFIED_TIME" />
+		<result property="modifiedBy" column="MODIFIED_BY" />
+		
+     </resultMap>
+	 <resultMap id="PPMSUPPLIERRISKEVAL_ALL_EXT" type="ppmSupplierRiskEvalExt" extends="PPMSUPPLIERRISKEVAL_ALL">
+		<result property="pmName" column="PM_NAME" />
+		<result property="deptName" column="DEPT_NAME" />
+		<result property="supplierName" column="SUPPLIER_NAME" />
+		<result property="leaderPmName" column="LEADER_PM_NAME" />
+		<result property="pmValue" column="PM_VALUE" />
+		<result property="deptIdVal" column="DEPT_ID_VAL" />
+		<result property="pmIdVal" column="PM_ID_VAL" />
+     </resultMap>
+
+     <!-- 所有字段名称 -->
+    <sql id="sql_flied_all">
+        ID,
+		INSTANCEID,
+		ASSESS_TYPE,
+		ASSESS_YEAR,
+		BUSI_NAME,
+		BUSI_TYPE,
+		SUPPLIER_ID,
+		IMP_INFO,
+		EXECUTION_MODE,
+		AFFECT_BUSI_TYPE,
+		ASSESS_SCORES,
+		ASSESS_RESULT,
+		PM_ID,
+		DEPT_ID,
+		LEADER_PM_ID,
+		STATE,
+		STATE_NAME,
+		CURRENT_ID,
+		CURRENT_NAME,
+		CREATED_TIME,
+		CREATED_BY,
+		MODIFIED_TIME,
+		MODIFIED_BY
+    </sql>
+    <sql id="sql_select_condition">
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="id != null " > ID = #{id} AND </if>
+		<if test="instanceid != null  and instanceid != '' " > INSTANCEID = #{instanceid} AND </if>
+		<if test="assessType != null  and assessType != '' " > ASSESS_TYPE = #{assessType} AND </if>
+		<if test="assessYear != null  and assessYear != '' " > ASSESS_YEAR = #{assessYear} AND </if>
+		<if test="busiName != null  and busiName != '' " > BUSI_NAME = #{busiName} AND </if>
+		<if test="busiType != null  and busiType != '' " > BUSI_TYPE = #{busiType} AND </if>
+		<if test="supplierId != null  and supplierId != '' " > SUPPLIER_ID = #{supplierId} AND </if>
+		<if test="impInfo != null  and impInfo != '' " > IMP_INFO = #{impInfo} AND </if>
+		<if test="executionMode != null  and executionMode != '' " > EXECUTION_MODE = #{executionMode} AND </if>
+		<if test="affectBusiType != null  and affectBusiType != '' " > AFFECT_BUSI_TYPE = #{affectBusiType} AND </if>
+		<if test="assessScores != null  and assessScores != '' " > ASSESS_SCORES = #{assessScores} AND </if>
+		<if test="assessResult != null  and assessResult != '' " > ASSESS_RESULT = #{assessResult} AND </if>
+		<if test="pmId != null  and pmId != '' " > PM_ID = #{pmId} AND </if>
+		<if test="deptId != null  and deptId != '' " > DEPT_ID = #{deptId} AND </if>
+		<if test="leaderPmId != null  and leaderPmId != '' " > LEADER_PM_ID = #{leaderPmId} AND </if>
+		<if test="state != null  and state != '' " > STATE = #{state} AND </if>
+		<if test="stateName != null  and stateName != '' " > STATE_NAME = #{stateName} AND </if>
+		<if test="currentId != null  and currentId != '' " > CURRENT_ID = #{currentId} AND </if>
+		<if test="currentName != null  and currentName != '' " > CURRENT_NAME = #{currentName} AND </if>
+		<if test="createdTime != null " > CREATED_TIME = #{createdTime} AND </if>
+		<if test="createdBy != null  and createdBy != '' " > CREATED_BY = #{createdBy} AND </if>
+		<if test="modifiedTime != null " > MODIFIED_TIME = #{modifiedTime} AND </if>
+		<if test="modifiedBy != null  and modifiedBy != '' " > MODIFIED_BY = #{modifiedBy} AND </if>
+        </trim>
+    </sql>
+    <!-- 查询分页  2022-12-07 ywwb905  -->
+    <select id="queryPagerList" parameterType="map" resultMap="PPMSUPPLIERRISKEVAL_ALL">
+        SELECT
+        <include refid="sql_flied_all" />
+        FROM PPM_SUPPLIER_RISK_EVAL
+        <include refid="sql_select_condition" />
+    </select>
+
+    <!-- 新增  2022-12-07 ywwb905  -->
+    <insert id="addPojo" parameterType="ppmSupplierRiskEval">
+        INSERT INTO PPM_SUPPLIER_RISK_EVAL (
+        <trim suffixOverrides=",">
+         <if test="id != null " > ID , </if>
+		<if test="instanceid != null  and instanceid != '' " > INSTANCEID , </if>
+		<if test="assessType != null  and assessType != '' " > ASSESS_TYPE , </if>
+		<if test="assessYear != null  and assessYear != '' " > ASSESS_YEAR , </if>
+		<if test="busiName != null  and busiName != '' " > BUSI_NAME , </if>
+		<if test="busiType != null  and busiType != '' " > BUSI_TYPE , </if>
+		<if test="supplierId != null  and supplierId != '' " > SUPPLIER_ID , </if>
+		<if test="impInfo != null  and impInfo != '' " > IMP_INFO , </if>
+		<if test="executionMode != null  and executionMode != '' " > EXECUTION_MODE , </if>
+		<if test="affectBusiType != null  and affectBusiType != '' " > AFFECT_BUSI_TYPE , </if>
+		<if test="assessScores != null  and assessScores != '' " > ASSESS_SCORES , </if>
+		<if test="assessResult != null  and assessResult != '' " > ASSESS_RESULT , </if>
+		<if test="pmId != null  and pmId != '' " > PM_ID , </if>
+		<if test="deptId != null  and deptId != '' " > DEPT_ID , </if>
+		<if test="leaderPmId != null  and leaderPmId != '' " > LEADER_PM_ID , </if>
+		<if test="state != null  and state != '' " > STATE , </if>
+		<if test="stateName != null  and stateName != '' " > STATE_NAME , </if>
+		<if test="currentId != null  and currentId != '' " > CURRENT_ID , </if>
+		<if test="currentName != null  and currentName != '' " > CURRENT_NAME , </if>
+		<if test="createdTime != null " > CREATED_TIME , </if>
+		<if test="createdBy != null  and createdBy != '' " > CREATED_BY , </if>
+		<if test="modifiedTime != null " > MODIFIED_TIME , </if>
+		<if test="modifiedBy != null  and modifiedBy != '' " > MODIFIED_BY , </if>
+          </trim>
+        )
+        VALUES(
+        <trim suffixOverrides=",">
+		<if test="id != null " > #{id} , </if>
+		<if test="instanceid != null  and instanceid != '' " > #{instanceid} , </if>
+		<if test="assessType != null  and assessType != '' " > #{assessType} , </if>
+		<if test="assessYear != null  and assessYear != '' " > #{assessYear} , </if>
+		<if test="busiName != null  and busiName != '' " > #{busiName} , </if>
+		<if test="busiType != null  and busiType != '' " > #{busiType} , </if>
+		<if test="supplierId != null  and supplierId != '' " > #{supplierId} , </if>
+		<if test="impInfo != null  and impInfo != '' " > #{impInfo} , </if>
+		<if test="executionMode != null  and executionMode != '' " > #{executionMode} , </if>
+		<if test="affectBusiType != null  and affectBusiType != '' " > #{affectBusiType} , </if>
+		<if test="assessScores != null  and assessScores != '' " > #{assessScores} , </if>
+		<if test="assessResult != null  and assessResult != '' " > #{assessResult} , </if>
+		<if test="pmId != null  and pmId != '' " > #{pmId} , </if>
+		<if test="deptId != null  and deptId != '' " > #{deptId} , </if>
+		<if test="leaderPmId != null  and leaderPmId != '' " > #{leaderPmId} , </if>
+		<if test="state != null  and state != '' " > #{state} , </if>
+		<if test="stateName != null  and stateName != '' " > #{stateName} , </if>
+		<if test="currentId != null  and currentId != '' " > #{currentId} , </if>
+		<if test="currentName != null  and currentName != '' " > #{currentName} , </if>
+		<if test="createdTime != null " > #{createdTime} , </if>
+		<if test="createdBy != null  and createdBy != '' " > #{createdBy} , </if>
+		<if test="modifiedTime != null " > #{modifiedTime} , </if>
+		<if test="modifiedBy != null  and modifiedBy != '' " > #{modifiedBy} , </if>
+        </trim>
+        )
+    </insert>
+
+    <!--通过id查询  ywwb905 2022-12-26 -->
+    <select id="queryDetail" parameterType="ppmSupplierRiskEval" resultMap="PPMSUPPLIERRISKEVAL_ALL">
+        SELECT
+        <include refid="sql_flied_all" />
+        FROM PPM_SUPPLIER_RISK_EVAL  WHERE ID=#{id}
+    </select>
+
+     <!--查询集合  ywwb905 2022-12-26 -->
+    <select id="getList" parameterType="ppmSupplierRiskEval" resultMap="PPMSUPPLIERRISKEVAL_ALL">
+        SELECT
+        <include refid="sql_flied_all" />
+        FROM PPM_SUPPLIER_RISK_EVAL
+        <include refid="sql_select_condition" />
+    </select>
+    <!-- update sql -->
+    <sql id="update_pojo_sql">
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="id != null " > ID=#{id} , </if>
+			<if test="instanceid != null  and instanceid != '' " > INSTANCEID=#{instanceid} , </if>
+			<if test="assessType != null  and assessType != '' " > ASSESS_TYPE=#{assessType} , </if>
+			<if test="assessYear != null  and assessYear != '' " > ASSESS_YEAR=#{assessYear} , </if>
+			<if test="busiName != null  and busiName != '' " > BUSI_NAME=#{busiName} , </if>
+			<if test="busiType != null  and busiType != '' " > BUSI_TYPE=#{busiType} , </if>
+			<if test="supplierId != null  and supplierId != '' " > SUPPLIER_ID=#{supplierId} , </if>
+			<if test="impInfo != null  and impInfo != '' " > IMP_INFO=#{impInfo} , </if>
+			<if test="executionMode != null  and executionMode != '' " > EXECUTION_MODE=#{executionMode} , </if>
+			<if test="affectBusiType != null  and affectBusiType != '' " > AFFECT_BUSI_TYPE=#{affectBusiType} , </if>
+			<if test="assessScores != null  and assessScores != '' " > ASSESS_SCORES=#{assessScores} , </if>
+			<if test="assessResult != null  and assessResult != '' " > ASSESS_RESULT=#{assessResult} , </if>
+			<if test="pmId != null  and pmId != '' " > PM_ID=#{pmId} , </if>
+			<if test="deptId != null  and deptId != '' " > DEPT_ID=#{deptId} , </if>
+			<if test="leaderPmId != null  and leaderPmId != '' " > LEADER_PM_ID=#{leaderPmId} , </if>
+			<if test="state != null  and state != '' " > STATE=#{state} , </if>
+			<if test="stateName != null  and stateName != '' " > STATE_NAME=#{stateName} , </if>
+			<if test="currentId != null  and currentId != '' " > CURRENT_ID=#{currentId} , </if>
+			<if test="currentName != null  and currentName != '' " > CURRENT_NAME=#{currentName} , </if>
+			<if test="createdTime != null " > CREATED_TIME=#{createdTime} , </if>
+			<if test="createdBy != null  and createdBy != '' " > CREATED_BY=#{createdBy} , </if>
+			<if test="modifiedTime != null " > MODIFIED_TIME=#{modifiedTime} , </if>
+			<if test="modifiedBy != null  and modifiedBy != '' " > MODIFIED_BY=#{modifiedBy} , </if>
+        </trim>
+    </sql>
+
+    <!--通过id编辑 ywwb905 2022-12-26 -->
+    <update id="updatePojo" parameterType="ppmSupplierRiskEval">
+        UPDATE
+        PPM_SUPPLIER_RISK_EVAL
+        <include refid="update_pojo_sql" />
+        WHERE ID=#{id}
+    </update>
+
+    <!--通过id批量删除  ywwb905 2022-12-26 -->
+    <delete id="deleteById" parameterType="ppmSupplierRiskEval">
+        DELETE
+        FROM
+        PPM_SUPPLIER_RISK_EVAL
+        WHERE ID = #{id}
+    </delete>
+	
+	<!--通过id批量删除  ywwb905 2022-12-07 -->
+    <delete id="deleteByInstanceId" parameterType="ppmSupplierRiskEval">
+        DELETE
+        FROM
+        PPM_SUPPLIER_RISK_EVAL
+        WHERE INSTANCEID = #{instanceid}
+    </delete>
+	
+	<!--通过id查询  ywwb905 2022-12-08 -->
+	<select id="queryBaseInfo" parameterType="ppmSupplierRiskEvalExt" resultMap="PPMSUPPLIERRISKEVAL_ALL_EXT">
+        SELECT 
+			RE.ID,
+			RE.INSTANCEID,
+			RE.ASSESS_TYPE,
+			RE.ASSESS_YEAR,
+			RE.BUSI_NAME,
+			RE.BUSI_TYPE,
+			RE.SUPPLIER_ID,
+			RE.IMP_INFO,
+			RE.EXECUTION_MODE,
+			RE.AFFECT_BUSI_TYPE,
+			RE.ASSESS_SCORES,
+			RE.ASSESS_RESULT,
+			RE.PM_ID,
+			RE.DEPT_ID,
+			RE.LEADER_PM_ID,
+			RE.STATE,
+			RE.STATE_NAME,
+			RE.CURRENT_ID,
+			RE.CURRENT_NAME,
+			RE.CREATED_TIME,
+			RE.CREATED_BY,
+			RE.MODIFIED_TIME,
+			RE.MODIFIED_BY,
+			CE1.EMPNAME PM_NAME,
+			CE2.EMPNAME LEADER_PM_NAME,
+			OI.OUTSOURCNAME SUPPLIER_NAME,
+			CD.LOCATION DEPT_NAME
+		FROM PPM_SUPPLIER_RISK_EVAL RE
+			LEFT JOIN COMM_EMPLOYEE CE1 ON RE.PM_ID = CE1.BADGE
+			LEFT JOIN COMM_EMPLOYEE CE2 ON RE.LEADER_PM_ID = CE2.BADGE
+			LEFT JOIN PPM_OUTSOURCING_INFO OI ON RE.SUPPLIER_ID = OI.ORGCODE
+			LEFT JOIN COMM_DEPARTMENT CD ON RE.DEPT_ID = CD.DEPID
+		<trim prefix="WHERE" suffixOverrides="AND">
+			<if test="id == null and instanceid == null " > RE.ID = '' AND </if>
+            <if test="id != null and id != '' " > RE.ID = #{id} AND </if>
+			<if test="instanceid != null and instanceid != '' " > RE.INSTANCEID = #{instanceid} AND </if>
+        </trim>
+    </select>
+	
+	<select id="queryBaseInfoList" parameterType="ppmSupplierRiskEvalExt" resultMap="PPMSUPPLIERRISKEVAL_ALL_EXT">
+		SELECT 
+			RE.ID,
+			RE.INSTANCEID,
+			RE.ASSESS_TYPE,
+			RE.ASSESS_YEAR,
+			RE.BUSI_NAME,
+			RE.BUSI_TYPE,
+			RE.SUPPLIER_ID,
+			RE.IMP_INFO,
+			RE.EXECUTION_MODE,
+			RE.AFFECT_BUSI_TYPE,
+			RE.ASSESS_SCORES,
+			RE.ASSESS_RESULT,
+			RE.PM_ID,
+			RE.DEPT_ID,
+			RE.LEADER_PM_ID,
+			RE.STATE,
+			RE.STATE_NAME,
+			RE.CURRENT_ID,
+			RE.CURRENT_NAME,
+			RE.CREATED_TIME,
+			RE.CREATED_BY,
+			RE.MODIFIED_TIME,
+			RE.MODIFIED_BY,
+			CE1.EMPNAME PM_NAME,
+			CE2.EMPNAME LEADER_PM_NAME,
+			OI.OUTSOURCNAME SUPPLIER_NAME,
+			CD.LOCATION DEPT_NAME
+		FROM PPM_SUPPLIER_RISK_EVAL RE
+			LEFT JOIN COMM_EMPLOYEE CE1 ON RE.PM_ID = CE1.BADGE
+			LEFT JOIN COMM_EMPLOYEE CE2 ON RE.LEADER_PM_ID = CE2.BADGE
+			LEFT JOIN PPM_OUTSOURCING_INFO OI ON RE.SUPPLIER_ID = OI.ORGCODE
+			LEFT JOIN COMM_DEPARTMENT CD ON RE.DEPT_ID = CD.DEPID
+		<trim prefix="WHERE" suffixOverrides="AND">
+            <if test="pmId != null and pmId != '' ">RE.PM_ID = #{pmId} AND</if>
+            <if test="deptId != null and deptId != '' ">RE.DEPT_ID = #{deptId} AND</if>
+            <if test="pmValue != null and pmValue != '' ">(RE.PM_ID = #{pmValue} OR CE1.EMPNAME = #{pmValue} ) AND</if>
+            <if test="assessYear != null and assessYear != '' ">RE.ASSESS_YEAR = #{assessYear} AND</if>
+            <if test="supplierId != null and supplierId != '' ">RE.SUPPLIER_ID = #{supplierId} AND</if>
+			<if test="state != null and state != '' " > RE.STATE = #{state} AND </if>
+			<if test="assessType != null and assessType != '' " > RE.ASSESS_TYPE = #{assessType} AND </if>
+			<if test="instanceid != null and instanceid != '' " > RE.INSTANCEID = #{instanceid} AND </if>
+			<if test="deptIdVal != null and deptIdVal != '' " > RE.DEPT_ID = #{deptIdVal} AND </if>
+			<if test="pmIdVal != null and pmIdVal != '' " > RE.PM_ID = #{pmIdVal} AND </if>
+			<if test="busiName != null and busiName != '' " > RE.BUSI_NAME = #{busiName} AND </if>
+        </trim>
+		ORDER BY RE.ID DESC
+	</select>
+
+</mapper>

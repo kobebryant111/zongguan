@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.tansun.wf.platform.mapper.ActProcessMapper">
+
+    <resultMap id="hiIdentityLinkResultMap" type="com.tansun.wf.activiti.model.HiIdentityLinkEntity">
+        <id property="id" column="ID_" jdbcType="VARCHAR" />
+        <result property="type" column="TYPE_" jdbcType="VARCHAR" />
+        <result property="userId" column="USER_ID_" jdbcType="VARCHAR" />
+        <result property="groupId" column="GROUP_ID_" jdbcType="VARCHAR" />
+        <result property="taskId" column="TASK_ID_" jdbcType="VARCHAR" />
+        <result property="processInstanceId" column="PROC_INST_ID_" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <insert id="insertHiIdentityLink" parameterType="com.tansun.wf.activiti.model.HiIdentityLinkEntity">
+        insert into ACT_HI_IDENTITYLINK (ID_, TYPE_, USER_ID_, GROUP_ID_, TASK_ID_, PROC_INST_ID_)
+        values (#{id, jdbcType=VARCHAR},
+                #{type, jdbcType=VARCHAR},
+                #{userId, jdbcType=VARCHAR},
+                #{groupId, jdbcType=VARCHAR},
+                #{taskId, jdbcType=VARCHAR},
+                #{processInstanceId, jdbcType=VARCHAR})
+    </insert>
+
+    <select id="findIsTemplate" resultType="integer">
+        select TEMPLATE_
+        from ACT_RE_PROCDEF
+        where ID_ = #{processInfo.processDefineId}
+    </select>
+
+    <update id="updateTemplateStatus">
+        update ACT_RE_PROCDEF
+        set TEMPLATE_=#{isTemplate}
+        where ID_=#{modelId}
+    </update>
+
+    <update id="updateProcessClasstifyXml">
+        update ACT_GE_BYTEARRAY
+        set BYTES_=#{bytes, jdbcType=BLOB}
+        where DEPLOYMENT_ID_=#{deploymentId}
+    </update>
+
+    <update id="updateProcessClasstify">
+        update ACT_RE_PROCDEF
+        set CATEGORY_=#{classtify}
+        where ID_=#{id}
+    </update>
+</mapper>

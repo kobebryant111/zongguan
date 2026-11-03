@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k74879 2021-11-16 -->
+<mapper namespace="com.work.ppm.application.model.onlinemanager.PpmDacenterDemand">
+	 <resultMap type="ppmDacenterDemand" id="PPMDACENTERDEMAND_ALL">
+        <result property="id" column="ID" />
+		<result property="title" column="TITLE" />
+		<result property="demandNo" column="DEMAND_NO" />
+		<result property="createBy" column="CREATE_BY" />
+		<result property="createDate" column="CREATE_DATE" />
+		<result property="demandDept" column="DEMAND_DEPT" />
+		<result property="demandBy" column="DEMAND_BY" />
+		<result property="phone" column="PHONE" />
+		<result property="demandType" column="DEMAND_TYPE" />
+		<result property="demandOnlineDate" column="DEMAND_ONLINE_DATE" />
+		<result property="mainSystemId" column="MAIN_SYSTEM_ID" />
+		<result property="demandRemakr" column="DEMAND_REMAKR" />
+		<result property="processInstId" column="PROCESSINST_ID" />
+		<result property="relationDemandStatus" column="RELATION_DEMAND_STATUS" />
+		<result property="relationDemandProgress" column="RELATION_DEMAND_PROGRESS" />
+		<result property="relationDemandNo" column="RELATION_DEMAND_NO" />
+		<result property="status" column="status" />
+		<result property="relationDemandRemakr" column="RELATION_DEMAND_REMAKR" />
+     </resultMap>
+
+
+	<resultMap id="PPMDACENTERDEMANDINFO_ALL" type="PpmDacenterDemandInfo" extends="PPMDACENTERDEMAND_ALL">
+		<result property="flowStatus" column="flowstatus" />
+		<result property="demandTypeName" column="dictname" />
+		<result property="sysName" column="sys_name" />
+		<result property="deptName" column="location" />
+		<result property="relationDemandStatusName" column="relationDemandStatusName" />
+		<result property="bringUpdate" column="bringupdate" />
+		<result property="buildDate" column="builddate" />
+		<result property="projectStatus" column="project_status" />
+		<result property="actualDate" column="actualdate" />
+	</resultMap>
+
+     <!-- 所有字段名称 -->
+        <sql id="sql_flied_all">
+			pf.flowstatus,
+			ed.dictname,
+			aas.sys_name,
+			cd.location,
+			ed1.dictname as relationDemandStatusName,
+			pd.ID,
+			pd.TITLE,
+			pd.DEMAND_NO,
+			pd.CREATE_BY,
+			pd.CREATE_DATE,
+			pd.DEMAND_DEPT,
+			pd.DEMAND_BY,
+			pd.PHONE,
+			pd.DEMAND_TYPE,
+			pd.DEMAND_ONLINE_DATE,
+			pd.MAIN_SYSTEM_ID,
+			pd.DEMAND_REMAKR,
+			pd.PROCESSINST_ID,
+			pd.RELATION_DEMAND_STATUS,
+			pd.RELATION_DEMAND_PROGRESS,
+			pd.RELATION_DEMAND_NO,
+			pd.RELATION_DEMAND_REMAKR
+        </sql>
+        <sql id="sql_select_condition">
+            <trim prefix="WHERE" suffixOverrides="AND">
+                <if test="id != null " > ID = #{id} AND </if>
+				<if test="title != null  and title != '' " > TITLE = #{title} AND </if>
+				<if test="demandNo != null  and demandNo != '' " > DEMAND_NO = #{demandNo} AND </if>
+				<if test="createBy != null  and createBy != '' " > CREATE_BY = #{createBy} AND </if>
+				<if test="createDate != null " > CREATE_DATE = #{createDate} AND </if>
+				<if test="demandDept != null  and demandDept != '' " > DEMAND_DEPT = #{demandDept} AND </if>
+				<if test="demandBy != null  and demandBy != '' " > DEMAND_BY = #{demandBy} AND </if>
+				<if test="phone != null  and phone != '' " > PHONE = #{phone} AND </if>
+				<if test="demandType != null  and demandType != '' " > DEMAND_TYPE = #{demandType} AND </if>
+				<if test="demandOnlineDate != null " > DEMAND_ONLINE_DATE = #{demandOnlineDate} AND </if>
+				<if test="mainSystemId != null  and mainSystemId != '' " > MAIN_SYSTEM_ID = #{mainSystemId} AND </if>
+				<if test="demandRemakr != null  and demandRemakr != '' " > DEMAND_REMAKR = #{demandRemakr} AND </if>
+				<if test="processInstId != null  and processInstId != '' " > PROCESSINST_ID = #{processInstId} AND </if>
+				<if test="relationDemandStatus != null  and relationDemandStatus != '' " > RELATION_DEMAND_STATUS = #{relationDemandStatus} AND </if>
+				<if test="relationDemandProgress != null " > RELATION_DEMAND_PROGRESS = #{relationDemandProgress} AND </if>
+				<if test="relationDemandNo != null  and relationDemandNo != '' " > RELATION_DEMAND_NO = #{relationDemandNo} AND </if>
+				<if test="relationDemandRemakr != null  and relationDemandRemakr != '' " > RELATION_DEMAND_REMAKR = #{relationDemandRemakr} AND </if>
+				
+            </trim>
+        </sql>
+
+        <!-- 新增  2021-11-16 k74879  -->
+        <insert id="addPojo" parameterType="ppmDacenterDemand">
+    		INSERT INTO PPM_DACENTER_DEMAND (
+    		<trim suffixOverrides=",">
+    		 <if test="id != null " > ID , </if>
+				<if test="title != null  and title != '' " > TITLE , </if>
+				<if test="demandNo != null  and demandNo != '' " > DEMAND_NO , </if>
+				<if test="createBy != null  and createBy != '' " > CREATE_BY , </if>
+				<if test="createDate != null " > CREATE_DATE , </if>
+				<if test="demandDept != null  and demandDept != '' " > DEMAND_DEPT , </if>
+				<if test="demandBy != null  and demandBy != '' " > DEMAND_BY , </if>
+				<if test="phone != null  and phone != '' " > PHONE , </if>
+				<if test="demandType != null  and demandType != '' " > DEMAND_TYPE , </if>
+				<if test="demandOnlineDate != null " > DEMAND_ONLINE_DATE , </if>
+				<if test="mainSystemId != null  and mainSystemId != '' " > MAIN_SYSTEM_ID , </if>
+				<if test="demandRemakr != null  and demandRemakr != '' " > DEMAND_REMAKR , </if>
+				<if test="processInstId != null  and processInstId != '' " > PROCESSINST_ID , </if>
+				<if test="relationDemandStatus != null  and relationDemandStatus != '' " > RELATION_DEMAND_STATUS , </if>
+				<if test="relationDemandProgress != null " > RELATION_DEMAND_PROGRESS , </if>
+				<if test="relationDemandNo != null  and relationDemandNo != '' " > RELATION_DEMAND_NO , </if>
+				<if test="status != null  and status != '' " > status , </if>
+				<if test="relationDemandRemakr != null  and relationDemandRemakr != '' " > RELATION_DEMAND_REMAKR , </if>
+              </trim>
+    		)
+    		VALUES(
+    		<trim suffixOverrides=",">
+    		 <if test="id != null " > #{id} , </if>
+				<if test="title != null  and title != '' " > #{title} , </if>
+				<if test="demandNo != null  and demandNo != '' " > #{demandNo} , </if>
+				<if test="createBy != null  and createBy != '' " > #{createBy} , </if>
+				<if test="createDate != null " > #{createDate} , </if>
+				<if test="demandDept != null  and demandDept != '' " > #{demandDept} , </if>
+				<if test="demandBy != null  and demandBy != '' " > #{demandBy} , </if>
+				<if test="phone != null  and phone != '' " > #{phone} , </if>
+				<if test="demandType != null  and demandType != '' " > #{demandType} , </if>
+				<if test="demandOnlineDate != null " > #{demandOnlineDate} , </if>
+				<if test="mainSystemId != null  and mainSystemId != '' " > #{mainSystemId} , </if>
+				<if test="demandRemakr != null  and demandRemakr != '' " > #{demandRemakr} , </if>
+				<if test="processInstId != null  and processInstId != '' " > #{processInstId} , </if>
+				<if test="relationDemandStatus != null  and relationDemandStatus != '' " > #{relationDemandStatus} , </if>
+				<if test="relationDemandProgress != null " > #{relationDemandProgress} , </if>
+				<if test="relationDemandNo != null  and relationDemandNo != '' " > #{relationDemandNo} , </if>
+				<if test="status != null  and status != '' " > #{status} , </if>
+				<if test="relationDemandRemakr != null  and relationDemandRemakr != '' " > #{relationDemandRemakr} , </if>
+				
+            </trim>
+    		)
+        </insert>
+
+        <!--通过id查询  k74879 2021-11-16 -->
+        <select id="queryDetail" parameterType="ppmDacenterDemand" resultMap="PPMDACENTERDEMANDINFO_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+			from PPM_DACENTER_DEMAND pd
+			left join PPM_PROJECT_FLOW pf on pd.processinst_id=pf.instanceid
+			left join eos_dict_entry ed on ed.dicttypeid='NEWKG_XQFL' and ed.dictid=pd.DEMAND_TYPE
+			left join eos_dict_entry ed1 on ed1.dicttypeid='NEWKG_XQZT' and ed1.dictid=pd.relation_demand_status
+			left join aap_system aas on aas.system_id=pd.main_system_id
+			left join COMM_DEPARTMENT cd on pd.demand_dept=cd.depid
+			<trim prefix="WHERE" suffixOverrides="AND">
+				<if test="id != null " > pd.ID = #{id} AND </if>
+				<if test="processInstId != null  and processInstId != '' " > pd.PROCESSINST_ID = #{processInstId} AND </if>
+			</trim>
+        </select>
+
+
+        <!-- update sql -->
+        <sql id="update_pojo_sql">
+        	<trim prefix="SET" suffixOverrides=",">
+				<if test="title != null  and title != '' " > TITLE=#{title} , </if>
+				<if test="demandNo != null  and demandNo != '' " > DEMAND_NO=#{demandNo} , </if>
+				<if test="demandDept != null  and demandDept != '' " > DEMAND_DEPT=#{demandDept} , </if>
+				<if test="demandBy != null  and demandBy != '' " > DEMAND_BY=#{demandBy} , </if>
+				<if test="phone != null  and phone != '' " > PHONE=#{phone} , </if>
+				<if test="demandType != null  and demandType != '' " > DEMAND_TYPE=#{demandType} , </if>
+				<if test="demandOnlineDate != null " > DEMAND_ONLINE_DATE=#{demandOnlineDate} , </if>
+				<if test="mainSystemId != null  and mainSystemId != '' " > MAIN_SYSTEM_ID=#{mainSystemId} , </if>
+				<if test="demandRemakr != null  and demandRemakr != '' " > DEMAND_REMAKR=#{demandRemakr} , </if>
+				<if test="relationDemandStatus != null  and relationDemandStatus != '' " > RELATION_DEMAND_STATUS=#{relationDemandStatus} , </if>
+				<if test="relationDemandProgress != null " > RELATION_DEMAND_PROGRESS=#{relationDemandProgress} , </if>
+				<if test="relationDemandNo != null  and relationDemandNo != '' " > RELATION_DEMAND_NO=#{relationDemandNo} , </if>
+				<if test="status != null  and status != '' " > status=#{status} , </if>
+				<if test="relationDemandRemakr != null  and relationDemandRemakr != '' " > RELATION_DEMAND_REMAKR=#{relationDemandRemakr} , </if>
+            </trim>
+        </sql>
+
+        <!--通过id编辑 k74879 2021-11-16 -->
+    	<update id="updatePojo" parameterType="ppmDacenterDemand">
+        	UPDATE
+        	PPM_DACENTER_DEMAND
+        	<include refid="update_pojo_sql" />
+			<trim prefix="WHERE" suffixOverrides="AND">
+				<if test="processInstId != null  and processInstId != '' " > PROCESSINST_ID = #{processInstId} AND </if>
+				<if test="id != null " > ID=#{id} AND </if>
+			</trim>
+        </update>
+
+        <!--通过id批量删除  k74879 2021-11-16 -->
+        <delete id="deleteById" parameterType="ppmDacenterDemand">
+        	DELETE
+        	FROM
+        	PPM_DACENTER_DEMAND
+			<trim prefix="WHERE" suffixOverrides="AND">
+				<if test="processInstId != null  and processInstId != '' " > PROCESSINST_ID = #{processInstId} AND </if>
+				<if test="id != null " > ID=#{id} AND </if>
+			</trim>
+        </delete>
+	<!-- 查询分页  2021-11-16 k74879  -->
+	<select id="queryPagerList" parameterType="map" resultMap="PPMDACENTERDEMANDINFO_ALL">
+		select
+			pf.flowstatus,
+			ed.dictname,
+			aas.sys_name,
+			cd.location,
+			case when
+			ot.demanStatus is not null
+			then
+			(select DICTNAME from eos_dict_entry where DICTTYPEID='BUSI_DEMAND_STATUS' and DICTID=ot.demanStatus)
+			else
+			(select DICTNAME from eos_dict_entry where DICTTYPEID='NEWKG_XQZT' and DICTID= pd.relation_demand_status)
+			end
+			as relationDemandStatusName,
+			pd.ID,
+			pd.TITLE,
+			pd.DEMAND_NO,
+			pd.CREATE_BY,
+			pd.CREATE_DATE,
+			pd.DEMAND_DEPT,
+			pd.DEMAND_BY,
+			pd.PHONE,
+			pd.DEMAND_TYPE,
+			pd.DEMAND_ONLINE_DATE,
+			pd.MAIN_SYSTEM_ID,
+			pd.DEMAND_REMAKR,
+			pd.PROCESSINST_ID,
+			pd.RELATION_DEMAND_STATUS,
+			pd.RELATION_DEMAND_PROGRESS,
+			pd.RELATION_DEMAND_NO,
+			pd.RELATION_DEMAND_REMAKR,
+			ot.bringupdate,
+			ot.builddate,
+			ot.status as project_status,
+			ot.actualdate
+				from PPM_DACENTER_DEMAND pd
+				left join PPM_PROJECT_FLOW pf on pd.processinst_id=pf.instanceid
+				left join eos_dict_entry ed on ed.dicttypeid='NEWKG_XQFL' and ed.dictid=pd.DEMAND_TYPE
+				left join aap_system aas on aas.system_id=pd.main_system_id
+				left join COMM_DEPARTMENT cd on pd.demand_dept=cd.depid
+				left join (
+						select t.bringupdate,
+						case when
+						t.status is null
+						then
+						'06'
+						else
+						t.status
+						end as demanStatus,
+						ps.builddate,ps.status,ps.demandno,ps.actualdate from (
+						select distinct * from (
+						select pt.bringupdate,pt.demandno,case when
+						pt.isdel = '1'
+						then
+						'07'
+						else
+						pt1.status
+						end  as status
+						from ppm_demandnewinfo  pt
+						left join ppm_demand_queue pt1 on pt1.demandno = pt.demandno
+						union
+						select  pa.bringupdate,pa.demandno,case when
+						pa.isdel = '1'
+						then
+						'07'
+						else
+						pt2.status
+						end  as status
+						from ppm_demand_apply pa
+						left join ppm_demand_queue pt2 on pt2.demandno = pa.demandno
+						) ) t
+						left join ppm_project_build_soft ps on ps.demandno=t.demandno
+				) ot on ot.demandno=pd.RELATION_DEMAND_NO
+		WHERE pd.status in('1','0')
+		<trim prefix="AND" suffixOverrides="AND">
+			<if test="id != null " > ID = #{id} AND </if>
+			<if test="title != null  and title != '' " > pd.TITLE like  '%'||  #{title} ||'%'  AND </if>
+			<if test="demandNo != null  and demandNo != '' " > pd.DEMAND_NO = #{demandNo} AND </if>
+			<if test="createBy != null  and createBy != '' " > pd.CREATE_BY like  '%'|| #{createBy} ||'%'  AND </if>
+			<if test="demandDept != null  and demandDept != '' " > pd.DEMAND_DEPT = #{demandDept} AND </if>
+			<if test="demandBy != null  and demandBy != '' " > pd.DEMAND_BY like  '%'||  #{demandBy}  ||'%'  AND </if>
+			<if test="phone != null  and phone != '' " > pd.PHONE = #{phone} AND </if>
+			<if test="demandType != null  and demandType != '' " > pd.DEMAND_TYPE = #{demandType} AND </if>
+			<if test="mainSystemId != null  and mainSystemId != '' " > pd.MAIN_SYSTEM_ID = #{mainSystemId} AND </if>
+			<if test="demandRemakr != null  and demandRemakr != '' " > pd.DEMAND_REMAKR = #{demandRemakr} AND </if>
+			<if test="processInstId != null  and processInstId != '' " > pd.PROCESSINST_ID = #{processInstId} AND </if>
+			<if test="relationDemandStatus != null  and relationDemandStatus != '' " > (pd.RELATION_DEMAND_STATUS in ( ${relationDemandStatus}) AND pd.RELATION_DEMAND_NO is null)
+				<if test="demanStatus != null  and demanStatus != '' " >
+				or (ot.demanStatus in ( ${demanStatus})  AND pd.RELATION_DEMAND_NO is not null)
+				</if> AND </if>
+			<if test="relationDemandProgress != null " > pd.RELATION_DEMAND_PROGRESS = #{relationDemandProgress} AND </if>
+			<if test="relationDemandNo != null  and relationDemandNo != '' " > pd.RELATION_DEMAND_NO = #{relationDemandNo} AND </if>
+			<if test="flowStatus != null  and flowStatus != '' and flowStatus != '已结束' " > pf.flowstatus = #{flowStatus} AND </if>
+			<if test="flowStatus=='已结束'"> (pf.flowstatus = #{flowStatus} or pd.id &lt; 0)  AND </if>
+			<if test="projectStatus != null  and projectStatus != ''" >ot.status in (${projectStatus}) AND </if>
+			<if test="startDate != null and startDate != ''">
+				to_char(CREATE_DATE, 'YYYY-MM-DD') BETWEEN
+				#{startDate}
+				AND
+				#{endDate}
+				AND
+			</if>
+			<if test="startDemandOnlineDate != null and startDemandOnlineDate != ''">
+				ot.actualdate BETWEEN
+				to_date(#{startDemandOnlineDate},'YYYY-MM-DD')
+				AND
+				to_date(#{endDemandOnlineDate},'YYYY-MM-DD')
+				AND
+			</if>
+			<if test="startBringUpdate != null and startBringUpdate != ''">
+				ot.bringupdate BETWEEN
+				to_date(#{startBringUpdate},'YYYY-MM-DD')
+				AND
+				to_date(#{endBringUpdate},'YYYY-MM-DD')
+				AND
+			</if>
+			<if test="startBuildDate != null and startBuildDate != ''">
+				ot.builddate BETWEEN
+				to_date(#{startBuildDate},'YYYY-MM-DD')
+				AND
+				to_date(#{endBuildDate},'YYYY-MM-DD')
+				AND
+			</if>
+		</trim>
+		order by pd.create_date desc
+	</select>
+
+
+</mapper>

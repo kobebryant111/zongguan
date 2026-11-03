@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k1327 2021-11-26 -->
+<mapper namespace="com.work.ppm.application.model.depkpi.PpmDepKpiLaunchCenter">
+    <resultMap type="ppmDepKpiLaunchCenter" id="PPMDEPKPILAUNCHCENTER_ALL">
+        <result property="id" column="ID"/>
+        <result property="content" column="CONTENT"/>
+        <result property="islaunch" column="ISLAUNCH"/>
+        <result property="isswitch" column="ISSWITCH"/>
+        <result property="itype" column="ITYPE"/>
+        <result property="autolaunchtime" column="AUTOLAUNCHTIME"/>
+        <result property="launchtime" column="LAUNCHTIME"/>
+        <result property="createtime" column="CREATETIME"/>
+        <result property="isdisabled" column="ISDISABLED"/>
+        <result property="term" column="TERM"/>
+        <result property="tyear" column="TYEAR"/>
+        <result property="launchurl" column="LAUNCHURL"/>
+        <result property="launchtype" column="LAUNCHTYPE"/>
+
+    </resultMap>
+
+    <!-- 所有字段名称 -->
+    <sql id="sql_flied_all">
+        ID,
+        CONTENT,
+        ISLAUNCH,
+        ISSWITCH,
+        ITYPE,
+        AUTOLAUNCHTIME,
+        LAUNCHTIME,
+        CREATETIME,
+        ISDISABLED,
+        TERM,
+        TYEAR,
+        LAUNCHURL,
+        LAUNCHTYPE
+    </sql>
+    <sql id="sql_select_condition">
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="id != null ">ID = #{id} AND</if>
+            <if test="content != null  and content != '' ">CONTENT = #{content} AND</if>
+            <if test="islaunch != null ">ISLAUNCH = #{islaunch} AND</if>
+            <if test="isswitch != null ">ISSWITCH = #{isswitch} AND</if>
+            <if test="itype != null  and itype != '' ">ITYPE = #{itype} AND</if>
+            <if test="autolaunchtime != null  and autolaunchtime != '' ">AUTOLAUNCHTIME = #{autolaunchtime} AND</if>
+            <if test="launchtime != null ">LAUNCHTIME = #{launchtime} AND</if>
+            <if test="createtime != null ">CREATETIME = #{createtime} AND</if>
+            <if test="isdisabled != null ">ISDISABLED = #{isdisabled} AND</if>
+            <if test="term != null  and term != '' ">TERM = #{term} AND</if>
+            <if test="tyear != null  and tyear != '' ">TYEAR = #{tyear} AND</if>
+            <if test="launchurl != null  and launchurl != '' ">LAUNCHURL = #{launchurl} AND</if>
+            <if test="launchtype != null ">LAUNCHTYPE = #{launchtype} AND</if>
+
+        </trim>
+    </sql>
+    <!-- 查询分页  2021-11-26 k1327  -->
+    <select id="queryPagerList" parameterType="map" resultMap="PPMDEPKPILAUNCHCENTER_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM PPM_DEP_KPI_LAUNCH_CENTER
+        <include refid="sql_select_condition"/>
+    </select>
+
+    <!-- 新增  2021-11-26 k1327  -->
+    <insert id="addPojo" parameterType="ppmDepKpiLaunchCenter">
+        INSERT INTO PPM_DEP_KPI_LAUNCH_CENTER (
+        <trim suffixOverrides=",">
+            <if test="id != null ">ID ,</if>
+            <if test="content != null  and content != '' ">CONTENT ,</if>
+            <if test="islaunch != null ">ISLAUNCH ,</if>
+            <if test="isswitch != null ">ISSWITCH ,</if>
+            <if test="itype != null  and itype != '' ">ITYPE ,</if>
+            <if test="autolaunchtime != null  and autolaunchtime != '' ">AUTOLAUNCHTIME ,</if>
+            <if test="launchtime != null ">LAUNCHTIME ,</if>
+            <if test="createtime != null ">CREATETIME ,</if>
+            <if test="isdisabled != null ">ISDISABLED ,</if>
+            <if test="term != null  and term != '' ">TERM ,</if>
+            <if test="tyear != null  and tyear != '' ">TYEAR ,</if>
+            <if test="launchurl != null  and launchurl != '' ">LAUNCHURL ,</if>
+            <if test="launchtype != null ">LAUNCHTYPE ,</if>
+
+        </trim>
+        )
+        VALUES(
+        <trim suffixOverrides=",">
+            <if test="id != null ">#{id} ,</if>
+            <if test="content != null  and content != '' ">#{content} ,</if>
+            <if test="islaunch != null ">#{islaunch} ,</if>
+            <if test="isswitch != null ">#{isswitch} ,</if>
+            <if test="itype != null  and itype != '' ">#{itype} ,</if>
+            <if test="autolaunchtime != null  and autolaunchtime != '' ">#{autolaunchtime} ,</if>
+            <if test="launchtime != null ">#{launchtime} ,</if>
+            <if test="createtime != null ">#{createtime} ,</if>
+            <if test="isdisabled != null ">#{isdisabled} ,</if>
+            <if test="term != null  and term != '' ">#{term} ,</if>
+            <if test="tyear != null  and tyear != '' ">#{tyear} ,</if>
+            <if test="launchurl != null  and launchurl != '' ">#{launchurl} ,</if>
+            <if test="launchtype != null ">#{launchtype} ,</if>
+
+        </trim>
+        )
+    </insert>
+
+    <!--通过id查询  k1327 2021-11-26 -->
+    <select id="queryDetail" parameterType="ppmDepKpiLaunchCenter" resultMap="PPMDEPKPILAUNCHCENTER_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM PPM_DEP_KPI_LAUNCH_CENTER WHERE ID=#{id}
+    </select>
+
+    <!--查询集合  k1327 2021-11-26 -->
+    <select id="getList" parameterType="ppmDepKpiLaunchCenter" resultMap="PPMDEPKPILAUNCHCENTER_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM PPM_DEP_KPI_LAUNCH_CENTER
+        <include refid="sql_select_condition"/>
+    </select>
+    <!-- update sql -->
+    <sql id="update_pojo_sql">
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="id != null ">ID=#{id} ,</if>
+            <if test="content != null  and content != '' ">CONTENT=#{content} ,</if>
+            <if test="islaunch != null ">ISLAUNCH=#{islaunch} ,</if>
+            <if test="isswitch != null ">ISSWITCH=#{isswitch} ,</if>
+            <if test="itype != null  and itype != '' ">ITYPE=#{itype} ,</if>
+            <if test="autolaunchtime != null  and autolaunchtime != '' ">AUTOLAUNCHTIME=#{autolaunchtime} ,</if>
+            <if test="launchtime != null ">LAUNCHTIME=#{launchtime} ,</if>
+            <if test="createtime != null ">CREATETIME=#{createtime} ,</if>
+            <if test="isdisabled != null ">ISDISABLED=#{isdisabled} ,</if>
+            <if test="term != null  and term != '' ">TERM=#{term} ,</if>
+            <if test="tyear != null  and tyear != '' ">TYEAR=#{tyear} ,</if>
+            <if test="launchurl != null  and launchurl != '' ">LAUNCHURL=#{launchurl} ,</if>
+            <if test="launchtype != null ">LAUNCHTYPE=#{launchtype} ,</if>
+
+        </trim>
+    </sql>
+
+    <!--通过id编辑 k1327 2021-11-26 -->
+    <update id="updatePojo" parameterType="ppmDepKpiLaunchCenter">
+        UPDATE
+        PPM_DEP_KPI_LAUNCH_CENTER
+        <include refid="update_pojo_sql"/>
+        WHERE ID=#{id}
+    </update>
+
+    <!--通过id批量删除  k1327 2021-11-26 -->
+    <delete id="deleteById" parameterType="ppmDepKpiLaunchCenter">
+        DELETE
+        FROM
+        PPM_DEP_KPI_LAUNCH_CENTER
+        WHERE ID = #{id}
+    </delete>
+
+</mapper>

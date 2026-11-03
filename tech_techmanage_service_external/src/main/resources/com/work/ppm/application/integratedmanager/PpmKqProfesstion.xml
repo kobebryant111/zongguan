@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k1327 2021-01-27 -->
+<mapper namespace="com.work.ppm.application.model.integratedmanager.PpmKqProfesstion">
+	 <resultMap type="ppmKqProfesstion" id="PPMKQPROFESSTION_ALL">
+        <result property="jobid" column="JOBID" />
+		<result property="createJobid" column="CREATE_JOBID" />
+		<result property="createDate" column="CREATE_DATE" />
+		<result property="jobname" column="JOBNAME" />
+		<result property="id" column="ID" />
+		<result property="deptno" column="DEPTNO" />
+		<result property="remark" column="REMARK" />
+		
+     </resultMap>
+
+     <!-- 所有字段名称 -->
+        <sql id="sql_flied_all">
+        	JOBID,
+			CREATE_JOBID,
+			CREATE_DATE,
+			JOBNAME,
+			ID,
+			DEPTNO,
+			REMARK
+        </sql>
+        <sql id="sql_select_condition">
+            <trim prefix="WHERE" suffixOverrides="AND">
+                <if test="jobid != null  and jobid != '' " > JOBID = #{jobid} AND </if>
+				<if test="createJobid != null  and createJobid != '' " > CREATE_JOBID = #{createJobid} AND </if>
+				<if test="createDate != null " > CREATE_DATE = #{createDate} AND </if>
+				<if test="jobname != null  and jobname != '' " > JOBNAME = #{jobname} AND </if>
+				<if test="id != null " > ID = #{id} AND </if>
+				<if test="deptno != null  and deptno != '' " > DEPTNO = #{deptno} AND </if>
+				<if test="remark != null  and remark != '' " > REMARK = #{remark} AND </if>
+				
+            </trim>
+        </sql>
+    	<!-- 查询分页  2021-01-27 k1327  -->
+        <select id="queryPagerList" parameterType="map" resultMap="PPMKQPROFESSTION_ALL">
+        	SELECT
+            <include refid="sql_flied_all" />
+            FROM PPM_KQ_PROFESSTION
+            <include refid="sql_select_condition" />
+        </select>
+
+        <!-- 新增  2021-01-27 k1327  -->
+        <insert id="addPojo" parameterType="ppmKqProfesstion">
+    		INSERT INTO PPM_KQ_PROFESSTION (
+    		<trim suffixOverrides=",">
+    		 <if test="jobid != null  and jobid != '' " > JOBID , </if>
+				<if test="createJobid != null  and createJobid != '' " > CREATE_JOBID , </if>
+				<if test="createDate != null " > CREATE_DATE , </if>
+				<if test="jobname != null  and jobname != '' " > JOBNAME , </if>
+				<if test="id != null " > ID , </if>
+				<if test="deptno != null  and deptno != '' " > DEPTNO , </if>
+				<if test="remark != null  and remark != '' " > REMARK , </if>
+				
+              </trim>
+    		)
+    		VALUES(
+    		<trim suffixOverrides=",">
+    		 <if test="jobid != null  and jobid != '' " > #{jobid} , </if>
+				<if test="createJobid != null  and createJobid != '' " > #{createJobid} , </if>
+				<if test="createDate != null " > #{createDate} , </if>
+				<if test="jobname != null  and jobname != '' " > #{jobname} , </if>
+				<if test="id != null " > #{id} , </if>
+				<if test="deptno != null  and deptno != '' " > #{deptno} , </if>
+				<if test="remark != null  and remark != '' " > #{remark} , </if>
+				
+            </trim>
+    		)
+        </insert>
+
+        <!--通过id查询  k1327 2021-01-27 -->
+        <select id="queryDetail" parameterType="ppmKqProfesstion" resultMap="PPMKQPROFESSTION_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_KQ_PROFESSTION  WHERE JOBID=#{jobid}
+        </select>
+
+         <!--查询集合  k1327 2021-01-27 -->
+        <select id="getList" parameterType="ppmKqProfesstion" resultMap="PPMKQPROFESSTION_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_KQ_PROFESSTION
+        	<include refid="sql_select_condition" />
+        </select>
+        <!-- update sql -->
+        <sql id="update_pojo_sql">
+        	<trim prefix="SET" suffixOverrides=",">
+        		<if test="jobid != null  and jobid != '' " > JOBID=#{jobid} , </if>
+				<if test="createJobid != null  and createJobid != '' " > CREATE_JOBID=#{createJobid} , </if>
+				<if test="createDate != null " > CREATE_DATE=#{createDate} , </if>
+				<if test="jobname != null  and jobname != '' " > JOBNAME=#{jobname} , </if>
+				<if test="id != null " > ID=#{id} , </if>
+				<if test="deptno != null  and deptno != '' " > DEPTNO=#{deptno} , </if>
+				<if test="remark != null  and remark != '' " > REMARK=#{remark} , </if>
+				
+            </trim>
+        </sql>
+
+        <!--通过id编辑 k1327 2021-01-27 -->
+    	<update id="updatePojo" parameterType="ppmKqProfesstion">
+        	UPDATE
+        	PPM_KQ_PROFESSTION
+        	<include refid="update_pojo_sql" />
+        	WHERE JOBID=#{jobid}
+        </update>
+
+        <!--通过id批量删除  k1327 2021-01-27 -->
+        <delete id="deleteById" parameterType="ppmKqProfesstion">
+        	DELETE
+        	FROM
+        	PPM_KQ_PROFESSTION
+        	WHERE JOBID = #{jobid}
+        </delete>
+
+</mapper>

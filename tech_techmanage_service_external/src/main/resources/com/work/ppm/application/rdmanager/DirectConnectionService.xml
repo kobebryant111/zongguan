@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k6991 2020-01-15 -->
+<mapper namespace="com.work.ppm.application.model.rdmanager.RdPurchaseContractDto">
+    <resultMap type="RdPurchaseContractDto" id="RDPURCHASECONTRACTDTO_ALL">
+        <result property="pkId" column="PK_ID"/>
+        <result property="budgetCode" column="BUDGET_CODE"/>
+        <result property="contractCode" column="CONTRACT_CODE"/>
+        <result property="contractName" column="CONTRACT_NAME"/>
+        <result property="contractStartDate" column="CONTRACT_START_DATE"/>
+        <result property="contractEndDate" column="CONTRACT_END_DATE"/>
+        <result property="maintenanceStartDate" column="MAINTENANCE_START_DATE"/>
+        <result property="maintenanceEndDate" column="MAINTENANCE_END_DATE"/>
+        <result property="supplierName" column="SUPPLIER_NAME"/>
+        <result property="invoiceType" column="INVOICE_TYPE"/>
+        <result property="contractTaxPoints" column="CONTRACT_TAX_POINTS"/>
+        <result property="contractAmount" column="CONTRACT_AMOUNT"/>
+        <result property="contractStartDateFlag" column="CONTRACT_START_DATE_FLAG"/>
+        <result property="contractEndDateFlag" column="CONTRACT_END_DATE_FLAG"/>
+    </resultMap>
+    <update id="importDates" parameterType="map">
+        UPDATE RD_PROJECT_CONTRACT
+        <trim prefix="set" suffixOverrides=",">
+            <if test="contractCode != null  and contractCode != '' ">CONTRACT_CODE=#{contractCode} ,</if>
+            <if test="contractName != null  and contractName != '' ">CONTRACT_NAME=#{contractName} ,</if>
+            <if test="contractStartDate != null  and contractStartDate != '' ">CONTRACT_START_DATE=#{contractStartDate}
+                ,
+            </if>
+            <if test="contractEndDate != null  and contractEndDate != '' ">CONTRACT_END_DATE=#{contractEndDate} ,</if>
+            <if test="maintenanceStartDate != null  and maintenanceStartDate != '' ">
+                MAINTENANCE_START_DATE=#{maintenanceStartDate} ,
+            </if>
+            <if test="maintenanceEndDate != null  and maintenanceEndDate != '' ">
+                MAINTENANCE_END_DATE=#{maintenanceEndDate} ,
+            </if>
+            <if test="supplierName != null  and supplierName != '' ">SUPPLIER_NAME=#{supplierName} ,</if>
+            <if test="invoiceType != null  and invoiceType != '' ">INVOICE_TYPE=#{invoiceType} ,</if>
+            <if test="contractTaxPoints != null  and contractTaxPoints != '' ">CONTRACT_TAX_POINTS=#{contractTaxPoints}
+                ,
+            </if>
+            <if test="contractAmount != null  and contractAmount != '' ">CONTRACT_AMOUNT=#{contractAmount} ,</if>
+            <if test="contractStartDateFlag != null  and contractStartDateFlag != '' ">
+                CONTRACT_START_DATE_FLAG=#{contractStartDateFlag} ,
+            </if>
+            <if test="contractEndDateFlag != null  and contractEndDateFlag != '' ">
+                CONTRACT_END_DATE_FLAG=#{contractEndDateFlag} ,
+            </if>
+        </trim>
+        WHERE CONTRACT_CODE = #{contractCode}
+    </update>
+    <update id="imports" parameterType="map">
+        UPDATE RD_PROJECT_CONTRACT
+        <trim prefix="set" suffixOverrides=",">
+            <if test="contractCode != null  and contractCode != '' ">CONTRACT_CODE=#{contractCode} ,</if>
+            <if test="contractName != null  and contractName != '' ">CONTRACT_NAME=#{contractName} ,</if>
+            <if test="contractStartDate != null  and contractStartDate != '' ">CONTRACT_START_DATE=#{contractStartDate}
+                ,
+            </if>
+            <if test="contractEndDate != null  and contractEndDate != '' ">CONTRACT_END_DATE=#{contractEndDate} ,</if>
+            <if test="maintenanceStartDate != null  and maintenanceStartDate != '' ">
+                MAINTENANCE_START_DATE=#{maintenanceStartDate} ,
+            </if>
+            <if test="maintenanceEndDate != null  and maintenanceEndDate != '' ">
+                MAINTENANCE_END_DATE=#{maintenanceEndDate} ,
+            </if>
+            <if test="supplierName != null  and supplierName != '' ">SUPPLIER_NAME=#{supplierName} ,</if>
+            <if test="invoiceType != null  and invoiceType != '' ">INVOICE_TYPE=#{invoiceType} ,</if>
+            <if test="contractTaxPoints != null  and contractTaxPoints != '' ">CONTRACT_TAX_POINTS=#{contractTaxPoints}
+                ,
+            </if>
+            <if test="contractAmount != null  and contractAmount != '' ">CONTRACT_AMOUNT=#{contractAmount} ,</if>
+            <if test="contractStartDateFlag != null  and contractStartDateFlag != '' ">
+                CONTRACT_START_DATE_FLAG=#{contractStartDateFlag} ,
+            </if>
+            <if test="contractEndDateFlag != null  and contractEndDateFlag != '' ">
+                CONTRACT_END_DATE_FLAG=#{contractEndDateFlag} ,
+            </if>
+        </trim>
+        WHERE BUDGET_CODE = #{budgetCode} and PK_ID = #{pkId}
+    </update>
+
+
+    <insert id="payInto" parameterType="list">
+        MERGE INTO RD_CONTRACT_PAY_RECORD P
+        USING (
+        <foreach item="item" collection="list" separator=" UNION ALL ">
+            SELECT
+            sys_guid() AS PK_ID,
+            #{item.rdProjectContractId} as RD_PROJECT_CONTRACT_ID,
+            #{item.serial} as SERIAL,
+            #{item.payNum} as PAY_NUM,
+            #{item.payAmount} as PAY_AMOUNT,
+            #{item.payment} as PAYMENT,
+            #{item.comptime} as COMPTIME,
+            #{item.createBy} as CREATE_BY,
+            #{item.createDate} as CREATE_DATE
+            FROM dual
+        </foreach>
+        ) src
+        ON (P.SERIAL = src.SERIAL)
+        <!--数据存在则更新-->
+        WHEN MATCHED THEN
+        UPDATE SET
+        P.RD_PROJECT_CONTRACT_ID = src.RD_PROJECT_CONTRACT_ID,
+        P.PAY_NUM = src.PAY_NUM,
+        P.PAY_AMOUNT = src.PAY_AMOUNT,
+        P.PAYMENT = src.PAYMENT,
+        P.COMPTIME = src.COMPTIME,
+        P.CREATE_BY = src.CREATE_BY,
+        P.CREATE_DATE = src.CREATE_DATE
+        <!--数据不存在则插入-->
+        WHEN NOT MATCHED THEN
+        INSERT (PK_ID,RD_PROJECT_CONTRACT_ID,SERIAL,PAY_NUM,PAY_AMOUNT,PAYMENT,COMPTIME,CREATE_BY,CREATE_DATE)
+        VALUES
+        (src.PK_ID,src.RD_PROJECT_CONTRACT_ID,src.SERIAL,src.PAY_NUM,src.PAY_AMOUNT,src.PAYMENT,src.COMPTIME,src.CREATE_BY,src.CREATE_DATE)
+    </insert>
+
+    <select id="getPkid" parameterType="map" resultType="string">
+        select PK_ID from RD_PROJECT_CONTRACT where CONTRACT_CODE = #{contractCode}
+    </select>
+
+    <select id="getStuate" parameterType="map" resultType="string">
+
+        SELECT
+        BUDGET_NAME
+        FROM
+        RD_PROJECT_CONTRACT
+        WHERE
+        CONTRACT_CODE = #{contractCode}
+
+    </select>
+
+</mapper>

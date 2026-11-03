@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k6991 2020-03-19 -->
+<mapper namespace="com.work.ppm.application.model.usermanager.PpmStaffFileRelatives">
+	 <resultMap type="ppmStaffFileRelatives" id="PPMSTAFFFILERELATIVES_ALL">
+        <result property="id" column="ID" />
+		<result property="name" column="NAME" />
+		<result property="relationship" column="RELATIONSHIP" />
+		<result property="gender" column="GENDER" />
+		<result property="certno" column="CERTNO" />
+		<result property="birthday" column="BIRTHDAY" />
+		<result property="workunit" column="WORKUNIT" />
+		<result property="post" column="POST" />
+		<result property="address" column="ADDRESS" />
+		<result property="phone" column="PHONE" />
+		<result property="flag" column="FLAG" />
+		<result property="badge" column="BADGE" />
+		<result property="rid" column="RID" />
+		<result property="ord" column="ORD" />
+		<result property="updateuserid" column="UPDATEUSERID" />
+		<result property="updatedate" column="UPDATEDATE" />
+		
+     </resultMap>
+
+     <!-- 所有字段名称 -->
+        <sql id="sql_flied_all">
+        	ID,
+			NAME,
+			RELATIONSHIP,
+			GENDER,
+			CERTNO,
+			BIRTHDAY,
+			WORKUNIT,
+			POST,
+			ADDRESS,
+			PHONE,
+			FLAG,
+			BADGE,
+			RID,
+			ORD,
+			UPDATEUSERID,
+			UPDATEDATE
+        </sql>
+    	<!-- 查询分页  2020-03-19 k6991  -->
+        <select id="queryPagerList" parameterType="map" resultMap="PPMSTAFFFILERELATIVES_ALL">
+        	SELECT
+            <include refid="sql_flied_all" />
+            FROM PPM_STAFF_FILE_RELATIVES
+            <trim prefix="WHERE" suffixOverrides="AND">
+                <if test="id != null " > ID = #{id} AND </if>
+				<if test="name != null  and name != '' " > NAME = #{name} AND </if>
+				<if test="relationship != null  and relationship != '' " > RELATIONSHIP = #{relationship} AND </if>
+				<if test="gender != null  and gender != '' " > GENDER = #{gender} AND </if>
+				<if test="certno != null  and certno != '' " > CERTNO = #{certno} AND </if>
+				<if test="birthday != null  and birthday != '' " > BIRTHDAY = #{birthday} AND </if>
+				<if test="workunit != null  and workunit != '' " > WORKUNIT = #{workunit} AND </if>
+				<if test="post != null  and post != '' " > POST = #{post} AND </if>
+				<if test="address != null  and address != '' " > ADDRESS = #{address} AND </if>
+				<if test="phone != null  and phone != '' " > PHONE = #{phone} AND </if>
+				<if test="flag != null  and flag != '' " > FLAG = #{flag} AND </if>
+				<if test="badge != null  and badge != '' " > BADGE = #{badge} AND </if>
+				<if test="rid != null  and rid != '' " > RID = #{rid} AND </if>
+				<if test="ord != null " > ORD = #{ord} AND </if>
+				<if test="updateuserid != null  and updateuserid != '' " > UPDATEUSERID = #{updateuserid} AND </if>
+				<if test="updatedate != null " > UPDATEDATE = #{updatedate} AND </if>
+				
+            </trim>
+        </select>
+
+        <!-- 新增  2020-03-19 k6991  -->
+        <insert id="addPojo" parameterType="ppmStaffFileRelatives">
+    		INSERT INTO PPM_STAFF_FILE_RELATIVES (
+    		ID,
+			NAME,
+			RELATIONSHIP,
+			GENDER,
+			CERTNO,
+			BIRTHDAY,
+			WORKUNIT,
+			POST,
+			ADDRESS,
+			PHONE,
+			FLAG,
+			BADGE,
+			RID,
+			ORD,
+			UPDATEUSERID,
+			UPDATEDATE
+    		)
+    		VALUES(
+    		#{id},
+			#{name},
+			#{relationship},
+			#{gender},
+			#{certno},
+			#{birthday},
+			#{workunit},
+			#{post},
+			#{address},
+			#{phone},
+			#{flag},
+			#{badge},
+			#{rid},
+			#{ord},
+			#{updateuserid},
+			#{updatedate}
+    		)
+        </insert>
+
+        <!--通过id查询  k6991 2020-03-19 -->
+        <select id="queryDetail" parameterType="map" resultMap="PPMSTAFFFILERELATIVES_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_STAFF_FILE_RELATIVES  WHERE ID=#{id}
+        </select>
+
+         <!--查询集合  k6991 2020-03-19 -->
+        <select id="getList" parameterType="map" resultMap="PPMSTAFFFILERELATIVES_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_STAFF_FILE_RELATIVES
+        	<trim prefix="WHERE" suffixOverrides="AND">
+        		<if test="id != null " > ID=#{id} AND </if>
+				<if test="name != null  and name != '' " > NAME=#{name} AND </if>
+				<if test="relationship != null  and relationship != '' " > RELATIONSHIP=#{relationship} AND </if>
+				<if test="gender != null  and gender != '' " > GENDER=#{gender} AND </if>
+				<if test="certno != null  and certno != '' " > CERTNO=#{certno} AND </if>
+				<if test="birthday != null  and birthday != '' " > BIRTHDAY=#{birthday} AND </if>
+				<if test="workunit != null  and workunit != '' " > WORKUNIT=#{workunit} AND </if>
+				<if test="post != null  and post != '' " > POST=#{post} AND </if>
+				<if test="address != null  and address != '' " > ADDRESS=#{address} AND </if>
+				<if test="phone != null  and phone != '' " > PHONE=#{phone} AND </if>
+				<if test="flag != null  and flag != '' " > FLAG=#{flag} AND </if>
+				<if test="badge != null  and badge != '' " > BADGE=#{badge} AND </if>
+				<if test="rid != null  and rid != '' " > RID=#{rid} AND </if>
+				<if test="ord != null " > ORD=#{ord} AND </if>
+				<if test="updateuserid != null  and updateuserid != '' " > UPDATEUSERID=#{updateuserid} AND </if>
+				<if test="updatedate != null " > UPDATEDATE=#{updatedate} AND </if>
+				
+            </trim>
+        </select>
+        <!-- update sql -->
+        <sql id="update_pojo_sql">
+        	<trim prefix="SET" suffixOverrides=",">
+        		<if test="id != null " > ID=#{id} , </if>
+				<if test="name != null  and name != '' " > NAME=#{name} , </if>
+				<if test="relationship != null  and relationship != '' " > RELATIONSHIP=#{relationship} , </if>
+				<if test="gender != null  and gender != '' " > GENDER=#{gender} , </if>
+				<if test="certno != null  and certno != '' " > CERTNO=#{certno} , </if>
+				<if test="birthday != null  and birthday != '' " > BIRTHDAY=#{birthday} , </if>
+				<if test="workunit != null  and workunit != '' " > WORKUNIT=#{workunit} , </if>
+				<if test="post != null  and post != '' " > POST=#{post} , </if>
+				<if test="address != null  and address != '' " > ADDRESS=#{address} , </if>
+				<if test="phone != null  and phone != '' " > PHONE=#{phone} , </if>
+				<if test="flag != null  and flag != '' " > FLAG=#{flag} , </if>
+				<if test="badge != null  and badge != '' " > BADGE=#{badge} , </if>
+				<if test="rid != null  and rid != '' " > RID=#{rid} , </if>
+				<if test="ord != null " > ORD=#{ord} , </if>
+				<if test="updateuserid != null  and updateuserid != '' " > UPDATEUSERID=#{updateuserid} , </if>
+				<if test="updatedate != null " > UPDATEDATE=#{updatedate} , </if>
+				
+            </trim>
+        </sql>
+
+        <!--通过id编辑 k6991 2020-03-19 -->
+    	<update id="updatePojo" parameterType="ppmStaffFileRelatives">
+        	UPDATE
+        	PPM_STAFF_FILE_RELATIVES
+        	<include refid="update_pojo_sql" />
+        	WHERE ID=#{id}
+        </update>
+
+        <!--通过id批量删除  k6991 2020-03-19 -->
+        <delete id="deleteById" parameterType="ppmStaffFileRelatives">
+        	DELETE
+        	FROM
+        	PPM_STAFF_FILE_RELATIVES
+        	WHERE ID = #{id}
+        </delete>
+</mapper>

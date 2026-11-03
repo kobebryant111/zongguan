@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k1327 2020-09-08 -->
+<mapper namespace="com.work.ppm.application.model.integratedmanager.PpmManpowerdemandApplyInfo">
+	 <resultMap type="ppmManpowerdemandApplyInfo" id="PPMMANPOWERDEMANDAPPLYINFO_ALL">
+        <result property="id" column="ID" />
+		<result property="usertype" column="USERTYPE" />
+		<result property="userlevel" column="USERLEVEL" />
+		<result property="usernum" column="USERNUM" />
+		<result property="addreason" column="ADDREASON" />
+		<result property="personrequire" column="PERSONREQUIRE" />
+		<result property="supplyids" column="SUPPLYIDS" />
+		<result property="supplynames" column="SUPPLYNAMES" />
+		<result property="createuserid" column="CREATEUSERID" />
+		<result property="createdate" column="CREATEDATE" />
+		<result property="isdel" column="ISDEL" />
+		<result property="instanceid" column="INSTANCEID" />
+		<result property="otherrequire" column="OTHERREQUIRE" />
+		<result property="isadvertise" column="ISADVERTISE" />
+		 <result property="status" column="STATUS" />
+     </resultMap>
+	<resultMap type="manpowerdemandsInfo" id="manpowerdemandsInfo">
+		<result property="id" column="ID" />
+		<result property="usertype" column="USERTYPE" />
+		<result property="userid" column="USERID" />
+		<result property="usename" column="USENAME" />
+		<result property="usernum" column="USERNUM" />
+		<result property="instanceid" column="INSTANCEID" />
+		<result property="supplytime" column="SUPPLYTIME" />
+		<result property="depid" column="DEPID" />
+		<result property="usertypename" column="USERTYPENAME" />
+
+	</resultMap>
+	<resultMap id="ppmManpowerdemandApplyInfoInfo_map" type="ppmManpowerdemandApplyInfoInfo" extends="PPMMANPOWERDEMANDAPPLYINFO_ALL">
+		<result  property="nums" column="NUMS"/>
+		<result property="userid" column="USERID" />
+		<result property="username" column="USERNAME" />
+		<result property="dept" column="DEPT" />
+		<result property="deptno" column="DEPTNO" />
+		<result property="supplytime" column="SUPPLYTIME" />
+		<result property="mstatus" column="MSTATUS" />
+		<result property="processId" column="PROCESS_ID" />
+	</resultMap>
+     <!-- 所有字段名称 -->
+        <sql id="sql_flied_all">
+        	ID,
+			USERTYPE,
+			USERLEVEL,
+			USERNUM,
+			ADDREASON,
+			PERSONREQUIRE,
+			SUPPLYIDS,
+			SUPPLYNAMES,
+			CREATEUSERID,
+			CREATEDATE,
+			ISDEL,
+			INSTANCEID,
+			OTHERREQUIRE,
+			ISADVERTISE,
+			STATUS
+        </sql>
+        <sql id="sql_select_condition">
+            <trim prefix="WHERE" suffixOverrides="AND">
+                <if test="id != null " > ID = #{id} AND </if>
+				<if test="usertype != null  and usertype != '' " > USERTYPE = #{usertype} AND </if>
+				<if test="userlevel != null  and userlevel != '' " > USERLEVEL = #{userlevel} AND </if>
+				<if test="usernum != null  and usernum != '' " > USERNUM = #{usernum} AND </if>
+				<if test="addreason != null  and addreason != '' " > ADDREASON = #{addreason} AND </if>
+				<if test="personrequire != null  and personrequire != '' " > PERSONREQUIRE = #{personrequire} AND </if>
+				<if test="supplyids != null  and supplyids != '' " > SUPPLYIDS = #{supplyids} AND </if>
+				<if test="supplynames != null  and supplynames != '' " > SUPPLYNAMES = #{supplynames} AND </if>
+				<if test="createuserid != null  and createuserid != '' " > CREATEUSERID = #{createuserid} AND </if>
+				<if test="createdate != null " > CREATEDATE = #{createdate} AND </if>
+				<if test="isdel != null  and isdel != '' " > ISDEL = #{isdel} AND </if>
+				<if test="instanceid != null  and instanceid != '' " > INSTANCEID = #{instanceid} AND </if>
+				<if test="otherrequire != null  and otherrequire != '' " > OTHERREQUIRE = #{otherrequire} AND </if>
+				<if test="isadvertise != null  and isadvertise != '' " > ISADVERTISE = #{isadvertise} AND </if>
+				<if test="status != null  and status != '' " > STATUS = #{status} AND </if>
+            </trim>
+        </sql>
+    	<!-- 查询分页  2020-09-08 k1327  -->
+        <select id="queryPagerList" parameterType="map" resultMap="ppmManpowerdemandApplyInfoInfo_map">
+			SELECT A.*,M.USERID,M.USERNAME,M.DEPT,M.DEPTNO,M.SUPPLYTIME,M.STATUS MSTATUS,
+			(SELECT COUNT(1)
+            FROM PPM_INTERVIEWEE_OVERINFO OV
+            LEFT JOIN PPM_INTERVIEW_APPLY AP ON OV.INSTANCEID=AP.INSTANCEID
+            WHERE AP.RL_ID = A.ID
+            AND INTERVIEWRESULT = 1) NUMS,
+            (SELECT AP.INSTANCEID
+            FROM PPM_INTERVIEW_APPLY AP
+            WHERE AP.RL_ID = A.ID AND ROWNUM =1)  PROCESS_ID
+			FROM PPM_MANPOWERDEMAND_APPLY_INFO A
+			LEFT JOIN PPM_INTERVIEWEE_OVERINFO O ON (A.INSTANCEID = O.INSTANCEID)
+			LEFT JOIN PPM_MANPOWERDEMAND_APPLY M ON (A.INSTANCEID=M.INSTANCEID)
+			<trim prefix="WHERE" suffixOverrides="AND">
+				<if test="1==1" > m.status in ('1','2') AND </if>
+				<if test="id != null " > ID = #{id} AND </if>
+				<if test="usertype != null  and usertype != '' " > USERTYPE = #{usertype} AND </if>
+				<if test="userlevel != null  and userlevel != '' " > USERLEVEL = #{userlevel} AND </if>
+				<if test="usernum != null  and usernum != '' " > USERNUM = #{usernum} AND </if>
+				<if test="addreason != null  and addreason != '' " > ADDREASON = #{addreason} AND </if>
+				<if test="personrequire != null  and personrequire != '' " > PERSONREQUIRE = #{personrequire} AND </if>
+				<if test="supplyids != null  and supplyids != '' " > SUPPLYIDS = #{supplyids} AND </if>
+				<if test="supplynames != null  and supplynames != '' " > SUPPLYNAMES = #{supplynames} AND </if>
+				<if test="createuserid != null  and createuserid != '' " > CREATEUSERID = #{createuserid} AND </if>
+				<if test="createdate != null " > CREATEDATE = #{createdate} AND </if>
+				<if test="isdel != null  and isdel != '' " > ISDEL = #{isdel} AND </if>
+				<if test="instanceid != null  and instanceid != '' " > INSTANCEID = #{instanceid} AND </if>
+				<if test="otherrequire != null  and otherrequire != '' " > OTHERREQUIRE = #{otherrequire} AND </if>
+				<if test="isadvertise != null  and isadvertise != '' " > ISADVERTISE = #{isadvertise} AND </if>
+				<if test="status != null  and status != '' " > STATUS = #{status} AND </if>
+				<if test="userid != null  and userid != '' " > m.userid = #{userid} AND </if>
+				<if test="depid != null  and depid != '' " > m.deptno = #{depid} AND </if>
+				<if test="currentuserid != null  and currentuserid != '' " > (m.userid = #{currentuserid} or  m.CREATEUSERID = #{currentuserid})</if>
+			</trim>
+			<trim prefix="order by " suffixOverrides=",">
+				<if test="1==1" >  CREATEDATE desc, </if>
+			</trim>
+        </select>
+		<!-- 查询 2020-09-08 k1327  -->
+		<select id="queryList" parameterType="map" resultMap="PPMMANPOWERDEMANDAPPLYINFO_ALL">
+			SELECT
+			<include refid="sql_flied_all" />
+			FROM ppm_manpowerdemand_apply_info
+			<include refid="sql_select_condition" />
+		</select>
+        <!-- 新增  2020-09-08 k1327  -->
+        <insert id="addPojo" parameterType="ppmManpowerdemandApplyInfo">
+    		INSERT INTO PPM_MANPOWERDEMAND_APPLY_INFO (
+    		<trim suffixOverrides=",">
+    		 <if test="id != null " > ID , </if>
+				<if test="usertype != null  and usertype != '' " > USERTYPE , </if>
+				<if test="userlevel != null  and userlevel != '' " > USERLEVEL , </if>
+				<if test="usernum != null  and usernum != '' " > USERNUM , </if>
+				<if test="addreason != null  and addreason != '' " > ADDREASON , </if>
+				<if test="personrequire != null  and personrequire != '' " > PERSONREQUIRE , </if>
+				<if test="supplyids != null  and supplyids != '' " > SUPPLYIDS , </if>
+				<if test="supplynames != null  and supplynames != '' " > SUPPLYNAMES , </if>
+				<if test="createuserid != null  and createuserid != '' " > CREATEUSERID , </if>
+				<if test="createdate != null " > CREATEDATE , </if>
+				<if test="isdel != null  and isdel != '' " > ISDEL , </if>
+				<if test="instanceid != null  and instanceid != '' " > INSTANCEID , </if>
+				<if test="otherrequire != null  and otherrequire != '' " > OTHERREQUIRE , </if>
+				<if test="isadvertise != null  and isadvertise != '' " > ISADVERTISE , </if>
+				<if test="status != null  and status != '' " > STATUS , </if>
+              </trim>
+    		)
+    		VALUES(
+    		<trim suffixOverrides=",">
+    		 <if test="id != null " > #{id} , </if>
+				<if test="usertype != null  and usertype != '' " > #{usertype} , </if>
+				<if test="userlevel != null  and userlevel != '' " > #{userlevel} , </if>
+				<if test="usernum != null  and usernum != '' " > #{usernum} , </if>
+				<if test="addreason != null  and addreason != '' " > #{addreason} , </if>
+				<if test="personrequire != null  and personrequire != '' " > #{personrequire} , </if>
+				<if test="supplyids != null  and supplyids != '' " > #{supplyids} , </if>
+				<if test="supplynames != null  and supplynames != '' " > #{supplynames} , </if>
+				<if test="createuserid != null  and createuserid != '' " > #{createuserid} , </if>
+				<if test="createdate != null " > #{createdate} , </if>
+				<if test="isdel != null  and isdel != '' " > #{isdel} , </if>
+				<if test="instanceid != null  and instanceid != '' " > #{instanceid} , </if>
+				<if test="otherrequire != null  and otherrequire != '' " > #{otherrequire} , </if>
+				<if test="isadvertise != null  and isadvertise != '' " > #{isadvertise} , </if>
+				<if test="status != null  and status != '' " > #{status} , </if>
+            </trim>
+    		)
+        </insert>
+
+        <!--通过id查询  k1327 2020-09-08 -->
+        <select id="queryDetail" parameterType="ppmManpowerdemandApplyInfo" resultMap="PPMMANPOWERDEMANDAPPLYINFO_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_MANPOWERDEMAND_APPLY_INFO  WHERE ID=#{id}
+        </select>
+
+         <!--查询集合  k1327 2020-09-08 -->
+        <select id="getList" parameterType="ppmManpowerdemandApplyInfo" resultMap="PPMMANPOWERDEMANDAPPLYINFO_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_MANPOWERDEMAND_APPLY_INFO
+        	<include refid="sql_select_condition" />
+        </select>
+        <!-- update sql -->
+        <sql id="update_pojo_sql">
+        	<trim prefix="SET" suffixOverrides=",">
+        		<if test="id != null " > ID=#{id} , </if>
+				<if test="usertype != null  and usertype != '' " > USERTYPE=#{usertype} , </if>
+				<if test="userlevel != null  and userlevel != '' " > USERLEVEL=#{userlevel} , </if>
+				<if test="usernum != null  and usernum != '' " > USERNUM=#{usernum} , </if>
+				<if test="addreason != null  and addreason != '' " > ADDREASON=#{addreason} , </if>
+				<if test="personrequire != null  and personrequire != '' " > PERSONREQUIRE=#{personrequire} , </if>
+				<if test="supplyids != null " > SUPPLYIDS=#{supplyids} , </if>
+				<if test="supplynames != null " > SUPPLYNAMES=#{supplynames} , </if>
+				<if test="createuserid != null  and createuserid != '' " > CREATEUSERID=#{createuserid} , </if>
+				<if test="createdate != null " > CREATEDATE=#{createdate} , </if>
+				<if test="isdel != null  and isdel != '' " > ISDEL=#{isdel} , </if>
+				<if test="instanceid != null  and instanceid != '' " > INSTANCEID=#{instanceid} , </if>
+				<if test="otherrequire != null  and otherrequire != '' " > OTHERREQUIRE=#{otherrequire} , </if>
+				<if test="isadvertise != null  and isadvertise != '' " > ISADVERTISE=#{isadvertise} , </if>
+				<if test="status != null  and status != '' " > STATUS=#{status} , </if>
+            </trim>
+        </sql>
+
+        <!--通过id编辑 k1327 2020-09-08 -->
+    	<update id="updatePojo" parameterType="ppmManpowerdemandApplyInfo">
+        	UPDATE
+        	PPM_MANPOWERDEMAND_APPLY_INFO
+        	<include refid="update_pojo_sql" />
+        	WHERE ID=#{id}
+        </update>
+
+        <!--通过id批量删除  k1327 2020-09-08 -->
+        <delete id="deleteById" parameterType="ppmManpowerdemandApplyInfo">
+        	DELETE
+        	FROM
+        	PPM_MANPOWERDEMAND_APPLY_INFO
+        	WHERE ID = #{id}
+        </delete>
+
+
+	<!--通过Instanceid批量删除  k1327 2020-09-08 -->
+	<delete id="deleteByInstanceid" parameterType="ppmManpowerdemandApplyInfo">
+		DELETE
+		FROM
+		PPM_MANPOWERDEMAND_APPLY_INFO
+		WHERE Instanceid = #{instanceid}
+	</delete>
+
+	<!--面试查询人力需求  k1327 2020-09-08 -->
+	<select id="queryManpowerdemands"  parameterType="map"  resultMap="manpowerdemandsInfo">
+		select I.ID,I.USERTYPE,a.userid,a.username,i.instanceid,i.usernum,a.supplytime,A.deptno depid,d.location depname,en.dictname USERTYPENAME,a.status mainstatus,i.status detailstatus
+		from PPM_MANPOWERDEMAND_APPLY_INFO I LEFT JOIN PPM_MANPOWERDEMAND_APPLY A ON I.INSTANCEID=A.INSTANCEID
+		left join eos_dict_entry en on en.dicttypeid='REQUIRE_PEOPLE_TYPE' and i.usertype=en.dictid
+		left join comm_department d on A.Deptno=d.depid
+		WHERE A.STATUS='1' and i.status='0'
+		<if test="userid != null  and userid != '' " > and i.CREATEUSERID = #{userid} </if>
+		<if test="depid != null  and depid != '' " > and A.deptno = #{depid} </if>
+		ORDER BY A.CREATETIME DESC
+	</select>
+	<!--面试查询人力需求  k1327 2020-09-08 -->
+	<select id="queryManpowerdemandsById"  parameterType="map"  resultMap="manpowerdemandsInfo">
+		select I.ID,I.USERTYPE,a.userid,a.username,i.instanceid,i.usernum,a.supplytime,A.deptno depid,d.location depname,en.dictname USERTYPENAME,a.status mainstatus,i.status detailstatus
+		from PPM_MANPOWERDEMAND_APPLY_INFO I JOIN PPM_MANPOWERDEMAND_APPLY A ON I.INSTANCEID=A.INSTANCEID
+		left join eos_dict_entry en on en.dicttypeid='REQUIRE_PEOPLE_TYPE' and i.usertype=en.dictid
+		left join comm_department d on A.Deptno=d.depid
+		WHERE i.id=#{id}
+	</select>
+	<!--通过id更新状态 k1327 2020-09-08 -->
+	<update id="updateManpowerdemandApplyInfoFinish" parameterType="ppmManpowerdemandApplyInfo">
+		UPDATE
+		PPM_MANPOWERDEMAND_APPLY_INFO I
+		SET I.STATUS='1'
+		WHERE I.ID=#{id}
+	</update>
+	<!--查询集合  k1327 2020-09-08 -->
+	<select id="getListExport" parameterType="ppmManpowerdemandApplyinfo" resultType="ppmManpowerdemandApplyInfoExport">
+		select to_char(to_date(m.createtime,'yyyy-MM-dd hh24:mi:ss'),'yyyy"年"MM"月"dd"日"') createtime,m.dept,e.dictname usertypename,
+		a.usernum nums,
+		m.username,a.addreason,a.personrequire,e1.dictname isadvertisename,
+		(select count(1)
+        from ppm_interviewee_overinfo ov
+        left join ppm_interview_apply ap on ov.instanceid=ap.instanceid
+        where ap.rl_id = a.id
+        and INTERVIEWRESULT = 1)||'/'||a.usernum demandSchedule,
+		decode(a.status,'0','进行中','1','已完成','') status,
+		a.supplynames
+		from ppm_manpowerdemand_apply_info a
+		left join ppm_interviewee_overinfo o on (a.instanceid = o.instanceid)
+		left join ppm_manpowerdemand_apply m on (a.instanceid=m.instanceid)
+		left join eos_dict_entry e on e.dicttypeid='REQUIRE_PEOPLE_TYPE' and a.usertype=e.dictid
+		left join eos_dict_entry e1 on e1.dicttypeid='WHETHER_CONTACT_RECRUITMENT' and a.isadvertise=e1.dictid
+		<trim prefix="WHERE" suffixOverrides="AND">
+			<if test="1==1" > m.status in ('1','2') AND </if>
+			<if test="id != null " > ID = #{id} AND </if>
+			<if test="usertype != null  and usertype != '' " > USERTYPE = #{usertype} AND </if>
+			<if test="userlevel != null  and userlevel != '' " > USERLEVEL = #{userlevel} AND </if>
+			<if test="usernum != null  and usernum != '' " > USERNUM = #{usernum} AND </if>
+			<if test="addreason != null  and addreason != '' " > ADDREASON = #{addreason} AND </if>
+			<if test="personrequire != null  and personrequire != '' " > PERSONREQUIRE = #{personrequire} AND </if>
+			<if test="supplyids != null  and supplyids != '' " > SUPPLYIDS = #{supplyids} AND </if>
+			<if test="supplynames != null  and supplynames != '' " > SUPPLYNAMES = #{supplynames} AND </if>
+			<if test="createuserid != null  and createuserid != '' " > CREATEUSERID = #{createuserid} AND </if>
+			<if test="createdate != null " > CREATEDATE = #{createdate} AND </if>
+			<if test="isdel != null  and isdel != '' " > ISDEL = #{isdel} AND </if>
+			<if test="instanceid != null  and instanceid != '' " > INSTANCEID = #{instanceid} AND </if>
+			<if test="otherrequire != null  and otherrequire != '' " > OTHERREQUIRE = #{otherrequire} AND </if>
+			<if test="isadvertise != null  and isadvertise != '' " > ISADVERTISE = #{isadvertise} AND </if>
+			<if test="status != null  and status != '' " > STATUS = #{status} AND </if>
+			<if test="userid != null  and userid != '' " > m.userid = #{userid} AND </if>
+			<if test="depid != null  and depid != '' " > m.deptno = #{depid} AND </if>
+		</trim>
+		<trim prefix="order by " suffixOverrides=",">
+			<if test="1==1" >  CREATEDATE desc, </if>
+		</trim>
+	</select>
+</mapper>

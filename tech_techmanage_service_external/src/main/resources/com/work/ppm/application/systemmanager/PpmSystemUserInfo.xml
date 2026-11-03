@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:ywwb436 2022-03-14 -->
+<!--  系统详情用户关系表 查询脚本 -->
+<mapper namespace="com.work.ppm.application.model.systemmanager.PpmSystemUserInfo">
+    <resultMap type="ppmSystemUserInfo" id="PPMSYSTEMUSERINFO_ALL">
+        <result property="sysId" column="SYS_ID"/>
+        <result property="badge" column="BADGE"/>
+
+    </resultMap>
+
+    <!-- 所有字段名称 -->
+    <sql id="sql_flied_all">
+        SYS_ID,
+        BADGE
+    </sql>
+    <sql id="sql_select_condition">
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="sysId != null ">SYS_ID = #{sysId} AND</if>
+            <if test="badge != null  and badge != '' ">BADGE = #{badge} AND</if>
+
+        </trim>
+    </sql>
+    <!-- 查询分页  2022-03-14 ywwb436  -->
+    <select id="queryPagerList" parameterType="map" resultMap="PPMSYSTEMUSERINFO_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM PPM_SYSTEM_USER_INFO
+        <include refid="sql_select_condition"/>
+    </select>
+
+    <!-- 新增  2022-03-14 ywwb436  -->
+    <insert id="addPojo" parameterType="ppmSystemUserInfo">
+        INSERT INTO PPM_SYSTEM_USER_INFO (
+        <trim suffixOverrides=",">
+            <if test="sysId != null ">SYS_ID ,</if>
+            <if test="badge != null  and badge != '' ">BADGE ,</if>
+
+        </trim>
+        )
+        VALUES(
+        <trim suffixOverrides=",">
+            <if test="sysId != null ">#{sysId} ,</if>
+            <if test="badge != null  and badge != '' ">#{badge} ,</if>
+
+        </trim>
+        )
+    </insert>
+
+    <!--通过id查询  ywwb436 2022-03-14 -->
+    <select id="queryDetail" parameterType="ppmSystemUserInfo" resultMap="PPMSYSTEMUSERINFO_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM PPM_SYSTEM_USER_INFO WHERE SYS_ID=#{sysId}
+    </select>
+
+    <!--查询集合  ywwb436 2022-03-14 -->
+    <select id="getList" parameterType="ppmSystemUserInfo" resultMap="PPMSYSTEMUSERINFO_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM PPM_SYSTEM_USER_INFO
+        <include refid="sql_select_condition"/>
+    </select>
+    <!-- update sql -->
+    <sql id="update_pojo_sql">
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="sysId != null ">SYS_ID=#{sysId} ,</if>
+            <if test="badge != null  and badge != '' ">BADGE=#{badge} ,</if>
+
+        </trim>
+    </sql>
+
+    <!--通过id编辑 ywwb436 2022-03-14 -->
+    <update id="updatePojo" parameterType="ppmSystemUserInfo">
+        UPDATE
+        PPM_SYSTEM_USER_INFO
+        <include refid="update_pojo_sql"/>
+        WHERE SYS_ID=#{sysId}
+    </update>
+
+    <!--通过id批量删除  ywwb436 2022-03-14 -->
+    <delete id="deleteById" parameterType="ppmSystemUserInfo">
+        DELETE
+        FROM
+        PPM_SYSTEM_USER_INFO
+        WHERE SYS_ID = #{sysId}
+    </delete>
+
+</mapper>

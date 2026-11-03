@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:ywwb436 2022-07-26 -->
+<!--  闸机权限申请表 查询脚本 -->
+<mapper namespace="com.work.ppm.application.model.integratedmanager.PpmZjAuthorityApply">
+    <resultMap type="ppmZjAuthorityApply" id="PPMZJAUTHORITYAPPLY_ALL">
+        <result property="id" column="ID" />
+        <result property="ppmZjId" column="PPM_ZJ_ID" />
+        <result property="instanceid" column="INSTANCEID" />
+        <result property="bizType" column="BIZ_TYPE" />
+        <result property="title" column="TITLE" />
+        <result property="flowid" column="FLOWID" />
+        <result property="flowflag" column="FLOWFLAG" />
+        <result property="depid" column="DEPID" />
+        <result property="applyType" column="APPLY_TYPE" />
+        <result property="beginDate" column="BEGIN_DATE" />
+        <result property="endDate" column="END_DATE" />
+        <result property="createid" column="CREATEID" />
+        <result property="createdate" column="CREATEDATE" />
+        <result property="completedate" column="COMPLETEDATE" />
+
+    </resultMap>
+
+    <!-- 所有字段名称 -->
+    <sql id="sql_flied_all">
+        ID,
+        PPM_ZJ_ID,
+        INSTANCEID,
+        BIZ_TYPE,
+        TITLE,
+        FLOWID,
+        FLOWFLAG,
+        DEPID,
+        APPLY_TYPE,
+        BEGIN_DATE,
+        END_DATE,
+        CREATEID,
+        CREATEDATE,
+        COMPLETEDATE
+    </sql>
+    <sql id="sql_select_condition">
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="id != null " > ID = #{id} AND </if>
+            <if test="ppmZjId != null " > PPM_ZJ_ID = #{ppmZjId} AND </if>
+            <if test="instanceid != null  and instanceid != '' " > INSTANCEID = #{instanceid} AND </if>
+            <if test="bizType != null " > BIZ_TYPE = #{bizType} AND </if>
+            <if test="title != null  and title != '' " > TITLE = #{title} AND </if>
+            <if test="flowid != null  and flowid != '' " > FLOWID = #{flowid} AND </if>
+            <if test="flowflag != null " > FLOWFLAG = #{flowflag} AND </if>
+            <if test="depid != null " > DEPID = #{depid} AND </if>
+            <if test="applyType != null " > APPLY_TYPE = #{applyType} AND </if>
+            <if test="beginDate != null " > BEGIN_DATE = #{beginDate} AND </if>
+            <if test="endDate != null " > END_DATE = #{endDate} AND </if>
+            <if test="createid != null  and createid != '' " > CREATEID = #{createid} AND </if>
+            <if test="createdate != null " > CREATEDATE = #{createdate} AND </if>
+            <if test="completedate != null " > COMPLETEDATE = #{completedate} AND </if>
+
+        </trim>
+    </sql>
+    <!-- 查询分页  2022-07-26 ywwb436  -->
+    <select id="queryPagerList" parameterType="map" resultMap="PPMZJAUTHORITYAPPLY_ALL">
+        SELECT
+        <include refid="sql_flied_all" />
+        FROM PPM_ZJ_AUTHORITY_APPLY
+        <include refid="sql_select_condition" />
+    </select>
+
+    <!-- 新增  2022-07-26 ywwb436  -->
+    <insert id="addPojo" parameterType="ppmZjAuthorityApply">
+        INSERT INTO PPM_ZJ_AUTHORITY_APPLY (
+        <trim suffixOverrides=",">
+            <if test="id != null " > ID , </if>
+            <if test="ppmZjId != null " > PPM_ZJ_ID , </if>
+            <if test="instanceid != null  and instanceid != '' " > INSTANCEID , </if>
+            <if test="bizType != null " > BIZ_TYPE , </if>
+            <if test="title != null  and title != '' " > TITLE , </if>
+            <if test="flowid != null  and flowid != '' " > FLOWID , </if>
+            <if test="flowflag != null " > FLOWFLAG , </if>
+            <if test="depid != null " > DEPID , </if>
+            <if test="applyType != null " > APPLY_TYPE , </if>
+            <if test="beginDate != null " > BEGIN_DATE , </if>
+            <if test="endDate != null " > END_DATE , </if>
+            <if test="createid != null  and createid != '' " > CREATEID , </if>
+            <if test="createdate != null " > CREATEDATE , </if>
+            <if test="completedate != null " > COMPLETEDATE , </if>
+
+        </trim>
+        )
+        VALUES(
+        <trim suffixOverrides=",">
+            <if test="id != null " > #{id} , </if>
+            <if test="ppmZjId != null " > #{ppmZjId} , </if>
+            <if test="instanceid != null  and instanceid != '' " > #{instanceid} , </if>
+            <if test="bizType != null " > #{bizType} , </if>
+            <if test="title != null  and title != '' " > #{title} , </if>
+            <if test="flowid != null  and flowid != '' " > #{flowid} , </if>
+            <if test="flowflag != null " > #{flowflag} , </if>
+            <if test="depid != null " > #{depid} , </if>
+            <if test="applyType != null " > #{applyType} , </if>
+            <if test="beginDate != null " > #{beginDate} , </if>
+            <if test="endDate != null " > #{endDate} , </if>
+            <if test="createid != null  and createid != '' " > #{createid} , </if>
+            <if test="createdate != null " > #{createdate} , </if>
+            <if test="completedate != null " > #{completedate} , </if>
+
+        </trim>
+        )
+    </insert>
+
+    <!--通过id查询  ywwb436 2022-07-26 -->
+    <select id="queryDetail" parameterType="ppmZjAuthorityApply" resultMap="PPMZJAUTHORITYAPPLY_ALL">
+        SELECT
+        <include refid="sql_flied_all" />
+        FROM PPM_ZJ_AUTHORITY_APPLY  WHERE INSTANCEID=#{instanceid}
+    </select>
+
+    <!--查询集合  ywwb436 2022-07-26 -->
+    <select id="getList" parameterType="ppmZjAuthorityApply" resultMap="PPMZJAUTHORITYAPPLY_ALL">
+        SELECT
+        <include refid="sql_flied_all" />
+        FROM PPM_ZJ_AUTHORITY_APPLY
+        <include refid="sql_select_condition" />
+    </select>
+    <!-- update sql -->
+    <sql id="update_pojo_sql">
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="id != null " > ID=#{id} , </if>
+            <if test="ppmZjId != null " > PPM_ZJ_ID=#{ppmZjId} , </if>
+            <if test="instanceid != null  and instanceid != '' " > INSTANCEID=#{instanceid} , </if>
+            <if test="bizType != null " > BIZ_TYPE=#{bizType} , </if>
+            <if test="title != null  and title != '' " > TITLE=#{title} , </if>
+            <if test="flowid != null  and flowid != '' " > FLOWID=#{flowid} , </if>
+            <if test="flowflag != null " > FLOWFLAG=#{flowflag} , </if>
+            <if test="depid != null " > DEPID=#{depid} , </if>
+            <if test="applyType != null " > APPLY_TYPE=#{applyType} , </if>
+            <if test="beginDate != null " > BEGIN_DATE=#{beginDate} , </if>
+            <if test="endDate != null " > END_DATE=#{endDate} , </if>
+            <if test="createid != null  and createid != '' " > CREATEID=#{createid} , </if>
+            <if test="createdate != null " > CREATEDATE=#{createdate} , </if>
+            <if test="completedate != null " > COMPLETEDATE=#{completedate} , </if>
+
+        </trim>
+    </sql>
+
+    <!--通过id编辑 ywwb436 2022-07-26 -->
+    <update id="updatePojo" parameterType="ppmZjAuthorityApply">
+        UPDATE
+        PPM_ZJ_AUTHORITY_APPLY
+        <include refid="update_pojo_sql" />
+        WHERE ID=#{id}
+    </update>
+
+    <!--通过id批量删除  ywwb436 2022-07-26 -->
+    <delete id="deleteById" parameterType="ppmZjAuthorityApply">
+        DELETE
+        FROM
+        PPM_ZJ_AUTHORITY_APPLY
+        WHERE ID = #{id}
+    </delete>
+    <!--通过id批量删除  ywwb436 2022-07-26 -->
+    <delete id="deleteByInstanceId" parameterType="ppmZjAuthorityApply">
+        DELETE  FROM PPM_ZJ_AUTHORITY_APPLY  WHERE INSTANCEID=#{instanceid}
+    </delete>
+
+</mapper>

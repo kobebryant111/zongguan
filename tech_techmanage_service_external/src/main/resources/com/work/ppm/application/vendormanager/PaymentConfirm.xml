@@ -1,0 +1,945 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.work.ppm.application.model.vendormanager.PaymentConfirm">
+
+    <resultMap type="paymentConfirm" id="PAYMENTCONFIRM_ALL">
+      <result property="id" column="ID"/>
+        <result property="instanceId" column="INSTANCE_ID"/>
+        <result property="flowId" column="FLOW_ID"/>
+      <result property="contractNo" column="CONTRACT_NO"/>
+      <result property="contractName" column="CONTRACT_NAME"/>
+      <result property="vendor" column="VENDOR"/>
+      <result property="paymentSubmitDate" column="PAYMENT_SUBMIT_DATE"/>
+      <result property="feeStartDate" column="FEE_START_DATE"/>
+      <result property="feeEndDate" column="FEE_END_DATE"/>
+      <result property="approvalStatus" column="APPROVAL_STATUS"/>
+      <result property="isDel" column="IS_DEL"/>
+      <result property="proManager" column="PRO_MANAGER"/>
+      <result property="amountRaw" column="AMOUNT_RAW"/>
+      <result property="amountSalt" column="AMOUNT_SALT"/>
+      <result property="amount" column="AMOUNT"/>
+      <result property="amountTax" column="AMOUNT_TAX"/>
+      <result property="taxRate" column="TAX_RATE"/>
+      <result property="remark" column="REMARK"/>
+      <result property="createDate" column="CREATE_DATE"/>
+      <result property="createUser" column="CREATE_USER"/>
+      <result property="updateDate" column="UPDATE_DATE"/>
+      <result property="updateUser" column="UPDATE_USER"/>
+    </resultMap>
+
+    <resultMap type="com.work.ppm.application.dto.vendorcontract.PaymentConfirmDto" id="PAYMENTCONFIRM_ALL_EXT" extends="PAYMENTCONFIRM_ALL">
+        <result property="deptName" column="DEPT_NAME"/>
+        <result property="proManagerName" column="proManagerName"/>
+    </resultMap>
+
+
+    <!-- 所有字段 -->
+    <sql id="sql_flied_all">
+        ID
+        ,INSTANCE_ID
+        ,FLOW_ID
+        ,CONTRACT_NO
+        ,CONTRACT_NAME
+        ,VENDOR
+        ,APPROVAL_PASS_DATE
+        ,PAYMENT_SUBMIT_DATE
+        ,FEE_START_DATE
+        ,FEE_END_DATE
+        ,APPROVAL_STATUS
+        ,IS_DEL
+        ,PRO_MANAGER
+        ,AMOUNT_RAW
+        ,AMOUNT_SALT
+        ,AMOUNT
+        ,AMOUNT_TAX
+        ,TAX_RATE
+        ,REMARK
+        ,CREATE_USER
+        ,UPDATE_USER
+    </sql>
+
+    <sql id="sql_flied_basic">
+        ID
+        ,INSTANCE_ID
+        ,FLOW_ID
+        ,CONTRACT_NO
+        ,CONTRACT_NAME
+        ,VENDOR
+        ,PAYMENT_SUBMIT_DATE
+        ,APPROVAL_PASS_DATE
+        ,FEE_START_DATE
+        ,FEE_END_DATE
+        ,APPROVAL_STATUS
+        ,IS_DEL
+        ,PRO_MANAGER
+        ,AMOUNT_RAW
+        ,AMOUNT_SALT
+        ,AMOUNT
+        ,AMOUNT_TAX
+        ,TAX_RATE
+        ,REMARK
+        ,CREATE_USER
+        ,UPDATE_USER
+    </sql>
+
+    <sql id="sql_flied_small">
+          ID
+          ,INSTANCE_ID
+          ,FLOW_ID
+          ,CONTRACT_NO
+          ,CONTRACT_NAME
+          ,VENDOR
+          ,PAYMENT_SUBMIT_DATE
+          ,FEE_START_DATE
+          ,FEE_END_DATE
+          ,APPROVAL_STATUS
+          ,IS_DEL
+          ,PRO_MANAGER
+          ,AMOUNT_RAW
+          ,AMOUNT_SALT
+          ,AMOUNT
+          ,AMOUNT_TAX
+          ,TAX_RATE
+          ,REMARK
+    </sql>
+
+    <!--  查询条件  -->
+    <sql id="sql_select_condition">
+       <trim prefix="WHERE" suffixOverrides="AND">
+           <if test="id != null and id != '' "> ID = #{id} AND </if>
+           <if test="instanceId != null and instanceId != '' "> INSTANCE_ID = #{instanceId} AND </if>
+           <if test="flowId != null and flowId != '' "> FLOW_ID = #{flowId} AND </if>
+           <if test="approvalPassDate != null and approvalPassDate != '' "> APPROVAL_PASS_DATE = #{approvalPassDate} AND </if>
+           <if test="contractNo != null and contractNo != '' "> CONTRACT_NO = #{contractNo} AND </if>
+           <if test="contractName != null and contractName != '' "> CONTRACT_NAME like '%'||#{contractName}||'%' AND</if>
+           <if test="vendor != null and vendor != '' "> VENDOR = #{vendor} AND </if>
+           <if test="paymentSubmitDate != null and paymentSubmitDate != '' "> PAYMENT_SUBMIT_DATE = #{paymentSubmitDate} AND </if>
+           <if test="feeStartDate != null and feeStartDate != '' "> FEE_START_DATE &gt;= #{feeStartDate} AND </if>
+           <if test="feeStartDateE != null and feeStartDateE != '' "> FEE_START_DATE &lt;= #{feeStartDateE} AND </if>
+           <if test="feeEndDate != null and feeEndDate != '' "> FEE_END_DATE &gt;= #{feeEndDate} AND </if>
+           <if test="feeEndDateE != null and feeEndDateE != '' "> FEE_END_DATE &lt;= #{feeEndDateE} AND </if>
+           <if test="approvalStatus != null and approvalStatus != '' "> APPROVAL_STATUS = #{approvalStatus} AND </if>
+           <if test="isDel != null and isDel != '' "> IS_DEL = #{isDel} AND </if>
+           <if test="proManager != null and proManager != '' "> PRO_MANAGER = #{proManager} AND </if>
+           <if test="amountRaw != null "> AMOUNT_RAW = #{amountRaw} AND </if>
+           <if test="amountSalt != null "> AMOUNT_SALT = #{amountSalt} AND </if>
+           <if test="amount != null"> AMOUNT = #{amount} AND </if>
+           <if test="amountTax != null"> AMOUNT_TAX = #{amountTax} AND </if>
+           <if test="taxRate != null "> TAX_RATE = #{taxRate} AND </if>
+           <if test="remark != null and remark != '' "> REMARK = #{remark} AND </if>
+           <if test="createUser != null and createUser != '' "> CREATE_USER = #{createUser} AND </if>
+           <if test="updateUser != null and updateUser != '' "> UPDATE_USER = #{updateUser} AND </if>
+       </trim>
+    </sql>
+
+    <!-- 查询条件 自定义 -->
+    <sql id="sql_select_condition_cus">
+       <trim prefix="WHERE" suffixOverrides="AND">
+           <if test="id != null and id != '' "> ID = #{id} AND </if>
+           <if test="instanceId != null and instanceId != '' "> INSTANCE_ID = #{instanceId} AND </if>
+           <if test="flowId != null and flowId != '' "> FLOW_ID = #{flowId} AND </if>
+           <if test="approvalPassDate != null and approvalPassDate != '' "> APPROVAL_PASS_DATE = #{approvalPassDate} AND </if>
+           <if test="flowStatus != null and flowStatus != '' " > FLOW_STATUS = #{flowStatus} AND </if>
+           <if test="contractNo != null and contractNo != '' "> CONTRACT_NO = #{contractNo} AND </if>
+           <if test="contractName != null and contractName != '' "> CONTRACT_NAME like '%'||#{contractName}||'%' AND </if>
+           <if test="vendor != null and vendor != '' "> VENDOR = #{vendor} AND </if>
+           <if test="paymentSubmitDate != null and paymentSubmitDate != '' "> PAYMENT_SUBMIT_DATE = #{paymentSubmitDate} AND </if>
+           <if test="feeStartDate != null and feeStartDate != '' "> FEE_START_DATE &gt;= #{feeStartDate} AND </if>
+           <if test="feeStartDateE != null and feeStartDateE != '' "> FEE_START_DATE &lt;= #{feeStartDateE} AND </if>
+           <if test="feeEndDate != null and feeEndDate != '' "> FEE_END_DATE &gt;= #{feeEndDate} AND </if>
+           <if test="feeEndDateE != null and feeEndDateE != '' "> FEE_END_DATE &lt;= #{feeEndDateE} AND </if>
+           <if test="approvalStatus != null and approvalStatus != '' "> APPROVAL_STATUS = #{approvalStatus} AND </if>
+           <if test="isDel != null and isDel != '' "> IS_DEL = #{isDel} AND </if>
+           <if test="proManager != null and proManager != '' "> PRO_MANAGER = #{proManager} AND </if>
+           <if test="amountRaw != null "> AMOUNT_RAW = #{amountRaw} AND </if>
+           <if test="amountSalt != null"> AMOUNT_SALT = #{amountSalt} AND </if>
+           <if test="amount != null"> AMOUNT = #{amount} AND </if>
+           <if test="amountTax != null"> AMOUNT_TAX = #{amountTax} AND </if>
+           <if test="taxRate != null "> TAX_RATE = #{taxRate} AND </if>
+           <if test="remark != null and remark != '' "> REMARK = #{remark} AND </if>
+           <if test="createUser != null and createUser != '' "> CREATE_USER = #{createUser} AND </if>
+           <if test="updateUser != null and updateUser != '' "> UPDATE_USER = #{updateUser} AND </if>
+       </trim>
+    </sql>
+
+    <!-- 更新字段 -->
+    <sql id="update_pojo_sql">
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="flowId != null and flowId != '' "> FLOW_ID = #{flowId},</if>
+            <if test="flowStatus != null and flowStatus != '' " > FLOW_STATUS = #{flowStatus},</if>
+            <if test="instanceId != null and instanceId != '' "> INSTANCE_ID = #{instanceId},</if>
+            <if test="contractNo != null and contractNo != '' " > CONTRACT_NO = #{contractNo},</if>
+            <if test="approvalPassDate != null and approvalPassDate != '' " > APPROVAL_PASS_DATE = #{approvalPassDate},</if>
+            <if test="paymentSubmitDate != null and paymentSubmitDate != '' " > PAYMENT_SUBMIT_DATE = #{paymentSubmitDate},</if>
+            <if test="contractName != null and contractName != '' " > CONTRACT_NAME = #{contractName},</if>
+            <if test="vendor != null and vendor != '' " > VENDOR = #{vendor},</if>
+            <if test="feeStartDate != null and feeStartDate != '' " > FEE_START_DATE = #{feeStartDate},</if>
+            <if test="feeEndDate != null and feeEndDate != '' " > FEE_END_DATE = #{feeEndDate},</if>
+            <if test="approvalStatus != null and approvalStatus != '' " > APPROVAL_STATUS = #{approvalStatus},</if>
+            <if test="isDel != null and isDel != '' " > IS_DEL = #{isDel},</if>
+            <if test="proManager != null and proManager != '' " > PRO_MANAGER = #{proManager},</if>
+            <if test="amountRaw != null " > AMOUNT_RAW = #{amountRaw},</if>
+            <if test="amountSalt != null " > AMOUNT_SALT = #{amountSalt},</if>
+            <if test="amount != null " > AMOUNT = #{amount},</if>
+            <if test="amountTax != null " > AMOUNT_TAX = #{amountTax},</if>
+            <if test="taxRate != null " > TAX_RATE = #{taxRate},</if>
+            <if test="remark != null and remark != '' " > REMARK = #{remark},</if>
+            <if test="createUser != null and createUser != '' " > CREATE_USER = #{createUser},</if>
+            <if test="updateUser != null and updateUser != '' " > UPDATE_USER = #{updateUser},</if>
+        </trim>
+    </sql>
+
+    <!--  查询  -->
+    <!-- pager query 2022-11-06 ywwb903  -->
+    <select id="queryPagerList" parameterType="map" resultType="com.work.ppm.application.dto.vendorcontract.PaymentConfirmDto">
+        SELECT
+              ID
+              ,INSTANCE_ID
+              ,FLOW_ID
+              ,CONTRACT_NO  as contractNo
+              ,CONTRACT_NAME  as contractName
+              ,VENDOR
+              ,(select outsourcname from PPM_OUTSOURCING_INFO where isdel = '0' and orgcode = VENDOR and rownum=1) vendorName
+              ,APPROVAL_PASS_DATE as approvalPassDate
+              ,PAYMENT_SUBMIT_DATE as paymentSubmitDate
+              ,FEE_START_DATE as feeStartDate
+              ,FEE_END_DATE  as feeEndDate
+              ,(select empname from comm_employee where badge = pro_manager and ISDISABLED = '0'  and rownum=1) as proManagerName
+              ,APPROVAL_STATUS as approvalStatus
+              ,IS_DEL
+              ,PRO_MANAGER proManager
+              ,AMOUNT_RAW as amountRaw
+              ,AMOUNT_SALT as amountSalt
+              ,AMOUNT
+              ,AMOUNT_TAX as amountTax
+              ,TAX_RATE as taxRate
+              ,REMARK
+              ,CREATE_USER
+              ,UPDATE_USER
+            FROM PPM_PAYMENT_CONFIRM
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="id != null and id != '' "> ID = #{id} AND </if>
+            <if test="instanceId != null and instanceId != '' "> INSTANCE_ID = #{instanceId} AND </if>
+            <if test="flowId != null and flowId != '' "> FLOW_ID = #{flowId} AND </if>
+            <if test="approvalPassDate != null and approvalPassDate != '' "> APPROVAL_PASS_DATE = #{approvalPassDate} AND </if>
+            <if test="contractNo != null and contractNo != '' "> CONTRACT_NO = #{contractNo} AND </if>
+            <if test="contractName != null and contractName != '' "> CONTRACT_NAME like '%'||#{contractName}||'%' AND</if>
+            <if test="vendor != null and vendor != '' "> VENDOR = #{vendor} AND </if>
+            <if test="paymentSubmitDate != null and paymentSubmitDate != '' "> PAYMENT_SUBMIT_DATE = #{paymentSubmitDate} AND </if>
+            <if test="feeStartDate != null and feeStartDate != '' "> FEE_START_DATE &gt;= #{feeStartDate} AND </if>
+            <if test="feeStartDateE != null and feeStartDateE != '' "> FEE_START_DATE &lt;= #{feeStartDateE} AND </if>
+            <if test="feeEndDate != null and feeEndDate != '' "> FEE_END_DATE &gt;= #{feeEndDate} AND </if>
+            <if test="feeEndDateE != null and feeEndDateE != '' "> FEE_END_DATE &lt;= #{feeEndDateE} AND </if>
+            <if test="approvalStatus != null and approvalStatus != '' "> APPROVAL_STATUS = #{approvalStatus} AND </if>
+            <if test="isDel != null and isDel != '' "> IS_DEL = #{isDel} AND </if>
+            <if test="amountRaw != null "> AMOUNT_RAW = #{amountRaw} AND </if>
+            <if test="amountSalt != null "> AMOUNT_SALT = #{amountSalt} AND </if>
+            <if test="amount != null"> AMOUNT = #{amount} AND </if>
+            <if test="amountTax != null"> AMOUNT_TAX = #{amountTax} AND </if>
+            <if test="taxRate != null "> TAX_RATE = #{taxRate} AND </if>
+            <if test="remark != null and remark != '' "> REMARK = #{remark} AND </if>
+            <if test="createUser != null and createUser != '' "> CREATE_USER = #{createUser} AND </if>
+            <if test="updateUser != null and updateUser != '' "> UPDATE_USER = #{updateUser} AND </if>
+            <if test='perm == "common"'> PRO_MANAGER = #{proManager} AND</if>
+            <if test='perm=="managers"'>
+                PRO_MANAGER in (select badge from comm_employee where depid in (
+                select depid from comm_employee where badge = #{proManager} )) AND
+            </if>
+        </trim>
+    </select>
+
+    <!-- list query 2022-11-06 ywwb903  -->
+    <select id="getList" parameterType="paymentConfirm" resultMap="PAYMENTCONFIRM_ALL">
+        SELECT
+        <include refid="sql_flied_basic"/>
+        FROM PPM_PAYMENT_CONFIRM
+        <include refid="sql_select_condition"/>
+    </select>
+
+    <!-- query details by map, conditions: id  2022-11-06 ywwb903  -->
+    <select id="queryDetailsById" parameterType="map" resultMap="PAYMENTCONFIRM_ALL">
+        SELECT
+        <include refid="sql_flied_all" />
+        FROM PPM_PAYMENT_CONFIRM WHERE ID=#{id}
+    </select>
+
+    <!-- query details by map, conditions: id  2022-11-06 ywwb903  -->
+    <select id="queryDetailsByInstanceId" parameterType="map" resultMap="PAYMENTCONFIRM_ALL">
+        SELECT
+        <include refid="sql_flied_all" />
+        FROM PPM_PAYMENT_CONFIRM WHERE INSTANCE_ID=#{instanceId}
+    </select>
+
+    <!-- selectListByIds  2022-11-06 ywwb903  -->
+    <select id="selectListByIds" resultMap="PAYMENTCONFIRM_ALL_EXT">
+        SELECT
+        <include refid="sql_flied_small" />
+        ,(select empname from comm_employee where badge = pro_manager and ISDISABLED = '0' and rownum =1) as proManagerName
+        FROM PPM_PAYMENT_CONFIRM
+        where id in
+        <foreach collection="list" item="ids" open="(" separator=", " close=")">
+            #{ids}
+        </foreach>
+    </select>
+
+    <!-- query details by obj  2022-11-06 ywwb903  -->
+    <select id="queryDetails" parameterType="paymentConfirm" resultMap="PAYMENTCONFIRM_ALL">
+        SELECT
+        <include refid="sql_flied_all" />
+        FROM PPM_PAYMENT_CONFIRM WHERE ID=#{id}
+    </select>
+
+    <!-- 查询审批通过的记录  2022-11-13 ywwb903  -->
+    <select id="selectOthers"  resultType="com.work.ppm.application.dto.vendorcontract.PaymentConfirmDto">
+        SELECT
+        a.id
+        ,a.INSTANCE_ID as instanceId
+        ,a.FLOW_ID as flowId
+        ,a.CONTRACT_NO as contractNo
+        ,a.CONTRACT_NAME as contractName
+        ,a.vendor
+        ,(select  outsourcname from PPM_OUTSOURCING_INFO where isdel = '0' and orgcode = a.vendor) as vendorName
+        ,a.FEE_START_DATE as feeStartDate
+        ,a.FEE_END_DATE as feeEndDate
+        ,(select empname from comm_employee where badge = a.pro_manager and ISDISABLED = '0'  and rownum=1) as proManagerName
+        , pro_manager as proManager
+        ,a.AMOUNT
+        ,a.AMOUNT_TAX as amountTax
+        ,a.TAX_RATE as taxRate
+        ,a.approval_pass_date as approvalPassDate
+        ,a.payment_submit_date as paymentSubmitDate
+        ,b.bank_code as bankCode
+        ,b.account
+        FROM PPM_PAYMENT_CONFIRM a
+        LEFT JOIN PPM_VENDOR_CONTRACT b
+        ON a.contract_no = b.contract_no
+        WHERE a.flow_status = '0' and a.approval_status = '01' and a.is_del= '0'
+        <if test="contractName != null and contractName != '' "> AND CONTRACT_NAME like '%'||#{contractName}||'%'</if>
+        <if test="vendor != null and vendor != '' "> AND A.VENDOR = #{vendor} </if>
+        <if test="feeStartDate != null and feeStartDate != '' "> AND FEE_START_DATE &gt;= #{feeStartDate}</if>
+        <if test="feeStartDateE != null and feeStartDateE != '' ">AND  FEE_START_DATE &lt;= #{feeStartDateE}</if>
+        <if test="feeEndDate != null and feeEndDate != '' "> AND FEE_END_DATE &gt;= #{feeEndDate}</if>
+        <if test="feeEndDateE != null and feeEndDateE != '' ">AND FEE_END_DATE &lt;= #{feeEndDateE}</if>
+        <if test='perm == "common"'> PRO_MANAGER = #{proManager} AND</if>
+        <if test='perm == "managers"'>
+            AND PRO_MANAGER in (select badge from comm_employee where depid in (
+            select depid from comm_employee where badge = #{proManager} ))
+        </if>
+        ORDER BY a.id
+    </select>
+
+   <!-- select by map  2022-11-06 ywwb903  -->
+    <select id="selectByMapBasic" parameterType="map" resultMap="PAYMENTCONFIRM_ALL">
+        SELECT
+        <include refid="sql_flied_basic" />
+        FROM PPM_PAYMENT_CONFIRM
+        <include refid="sql_select_condition_cus"/>
+    </select>
+
+    <select id="selectByMapSmall" parameterType="map" resultMap="PAYMENTCONFIRM_ALL">
+        SELECT
+        <include refid="sql_flied_small" />
+        FROM PPM_PAYMENT_CONFIRM
+        <include refid="sql_select_condition_cus"/>
+    </select>
+
+    <!-- 支付确认 基本信息  2022-11-06 ywwb903  -->
+    <select id="selectOne" parameterType="paymentConfirm" resultMap="PAYMENTCONFIRM_ALL">
+        SELECT contract_no,
+        contract_name,
+        outsource_no,
+        tax_rate,
+        SUM(actual_price) amount_raw
+        FROM (SELECT a.contract_no,
+        a.contract_name,
+        b.outsource_no,
+        b.price *
+        (c.actual_attendance_days / c.required_attendance_days) actual_price,
+        tax_rate
+        FROM
+        (SELECT id,contract_no, contract_name, tax_rate
+        FROM PPM_VENDOR_CONTRACT
+        WHERE IS_DEL = '0') a
+        LEFT JOIN (SELECT JOB_ID,
+        outsource_no,
+        user_name,
+        PERSON_IN_CHARGE,
+        price,
+        NEW_CONTRACT_ID as contract_id
+        FROM PPM_OUTSOURCING_BASIC
+<!--        WHERE OUTSOURCE_TYPE = '1'-->
+        ) b
+        ON a.id = b.contract_id
+        LEFT JOIN PPM_KQ_INFO c
+        ON b.job_id = c.job_id
+        WHERE a.CONTRACT_NO = #{contractNo}
+        AND PERSON_IN_CHARGE = #{proManager}
+<!--        AND attendance_month &gt;= #{feeStartDate}-->
+<!--        AND attendance_month &lt;= #{feeEndDate}-->
+        )
+        GROUP BY contract_no, contract_name, outsource_no, tax_rate
+    </select>
+
+    <!-- 每个人一月一记录  2022-11-06 ywwb903 selectPersons暂停用  -->
+    <select id="selectPersons" parameterType="paymentConfirm" resultType="com.work.ppm.application.model.vendormanager.PaymentConfirmOther">
+        SELECT c.id
+        ,b.job_id as jobId
+        ,b.user_name as  userName
+        ,b.price
+        ,required_attendance_days as requiredAttendanceDays
+        ,actual_attendance_days as actualAttendanceDays
+        ,round((actual_attendance_days / required_attendance_days) * price,2) actualPrice
+        ,substr(attendance_month,0,4) as paymentYear
+        ,substr(attendance_month,5,5) as paymentMonth
+        FROM (SELECT id, contract_no, contract_name, tax_rate
+        FROM PPM_VENDOR_CONTRACT
+        WHERE IS_DEL = '0') a
+        LEFT JOIN (SELECT JOB_ID,
+        outsource_no,
+        user_name,
+        PERSON_IN_CHARGE,
+        price,
+        NEW_CONTRACT_ID as contract_id
+        FROM PPM_OUTSOURCING_BASIC
+        WHERE OUTSOURCE_TYPE = '1') b
+        ON a.id = b.contract_id
+        LEFT JOIN PPM_KQ_INFO c
+        ON b.job_id = c.job_id
+        WHERE a.CONTRACT_NO = #{contractNo}
+        AND b.PERSON_IN_CHARGE = #{proManager}
+        AND attendance_month &gt;= #{feeStartDate}
+        AND attendance_month &lt;= #{feeEndDate}
+    </select>
+    <select id="exportPersonListOld" parameterType="paymentConfirm" resultType="com.work.ppm.application.model.vendormanager.PaymentConfirmOther">
+        SELECT
+        JOB_ID as jobId
+        ,USER_NAME as userName
+        ,substr(ATTENDANCE_DATE,0,4) as paymentYear
+        ,substr(ATTENDANCE_DATE,5,5) as paymentMonth
+        ,max(REQUIRED_ATTENDANCE_DAYS) as requiredAttendanceDays
+        ,max(ACTUAL_ATTENDANCE_DAYS) as actualAttendanceDays
+        ,round(sum(price),2) as actualPrice
+        ,max(prices) as price
+        FROM (
+        SELECT
+        pki.id
+        ,t.JOB_ID
+        ,t.USER_NAME
+        ,t.ATTENDANCE_DATE
+        ,prices
+        ,case t.am_whether_abnormal + t.pm_whether_abnormal
+        when 2 then 0
+        when 1 then 1/2*1/pki.required_attendance_days*t.prices
+        else 1/pki.required_attendance_days*t.prices
+        end price
+        ,pki.REQUIRED_ATTENDANCE_DAYS
+        ,pki.ACTUAL_ATTENDANCE_DAYS
+        ,new_contract_id
+        FROM (
+        SELECT pkr.JOB_ID,pkr.user_name, pkr.am_whether_abnormal
+        ,pkr.pm_whether_abnormal
+        ,pkr.is_holiday
+        ,pkr.outsource_type
+        ,TO_CHAR(pkr.ATTENDANCE_DATE,'yyyyMM') AS  ATTENDANCE_DATE
+        ,pkr.prices
+        ,pob.person_in_charge
+        ,pob.new_contract_id
+        FROM PPM_KQ_RECORD pkr
+        LEFT JOIN PPM_OUTSOURCING_BASIC pob
+        ON pkr.job_id = pob.job_id
+        ) t
+        LEFT JOIN  PPM_KQ_INFO pki
+        on t.job_id = pki.job_id
+        WHERE pki.attendance_month = t.attendance_date
+        AND t.attendance_date &gt;= #{feeStartDate}
+        AND t.attendance_date &lt;= #{feeEndDate}
+        AND t.job_id in
+        <foreach collection="jobIdList" item="jobId" open="(" separator=", " close=")">
+            #{jobId}
+        </foreach>
+
+        AND is_holiday = '0' and outsource_type = '1'
+        )
+        group by JOB_ID,USER_NAME,ATTENDANCE_DATE
+        ORDER BY JOB_ID,ATTENDANCE_DATE
+    </select>
+
+    <select id="exportPersonList" parameterType="paymentConfirm" resultType="com.work.ppm.application.model.vendormanager.PaymentConfirmOther">
+        SELECT JOB_ID as jobId,
+       USER_NAME as userName,
+       substr(ATTENDANCE_DATE, 0, 4) as paymentYear,
+       substr(ATTENDANCE_DATE, 5, 5) as paymentMonth,
+       round(sum(price), 2) as actualPrice,
+       (select sum(day) tt
+                  from (select case kqr.am_whether_abnormal +
+                                kqr.pm_whether_abnormal
+                                 when 2 then
+                                  0
+                                 when 1 then
+                                  0.5
+                                 else
+                                  1
+                               END day,
+                               job_id
+                          from PPM_KQ_RECORD kqr
+                         where attendance_date &gt;= to_date(#{feeStartDate}, 'yyyyMMdd')
+                           and attendance_date &lt;= to_date(#{feeEndDate}, 'yyyyMMdd')
+                           and is_holiday = '0') t1
+                 where t1.job_id = st.JOB_ID) as actualAttendanceDayst,
+               (select count(1)
+                  from PPM_KQ_RECORD kqr
+                 where attendance_date &gt;= to_date(#{feeStartDate}, 'yyyyMMdd')
+                   and attendance_date &lt;= to_date(#{feeEndDate}, 'yyyyMMdd')
+                   and is_holiday = '0'
+                   and kqr.job_id = st.JOB_ID) as requiredAttendanceDayst,
+                   max(REQUIRED_ATTENDANCE_DAYS) as requiredAttendanceDaysq,
+                   max(ACTUAL_ATTENDANCE_DAYS) as actualAttendanceDaysq,
+			max(prices) as price
+		FROM (SELECT pki.id,
+               t.JOB_ID,
+               t.USER_NAME,
+               substr(t.ATTENDANCE_DATE, 0, 6) as ATTENDANCE_DATE,
+               prices,
+               case t.am_whether_abnormal + t.pm_whether_abnormal
+                 when 2 then
+                  0
+                 when 1 then
+                  1 / 2 * 1 / pki.required_attendance_days * t.prices
+                 else
+                  1 / pki.required_attendance_days * t.prices
+               end price,
+              pki.REQUIRED_ATTENDANCE_DAYS,
+              pki.ACTUAL_ATTENDANCE_DAYS,
+               new_contract_id
+          FROM (SELECT pkr.JOB_ID,
+                       pkr.user_name,
+                       pkr.am_whether_abnormal,
+                       pkr.pm_whether_abnormal,
+                       pkr.is_holiday,
+                       pkr.outsource_type,
+                       TO_CHAR(pkr.ATTENDANCE_DATE, 'yyyyMMdd') AS ATTENDANCE_DATE,
+                       pkr.prices,
+                       pob.person_in_charge,
+                       pob.new_contract_id
+                  FROM PPM_KQ_RECORD pkr
+                  LEFT JOIN PPM_OUTSOURCING_BASIC pob
+                    ON pkr.job_id = pob.job_id) t
+          LEFT JOIN PPM_KQ_INFO pki
+            on t.job_id = pki.job_id
+         WHERE pki.attendance_month = substr(t.attendance_date, 0, 6)
+           AND t.attendance_date &gt;= #{feeStartDate}
+           AND t.attendance_date &lt;= #{feeEndDate}
+           AND t.job_id in 
+		   <foreach collection="jobIdList" item="jobId" open="(" separator=", " close=")">
+				#{jobId}
+		   </foreach>
+           AND is_holiday = '0'
+           and outsource_type = '1' ) st
+	group by JOB_ID, USER_NAME, ATTENDANCE_DATE
+	ORDER BY JOB_ID, ATTENDANCE_DATE
+    </select>
+
+    <!-- 人员信息-每月费用记录  2023-01-19 ywwb903   -->
+    <select id="selectPersonListOld" parameterType="paymentConfirm" resultType="com.work.ppm.application.dto.vendormanager.PaymentConfirmPersonDto">
+        SELECT
+        JOB_ID as jobId
+        ,USER_NAME as userName
+        ,substr(ATTENDANCE_DATE,0,4) as paymentYear
+        ,substr(ATTENDANCE_DATE,5,5) as paymentMonth
+        ,max(REQUIRED_ATTENDANCE_DAYS) as requiredAttendanceDays
+        ,max(ACTUAL_ATTENDANCE_DAYS) as actualAttendanceDays
+        ,nvl(round(sum(price),2),0) as actualPrice
+        ,nvl(max(prices),0) as price
+        FROM (
+        SELECT
+        pki.id
+        ,t.JOB_ID
+        ,t.USER_NAME
+        ,t.ATTENDANCE_DATE
+        ,prices
+        ,case t.am_whether_abnormal + t.pm_whether_abnormal
+        when 2 then 0
+        when 1 then 1/2*1/pki.required_attendance_days*t.prices
+        else 1/pki.required_attendance_days*t.prices
+        end price
+        ,pki.REQUIRED_ATTENDANCE_DAYS
+        ,pki.ACTUAL_ATTENDANCE_DAYS
+        ,new_contract_id
+        FROM (
+        SELECT pkr.JOB_ID,pkr.user_name, pkr.am_whether_abnormal
+        ,pkr.pm_whether_abnormal
+        ,pkr.is_holiday
+        ,pkr.outsource_type
+        ,TO_CHAR(pkr.ATTENDANCE_DATE,'yyyyMM') AS  ATTENDANCE_DATE
+        ,pkr.prices
+        ,pob.person_in_charge
+        ,pob.new_contract_id
+        FROM PPM_KQ_RECORD pkr
+        LEFT JOIN PPM_OUTSOURCING_BASIC pob
+        ON pkr.job_id = pob.job_id
+        ) t
+        LEFT JOIN  PPM_KQ_INFO pki
+        on t.job_id = pki.job_id
+        WHERE pki.attendance_month = t.attendance_date
+        AND t.attendance_date &gt;= #{feeStartDate}
+        AND t.attendance_date &lt;= #{feeEndDate}
+        AND person_in_charge = #{proManager}
+        AND new_contract_id = #{contractId}
+        AND is_holiday = '0' and outsource_type = '1'
+        )
+        group by JOB_ID,USER_NAME,ATTENDANCE_DATE
+        ORDER BY JOB_ID,ATTENDANCE_DATE
+    </select>
+
+    <!-- 人员信息-每月费用记录  2023-01-19 ywwb903   -->
+    <select id="selectPersonList" parameterType="paymentConfirm" resultType="com.work.ppm.application.dto.vendormanager.PaymentConfirmPersonDto">
+        SELECT
+        JOB_ID as jobId
+        ,USER_NAME as userName
+        ,(select sum(day) tt from (
+        select case kqr.am_whether_abnormal + kqr.pm_whether_abnormal
+        when 2 then 0
+        when 1 then 0.5
+        else 1 END day,
+        job_id
+        from PPM_KQ_RECORD kqr where attendance_date &gt;= to_date(#{feeStartDate}, 'yyyyMMdd')
+        and attendance_date &lt;= to_date(#{feeEndDate}, 'yyyyMMdd')
+        and is_holiday = '0')t1
+        where t1.job_id =  tt.JOB_ID) as actualAttendanceDayst
+        ,(select count(1) from PPM_KQ_RECORD kqr where attendance_date &gt;= to_date(#{feeStartDate}, 'yyyyMMdd')
+        and attendance_date &lt;= to_date(#{feeEndDate}, 'yyyyMMdd')
+        and is_holiday = '0'
+        and kqr.job_id =  tt.JOB_ID) as requiredAttendanceDayst
+        ,substr(ATTENDANCE_DATE,0,4) as paymentYear
+        ,substr(ATTENDANCE_DATE,5,5) as paymentMonth
+        ,max(REQUIRED_ATTENDANCE_DAYS) as requiredAttendanceDaysq
+        ,max(ACTUAL_ATTENDANCE_DAYS) as actualAttendanceDaysq
+        ,nvl(round(sum(price),2),0) as actualPrice
+        ,nvl(max(prices),0) as price
+        FROM (
+        SELECT
+        pki.id
+        ,t.JOB_ID
+        ,t.USER_NAME
+        ,substr(t.ATTENDANCE_DATE,0,6) ATTENDANCE_DATE
+        ,prices
+        ,case t.am_whether_abnormal + t.pm_whether_abnormal
+        when 2 then 0
+        when 1 then 1/2*1/pki.required_attendance_days*t.prices
+        else 1/pki.required_attendance_days*t.prices
+        end price
+        ,pki.REQUIRED_ATTENDANCE_DAYS
+        ,pki.ACTUAL_ATTENDANCE_DAYS
+        ,new_contract_id
+        -- SELECT *
+        FROM (
+        SELECT pkr.JOB_ID,pkr.user_name, pkr.am_whether_abnormal
+        ,pkr.pm_whether_abnormal
+        ,pkr.is_holiday
+        ,pkr.outsource_type
+        ,TO_CHAR(pkr.ATTENDANCE_DATE,'yyyyMMdd') AS  ATTENDANCE_DATE
+        ,pkr.prices
+        ,pob.person_in_charge
+        ,pob.new_contract_id
+        FROM PPM_KQ_RECORD pkr
+        LEFT JOIN PPM_OUTSOURCING_BASIC pob
+        ON pkr.job_id = pob.job_id
+        ) t
+        LEFT JOIN  PPM_KQ_INFO pki
+        on t.job_id = pki.job_id
+        WHERE pki.attendance_month = substr(t.attendance_date,0,6)
+        AND t.attendance_date &gt;= #{feeStartDate}
+        AND t.attendance_date &lt;= #{feeEndDate}
+        AND person_in_charge = #{proManager}
+        AND new_contract_id = #{contractId}
+        AND is_holiday = '0' and outsource_type = '1'
+        ) tt
+        group by JOB_ID,USER_NAME,ATTENDANCE_DATE
+        ORDER BY JOB_ID,ATTENDANCE_DATE
+    </select>
+
+    <select id="selectAmountRaw" parameterType="paymentConfirm" resultType="Double">
+        SELECT round(SUM(price),2) price
+        FROM (
+        SELECT
+        pki.id
+        ,t.JOB_ID
+        ,t.USER_NAME
+        ,t.ATTENDANCE_DATE
+        ,prices
+        ,case t.am_whether_abnormal + t.pm_whether_abnormal
+        when 2 then 0
+        when 1 then 1/2*1/pki.required_attendance_days*t.prices
+        else 1/pki.required_attendance_days*t.prices
+        end price
+        ,pki.REQUIRED_ATTENDANCE_DAYS
+        ,pki.ACTUAL_ATTENDANCE_DAYS
+        ,new_contract_id
+        FROM (
+        SELECT pkr.JOB_ID,pkr.user_name, pkr.am_whether_abnormal
+        ,pkr.pm_whether_abnormal
+        ,pkr.is_holiday
+        ,pkr.outsource_type
+        ,TO_CHAR(pkr.ATTENDANCE_DATE,'yyyyMM') AS  ATTENDANCE_DATE
+        ,pkr.prices
+        ,pob.person_in_charge
+        ,pob.new_contract_id
+        FROM PPM_KQ_RECORD pkr
+        LEFT JOIN PPM_OUTSOURCING_BASIC pob
+        ON pkr.job_id = pob.job_id
+        ) t
+        LEFT JOIN  PPM_KQ_INFO pki
+        on t.job_id = pki.job_id
+        WHERE pki.attendance_month = t.attendance_date
+        AND t.attendance_date &gt;= #{feeStartDate}
+        AND t.attendance_date &lt;= #{feeEndDate}
+        AND person_in_charge = #{proManager}
+        AND new_contract_id = #{contractId}
+        AND is_holiday = '0' and outsource_type = '1'
+        )
+    </select>
+
+    <!-- 考勤详情<每天> 2022-11-06 ywwb903  -->
+    <select id="selectAttendanceDetails" parameterType="paymentConfirm" resultType="com.work.ppm.application.dto.vendorcontract.AttendanceInfoDto">
+        SELECT job_id as jobId,
+        userName,
+        attendance_date as attendanceDate,
+        (am_day + pm_day)||'' as actualAttendanceDays,
+        '1' as requiredAttendanceDays
+        FROM (SELECT a.job_id,
+        a.user_name as userName,
+        b.attendance_date,
+        case when am_whether_abnormal = '0' then 0.5 else 0 end am_day,
+        case when pm_whether_abnormal = '0' then 0.5 else 0 end pm_day
+        FROM ( SELECT
+              job_id,
+              outsource_no,
+              user_name,
+              PERSON_IN_CHARGE,
+              price,
+              NEW_CONTRACT_ID as contract_id
+        FROM PPM_OUTSOURCING_BASIC
+        WHERE OUTSOURCE_TYPE = '1') a
+        LEFT JOIN PPM_KQ_RECORD b
+        on a.job_id = b.job_id
+        WHERE a.contract_id = #{contractNo}
+        AND a.PERSON_IN_CHARGE = #{proManager}
+        AND b.is_holiday = '0'
+        AND attendance_date &gt;= to_date(#{feeStartDate}, 'yyyy/MM')
+        AND attendance_date &lt;
+            add_months(to_date(#{feeEndDate}, 'yyyy/MM'), 1)
+        ) c order by c.job_id, c.attendance_date
+    </select>
+
+    <select id="selectAttendanceDetailsCus" parameterType="com.work.ppm.application.dto.vendorcontract.PaymentConfirmDto"
+            resultType="com.work.ppm.application.dto.vendorcontract.AttendanceInfoDto">
+        SELECT job_id as jobId,
+        userName,
+        to_char(attendance_date,'yyyy-MM-dd') as attendanceDate,
+        (am_day + pm_day)||'' as actualAttendanceDays,
+        '1' as requiredAttendanceDays
+        FROM (SELECT a.job_id,
+        a.user_name as userName,
+        b.attendance_date,
+        case when am_whether_abnormal = '0' then 0.5 else 0 end am_day,
+        case when pm_whether_abnormal = '0' then 0.5 else 0 end pm_day
+        FROM ( SELECT
+        job_id,
+        outsource_no,
+        user_name,
+        PERSON_IN_CHARGE,
+        price,
+        NEW_CONTRACT_ID as contract_id
+        FROM PPM_OUTSOURCING_BASIC
+<!--        WHERE OUTSOURCE_TYPE = '1'-->
+        ) a
+        LEFT JOIN PPM_KQ_RECORD b
+        on a.job_id = b.job_id
+        WHERE
+        b.job_id in
+        <foreach collection="jobIdList" item="jobId" open="(" separator=", " close=")">
+            #{jobId}
+        </foreach>
+        AND b.is_holiday = '0'
+        AND attendance_date &gt;= to_date(#{feeStartDate}, 'yyyyMMdd')
+        AND attendance_date &lt;= to_date(#{feeEndDate}, 'yyyyMMdd')
+        ) c order by c.job_id, c.attendance_date
+    </select>
+   <!-- selectCount  2022-11-06 ywwb903  -->
+    <select id="selectCount" parameterType="map" resultType="Long">
+        SELECT COUNT(1)
+        FROM PPM_PAYMENT_CONFIRM
+        <include refid="sql_select_condition_cus"/>
+    </select>
+
+    <!-- 外包花名册人员是否关联合同  2022-11-06 ywwb903  -->
+    <select id="selectCountJoinContract" parameterType="paymentConfirm" resultType="Integer">
+        SELECT COUNT(1)
+          FROM PPM_OUTSOURCING_BASIC
+         WHERE PERSON_IN_CHARGE = #{proManager} AND OUTSOURCE_NO = #{vendor} AND NEW_CONTRACT_ID IS NULL AND OUTSOURCE_TYPE='1'
+    </select>
+
+    <!--  新增  -->
+    <!-- insert 2022-11-06 ywwb903  -->
+    <insert id="addPojo" parameterType="paymentConfirm">
+    	INSERT INTO PPM_PAYMENT_CONFIRM (
+    	<trim suffixOverrides=",">
+    	    <if test="id != null and id != '' ">  ID ,</if>
+            <if test="instanceId != null and instanceId != '' ">  INSTANCE_ID ,</if>
+            <if test="flowId != null and flowId != '' ">  FLOW_ID ,</if>
+    	    <if test="contractNo != null and contractNo != '' ">  CONTRACT_NO ,</if>
+    	    <if test="contractName != null and contractName != '' ">  CONTRACT_NAME ,</if>
+    	    <if test="vendor != null and vendor != '' ">  VENDOR ,</if>
+    	    <if test="paymentSubmitDate != null and paymentSubmitDate != '' ">  PAYMENT_SUBMIT_DATE ,</if>
+    	    <if test="feeStartDate != null and feeStartDate != '' ">  FEE_START_DATE ,</if>
+    	    <if test="feeEndDate != null and feeEndDate != '' ">  FEE_END_DATE ,</if>
+    	    <if test="approvalStatus != null and approvalStatus != '' ">  APPROVAL_STATUS ,</if>
+    	    <if test="isDel != null and isDel != '' ">  IS_DEL ,</if>
+    	    <if test="proManager != null and proManager != '' ">  PRO_MANAGER ,</if>
+    	    <if test="amountRaw != null and amountRaw != '' ">  AMOUNT_RAW ,</if>
+    	    <if test="amountSalt != null and amountSalt != '' ">  AMOUNT_SALT ,</if>
+    	    <if test="amount != null and amount != '' ">  AMOUNT ,</if>
+    	    <if test="amountTax != null and amountTax != '' ">  AMOUNT_TAX ,</if>
+    	    <if test="taxRate != null and taxRate != '' ">  TAX_RATE ,</if>
+    	    <if test="remark != null and remark != '' ">  REMARK ,</if>
+    	    <if test="createUser != null and createUser != '' ">  CREATE_USER ,</if>
+    	    <if test="updateUser != null and updateUser != '' ">  UPDATE_USER ,</if>
+    	</trim>
+    	)
+    	VALUES(
+    	<trim suffixOverrides=",">
+            <if test="id != null and id != '' "> #{id} ,</if>
+            <if test="instanceId != null and instanceId != '' "> #{instanceId} ,</if>
+            <if test="flowId != null and flowId != '' "> #{flowId} ,</if>
+            <if test="contractNo != null and contractNo != '' "> #{contractNo} ,</if>
+            <if test="contractName != null and contractName != '' "> #{contractName} ,</if>
+            <if test="vendor != null and vendor != '' "> #{vendor} ,</if>
+            <if test="paymentSubmitDate != null and paymentSubmitDate != '' "> #{paymentSubmitDate} ,</if>
+            <if test="feeStartDate != null and feeStartDate != '' "> #{feeStartDate} ,</if>
+            <if test="feeEndDate != null and feeEndDate != '' "> #{feeEndDate} ,</if>
+            <if test="approvalStatus != null and approvalStatus != '' "> #{approvalStatus} ,</if>
+            <if test="isDel != null and isDel != '' "> #{isDel} ,</if>
+            <if test="proManager != null and proManager != '' "> #{proManager} ,</if>
+            <if test="amountRaw != null and amountRaw != '' "> #{amountRaw} ,</if>
+            <if test="amountSalt != null and amountSalt != '' "> #{amountSalt} ,</if>
+            <if test="amount != null and amount != '' "> #{amount} ,</if>
+            <if test="amountTax != null and amountTax != '' "> #{amountTax} ,</if>
+            <if test="taxRate != null and taxRate != '' "> #{taxRate} ,</if>
+            <if test="remark != null and remark != '' "> #{remark} ,</if>
+            <if test="createUser != null and createUser != '' "> #{createUser} ,</if>
+            <if test="updateUser != null and updateUser != '' "> #{updateUser} ,</if>
+    	</trim>
+    	)
+    </insert>
+
+    <!-- batch insert 2022-11-06 ywwb903  -->
+    <insert id="batchAdd" parameterType="list">
+        INSERT ALL
+        <foreach collection="list" item="item" index="index">
+            INTO PPM_PAYMENT_CONFIRM (
+            <trim suffixOverrides=",">
+                <if test="item.id != null" > ID ,</if>
+                <if test="item.contractNo != null and item.contractNo != '' ">  CONTRACT_NO ,</if>
+                <if test="item.contractName != null and item.contractName != '' ">  CONTRACT_NAME ,</if>
+                <if test="item.vendor != null and item.vendor != '' ">  VENDOR ,</if>
+                <if test="item.paymentSubmitDate != null and item.paymentSubmitDate != '' ">  PAYMENT_SUBMIT_DATE ,</if>
+                <if test="item.feeStartDate != null and item.feeStartDate != '' ">  FEE_START_DATE ,</if>
+                <if test="item.feeEndDate != null and item.feeEndDate != '' ">  FEE_END_DATE ,</if>
+                <if test="item.approvalStatus != null and item.approvalStatus != '' ">  APPROVAL_STATUS ,</if>
+                <if test="item.isDel != null and item.isDel != '' ">  IS_DEL ,</if>
+                <if test="item.proManager != null and item.proManager != '' ">  PRO_MANAGER ,</if>
+                <if test="item.amountRaw != null and item.amountRaw != '' ">  AMOUNT_RAW ,</if>
+                <if test="item.amountSalt != null and item.amountSalt != '' ">  AMOUNT_SALT ,</if>
+                <if test="item.amount != null and item.amount != '' ">  AMOUNT ,</if>
+                <if test="item.amountTax != null and item.amountTax != '' ">  AMOUNT_TAX ,</if>
+                <if test="item.taxRate != null and item.taxRate != '' ">  TAX_RATE ,</if>
+                <if test="item.remark != null and item.remark != '' ">  REMARK ,</if>
+                <if test="item.createDate != null and item.createDate != '' ">  CREATE_DATE ,</if>
+                <if test="item.createUser != null and item.createUser != '' ">  CREATE_USER ,</if>
+                <if test="item.updateDate != null and item.updateDate != '' ">  UPDATE_DATE ,</if>
+                <if test="item.updateUser != null and item.updateUser != '' ">  UPDATE_USER ,</if>
+            </trim>
+            )
+            VALUES(
+            <trim suffixOverrides=",">
+                <if test="item.id != null" > #{item.id} ,</if>
+                <if test="item.contractNo != null and item.contractNo != '' " > #{item.contractNo} ,</if>
+                <if test="item.contractName != null and item.contractName != '' " > #{item.contractName} ,</if>
+                <if test="item.vendor != null and item.vendor != '' " > #{item.vendor} ,</if>
+                <if test="item.paymentSubmitDate != null and item.paymentSubmitDate != '' " > #{item.paymentSubmitDate} ,</if>
+                <if test="item.feeStartDate != null and item.feeStartDate != '' " > #{item.feeStartDate} ,</if>
+                <if test="item.feeEndDate != null and item.feeEndDate != '' " > #{item.feeEndDate} ,</if>
+                <if test="item.approvalStatus != null and item.approvalStatus != '' " > #{item.approvalStatus} ,</if>
+                <if test="item.isDel != null and item.isDel != '' " > #{item.isDel} ,</if>
+                <if test="item.proManager != null and item.proManager != '' " > #{item.proManager} ,</if>
+                <if test="item.amountRaw != null and item.amountRaw != '' " > #{item.amountRaw} ,</if>
+                <if test="item.amountSalt != null and item.amountSalt != '' " > #{item.amountSalt} ,</if>
+                <if test="item.amount != null and item.amount != '' " > #{item.amount} ,</if>
+                <if test="item.amountTax != null and item.amountTax != '' " > #{item.amountTax} ,</if>
+                <if test="item.taxRate != null and item.taxRate != '' " > #{item.taxRate} ,</if>
+                <if test="item.remark != null and item.remark != '' " > #{item.remark} ,</if>
+                <if test="item.createUser != null and item.createUser != '' " > #{item.createUser} ,</if>
+                <if test="item.updateUser != null and item.updateUser != '' " > #{item.updateUser} ,</if>
+            </trim>
+            )
+        </foreach>
+        select 1 from dual
+    </insert>
+
+    <!--  更新  -->
+	<!-- update by id 2022-11-06 ywwb903  -->
+	<update id="updatePojo" parameterType="paymentConfirm">
+		UPDATE
+		PPM_PAYMENT_CONFIRM
+		<include refid="update_pojo_sql" />
+		WHERE ID = #{id}
+	</update>
+    <!-- update by instanceId 2022-11-06 ywwb903  -->
+    <update id="updateByInstanceId" parameterType="paymentConfirm">
+        UPDATE
+        PPM_PAYMENT_CONFIRM
+        <include refid="update_pojo_sql" />
+        WHERE  is_del = '0' and instance_id = #{instanceId}
+    </update>
+
+	<!--  删除  -->
+	<!-- delete by pojo 2022-11-06 ywwb903  -->
+    <delete id="deletePojo" parameterType="paymentConfirm">
+        DELETE FROM PPM_PAYMENT_CONFIRM WHERE ID = #{id}
+    </delete>
+
+    <select id="selectExpireResult" parameterType="paymentConfirm" resultType="Boolean">
+        SELECT CASE WHEN fee_start_date &gt;= start_date AND fee_end_date &lt;= end_date THEN 1 ELSE 0 END FROM
+        (SELECT
+               to_date(#{feeStartDate}, 'yyyy-MM-dd') as fee_start_date,
+               to_date(#{feeEndDate}, 'yyyy-MM-dd') as fee_end_date,
+               to_date(start_date, 'yyyy-MM-dd') as start_date,
+               to_date(end_date, 'yyyy-MM-dd')+90 as end_date
+          FROM PPM_VENDOR_CONTRACT
+         WHERE contract_no = #{contractNo}
+          AND vendor = #{vendor}
+          AND  is_del = '0')
+    </select>
+
+    <!-- 提交记录是否重复  2022-11-06 ywwb903  -->
+    <select id="selectRepetition" parameterType="map" resultType="Long">
+        SELECT COUNT(1)
+        FROM PPM_PAYMENT_CONFIRM
+        WHERE CONTRACT_NO = #{contractNo}
+        AND VENDOR = #{vendor}
+        AND PRO_MANAGER =  #{proManager}
+        AND ((fee_start_date >= #{feeStartDate} and fee_start_date &lt;= #{feeEndDate}) or (fee_end_date >= #{feeStartDate} and fee_end_date &lt;= #{feeEndDate})
+        or (fee_start_date > #{feeStartDate} and #{feeEndDate} > fee_end_date))
+        AND is_del = '0'
+    </select>
+
+	<!-- 提交记录是否重复  2022-12-09 ywwb905  -->
+    <select id="getNotFinishList" parameterType="paymentConfirm" resultMap="PAYMENTCONFIRM_ALL">
+        SELECT
+        <include refid="sql_flied_basic"/>
+        FROM PPM_PAYMENT_CONFIRM
+        WHERE APPROVAL_STATUS != #{approvalStatus}
+        AND IS_DEL = #{isDel}
+        AND PRO_MANAGER = #{proManager}
+    </select>
+</mapper>

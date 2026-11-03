@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tansun.wf.platform.mapper.WfTenantMapper">
+
+	<resultMap id="wfTenantMap" type="com.tansun.wf.platform.model.WfTenantEntity">
+		<result column="id" property="id" javaType="java.lang.String"/>
+		<result column="tenant_id" property="tenantId" javaType="java.lang.String"/>
+		<result column="tenant_name" property="name" javaType="java.lang.String"/>
+		<result column="create_by" property="createBy" javaType="java.lang.String"/>
+		<result column="create_date" property="createDate" javaType="java.util.Date"/>
+		<result column="update_by" property="updateBy" javaType="java.lang.String"/>
+		<result column="update_date" property="updateDate" javaType="java.util.Date"/>
+		<result column="remarks" property="remarks" javaType="java.lang.String"/>
+		<result column="del_flag" property="delFlag" javaType="java.lang.String"/>
+	</resultMap>
+    <sql id="wfTenantColumns">
+		a.id,
+		a.tenant_id,
+		a.tenant_name,
+		a.create_by,
+		a.create_date,
+		a.update_by,
+		a.update_date,
+		a.remarks
+	</sql>
+
+	<delete id="delete" parameterType="com.tansun.wf.platform.model.WfTenantEntity">
+        delete from wf_tenant where id = #{id}
+    </delete>
+
+    <select id="findList" parameterType="com.tansun.wf.platform.query.WfTenantQuery" resultMap="wfTenantMap">
+        SELECT
+        <include refid="wfTenantColumns"/>
+		FROM wf_tenant a
+		<where> 1=1
+			<if test="id != null and id != ''"  >
+				AND a.id = #{id}
+			</if>
+			<if test="tenantId != null and tenantId != ''">
+			<bind name="likeTenantId" value="_parameter.tenantId + '%'"/>
+				AND a.tenant_id LIKE #{likeTenantId}
+			</if>
+			<if test="name != null and name != '' " >
+				<bind name="likeName" value="_parameter.name + '%'"/>
+				AND a.tenant_name LIKE #{likeName}
+			</if>
+		</where>
+    </select>
+
+
+	<select id="selectById" parameterType="java.lang.String" resultType="com.tansun.wf.platform.model.WfTenantEntity">
+		SELECT
+		<include refid="wfTenantColumns"/>
+		FROM wf_tenant a
+		where id = #{id}
+	</select>
+
+	<update id="update"  parameterType="com.tansun.wf.platform.model.WfTenantEntity">
+		UPDATE wf_tenant
+		<set>
+			<if test="tenantId != null">
+				tenant_id = #{tenantId},
+			</if>
+			<if test="name != null">
+				tenant_name = #{name},
+			</if>
+			<if test="updateBy != null">
+				update_by = #{updateBy},
+			</if>
+			<if test="updateDate != null">
+				update_date = #{updateDate},
+			</if>
+			<if test="createDate != null">
+				create_date = #{createDate},
+			</if>
+			<if test="createBy != null">
+				create_by = #{createBy},
+			</if>
+			<if test="remarks != null">
+				remarks = #{remarks},
+			</if>
+		</set>
+		WHERE id = #{id}
+	</update>
+
+	<insert id="insert" parameterType="com.tansun.wf.platform.model.WfTenantEntity">
+		 INSERT INTO wf_tenant (
+            id,
+            tenant_id,
+            tenant_name,
+            create_by,
+            create_date,
+            update_by,
+            update_date,
+            remarks,
+            del_flag
+        )
+        VALUES (
+          #{id},
+          #{tenantId},
+          #{name},
+          #{createBy},
+          #{createDate},
+          #{updateBy},
+          #{updateDate},
+          #{remarks},
+          #{delFlag}
+        )
+	</insert>
+
+</mapper>

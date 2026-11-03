@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:ywwb436 2022-03-14 -->
+<!--  系统详情表 查询脚本 -->
+<mapper namespace="com.work.ppm.application.model.systemmanager.PpmSystemInfo">
+    <resultMap type="ppmSystemInfo" id="PPM_SYSTEM_INFO_ALL">
+        <result property="id" column="ID"/>
+        <result property="name" column="NAME"/>
+        <result property="depId" column="DEP_ID"/>
+        <result property="depName" column="LOCATION"/>
+        <result property="createBy" column="CREATE_BY"/>
+        <result property="createDate" column="CREATE_DATE"/>
+        <result property="updateBy" column="UPDATE_BY"/>
+        <result property="updateDate" column="UPDATE_DATE"/>
+        <result property="remark" column="REMARK"/>
+    </resultMap>
+
+    <resultMap type="ppmSystemUserInfo" id="PPM_SYSTEM_USER_INFO_ALL">
+        <result property="sysId" column="SYS_ID"/>
+        <result property="badge" column="BADGE"/>
+        <result property="empName" column="EMPNAME"/>
+    </resultMap>
+
+
+    <resultMap type="commEmployee" id="COMMEMPLOYEE_ALL">
+        <result property="gender" column="GENDER" />
+        <result property="updateflg" column="UPDATEFLG" />
+        <result property="lastupdatedate" column="LASTUPDATEDATE" />
+        <result property="reportto" column="REPORTTO" />
+        <result property="isdisabled" column="ISDISABLED" />
+        <result property="shortphone" column="SHORTPHONE" />
+        <result property="empname" column="EMPNAME" />
+        <result property="empauth" column="EMPAUTH" />
+        <result property="birthday" column="BIRTHDAY" />
+        <result property="authproperty" column="AUTHPROPERTY" />
+        <result property="remark" column="REMARK" />
+        <result property="fullname" column="FULLNAME" />
+        <result property="jobid" column="JOBID" />
+        <result property="eid" column="EID" />
+        <result property="badge" column="BADGE" />
+        <result property="compid" column="COMPID" />
+        <result property="empstatus" column="EMPSTATUS" />
+        <result property="officephone" column="OFFICEPHONE" />
+        <result property="eidhr" column="EIDHR" />
+        <result property="boardline" column="BOARDLINE" />
+        <result property="spellname" column="SPELLNAME" />
+        <result property="depid" column="DEPID" />
+        <result property="headship" column="HEADSHIP" />
+        <result property="mobiletelphone" column="MOBILETELPHONE" />
+    </resultMap>
+
+    <!-- 所有字段名称 -->
+    <sql id="sql_flied_all">
+        psi.ID,
+        psi.NAME,
+        psi.DEP_ID,
+        cd.LOCATION,
+        psi.CREATE_BY,
+        psi.CREATE_DATE,
+        psi.UPDATE_BY,
+        psi.UPDATE_DATE,
+        psi.REMARK
+    </sql>
+    <sql id="sql_select_condition">
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="id != null  and id != '' ">psi.id =#{id} AND</if>
+            <if test="name != null  and name != '' ">psi.NAME like '%'||#{name}||'%'  AND</if>
+            <if test="depId != null ">psi.DEP_ID = #{depId} AND</if>
+            <if test="badge != null  and badge != '' ">
+                    psi.ID in (select psui.sys_id from ppm_system_user_info psui
+                    where psui.badge = #{badge}) AND</if>
+            <if test="empName != null  and empName != '' ">
+                    psi.ID in (
+                        select psui.sys_id from ppm_system_user_info psui
+                        join comm_employee ce on ce.badge = psui.badge
+                    where ce.empname like '%'||#{empName}||'%' ) AND</if>
+            <if test="createBy != null  and createBy != '' ">psi.CREATE_BY like '%'||#{createBy}||'%'  AND</if>
+            <if test="updateBy != null  and updateBy != '' ">psi.UPDATE_BY like '%'||#{updateBy}||'%'  AND</if>
+        </trim>
+    </sql>
+    <!-- 查询分页  2022-03-14 ywwb436  -->
+    <select id="queryPagerList" parameterType="map" resultMap="PPM_SYSTEM_INFO_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM PPM_SYSTEM_INFO psi
+        left join comm_department cd on cd.depid = psi.dep_id
+        <include refid="sql_select_condition"/>
+    </select>
+
+    <!-- 查询系统负责人  2022-03-14 ywwb436  -->
+    <select id="selectPpmSystemUserInfo" parameterType="ppmSystemInfo" resultMap="PPM_SYSTEM_USER_INFO_ALL">
+        select
+            psui.sys_id, psui.badge, ce.empname
+        from ppm_system_user_info psui
+        left join comm_employee ce on ce.badge = psui.badge
+        where psui.sys_id = #{id}
+    </select>
+
+    <!-- 查询项目关联的行员信息   -->
+    <select id="findByPpmSystemInfo" parameterType="map" resultMap="COMMEMPLOYEE_ALL">
+        select ce.* from ppm_system_info psi
+        join ppm_system_user_info psui on psui.sys_id = psi.id
+        join comm_employee ce on ce.badge = psui.badge
+        <include refid="sql_select_condition"/>
+    </select>
+
+
+    <!-- 新增  2022-03-14 ywwb436  -->
+    <insert id="addPojo" parameterType="ppmSystemInfo">
+        INSERT INTO PPM_SYSTEM_INFO (
+        <trim suffixOverrides=",">
+            <if test="id != null ">ID ,</if>
+            <if test="name != null  and name != '' ">NAME ,</if>
+            <if test="depId != null ">DEP_ID ,</if>
+            <if test="createBy != null  and createBy != '' ">CREATE_BY ,</if>
+            <if test="createDate != null ">CREATE_DATE ,</if>
+            <if test="updateBy != null  and updateBy != '' ">UPDATE_BY ,</if>
+            <if test="updateDate != null ">UPDATE_DATE ,</if>
+            <if test="remark != null  and remark != '' ">REMARK ,</if>
+        </trim>
+        )
+        VALUES(
+        <trim suffixOverrides=",">
+            <if test="id != null ">#{id} ,</if>
+            <if test="name != null  and name != '' ">#{name} ,</if>
+            <if test="depId != null ">#{depId} ,</if>
+            <if test="createBy != null  and createBy != '' ">#{createBy} ,</if>
+            <if test="createDate != null ">#{createDate} ,</if>
+            <if test="updateBy != null  and updateBy != '' ">#{updateBy} ,</if>
+            <if test="updateDate != null ">#{updateDate} ,</if>
+            <if test="remark != null  and remark != '' ">#{remark} ,</if>
+        </trim>
+        )
+    </insert>
+
+    <!--通过id查询  ywwb436 2022-03-14 -->
+    <select id="queryDetail" parameterType="ppmSystemInfo" resultMap="PPM_SYSTEM_INFO_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM PPM_SYSTEM_INFO  psi
+        left join comm_department cd on cd.depid = psi.dep_id
+        WHERE ID=#{id}
+    </select>
+
+    <!--查询集合  ywwb436 2022-03-14 -->
+    <select id="getList" parameterType="ppmSystemInfo" resultMap="PPM_SYSTEM_INFO_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM PPM_SYSTEM_INFO psi
+        left join comm_department cd on cd.depid = psi.dep_id
+<!--        <include refid="sql_select_condition"/>-->
+    </select>
+    <!-- update sql -->
+    <sql id="update_pojo_sql">
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="id != null ">ID=#{id} ,</if>
+            <if test="name != null  and name != '' ">NAME=#{name} ,</if>
+            <if test="depId != null ">DEP_ID=#{depId} ,</if>
+            <if test="createBy != null  and createBy != '' ">CREATE_BY=#{createBy} ,</if>
+            <if test="createDate != null ">CREATE_DATE=#{createDate} ,</if>
+            <if test="updateBy != null  and updateBy != '' ">UPDATE_BY=#{updateBy} ,</if>
+            <if test="updateDate != null ">UPDATE_DATE=#{updateDate} ,</if>
+            <if test="remark != null  and remark != '' ">REMARK=#{remark} ,</if>
+
+        </trim>
+    </sql>
+
+    <!--通过id编辑 ywwb436 2022-03-14 -->
+    <update id="updatePojo" parameterType="ppmSystemInfo">
+        UPDATE
+        PPM_SYSTEM_INFO
+        <include refid="update_pojo_sql"/>
+        WHERE ID=#{id}
+    </update>
+
+    <!--通过id批量删除  ywwb436 2022-03-14 -->
+    <delete id="deleteById" parameterType="ppmSystemInfo">
+        DELETE
+        FROM
+        PPM_SYSTEM_INFO
+        WHERE ID = #{id}
+    </delete>
+	
+	<!-- 查询分页  2022-03-14 ywwb436  -->
+    <select id="queryTransferList" parameterType="ppmSystemInfo" resultMap="PPM_SYSTEM_INFO_ALL">
+        SELECT
+			psi.ID,
+			psi.NAME,
+			psi.DEP_ID,
+			cd.LOCATION,
+			psi.CREATE_BY,
+			psi.CREATE_DATE,
+			psi.UPDATE_BY,
+			psi.UPDATE_DATE,
+			psi.REMARK
+        FROM PPM_SYSTEM_INFO psi
+			left join comm_department cd on cd.depid = psi.dep_id
+        <include refid="sql_select_condition"/>
+    </select>
+
+	
+	 <select id="querySystemDetail" parameterType="ppmSystemInfo" resultMap="PPM_SYSTEM_INFO_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM PPM_SYSTEM_INFO psi
+			left join comm_department cd on cd.depid = psi.dep_id
+			WHERE psi.NAME = #{name} AND psi.DEP_ID = #{depId}
+        
+    </select>
+</mapper>

@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k76239 2021-11-21 -->
+<mapper namespace="com.work.ppm.application.model.depkpi.PpmDepkpiTarget">
+    <resultMap type="ppmDepkpiTarget" id="PPMDEPKPITARGET_ALL">
+        <result property="id" column="ID"/>
+        <result property="sign" column="SIGN"/>
+        <result property="name" column="NAME"/>
+        <result property="remark" column="REMARK"/>
+        <result property="levelnum" column="LEVELNUM"/>
+        <result property="targettype" column="TARGETTYPE"/>
+        <result property="depid" column="DEPID"/>
+        <result property="evaltype" column="EVALTYPE"/>
+        <result property="selfeval" column="SELFEVAL"/>
+        <result property="isdel" column="ISDEL"/>
+        <result property="lastmoduserid" column="LASTMODUSERID"/>
+        <result property="lastmodtime" column="LASTMODTIME"/>
+        <result property="maxpoint" column="MAXPOINT"/>
+        <result property="minpoint" column="MINPOINT"/>
+        <result property="marker" column="MARKER"/>
+        <result property="depname" column="DEPNAME"/>
+    </resultMap>
+
+    <resultMap type="ppmDepkpiTargetInfo" id="PPMDEPKPITARGET_ALL_EX" extends="PPMDEPKPITARGET_ALL">
+        <result property="marker" column="MARKER"/>
+    </resultMap>
+
+    <!-- 所有字段名称 -->
+    <sql id="sql_flied_all">
+        ID,
+        SIGN,
+        NAME,
+        REMARK,
+        LEVELNUM,
+        TARGETTYPE,
+        DEPID,
+        EVALTYPE,
+        SELFEVAL,
+        ISDEL,
+        LASTMODUSERID,
+        LASTMODTIME,
+        MAXPOINT,
+        MINPOINT
+    </sql>
+    <sql id="sql_select_condition">
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="id != null ">ID = #{id} AND</if>
+            <if test="sign != null ">SIGN = #{sign} AND</if>
+            <if test="name != null  and name != '' ">NAME like '%' || #{name} || '%' AND</if>
+            <if test="remark != null  and remark != '' ">REMARK = #{remark} AND</if>
+            <if test="levelnum != null ">LEVELNUM = #{levelnum} AND</if>
+            <if test="targettype != null ">TARGETTYPE = #{targettype} AND</if>
+            <if test="depid != null  and depid != '' ">DEPID = #{depid} AND</if>
+            <if test="evaltype != null ">EVALTYPE = #{evaltype} AND</if>
+            <if test="selfeval != null ">SELFEVAL = #{selfeval} AND</if>
+            <if test="isdel != null ">ISDEL = #{isdel} AND</if>
+            <if test="lastmoduserid != null  and lastmoduserid != '' ">LASTMODUSERID = #{lastmoduserid} AND</if>
+            <if test="lastmodtime != null ">LASTMODTIME = #{lastmodtime} AND</if>
+            <if test="maxpoint != null ">MAXPOINT = #{maxpoint} AND</if>
+            <if test="minpoint != null ">MINPOINT = #{minpoint} AND</if>
+        </trim>
+    </sql>
+    <!-- 指标列表分页查询 2021-11-21 k76239  -->
+    <select id="queryPagerList" parameterType="map" resultMap="PPMDEPKPITARGET_ALL">
+        SELECT
+        a.ID,
+        a.SIGN,
+        a.NAME,
+        a.REMARK,
+        a.LEVELNUM,
+        a.TARGETTYPE,
+        a.DEPID,
+        a.EVALTYPE,
+        a.SELFEVAL,
+        a.ISDEL,
+        a.LASTMODUSERID,
+        a.LASTMODTIME,
+        a.MAXPOINT,
+        a.MINPOINT,
+        b.location depname
+        FROM PPM_DEPKPI_TARGET a left join COMM_DEPARTMENT b on a.depid= b.depid
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="id != null ">a.ID = #{id} AND</if>
+            <if test="sign != null ">a.SIGN = #{sign} AND</if>
+            <if test="name != null  and name != '' ">a.NAME like '%' || #{name} || '%' AND</if>
+            <if test="remark != null  and remark != '' ">a.REMARK = #{remark} AND</if>
+            <if test="levelnum != null ">a.LEVELNUM = #{levelnum} AND</if>
+            <if test="targettype != null ">a.TARGETTYPE = #{targettype} AND</if>
+            <if test="depid != null  and depid != '' ">a.DEPID = #{depid} AND</if>
+            <if test="evaltype != null ">a.EVALTYPE = #{evaltype} AND</if>
+            <if test="selfeval != null ">a.SELFEVAL = #{selfeval} AND</if>
+            <if test="isdel != null ">a.ISDEL = #{isdel} AND</if>
+            <if test="lastmoduserid != null  and lastmoduserid != '' ">a.LASTMODUSERID = #{lastmoduserid} AND</if>
+            <if test="lastmodtime != null ">a.LASTMODTIME = #{lastmodtime} AND</if>
+            <if test="maxpoint != null ">a.MAXPOINT = #{maxpoint} AND</if>
+            <if test="minpoint != null ">a.MINPOINT = #{minpoint} AND</if>
+        </trim>
+    </select>
+
+    <!-- 新增  2021-11-21 k76239  -->
+    <insert id="addPojo" parameterType="ppmDepkpiTarget">
+        INSERT INTO PPM_DEPKPI_TARGET (
+        <trim suffixOverrides=",">
+            <if test="id != null ">ID ,</if>
+            <if test="sign != null ">SIGN ,</if>
+            <if test="name != null  and name != '' ">NAME ,</if>
+            <if test="remark != null  and remark != '' ">REMARK ,</if>
+            <if test="levelnum != null ">LEVELNUM ,</if>
+            <if test="targettype != null ">TARGETTYPE ,</if>
+            <if test="depid != null  and depid != '' ">DEPID ,</if>
+            <if test="evaltype != null ">EVALTYPE ,</if>
+            <if test="selfeval != null ">SELFEVAL ,</if>
+            <if test="isdel != null ">ISDEL ,</if>
+            <if test="lastmoduserid != null  and lastmoduserid != '' ">LASTMODUSERID ,</if>
+            <if test="lastmodtime != null ">LASTMODTIME ,</if>
+            <if test="maxpoint != null ">MAXPOINT ,</if>
+            <if test="minpoint != null ">MINPOINT ,</if>
+        </trim>
+        )
+        VALUES(
+        <trim suffixOverrides=",">
+            <if test="id != null ">#{id} ,</if>
+            <if test="sign != null ">#{sign} ,</if>
+            <if test="name != null  and name != '' ">#{name} ,</if>
+            <if test="remark != null  and remark != '' ">#{remark} ,</if>
+            <if test="levelnum != null ">#{levelnum} ,</if>
+            <if test="targettype != null ">#{targettype} ,</if>
+            <if test="depid != null  and depid != '' ">#{depid} ,</if>
+            <if test="evaltype != null ">#{evaltype} ,</if>
+            <if test="selfeval != null ">#{selfeval} ,</if>
+            <if test="isdel != null ">#{isdel} ,</if>
+            <if test="lastmoduserid != null  and lastmoduserid != '' ">#{lastmoduserid} ,</if>
+            <if test="lastmodtime != null ">#{lastmodtime} ,</if>
+            <if test="maxpoint != null ">#{maxpoint} ,</if>
+            <if test="minpoint != null ">#{minpoint} ,</if>
+        </trim>
+        )
+    </insert>
+
+    <!--通过id查询  k76239 2021-11-21 -->
+    <select id="queryDetail" parameterType="ppmDepkpiTarget" resultMap="PPMDEPKPITARGET_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM PPM_DEPKPI_TARGET WHERE ID=#{id}
+    </select>
+
+    <!--查询集合  k76239 2021-11-21 -->
+    <select id="getList" parameterType="ppmDepkpiTarget" resultMap="PPMDEPKPITARGET_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM PPM_DEPKPI_TARGET
+        <include refid="sql_select_condition"/>
+        AND ISDEL= #{isdel}
+    </select>
+
+    <!-- update sql -->
+    <sql id="update_pojo_sql">
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="id != null ">ID=#{id} ,</if>
+            <if test="sign != null ">SIGN=#{sign} ,</if>
+            <if test="name != null  and name != '' ">NAME=#{name} ,</if>
+            <if test="remark != null  and remark != '' ">REMARK=#{remark} ,</if>
+            <if test="levelnum != null ">LEVELNUM=#{levelnum} ,</if>
+            <if test="targettype != null ">TARGETTYPE=#{targettype} ,</if>
+            <if test="depid != null  and depid != '' ">DEPID=#{depid} ,</if>
+            <if test="evaltype != null ">EVALTYPE=#{evaltype} ,</if>
+            <if test="selfeval != null ">SELFEVAL=#{selfeval} ,</if>
+            <if test="isdel != null ">ISDEL=#{isdel} ,</if>
+            <if test="lastmoduserid != null  and lastmoduserid != '' ">LASTMODUSERID=#{lastmoduserid} ,</if>
+            <if test="lastmodtime != null ">LASTMODTIME=#{lastmodtime} ,</if>
+            <if test="maxpoint != null ">MAXPOINT=#{maxpoint} ,</if>
+            <if test="minpoint != null ">MINPOINT=#{minpoint} ,</if>
+        </trim>
+    </sql>
+
+    <!--通过id更新-->
+    <update id="updatePojo" parameterType="ppmDepkpiTarget">
+        UPDATE
+        PPM_DEPKPI_TARGET
+        <trim prefix="SET" suffixOverrides=",">
+            NAME=#{name, jdbcType=VARCHAR} ,
+            REMARK=#{remark, jdbcType=VARCHAR} ,
+            LEVELNUM=#{levelnum, jdbcType=INTEGER} ,
+            TARGETTYPE=#{targettype, jdbcType=INTEGER} ,
+            DEPID=#{depid, jdbcType=INTEGER} ,
+            EVALTYPE=#{evaltype, jdbcType=INTEGER} ,
+            SELFEVAL=#{selfeval, jdbcType=INTEGER} ,
+            LASTMODUSERID=#{lastmoduserid, jdbcType=INTEGER} ,
+            LASTMODTIME=#{lastmodtime, jdbcType=TIMESTAMP} ,
+            MAXPOINT=#{maxpoint, jdbcType=INTEGER},
+            MINPOINT=#{minpoint, jdbcType=INTEGER} ,
+        </trim>
+        WHERE ID=#{id}
+    </update>
+
+    <!--通过id软删除（删除指标） -->
+    <update id="changeIsdel" parameterType="ppmDepkpiTarget">
+        UPDATE
+        PPM_DEPKPI_TARGET
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="sign != null ">SIGN=#{sign} ,</if>
+            <if test="name != null  and name != '' ">NAME=#{name} ,</if>
+            <if test="remark != null  and remark != '' ">REMARK=#{remark} ,</if>
+            <if test="levelnum != null ">LEVELNUM=#{levelnum} ,</if>
+            <if test="targettype != null ">TARGETTYPE=#{targettype} ,</if>
+            <if test="depid != null  and depid != '' ">DEPID=#{depid} ,</if>
+            <if test="evaltype != null ">EVALTYPE=#{evaltype} ,</if>
+            <if test="selfeval != null ">SELFEVAL=#{selfeval} ,</if>
+            <if test="isdel != null ">ISDEL=#{isdel} ,</if>
+            <if test="lastmoduserid != null  and lastmoduserid != '' ">LASTMODUSERID=#{lastmoduserid} ,</if>
+            <if test="lastmodtime != null ">LASTMODTIME=#{lastmodtime} ,</if>
+            <if test="maxpoint != null ">MAXPOINT=#{maxpoint} ,</if>
+            <if test="minpoint != null ">MINPOINT=#{minpoint} ,</if>
+        </trim>
+        WHERE ID=#{id}
+    </update>
+
+    <!--查询集合  k76239 2021-11-21 -->
+    <select id="queryMarkerById" parameterType="ppmDepkpiTarget" resultMap="PPMDEPKPITARGET_ALL_EX">
+        select
+        b.marker MARKER
+        from PPM_DEPKPI_TARGET a
+        left join PPM_DEPKPI_DEP_REL b
+        ON a.depid = b.depid
+        where a.id = #{id}
+    </select>
+</mapper>

@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k1327 2020-10-20 -->
+<mapper namespace="com.work.ppm.application.model.integratedmanager.PpmApplyvirtualInfo">
+	 <resultMap type="ppmApplyvirtualInfo" id="PPMAPPLYVIRTUALINFO_ALL">
+        <result property="flowid" column="FLOWID" />
+		<result property="userType" column="USER_TYPE" />
+		<result property="username" column="USERNAME" />
+		<result property="usercode" column="USERCODE" />
+		<result property="xmjl" column="XMJL" />
+		<result property="ssxm" column="SSXM" />
+		<result property="pzx" column="PZX" />
+		<result property="others" column="OTHERS" />
+		<result property="virtualNo" column="VIRTUAL_NO" />
+		<result property="status" column="STATUS" />
+		<result property="createtime" column="CREATETIME" />
+		<result property="id" column="ID" />
+		<result property="duedate" column="DUEDATE" />
+		<result property="state" column="STATE" />
+		<result property="dept" column="DEPT" />
+		<result property="xmjlcode" column="XMJLCODE" />
+		
+     </resultMap>
+
+     <!-- 所有字段名称 -->
+        <sql id="sql_flied_all">
+        	FLOWID,
+			USER_TYPE,
+			USERNAME,
+			USERCODE,
+			XMJL,
+			SSXM,
+			PZX,
+			OTHERS,
+			VIRTUAL_NO,
+			STATUS,
+			CREATETIME,
+			ID,
+			DUEDATE,
+			STATE,
+			DEPT,
+			XMJLCODE
+        </sql>
+        <sql id="sql_select_condition">
+            <trim prefix="WHERE" suffixOverrides="AND">
+                <if test="flowid != null  and flowid != '' " > FLOWID = #{flowid} AND </if>
+				<if test="userType != null  and userType != '' " > USER_TYPE = #{userType} AND </if>
+				<if test="username != null  and username != '' " > USERNAME = #{username} AND </if>
+				<if test="usercode != null  and usercode != '' " > USERCODE = #{usercode} AND </if>
+				<if test="xmjl != null  and xmjl != '' " > XMJL = #{xmjl} AND </if>
+				<if test="ssxm != null  and ssxm != '' " > SSXM = #{ssxm} AND </if>
+				<if test="pzx != null  and pzx != '' " > PZX = #{pzx} AND </if>
+				<if test="others != null  and others != '' " > OTHERS = #{others} AND </if>
+				<if test="virtualNo != null  and virtualNo != '' " > VIRTUAL_NO = #{virtualNo} AND </if>
+				<if test="status != null  and status != '' " > STATUS = #{status} AND </if>
+				<if test="createtime != null  and createtime != '' " > CREATETIME = #{createtime} AND </if>
+				<if test="id != null  and id != '' " > ID = #{id} AND </if>
+				<if test="duedate != null  and duedate != '' " > DUEDATE = #{duedate} AND </if>
+				<if test="state != null  and state != '' " > STATE = #{state} AND </if>
+				<if test="dept != null  and dept != '' " > DEPT = #{dept} AND </if>
+				<if test="xmjlcode != null  and xmjlcode != '' " > XMJLCODE = #{xmjlcode} AND </if>
+				
+            </trim>
+        </sql>
+    	<!-- 查询分页  2020-10-20 k1327  -->
+        <select id="queryPagerList" parameterType="map" resultMap="PPMAPPLYVIRTUALINFO_ALL">
+        	SELECT
+            <include refid="sql_flied_all" />
+            FROM PPM_APPLYVIRTUAL_INFO
+            <include refid="sql_select_condition" />
+        </select>
+
+        <!-- 新增  2020-10-20 k1327  -->
+        <insert id="addPojo" parameterType="ppmApplyvirtualInfo">
+    		INSERT INTO PPM_APPLYVIRTUAL_INFO (
+    		<trim suffixOverrides=",">
+    		 <if test="flowid != null  and flowid != '' " > FLOWID , </if>
+				<if test="userType != null  and userType != '' " > USER_TYPE , </if>
+				<if test="username != null  and username != '' " > USERNAME , </if>
+				<if test="usercode != null  and usercode != '' " > USERCODE , </if>
+				<if test="xmjl != null  and xmjl != '' " > XMJL , </if>
+				<if test="ssxm != null  and ssxm != '' " > SSXM , </if>
+				<if test="pzx != null  and pzx != '' " > PZX , </if>
+				<if test="others != null  and others != '' " > OTHERS , </if>
+				<if test="virtualNo != null  and virtualNo != '' " > VIRTUAL_NO , </if>
+				<if test="status != null  and status != '' " > STATUS , </if>
+				<if test="createtime != null  and createtime != '' " > CREATETIME , </if>
+				<if test="id != null  and id != '' " > ID , </if>
+				<if test="duedate != null  and duedate != '' " > DUEDATE , </if>
+				<if test="state != null  and state != '' " > STATE , </if>
+				<if test="dept != null  and dept != '' " > DEPT , </if>
+				<if test="xmjlcode != null  and xmjlcode != '' " > XMJLCODE , </if>
+				
+              </trim>
+    		)
+    		VALUES(
+    		<trim suffixOverrides=",">
+    		 <if test="flowid != null  and flowid != '' " > #{flowid} , </if>
+				<if test="userType != null  and userType != '' " > #{userType} , </if>
+				<if test="username != null  and username != '' " > #{username} , </if>
+				<if test="usercode != null  and usercode != '' " > #{usercode} , </if>
+				<if test="xmjl != null  and xmjl != '' " > #{xmjl} , </if>
+				<if test="ssxm != null  and ssxm != '' " > #{ssxm} , </if>
+				<if test="pzx != null  and pzx != '' " > #{pzx} , </if>
+				<if test="others != null  and others != '' " > #{others} , </if>
+				<if test="virtualNo != null  and virtualNo != '' " > #{virtualNo} , </if>
+				<if test="status != null  and status != '' " > #{status} , </if>
+				<if test="createtime != null  and createtime != '' " > #{createtime} , </if>
+				<if test="id != null  and id != '' " > #{id} , </if>
+				<if test="duedate != null  and duedate != '' " > #{duedate} , </if>
+				<if test="state != null  and state != '' " > #{state} , </if>
+				<if test="dept != null  and dept != '' " > #{dept} , </if>
+				<if test="xmjlcode != null  and xmjlcode != '' " > #{xmjlcode} , </if>
+				
+            </trim>
+    		)
+        </insert>
+
+        <!--通过id查询  k1327 2020-10-20 -->
+        <select id="queryDetail" parameterType="ppmApplyvirtualInfo" resultMap="PPMAPPLYVIRTUALINFO_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_APPLYVIRTUAL_INFO  WHERE FLOWID=#{flowid}
+        </select>
+
+         <!--查询集合  k1327 2020-10-20 -->
+        <select id="getList" parameterType="ppmApplyvirtualInfo" resultMap="PPMAPPLYVIRTUALINFO_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_APPLYVIRTUAL_INFO
+        	<include refid="sql_select_condition" />
+        </select>
+        <!-- update sql -->
+        <sql id="update_pojo_sql">
+        	<trim prefix="SET" suffixOverrides=",">
+        		<if test="flowid != null  and flowid != '' " > FLOWID=#{flowid} , </if>
+				<if test="userType != null  and userType != '' " > USER_TYPE=#{userType} , </if>
+				<if test="username != null  and username != '' " > USERNAME=#{username} , </if>
+				<if test="usercode != null  and usercode != '' " > USERCODE=#{usercode} , </if>
+				<if test="xmjl != null  and xmjl != '' " > XMJL=#{xmjl} , </if>
+				<if test="ssxm != null  and ssxm != '' " > SSXM=#{ssxm} , </if>
+				<if test="pzx != null  and pzx != '' " > PZX=#{pzx} , </if>
+				<if test="others != null  and others != '' " > OTHERS=#{others} , </if>
+				<if test="virtualNo != null  and virtualNo != '' " > VIRTUAL_NO=#{virtualNo} , </if>
+				<if test="status != null  and status != '' " > STATUS=#{status} , </if>
+				<if test="createtime != null  and createtime != '' " > CREATETIME=#{createtime} , </if>
+				<if test="id != null  and id != '' " > ID=#{id} , </if>
+				<if test="duedate != null  and duedate != '' " > DUEDATE=#{duedate} , </if>
+				<if test="state != null  and state != '' " > STATE=#{state} , </if>
+				<if test="dept != null  and dept != '' " > DEPT=#{dept} , </if>
+				<if test="xmjlcode != null  and xmjlcode != '' " > XMJLCODE=#{xmjlcode} , </if>
+				
+            </trim>
+        </sql>
+
+        <!--通过id编辑 k1327 2020-10-20 -->
+    	<update id="updatePojo" parameterType="ppmApplyvirtualInfo">
+        	UPDATE
+        	PPM_APPLYVIRTUAL_INFO
+        	<include refid="update_pojo_sql" />
+        	WHERE FLOWID=#{flowid}
+        </update>
+
+        <!--通过id批量删除  k1327 2020-10-20 -->
+        <delete id="deleteById" parameterType="ppmApplyvirtualInfo">
+        	DELETE
+        	FROM
+        	PPM_APPLYVIRTUAL_INFO
+        	WHERE FLOWID = #{flowid}
+        </delete>
+
+		<!--修改虚拟机状态-->
+		<update id="updateVirtualState" parameterType="map">
+			update ppm_applyvirtual_info  set state='2' where usercode=#{usercode}
+		</update>
+</mapper>

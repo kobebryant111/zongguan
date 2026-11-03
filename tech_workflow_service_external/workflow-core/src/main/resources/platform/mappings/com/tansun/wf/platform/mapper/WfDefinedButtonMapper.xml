@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tansun.wf.platform.mapper.WfDefinedButtonMapper">
+
+    <resultMap type="com.tansun.wf.platform.model.WfDefinedButtonEntity" id="buttonMap">
+        <result column="ID" property="id" javaType="java.lang.String"/>
+        <result column="KEY" property="key" javaType="java.lang.String"/>
+        <result column="NAME" property="name" javaType="java.lang.String"/>
+        <result column="ALIAS" property="alias" javaType="java.lang.String"/>
+        <result column="STATUS" property="status" javaType="java.lang.String"/>
+        <result column="BUTTON_SORT" property="buttonSort" javaType="java.lang.Integer"/>
+    </resultMap>
+
+    <sql id="column_list">
+        w.ID ,
+        w.KEY,
+        w.NAME,
+        w.ALIAS,
+        w.STATUS,
+        w.BUTTON_SORT
+    </sql>
+
+    <select id="findList" parameterType="com.tansun.wf.platform.query.WfDefinedButtonQuery" resultMap="buttonMap">
+        SELECT
+        <include refid="column_list"/>
+        FROM wf_defined_button w
+        <include refid="where_filters"/>
+        ORDER BY BUTTON_SORT ASC
+    </select>
+
+
+    <select id="findByKey" parameterType="com.tansun.wf.platform.query.WfDefinedButtonQuery"
+            resultType="com.tansun.wf.platform.model.WfDefinedButtonEntity">
+        SELECT
+        <include refid="column_list"/>
+        FROM wf_defined_button w
+        where w.key = #{key}
+    </select>
+
+
+    <select id="selectById" parameterType="java.lang.String" resultType="com.tansun.wf.platform.model.WfDefinedButtonEntity">
+        SELECT
+        <include refid="column_list"/>
+        FROM wf_defined_button w
+        WHERE id = #{id}
+    </select>
+
+    <sql id="where_filters">
+        <where>
+            <if test="id!=null and id!=''">
+                AND w.ID = #{id}
+            </if>
+            <if test="key!=null and key!=''">
+            <bind name="likeKey" value="_parameter.key + '%'"/>
+                    AND w.key like #{likeKey}
+            </if>
+            <if test="name!=null and name!=''">
+                <bind name="likeName" value="_parameter.name + '%'"/>
+                    AND w.name like #{likeName}
+            </if>
+            <if test="tenantId!=null and tenantId!=''">
+                AND w.tenant_id = #{tenantId}
+            </if>
+        </where>
+    </sql>
+
+
+    <update id="update">
+    	UPDATE wf_defined_button w
+        <set>
+            <if test="key != null">
+                w.KEY = #{key},
+            </if>
+            <if test="name != null">
+                w.name  = #{name},
+            </if>
+            <if test="alias != null">
+                w.ALIAS = #{alias},
+            </if>
+            <if test="status != null">
+                w.STATUS = #{status},
+            </if>
+            <if test="buttonSort != null">
+                w.BUTTON_SORT = #{buttonSort},
+            </if>
+        </set>
+		WHERE id = #{id}
+    </update>
+
+
+
+    <insert id="insert" parameterType="com.tansun.wf.platform.model.WfDefinedButtonEntity">
+		INSERT INTO wf_defined_button
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            ID,
+        <if test="_databaseId =='oracle'">
+            KEY,
+        </if>
+        <if test="_databaseId =='mysql'">
+            `KEY`,
+        </if>
+        <if test="_databaseId =='oracle'">
+            NAME,
+        </if>
+        <if test="_databaseId =='mysql'">
+            `NAME`,
+        </if>
+            TENANT_ID,
+            ALIAS,
+            STATUS,
+            BUTTON_SORT
+        </trim>
+	     VALUES (
+			#{id,jdbcType=VARCHAR},
+			#{key,jdbcType=VARCHAR},
+			#{name,jdbcType=VARCHAR},
+			#{tenantId,jdbcType=VARCHAR},
+			#{alias,jdbcType=VARCHAR},
+			#{status,jdbcType=VARCHAR},
+			#{buttonSort,jdbcType=VARCHAR}
+		)
+	</insert>
+
+
+    <delete id="delete" parameterType="com.tansun.wf.platform.model.WfDefinedButtonEntity">
+ 		DELETE FROM wf_defined_button
+		WHERE ID = #{id}
+ 	</delete>
+
+</mapper>

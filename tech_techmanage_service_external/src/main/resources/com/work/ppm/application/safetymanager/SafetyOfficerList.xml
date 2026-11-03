@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k6991 2020-06-30 -->
+<mapper namespace="com.work.ppm.application.model.safetymanager.SafetyOfficerList">
+    <resultMap type="safetyOfficerList" id="SAFETYOFFICERLIST_ALL">
+        <result property="id" column="ID"/>
+        <result property="depcode" column="DEPCODE"/>
+        <result property="location" column="LOCATION"/>
+        <result property="depBadge" column="DEP_BADGE"/>
+        <result property="depManager" column="DEP_MANAGER"/>
+        <result property="safetySpecialist" column="SAFETY_SPECIALIST"/>
+        <result property="badge" column="BADGE"/>
+        <result property="phoneNum" column="PHONE_NUM"/>
+        <result property="createUser" column="CREATE_USER"/>
+        <result property="createTime" column="CREATE_TIME"/>
+        <result property="updateUser" column="UPDATE_USER"/>
+        <result property="updateTime" column="UPDATE_TIME"/>
+        <result property="depBadge" column="DEP_BADGE"/>
+        <result property="safetyStatus" column="SAFETY_STATUS"/>
+    </resultMap>
+
+    <resultMap type="employeeDepartMsg" id="EMPLOYEEDEPARTMSG_ALL">
+        <result property="badge" column="BADGE"/>
+        <result property="empname" column="EMPNAME"/>
+        <result property="depcode" column="DEPCODE"/>
+        <result property="location" column="LOCATION"/>
+    </resultMap>
+
+    <!-- 所有字段名称 -->
+    <sql id="sql_flied_all">
+        ID,
+        DEPCODE,
+        LOCATION,
+        DEP_MANAGER,
+        SAFETY_SPECIALIST,
+        BADGE,
+        PHONE_NUM,
+        CREATE_USER,
+        CREATE_TIME,
+        UPDATE_USER,
+        UPDATE_TIME,
+        DEP_BADGE,
+        SAFETY_STATUS
+    </sql>
+
+    <sql id="sql_select_condition">
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="id != null ">ID = #{id} AND</if>
+            <if test="depcode != null  and depcode != '' ">DEPCODE = #{depcode} AND</if>
+            <if test="location != null and location != '' ">LOCATION = #{location} AND</if>
+            <if test="depManager != null  and depManager != '' ">DEP_MANAGER = #{depManager} AND</if>
+            <if test="safetySpecialist != null  and safetySpecialist != '' ">SAFETY_SPECIALIST = #{safetySpecialist}
+                AND
+            </if>
+            <if test="badge != null  and badge != '' ">BADGE = #{badge} AND</if>
+            <if test="phoneNum != null  and phoneNum != '' ">PHONE_NUM = #{phoneNum} AND</if>
+        </trim>
+    </sql>
+
+    <sql id="update_pojo_sql">
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="depcode != null  and depcode != '' ">DEPCODE = #{depcode} ,</if>
+            <if test="location != null and location != '' ">LOCATION = #{location} ,</if>
+            <if test="depManager != null  and depManager != '' ">DEP_MANAGER = #{depManager} ,</if>
+            <if test="safetySpecialist != null  and safetySpecialist != '' ">
+                SAFETY_SPECIALIST = #{safetySpecialist} ,
+            </if>
+            <if test="badge != null  and badge != '' ">BADGE = #{badge} ,</if>
+            <if test="phoneNum != null  and phoneNum != '' ">PHONE_NUM = #{phoneNum} ,</if>
+            <if test="safetyStatus != null  and safetyStatus != '' ">SAFETY_STATUS = #{safetyStatus} ,</if>
+        </trim>
+    </sql>
+
+    <!--通过id编辑 k6991 2021-01-12 -->
+    <update id="updateMsg" parameterType="safetyOfficerList">
+        UPDATE
+        COMM_HEAD_SAFETYSPECIALIST
+        <include refid="update_pojo_sql"/>
+        WHERE ID = #{id}
+    </update>
+
+    <select id="queryPagerList" parameterType="map" resultMap="SAFETYOFFICERLIST_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM COMM_HEAD_SAFETYSPECIALIST
+        <include refid="sql_select_condition"/>
+    </select>
+    <!--查询总部部门-->
+    <select id="queryByNotXfjr" parameterType="map" resultMap="SAFETYOFFICERLIST_ALL">
+        SELECT T.DEPCODE, T.LOCATION, E.BADGE DEP_BADGE,E.EMPNAME DEP_MANAGER
+        FROM COMM_DEPARTMENT T
+        LEFT JOIN COMM_EMPLOYEE E ON
+        T.DIRECTOR = E.EID
+        WHERE DEPGRADE = '010'
+        AND LOCATION NOT LIKE '宁银消金消费金融%'
+        AND DEPCODE NOT IN ('3540004000','3540000100'，'3540000300')
+
+    </select>
+    <!--depcode存在则更新不存在则插入-->
+    <insert id="upsert" parameterType="List">
+        MERGE INTO COMM_HEAD_SAFETYSPECIALIST u
+        USING (
+        <foreach item="item" collection="list" separator=" UNION ALL ">
+            SELECT
+            sys_guid() AS id,
+            #{item.depcode} AS depcode,
+            #{item.location} AS location,
+            #{item.depManager} AS depManager,
+            #{item.depBadge} AS depBadge
+            FROM dual
+        </foreach>
+        ) src
+        ON (u.depcode = src.depcode)
+        <!--数据存在则更新-->
+        WHEN MATCHED THEN
+        UPDATE SET
+        u.location = src.location,
+        u.DEP_MANAGER= src.depManager,
+        u.DEP_BADGE = src.depBadge
+        <!--数据不存在则插入-->
+        WHEN NOT MATCHED THEN
+        INSERT (ID,DEPCODE, LOCATION, DEP_MANAGER, DEP_BADGE)
+        VALUES (src.id,src.depcode, src.location, src.depManager, src.depBadge)
+    </insert>
+
+    <delete id="deletert" parameterType="list">
+        <!--删除list中不存在的-->
+        DELETE FROM COMM_HEAD_SAFETYSPECIALIST WHERE DEPCODE NOT IN
+        <foreach collection="list" item="item" separator="," open="(" close=")">
+            #{item.depcode}
+        </foreach>
+    </delete>
+
+    <select id="quertBadgeMsg" parameterType="map" resultMap="EMPLOYEEDEPARTMSG_ALL">
+        SELECT
+        ce.BADGE,
+        ce.EMPNAME,
+        cd.DEPCODE,
+        cd.LOCATION
+        FROM
+        COMM_EMPLOYEE ce
+        LEFT JOIN COMM_DEPARTMENT cd ON
+        ce.DEPID = cd.DEPID
+    </select>
+
+    <update id="updateSafetyOfficerEmployeeMsg" parameterType="map">
+        UPDATE COMM_HEAD_SAFETYSPECIALIST
+        <trim prefix="SET" suffixOverrides=",">
+            PHONE_NUM = #{mobiletelphone} ,
+            SAFETY_SPECIALIST = #{empname} ,
+            BADGE = #{badge} ,
+        </trim>
+        WHERE BADGE = #{oldBadge}
+    </update>
+
+    <update id="updateEmployeeMsg" parameterType="map">
+        UPDATE COMM_HEAD_SAFETYSPECIALIST
+        <trim prefix="SET" suffixOverrides=",">
+            PHONE_NUM = #{mobiletelphone} ,
+            SAFETY_SPECIALIST = #{empname} ,
+            BADGE = #{badge} ,
+            SAFETY_STATUS = #{safetyStatus},
+        </trim>
+        WHERE DEPCODE = #{depcode}
+    </update>
+
+    <update id="updateSafetyOfficer" parameterType="safetyOfficerList">
+        UPDATE
+        COMM_HEAD_SAFETYSPECIALIST
+        <include refid="update_pojo_sql"/>
+        WHERE BADGE = #{badge}
+    </update>
+
+    <select id="querySafetyOfficerInfo" parameterType="map" resultMap="SAFETYOFFICERLIST_ALL">
+        SELECT * FROM COMM_HEAD_SAFETYSPECIALIST
+        WHERE BADGE = #{badge}
+    </select>
+    <select id="queryDepcode" parameterType="map" resultType="String" >
+        SELECT
+        D.DEPCODE
+        FROM
+        COMM_DEPARTMENT D
+        START WITH
+        D.DEPCODE = #{depcode}
+        CONNECT BY PRIOR   D.DEPID = D.ADMINID
+    </select>
+</mapper>

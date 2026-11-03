@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:ywwb905 2022-09-22 -->
+<!--  考勤导入记录表 查询脚本 -->
+<mapper namespace="com.work.ppm.application.model.integratedmanager.PpmKqRecordImport">
+    <resultMap type="ppmKqRecordImport" id="PPMKQRECORDIMPORT_ALL">
+        <result property="id" column="ID" />
+        <result property="jobId" column="JOB_ID" />
+        <result property="userName" column="USER_NAME" />
+        <result property="attendanceDate" column="ATTENDANCE_DATE" />
+        <result property="outsourceType" column="OUTSOURCE_TYPE" />
+        <result property="morningWorkingTime" column="MORNING_WORKING_TIME" />
+        <result property="morningClosingTime" column="MORNING_CLOSING_TIME" />
+        <result property="afternoonWorkingTime" column="AFTERNOON_WORKING_TIME" />
+        <result property="afternoonClosingTime" column="AFTERNOON_CLOSING_TIME" />
+        <result property="overtimeTime" column="OVERTIME_TIME" />
+        <result property="amAbnormalReason" column="AM_ABNORMAL_REASON" />
+        <result property="pmAbnormalReason" column="PM_ABNORMAL_REASON" />
+        <result property="importState" column="IMPORT_STATE" />
+        <result property="templateType" column="TEMPLATE_TYPE" />
+        <result property="createdTime" column="CREATED_TIME" />
+        <result property="createdBy" column="CREATED_BY" />
+        <result property="modifiedTime" column="MODIFIED_TIME" />
+        <result property="modifiedBy" column="MODIFIED_BY" />
+
+    </resultMap>
+
+    <!-- 所有字段名称 -->
+    <sql id="sql_flied_all">
+        ID,
+        JOB_ID,
+        USER_NAME,
+        ATTENDANCE_DATE,
+        OUTSOURCE_TYPE,
+        MORNING_WORKING_TIME,
+        MORNING_CLOSING_TIME,
+        AFTERNOON_WORKING_TIME,
+        AFTERNOON_CLOSING_TIME,
+        OVERTIME_TIME,
+        AM_ABNORMAL_REASON,
+        PM_ABNORMAL_REASON,
+        IMPORT_STATE,
+        TEMPLATE_TYPE,
+        CREATED_TIME,
+        CREATED_BY,
+		MODIFIED_TIME,
+		MODIFIED_BY
+    </sql>
+    <sql id="sql_select_condition">
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="id != null " > ID = #{id} AND </if>
+            <if test="jobId != null " > JOB_ID = #{jobId} AND </if>
+            <if test="userName != null " > USER_NAME = #{userName} AND </if>
+            <if test="attendanceDate != null " > ATTENDANCE_DATE = #{attendanceDate} AND </if>
+            <if test="outsourceType != null " > OUTSOURCE_TYPE = #{outsourceType} AND </if>
+            <if test="morningWorkingTime != null " > MORNING_WORKING_TIME = #{morningWorkingTime} AND </if>
+            <if test="morningClosingTime != null " > MORNING_CLOSING_TIME = #{morningClosingTime} AND </if>
+            <if test="afternoonWorkingTime != null " > AFTERNOON_WORKING_TIME = #{afternoonWorkingTime} AND </if>
+            <if test="afternoonClosingTime != null " > AFTERNOON_CLOSING_TIME = #{afternoonClosingTime} AND </if>
+            <if test="overtimeTime != null " > OVERTIME_TIME = #{overtimeTime} AND </if>
+            <if test="amAbnormalReason != null " > AM_ABNORMAL_REASON = #{amAbnormalReason} AND </if>
+            <if test="pmAbnormalReason != null " > PM_ABNORMAL_REASON = #{pmAbnormalReason} AND </if>
+            <if test="importState != null " > IMPORT_STATE = #{importState} AND </if>
+            <if test="templateType != null " > TEMPLATE_TYPE = #{templateType} AND </if>
+            <if test="createdTime != null " > CREATED_TIME = #{createdTime} AND </if>
+            <if test="createdBy != null " > CREATED_BY = #{createdBy} AND </if>
+            <if test="modifiedTime != null " > MODIFIED_TIME = #{modifiedTime} AND </if>
+            <if test="modifiedBy != null " > MODIFIED_BY = #{modifiedBy} AND </if>
+        </trim>
+    </sql>
+    <!-- 查询分页  2022-09-22 ywwb905  -->
+    <select id="queryPagerList" parameterType="map" resultMap="PPMKQRECORDIMPORT_ALL">
+        SELECT
+        <include refid="sql_flied_all" />
+        FROM PPM_KQ_RECORD_IMPORT
+        <include refid="sql_select_condition" />
+        order by ID desc
+    </select>
+
+    <!-- 新增  2022-09-22 ywwb905  -->
+    <insert id="addPojo" parameterType="ppmKqRecordImport">
+        INSERT INTO PPM_KQ_RECORD_IMPORT (
+        <trim suffixOverrides=",">
+            <if test="id != null " > ID , </if>
+            <if test="jobId != null " > JOB_ID , </if>
+            <if test="userName != null " > USER_NAME , </if>
+            <if test="attendanceDate != null " > ATTENDANCE_DATE , </if>
+            <if test="outsourceType != null " > OUTSOURCE_TYPE , </if>
+            <if test="morningWorkingTime != null " > MORNING_WORKING_TIME , </if>
+            <if test="morningClosingTime != null " > MORNING_CLOSING_TIME , </if>
+            <if test="afternoonWorkingTime != null " > AFTERNOON_WORKING_TIME , </if>
+            <if test="afternoonClosingTime != null " > AFTERNOON_CLOSING_TIME , </if>
+            <if test="overtimeTime != null " > OVERTIME_TIME , </if>
+            <if test="amAbnormalReason != null " > AM_ABNORMAL_REASON , </if>
+            <if test="pmAbnormalReason != null " > PM_ABNORMAL_REASON , </if>
+            <if test="importState != null " > IMPORT_STATE , </if>
+            <if test="templateType != null " > TEMPLATE_TYPE , </if>
+            <if test="createdTime != null " > CREATED_TIME , </if>
+            <if test="createdBy != null " > CREATED_BY , </if>
+            <if test="modifiedTime != null " > MODIFIED_TIME , </if>
+            <if test="modifiedBy != null " > MODIFIED_BY , </if>
+        </trim>
+        )
+        VALUES(
+        <trim suffixOverrides=",">
+            <if test="id != null " > #{id} , </if>
+            <if test="jobId != null " > #{jobId} , </if>
+            <if test="userName != null " > #{userName} , </if>
+            <if test="attendanceDate != null " > #{attendanceDate} , </if>
+            <if test="outsourceType != null " > #{outsourceType} , </if>
+            <if test="morningWorkingTime != null " > #{morningWorkingTime} , </if>
+            <if test="morningClosingTime != null " > #{morningClosingTime} , </if>
+            <if test="afternoonWorkingTime != null " > #{afternoonWorkingTime} , </if>
+            <if test="afternoonClosingTime != null " > #{afternoonClosingTime} , </if>
+            <if test="overtimeTime != null " > #{overtimeTime} , </if>
+            <if test="amAbnormalReason != null " > #{amAbnormalReason} , </if>
+            <if test="pmAbnormalReason != null " > #{pmAbnormalReason} , </if>
+            <if test="importState != null " > #{importState} , </if>
+            <if test="templateType != null " > #{templateType} , </if>
+            <if test="createdTime != null " > #{createdTime} , </if>
+            <if test="createdBy != null " > #{createdBy} , </if>
+            <if test="modifiedTime != null " > #{modifiedTime} , </if>
+            <if test="modifiedBy != null " > #{modifiedBy} , </if>
+        </trim>
+        )
+    </insert>
+
+    <!--通过id查询  ywwb905 2022-09-22 -->
+    <select id="queryDetail" parameterType="ppmKqRecordImport" resultMap="PPMKQRECORDIMPORT_ALL">
+        SELECT
+        <include refid="sql_flied_all" />
+        FROM PPM_KQ_RECORD_IMPORT
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="id != null " > ID = #{id} AND </if>
+        </trim>
+    </select>
+
+    <!--查询集合  ywwb905 2022-09-22 -->
+    <select id="getList" parameterType="ppmKqRecordImport" resultMap="PPMKQRECORDIMPORT_ALL">
+        SELECT
+        <include refid="sql_flied_all" />
+        FROM PPM_KQ_RECORD_IMPORT
+        <include refid="sql_select_condition" />
+    </select>
+
+    <!--通过id编辑 ywwb905 2022-09-22 -->
+    <update id="updatePojo" parameterType="ppmKqRecordImport">
+        UPDATE
+        PPM_KQ_RECORD_IMPORT
+        <include refid="update_pojo_sql" />
+        WHERE ID=#{id}
+    </update>
+
+    <!-- update sql -->
+    <sql id="update_pojo_sql">
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="jobId != null " > JOB_ID=#{jobId} , </if>
+            <if test="userName != null " > USER_NAME=#{userName} , </if>
+            <if test="attendanceDate != null " > ATTENDANCE_DATE=#{attendanceDate} , </if>
+            <if test="outsourceType != null " > OUTSOURCE_TYPE=#{outsourceType} , </if>
+            <if test="morningWorkingTime != null " > MORNING_WORKING_TIME=#{morningWorkingTime} , </if>
+            <if test="morningClosingTime != null " > MORNING_CLOSING_TIME=#{morningClosingTime} , </if>
+            <if test="afternoonWorkingTime != null " > AFTERNOON_WORKING_TIME=#{afternoonWorkingTime} , </if>
+            <if test="afternoonClosingTime != null " > AFTERNOON_CLOSING_TIME=#{afternoonClosingTime} , </if>
+            <if test="overtimeTime != null " > OVERTIME_TIME=#{overtimeTime} , </if>
+            <if test="amAbnormalReason != null " > AM_ABNORMAL_REASON=#{amAbnormalReason} , </if>
+            <if test="pmAbnormalReason != null " > PM_ABNORMAL_REASON=#{pmAbnormalReason} , </if>
+            <if test="importState != null " > IMPORT_STATE=#{importState} , </if>
+            <if test="templateType != null " > TEMPLATE_TYPE=#{templateType} , </if>
+            <if test="createdTime != null " > CREATED_TIME=#{createdTime} , </if>
+            <if test="createdBy != null " > CREATED_BY=#{createdBy} , </if>
+			<if test="modifiedTime != null " > MODIFIED_TIME=#{modifiedTime} , </if>
+            <if test="modifiedBy != null " > MODIFIED_BY=#{modifiedBy} , </if>
+        </trim>
+    </sql>
+	
+	<update id="updatePojoImport" parameterType="ppmKqRecordImport">
+        UPDATE
+        PPM_KQ_RECORD_IMPORT
+        <include refid="update_pojo_import_sql" />
+        WHERE ID=#{id}
+    </update>
+
+    <!-- update sql -->
+    <sql id="update_pojo_import_sql">
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="jobId != null " > JOB_ID=#{jobId} , </if>
+            <if test="userName != null " > USER_NAME=#{userName} , </if>
+            <if test="attendanceDate != null " > ATTENDANCE_DATE=#{attendanceDate} , </if>
+            <if test="" > OUTSOURCE_TYPE=#{outsourceType} , </if>
+            <if test="" > MORNING_WORKING_TIME=#{morningWorkingTime} , </if>
+            <if test="" > MORNING_CLOSING_TIME=#{morningClosingTime} , </if>
+            <if test="" > AFTERNOON_WORKING_TIME=#{afternoonWorkingTime} , </if>
+            <if test="" > AFTERNOON_CLOSING_TIME=#{afternoonClosingTime} , </if>
+            <if test="" > OVERTIME_TIME=#{overtimeTime} , </if>
+            <if test="" > AM_ABNORMAL_REASON=#{amAbnormalReason} , </if>
+            <if test="" > PM_ABNORMAL_REASON=#{pmAbnormalReason} , </if>
+            <if test="importState != null " > IMPORT_STATE=#{importState} , </if>
+            <if test="templateType != null " > TEMPLATE_TYPE=#{templateType} , </if>
+            <if test="createdTime != null " > CREATED_TIME=#{createdTime} , </if>
+            <if test="createdBy != null " > CREATED_BY=#{createdBy} , </if>
+			<if test="modifiedTime != null " > MODIFIED_TIME=#{modifiedTime} , </if>
+            <if test="modifiedBy != null " > MODIFIED_BY=#{modifiedBy} , </if>
+        </trim>
+    </sql>
+
+    <!--通过id批量删除  ywwb905 2022-09-30 -->
+    <delete id="deleteById" parameterType="ppmKqRecordImport">
+        DELETE
+        FROM
+        PPM_KQ_RECORD_IMPORT
+        WHERE ID = #{id}
+    </delete>
+
+</mapper>

@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k1327 2021-07-06 -->
+<mapper namespace="com.work.ppm.application.model.kpi.PpmKpiBalanceDeduce">
+	 <resultMap type="ppmKpiBalanceDeduce" id="PPMKPIBALANCEDEDUCE_ALL">
+        <result property="id" column="ID" />
+		<result property="tyear" column="TYEAR" />
+		<result property="term" column="TERM" />
+		<result property="eid" column="EID" />
+		<result property="item" column="ITEM" />
+		<result property="plan" column="PLAN" />
+		<result property="itemdescribe" column="ITEMDESCRIBE" />
+		<result property="plandescribe" column="PLANDESCRIBE" />
+		<result property="deducescorereason" column="DEDUCESCOREREASON" />
+		<result property="value" column="VALUE" />
+		<result property="regby" column="REGBY" />
+		<result property="regtime" column="REGTIME" />
+
+		 <result property="workremark" column="WORKREMARK" />
+     </resultMap>
+
+     <!-- 所有字段名称 -->
+        <sql id="sql_flied_all">
+        	ID,
+			TYEAR,
+			TERM,
+			EID,
+			ITEM,
+			PLAN,
+			ITEMDESCRIBE,
+			PLANDESCRIBE,
+			DEDUCESCOREREASON,
+			VALUE,
+			REGBY,
+			REGTIME,
+			WORKREMARK
+        </sql>
+        <sql id="sql_select_condition">
+            <trim prefix="WHERE" suffixOverrides="AND">
+                <if test="id != null " > ID = #{id} AND </if>
+				<if test="tyear != null  and tyear != '' " > TYEAR = #{tyear} AND </if>
+				<if test="term != null  and term != '' " > TERM = #{term} AND </if>
+				<if test="eid != null  and eid != '' " > EID = #{eid} AND </if>
+				<if test="item != null  and item != '' " > ITEM = #{item} AND </if>
+				<if test="plan != null  and plan != '' " > PLAN = #{plan} AND </if>
+				<if test="itemdescribe != null  and itemdescribe != '' " > ITEMDESCRIBE = #{itemdescribe} AND </if>
+				<if test="plandescribe != null  and plandescribe != '' " > PLANDESCRIBE = #{plandescribe} AND </if>
+				<if test="deducescorereason != null  and deducescorereason != '' " > DEDUCESCOREREASON = #{deducescorereason} AND </if>
+				<if test="value != null " > VALUE = #{value} AND </if>
+				<if test="regby != null  and regby != '' " > REGBY = #{regby} AND </if>
+				<if test="regtime != null " > REGTIME = #{regtime} AND </if>
+				<if test="workremark != null  and workremark != '' " > WORKREMARK = #{workremark} AND </if>
+            </trim>
+        </sql>
+    	<!-- 查询分页  2021-07-06 k1327  -->
+        <select id="queryPagerList" parameterType="map" resultMap="PPMKPIBALANCEDEDUCE_ALL">
+        	SELECT
+            <include refid="sql_flied_all" />
+            FROM PPM_KPI_BALANCE_DEDUCE
+            <include refid="sql_select_condition" />
+        </select>
+
+        <!-- 新增  2021-07-06 k1327  -->
+        <insert id="addPojo" parameterType="ppmKpiBalanceDeduce">
+    		INSERT INTO PPM_KPI_BALANCE_DEDUCE (
+    		<trim suffixOverrides=",">
+    		 <if test="id != null " > ID , </if>
+				<if test="tyear != null  and tyear != '' " > TYEAR , </if>
+				<if test="term != null  and term != '' " > TERM , </if>
+				<if test="eid != null  and eid != '' " > EID , </if>
+				<if test="item != null  and item != '' " > ITEM , </if>
+				<if test="plan != null  and plan != '' " > PLAN , </if>
+				<if test="itemdescribe != null  and itemdescribe != '' " > ITEMDESCRIBE , </if>
+				<if test="plandescribe != null  and plandescribe != '' " > PLANDESCRIBE , </if>
+				<if test="deducescorereason != null  and deducescorereason != '' " > DEDUCESCOREREASON , </if>
+				<if test="value != null " > VALUE , </if>
+				<if test="regby != null  and regby != '' " > REGBY , </if>
+				<if test="regtime != null " > REGTIME , </if>
+				<if test="workremark != null  and workremark != '' " > WORKREMARK , </if>
+              </trim>
+    		)
+    		VALUES(
+    		<trim suffixOverrides=",">
+    		 <if test="id != null " > #{id} , </if>
+				<if test="tyear != null  and tyear != '' " > #{tyear} , </if>
+				<if test="term != null  and term != '' " > #{term} , </if>
+				<if test="eid != null  and eid != '' " > #{eid} , </if>
+				<if test="item != null  and item != '' " > #{item} , </if>
+				<if test="plan != null  and plan != '' " > #{plan} , </if>
+				<if test="itemdescribe != null  and itemdescribe != '' " > #{itemdescribe} , </if>
+				<if test="plandescribe != null  and plandescribe != '' " > #{plandescribe} , </if>
+				<if test="deducescorereason != null  and deducescorereason != '' " > #{deducescorereason} , </if>
+				<if test="value != null " > #{value} , </if>
+				<if test="regby != null  and regby != '' " > #{regby} , </if>
+				<if test="regtime != null " > #{regtime} , </if>
+				<if test="workremark != null and workremark != ''" > #{workremark} , </if>
+            </trim>
+    		)
+        </insert>
+
+        <!--通过id查询  k1327 2021-07-06 -->
+        <select id="queryDetail" parameterType="ppmKpiBalanceDeduce" resultMap="PPMKPIBALANCEDEDUCE_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_KPI_BALANCE_DEDUCE  WHERE ID=#{id}
+        </select>
+
+         <!--查询集合  k1327 2021-07-06 -->
+        <select id="getList" parameterType="ppmKpiBalanceDeduce" resultMap="PPMKPIBALANCEDEDUCE_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_KPI_BALANCE_DEDUCE
+        	<include refid="sql_select_condition" />
+        </select>
+        <!-- update sql -->
+        <sql id="update_pojo_sql">
+        	<trim prefix="SET" suffixOverrides=",">
+        		<if test="id != null " > ID=#{id} , </if>
+				<if test="tyear != null  and tyear != '' " > TYEAR=#{tyear} , </if>
+				<if test="term != null  and term != '' " > TERM=#{term} , </if>
+				<if test="eid != null  and eid != '' " > EID=#{eid} , </if>
+				<if test="item != null  and item != '' " > ITEM=#{item} , </if>
+				<if test="plan != null  and plan != '' " > PLAN=#{plan} , </if>
+				<if test="itemdescribe != null  and itemdescribe != '' " > ITEMDESCRIBE=#{itemdescribe} , </if>
+				<if test="plandescribe != null  and plandescribe != '' " > PLANDESCRIBE=#{plandescribe} , </if>
+				<if test="deducescorereason != null  and deducescorereason != '' " > DEDUCESCOREREASON=#{deducescorereason} , </if>
+				<if test="value != null " > VALUE=#{value} , </if>
+				<if test="regby != null  and regby != '' " > REGBY=#{regby} , </if>
+				<if test="regtime != null " > REGTIME=#{regtime} , </if>
+				<if test="workremark != null " > WORKREMARK=#{workremark} , </if>
+            </trim>
+        </sql>
+
+        <!--通过id编辑 k1327 2021-07-06 -->
+    	<update id="updatePojo" parameterType="ppmKpiBalanceDeduce">
+        	UPDATE
+        	PPM_KPI_BALANCE_DEDUCE
+        	<include refid="update_pojo_sql" />
+        	WHERE ID=#{id}
+        </update>
+
+        <!--通过id批量删除  k1327 2021-07-06 -->
+        <delete id="deleteById" parameterType="ppmKpiBalanceDeduce">
+        	DELETE
+        	FROM
+        	PPM_KPI_BALANCE_DEDUCE
+        	WHERE ID = #{id}
+        </delete>
+
+		<!--计算分数  k1327 2021-07-06 -->
+		<select id="querySummaryValue" parameterType="ppmKpiBalanceDeduce" resultMap="PPMKPIBALANCEDEDUCE_ALL">
+			select sum(d.value) value from PPM_KPI_BALANCE_DEDUCE d where d.tyear=#{tyear} and d.eid=#{eid} and d.item=#{item} and d.plan=#{plan}
+		</select>
+</mapper>

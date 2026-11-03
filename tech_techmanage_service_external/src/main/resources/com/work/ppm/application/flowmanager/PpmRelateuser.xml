@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k6991 2020-06-16 -->
+<mapper namespace="com.work.ppm.application.model.flowmanager.PpmRelateuser">
+	 <resultMap type="ppmRelateuser" id="PPMRELATEUSER_ALL">
+        <result property="id" column="ID" />
+		<result property="userno" column="USERNO" />
+		<result property="relateUserno" column="RELATE_USERNO" />
+		
+     </resultMap>
+
+     <!-- 所有字段名称 -->
+        <sql id="sql_flied_all">
+        	ID,
+			USERNO,
+			RELATE_USERNO
+        </sql>
+		<resultMap id="QUERYPAGERLIST_MAP" type="ppmRelateuserInfo" extends="PPMRELATEUSER_ALL">
+			<result property="userName" column="USERNAME" />
+			<result property="realteUserName" column="REALTEUSERNAME" />
+		</resultMap>
+    	<!-- 查询分页  2020-06-16 k6991  -->
+        <select id="queryPagerList" parameterType="map" resultMap="QUERYPAGERLIST_MAP">
+			SELECT T.ID,T.USERNO,E.EMPNAME||'('||T.USERNO||')' AS USERNAME,
+			T.RELATE_USERNO,E1.EMPNAME||'('||T.RELATE_USERNO||')' AS REALTEUSERNAME
+			FROM PPM_RELATEUSER T
+			LEFT JOIN PPM_EMP_VIEW E ON E.BADGE=T.USERNO
+			LEFT JOIN PPM_EMP_VIEW E1 ON E1.BADGE=T.RELATE_USERNO
+            <trim prefix="WHERE" suffixOverrides="AND">
+                <if test="id != null " > T.ID = #{id} AND </if>
+				<if test="userno != null  and userno != '' " > T.USERNO = #{userno} AND </if>
+				<if test="relateUserno != null  and relateUserno != '' " > T.RELATE_USERNO = #{relateUserno} AND </if>
+				
+            </trim>
+        </select>
+
+        <!-- 新增  2020-06-16 k6991  -->
+        <insert id="addPojo" parameterType="ppmRelateuser">
+    		INSERT INTO PPM_RELATEUSER (
+    		<trim suffixOverrides=",">
+    		 <if test="id != null " > ID , </if>
+				<if test="userno != null  and userno != '' " > USERNO , </if>
+				<if test="relateUserno != null  and relateUserno != '' " > RELATE_USERNO , </if>
+				
+              </trim>
+    		)
+    		VALUES(
+    		<trim suffixOverrides=",">
+    		 <if test="id != null " > #{id} , </if>
+				<if test="userno != null  and userno != '' " > #{userno} , </if>
+				<if test="relateUserno != null  and relateUserno != '' " > #{relateUserno} , </if>
+				
+            </trim>
+    		)
+        </insert>
+
+        <!--通过id查询  k6991 2020-06-16 -->
+        <select id="queryDetail" parameterType="map" resultMap="PPMRELATEUSER_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_RELATEUSER  WHERE RELATE_USERNO=#{relateUserno} AND ROWNUM=1
+        </select>
+
+         <!--查询集合  k6991 2020-06-16 -->
+        <select id="getList" parameterType="map" resultMap="PPMRELATEUSER_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_RELATEUSER
+        	<trim prefix="WHERE" suffixOverrides="AND">
+        		<if test="id != null " > ID=#{id} AND </if>
+				<if test="userno != null  and userno != '' " > USERNO=#{userno} AND </if>
+				<if test="relateUserno != null  and relateUserno != '' " > RELATE_USERNO=#{relateUserno} AND </if>
+				
+            </trim>
+        </select>
+        <!-- update sql -->
+        <sql id="update_pojo_sql">
+        	<trim prefix="SET" suffixOverrides=",">
+        		<if test="id != null " > ID=#{id} , </if>
+				<if test="userno != null  and userno != '' " > USERNO=#{userno} , </if>
+				<if test="relateUserno != null  and relateUserno != '' " > RELATE_USERNO=#{relateUserno} , </if>
+				
+            </trim>
+        </sql>
+
+        <!--通过id编辑 k6991 2020-06-16 -->
+    	<update id="updatePojo" parameterType="ppmRelateuser">
+        	UPDATE
+        	PPM_RELATEUSER
+        	<include refid="update_pojo_sql" />
+        	WHERE ID=#{id}
+        </update>
+
+        <!--通过id批量删除  k6991 2020-06-16 -->
+        <delete id="deleteById" parameterType="ppmRelateuser">
+        	DELETE
+        	FROM
+        	PPM_RELATEUSER
+        	WHERE ID = #{id}
+        </delete>
+</mapper>

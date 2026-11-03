@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k6991 2020-01-15 -->
+<mapper namespace="com.work.ppm.application.model.systemmanager.CommRole">
+	 <resultMap type="commRole" id="COMMROLE_ALL">
+        <result property="rolename" column="ROLENAME" />
+		<result property="roletype" column="ROLETYPE" />
+		<result property="isdisabled" column="ISDISABLED" />
+		<result property="parentid" column="PARENTID" />
+		<result property="roleid" column="ROLEID" />
+		<result property="roledesc" column="ROLEDESC" />
+		<result property="selfid" column="SELFID" />
+     </resultMap>
+
+     <!-- 所有字段名称 -->
+        <sql id="sql_flied_all">
+        	ROLENAME,
+			ROLETYPE,
+			ISDISABLED,
+			PARENTID,
+			ROLEID,
+			ROLEDESC,
+			SELFID
+        </sql>
+		<resultMap id="QUERYPAGERLIST_MAP" type="commRoleInfo" extends="COMMROLE_ALL">
+			<result column="ORGNAME" property="orgName"/>
+			<result column="OPERATORNAME" property="operatorName"/>
+			<result column="USERID" property="userId"/>
+			<result column="COMPID" property="compId"/>
+		</resultMap>
+    	<!-- 查询分页  2020-01-15 k6991  -->
+        <select id="queryPagerList" parameterType="map" resultMap="QUERYPAGERLIST_MAP">
+			SELECT * FROM (SELECT M.USERID,
+			M.OPERATORNAME,
+			e.COMPID,
+			ORG.LOCATION ORGNAME
+			FROM COMM_OPERATOR M
+			left join ppm_emp_view e on M.Userid = e.badge
+			left join COMM_ORGANIZATION ORG on e.compid = org.compid
+			WHERE M.PARTID IS NULL
+			AND (M.STATUS = 'running' OR M.STATUS = 'lock')) T
+
+			<trim prefix="WHERE" suffixOverrides="AND">
+				<if test="operatorName != null  and operatorName != '' " >   instr( T.OPERATORNAME, #{operatorName}) > 0 </if>
+				<if test="userId != null  " >   instr( T.USERID, #{userId}) > 0 </if>
+			</trim>
+			ORDER BY T.COMPID, T.USERID
+        </select>
+
+        <!-- 新增  2020-01-15 k6991  -->
+        <insert id="addPojo" parameterType="commRole">
+    		INSERT INTO COMM_ROLE (
+    		ROLENAME,
+			ROLETYPE,
+			ISDISABLED,
+			PARENTID,
+			ROLEID,
+			ROLEDESC,
+			SELFID
+    		)
+    		VALUES(
+    		#{rolename},
+			#{roletype},
+			#{isdisabled},
+			#{parentid},
+			#{roleid},
+			#{roledesc},
+			#{selfid}
+    		)
+        </insert>
+
+        <!--通过id查询  k6991 2020-01-15 -->
+        <select id="queryById" parameterType="map" resultMap="COMMROLE_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM COMM_ROLE  WHERE ROLENAME=#{rolename}
+        </select>
+
+         <!--查询集合  k6991 2020-01-15 -->
+        <select id="getList" parameterType="map" resultMap="COMMROLE_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM COMM_ROLE
+        	<trim prefix="WHERE" suffixOverrides="AND">
+        		<if test="rolename != null  and rolename != '' " > ROLENAME=#{rolename} AND </if>
+				<if test="roletype != null  and roletype != '' " > ROLETYPE=#{roletype} AND </if>
+				<if test="isdisabled != null  and isdisabled != '' " > ISDISABLED=#{isdisabled} AND </if>
+				<if test="parentid != null  and parentid != '' " > PARENTID=#{parentid} AND </if>
+				<if test="roleid != null  and roleid != '' " > ROLEID=#{roleid} AND </if>
+				<if test="roledesc != null  and roledesc != '' " > ROLEDESC=#{roledesc} AND </if>
+				<if test="selfid != null " > SELFID=#{selfid} AND </if>
+				
+            </trim>
+        </select>
+        <!-- update sql -->
+        <sql id="update_pojo_sql">
+        	<trim prefix="SET" suffixOverrides=",">
+        		<if test="rolename != null  and rolename != '' " > ROLENAME=#{rolename} , </if>
+				<if test="roletype != null  and roletype != '' " > ROLETYPE=#{roletype} , </if>
+				<if test="isdisabled != null  and isdisabled != '' " > ISDISABLED=#{isdisabled} , </if>
+				<if test="parentid != null  and parentid != '' " > PARENTID=#{parentid} , </if>
+				<if test="roleid != null  and roleid != '' " > ROLEID=#{roleid} , </if>
+				<if test="roledesc != null  and roledesc != '' " > ROLEDESC=#{roledesc} , </if>
+				<if test="selfid != null " > SELFID=#{selfid} , </if>
+				
+            </trim>
+        </sql>
+
+        <!--通过id编辑 k6991 2020-01-15 -->
+    	<update id="updatePojo" parameterType="commRole">
+        	UPDATE
+        	COMM_ROLE
+        	<include refid="update_pojo_sql" />
+        	WHERE ROLENAME=#{rolename}
+        </update>
+
+        <!--通过id批量删除  k6991 2020-01-15 -->
+        <delete id="deleteById" parameterType="commRole">
+        	DELETE
+        	FROM
+        	COMM_ROLE
+        	WHERE ROLENAME = #{rolename}
+        </delete>
+</mapper>

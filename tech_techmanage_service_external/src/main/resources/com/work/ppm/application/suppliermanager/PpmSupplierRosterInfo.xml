@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:ywwb905 2023-01-10 -->
+<!--  供应商花名册表 查询脚本 -->
+<mapper namespace="com.work.ppm.application.model.suppliermanager.PpmSupplierRosterInfo">
+	 <resultMap type="ppmSupplierRosterInfo" id="PPMSUPPLIERROSTERINFO_ALL">
+        <result property="id" column="ID" />
+		<result property="pid" column="PID" />
+		<result property="deptId" column="DEPT_ID" />
+		<result property="supplierName" column="SUPPLIER_NAME" />
+		<result property="supplierCode" column="SUPPLIER_CODE" />
+		<result property="supplierType" column="SUPPLIER_TYPE" />
+		<result property="serviceMode" column="SERVICE_MODE" />
+		<result property="isSubcontract" column="IS_SUBCONTRACT" />
+		<result property="systemId" column="SYSTEM_ID" />
+		<result property="projectId" column="PROJECT_ID" />
+		<result property="serviceType" column="SERVICE_TYPE" />
+		<result property="startTime" column="START_TIME" />
+		<result property="endTime" column="END_TIME" />
+		<result property="accessResult" column="ACCESS_RESULT" />
+		<result property="supplierYear" column="SUPPLIER_YEAR" />
+		<result property="fileNo" column="FILE_NO" />
+		<result property="isDel" column="IS_DEL" />
+		<result property="createdTime" column="CREATED_TIME" />
+		<result property="createdBy" column="CREATED_BY" />
+		<result property="modifiedTime" column="MODIFIED_TIME" />
+		<result property="modifiedBy" column="MODIFIED_BY" />
+		
+     </resultMap>
+	 <resultMap id="PPMSUPPLIERROSTERINFO_ALL_EXT" type="ppmSupplierRosterInfoExt" extends="PPMSUPPLIERROSTERINFO_ALL">
+		<result property="delVal" column="DEL_VAL" />
+		<result property="deptName" column="DEPT_NAME" />
+		<result property="systemName" column="SYSTEM_NAME" />
+		<result property="projectName" column="PROJECT_NAME" />
+		<result property="isFeat" column="IS_FEAT" />
+     </resultMap>
+
+     <!-- 所有字段名称 -->
+    <sql id="sql_flied_all">
+        ID,
+			PID,
+			DEPT_ID,
+			SUPPLIER_NAME,
+			SUPPLIER_CODE,
+			SUPPLIER_TYPE,
+			SERVICE_MODE,
+			IS_SUBCONTRACT,
+			SYSTEM_ID,
+			PROJECT_ID,
+			SERVICE_TYPE,
+			START_TIME,
+			END_TIME,
+			ACCESS_RESULT,
+			SUPPLIER_YEAR,
+			FILE_NO,
+			IS_DEL,
+			CREATED_TIME,
+			CREATED_BY,
+			MODIFIED_TIME,
+			MODIFIED_BY
+    </sql>
+    <sql id="sql_select_condition">
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="id != null " > ID = #{id} AND </if>
+				<if test="pid != null " > PID = #{pid} AND </if>
+				<if test="deptId != null  and deptId != '' " > DEPT_ID = #{deptId} AND </if>
+				<if test="supplierName != null  and supplierName != '' " > SUPPLIER_NAME = #{supplierName} AND </if>
+				<if test="supplierCode != null  and supplierCode != '' " > SUPPLIER_CODE = #{supplierCode} AND </if>
+				<if test="supplierType != null  and supplierType != '' " > SUPPLIER_TYPE = #{supplierType} AND </if>
+				<if test="serviceMode != null  and serviceMode != '' " > SERVICE_MODE = #{serviceMode} AND </if>
+				<if test="isSubcontract != null  and isSubcontract != '' " > IS_SUBCONTRACT = #{isSubcontract} AND </if>
+				<if test="systemId != null  and systemId != '' " > SYSTEM_ID = #{systemId} AND </if>
+				<if test="projectId != null  and projectId != '' " > PROJECT_ID = #{projectId} AND </if>
+				<if test="serviceType != null  and serviceType != '' " > SERVICE_TYPE = #{serviceType} AND </if>
+				<if test="startTime != null and startTime != ''" > START_TIME = #{startTime} AND </if>
+				<if test="endTime != null and endTime != ''" > END_TIME = #{endTime} AND </if>
+				<if test="accessResult != null  and accessResult != '' " > ACCESS_RESULT = #{accessResult} AND </if>
+				<if test="supplierYear != null  and supplierYear != '' " > SUPPLIER_YEAR = #{supplierYear} AND </if>
+				<if test="fileNo != null  and fileNo != '' " > FILE_NO = #{fileNo} AND </if>
+				<if test="isDel != null  and isDel != '' " > IS_DEL = #{isDel} AND </if>
+				<if test="createdTime != null " > CREATED_TIME = #{createdTime} AND </if>
+				<if test="createdBy != null  and createdBy != '' " > CREATED_BY = #{createdBy} AND </if>
+				<if test="modifiedTime != null " > MODIFIED_TIME = #{modifiedTime} AND </if>
+				<if test="modifiedBy != null  and modifiedBy != '' " > MODIFIED_BY = #{modifiedBy} AND </if>
+				
+        </trim>
+    </sql>
+    <!-- 查询分页  2023-01-11 ywwb905  -->
+    <select id="queryPagerList" parameterType="map" resultMap="PPMSUPPLIERROSTERINFO_ALL">
+        SELECT
+        <include refid="sql_flied_all" />
+        FROM PPM_SUPPLIER_ROSTER_INFO
+        <include refid="sql_select_condition" />
+    </select>
+
+    <!-- 新增  2023-01-11 ywwb905  -->
+    <insert id="addPojo" parameterType="ppmSupplierRosterInfo">
+        INSERT INTO PPM_SUPPLIER_ROSTER_INFO (
+        <trim suffixOverrides=",">
+         <if test="id != null " > ID , </if>
+				<if test="pid != null " > PID , </if>
+				<if test="deptId != null  and deptId != '' " > DEPT_ID , </if>
+				<if test="supplierName != null  and supplierName != '' " > SUPPLIER_NAME , </if>
+				<if test="supplierCode != null  and supplierCode != '' " > SUPPLIER_CODE , </if>
+				<if test="supplierType != null  and supplierType != '' " > SUPPLIER_TYPE , </if>
+				<if test="serviceMode != null  and serviceMode != '' " > SERVICE_MODE , </if>
+				<if test="isSubcontract != null  and isSubcontract != '' " > IS_SUBCONTRACT , </if>
+				<if test="systemId != null  and systemId != '' " > SYSTEM_ID , </if>
+				<if test="projectId != null  and projectId != '' " > PROJECT_ID , </if>
+				<if test="serviceType != null  and serviceType != '' " > SERVICE_TYPE , </if>
+				<if test="startTime != null and startTime != ''" > START_TIME , </if>
+				<if test="endTime != null and endTime != ''" > END_TIME , </if>
+				<if test="accessResult != null  and accessResult != '' " > ACCESS_RESULT , </if>
+				<if test="supplierYear != null  and supplierYear != '' " > SUPPLIER_YEAR , </if>
+				<if test="fileNo != null  and fileNo != '' " > FILE_NO , </if>
+				<if test="isDel != null  and isDel != '' " > IS_DEL , </if>
+				<if test="createdTime != null " > CREATED_TIME , </if>
+				<if test="createdBy != null  and createdBy != '' " > CREATED_BY , </if>
+				<if test="modifiedTime != null " > MODIFIED_TIME , </if>
+				<if test="modifiedBy != null  and modifiedBy != '' " > MODIFIED_BY , </if>
+				
+          </trim>
+        )
+        VALUES(
+        <trim suffixOverrides=",">
+         <if test="id != null " > #{id} , </if>
+				<if test="pid != null " > #{pid} , </if>
+				<if test="deptId != null  and deptId != '' " > #{deptId} , </if>
+				<if test="supplierName != null  and supplierName != '' " > #{supplierName} , </if>
+				<if test="supplierCode != null  and supplierCode != '' " > #{supplierCode} , </if>
+				<if test="supplierType != null  and supplierType != '' " > #{supplierType} , </if>
+				<if test="serviceMode != null  and serviceMode != '' " > #{serviceMode} , </if>
+				<if test="isSubcontract != null  and isSubcontract != '' " > #{isSubcontract} , </if>
+				<if test="systemId != null  and systemId != '' " > #{systemId} , </if>
+				<if test="projectId != null  and projectId != '' " > #{projectId} , </if>
+				<if test="serviceType != null  and serviceType != '' " > #{serviceType} , </if>
+				<if test="startTime != null and startTime != ''" > #{startTime} , </if>
+				<if test="endTime != null and endTime != ''" > #{endTime} , </if>
+				<if test="accessResult != null  and accessResult != '' " > #{accessResult} , </if>
+				<if test="supplierYear != null  and supplierYear != '' " > #{supplierYear} , </if>
+				<if test="fileNo != null  and fileNo != '' " > #{fileNo} , </if>
+				<if test="isDel != null  and isDel != '' " > #{isDel} , </if>
+				<if test="createdTime != null " > #{createdTime} , </if>
+				<if test="createdBy != null  and createdBy != '' " > #{createdBy} , </if>
+				<if test="modifiedTime != null " > #{modifiedTime} , </if>
+				<if test="modifiedBy != null  and modifiedBy != '' " > #{modifiedBy} , </if>
+				
+        </trim>
+        )
+    </insert>
+
+    <!--通过id查询  ywwb905 2023-01-11 -->
+    <select id="queryDetail" parameterType="ppmSupplierRosterInfo" resultMap="PPMSUPPLIERROSTERINFO_ALL">
+        SELECT
+        <include refid="sql_flied_all" />
+        FROM PPM_SUPPLIER_ROSTER_INFO  WHERE ID=#{id}
+    </select>
+
+     <!--查询集合  ywwb905 2023-01-11 -->
+    <select id="getList" parameterType="ppmSupplierRosterInfo" resultMap="PPMSUPPLIERROSTERINFO_ALL">
+        SELECT
+        <include refid="sql_flied_all" />
+        FROM PPM_SUPPLIER_ROSTER_INFO
+        <include refid="sql_select_condition" />
+    </select>
+    <!-- update sql -->
+    <sql id="update_pojo_sql">
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="id != null " > ID=#{id} , </if>
+				<if test="pid != null " > PID=#{pid} , </if>
+				<if test="deptId != null  and deptId != '' " > DEPT_ID=#{deptId} , </if>
+				<if test="supplierName != null  and supplierName != '' " > SUPPLIER_NAME=#{supplierName} , </if>
+				<if test="supplierCode != null  and supplierCode != '' " > SUPPLIER_CODE=#{supplierCode} , </if>
+				<if test="supplierType != null  and supplierType != '' " > SUPPLIER_TYPE=#{supplierType} , </if>
+				<if test="serviceMode != null  and serviceMode != '' " > SERVICE_MODE=#{serviceMode} , </if>
+				<if test="isSubcontract != null  and isSubcontract != '' " > IS_SUBCONTRACT=#{isSubcontract} , </if>
+				<if test="systemId != null  and systemId != '' " > SYSTEM_ID=#{systemId} , PROJECT_ID = '',</if>
+				<if test="projectId != null  and projectId != '' " > PROJECT_ID=#{projectId} , SYSTEM_ID = '',</if>
+				<if test="serviceType != null  and serviceType != '' " > SERVICE_TYPE=#{serviceType} , </if>
+				<if test="startTime != null and startTime != ''" > START_TIME=#{startTime} , </if>
+				<if test="endTime != null and endTime != ''" > END_TIME=#{endTime} , </if>
+				<if test="accessResult != null  and accessResult != '' " > ACCESS_RESULT=#{accessResult} , </if>
+				<if test="supplierYear != null  and supplierYear != '' " > SUPPLIER_YEAR=#{supplierYear} , </if>
+				<if test="fileNo != null  and fileNo != '' " > FILE_NO=#{fileNo} , </if>
+				<if test="isDel != null  and isDel != '' " > IS_DEL=#{isDel} , </if>
+				<if test="createdTime != null " > CREATED_TIME=#{createdTime} , </if>
+				<if test="createdBy != null  and createdBy != '' " > CREATED_BY=#{createdBy} , </if>
+				<if test="modifiedTime != null " > MODIFIED_TIME=#{modifiedTime} , </if>
+				<if test="modifiedBy != null  and modifiedBy != '' " > MODIFIED_BY=#{modifiedBy} , </if>
+				
+        </trim>
+    </sql>
+
+    <!--通过id编辑 ywwb905 2023-01-11 -->
+    <update id="updatePojo" parameterType="ppmSupplierRosterInfo">
+        UPDATE
+        PPM_SUPPLIER_ROSTER_INFO
+        <include refid="update_pojo_sql" />
+        WHERE ID=#{id}
+    </update>
+	
+	<!--通过id编辑 ywwb905 2023-01-11 -->
+    <update id="updatePojoInfo" parameterType="ppmSupplierRosterInfo">
+        UPDATE
+        PPM_SUPPLIER_ROSTER_INFO
+        <include refid="update_pojo_sql" />
+        WHERE ID=#{id}
+    </update>
+
+    <!--通过id批量删除  ywwb905 2023-01-11 -->
+    <delete id="deleteById" parameterType="ppmSupplierRosterInfo">
+        DELETE
+        FROM
+        PPM_SUPPLIER_ROSTER_INFO
+        WHERE ID = #{id}
+    </delete>
+	
+	<delete id="deleteInId" parameterType="ppmSupplierRosterInfo">
+        UPDATE
+        PPM_SUPPLIER_ROSTER_INFO
+		SET IS_DEL = '1'
+		<trim prefix="WHERE" suffixOverrides="AND">
+			<if test="true">PID=#{pid} AND IS_DEL = '0' AND </if>
+			<if test="delVal != null and delVal != '' ">ID NOT IN (${delVal}) AND</if>
+		</trim>
+    </delete>
+	
+	<select id="queryBaseInfoList" parameterType="ppmSupplierRosterInfoExt" resultMap="PPMSUPPLIERROSTERINFO_ALL_EXT">
+		SELECT 
+		  RI.ID,
+		  RI.PID,
+		  RI.DEPT_ID,
+		  CD.LOCATION DEPT_NAME,
+		  RI.SUPPLIER_CODE,
+		  RI.SUPPLIER_NAME,
+		  RI.SUPPLIER_TYPE,
+		  RI.SERVICE_MODE,
+		  RI.SERVICE_TYPE,
+		  RI.IS_SUBCONTRACT,
+		  RI.SYSTEM_ID,
+		  SI.NAME SYSTEM_NAME,
+		  RI.PROJECT_ID,
+		  PI.NAME PROJECT_NAME,
+		  RI.START_TIME,
+		  RI.END_TIME,
+		  RI.SUPPLIER_YEAR,
+		  RI.ACCESS_RESULT,
+		  RI.FILE_NO,
+		  RI.IS_DEL,
+		  OI.IS_FEAT,
+		  RI.CREATED_TIME, 
+		  RI.CREATED_BY,
+		  RI.MODIFIED_TIME,
+		  RI.MODIFIED_BY
+		FROM PPM_SUPPLIER_ROSTER_INFO RI
+			LEFT JOIN PPM_OUTSOURCING_INFO OI ON RI.PID = OI.ID
+			LEFT JOIN COMM_DEPARTMENT CD ON RI.DEPT_ID = CD.DEPID
+			LEFT JOIN PPM_PROJECT_INFO PI ON PI.ID = RI.PROJECT_ID
+			LEFT JOIN PPM_SYSTEM_INFO SI ON SI.ID = RI.SYSTEM_ID 
+		<trim prefix="WHERE" suffixOverrides="AND">
+            <if test="isDel != null and isDel != '' ">RI.IS_DEL = #{isDel} AND</if>
+            <if test="pid != null and pid != '' ">RI.PID = #{pid} AND</if>
+            <if test="deptId != null and deptId != '' ">RI.DEPT_ID = #{deptId} AND</if>
+            <if test="assessYear != null and assessYear != '' ">RI.SUPPLIER_YEAR = #{supplierYear} AND</if>
+            <if test="supplierCode != null and supplierCode != '' ">RI.SUPPLIER_CODE = #{supplierCode} AND</if>
+            <if test="supplierName != null and supplierName != '' ">RI.SUPPLIER_NAME = #{supplierName} AND</if>
+			<if test="supplierType != null and supplierType != '' " > RI.SUPPLIER_TYPE = #{supplierType} AND </if>
+			<if test="systemId != null and systemId != '' " > RI.SYSTEM_ID = #{systemId} AND </if>
+			<if test="projectId != null and projectId != '' " > RI.PROJECT_ID = #{projectId} AND </if>
+        </trim>
+		ORDER BY RI.ID DESC
+	</select>
+	
+	
+
+</mapper>

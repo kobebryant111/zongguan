@@ -1,0 +1,376 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k4038 2021-09-28 -->
+<mapper namespace="com.work.ppm.application.model.onlinemanager.PpmProjectOnlinefjh">
+	 <resultMap type="ppmProjectOnlinefjh" id="PPMPROJECTONLINEFJH_ALL">
+        <result property="id" column="ID" />
+		<result property="onlineno" column="ONLINENO" />
+		<result property="projectno" column="PROJECTNO" />
+		<result property="userid" column="USERID" />
+		<result property="apply" column="APPLY" />
+		<result property="deptno" column="DEPTNO" />
+		<result property="projecttype" column="PROJECTTYPE" />
+		<result property="projectscale" column="PROJECTSCALE" />
+		<result property="sysno" column="SYSNO" />
+		<result property="busideptno" column="BUSIDEPTNO" />
+		<result property="operatetype" column="OPERATETYPE" />
+		<result property="planonline" column="PLANONLINE" />
+		<result property="testconclusion" column="TESTCONCLUSION" />
+		<result property="orgarea" column="ORGAREA" />
+		<result property="instanceid" column="INSTANCEID" />
+		<result property="isdel" column="ISDEL" />
+		<result property="createtime" column="CREATETIME" />
+		<result property="creators" column="CREATORS" />
+		<result property="lastmodtime" column="LASTMODTIME" />
+		<result property="lastmoduser" column="LASTMODUSER" />
+		<result property="ywuserid" column="YWUSERID" />
+		<result property="ywfgzjluserid" column="YWFGZJLUSERID" />
+		<result property="ysuserid" column="YSUSERID" />
+		<result property="ysfgzjluserid" column="YSFGZJLUSERID" />
+		<result property="demandno" column="DEMANDNO" />
+		<result property="reviewid" column="REVIEWID" />
+		<result property="reviewstatus" column="REVIEWSTATUS" />
+		<result property="fjhreason" column="FJHREASON" />
+		<result property="content" column="CONTENT" />
+		<result property="fgnxqpg" column="FGNXQPG" />
+		<result property="isothersys" column="ISOTHERSYS" />
+		<result property="teststatus" column="TESTSTATUS" />
+		<result property="testresult" column="TESTRESULT" />
+		<result property="wyType" column="WY_TYPE" />
+		<result property="isdfxfjh" column="ISDFXFJH" />
+		<result property="isproduct" column="ISPRODUCT" />
+		<result property="bfsxreason" column="BFSXREASON" />
+		<result property="testcontent" column="TESTCONTENT" />
+		<result property="noallreason" column="NOALLREASON" />
+		<result property="issueid" column="ISSUEID" />
+		<result property="iszjlsp" column="ISZJLSP" />
+		
+     </resultMap>
+
+     <!-- 所有字段名称 -->
+        <sql id="sql_flied_all">
+        	ID,
+			ONLINENO,
+			PROJECTNO,
+			USERID,
+			APPLY,
+			DEPTNO,
+			PROJECTTYPE,
+			PROJECTSCALE,
+			SYSNO,
+			BUSIDEPTNO,
+			OPERATETYPE,
+			PLANONLINE,
+			TESTCONCLUSION,
+			ORGAREA,
+			INSTANCEID,
+			ISDEL,
+			CREATETIME,
+			CREATORS,
+			LASTMODTIME,
+			LASTMODUSER,
+			YWUSERID,
+			YWFGZJLUSERID,
+			YSUSERID,
+			YSFGZJLUSERID,
+			DEMANDNO,
+			REVIEWID,
+			REVIEWSTATUS,
+			FJHREASON,
+			CONTENT,
+			FGNXQPG,
+			ISOTHERSYS,
+			TESTSTATUS,
+			TESTRESULT,
+			WY_TYPE,
+			ISDFXFJH,
+			ISPRODUCT,
+			BFSXREASON,
+			TESTCONTENT,
+			NOALLREASON,
+			ISSUEID,
+			ISZJLSP
+        </sql>
+        <sql id="sql_select_condition">
+            <trim prefix="WHERE" suffixOverrides="AND">
+                <if test="id != null " > ID = #{id} AND </if>
+				<if test="onlineno != null  and onlineno != '' " > ONLINENO = #{onlineno} AND </if>
+				<if test="projectno != null  and projectno != '' " > PROJECTNO = #{projectno} AND </if>
+				<if test="userid != null  and userid != '' " > USERID = #{userid} AND </if>
+				<if test="apply != null " > APPLY = #{apply} AND </if>
+				<if test="deptno != null  and deptno != '' " > DEPTNO = #{deptno} AND </if>
+				<if test="projecttype != null  and projecttype != '' " > PROJECTTYPE = #{projecttype} AND </if>
+				<if test="projectscale != null  and projectscale != '' " > PROJECTSCALE = #{projectscale} AND </if>
+				<if test="sysno != null  and sysno != '' " > SYSNO = #{sysno} AND </if>
+				<if test="busideptno != null  and busideptno != '' " > BUSIDEPTNO = #{busideptno} AND </if>
+				<if test="operatetype != null  and operatetype != '' " > OPERATETYPE = #{operatetype} AND </if>
+				<if test="planonline != null " > PLANONLINE = #{planonline} AND </if>
+				<if test="testconclusion != null  and testconclusion != '' " > TESTCONCLUSION = #{testconclusion} AND </if>
+				<if test="orgarea != null  and orgarea != '' " > ORGAREA = #{orgarea} AND </if>
+				<if test="instanceid != null  and instanceid != '' " > INSTANCEID = #{instanceid} AND </if>
+				<if test="isdel != null " > ISDEL = #{isdel} AND </if>
+				<if test="createtime != null " > CREATETIME = #{createtime} AND </if>
+				<if test="creators != null  and creators != '' " > CREATORS = #{creators} AND </if>
+				<if test="lastmodtime != null " > LASTMODTIME = #{lastmodtime} AND </if>
+				<if test="lastmoduser != null  and lastmoduser != '' " > LASTMODUSER = #{lastmoduser} AND </if>
+				<if test="ywuserid != null  and ywuserid != '' " > YWUSERID = #{ywuserid} AND </if>
+				<if test="ywfgzjluserid != null  and ywfgzjluserid != '' " > YWFGZJLUSERID = #{ywfgzjluserid} AND </if>
+				<if test="ysuserid != null  and ysuserid != '' " > YSUSERID = #{ysuserid} AND </if>
+				<if test="ysfgzjluserid != null  and ysfgzjluserid != '' " > YSFGZJLUSERID = #{ysfgzjluserid} AND </if>
+				<if test="demandno != null  and demandno != '' " > DEMANDNO = #{demandno} AND </if>
+				<if test="reviewid != null  and reviewid != '' " > REVIEWID = #{reviewid} AND </if>
+				<if test="reviewstatus != null  and reviewstatus != '' " > REVIEWSTATUS = #{reviewstatus} AND </if>
+				<if test="fjhreason != null  and fjhreason != '' " > FJHREASON = #{fjhreason} AND </if>
+				<if test="content != null  and content != '' " > CONTENT = #{content} AND </if>
+				<if test="fgnxqpg != null  and fgnxqpg != '' " > FGNXQPG = #{fgnxqpg} AND </if>
+				<if test="isothersys != null  and isothersys != '' " > ISOTHERSYS = #{isothersys} AND </if>
+				<if test="teststatus != null  and teststatus != '' " > TESTSTATUS = #{teststatus} AND </if>
+				<if test="testresult != null  and testresult != '' " > TESTRESULT = #{testresult} AND </if>
+				<if test="wyType != null  and wyType != '' " > WY_TYPE = #{wyType} AND </if>
+				<if test="isdfxfjh != null  and isdfxfjh != '' " > ISDFXFJH = #{isdfxfjh} AND </if>
+				<if test="isproduct != null  and isproduct != '' " > ISPRODUCT = #{isproduct} AND </if>
+				<if test="bfsxreason != null  and bfsxreason != '' " > BFSXREASON = #{bfsxreason} AND </if>
+				<if test="testcontent != null  and testcontent != '' " > TESTCONTENT = #{testcontent} AND </if>
+				<if test="noallreason != null  and noallreason != '' " > NOALLREASON = #{noallreason} AND </if>
+				<if test="issueid != null  and issueid != '' " > ISSUEID = #{issueid} AND </if>
+				<if test="iszjlsp != null  and iszjlsp != '' " > ISZJLSP = #{iszjlsp} AND </if>
+				
+            </trim>
+        </sql>
+    	<!-- 查询分页  2021-09-28 k4038  -->
+        <select id="queryPagerList" parameterType="map" resultMap="PPMPROJECTONLINEFJH_ALL">
+        	SELECT
+            <include refid="sql_flied_all" />
+            FROM PPM_PROJECT_ONLINEFJH
+            <include refid="sql_select_condition" />
+        </select>
+
+        <!-- 新增  2021-09-28 k4038  -->
+        <insert id="addPojo" parameterType="ppmProjectOnlinefjh">
+    		INSERT INTO PPM_PROJECT_ONLINEFJH (
+    		<trim suffixOverrides=",">
+    		 <if test="id != null " > ID , </if>
+				<if test="onlineno != null  and onlineno != '' " > ONLINENO , </if>
+				<if test="projectno != null  and projectno != '' " > PROJECTNO , </if>
+				<if test="userid != null  and userid != '' " > USERID , </if>
+				<if test="apply != null " > APPLY , </if>
+				<if test="deptno != null  and deptno != '' " > DEPTNO , </if>
+				<if test="projecttype != null  and projecttype != '' " > PROJECTTYPE , </if>
+				<if test="projectscale != null  and projectscale != '' " > PROJECTSCALE , </if>
+				<if test="sysno != null  and sysno != '' " > SYSNO , </if>
+				<if test="busideptno != null  and busideptno != '' " > BUSIDEPTNO , </if>
+				<if test="operatetype != null  and operatetype != '' " > OPERATETYPE , </if>
+				<if test="planonline != null " > PLANONLINE , </if>
+				<if test="testconclusion != null  and testconclusion != '' " > TESTCONCLUSION , </if>
+				<if test="orgarea != null  and orgarea != '' " > ORGAREA , </if>
+				<if test="instanceid != null  and instanceid != '' " > INSTANCEID , </if>
+				<if test="isdel != null " > ISDEL , </if>
+				<if test="createtime != null " > CREATETIME , </if>
+				<if test="creators != null  and creators != '' " > CREATORS , </if>
+				<if test="lastmodtime != null " > LASTMODTIME , </if>
+				<if test="lastmoduser != null  and lastmoduser != '' " > LASTMODUSER , </if>
+				<if test="ywuserid != null  and ywuserid != '' " > YWUSERID , </if>
+				<if test="ywfgzjluserid != null  and ywfgzjluserid != '' " > YWFGZJLUSERID , </if>
+				<if test="ysuserid != null  and ysuserid != '' " > YSUSERID , </if>
+				<if test="ysfgzjluserid != null  and ysfgzjluserid != '' " > YSFGZJLUSERID , </if>
+				<if test="demandno != null  and demandno != '' " > DEMANDNO , </if>
+				<if test="reviewid != null  and reviewid != '' " > REVIEWID , </if>
+				<if test="reviewstatus != null  and reviewstatus != '' " > REVIEWSTATUS , </if>
+				<if test="fjhreason != null  and fjhreason != '' " > FJHREASON , </if>
+				<if test="content != null  and content != '' " > CONTENT , </if>
+				<if test="fgnxqpg != null  and fgnxqpg != '' " > FGNXQPG , </if>
+				<if test="isothersys != null  and isothersys != '' " > ISOTHERSYS , </if>
+				<if test="teststatus != null  and teststatus != '' " > TESTSTATUS , </if>
+				<if test="testresult != null  and testresult != '' " > TESTRESULT , </if>
+				<if test="wyType != null  and wyType != '' " > WY_TYPE , </if>
+				<if test="isdfxfjh != null  and isdfxfjh != '' " > ISDFXFJH , </if>
+				<if test="isproduct != null  and isproduct != '' " > ISPRODUCT , </if>
+				<if test="bfsxreason != null  and bfsxreason != '' " > BFSXREASON , </if>
+				<if test="testcontent != null  and testcontent != '' " > TESTCONTENT , </if>
+				<if test="noallreason != null  and noallreason != '' " > NOALLREASON , </if>
+				<if test="issueid != null  and issueid != '' " > ISSUEID , </if>
+				<if test="iszjlsp != null  and iszjlsp != '' " > ISZJLSP , </if>
+				
+              </trim>
+    		)
+    		VALUES(
+    		<trim suffixOverrides=",">
+    		 <if test="id != null " > #{id} , </if>
+				<if test="onlineno != null  and onlineno != '' " > #{onlineno} , </if>
+				<if test="projectno != null  and projectno != '' " > #{projectno} , </if>
+				<if test="userid != null  and userid != '' " > #{userid} , </if>
+				<if test="apply != null " > #{apply} , </if>
+				<if test="deptno != null  and deptno != '' " > #{deptno} , </if>
+				<if test="projecttype != null  and projecttype != '' " > #{projecttype} , </if>
+				<if test="projectscale != null  and projectscale != '' " > #{projectscale} , </if>
+				<if test="sysno != null  and sysno != '' " > #{sysno} , </if>
+				<if test="busideptno != null  and busideptno != '' " > #{busideptno} , </if>
+				<if test="operatetype != null  and operatetype != '' " > #{operatetype} , </if>
+				<if test="planonline != null " > #{planonline} , </if>
+				<if test="testconclusion != null  and testconclusion != '' " > #{testconclusion} , </if>
+				<if test="orgarea != null  and orgarea != '' " > #{orgarea} , </if>
+				<if test="instanceid != null  and instanceid != '' " > #{instanceid} , </if>
+				<if test="isdel != null " > #{isdel} , </if>
+				<if test="createtime != null " > #{createtime} , </if>
+				<if test="creators != null  and creators != '' " > #{creators} , </if>
+				<if test="lastmodtime != null " > #{lastmodtime} , </if>
+				<if test="lastmoduser != null  and lastmoduser != '' " > #{lastmoduser} , </if>
+				<if test="ywuserid != null  and ywuserid != '' " > #{ywuserid} , </if>
+				<if test="ywfgzjluserid != null  and ywfgzjluserid != '' " > #{ywfgzjluserid} , </if>
+				<if test="ysuserid != null  and ysuserid != '' " > #{ysuserid} , </if>
+				<if test="ysfgzjluserid != null  and ysfgzjluserid != '' " > #{ysfgzjluserid} , </if>
+				<if test="demandno != null  and demandno != '' " > #{demandno} , </if>
+				<if test="reviewid != null  and reviewid != '' " > #{reviewid} , </if>
+				<if test="reviewstatus != null  and reviewstatus != '' " > #{reviewstatus} , </if>
+				<if test="fjhreason != null  and fjhreason != '' " > #{fjhreason} , </if>
+				<if test="content != null  and content != '' " > #{content} , </if>
+				<if test="fgnxqpg != null  and fgnxqpg != '' " > #{fgnxqpg} , </if>
+				<if test="isothersys != null  and isothersys != '' " > #{isothersys} , </if>
+				<if test="teststatus != null  and teststatus != '' " > #{teststatus} , </if>
+				<if test="testresult != null  and testresult != '' " > #{testresult} , </if>
+				<if test="wyType != null  and wyType != '' " > #{wyType} , </if>
+				<if test="isdfxfjh != null  and isdfxfjh != '' " > #{isdfxfjh} , </if>
+				<if test="isproduct != null  and isproduct != '' " > #{isproduct} , </if>
+				<if test="bfsxreason != null  and bfsxreason != '' " > #{bfsxreason} , </if>
+				<if test="testcontent != null  and testcontent != '' " > #{testcontent} , </if>
+				<if test="noallreason != null  and noallreason != '' " > #{noallreason} , </if>
+				<if test="issueid != null  and issueid != '' " > #{issueid} , </if>
+				<if test="iszjlsp != null  and iszjlsp != '' " > #{iszjlsp} , </if>
+				
+            </trim>
+    		)
+        </insert>
+
+        <!--通过id查询  k4038 2021-09-28 -->
+        <select id="queryDetail" parameterType="ppmProjectOnlinefjh" resultMap="PPMPROJECTONLINEFJH_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_PROJECT_ONLINEFJH  WHERE instanceid=#{instanceid}
+        </select>
+
+         <!--查询集合  k4038 2021-09-28 -->
+        <select id="getList" parameterType="ppmProjectOnlinefjh" resultMap="PPMPROJECTONLINEFJH_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_PROJECT_ONLINEFJH
+        	<include refid="sql_select_condition" />
+        </select>
+        <!-- update sql -->
+        <sql id="update_pojo_sql">
+        	<trim prefix="SET" suffixOverrides=",">
+        		<if test="id != null " > ID=#{id} , </if>
+				<if test="onlineno != null  and onlineno != '' " > ONLINENO=#{onlineno} , </if>
+				<if test="projectno != null  and projectno != '' " > PROJECTNO=#{projectno} , </if>
+				<if test="userid != null  and userid != '' " > USERID=#{userid} , </if>
+				<if test="apply != null " > APPLY=#{apply} , </if>
+				<if test="deptno != null  and deptno != '' " > DEPTNO=#{deptno} , </if>
+				<if test="projecttype != null  and projecttype != '' " > PROJECTTYPE=#{projecttype} , </if>
+				<if test="projectscale != null  and projectscale != '' " > PROJECTSCALE=#{projectscale} , </if>
+				<if test="sysno != null  and sysno != '' " > SYSNO=#{sysno} , </if>
+				<if test="busideptno != null  and busideptno != '' " > BUSIDEPTNO=#{busideptno} , </if>
+				<if test="operatetype != null  and operatetype != '' " > OPERATETYPE=#{operatetype} , </if>
+				<if test="planonline != null " > PLANONLINE=#{planonline} , </if>
+				<if test="testconclusion != null  and testconclusion != '' " > TESTCONCLUSION=#{testconclusion} , </if>
+				<if test="orgarea != null  and orgarea != '' " > ORGAREA=#{orgarea} , </if>
+				<if test="instanceid != null  and instanceid != '' " > INSTANCEID=#{instanceid} , </if>
+				<if test="isdel != null " > ISDEL=#{isdel} , </if>
+				<if test="createtime != null " > CREATETIME=#{createtime} , </if>
+				<if test="creators != null  and creators != '' " > CREATORS=#{creators} , </if>
+				<if test="lastmodtime != null " > LASTMODTIME=#{lastmodtime} , </if>
+				<if test="lastmoduser != null  and lastmoduser != '' " > LASTMODUSER=#{lastmoduser} , </if>
+				<if test="ywuserid != null  and ywuserid != '' " > YWUSERID=#{ywuserid} , </if>
+				<if test="ywfgzjluserid != null  and ywfgzjluserid != '' " > YWFGZJLUSERID=#{ywfgzjluserid} , </if>
+				<if test="ysuserid != null  and ysuserid != '' " > YSUSERID=#{ysuserid} , </if>
+				<if test="ysfgzjluserid != null  and ysfgzjluserid != '' " > YSFGZJLUSERID=#{ysfgzjluserid} , </if>
+				<if test="demandno != null  and demandno != '' " > DEMANDNO=#{demandno} , </if>
+				<if test="reviewid != null  and reviewid != '' " > REVIEWID=#{reviewid} , </if>
+				<if test="reviewstatus != null  and reviewstatus != '' " > REVIEWSTATUS=#{reviewstatus} , </if>
+				<if test="fjhreason != null  and fjhreason != '' " > FJHREASON=#{fjhreason} , </if>
+				<if test="content != null  and content != '' " > CONTENT=#{content} , </if>
+				<if test="fgnxqpg != null  and fgnxqpg != '' " > FGNXQPG=#{fgnxqpg} , </if>
+				<if test="isothersys != null  and isothersys != '' " > ISOTHERSYS=#{isothersys} , </if>
+				<if test="teststatus != null  and teststatus != '' " > TESTSTATUS=#{teststatus} , </if>
+				<if test="testresult != null  and testresult != '' " > TESTRESULT=#{testresult} , </if>
+				<if test="wyType != null  and wyType != '' " > WY_TYPE=#{wyType} , </if>
+				<if test="isdfxfjh != null  and isdfxfjh != '' " > ISDFXFJH=#{isdfxfjh} , </if>
+				<if test="isproduct != null  and isproduct != '' " > ISPRODUCT=#{isproduct} , </if>
+				<if test="bfsxreason != null  and bfsxreason != '' " > BFSXREASON=#{bfsxreason} , </if>
+				<if test="testcontent != null  and testcontent != '' " > TESTCONTENT=#{testcontent} , </if>
+				<if test="noallreason != null  and noallreason != '' " > NOALLREASON=#{noallreason} , </if>
+				<if test="issueid != null  and issueid != '' " > ISSUEID=#{issueid} , </if>
+				<if test="iszjlsp != null  and iszjlsp != '' " > ISZJLSP=#{iszjlsp} , </if>
+				
+            </trim>
+        </sql>
+
+        <!--通过id编辑 k4038 2021-09-28 -->
+    	<update id="updatePojo" parameterType="ppmProjectOnlinefjh">
+        	UPDATE
+        	PPM_PROJECT_ONLINEFJH
+        	<include refid="update_pojo_sql" />
+        	WHERE ID=#{id}
+        </update>
+
+        <!--通过id批量删除  k4038 2021-09-28 -->
+        <delete id="deleteById" parameterType="ppmProjectOnlinefjh">
+        	DELETE
+        	FROM
+        	PPM_PROJECT_ONLINEFJH
+        	WHERE ID = #{id}
+        </delete>
+
+	<select id="queryNewFjhOnileFlow" parameterType="map" resultMap="PPMPROJECTONLINEFJH_ALL">
+		select w.instanceid from ppm_project_onlinefjh w
+		left join ppm_project_flow f on f.instanceid=w.instanceid
+		where f.flowstatus in ('进行中')
+		and f.activityid='manualActivity1'
+		and ( w.projectno=#{id} or  w.onlineno=#{id})
+	</select>
+
+	<resultMap type="ppmProjectOnlinefjhInfo" id="PPMPROJECTONLINEFJHINFO_ALL" extends="PPMPROJECTONLINEFJH_ALL">
+		<result property="projectname" column="PROJECTNAME" />
+		<result property="busiuserid" column="BUSIUSERID" />
+		<result property="tecdeptno" column="TECDEPTNO" />
+		<result property="manauserid" column="MANAUSERID" />
+		<result property="sysname" column="SYSNAME" />
+		<result property="location" column="LOCATION" />
+		<result property="empname" column="EMPNAME" />
+		<result property="ysfgzjlname" column="YSFGZJLNAME" />
+	</resultMap>
+
+	<!--通过id查询  k4038 2021-09-28 -->
+	<select id="getOnlineInfo" parameterType="ppmProjectOnlinefjh" resultMap="PPMPROJECTONLINEFJHINFO_ALL">
+		select o.*,
+				p.projectname,
+				p.busiuserid,
+				p.deptno tecdeptno,
+				p.manauserid,
+				s.sys_name sysname,
+				d.location,
+				e.empname,
+				( select pev.empname || '(' || pev.badge|| ')'  from ppm_emp_viewall pev where pev.badge=o.ysfgzjluserid) as ysfgzjlname
+		from PPM_PROJECT_ONLINEFJH o
+		left join ppm_project_build_soft p on o.projectno = p.projectno
+		left join aap_system s on o.sysno = s.system_id
+		left join comm_department d on o.busideptno = d.depid
+		left join ppm_emp_viewall e on o.userid = e.badge
+		WHERE o.instanceid=#{instanceid}
+	</select>
+
+	<select id="queryDetailByInstanceid" parameterType="ppmProjectOnlinefjh" resultMap="PPMPROJECTONLINEFJH_ALL">
+		SELECT
+		<include refid="sql_flied_all" />
+		FROM PPM_PROJECT_ONLINEFJH
+		WHERE instanceid=#{instanceid}
+		and isdel = 0
+	</select>
+
+	<select id="queryInstanceidByOnlinenum" parameterType="ppmProjectOnlinefjh" resultMap="PPMPROJECTONLINEFJH_ALL">
+		SELECT
+		<include refid="sql_flied_all" />
+		FROM PPM_PROJECT_ONLINEFJH
+		WHERE onlineno=#{onlineno}
+		and isdel = 0
+	</select>
+
+</mapper>

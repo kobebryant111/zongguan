@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+  
+<mapper namespace="com.tansun.wf.activiti.mapper.WfHiTaskCountsMapper">
+    <select id="selectWfHiTaskCountByUser" parameterType="com.tansun.wf.activiti.query.WfHiTaskCountsQuery" resultType="hashMap">
+      SELECT ASSIGNEE_ as assignee,count(*) as total
+      from act_hi_taskinst RES
+      INNER JOIN ACT_HI_PROCINST P ON RES.PROC_INST_ID_ = P.PROC_INST_ID_
+      <if test="singleHiTaskStatus == 1 || singleHiTaskStatus == 2">
+            INNER JOIN (
+            SELECT DISTINCT
+            htk.PROC_INST_ID_,
+            <if test="singleHiTaskStatus == 1">
+                htk.TASK_DEF_KEY_,
+            </if>
+            MAX( htk.END_TIME_ ) AS END_TIME_
+            FROM
+            act_hi_taskinst htk
+            <where>
+                htk.DELETE_REASON_ != 'delete'
+                AND htk.DELETE_REASON_ != 'reback'
+                AND htk.DELETE_REASON_ != 'TansunBackDelete'
+                <if test="assignees != null  and assignees!=''">
+                    AND htk.ASSIGNEE_ in
+                    <foreach collection="assignees" item="assignee"  open="(" separator="," close=")">
+                        #{assignee}
+                    </foreach>
+                </if>
+            </where>
+            GROUP BY
+            <if test="singleHiTaskStatus == 1">
+                htk.TASK_DEF_KEY_,
+            </if>
+            htk.PROC_INST_ID_
+            ORDER BY
+            htk.PROC_INST_ID_) singleHi ON RES.PROC_INST_ID_ = singleHi.PROC_INST_ID_
+            AND RES.END_TIME_ = singleHi.END_TIME_
+        </if>
+       <where>
+           RES.DELETE_REASON_ !='delete' AND RES.DELETE_REASON_ !='reback' AND RES.DELETE_REASON_ !='TansunBackDelete' AND RES.END_TIME_ is not null
+           AND ASSIGNEE_ in
+           <foreach collection="assignees" item="assignee"  open="(" separator="," close=")">
+               #{assignee}
+           </foreach>
+           <if  test="tenantId !=null and  tenantId != '' ">
+               AND RES.TENANT_ID_ = #{tenantId}
+           </if>
+           <if test="isEndIncludeRuTask == 0"><!-- 已结 -->
+               AND p.END_TIME_ is not null
+           </if>
+           <if test="isEndIncludeRuTask == 1"><!-- 未结 -->
+               AND p.END_TIME_ is null
+           </if>
+            GROUP BY ASSIGNEE_
+       </where>
+    </select>
+</mapper>

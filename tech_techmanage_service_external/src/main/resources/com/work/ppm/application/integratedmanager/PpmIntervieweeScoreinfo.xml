@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k6991 2020-08-24 -->
+<mapper namespace="com.work.ppm.application.model.integratedmanager.PpmIntervieweeScoreinfo">
+	 <resultMap type="ppmIntervieweeScoreinfo" id="PPMINTERVIEWEESCOREINFO_ALL">
+        <result property="id" column="ID" />
+		<result property="idcard" column="IDCARD" />
+		<result property="msgid" column="MSGID" />
+		<result property="msgname" column="MSGNAME" />
+		<result property="education" column="EDUCATION" />
+		<result property="experience" column="EXPERIENCE" />
+		<result property="technology" column="TECHNOLOGY" />
+		<result property="comprehensive" column="COMPREHENSIVE" />
+		<result property="remark" column="REMARK" />
+		<result property="instanceid" column="INSTANCEID" />
+		<result property="pid" column="PID" />
+
+     </resultMap>
+
+     <!-- 所有字段名称 -->
+        <sql id="sql_flied_all">
+        	ID,
+			IDCARD,
+			MSGID,
+			MSGNAME,
+			EDUCATION,
+			EXPERIENCE,
+			TECHNOLOGY,
+			COMPREHENSIVE,
+			REMARK,
+			INSTANCEID,
+			PID
+        </sql>
+        <sql id="sql_select_condition">
+            <trim prefix="WHERE" suffixOverrides="AND">
+                <if test="id != null  and id != '' " > ID = #{id} AND </if>
+				<if test="idcard != null  and idcard != '' " > IDCARD = #{idcard} AND </if>
+				<if test="msgid != null  and msgid != '' " > MSGID = #{msgid} AND </if>
+				<if test="msgname != null  and msgname != '' " > MSGNAME = #{msgname} AND </if>
+				<if test="education != null  and education != '' " > EDUCATION = #{education} AND </if>
+				<if test="experience != null  and experience != '' " > EXPERIENCE = #{experience} AND </if>
+				<if test="technology != null  and technology != '' " > TECHNOLOGY = #{technology} AND </if>
+				<if test="comprehensive != null  and comprehensive != '' " > COMPREHENSIVE = #{comprehensive} AND </if>
+				<if test="remark != null  and remark != '' " > REMARK = #{remark} AND </if>
+				<if test="instanceid != null  and instanceid != '' " > INSTANCEID = #{instanceid} AND </if>
+				<if test="pid != null  and pid != '' " > PID = #{pid} AND </if>
+
+            </trim>
+        </sql>
+    	<!-- 查询分页  2020-08-24 k6991  -->
+        <select id="queryPagerList" parameterType="map" resultMap="PPMINTERVIEWEESCOREINFO_ALL">
+        	SELECT
+            <include refid="sql_flied_all" />
+            FROM PPM_INTERVIEWEE_SCOREINFO
+            <include refid="sql_select_condition" />
+        </select>
+
+        <!-- 新增  2020-08-24 k6991  -->
+        <insert id="addPojo" parameterType="ppmIntervieweeScoreinfo">
+    		INSERT INTO PPM_INTERVIEWEE_SCOREINFO (
+    		<trim suffixOverrides=",">
+    		 <if test="id != null  and id != '' " > ID , </if>
+				<if test="idcard != null  and idcard != '' " > IDCARD , </if>
+				<if test="msgid != null  and msgid != '' " > MSGID , </if>
+				<if test="msgname != null  and msgname != '' " > MSGNAME , </if>
+				<if test="education != null  and education != '' " > EDUCATION , </if>
+				<if test="experience != null  and experience != '' " > EXPERIENCE , </if>
+				<if test="technology != null  and technology != '' " > TECHNOLOGY , </if>
+				<if test="comprehensive != null  and comprehensive != '' " > COMPREHENSIVE , </if>
+				<if test="remark != null  and remark != '' " > REMARK , </if>
+				<if test="instanceid != null  and instanceid != '' " > INSTANCEID , </if>
+				<if test="pid != null  and pid != '' " > PID , </if>
+
+              </trim>
+    		)
+    		VALUES(
+    		<trim suffixOverrides=",">
+    		 <if test="id != null  and id != '' " > #{id} , </if>
+				<if test="idcard != null  and idcard != '' " > #{idcard} , </if>
+				<if test="msgid != null  and msgid != '' " > #{msgid} , </if>
+				<if test="msgname != null  and msgname != '' " > #{msgname} , </if>
+				<if test="education != null  and education != '' " > #{education} , </if>
+				<if test="experience != null  and experience != '' " > #{experience} , </if>
+				<if test="technology != null  and technology != '' " > #{technology} , </if>
+				<if test="comprehensive != null  and comprehensive != '' " > #{comprehensive} , </if>
+				<if test="remark != null  and remark != '' " > #{remark} , </if>
+				<if test="instanceid != null  and instanceid != '' " > #{instanceid} , </if>
+				<if test="pid != null  and pid != '' " > #{pid} , </if>
+
+            </trim>
+    		)
+        </insert>
+
+        <!--通过id查询  k6991 2020-08-24 -->
+        <select id="queryDetail" parameterType="ppmIntervieweeScoreinfo" resultMap="PPMINTERVIEWEESCOREINFO_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_INTERVIEWEE_SCOREINFO  WHERE ID=#{id}
+        </select>
+
+         <!--查询集合  k6991 2020-08-24 -->
+        <select id="getList" parameterType="map" resultMap="PPMINTERVIEWEESCOREINFO_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_INTERVIEWEE_SCOREINFO
+        	<include refid="sql_select_condition" />
+        </select>
+        <!-- update sql -->
+        <sql id="update_pojo_sql">
+        	<trim prefix="SET" suffixOverrides=",">
+        		<if test="id != null  and id != '' " > ID=#{id} , </if>
+				<if test="idcard != null  and idcard != '' " > IDCARD=#{idcard} , </if>
+				<if test="msgid != null  and msgid != '' " > MSGID=#{msgid} , </if>
+				<if test="msgname != null  and msgname != '' " > MSGNAME=#{msgname} , </if>
+				<if test="education != null  and education != '' " > EDUCATION=#{education} , </if>
+				<if test="experience != null  and experience != '' " > EXPERIENCE=#{experience} , </if>
+				<if test="technology != null  and technology != '' " > TECHNOLOGY=#{technology} , </if>
+				<if test="comprehensive != null  and comprehensive != '' " > COMPREHENSIVE=#{comprehensive} , </if>
+				<if test="remark != null  and remark != '' " > REMARK=#{remark} , </if>
+				<if test="instanceid != null  and instanceid != '' " > INSTANCEID=#{instanceid} , </if>
+				<if test="pid != null  and pid != '' " > PID=#{pid} , </if>
+
+            </trim>
+        </sql>
+
+        <!--通过id编辑 k6991 2020-08-24 -->
+    	<update id="updatePojo" parameterType="ppmIntervieweeScoreinfo">
+        	UPDATE
+        	PPM_INTERVIEWEE_SCOREINFO
+        	<include refid="update_pojo_sql" />
+        	WHERE ID=#{id}
+        </update>
+
+        <delete id="deleteById" parameterType="ppmIntervieweeScoreinfo">
+        	DELETE FROM PPM_INTERVIEWEE_SCOREINFO WHERE id=#{id}
+        </delete>
+
+        <delete id="deleteByInstanceId" parameterType="ppmIntervieweeScoreinfo">
+        	DELETE FROM PPM_INTERVIEWEE_SCOREINFO WHERE INSTANCEID=#{instanceid}
+        </delete>
+
+</mapper>

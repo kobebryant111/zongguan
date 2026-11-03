@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k6991 2020-04-09 -->
+<mapper namespace="com.work.ppm.application.model.othermanager.PpmSoulInfo">
+	 <resultMap type="ppmSoulInfo" id="PPMSOULINFO_ALL">
+        <result property="id" column="ID" />
+		<result property="roles" column="ROLES" />
+		<result property="content" column="CONTENT" />
+		<result property="starttime" column="STARTTIME" />
+		<result property="endtime" column="ENDTIME" />
+		<result property="style" column="STYLE" />
+		
+     </resultMap>
+
+     <!-- 所有字段名称 -->
+        <sql id="sql_flied_all">
+        	ID,
+			ROLES,
+			CONTENT,
+			STARTTIME,
+			ENDTIME,
+			STYLE
+        </sql>
+    	<!-- 查询分页  2020-04-09 k6991  -->
+        <select id="queryPagerList" parameterType="map" resultMap="PPMSOULINFO_ALL">
+        	SELECT
+            <include refid="sql_flied_all" />
+            FROM PPM_SOUL_INFO
+            <trim prefix="WHERE" suffixOverrides="AND">
+                <if test="id != null " > ID = #{id} AND </if>
+				<if test="roles != null  and roles != '' " > ROLES = #{roles} AND </if>
+				<if test="content != null  and content != '' " >  instr( CONTENT , #{content}) > 0 AND </if>
+				<if test="starttime != null  and starttime != '' " > STARTTIME = #{starttime} AND </if>
+				<if test="endtime != null  and endtime != '' " > ENDTIME = #{endtime} AND </if>
+				<if test="style != null  and style != '' " > STYLE = #{style} AND </if>
+            </trim>
+			ORDER BY STYLE DESC
+        </select>
+
+        <!-- 新增  2020-04-09 k6991  -->
+        <insert id="addPojo" parameterType="ppmSoulInfo">
+    		INSERT INTO PPM_SOUL_INFO (
+    		<trim suffixOverrides=",">
+    		 <if test="id != null " > ID , </if>
+				<if test="roles != null  and roles != '' " > ROLES , </if>
+				<if test="content != null  and content != '' " > CONTENT , </if>
+				<if test="starttime != null  and starttime != '' " > STARTTIME , </if>
+				<if test="endtime != null  and endtime != '' " > ENDTIME , </if>
+				<if test="style != null  and style != '' " > STYLE , </if>
+				
+              </trim>
+    		)
+    		VALUES(
+    		<trim suffixOverrides=",">
+    		 <if test="id != null " > #{id} , </if>
+				<if test="roles != null  and roles != '' " > #{roles} , </if>
+				<if test="content != null  and content != '' " > #{content} , </if>
+				<if test="starttime != null  and starttime != '' " > #{starttime} , </if>
+				<if test="endtime != null  and endtime != '' " > #{endtime} , </if>
+				<if test="style != null  and style != '' " > #{style} , </if>
+				
+            </trim>
+    		)
+        </insert>
+
+        <!--通过id查询  k6991 2020-04-09 -->
+        <select id="queryDetail" parameterType="map" resultMap="PPMSOULINFO_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_SOUL_INFO  WHERE ID=#{id}
+        </select>
+
+         <!--查询集合  k6991 2020-04-09 -->
+        <select id="getList" parameterType="map" resultMap="PPMSOULINFO_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_SOUL_INFO
+        	<trim prefix="WHERE" suffixOverrides="AND">
+        		<if test="id != null " > ID=#{id} AND </if>
+				<if test="roles != null  and roles != '' " > ROLES=#{roles} AND </if>
+				<if test="content != null  and content != '' " > CONTENT=#{content} AND </if>
+				<if test="starttime != null  and starttime != '' " > STARTTIME=#{starttime} AND </if>
+				<if test="endtime != null  and endtime != '' " > ENDTIME=#{endtime} AND </if>
+				<if test="style != null  and style != '' " > STYLE=#{style} AND </if>
+				
+            </trim>
+        </select>
+        <!-- update sql -->
+        <sql id="update_pojo_sql">
+        	<trim prefix="SET" suffixOverrides=",">
+        		<if test="id != null " > ID=#{id} , </if>
+				<if test="roles != null  and roles != '' " > ROLES=#{roles} , </if>
+				<if test="content != null  and content != '' " > CONTENT=#{content} , </if>
+				<if test="starttime != null  and starttime != '' " > STARTTIME=#{starttime} , </if>
+				<if test="endtime != null  and endtime != '' " > ENDTIME=#{endtime} , </if>
+				<if test="style != null  and style != '' " > STYLE=#{style} , </if>
+				
+            </trim>
+        </sql>
+        <!--通过id编辑 k6991 2020-04-09 -->
+    	<update id="updatePojo" parameterType="ppmSoulInfo">
+        	UPDATE
+        	PPM_SOUL_INFO
+        	<include refid="update_pojo_sql" />
+        	WHERE ID=#{id}
+        </update>
+
+        <!--通过id批量删除  k6991 2020-04-09 -->
+        <delete id="deleteById" parameterType="ppmSoulInfo">
+        	DELETE
+        	FROM
+        	PPM_SOUL_INFO
+        	WHERE ID = #{id}
+        </delete>
+
+        <!-- 获取主键id -->
+        <select id="getPrimaryKey" parameterType="map" resultType="long">
+            SELECT MAX(ID) FROM PPM_SOUL_INFO
+        </select>
+		<!-- 批量插入 k6991 -->
+		<insert id="batchAdd" parameterType="list">
+			INSERT ALL
+			<foreach collection="list" index="index" item="item">
+				INTO PPM_SOUL_INFO (
+				<trim suffixOverrides=",">
+					<if test="item.id != null " > ID , </if>
+					<if test="item.roles != null  and item.roles != '' " > ROLES , </if>
+					<if test="item.content != null  and item.content != '' " > CONTENT , </if>
+					<if test="item.starttime != null  and item.starttime != '' " > STARTTIME , </if>
+					<if test="item.endtime != null  and item.endtime != '' " > ENDTIME , </if>
+					<if test="item.style != null  and item.style != '' " > STYLE , </if>
+
+				</trim>
+				)
+				VALUES(
+				<trim suffixOverrides=",">
+					<if test="item.id != null " > #{item.id} , </if>
+					<if test="item.roles != null  and item.roles != '' " > #{item.roles} , </if>
+					<if test="item.content != null  and item.content != '' " > #{item.content} , </if>
+					<if test="item.starttime != null  and item.starttime != '' " > #{item.starttime} , </if>
+					<if test="item.endtime != null  and item.endtime != '' " > #{item.endtime} , </if>
+					<if test="item.style != null  and item.style != '' " > #{item.style} , </if>
+				</trim>
+				)
+			</foreach>
+			select 1 from dual
+		</insert>
+	<!-- 批量删除 k6991 2020-04-28 -->
+	<delete id="batchDelForId" parameterType="map" >
+		DELETE
+		FROM
+		PPM_SOUL_INFO
+		WHERE ID in (${ids})
+	</delete>
+</mapper>

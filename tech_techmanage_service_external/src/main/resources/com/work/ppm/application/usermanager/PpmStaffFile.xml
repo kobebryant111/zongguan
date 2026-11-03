@@ -1,0 +1,389 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k6991 2020-03-18 -->
+<mapper namespace="com.work.ppm.application.model.usermanager.PpmStaffFile">
+	 <resultMap type="ppmStaffFile" id="PPMSTAFFFILE_ALL">
+        <result property="id" column="ID" />
+		<result property="ranksalary" column="RANKSALARY" />
+		<result property="weight" column="WEIGHT" />
+		<result property="carno" column="CARNO" />
+		<result property="status" column="STATUS" />
+		<result property="badge" column="BADGE" />
+		<result property="highestfulltimeedu" column="HIGHESTFULLTIMEEDU" />
+		<result property="subordinatebranch" column="SUBORDINATEBRANCH" />
+		<result property="gender" column="GENDER" />
+		<result property="birthday" column="BIRTHDAY" />
+		<result property="nation" column="NATION" />
+		<result property="joindate" column="JOINDATE" />
+		<result property="technicalexpertise" column="TECHNICALEXPERTISE" />
+		<result property="hospital" column="HOSPITAL" />
+		<result property="maritalstatus" column="MARITALSTATUS" />
+		<result property="fraternalwill" column="FRATERNALWILL" />
+		<result property="isdel" column="ISDEL" />
+		<result property="empname" column="EMPNAME" />
+		<result property="worktime" column="WORKTIME" />
+		<result property="depid" column="DEPID" />
+		<result property="jobid" column="JOBID" />
+		<result property="laundaycard" column="LAUNDAYCARD" />
+		<result property="domicilelocation" column="DOMICILELOCATION" />
+		<result property="interest" column="INTEREST" />
+		<result property="updatedate" column="UPDATEDATE" />
+		<result property="updateflag" column="UPDATEFLAG" />
+		<result property="motto" column="MOTTO" />
+		<result property="certtype" column="CERTTYPE" />
+		<result property="recruitmodle" column="RECRUITMODLE" />
+		<result property="highestedu" column="HIGHESTEDU" />
+		<result property="height" column="HEIGHT" />
+		<result property="officelocation" column="OFFICELOCATION" />
+		<result property="team" column="TEAM" />
+		<result property="certno" column="CERTNO" />
+		<result property="highestfulltimedegree" column="HIGHESTFULLTIMEDEGREE" />
+		<result property="shirtsize" column="SHIRTSIZE" />
+		<result property="image" column="IMAGE" />
+		<result property="highestdegree" column="HIGHESTDEGREE" />
+		<result property="xaddress" column="XADDRESS" />
+		<result property="politiccontenance" column="POLITICCONTENANCE" />
+		<result property="joinpartytime" column="JOINPARTYTIME" />
+		<result property="otherinfos" column="OTHERINFOS" />
+		<result property="updateuserid" column="UPDATEUSERID" />
+		
+     </resultMap>
+
+     <!-- 所有字段名称 -->
+        <sql id="sql_flied_all">
+        	ID,
+			RANKSALARY,
+			WEIGHT,
+			CARNO,
+			STATUS,
+			BADGE,
+			HIGHESTFULLTIMEEDU,
+			SUBORDINATEBRANCH,
+			GENDER,
+			BIRTHDAY,
+			NATION,
+			JOINDATE,
+			TECHNICALEXPERTISE,
+			HOSPITAL,
+			MARITALSTATUS,
+			FRATERNALWILL,
+			ISDEL,
+			EMPNAME,
+			WORKTIME,
+			DEPID,
+			JOBID,
+			LAUNDAYCARD,
+			DOMICILELOCATION,
+			INTEREST,
+			UPDATEDATE,
+			UPDATEFLAG,
+			MOTTO,
+			CERTTYPE,
+			RECRUITMODLE,
+			HIGHESTEDU,
+			HEIGHT,
+			OFFICELOCATION,
+			TEAM,
+			CERTNO,
+			HIGHESTFULLTIMEDEGREE,
+			SHIRTSIZE,
+			IMAGE,
+			HIGHESTDEGREE,
+			XADDRESS,
+			POLITICCONTENANCE,
+			JOINPARTYTIME,
+			OTHERINFOS,
+			UPDATEUSERID
+        </sql>
+    	<!-- 查询分页  2020-03-18 k6991  -->
+        <select id="queryPagerList" parameterType="map" resultMap="PPMSTAFFFILE_ALL">
+        	SELECT
+            <include refid="sql_flied_all" />
+            FROM PPM_STAFF_FILE
+            <trim prefix="WHERE" suffixOverrides="AND">
+                <if test="id != null " > ID = #{id} AND </if>
+				<if test="ranksalary != null  and ranksalary != '' " > RANKSALARY = #{ranksalary} AND </if>
+				<if test="weight != null  and weight != '' " > WEIGHT = #{weight} AND </if>
+				<if test="carno != null  and carno != '' " > CARNO = #{carno} AND </if>
+				<if test="status != null  and status != '' " > STATUS = #{status} AND </if>
+				<if test="badge != null  and badge != '' " > BADGE = #{badge} AND </if>
+				<if test="highestfulltimeedu != null  and highestfulltimeedu != '' " > HIGHESTFULLTIMEEDU = #{highestfulltimeedu} AND </if>
+				<if test="subordinatebranch != null  and subordinatebranch != '' " > SUBORDINATEBRANCH = #{subordinatebranch} AND </if>
+				<if test="gender != null  and gender != '' " > GENDER = #{gender} AND </if>
+				<if test="birthday != null  and birthday != '' " > BIRTHDAY = #{birthday} AND </if>
+				<if test="nation != null  and nation != '' " > NATION = #{nation} AND </if>
+				<if test="joindate != null  and joindate != '' " > JOINDATE = #{joindate} AND </if>
+				<if test="technicalexpertise != null  and technicalexpertise != '' " > TECHNICALEXPERTISE = #{technicalexpertise} AND </if>
+				<if test="hospital != null  and hospital != '' " > HOSPITAL = #{hospital} AND </if>
+				<if test="maritalstatus != null  and maritalstatus != '' " > MARITALSTATUS = #{maritalstatus} AND </if>
+				<if test="fraternalwill != null  and fraternalwill != '' " > FRATERNALWILL = #{fraternalwill} AND </if>
+				<if test="isdel != null  and isdel != '' " > ISDEL = #{isdel} AND </if>
+				<if test="empname != null  and empname != '' " > EMPNAME = #{empname} AND </if>
+				<if test="worktime != null  and worktime != '' " > WORKTIME = #{worktime} AND </if>
+				<if test="depid != null  and depid != '' " > DEPID = #{depid} AND </if>
+				<if test="jobid != null  and jobid != '' " > JOBID = #{jobid} AND </if>
+				<if test="laundaycard != null  and laundaycard != '' " > LAUNDAYCARD = #{laundaycard} AND </if>
+				<if test="domicilelocation != null  and domicilelocation != '' " > DOMICILELOCATION = #{domicilelocation} AND </if>
+				<if test="interest != null  and interest != '' " > INTEREST = #{interest} AND </if>
+				<if test="updatedate != null " > UPDATEDATE = #{updatedate} AND </if>
+				<if test="updateflag != null  and updateflag != '' " > UPDATEFLAG = #{updateflag} AND </if>
+				<if test="motto != null  and motto != '' " > MOTTO = #{motto} AND </if>
+				<if test="certtype != null  and certtype != '' " > CERTTYPE = #{certtype} AND </if>
+				<if test="recruitmodle != null  and recruitmodle != '' " > RECRUITMODLE = #{recruitmodle} AND </if>
+				<if test="highestedu != null  and highestedu != '' " > HIGHESTEDU = #{highestedu} AND </if>
+				<if test="height != null  and height != '' " > HEIGHT = #{height} AND </if>
+				<if test="officelocation != null  and officelocation != '' " > OFFICELOCATION = #{officelocation} AND </if>
+				<if test="team != null  and team != '' " > TEAM = #{team} AND </if>
+				<if test="certno != null  and certno != '' " > CERTNO = #{certno} AND </if>
+				<if test="highestfulltimedegree != null  and highestfulltimedegree != '' " > HIGHESTFULLTIMEDEGREE = #{highestfulltimedegree} AND </if>
+				<if test="shirtsize != null  and shirtsize != '' " > SHIRTSIZE = #{shirtsize} AND </if>
+				<if test="image != null  and image != '' " > IMAGE = #{image} AND </if>
+				<if test="highestdegree != null  and highestdegree != '' " > HIGHESTDEGREE = #{highestdegree} AND </if>
+				<if test="xaddress != null  and xaddress != '' " > XADDRESS = #{xaddress} AND </if>
+				<if test="politiccontenance != null  and politiccontenance != '' " > POLITICCONTENANCE = #{politiccontenance} AND </if>
+				<if test="joinpartytime != null  and joinpartytime != '' " > JOINPARTYTIME = #{joinpartytime} AND </if>
+				<if test="otherinfos != null  and otherinfos != '' " > OTHERINFOS = #{otherinfos} AND </if>
+				<if test="updateuserid != null  and updateuserid != '' " > UPDATEUSERID = #{updateuserid} AND </if>
+				
+                <if test="size != null " > <![CDATA[ ROWNUM <= #{size} AND ]]> </if>
+            </trim>
+        </select>
+
+        <!-- 新增  2020-03-18 k6991  -->
+        <insert id="addPojo" parameterType="ppmStaffFile">
+    		INSERT INTO PPM_STAFF_FILE (
+    		ID,
+			RANKSALARY,
+			WEIGHT,
+			CARNO,
+			STATUS,
+			BADGE,
+			HIGHESTFULLTIMEEDU,
+			SUBORDINATEBRANCH,
+			GENDER,
+			BIRTHDAY,
+			NATION,
+			JOINDATE,
+			TECHNICALEXPERTISE,
+			HOSPITAL,
+			MARITALSTATUS,
+			FRATERNALWILL,
+			ISDEL,
+			EMPNAME,
+			WORKTIME,
+			DEPID,
+			JOBID,
+			LAUNDAYCARD,
+			DOMICILELOCATION,
+			INTEREST,
+			UPDATEDATE,
+			UPDATEFLAG,
+			MOTTO,
+			CERTTYPE,
+			RECRUITMODLE,
+			HIGHESTEDU,
+			HEIGHT,
+			OFFICELOCATION,
+			TEAM,
+			CERTNO,
+			HIGHESTFULLTIMEDEGREE,
+			SHIRTSIZE,
+			IMAGE,
+			HIGHESTDEGREE,
+			XADDRESS,
+			POLITICCONTENANCE,
+			JOINPARTYTIME,
+			OTHERINFOS,
+			UPDATEUSERID
+    		)
+    		VALUES(
+    		#{id},
+			#{ranksalary},
+			#{weight},
+			#{carno},
+			#{status},
+			#{badge},
+			#{highestfulltimeedu},
+			#{subordinatebranch},
+			#{gender},
+			#{birthday},
+			#{nation},
+			#{joindate},
+			#{technicalexpertise},
+			#{hospital},
+			#{maritalstatus},
+			#{fraternalwill},
+			#{isdel},
+			#{empname},
+			#{worktime},
+			#{depid},
+			#{jobid},
+			#{laundaycard},
+			#{domicilelocation},
+			#{interest},
+			#{updatedate},
+			#{updateflag},
+			#{motto},
+			#{certtype},
+			#{recruitmodle},
+			#{highestedu},
+			#{height},
+			#{officelocation},
+			#{team},
+			#{certno},
+			#{highestfulltimedegree},
+			#{shirtsize},
+			#{image},
+			#{highestdegree},
+			#{xaddress},
+			#{politiccontenance},
+			#{joinpartytime},
+			#{otherinfos},
+			#{updateuserid}
+    		)
+        </insert>
+		<resultMap id="QUERYBYBADGE_MAP" type="ppmStaffFileInfo" extends="PPMSTAFFFILE_ALL">
+			<result property="depName" column="DEP_NAME" />
+			<result property="jobName" column="JOB_NAME" />
+			<result property="email" column="EMAIL" />
+			<result property="contel" column="CONTEL" />
+			<result property="groupName" column="GROUPNAME" />
+		</resultMap>
+        <!--员工档案  k6991 2020-03-18 -->
+        <select id="queryByBadge" parameterType="ppmStaffFile" resultMap="QUERYBYBADGE_MAP">
+        	SELECT
+			F.ID,F.BADGE,F.EMPNAME,F.GENDER,F.CERTTYPE,F.CERTNO,F.BIRTHDAY,F.NATION,F.DOMICILELOCATION,F.RECRUITMODLE,F.RANKSALARY,F.JOINDATE,F.WORKTIME
+			,D.LOCATION DEP_NAME,J.LOCATION JOB_NAME,F.HIGHESTEDU,F.HIGHESTFULLTIMEEDU,F.HIGHESTDEGREE,F.HIGHESTFULLTIMEDEGREE,F.XADDRESS,F.HEIGHT,F.WEIGHT,F.POLITICCONTENANCE,
+			F.JOINPARTYTIME,F.SUBORDINATEBRANCH,F.OFFICELOCATION,F.TECHNICALEXPERTISE,F.INTEREST,F.OTHERINFOS,F.SHIRTSIZE,F.CARNO,F.LAUNDAYCARD,F.HOSPITAL,F.MARITALSTATUS,
+			F.FRATERNALWILL,F.IMAGE,F.MOTTO ,B.EMAIL,B.CONTEL,T.GROUPNAME,F.UPDATEFLAG
+			FROM PPM_STAFF_FILE F
+			LEFT JOIN PPM_EEMPLOYEE_BASEINFOR B ON F.BADGE=B.BADGE
+			LEFT JOIN COMM_DEPARTMENT D ON F.DEPID=D.DEPID
+			LEFT JOIN COMM_JOB J ON F.JOBID=J.JOBID
+			LEFT JOIN (
+			SELECT U.USERID,U.TEAMGRPUPID,G.GROUPNAME  FROM PPM_DA_TEAM_USER U
+			LEFT JOIN  PPM_DA_TEAM_GROUP G  ON U.TEAMGRPUPID=G.ID
+			UNION
+			SELECT G.GROUPUSERID,G.ID,G.GROUPNAME FROM PPM_DA_TEAM_GROUP G
+			) T ON T.USERID=F.BADGE
+			WHERE F.BADGE=#{badge} AND ROWNUM=1
+        </select>
+
+         <!--查询集合  k6991 2020-03-18 -->
+        <select id="getList" parameterType="map" resultMap="PPMSTAFFFILE_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_STAFF_FILE
+        	<trim prefix="WHERE" suffixOverrides="AND">
+        		<if test="id != null " > ID=#{id} AND </if>
+				<if test="ranksalary != null  and ranksalary != '' " > RANKSALARY=#{ranksalary} AND </if>
+				<if test="weight != null  and weight != '' " > WEIGHT=#{weight} AND </if>
+				<if test="carno != null  and carno != '' " > CARNO=#{carno} AND </if>
+				<if test="status != null  and status != '' " > STATUS=#{status} AND </if>
+				<if test="badge != null  and badge != '' " > BADGE=#{badge} AND </if>
+				<if test="highestfulltimeedu != null  and highestfulltimeedu != '' " > HIGHESTFULLTIMEEDU=#{highestfulltimeedu} AND </if>
+				<if test="subordinatebranch != null  and subordinatebranch != '' " > SUBORDINATEBRANCH=#{subordinatebranch} AND </if>
+				<if test="gender != null  and gender != '' " > GENDER=#{gender} AND </if>
+				<if test="birthday != null  and birthday != '' " > BIRTHDAY=#{birthday} AND </if>
+				<if test="nation != null  and nation != '' " > NATION=#{nation} AND </if>
+				<if test="joindate != null  and joindate != '' " > JOINDATE=#{joindate} AND </if>
+				<if test="technicalexpertise != null  and technicalexpertise != '' " > TECHNICALEXPERTISE=#{technicalexpertise} AND </if>
+				<if test="hospital != null  and hospital != '' " > HOSPITAL=#{hospital} AND </if>
+				<if test="maritalstatus != null  and maritalstatus != '' " > MARITALSTATUS=#{maritalstatus} AND </if>
+				<if test="fraternalwill != null  and fraternalwill != '' " > FRATERNALWILL=#{fraternalwill} AND </if>
+				<if test="isdel != null  and isdel != '' " > ISDEL=#{isdel} AND </if>
+				<if test="empname != null  and empname != '' " > EMPNAME=#{empname} AND </if>
+				<if test="worktime != null  and worktime != '' " > WORKTIME=#{worktime} AND </if>
+				<if test="depid != null  and depid != '' " > DEPID=#{depid} AND </if>
+				<if test="jobid != null  and jobid != '' " > JOBID=#{jobid} AND </if>
+				<if test="laundaycard != null  and laundaycard != '' " > LAUNDAYCARD=#{laundaycard} AND </if>
+				<if test="domicilelocation != null  and domicilelocation != '' " > DOMICILELOCATION=#{domicilelocation} AND </if>
+				<if test="interest != null  and interest != '' " > INTEREST=#{interest} AND </if>
+				<if test="updatedate != null " > UPDATEDATE=#{updatedate} AND </if>
+				<if test="updateflag != null  and updateflag != '' " > UPDATEFLAG=#{updateflag} AND </if>
+				<if test="motto != null  and motto != '' " > MOTTO=#{motto} AND </if>
+				<if test="certtype != null  and certtype != '' " > CERTTYPE=#{certtype} AND </if>
+				<if test="recruitmodle != null  and recruitmodle != '' " > RECRUITMODLE=#{recruitmodle} AND </if>
+				<if test="highestedu != null  and highestedu != '' " > HIGHESTEDU=#{highestedu} AND </if>
+				<if test="height != null  and height != '' " > HEIGHT=#{height} AND </if>
+				<if test="officelocation != null  and officelocation != '' " > OFFICELOCATION=#{officelocation} AND </if>
+				<if test="team != null  and team != '' " > TEAM=#{team} AND </if>
+				<if test="certno != null  and certno != '' " > CERTNO=#{certno} AND </if>
+				<if test="highestfulltimedegree != null  and highestfulltimedegree != '' " > HIGHESTFULLTIMEDEGREE=#{highestfulltimedegree} AND </if>
+				<if test="shirtsize != null  and shirtsize != '' " > SHIRTSIZE=#{shirtsize} AND </if>
+				<if test="image != null  and image != '' " > IMAGE=#{image} AND </if>
+				<if test="highestdegree != null  and highestdegree != '' " > HIGHESTDEGREE=#{highestdegree} AND </if>
+				<if test="xaddress != null  and xaddress != '' " > XADDRESS=#{xaddress} AND </if>
+				<if test="politiccontenance != null  and politiccontenance != '' " > POLITICCONTENANCE=#{politiccontenance} AND </if>
+				<if test="joinpartytime != null  and joinpartytime != '' " > JOINPARTYTIME=#{joinpartytime} AND </if>
+				<if test="otherinfos != null  and otherinfos != '' " > OTHERINFOS=#{otherinfos} AND </if>
+				<if test="updateuserid != null  and updateuserid != '' " > UPDATEUSERID=#{updateuserid} AND </if>
+				
+            </trim>
+        </select>
+        <!-- update sql -->
+        <sql id="update_pojo_sql">
+        	<trim prefix="SET" suffixOverrides=",">
+        		<if test="id != null " > ID=#{id} , </if>
+				<if test="ranksalary != null  and ranksalary != '' " > RANKSALARY=#{ranksalary} , </if>
+				<if test="weight != null  and weight != '' " > WEIGHT=#{weight} , </if>
+				<if test="carno != null  and carno != '' " > CARNO=#{carno} , </if>
+				<if test="status != null  and status != '' " > STATUS=#{status} , </if>
+				<if test="badge != null  and badge != '' " > BADGE=#{badge} , </if>
+				<if test="highestfulltimeedu != null  and highestfulltimeedu != '' " > HIGHESTFULLTIMEEDU=#{highestfulltimeedu} , </if>
+				<if test="subordinatebranch != null  and subordinatebranch != '' " > SUBORDINATEBRANCH=#{subordinatebranch} , </if>
+				<if test="gender != null  and gender != '' " > GENDER=#{gender} , </if>
+				<if test="birthday != null  and birthday != '' " > BIRTHDAY=#{birthday} , </if>
+				<if test="nation != null  and nation != '' " > NATION=#{nation} , </if>
+				<if test="joindate != null  and joindate != '' " > JOINDATE=#{joindate} , </if>
+				<if test="technicalexpertise != null  and technicalexpertise != '' " > TECHNICALEXPERTISE=#{technicalexpertise} , </if>
+				<if test="hospital != null  and hospital != '' " > HOSPITAL=#{hospital} , </if>
+				<if test="maritalstatus != null  and maritalstatus != '' " > MARITALSTATUS=#{maritalstatus} , </if>
+				<if test="fraternalwill != null  and fraternalwill != '' " > FRATERNALWILL=#{fraternalwill} , </if>
+				<if test="isdel != null  and isdel != '' " > ISDEL=#{isdel} , </if>
+				<if test="empname != null  and empname != '' " > EMPNAME=#{empname} , </if>
+				<if test="worktime != null  and worktime != '' " > WORKTIME=#{worktime} , </if>
+				<if test="depid != null  and depid != '' " > DEPID=#{depid} , </if>
+				<if test="jobid != null  and jobid != '' " > JOBID=#{jobid} , </if>
+				<if test="laundaycard != null  and laundaycard != '' " > LAUNDAYCARD=#{laundaycard} , </if>
+				<if test="domicilelocation != null  and domicilelocation != '' " > DOMICILELOCATION=#{domicilelocation} , </if>
+				<if test="interest != null  and interest != '' " > INTEREST=#{interest} , </if>
+				<if test="updatedate != null " > UPDATEDATE=#{updatedate} , </if>
+				<if test="updateflag != null  and updateflag != '' " > UPDATEFLAG=#{updateflag} , </if>
+				<if test="motto != null  and motto != '' " > MOTTO=#{motto} , </if>
+				<if test="certtype != null  and certtype != '' " > CERTTYPE=#{certtype} , </if>
+				<if test="recruitmodle != null  and recruitmodle != '' " > RECRUITMODLE=#{recruitmodle} , </if>
+				<if test="highestedu != null  and highestedu != '' " > HIGHESTEDU=#{highestedu} , </if>
+				<if test="height != null  and height != '' " > HEIGHT=#{height} , </if>
+				<if test="officelocation != null  and officelocation != '' " > OFFICELOCATION=#{officelocation} , </if>
+				<if test="team != null  and team != '' " > TEAM=#{team} , </if>
+				<if test="certno != null  and certno != '' " > CERTNO=#{certno} , </if>
+				<if test="highestfulltimedegree != null  and highestfulltimedegree != '' " > HIGHESTFULLTIMEDEGREE=#{highestfulltimedegree} , </if>
+				<if test="shirtsize != null  and shirtsize != '' " > SHIRTSIZE=#{shirtsize} , </if>
+				<if test="image != null  and image != '' " > IMAGE=#{image} , </if>
+				<if test="highestdegree != null  and highestdegree != '' " > HIGHESTDEGREE=#{highestdegree} , </if>
+				<if test="xaddress != null  and xaddress != '' " > XADDRESS=#{xaddress} , </if>
+				<if test="politiccontenance != null  and politiccontenance != '' " > POLITICCONTENANCE=#{politiccontenance} , </if>
+				<if test="joinpartytime != null  and joinpartytime != '' " > JOINPARTYTIME=#{joinpartytime} , </if>
+				<if test="otherinfos != null  and otherinfos != '' " > OTHERINFOS=#{otherinfos} , </if>
+				<if test="updateuserid != null  and updateuserid != '' " > UPDATEUSERID=#{updateuserid} , </if>
+				
+            </trim>
+        </sql>
+
+        <!--通过id编辑 k6991 2020-03-18 -->
+    	<update id="updatePojo" parameterType="ppmStaffFile">
+        	UPDATE
+        	PPM_STAFF_FILE
+        	<include refid="update_pojo_sql" />
+        	WHERE BADGE=#{badge}
+		</update>
+
+        <!--通过id批量删除  k6991 2020-03-18 -->
+        <delete id="deleteById" parameterType="ppmStaffFile">
+        	DELETE
+        	FROM
+        	PPM_STAFF_FILE
+        	WHERE ID = #{id}
+        </delete>
+</mapper>

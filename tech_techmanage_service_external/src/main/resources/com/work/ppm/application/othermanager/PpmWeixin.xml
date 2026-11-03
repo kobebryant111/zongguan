@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k6991 2020-12-21 -->
+<mapper namespace="com.work.ppm.application.model.othermanager.PpmWeixin">
+	 <resultMap type="ppmWeixin" id="PPMWEIXIN_ALL">
+        <result property="id" column="ID" />
+		<result property="instanceid" column="INSTANCEID" />
+		<result property="workitemid" column="WORKITEMID" />
+		<result property="safecode" column="SAFECODE" />
+		<result property="flowname" column="FLOWNAME" />
+		<result property="flowtext" column="FLOWTEXT" />
+		<result property="users" column="USERS" />
+		<result property="status" column="STATUS" />
+		<result property="fromuser" column="FROMUSER" />
+		<result property="createtime" column="CREATETIME" />
+		<result property="creators" column="CREATORS" />
+		<result property="lastmodtime" column="LASTMODTIME" />
+		<result property="lastmoduser" column="LASTMODUSER" />
+		<result property="activityinstid" column="ACTIVITYINSTID" />
+		<result property="activityinstname" column="ACTIVITYINSTNAME" />
+		
+     </resultMap>
+
+     <!-- 所有字段名称 -->
+        <sql id="sql_flied_all">
+        	ID,
+			INSTANCEID,
+			WORKITEMID,
+			SAFECODE,
+			FLOWNAME,
+			FLOWTEXT,
+			USERS,
+			STATUS,
+			FROMUSER,
+			CREATETIME,
+			CREATORS,
+			LASTMODTIME,
+			LASTMODUSER,
+			ACTIVITYINSTID,
+			ACTIVITYINSTNAME
+        </sql>
+        <sql id="sql_select_condition">
+            <trim prefix="WHERE" suffixOverrides="AND">
+                <if test="id != null " > ID = #{id} AND </if>
+				<if test="instanceid != null  and instanceid != '' " > INSTANCEID = #{instanceid} AND </if>
+				<if test="workitemid != null  and workitemid != '' " > WORKITEMID = #{workitemid} AND </if>
+				<if test="safecode != null  and safecode != '' " > SAFECODE = #{safecode} AND </if>
+				<if test="flowname != null  and flowname != '' " > FLOWNAME = #{flowname} AND </if>
+				<if test="flowtext != null  and flowtext != '' " > FLOWTEXT = #{flowtext} AND </if>
+				<if test="users != null  and users != '' " > USERS = #{users} AND </if>
+				<if test="status != null  and status != '' " > STATUS = #{status} AND </if>
+				<if test="fromuser != null  and fromuser != '' " > FROMUSER = #{fromuser} AND </if>
+				<if test="createtime != null " > CREATETIME = #{createtime} AND </if>
+				<if test="creators != null  and creators != '' " > CREATORS = #{creators} AND </if>
+				<if test="lastmodtime != null " > LASTMODTIME = #{lastmodtime} AND </if>
+				<if test="lastmoduser != null  and lastmoduser != '' " > LASTMODUSER = #{lastmoduser} AND </if>
+				<if test="activityinstid != null  and activityinstid != '' " > ACTIVITYINSTID = #{activityinstid} AND </if>
+				<if test="activityinstname != null  and activityinstname != '' " > ACTIVITYINSTNAME = #{activityinstname} AND </if>
+				
+            </trim>
+        </sql>
+    	<!-- 查询分页  2020-12-21 k6991  -->
+        <select id="queryPagerList" parameterType="map" resultMap="PPMWEIXIN_ALL">
+        	SELECT
+            <include refid="sql_flied_all" />
+            FROM PPM_WEIXIN
+            <include refid="sql_select_condition" />
+        </select>
+
+        <!-- 新增  2020-12-21 k6991  -->
+        <insert id="addPojo" parameterType="ppmWeixin">
+    		INSERT INTO PPM_WEIXIN (
+    		<trim suffixOverrides=",">
+    		 <if test="id != null " > ID , </if>
+				<if test="instanceid != null  and instanceid != '' " > INSTANCEID , </if>
+				<if test="workitemid != null  and workitemid != '' " > WORKITEMID , </if>
+				<if test="safecode != null  and safecode != '' " > SAFECODE , </if>
+				<if test="flowname != null  and flowname != '' " > FLOWNAME , </if>
+				<if test="flowtext != null  and flowtext != '' " > FLOWTEXT , </if>
+				<if test="users != null  and users != '' " > USERS , </if>
+				<if test="status != null  and status != '' " > STATUS , </if>
+				<if test="fromuser != null  and fromuser != '' " > FROMUSER , </if>
+				<if test="createtime != null " > CREATETIME , </if>
+				<if test="creators != null  and creators != '' " > CREATORS , </if>
+				<if test="lastmodtime != null " > LASTMODTIME , </if>
+				<if test="lastmoduser != null  and lastmoduser != '' " > LASTMODUSER , </if>
+				<if test="activityinstid != null  and activityinstid != '' " > ACTIVITYINSTID , </if>
+				<if test="activityinstname != null  and activityinstname != '' " > ACTIVITYINSTNAME , </if>
+				
+              </trim>
+    		)
+    		VALUES(
+    		<trim suffixOverrides=",">
+    		 <if test="id != null " > #{id} , </if>
+				<if test="instanceid != null  and instanceid != '' " > #{instanceid} , </if>
+				<if test="workitemid != null  and workitemid != '' " > #{workitemid} , </if>
+				<if test="safecode != null  and safecode != '' " > #{safecode} , </if>
+				<if test="flowname != null  and flowname != '' " > #{flowname} , </if>
+				<if test="flowtext != null  and flowtext != '' " > #{flowtext} , </if>
+				<if test="users != null  and users != '' " > #{users} , </if>
+				<if test="status != null  and status != '' " > #{status} , </if>
+				<if test="fromuser != null  and fromuser != '' " > #{fromuser} , </if>
+				<if test="createtime != null " > #{createtime} , </if>
+				<if test="creators != null  and creators != '' " > #{creators} , </if>
+				<if test="lastmodtime != null " > #{lastmodtime} , </if>
+				<if test="lastmoduser != null  and lastmoduser != '' " > #{lastmoduser} , </if>
+				<if test="activityinstid != null  and activityinstid != '' " > #{activityinstid} , </if>
+				<if test="activityinstname != null  and activityinstname != '' " > #{activityinstname} , </if>
+				
+            </trim>
+    		)
+        </insert>
+
+        <!--通过id查询  k6991 2020-12-21 -->
+        <select id="queryDetail" parameterType="ppmWeixin" resultMap="PPMWEIXIN_ALL">
+        	SELECT * FROM (
+			SELECT
+			<include refid="sql_flied_all" />
+			FROM PPM_WEIXIN
+
+			<trim prefix="WHERE" suffixOverrides="AND">
+				<if test="id != null " > ID = #{id} AND </if>
+				<if test="instanceid != null  and instanceid != '' " > INSTANCEID = #{instanceid} AND </if>
+				<if test="workitemid != null  and workitemid != '' " > WORKITEMID = #{workitemid} AND </if>
+			</trim>
+			ORDER BY ID DESC
+			)  WHERE ROWNUM =1
+        </select>
+
+         <!--查询集合  k6991 2020-12-21 -->
+        <select id="getList" parameterType="ppmWeixin" resultMap="PPMWEIXIN_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_WEIXIN
+        	<include refid="sql_select_condition" />
+        </select>
+        <!-- update sql -->
+        <sql id="update_pojo_sql">
+        	<trim prefix="SET" suffixOverrides=",">
+        		<if test="id != null " > ID=#{id} , </if>
+				<if test="instanceid != null  and instanceid != '' " > INSTANCEID=#{instanceid} , </if>
+				<if test="workitemid != null  and workitemid != '' " > WORKITEMID=#{workitemid} , </if>
+				<if test="safecode != null  and safecode != '' " > SAFECODE=#{safecode} , </if>
+				<if test="flowname != null  and flowname != '' " > FLOWNAME=#{flowname} , </if>
+				<if test="flowtext != null  and flowtext != '' " > FLOWTEXT=#{flowtext} , </if>
+				<if test="users != null  and users != '' " > USERS=#{users} , </if>
+				<if test="status != null  and status != '' " > STATUS=#{status} , </if>
+				<if test="fromuser != null  and fromuser != '' " > FROMUSER=#{fromuser} , </if>
+				<if test="createtime != null " > CREATETIME=#{createtime} , </if>
+				<if test="creators != null  and creators != '' " > CREATORS=#{creators} , </if>
+				<if test="lastmodtime != null " > LASTMODTIME=#{lastmodtime} , </if>
+				<if test="lastmoduser != null  and lastmoduser != '' " > LASTMODUSER=#{lastmoduser} , </if>
+				<if test="activityinstid != null  and activityinstid != '' " > ACTIVITYINSTID=#{activityinstid} , </if>
+				<if test="activityinstname != null  and activityinstname != '' " > ACTIVITYINSTNAME=#{activityinstname} , </if>
+				
+            </trim>
+        </sql>
+
+        <!--通过id编辑 k6991 2020-12-21 -->
+    	<update id="updatePojo" parameterType="ppmWeixin">
+        	UPDATE
+        	PPM_WEIXIN
+        	<include refid="update_pojo_sql" />
+			<trim prefix="WHERE" suffixOverrides="AND">
+				<if test="id != null " > ID = #{id} AND </if>
+				<if test="instanceid != null  and instanceid != '' " > INSTANCEID = #{instanceid} AND </if>
+				<if test="workitemid != null  and workitemid != '' " > WORKITEMID = #{workitemid} AND </if>
+			</trim>
+        </update>
+
+        <!--通过id批量删除  k6991 2020-12-21 -->
+        <delete id="deleteById" parameterType="ppmWeixin">
+        	DELETE
+        	FROM
+        	PPM_WEIXIN
+        	WHERE ID = #{id}
+        </delete>
+
+</mapper>

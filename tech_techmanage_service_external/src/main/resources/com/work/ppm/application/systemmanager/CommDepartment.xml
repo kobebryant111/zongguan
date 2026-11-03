@@ -1,0 +1,686 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k6991 2020-01-19 -->
+<mapper namespace="com.work.ppm.application.model.systemmanager.CommDepartment">
+    <resultMap type="commDepartment" id="COMMDEPARTMENT_ALL">
+        <result property="disableddate" column="DISABLEDDATE"/>
+        <result property="updateflg" column="UPDATEFLG"/>
+        <result property="lastupdatedate" column="LASTUPDATEDATE"/>
+        <result property="depcharge" column="DEPCHARGE"/>
+        <result property="effectdate" column="EFFECTDATE"/>
+        <result property="adminid" column="ADMINID"/>
+        <result property="isdisabled" column="ISDISABLED"/>
+        <result property="director" column="DIRECTOR"/>
+        <result property="depgrade" column="DEPGRADE"/>
+        <result property="depidhr" column="DEPIDHR"/>
+        <result property="depid" column="DEPID"/>
+        <result property="displaycode" column="DISPLAYCODE"/>
+        <result property="remark" column="REMARK"/>
+        <result property="depcode" column="DEPCODE"/>
+        <result property="location" column="LOCATION"/>
+        <result property="compid" column="COMPID"/>
+
+    </resultMap>
+
+    <!-- 所有字段名称 -->
+    <sql id="sql_flied_all">
+        DISABLEDDATE,
+        UPDATEFLG,
+        LASTUPDATEDATE,
+        DEPCHARGE,
+        EFFECTDATE,
+        ADMINID,
+        ISDISABLED,
+        DIRECTOR,
+        DEPGRADE,
+        DEPIDHR,
+        DEPID,
+        DISPLAYCODE,
+        REMARK,
+        DEPCODE,
+        LOCATION,
+        COMPID
+    </sql>
+    <!-- 查询分页  2020-01-19 k6991  -->
+    <select id="queryPagerList" parameterType="map" resultMap="COMMDEPARTMENT_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM COMM_DEPARTMENT
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="disableddate != null ">DISABLEDDATE = #{disableddate} AND</if>
+            <if test="updateflg != null  and updateflg != '' ">UPDATEFLG = #{updateflg} AND</if>
+            <if test="lastupdatedate != null ">LASTUPDATEDATE = #{lastupdatedate} AND</if>
+            <if test="depcharge != null ">DEPCHARGE = #{depcharge} AND</if>
+            <if test="effectdate != null ">EFFECTDATE = #{effectdate} AND</if>
+            <if test="adminid != null ">ADMINID = #{adminid} AND</if>
+            <if test="isdisabled != null  and isdisabled != '' ">ISDISABLED = #{isdisabled} AND</if>
+            <if test="director != null ">DIRECTOR = #{director} AND</if>
+            <if test="depgrade != null  and depgrade != '' ">DEPGRADE = #{depgrade} AND</if>
+            <if test="depidhr != null ">DEPIDHR = #{depidhr} AND</if>
+            <if test="depid != null ">DEPID = #{depid} AND</if>
+            <if test="displaycode != null  and displaycode != '' ">DISPLAYCODE = #{displaycode} AND</if>
+            <if test="remark != null  and remark != '' ">REMARK = #{remark} AND</if>
+            <if test="depcode != null  and depcode != '' ">DEPCODE = #{depcode} AND</if>
+            <if test="location != null  and location != '' ">LOCATION = #{location} AND</if>
+            <if test="compid != null ">COMPID = #{compid} AND</if>
+
+            <if test="size != null "> <![CDATA[ ROWNUM <= #{size} AND ]]> </if>
+        </trim>
+    </select>
+
+    <!-- 新增  2022-07-19 ywwb436  -->
+    <insert id="addPojo" parameterType="commDepartment">
+        INSERT INTO COMM_DEPARTMENT (
+        <trim suffixOverrides=",">
+            <if test="depid != null ">DEPID ,</if>
+            <if test="depcode != null  and depcode != '' ">DEPCODE ,</if>
+            <if test="location != null  and location != '' ">LOCATION ,</if>
+            <if test="depgrade != null  and depgrade != '' ">DEPGRADE ,</if>
+            <if test="compid != null ">COMPID ,</if>
+            <if test="adminid != null ">ADMINID ,</if>
+            <if test="effectdate != null ">EFFECTDATE ,</if>
+            <if test="isdisabled != null  and isdisabled != '' ">ISDISABLED ,</if>
+            <if test="disableddate != null ">DISABLEDDATE ,</if>
+            <if test="remark != null  and remark != '' ">REMARK ,</if>
+            <if test="updateflg != null  and updateflg != '' ">UPDATEFLG ,</if>
+            <if test="lastupdatedate != null ">LASTUPDATEDATE ,</if>
+            <if test="depidhr != null ">DEPIDHR ,</if>
+            <if test="director != null ">DIRECTOR ,</if>
+            <if test="depcharge != null ">DEPCHARGE ,</if>
+            <if test="displaycode != null  and displaycode != '' ">DISPLAYCODE ,</if>
+
+        </trim>
+        )
+        VALUES(
+        <trim suffixOverrides=",">
+            <if test="depid != null ">#{depid} ,</if>
+            <if test="depcode != null  and depcode != '' ">#{depcode} ,</if>
+            <if test="location != null  and location != '' ">#{location} ,</if>
+            <if test="depgrade != null  and depgrade != '' ">#{depgrade} ,</if>
+            <if test="compid != null ">#{compid} ,</if>
+            <if test="adminid != null ">#{adminid} ,</if>
+            <if test="effectdate != null ">#{effectdate} ,</if>
+            <if test="isdisabled != null  and isdisabled != '' ">#{isdisabled} ,</if>
+            <if test="disableddate != null ">#{disableddate} ,</if>
+            <if test="remark != null  and remark != '' ">#{remark} ,</if>
+            <if test="updateflg != null  and updateflg != '' ">#{updateflg} ,</if>
+            <if test="lastupdatedate != null ">#{lastupdatedate} ,</if>
+            <if test="depidhr != null ">#{depidhr} ,</if>
+            <if test="director != null ">#{director} ,</if>
+            <if test="depcharge != null ">#{depcharge} ,</if>
+            <if test="displaycode != null  and displaycode != '' ">#{displaycode} ,</if>
+
+        </trim>
+        )
+    </insert>
+
+    <!--通过id查询  k6991 2020-01-19 -->
+    <select id="queryById" parameterType="map" resultMap="COMMDEPARTMENT_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM COMM_DEPARTMENT WHERE DEPID=#{depIdVal}
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="depid != null ">DEPID=#{depid} AND</if>
+            <if test="location != null  and location != '' ">LOCATION=#{location} AND</if>
+        </trim>
+    </select>
+
+    <select id="queryReportto" parameterType="map" resultType="java.util.Map">
+        SELECT
+        ce.BADGE ,
+        ce.EID ,
+        cd.DIRECTOR ,
+        cd.DEPCHARGE
+        FROM
+        COMM_DEPARTMENT cd
+        LEFT JOIN COMM_EMPLOYEE ce ON
+        cd.DEPID = ce.DEPID
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="badge != null  and badge != '' ">BADGE = #{badge} AND</if>
+        </trim>
+    </select>
+
+    <select id="queryByDeptId" parameterType="map" resultMap="COMMDEPARTMENT_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM COMM_DEPARTMENT
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="depid != null ">DEPID=#{depid} AND</if>
+            <if test="location != null  and location != '' ">LOCATION=#{location} AND</if>
+        </trim>
+    </select>
+
+    <!--查询集合  k6991 2020-01-19 -->
+    <select id="getList" parameterType="map" resultMap="COMMDEPARTMENT_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM COMM_DEPARTMENT
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="disableddate != null ">DISABLEDDATE=#{disableddate} AND</if>
+            <if test="updateflg != null  and updateflg != '' ">UPDATEFLG=#{updateflg} AND</if>
+            <if test="lastupdatedate != null ">LASTUPDATEDATE=#{lastupdatedate} AND</if>
+            <if test="depcharge != null ">DEPCHARGE=#{depcharge} AND</if>
+            <if test="effectdate != null ">EFFECTDATE=#{effectdate} AND</if>
+            <if test="adminid != null ">ADMINID=#{adminid} AND</if>
+            <if test="isdisabled != null  and isdisabled != '' ">ISDISABLED=#{isdisabled} AND</if>
+            <if test="director != null ">DIRECTOR=#{director} AND</if>
+            <if test="depgrade != null  and depgrade != '' ">DEPGRADE=#{depgrade} AND</if>
+            <if test="depidhr != null ">DEPIDHR=#{depidhr} AND</if>
+            <if test="depid != null ">DEPID=#{depid} AND</if>
+            <if test="displaycode != null  and displaycode != '' ">DISPLAYCODE=#{displaycode} AND</if>
+            <if test="remark != null  and remark != '' ">REMARK=#{remark} AND</if>
+            <if test="depcode != null  and depcode != '' ">DEPCODE=#{depcode} AND</if>
+            <if test="location != null  and location != '' ">LOCATION=#{location} AND</if>
+            <if test="compid != null ">COMPID=#{compid} AND</if>
+
+        </trim>
+    </select>
+
+    <!--通过id查询  k6991 2020-12-21 -->
+    <select id="queryDetail" parameterType="commDepartment" resultMap="COMMDEPARTMENT_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM COMM_DEPARTMENT
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="depid != null ">DEPID=#{depid} AND</if>
+            <if test="depcode != null  and depcode != '' ">DEPCODE=#{depcode} AND</if>
+            <if test="location != null  and location != '' ">INSTR(LOCATION,#{location}) > 0 AND</if>
+            <if test="compid != null and compid != ''">COMPID=#{compid} AND</if>
+        </trim>
+
+    </select>
+    <!-- update sql -->
+    <sql id="update_pojo_sql">
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="disableddate != null ">DISABLEDDATE=#{disableddate} ,</if>
+            <if test="updateflg != null  and updateflg != '' ">UPDATEFLG=#{updateflg} ,</if>
+            <if test="lastupdatedate != null ">LASTUPDATEDATE=#{lastupdatedate} ,</if>
+            <if test="depcharge != null ">DEPCHARGE=#{depcharge} ,</if>
+            <if test="effectdate != null ">EFFECTDATE=#{effectdate} ,</if>
+            <if test="adminid != null ">ADMINID=#{adminid} ,</if>
+            <if test="isdisabled != null  and isdisabled != '' ">ISDISABLED=#{isdisabled} ,</if>
+            <if test="director != null ">DIRECTOR=#{director} ,</if>
+            <if test="depgrade != null  and depgrade != '' ">DEPGRADE=#{depgrade} ,</if>
+            <if test="depidhr != null ">DEPIDHR=#{depidhr} ,</if>
+            <if test="depid != null ">DEPID=#{depid} ,</if>
+            <if test="displaycode != null  and displaycode != '' ">DISPLAYCODE=#{displaycode} ,</if>
+            <if test="remark != null  and remark != '' ">REMARK=#{remark} ,</if>
+            <if test="depcode != null  and depcode != '' ">DEPCODE=#{depcode} ,</if>
+            <if test="location != null  and location != '' ">LOCATION=#{location} ,</if>
+            <if test="compid != null ">COMPID=#{compid} ,</if>
+
+        </trim>
+    </sql>
+
+    <!--通过id编辑 k6991 2020-01-19 -->
+    <update id="updatePojo" parameterType="commDepartment">
+        UPDATE
+        COMM_DEPARTMENT
+        <include refid="update_pojo_sql"/>
+        WHERE depid=#{depid}
+    </update>
+
+    <!--通过id批量删除  k6991 2020-01-19 -->
+    <delete id="deletePojo" parameterType="commDepartment">
+        DELETE
+        FROM
+        COMM_DEPARTMENT
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="depid != null ">DEPID=#{depid} AND</if>
+            <if test="location != null  and location != '' ">INSTR(LOCATION,#{location}) > 0 AND</if>
+            <if test="compid != null and compid != ''">COMPID=#{compid} AND</if>
+        </trim>
+    </delete>
+    <!-- 组织树 2020-05-25 k6991-->
+    <select id="queryDeptTree" parameterType="map" resultType="commTree">
+        select a.ID,
+        a.PCODE,
+        case a.ID
+        when 'dep7004' then
+        substr(a.text, 0, instr(a.text, '_', 1) - 1)
+        else
+        a.text
+        end text,
+        a.PID,
+        a.ATTR,
+        a.TEXTPY,
+        case
+        when a.pcode = 6000000300 then   1
+        when a.pcode = '6000000303' then 2
+        when a.pcode = '6000000302' then 3
+        when a.pcode = '6000000301' then 4
+        when a.pcode = '6000000305' then 5
+        when a.pcode = '6000000307' then 6
+        else  99
+        end order_by,
+        a.ORD
+        from (select a.*, ord
+        from (select 'dep' || t.depid id,
+        t.depcode pcode,
+        substr(t.location,
+        instr(t.location, '-', 1) + 1,
+        Length(t.location)) text,
+        'org' || t.compid pid,
+        'dep' attr,
+        to_char(t.depid) textpy
+        from comm_department t
+        where t.isdisabled = '0'
+        and t.depcode = #{code}
+
+        union all
+        select 'dep' || t.depid id,
+        t.depcode pcode,
+        substr(t.location,
+        instr(t.location, '-', 1) + 1,
+        Length(t.location)) text,
+        decode(m.centerid,
+        null,
+        'dep' || t.adminid,
+        'cen' || m.centerid) pid,
+        'dep' attr,
+        to_char(t.depid) textpy
+        from comm_department t
+        left join ppm_da_dept_manager m
+        on t.depid = m.deptid
+        where t.adminid is not null
+        and t.isdisabled = '0'
+        and t.adminid = '7004'
+
+        union all
+        select 'gro' || ga.id id,
+        ga.id pcode,
+        ga.groupname text,
+        'dep' || ga.depid pid,
+        'gro' attr,
+        to_char(ga.depid) textpy
+        from ppm_da_team_group ga
+        where ga.isdel = '0'
+
+        union all
+        select 'cen' || m.id id,
+        to_char(m.id) pcode,
+        m.centername text,
+        'dep7004' pid,
+        'cen' attr,
+        to_char(m.id) textpy
+        from Ppm_Da_Center m) a
+        left join ppm_dept_ord o
+        on a.id = o.depid
+        start with a.pcode in (select #{code} from dual)
+        connect by prior a.id = a.pid
+        ) a
+        order by order_by
+
+    </select>
+
+    <select id="queryDeptTreeQt" parameterType="map" resultType="commTree">
+        select a.ID,
+        a.PCODE,
+        case a.ID
+        when ${pidVal} then
+        substr(a.text, 0, instr(a.text, '_', 1) - 1)
+        else
+        a.text
+        end text,
+        a.PID,
+        a.ATTR,
+        a.TEXTPY,
+        a.displaycode,
+        a.ORD
+        from (select a.*, ord
+        from (select 'dep' || t.depid id,
+        t.depcode pcode,
+        substr(t.location,
+        instr(t.location, '-', 1) + 1,
+        Length(t.location)) text,
+        'org' || t.compid pid,
+        'dep' attr,
+        to_char(t.depid) textpy,
+        t.displaycode
+        from comm_department t
+        where t.isdisabled = '0'
+        and t.depcode = #{code}
+
+        union all
+        select 'dep' || t.depid id,
+        t.depcode pcode,
+        substr(t.location,
+        instr(t.location, '-', 1) + 1,
+        Length(t.location)) text,
+        decode(m.centerid,
+        null,
+        'dep' || t.adminid,
+        'cen' || m.centerid) pid,
+        'dep' attr,
+        to_char(t.depid) textpy,
+        t.displaycode
+        from comm_department t
+        left join ppm_da_dept_manager m
+        on t.depid = m.deptid
+        where t.adminid is not null
+        and t.isdisabled = '0'
+        and t.adminid = #{depIdVal}
+
+        union all
+        select 'gro' || ga.id id,
+        ga.id pcode,
+        ga.groupname text,
+        'dep' || ga.depid pid,
+        'gro' attr,
+        to_char(ga.depid) textpy,
+        '' displaycode
+        from ppm_da_team_group ga
+        where ga.isdel = '0'
+
+        union all
+        select 'cen' || m.id id,
+        to_char(m.id) pcode,
+        m.centername text,
+        ${pidVal} pid,
+        'cen' attr,
+        to_char(m.id) textpy,
+        '' displaycode
+        from Ppm_Da_Center m) a
+        left join ppm_dept_ord o
+        on a.id = o.depid
+        start with a.pcode in (select #{code} from dual)
+        connect by prior a.id = a.pid
+        ) a
+        order by PCODE
+
+    </select>
+
+    <!-- 根据userid查询 部门 DEPGRADE-->
+    <select id="queryDepgradeByUserId" parameterType="map" resultType="commDepartment">
+        SELECT A.DEPGRADE FROM COMM_DEPARTMENT A WHERE A.DEPID = (
+        SELECT T.DEPID FROM PPM_EMP_VIEW T WHERE T.BADGE = #{userId}
+        )
+    </select>
+    <!-- 授权列表 k6991 2020-07-13 -->
+    <select id="queryResourceStaff" parameterType="map" resultType="commTree">
+        select a.*
+        from (
+        select 'org' || t.compid id, t.compcode pcode, t.location text, 'org' || t.adminid pid, 'org' attr, 0 manageid,
+        0 ranksort, '' textpy, '' empstatus , '' fullname , '' spellname
+        from comm_organization t where t.isdisabled = '0'
+        union
+        select 'dep' || t.depid id, t.depcode pcode, t.location text, 'org' || t.compid pid, 'dep' attr, 0 manageid, 0
+        ranksort, '' textpy, '' empstatus , '' fullname , '' spellname
+        from comm_department t where t.adminid is null and t.isdisabled = '0'
+        union
+        select 'dep' || t.depid id, t.depcode pcode, t.location text, 'dep' || t.adminid pid, 'dep' attr, 0 manageid, 0
+        ranksort, '' textpy, '' empstatus, '' fullname , '' spellname
+        from comm_department t where t.adminid is not null and t.isdisabled = '0'
+        union
+        select distinct 'emp' || t.eid id, t.badge pcode, t.empname || '(' || t.badge || ')' text, 'dep' || t.depid pid,
+        'emp' attr,
+        1 manageid, nvl(b.ranknum, 0) ranksort, '' textpy, '' empstatus , '' fullname , '' spellname
+        from COMM_PARTTIMEJOB t
+        left join comm_department a on t.depid = a.depid
+        left join ppm_system_userrank b on t.badge = b.userid and t.depid = b.deptno
+        where t.isdisable = 0
+        <if test="badge != null and badge != ''">
+            and t.badge in (${badge}})
+        </if>
+        union
+        select 'emp' || t.badge id, t.badge pcode, t.empname || '(' || t.badge || ')' text, 'dep' || t.depid pid, 'emp'
+        attr,
+        case when t.eidhr = a.director then 1 else 0 end manageid, nvl(b.ranknum, 0) ranksort, '' textpy, '' empstatus ,
+        t.fullname , t.spellname
+        from ppm_emp_view t
+        left join comm_department a on t.depid = a.depid
+        left join ppm_system_userrank b on t.badge = b.userid and t.depid = b.deptno
+        where t.badge not like 'k%' and t.badge not like 'K%' and t.badge not like 'L%' and t.badge not like 'l%' and
+        t.depid != '7004'
+        <if test="badge != null and badge != ''">
+            and t.badge in (${badge}})
+        </if>
+        ) a
+        <trim prefix="where" suffixOverrides="and">
+            <if test="true">1=1</if>
+            <if test="userData != null and userData !='' ">
+                AND ( instr(a.pcode,#{userData}) > 0 or instr(a.text, #{userData}) > 0
+                or instr(a.textpy, #{userData}) > 0 or instr( upper(a.fullname), upper(#{userData})) > 0
+                or instr(upper(a.spellname), upper(#{userData})) > 0 ) AND
+            </if>
+            <if test="deptNo != null and deptNo !='' ">
+                start with a.id = 'dep'||#{deptNo} connect by prior a.id = a.pid AND
+            </if>
+            <if test="adminId != null and adminId !='' ">
+                start with a.id = 'org'||#{adminId} connect by prior a.id = a.pid AND
+            </if>
+
+        </trim>
+        order by manageid desc, ranksort desc, pcode asc
+    </select>
+    <!-- 部门树 2020-08-05 k6991 -->
+    <select id="queryResourceDept" parameterType="map" resultType="commTree">
+        select distinct a.*,
+        ord
+        from (
+        select 'org' || t.compid id, t.compcode pcode, t.location text, 'org' || t.adminid pid, 'org' attr, '' textpy,t.displaycode
+        from comm_organization t where t.isdisabled = '0'
+        union all
+        select 'dep' || t.depid id, t.depcode pcode, t.location text, 'org' || t.compid pid, 'dep' attr, '' textpy,t.displaycode
+        from comm_department t where t.adminid is null and t.isdisabled = '0'and t.location is not null
+        <if test="objectgrade != '' and objectgrade != 1">
+            union all
+            select 'dep' || t.depid id, t.depcode pcode, t.location text, 'dep' || t.adminid pid, 'dep' attr, '' textpy,t.displaycode
+            from comm_department t where t.adminid is not null and t.isdisabled = '0' and t.location is not null
+        </if>
+        ) a left join ppm_dept_ord o on a.id = o.depid
+
+        <if test="objectcode != null and objectgrade != ''">
+            start with a.pcode in (select #{objectcode} from dual) connect by prior a.id = a.pid
+        </if>
+        order by a.displaycode
+    </select>
+    <!-- 根据条件查询部门 k6991 2020-08-19  -->
+    <select id="getDeptByCompId" parameterType="map" resultType="commTree">
+        <choose>
+            <when test="next == 'org,dep'">
+                select * from (
+                select o.compid id , o.adminid pid , o.location text , 'org' attr , 'B' order_by
+                from comm_organization o where adminid = #{id} and isdisabled = '0'
+                union
+                select o.depid id , o.adminid pid , o.location text , 'dep' attr ,'A'||o.depid order_by
+                from comm_department o where compid = #{id} and isdisabled = '0' and adminid is null
+                ) order by order_by asc
+            </when>
+            <otherwise>
+                select o.depid id , o.adminid pid , o.location text , #{next} attr
+                from comm_department o where
+                <if test="admin == true">
+                    adminid = #{id} and
+                </if>
+                <if test="admin == false">
+                    compid = #{id} and
+                </if>
+                isdisabled = '0'
+                <if test="admin == false">
+                    and adminid is null
+                </if>
+                order by o.depid asc
+            </otherwise>
+        </choose>
+    </select>
+    <!-- 根据编号 返回记录数 k6991 2020-08-20 -->
+    <select id="hasDepCount" parameterType="map" resultType="long">
+        select count(depid) from comm_department where
+        <if test="compid != null and compid != ''">
+            compid = #{compid} and
+        </if>
+        <if test="adminid != null and adminid != ''">
+            adminid = #{adminid} and
+        </if>
+        isdisabled = '0'
+    </select>
+    <!-- 根据部门编号查询部门名称 -->
+    <select id="getDetpIdForDeptName" parameterType="map" resultType="commDepartment">
+        select location from comm_department where depid = #{deptId}
+    </select>
+    <!-- 查询总行部门 -->
+    <select id="queryHeadOffice" parameterType="map" resultType="commDepartment">
+        select
+        d.DISABLEDDATE,
+        d.UPDATEFLG,
+        d.LASTUPDATEDATE,
+        d.DEPCHARGE,
+        d.EFFECTDATE,
+        d.ADMINID,
+        d.ISDISABLED,
+        d.DIRECTOR,
+        d.DEPGRADE,
+        d.DEPIDHR,
+        d.DEPID,
+        d.DISPLAYCODE,
+        d.REMARK,
+        d.DEPCODE,
+        d.LOCATION,
+        d.COMPID
+        from comm_department d
+        left join ppm_dept_ord o on 'dep'||d.depid=o.depid
+        where d.adminid='7004' and d.isdisabled='0' order by o.ord
+    </select>
+
+    <!-- 查询总行部门 -->
+    <select id="queryDirectDeps" parameterType="map" resultType="commDepartment">
+        select d1.* from comm_department d1 left join comm_employee e1 on d1.director=e1.eidhr where e1.badge=#{badge}
+        and d1.isdisabled='0'
+    </select>
+    <!-- 根据部门名称查询id k6991 2021-05-7 -->
+    <select id="getDepNameForId" parameterType="commDepartment" resultMap="COMMDEPARTMENT_ALL">
+        SELECT DEPID FROM COMM_DEPARTMENT WHERE
+        <if test="null != adminid and adminid != ''">ADMINID='7004' AND</if>
+        INSTR(LOCATION, #{location}) > 0 AND ROWNUM =1
+    </select>
+    <resultMap id="QUERYMANAGERBYDEPID_MAP" type="commDepartmentInfo">
+        <result column="LOCATION" property="location"/>
+        <result column="DEPID" property="depid"/>
+        <result column="EMPNAME" property="empname"/>
+        <result column="BADGE" property="badge"/>
+        <result column="USERNAME" property="username"/>
+        <result column="USERID" property="userid"/>
+    </resultMap>
+    <!-- 获取部门分管总经理/主持经理/部门经理层(二级部经理) k6991 2021-10-9 -->
+    <select id="queryManagerByDepid" parameterType="commDepartment" resultMap="QUERYMANAGERBYDEPID_MAP">
+        select t.location ,t.DEPID,e.empname,e.BADGE,
+        (select empname from comm_employee where badge = m.userid) username,m.userid
+        from comm_department t
+        left join comm_employee e on e.eidhr = t.director
+        left join ppm_da_dept_manager m on m.deptid =t.depid
+        where t.depid = #{depid}
+    </select>
+
+    <select id="getFhITManager" parameterType="map" resultMap="COMMDEPARTMENT_ALL">
+        select
+        <include refid="sql_flied_all"/>
+        from comm_department d where
+        d.compid=#{compid} and d.isdisabled=0
+        <choose>
+            <when test="status == 1">
+                and (d.location like '%分行科技部' or d.location like '%分行金融科技部')
+            </when>
+            <when test="status == 2">
+                and (d.location like '%分行运营部')
+            </when>
+            <when test="status == 3">
+                and (d.location like '%运营部')
+            </when>
+            <when test="status == 4">
+                and (d.location like '%分行科技部-总经理室%' or d.location like '%分行金融科技部-总经理室%')
+            </when>
+            <otherwise>
+                and (d.location like '%运营部-总经理室%')
+            </otherwise>
+        </choose>
+        and rownum=1
+    </select>
+    <!-- 分行科技部 -->
+    <select id="queryFhKjbManager" parameterType="map" resultMap="COMMDEPARTMENT_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM COMM_DEPARTMENT D
+        WHERE D.COMPID=#{compid} AND D.LOCATION LIKE '%科技部' AND D.ISDISABLED='0'
+
+    </select>
+
+    <!-- 所属一级部门下的所有二级部门-->
+    <select id="query2ndBy1stDept" parameterType="map" resultMap="COMMDEPARTMENT_ALL">
+        SELECT depid, depcode, location  FROM comm_department WHERE adminid in (
+        select adminId from ppm.comm_department where depid = #{depId} AND ISDISABLED='0')
+    </select>
+
+    <!-- 授权列表 k6991 2020-07-13 -->
+    <select id="queryEmpList" parameterType="map" resultType="commTree">
+        select 'emp' || t.badge id,
+        t.badge pcode,
+        t.empname || '(' || t.badge || ')' text,
+        'dep' || t.depid pid,
+        'emp' attr,
+        case
+        when t.eidhr = a.director then
+        1
+        else
+        0
+        end manageid,
+        nvl(b.ranknum, 0) ranksort,
+        '' textpy,
+        '' empstatus,
+        t.fullname,
+        t.spellname
+        from ppm_emp_view t
+        left join comm_department a
+        on t.depid = a.depid
+        left join ppm_system_userrank b
+        on t.badge = b.userid
+        and t.depid = b.deptno
+        where t.badge not like 'k%'
+        and t.badge not like 'K%'
+        and t.badge not like 'L%'
+        and t.badge not like 'l%'
+        and t.depid = #{deptNo}
+    </select>
+
+    <select id="queryMsgList" parameterType="map" resultType="commTree">
+        SELECT
+        'emp' || t.badge id,
+        t.badge pcode,
+        t.empname || '(' || t.badge || ')' text,
+        'dep' || t.depid pid,
+        'emp' attr,
+        CASE
+        WHEN t.eidhr = a.director THEN 1
+        ELSE 0
+        END manageid,
+        nvl(b.ranknum, 0) ranksort,
+        '' textpy,
+        '' empstatus,
+        t.fullname,
+        t.spellname
+        FROM
+        ppm.IM_USER_ROLE_REL iurr
+        LEFT JOIN ppm.COMM_EMPLOYEE t ON
+        iurr.URR_USERID = t.BADGE
+        LEFT JOIN comm_department a ON
+        t.depid = a.depid
+        LEFT JOIN ppm_system_userrank b ON
+        t.badge = b.userid
+        AND t.depid = b.deptno
+        WHERE
+        t.badge NOT LIKE 'k%'
+        AND t.badge NOT LIKE 'K%'
+        AND t.badge NOT LIKE 'L%'
+        AND t.badge NOT LIKE 'l%'
+        AND iurr.URR_ROLEID = #{urrRoleid}
+    </select>
+
+    <select id="queryDepByBadge" parameterType="map" resultType="commDepartment">
+        SELECT
+        cd.DEPID ,
+        cd.LOCATION
+        FROM ppm.COMM_DEPARTMENT cd
+        LEFT JOIN ppm.COMM_EMPLOYEE ce ON ce.DEPID = cd.DEPID
+        WHERE ce.BADGE = #{badge}
+    </select>
+</mapper>

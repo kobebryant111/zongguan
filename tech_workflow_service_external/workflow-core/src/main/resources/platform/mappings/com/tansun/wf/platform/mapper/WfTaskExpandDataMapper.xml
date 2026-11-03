@@ -1,0 +1,891 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.tansun.wf.platform.mapper.WfTaskExpandDataMapper">
+
+  <insert id="insertTaskExpandData" parameterType="com.tansun.wf.activiti.model.TaskExpandDataEntity">
+    INSERT INTO ${prefix}WF_TASK_EXPAND_DATA (id, task_expand_plan_id, process_inst_id, process_def_id, task_id, task_node_id,tenant_id,
+     process_def_key, business_key, process_classify_id, process_name, process_classify_code, super_process_instance_id, process_start_time, process_end_time, start_user_id, start_user_dept_code,
+      start_user_role_code, start_user_parent_org_code, start_user_org_code, task_name, task_type, is_start_node, task_create_time, task_end_time, form_scene, act_button, is_multi, select_user_model,
+      candidate_roles, candidate_depts, candidate_orgs, assignee_role_code, assignee_role_name, assignee_dept_code, assignee_dept_name, assignee_org_code, assignee_org_name,  opion_key, opion, opinion, comment_msg,
+     field01, field02, field03, field04, field05, field06, field07, field08, field09, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20 )
+    VALUES (
+      #{id,jdbcType=VARCHAR},
+      #{taskExpandPlanId,jdbcType=VARCHAR},
+      #{processInstanceId,jdbcType=VARCHAR},
+      #{processDefineId,jdbcType=VARCHAR},
+      #{taskId,jdbcType=VARCHAR},
+      #{taskNodeId,jdbcType=VARCHAR},
+	  #{tenantId,jdbcType=VARCHAR},
+      #{processDefKey,jdbcType=VARCHAR},
+      #{businessKey,jdbcType=VARCHAR},
+      #{processClassifyId,jdbcType=VARCHAR},
+      #{processName,jdbcType=VARCHAR},
+      #{processClassifyCode,jdbcType=VARCHAR},
+      #{superProcessInstanceId,jdbcType=VARCHAR},
+      #{processStartTime,jdbcType=TIMESTAMP},
+      #{processEndTime,jdbcType=TIMESTAMP},
+      #{startUserId,jdbcType=VARCHAR},
+      #{startUserDeptCode,jdbcType=VARCHAR},
+      #{startUserRoleCode,jdbcType=VARCHAR},
+      #{startUserParentOrgCode,jdbcType=VARCHAR},
+      #{startUserOrgCode,jdbcType=VARCHAR},
+      #{taskName,jdbcType=VARCHAR},
+      #{taskType,jdbcType=VARCHAR},
+      #{isStartNode,jdbcType=VARCHAR},
+      #{taskCreateTime,jdbcType=TIMESTAMP},
+      #{taskEndTime,jdbcType=TIMESTAMP},
+      #{formScene,jdbcType=VARCHAR},
+      #{actButton,jdbcType=VARCHAR},
+      #{isMulti,jdbcType=VARCHAR},
+      #{selectUserModel,jdbcType=VARCHAR},
+      #{candidateRoles,jdbcType=VARCHAR},
+      #{candidateDepts,jdbcType=VARCHAR},
+      #{candidateOrgs,jdbcType=VARCHAR},
+      #{assigneeRoleCode,jdbcType=VARCHAR},
+      #{assigneeRoleName,jdbcType=VARCHAR},
+      #{assigneeDeptCode,jdbcType=VARCHAR},
+      #{assigneeDeptName,jdbcType=VARCHAR},
+      #{assigneeOrgCode,jdbcType=VARCHAR},
+      #{assigneeOrgName,jdbcType=VARCHAR},
+      #{opionKey,jdbcType=VARCHAR},
+      #{opion,jdbcType=VARCHAR},
+      #{opinion,jdbcType=VARCHAR},
+      #{commentMsg,jdbcType=VARCHAR},
+      #{field01,jdbcType=VARCHAR},
+      #{field02,jdbcType=VARCHAR},
+      #{field03,jdbcType=VARCHAR},
+      #{field04,jdbcType=VARCHAR},
+      #{field05,jdbcType=VARCHAR},
+      #{field06,jdbcType=VARCHAR},
+      #{field07,jdbcType=VARCHAR},
+      #{field08,jdbcType=VARCHAR},
+      #{field09,jdbcType=VARCHAR},
+      #{field10,jdbcType=VARCHAR},
+      #{field11,jdbcType=VARCHAR},
+      #{field12,jdbcType=VARCHAR},
+      #{field13,jdbcType=VARCHAR},
+      #{field14,jdbcType=VARCHAR},
+      #{field15,jdbcType=VARCHAR},
+      #{field16,jdbcType=VARCHAR},
+      #{field17,jdbcType=VARCHAR},
+      #{field18,jdbcType=VARCHAR},
+      #{field19,jdbcType=VARCHAR},
+      #{field20,jdbcType=VARCHAR}
+    )
+
+  </insert>
+
+
+  <select id="selectWfTasksCountByQueryCriteria" parameterType="com.tansun.wf.activiti.query.WfTaskQuery" resultType="long">
+    select count(distinct RES.ID_)
+    <include refid="selectWfTasksByQueryCriteriaSql"/>
+  </select>
+
+  <select id="selectWfTasksByQueryCriteria" parameterType="com.tansun.wf.activiti.query.WfTaskQuery" resultType="hashMap">
+    <if test="_databaseId !='db2'">
+      <include refid="notDb2Select"/>
+    </if>
+    <if test="_databaseId =='db2'">
+      <include refid="db2Select"/>
+    </if>
+  </select>
+
+  <sql id="db2Select">
+    ${limitBefore}
+    select distinct
+      W.ID_ "taskId",
+      W.EXECUTION_ID_ "executionId",
+      W.PROC_INST_ID_ "processInstanceId",
+      W.PROC_DEF_ID_ "processDefinitionId",
+      W.NAME_ "activityName",
+      W.DESCRIPTION_ "description" ,
+      W.TASK_DEF_KEY_ "activityId",
+      W.CREATE_TIME_ "createTime",
+      W.claimTime "claimTime",
+      W.DUE_DATE_ "dueDate",
+      W.SUSPENSION_STATE_ "suspensionState",
+      W.FORM_KEY_ "formKey",
+      W.TENANT_ID_ "tenantId",
+      W.businessKey "businessKey",
+      W.startUserId "startUserId",
+      W.processStartTime "processStartTime",
+      W.superProcessInstanceId "superProcessInstanceId",
+
+      W.orgId "orgId",
+      W.taskType "taskType",
+      W.processDefineName "processDefineName",
+      W.processDefineKEY "processDefineKEY",
+      W.classifyName "classifyName",
+      W.classifyCode "classifyCode",
+      W.ASSIGNEE_ "assignee"
+    <if test="fieldMapping!=null and fieldMapping.size() > 0">
+      ,
+      <foreach collection="fieldMapping" item="field"  open="" separator="," close="">
+        ${field}
+      </foreach>
+    </if> ,
+    row_number() over (ORDER BY W.ID_ ) rnk
+    FROM ( select distinct RES.*,
+              E.BUSINESS_KEY_    businessKey,
+              ahp.START_USER_ID_ startUserId,
+              ahp.START_TIME_ processStartTime,
+              ahp.SUPER_PROCESS_INSTANCE_ID_ superProcessInstanceId,
+              arv.TEXT_          orgId,
+              rv.TEXT_           taskType,
+              R.NAME_            processDefineName,
+              R.KEY_             processDefineKEY,
+              C.name             classifyName,
+              C.code             classifyCode,
+              ht.claim_time_ claimTime
+            <if test="fieldMapping!=null and fieldMapping.size() > 0">
+              ,
+              w.*
+            </if>
+    <include refid="selectWfTasksByQueryCriteriaSql"/>
+    ORDER BY RES.CREATE_TIME_ DESC
+    )W ) SUB WHERE SUB.rnk &gt;= #{firstRow} AND SUB.rnk &lt; #{lastRow}
+  </sql>
+
+  <sql id="notDb2Select">
+    ${limitBefore}
+    select distinct
+    RES.ID_ "taskId",
+    RES.EXECUTION_ID_ "executionId",
+    RES.PROC_INST_ID_ "processInstanceId",
+    RES.PROC_DEF_ID_ "processDefinitionId",
+    RES.NAME_ "activityName",
+    RES.DESCRIPTION_ "description" ,
+    RES.TASK_DEF_KEY_ "activityId",
+    RES.CREATE_TIME_ "createTime",
+    ht.claim_time_ "claimTime",
+    RES.DUE_DATE_ "dueDate",
+    RES.SUSPENSION_STATE_ "suspensionState",
+    RES.FORM_KEY_ "formKey",
+    RES.TENANT_ID_ "tenantId",
+    E.BUSINESS_KEY_ "businessKey",
+    ahp.START_USER_ID_ "startUserId",
+    ahp.START_TIME_ "processStartTime",
+    ahp.SUPER_PROCESS_INSTANCE_ID_ "superProcessInstanceId",
+    arv.TEXT_ "orgId",
+    rv.TEXT_ "taskType",
+    R.NAME_ "processDefineName",
+    R.KEY_ "processDefineKey",
+    C.name "classifyName",
+    C.code "classifyCode",
+    RES.ASSIGNEE_ "assignee"
+    <if test="fieldMapping!=null and fieldMapping.size() > 0">
+      ,
+      <foreach collection="fieldMapping" item="field"  open="" separator="," close="">
+        ${field}
+      </foreach>
+    </if>
+    ${limitBetween}
+    <include refid="selectWfTasksByQueryCriteriaSql"/>
+      <if test="createTimeSort =='desc'">
+         ORDER BY RES.CREATE_TIME_ DESC
+      </if>
+      <if test="createTimeSort =='asc'">
+          ORDER BY RES.CREATE_TIME_ ASC
+      </if>
+    ${limitAfter}
+  </sql>
+
+
+  <sql id="selectWfTasksByQueryCriteriaSql">
+    FROM ${prefix}act_ru_task RES
+    INNER JOIN wf_task_expand_data w ON RES.ID_ = w.task_id
+    AND RES.PROC_INST_ID_ = W.PROCESS_INST_ID
+    <if test="taskPoolStatus != 1">
+    LEFT JOIN ACT_RU_IDENTITYLINK I ON I.TASK_ID_ = RES.ID_
+      <!-- 优化过滤导致执行时间过长 -->
+      <if test="userId != null and userId!=''">
+        AND I.USER_ID_ = #{userId}
+      </if>
+    </if>
+    LEFT JOIN ACT_RU_EXECUTION E ON RES.PROC_INST_ID_ = E.PROC_INST_ID_ AND E.PARENT_ID_ IS NULL
+    LEFT JOIN ACT_RE_PROCDEF R ON RES.PROC_DEF_ID_ = R.ID_
+    <!-- LEFT JOIN wf_process_config P ON P.PROC_DEF_ID = RES.PROC_DEF_ID_ AND P.ACT_ID = RES.TASK_DEF_KEY_ -->
+    LEFT JOIN WF_PROCESS_CLASSIFY C ON C.id = R.CATEGORY_
+    LEFT JOIN ACT_HI_PROCINST ahp ON ahp.PROC_INST_ID_ = RES.PROC_INST_ID_
+    LEFT JOIN act_ru_variable arv ON arv.PROC_INST_ID_ = RES.PROC_INST_ID_
+    	AND arv.NAME_='_START_USER_ORG_ID'
+    LEFT JOIN act_ru_variable rv ON rv.TASK_ID_ = RES.ID_
+    AND rv.NAME_='_ADDED_TASK_TYPE'
+    <if test="isAllot == 1">
+      	INNER JOIN (
+			SELECT HIPOOL.* FROM WF_HI_TASK_POOL_EXECUTE_DATA HIPOOL
+		INNER JOIN
+			(SELECT
+				INHIPOOL.TASK_ID_,MAX(INHIPOOL.CREATE_DATE_) AS MAX_DATE
+			FROM
+				WF_HI_TASK_POOL_EXECUTE_DATA INHIPOOL
+			GROUP BY
+				INHIPOOL.TASK_ID_
+			) OUTHIPOOL
+		ON
+			HIPOOL.TASK_ID_ = OUTHIPOOL.TASK_ID_ AND HIPOOL.CREATE_DATE_ = OUTHIPOOL.MAX_DATE AND HIPOOL.IS_ALLOT_ = '1'
+					) HIPOOLS ON HIPOOLS.TASK_ID_ = RES.ID_
+    </if>
+
+    INNER JOIN act_hi_taskinst ht on RES.id_ = ht.id_
+
+    <where>
+      <if test="fieldCondition != null and fieldCondition.size() > 0">
+        <foreach collection="fieldCondition" item="condition"  open="" separator="" close="">
+          AND ${condition}
+        </foreach>
+      </if>
+      <if test="processCreateTimeBefore != null and processCreateTimeBefore !=''
+      			and processCreateTimeAfter != null and processCreateTimeAfter !=''and databaseType !='oracle' ">
+     	AND ahp.START_TIME_ BETWEEN #{processCreateTimeBefore} AND #{processCreateTimeAfter}
+      </if>
+        <if test="processCreateTimeBefore != null and processCreateTimeBefore !=''
+      			and processCreateTimeAfter != null and processCreateTimeAfter !=''and databaseType =='oracle'">
+            AND ahp.START_TIME_ BETWEEN to_date(#{processCreateTimeBefore},'yy-mm-dd,hh24:mi:ss') AND to_date(#{processCreateTimeAfter},'yy-mm-dd,hh24:mi:ss')
+        </if>
+      <if test="processInstanceId != null and processInstanceId!=''">
+        AND RES.PROC_INST_ID_ = #{processInstanceId}
+      </if>
+      <if test="processDefinitionId != null and processDefinitionId!=''">
+        AND RES.PROC_DEF_ID_ = #{processDefinitionId}
+      </if>
+      <if test="taskDefinitionKey != null and taskDefinitionKey!=''">
+        AND RES.TASK_DEF_KEY_ = #{taskDefinitionKey}
+      </if>
+      <if test="taskId != null and taskId!=''">
+        AND RES.ID_ = #{taskId}
+      </if>
+      <if test="taskNameLike != null and taskNameLike!=''">
+        AND RES.NAME_ LIKE #{taskNameLike}
+      </if>
+      <if test="tenantId != null and tenantId!=''">
+        AND RES.TENANT_ID_ = #{tenantId}
+      </if>
+      <if test="tenantIds != null  and tenantIds.size() > 0">
+            AND RES.TENANT_ID_ IN
+            <foreach collection="tenantIds" item="tenantId"  open="(" separator="," close=")">
+                #{tenantId}
+            </foreach>
+        </if>
+      <if test="classifyCode != null and classifyCode!=''">
+        AND C.code = #{classifyCode}
+      </if>
+       <if test="taskPoolStatus == 0 and userId != null and userId!=''">
+      	AND (
+          RES.ASSIGNEE_ = #{userId}
+            OR (
+              RES.ASSIGNEE_ IS NULL AND I.USER_ID_ = #{userId}
+            )
+        )
+      </if>
+      <if test="(taskPoolStatus == 0 or taskPoolStatus == 2) and roleList != null and roleList.size() >0">
+         AND RES.ASSIGNEE_ is null
+         AND I.TYPE_ = 'candidate'
+         AND I.GROUP_ID_ IN
+        <foreach item="role" index="index" collection="roleList" open="(" separator="," close=")">
+          #{role}
+        </foreach>
+      </if>
+      <if test="(taskPoolStatus == 0 or taskPoolStatus == 2) and orgList != null and orgList.size() >0">
+        AND RES.ASSIGNEE_ is null
+        AND I.TYPE_ = 'candidateOrgs'
+        AND I.GROUP_ID_ IN
+        <foreach item="org" index="index" collection="orgList" open="(" separator="," close=")">
+          #{org}
+        </foreach>
+      </if>
+      <if test="taskPoolStatus == 1">
+      	AND RES.ASSIGNEE_ IS NOT NULL
+      </if>
+      <if test="taskPoolStatus == 1 and userId != null and userId!=''">
+      	AND RES.ASSIGNEE_ = #{userId}
+      </if>
+      <if test="taskPoolStatus == 2">
+      	AND I.USER_ID_ is NOT NULL AND RES.ASSIGNEE_ IS NULL
+      </if>
+      <if test="taskPoolStatus == 2 and userId != null and userId!=''">
+      	AND I.USER_ID_ = #{userId}
+      </if>
+      <if test="isAllot == 1 and userId != null and userId!=''">
+      		AND RES.ASSIGNEE_ = #{userId}
+      </if>
+      <if test="claimTimeBefore != null" >
+          AND ht.claim_time_  &lt; #{claimTimeBefore}
+      </if>
+      <if test="claimTimeAfter != null" >
+          AND ht.claim_time_  &gt; #{claimTimeAfter}
+      </if>
+      <if test="businessKey != null  and businessKey!=''">
+          AND E.BUSINESS_KEY_ = #{businessKey}
+      </if>
+      <if test="businessKeyLike != null  and businessKeyLike!=''">
+          AND E.BUSINESS_KEY_ like #{businessKeyLike}
+      </if>
+      <if test="processDefineName != null  and processDefineName!=''">
+            AND  R.NAME_ = #{processDefineName}
+      </if>
+      <if test="processDefineNameLike != null  and processDefineNameLike!=''">
+            AND  R.NAME_ like #{processDefineNameLike}
+      </if>
+        <if test="processDefineKey != null  and processDefineKey!=''">
+            AND  R.KEY_ = #{processDefineKey}
+        </if>
+        <if test="processDefineKeyLike != null  and processDefineKeyLike!=''">
+            AND  R.KEY_ like #{processDefineKeyLike}
+        </if>
+        <if test="databaseType =='oracle'">
+            <if test="createTimeBefore != null and createTimeBefore!=''">
+                AND RES.CREATE_TIME_ &lt;= to_timestamp(#{createTimeBefore}||'.999','YYYY-MM-DD HH24:MI:ss.ff3')
+            </if>
+            <if test="createTimeAfter != null and createTimeAfter!=''">
+                AND RES.CREATE_TIME_ &gt;= to_timestamp(#{createTimeAfter}||'.999','YYYY-MM-DD HH24:MI:ss.ff3')
+            </if>
+        </if>
+        <if test="databaseType !='oracle'">
+            <if test="createTimeBefore != null and createTimeBefore!=''">
+                AND RES.CREATE_TIME_ &lt;= #{createTimeBefore}
+            </if>
+            <if test="createTimeAfter != null and createTimeAfter!=''">
+                AND RES.CREATE_TIME_ &gt;= #{createTimeAfter}
+            </if>
+        </if>
+        <if test="unequalActivityId != null  and unequalActivityId!=''">
+            AND  RES.TASK_DEF_KEY_ != #{unequalActivityId}
+        </if>
+        <if test="unequalActivityName != null  and unequalActivityName!=''">
+            AND  RES.NAME_ != #{unequalActivityName}
+        </if>
+    </where>
+  </sql>
+
+  <resultMap id="ruTaskExpandDataResultMap" type="com.tansun.wf.activiti.model.TaskExpandDataEntity">
+    <id property="id" column="id" jdbcType="VARCHAR"/>
+    <result property="taskExpandPlanId" column="task_expand_plan_id" jdbcType="VARCHAR"/>
+    <result property="processInstanceId" column="process_inst_id" jdbcType="VARCHAR"/>
+    <result property="processDefineId" column="process_def_id" jdbcType="VARCHAR"/>
+    <result property="taskId" column="task_id" jdbcType="VARCHAR"/>
+    <result property="taskNodeId" column="task_node_id" jdbcType="VARCHAR"/>
+    <result property="tenantId" column="tenant_id" jdbcType="VARCHAR"/>
+    <result property="processDefKey" column="process_def_key" jdbcType="VARCHAR"/>
+    <result property="businessKey" column="business_key" jdbcType="VARCHAR"/>
+    <result property="processClassifyId" column="process_classify_id" jdbcType="VARCHAR"/>
+    <result property="processName" column="process_name" jdbcType="VARCHAR"/>
+    <result property="processClassifyCode" column="process_classify_code" jdbcType="VARCHAR"/>
+    <result property="superProcessInstanceId" column="super_process_instance_id" jdbcType="VARCHAR"/>
+    <result property="processStartTime" column="process_start_time" jdbcType="TIMESTAMP"/>
+    <result property="processEndTime" column="process_end_time" jdbcType="TIMESTAMP"/>
+    <result property="startUserId" column="start_user_id" jdbcType="VARCHAR"/>
+    <result property="startUserDeptCode" column="start_user_dept_code" jdbcType="VARCHAR"/>
+    <result property="startUserRoleCode" column="start_user_role_code" jdbcType="VARCHAR"/>
+    <result property="startUserParentOrgCode" column="start_user_parent_org_code" jdbcType="VARCHAR"/>
+    <result property="startUserOrgCode" column="start_user_org_code" jdbcType="VARCHAR"/>
+    <result property="taskName" column="task_name" jdbcType="VARCHAR"/>
+    <result property="taskType" column="task_type" jdbcType="VARCHAR"/>
+    <result property="isStartNode" column="is_start_node" jdbcType="VARCHAR"/>
+    <result property="taskCreateTime" column="task_create_time" jdbcType="TIMESTAMP"/>
+    <result property="taskEndTime" column="task_end_time" jdbcType="TIMESTAMP"/>
+    <result property="formScene" column="form_scene" jdbcType="VARCHAR"/>
+    <result property="actButton" column="act_button" jdbcType="VARCHAR"/>
+    <result property="isMulti" column="is_multi" jdbcType="VARCHAR"/>
+    <result property="selectUserModel" column="select_user_model" jdbcType="VARCHAR"/>
+    <result property="candidateRoles" column="candidate_roles" jdbcType="VARCHAR"/>
+    <result property="candidateDepts" column="candidate_depts" jdbcType="VARCHAR"/>
+    <result property="candidateOrgs" column="candidate_orgs" jdbcType="VARCHAR"/>
+    <result property="field01" column="field01" jdbcType="VARCHAR"/>
+    <result property="field02" column="field02" jdbcType="VARCHAR"/>
+    <result property="field03" column="field03" jdbcType="VARCHAR"/>
+    <result property="field04" column="field04" jdbcType="VARCHAR"/>
+    <result property="field05" column="field05" jdbcType="VARCHAR"/>
+    <result property="field06" column="field06" jdbcType="VARCHAR"/>
+    <result property="field07" column="field07" jdbcType="VARCHAR"/>
+    <result property="field08" column="field08" jdbcType="VARCHAR"/>
+    <result property="field09" column="field09" jdbcType="VARCHAR"/>
+    <result property="field10" column="field10" jdbcType="VARCHAR"/>
+    <result property="field11" column="field11" jdbcType="VARCHAR"/>
+    <result property="field12" column="field12" jdbcType="VARCHAR"/>
+    <result property="field13" column="field13" jdbcType="VARCHAR"/>
+    <result property="field14" column="field14" jdbcType="VARCHAR"/>
+    <result property="field15" column="field15" jdbcType="VARCHAR"/>
+    <result property="field16" column="field16" jdbcType="VARCHAR"/>
+    <result property="field17" column="field17" jdbcType="VARCHAR"/>
+    <result property="field18" column="field18" jdbcType="VARCHAR"/>
+    <result property="field19" column="field19" jdbcType="VARCHAR"/>
+    <result property="field20" column="field20" jdbcType="VARCHAR"/>
+
+  </resultMap>
+
+  <select id="selectByTaskId" parameterType="string" resultMap="ruTaskExpandDataResultMap">
+    SELECT
+        ID id,
+        TASK_EXPAND_PLAN_ID,
+        PROCESS_INST_ID,
+        PROCESS_DEF_ID,
+        TASK_ID,
+        TASK_NODE_ID,
+        tenant_id,
+        process_def_key,
+        business_key,
+        process_classify_id,
+        process_name,
+        process_classify_code,
+        super_process_instance_id,
+        process_start_time,
+        process_end_time,
+        start_user_id,
+        start_user_dept_code,
+        start_user_role_code,
+        start_user_parent_org_code,
+        start_user_org_code,
+        task_name,
+        task_type,
+        is_start_node,
+        task_create_time,
+        task_end_time,
+        form_scene,
+        act_button,
+        is_multi,
+        select_user_model,
+        candidate_roles,
+        candidate_depts,
+        candidate_orgs,
+        FIELD01,
+        FIELD02,
+        FIELD03,
+        FIELD04,
+        FIELD05,
+        FIELD06,
+        FIELD07,
+        FIELD08,
+        FIELD09,
+        FIELD10,
+        FIELD11,
+        FIELD12,
+        FIELD13,
+        FIELD14,
+        FIELD15,
+        FIELD16,
+        FIELD17,
+        FIELD18,
+        FIELD19,
+        FIELD20
+    FROM
+        wf_task_expand_data
+    WHERE task_Id = #{taskId}
+  </select>
+
+  <select id="userTaskCount" parameterType="java.lang.String" resultType="java.util.Map">
+    SELECT
+        c.userId,
+        COUNT(c.taskId) taskCount
+    FROM
+        (
+            SELECT
+                USER_ID_ userId,
+                TASK_ID_ taskId
+            FROM
+                act_ru_identitylink t,
+                act_ru_task t1
+            WHERE
+                t.TYPE_ = 'candidate'
+            AND t.task_id_ = t1.id_
+            AND t.USER_ID_ IS NOT NULL
+            AND t1.assignee_ IS NULL
+            UNION
+                SELECT
+                    ASSIGNEE_ userId,
+                    ID_ taskId
+                FROM
+                    act_ru_task
+                WHERE
+                    ASSIGNEE_ IS NOT NULL
+                AND ASSIGNEE_ != ''
+                AND ASSIGNEE_ != 'rebackSetNull'
+        ) c
+    <where>
+      <if test="userId != null and userId!=''">
+        c.userId = #{userId}
+      </if>
+    </where>
+    GROUP BY
+      c.userId
+  </select>
+  <delete id="deleteTaskExpandData" parameterType="com.tansun.wf.activiti.model.TaskExpandDataEntity">
+    delete from ${prefix}wf_task_expand_data
+    where ID = #{id}
+  </delete>
+
+  <update id="updateTaskExpandData" parameterType="com.tansun.wf.activiti.model.TaskExpandDataEntity">
+  	UPDATE
+  		${prefix}wf_task_expand_data
+    SET
+    	FIELD01=#{field01},
+    	FIELD02=#{field02},
+    	FIELD03=#{field03},
+    	FIELD04=#{field04},
+    	FIELD05=#{field05},
+    	FIELD06=#{field06},
+    	FIELD07=#{field07},
+    	FIELD08=#{field08},
+    	FIELD09=#{field09},
+    	FIELD10=#{field10},
+    	FIELD11=#{field11},
+    	FIELD12=#{field12},
+    	FIELD13=#{field13},
+    	FIELD14=#{field14},
+    	FIELD15=#{field15},
+    	FIELD16=#{field16},
+    	FIELD17=#{field17},
+    	FIELD18=#{field18},
+    	FIELD19=#{field19},
+    	FIELD20=#{field20}
+    WHERE
+    	task_id = #{taskId}
+  </update>
+
+    <!-- 优化查询待办sql,优化方向：
+        1.减少left join 表的数量
+        2.在left join 表 后加上过滤条件 如left join wf_task_expand_data w ON RES.ID_ = w.task_id  and  t.assignee_ ='u1'
+        3. 所有更新操作的列都放在act_ru_task 表中,不冗余在wf_task_expand_data表中
+        4.查询的列尽量冗余在wf_task_expand_data 表中
+        5.selectWfTasksCountByQueryCriteria 将作为旧数据兼容使用
+    -->
+    <select id="selectWfTasks" parameterType="com.tansun.wf.activiti.query.WfTaskQuery" resultType="hashMap">
+        ${limitBefore}
+
+        <if test="_databaseId =='db2'">
+            select RES.*, row_number() over (ORDER BY RES."taskId" ) rnk FROM (
+        </if>
+
+        SELECT distinct
+            RES.ID_ "taskId",
+            RES.EXECUTION_ID_ "executionId",
+            RES.PROC_INST_ID_ "processInstanceId",
+            RES.PROC_DEF_ID_ "processDefinitionId",
+            RES.NAME_ "activityName",
+            RES.DESCRIPTION_ "description",
+            RES.TASK_DEF_KEY_ "activityId",
+            RES.CREATE_TIME_ "createTime",
+            RES.DUE_DATE_ "dueDate",
+            RES.SUSPENSION_STATE_ "suspensionState",
+            RES.FORM_KEY_ "formKey",
+            RES.TENANT_ID_ "tenantId",
+            RES.ASSIGNEE_ "assignee",
+            W.BUSINESS_KEY "businessKey",
+            W.START_USER_ID "startUserId",
+            W.PROCESS_START_TIME "processStartTime",
+            W.SUPER_PROCESS_INSTANCE_ID "superProcessInstanceId",
+            W.START_USER_ORG_CODE "orgId",
+            W.PROCESS_NAME "processDefineName",
+            W.PROCESS_DEF_KEY "processDefineKey",
+            W.PROCESS_CLASSIFY_CODE "classifyCode",
+            W.ACT_BUTTON "actButton",
+            W.IS_MULTI "isMulti",
+            W.CANDIDATE_ROLES "candidateRoles",
+            W.CANDIDATE_DEPTS "candidateDepts",
+            W.CANDIDATE_ORGS "candidateOrgs",
+            W.SELECT_USER_MODEL "selectUserModel",
+            W.IS_START_NODE "isStartNode",
+            W.task_Type "taskType",
+            W.FORM_SCENE "formScene",
+            <if test="fieldMapping!=null and fieldMapping.size() > 0">
+                <foreach collection="fieldMapping" item="field"  open="" separator="," close="">
+                    ${field}
+                </foreach>,
+            </if>
+            <if test="taskPoolStatus != 2 and (claimTimeBefore != null or claimTimeAfter != null)">
+                ht.claim_time_ "claimTime",
+            </if>
+            '1' AS "taskStatus"
+
+          <include refid="selectWfTasksFromWhere"/>
+          <if test="createTimeSort =='desc'">
+             ORDER BY RES.CREATE_TIME_ DESC
+          </if>
+          <if test="createTimeSort =='asc'">
+             ORDER BY RES.CREATE_TIME_ ASC
+          </if>
+        ${limitAfter}
+    </select>
+
+    <select id="selectWfTasksCount" parameterType="com.tansun.wf.activiti.query.WfTaskQuery" resultType="long">
+        select count(distinct RES.ID_)
+        <include refid="selectWfTasksFromWhere"/>
+    </select>
+
+    <sql id="selectWfTasksFromWhere">
+        FROM ${prefix}act_ru_task RES
+            INNER JOIN wf_task_expand_data w ON RES.ID_ = w.task_id
+            <include refid="expandDataCondtion"/>
+
+            <if test="(taskPoolStatus == 0 or taskPoolStatus == 2) and userId != null and userId!=''">
+                LEFT JOIN ACT_RU_IDENTITYLINK I ON I.TASK_ID_ = RES.ID_
+                AND I.USER_ID_ = #{userId}
+            </if>
+            <if test="taskPoolStatus == 2 and (userId == null or userId=='')">
+                LEFT JOIN ACT_RU_IDENTITYLINK I ON I.TASK_ID_ = RES.ID_
+            </if>
+
+            <if test="isAllot == 1">
+                INNER JOIN (
+                    SELECT HIPOOL.* FROM WF_HI_TASK_POOL_EXECUTE_DATA HIPOOL
+                INNER JOIN
+                    (SELECT
+                        INHIPOOL.TASK_ID_,MAX(INHIPOOL.CREATE_DATE_) AS MAX_DATE
+                    FROM
+                        WF_HI_TASK_POOL_EXECUTE_DATA INHIPOOL
+                    GROUP BY
+                        INHIPOOL.TASK_ID_
+                    ) OUTHIPOOL
+                ON
+                    HIPOOL.TASK_ID_ = OUTHIPOOL.TASK_ID_ AND HIPOOL.CREATE_DATE_ = OUTHIPOOL.MAX_DATE AND HIPOOL.IS_ALLOT_ = '1'
+                            ) HIPOOLS ON HIPOOLS.TASK_ID_ = RES.ID_
+            </if>
+
+            <if test="taskPoolStatus != 2 and (claimTimeBefore != null or claimTimeAfter != null)">
+                INNER JOIN act_hi_taskinst ht on RES.id_ = ht.id_
+                <if test=" userId != null and userId!=''">
+                    and ht.ASSIGNEE_= #{userId}
+                </if>
+            </if>
+
+            <if test="taskPoolStatus == 3 and userId != null and userId!=''">
+                INNER JOIN WF_HI_TASK_POOL_EXECUTE_DATA hp
+                ON RES.id_ = hp.TASK_ID_ and RES.ASSIGNEE_ = hp.user_id_ and hp.sys_id_ = #{userId}
+            </if>
+
+            <where>
+              <if test="processInstanceId != null and processInstanceId!=''">
+                AND RES.PROC_INST_ID_ = #{processInstanceId}
+              </if>
+              <if test="processDefinitionId != null and processDefinitionId!=''">
+                AND RES.PROC_DEF_ID_ = #{processDefinitionId}
+              </if>
+              <if test="taskDefinitionKey != null and taskDefinitionKey!=''">
+                AND RES.TASK_DEF_KEY_ = #{taskDefinitionKey}
+              </if>
+                <if test="processDefineKeys != null and processDefineKeys.size() > 0">
+                    AND R.KEY_ in
+                    <foreach collection="processDefineKeys" item="processDefineKey"  open="(" separator="," close=")">
+                        #{processDefineKey}
+                    </foreach>
+                </if>
+              <if test="taskId != null and taskId!=''">
+                AND RES.ID_ = #{taskId}
+              </if>
+
+              <if test="taskNameLike != null and taskNameLike!=''">
+                AND RES.NAME_ LIKE #{taskNameLike}
+              </if>
+              <if test="tenantId != null and tenantId!=''">
+                AND RES.TENANT_ID_ = #{tenantId}
+              </if>
+              <if test="tenantIds != null  and tenantIds.size() > 0">
+                    AND RES.TENANT_ID_ IN
+                    <foreach collection="tenantIds" item="tenantId"  open="(" separator="," close=")">
+                        #{tenantId}
+                    </foreach>
+                </if>
+
+               <if test="taskPoolStatus == 0 and userId != null and userId!=''">
+                AND (
+                  RES.ASSIGNEE_ = #{userId}
+                    OR (
+                      RES.ASSIGNEE_ IS NULL
+                        AND (
+                            I.USER_ID_ = #{userId}
+                        )
+                    )
+                )
+              </if>
+              <if test="(taskPoolStatus == 0 or taskPoolStatus == 2) and roleList != null and roleList.size() >0">
+                 AND RES.ASSIGNEE_ is null
+                 AND I.TYPE_ = 'candidate'
+                 AND I.GROUP_ID_ IN
+                <foreach item="role" index="index" collection="roleList" open="(" separator="," close=")">
+                  #{role}
+                </foreach>
+              </if>
+              <if test="(taskPoolStatus == 0 or taskPoolStatus == 2) and orgList != null and orgList.size() >0">
+                AND RES.ASSIGNEE_ is null
+                AND I.TYPE_ = 'candidateOrgs'
+                AND I.GROUP_ID_ IN
+                <foreach item="org" index="index" collection="orgList" open="(" separator="," close=")">
+                  #{org}
+                </foreach>
+              </if>
+              <if test="taskPoolStatus == 1">
+                AND RES.ASSIGNEE_ IS NOT NULL
+              </if>
+              <if test="taskPoolStatus == 1 and userId != null and userId!=''">
+                AND RES.ASSIGNEE_ = #{userId}
+              </if>
+              <if test="taskPoolStatus == 2">
+                AND I.USER_ID_ is NOT NULL AND RES.ASSIGNEE_ IS NULL
+              </if>
+              <if test="taskPoolStatus == 2 and userId != null and userId!=''">
+                AND I.USER_ID_ = #{userId}
+              </if>
+              <if test="isAllot == 1 and userId != null and userId!=''">
+                    AND RES.ASSIGNEE_ = #{userId}
+              </if>
+                <if test="taskPoolStatus != 2 and (claimTimeBefore != null or claimTimeAfter != null)">
+                    <if test="claimTimeBefore != null" >
+                        AND ht.claim_time_  &lt; #{claimTimeBefore}
+                    </if>
+                    <if test="claimTimeAfter != null" >
+                        AND ht.claim_time_  &gt; #{claimTimeAfter}
+                    </if>
+                </if>
+                <if test="_databaseId =='oracle'">
+                    <if test="createTimeBefore != null and createTimeBefore!=''">
+                        AND RES.CREATE_TIME_ &lt;= to_timestamp(#{createTimeBefore}||'.999','YYYY-MM-DD HH24:MI:ss.ff3')
+                    </if>
+                    <if test="createTimeAfter != null and createTimeAfter!=''">
+                        AND RES.CREATE_TIME_ &gt;= to_timestamp(#{createTimeAfter}||'.999','YYYY-MM-DD HH24:MI:ss.ff3')
+                    </if>
+                </if>
+                <if test="_databaseId !='oracle'">
+                    <if test="createTimeBefore != null and createTimeBefore!=''">
+                        AND RES.CREATE_TIME_ &lt;= #{createTimeBefore}
+                    </if>
+                    <if test="createTimeAfter != null and createTimeAfter!=''">
+                        AND RES.CREATE_TIME_ &gt;= #{createTimeAfter}
+                    </if>
+                </if>
+                <if test="unequalActivityId != null  and unequalActivityId!=''">
+                    AND  RES.TASK_DEF_KEY_ != #{unequalActivityId}
+                </if>
+                <if test="unequalActivityName != null  and unequalActivityName!=''">
+                    AND  RES.NAME_ != #{unequalActivityName}
+                </if>
+
+            </where>
+    </sql>
+
+    <sql id="expandDataCondtion">
+        <if test="fieldCondition != null and fieldCondition.size() > 0">
+            <foreach collection="fieldCondition" item="condition"  open="" separator="" close="">
+              AND ${condition}
+            </foreach>
+          </if>
+          <if test="processCreateTimeBefore != null and processCreateTimeBefore !=''
+          			and processCreateTimeAfter != null and processCreateTimeAfter !=''">
+              AND W.PROCESS_START_TIME BETWEEN
+
+              <if test="_databaseId =='oracle'">
+                  to_date(#{processCreateTimeBefore},'yy-mm-dd,hh24:mi:ss') AND to_date(#{processCreateTimeAfter},'yy-mm-dd,hh24:mi:ss')
+              </if>
+              <if test="_databaseId =='postgres'">
+                  to_timestamp(#{processCreateTimeBefore},'YYYY-mm-dd HH24:MI:SS.MS') AND to_timestamp(#{processCreateTimeAfter},'YYYY-mm-dd HH24:MI:SS.MS')
+              </if>
+              <if test="_databaseId !='oracle' and _databaseId !='postgres'">
+                  #{processCreateTimeBefore} AND #{processCreateTimeAfter}
+              </if>
+
+          </if>
+
+          <if test="processInstanceId != null and processInstanceId!=''">
+            AND w.PROCESS_INST_ID = #{processInstanceId}
+          </if>
+          <if test="processDefinitionId != null and processDefinitionId!=''">
+            AND w.PROCESS_DEF_ID = #{processDefinitionId}
+          </if>
+          <if test="taskDefinitionKey != null and taskDefinitionKey!=''">
+            AND w.TASK_NODE_ID = #{taskDefinitionKey}
+          </if>
+          <if test="taskId != null and taskId!=''">
+            AND w.TASK_ID = #{taskId}
+          </if>
+          <if test="taskNameLike != null and taskNameLike!=''">
+            AND w.TASK_NAME LIKE #{taskNameLike}
+          </if>
+          <if test="tenantId != null and tenantId!=''">
+            AND w.TENANT_ID = #{tenantId}
+          </if>
+          <if test="tenantIds != null  and tenantIds.size() > 0">
+                AND w.TENANT_ID IN
+                <foreach collection="tenantIds" item="tenantId"  open="(" separator="," close=")">
+                    #{tenantId}
+                </foreach>
+            </if>
+          <if test="classifyCode != null and classifyCode!=''">
+            AND w.PROCESS_CLASSIFY_CODE = #{classifyCode}
+          </if>
+          <if test="businessKey != null  and businessKey!=''">
+              AND w.BUSINESS_KEY = #{businessKey}
+          </if>
+          <if test="businessKeyLike != null  and businessKeyLike!=''">
+              AND w.BUSINESS_KEY like #{businessKeyLike}
+          </if>
+          <if test="processDefineName != null  and processDefineName!=''">
+                AND  w.PROCESS_NAME = #{processDefineName}
+          </if>
+          <if test="processDefineNameLike != null  and processDefineNameLike!=''">
+                AND  w.PROCESS_NAME like #{processDefineNameLike}
+          </if>
+          <if test="processDefineKey != null  and processDefineKey!=''">
+              AND  w.PROCESS_DEF_KEY = #{processDefineKey}
+          </if>
+          <if test="processDefineKeyLike != null  and processDefineKeyLike!=''">
+              AND  w.PROCESS_DEF_KEY like #{processDefineKeyLike}
+          </if>
+    </sql>   
+
+  
+
+    <sql id="wfTaskExpandDataColumns">
+		a.id AS "id",
+		a.task_expand_plan_id,
+		a.process_inst_id,
+		a.process_def_id,
+		a.task_id,
+		a.task_node_id,
+		a.field01,
+		a.field02,
+		a.field03,
+		a.field04,
+		a.field05,
+		a.field06,
+		a.field07,
+		a.field08,
+		a.field09,
+		a.field10,
+		a.field11,
+		a.field12,
+		a.field13,
+		a.field14,
+		a.field15,
+		a.field16,
+		a.field17,
+		a.field18,
+		a.field19,
+		a.field20
+	</sql>
+
+    <select id="findList" resultMap="ruTaskExpandDataResultMap">
+        SELECT
+        <include refid="wfTaskExpandDataColumns"/>
+        FROM wf_task_expand_data a
+        <where>
+            <if test="processDefineId != null and processDefineId !=''">
+                AND a.process_def_id = #{processDefineId}
+            </if>
+            <if test="processInstanceId != null and processInstanceId !=''">
+                AND a.process_inst_id = #{processInstanceId}
+            </if>
+            <if test="taskId != null and taskId !=''">
+                AND a.task_id = #{taskId}
+            </if>
+            <if test="fieldColumn != null and fieldColumn !='' and fieldValue != null and fieldValue !=''">
+                AND a.${fieldColumn} like #{fieldValue}
+            </if>
+        </where>
+    </select>
+
+
+    <select id="findTaskUrlAndNameInfo" resultMap="ruTaskExpandDataResultMap">
+        select task_name,form_scene from wf_task_expand_data where task_id=#{taskId}
+    </select>
+</mapper>

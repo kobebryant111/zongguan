@@ -1,0 +1,453 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k1327 2021-05-31 -->
+<mapper namespace="com.work.ppm.application.model.kpi.PpmKpiItem">
+	 <resultMap type="ppmKpiItem" id="PPMKPIITEM_ALL">
+        <result property="id" column="ID" />
+		<result property="item" column="ITEM" />
+		<result property="userole" column="USEROLE" />
+		<result property="centerid" column="CENTERID" />
+		<result property="itype" column="ITYPE" />
+		<result property="uptuserid" column="UPTUSERID" />
+		<result property="uptdate" column="UPTDATE" />
+		<result property="isdel" column="ISDEL" />
+		<result property="weight" column="WEIGHT" />
+		<result property="mainpart" column="MAINPART" />
+		<result property="userolename" column="USEROLENAME" />
+		
+     </resultMap>
+
+	<resultMap type="ppmKpiItemInfo" id="PPMKPIITEM_ALL_EXT" extends="PPMKPIITEM_ALL">
+		<result property="centername" column="CENTERNAME" />
+		<result property="itypename" column="ITYPENAME" />
+		<result property="mainpartname" column="MAINPARTNAME" />
+	</resultMap>
+	 <resultMap type="ppmKpiItemKpiInfo" id="PPMKPIITEM_ALL_KPI_EXT" extends="PPMKPIITEM_ALL">
+		 <result property="centername" column="CENTERNAME" />
+		 <result property="itypename" column="ITYPENAME" />
+	 </resultMap>
+	<resultMap type="ppmKpiItemComprehensiveAbilityInfo" id="PPMKPIITEM_ALL_COMPREHENSIVEABILITY_EXT" extends="PPMKPIITEM_ALL">
+		<result property="standard" column="STANDARD" />
+		<result property="workcontent" column="WORKCONTENT" />
+		<result property="value" column="VALUE" />
+		<result property="finishdate" column="FINISHDATE" />
+		<result property="did" column="DID" />
+	</resultMap>
+	<resultMap type="ppmKpiItemPostEvaluationInfo" id="PPMKPIITEM_ALL_POSTEVALUATION_EXT" extends="PPMKPIITEM_ALL">
+		<result property="standard" column="STANDARD" />
+		<result property="workcontent" column="WORKCONTENT" />
+		<result property="value" column="VALUE" />
+		<result property="finishdate" column="FINISHDATE" />
+		<result property="did" column="DID" />
+	</resultMap>
+
+	<resultMap type="ppmKpiItemBalanceInfo" id="PPMKPIITEM_ALL_BALANCE_EXT" extends="PPMKPIITEM_ALL">
+		<result property="standard" column="STANDARD" />
+		<result property="workcontent" column="WORKCONTENT" />
+		<result property="value" column="VALUE" />
+		<result property="finishdate" column="FINISHDATE" />
+		<result property="did" column="DID" />
+	</resultMap>
+
+
+	<resultMap type="ppmKpiItemInsertInfo" id="PPMKPIITEM_INSERT_ALL_EXT" extends="PPMKPIITEM_ALL">
+		<result property="did" column="DID" />
+		<result property="rid" column="RID" />
+		<result property="disdel" column="DISDEL" />
+		<result property="value" column="VALUE" />
+		<result property="finishdate" column="FINISHDATE" />
+		<result property="standard" column="STANDARD" />
+		<result property="workcontent" column="WORKCONTENT" />
+		<result property="duptuserid" column="DUPTUSERID" />
+		<result property="duptdate" column="DUPTDATE" />
+	</resultMap>
+     <!-- 所有字段名称 -->
+        <sql id="sql_flied_all">
+        	ID,
+			ITEM,
+			USEROLE,
+			CENTERID,
+			ITYPE,
+			UPTUSERID,
+			UPTDATE,
+			ISDEL,
+			WEIGHT,
+			MAINPART,
+			USEROLENAME
+        </sql>
+        <sql id="sql_select_condition">
+            <trim prefix="WHERE" suffixOverrides="AND">
+                <if test="id != null " > ID = #{id} AND </if>
+				<if test="item != null  and item != '' " > ITEM = #{item} AND </if>
+				<if test="userole != null  and userole != '' " > USEROLE = #{userole} AND </if>
+				<if test="centerid != null  and centerid != '' " > CENTERID = #{centerid} AND </if>
+				<if test="itype != null " > ITYPE = #{itype} AND </if>
+				<if test="uptuserid != null  and uptuserid != '' " > UPTUSERID = #{uptuserid} AND </if>
+				<if test="uptdate != null " > UPTDATE = #{uptdate} AND </if>
+				<if test="isdel != null " > ISDEL = #{isdel} AND </if>
+				<if test="weight != null " > WEIGHT = #{weight} AND </if>
+				<if test="mainpart != null  and mainpart != '' " > MAINPART = #{mainpart} AND </if>
+				<if test="userolename != null  and userolename != '' " > USEROLENAME = #{userolename} AND </if>
+				
+            </trim>
+        </sql>
+    	<!-- 查询分页  2021-05-31 k1327  -->
+        <select id="queryPagerList" parameterType="map" resultMap="PPMKPIITEM_ALL">
+        	SELECT
+            <include refid="sql_flied_all" />
+            FROM PPM_KPI_ITEM
+            <include refid="sql_select_condition" />
+        </select>
+
+        <!-- 新增  2021-05-31 k1327  -->
+        <insert id="addPojo" parameterType="ppmKpiItem">
+    		INSERT INTO PPM_KPI_ITEM (
+    		<trim suffixOverrides=",">
+    		 <if test="id != null " > ID , </if>
+				<if test="item != null  and item != '' " > ITEM , </if>
+				<if test="userole != null  and userole != '' " > USEROLE , </if>
+				<if test="centerid != null  and centerid != '' " > CENTERID , </if>
+				<if test="itype != null " > ITYPE , </if>
+				<if test="uptuserid != null  and uptuserid != '' " > UPTUSERID , </if>
+				<if test="uptdate != null " > UPTDATE , </if>
+				<if test="isdel != null " > ISDEL , </if>
+				<if test="weight != null " > WEIGHT , </if>
+				<if test="mainpart != null  and mainpart != '' " > MAINPART , </if>
+				<if test="userolename != null  and userolename != '' " > USEROLENAME , </if>
+				
+              </trim>
+    		)
+    		VALUES(
+    		<trim suffixOverrides=",">
+    		 <if test="id != null " > #{id} , </if>
+				<if test="item != null  and item != '' " > #{item} , </if>
+				<if test="userole != null  and userole != '' " > #{userole} , </if>
+				<if test="centerid != null  and centerid != '' " > #{centerid} , </if>
+				<if test="itype != null " > #{itype} , </if>
+				<if test="uptuserid != null  and uptuserid != '' " > #{uptuserid} , </if>
+				<if test="uptdate != null " > #{uptdate} , </if>
+				<if test="isdel != null " > #{isdel} , </if>
+				<if test="weight != null " > #{weight} , </if>
+				<if test="mainpart != null  and mainpart != '' " > #{mainpart} , </if>
+				<if test="userolename != null  and userolename != '' " > #{userolename} , </if>
+				
+            </trim>
+    		)
+        </insert>
+
+        <!--通过id查询  k1327 2021-05-31 -->
+        <select id="queryDetail" parameterType="ppmKpiItem" resultMap="PPMKPIITEM_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_KPI_ITEM  WHERE ID=#{id}
+        </select>
+
+         <!--查询集合  k1327 2021-05-31 -->
+        <select id="getList" parameterType="ppmKpiItem" resultMap="PPMKPIITEM_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_KPI_ITEM
+        	<include refid="sql_select_condition" />
+        </select>
+        <!-- update sql -->
+        <sql id="update_pojo_sql">
+        	<trim prefix="SET" suffixOverrides=",">
+        		<if test="id != null " > ID=#{id} , </if>
+				<if test="item != null  and item != '' " > ITEM=#{item} , </if>
+				<if test="userole != null  and userole != '' " > USEROLE=#{userole} , </if>
+				<if test="centerid != null  and centerid != '' " > CENTERID=#{centerid} , </if>
+				<if test="itype != null " > ITYPE=#{itype} , </if>
+				<if test="uptuserid != null  and uptuserid != '' " > UPTUSERID=#{uptuserid} , </if>
+				<if test="uptdate != null " > UPTDATE=#{uptdate} , </if>
+				<if test="isdel != null " > ISDEL=#{isdel} , </if>
+				<if test="weight != null " > WEIGHT=#{weight} , </if>
+				<if test="mainpart != null  and mainpart != '' " > MAINPART=#{mainpart} , </if>
+				<if test="userolename != null  and userolename != '' " > USEROLENAME=#{userolename} , </if>
+				
+            </trim>
+        </sql>
+
+        <!--通过id编辑 k1327 2021-05-31 -->
+    	<update id="updatePojo" parameterType="ppmKpiItem">
+        	UPDATE
+        	PPM_KPI_ITEM
+        	<include refid="update_pojo_sql" />
+        	WHERE ID=#{id}
+        </update>
+
+        <!--通过id批量删除  k1327 2021-05-31 -->
+        <delete id="deleteById" parameterType="ppmKpiItem">
+        	DELETE
+        	FROM
+        	PPM_KPI_ITEM
+        	WHERE ID = #{id}
+        </delete>
+		<!--查询kpi指标集合  k1327 2021-05-31 -->
+		<select id="getKpiDatas" parameterType="ppmKpiItemKpiInfo" resultMap="PPMKPIITEM_ALL_KPI_EXT">
+			select i.id,
+			i.item,
+			i.userole,
+			i.centerid,
+			i.itype,
+			i.uptuserid,
+			i.uptdate,
+			i.isdel,
+			i.weight,
+			i.mainpart,
+			i.userolename,
+			c.centername,
+			e.dictname itypename
+			from ppm_kpi_item i
+			left join ppm_da_center c on i.centerid=c.id
+			left join eos_dict_entry e on i.itype=e.dictid and e.dicttypeid='KPI_TYPE'
+			<trim prefix="WHERE" suffixOverrides="AND">
+				<if test="true"> i.ISDEL = '0' AND </if>
+				<if test="true"> i.ITYPE = '1' AND </if>
+				<if test="id != null " > i.ID = #{id} AND </if>
+				<if test="item != null  and item != '' " > i.ITEM like  '%'||#{item}||'%' AND </if>
+				<if test="userole != null  and userole != '' " > i.USEROLE = #{userole} AND </if>
+				<if test="centerid != null  and centerid != '' " > i.CENTERID = #{centerid} AND </if>
+				<if test="uptuserid != null  and uptuserid != '' " > i.UPTUSERID = #{uptuserid} AND </if>
+				<if test="uptdate != null " > i.UPTDATE = #{uptdate} AND </if>
+				<if test="weight != null " > i.WEIGHT = #{weight} AND </if>
+				<if test="mainpart != null  and mainpart != '' " > i.MAINPART = #{mainpart} AND </if>
+				<if test="userolename != null  and userolename != '' " > i.USEROLENAME = #{userolename} AND </if>
+			</trim>
+		</select>
+
+		<!--通过id查询  k1327 2021-05-08 -->
+		<select id="queryKpiDetailById" parameterType="ppmKpiItem" resultMap="PPMKPIITEM_ALL">
+			SELECT
+			<include refid="sql_flied_all" />
+			FROM ppm_kpi_item  WHERE ID = #{id}
+		</select>
+
+		<!--通过item查询  k1327 2021-05-08 -->
+		<select id="queryKpiDetailByItem" parameterType="ppmKpiItem" resultMap="PPMKPIITEM_ALL">
+			SELECT
+			<include refid="sql_flied_all" />
+			FROM ppm_kpi_item  WHERE item = #{item} and ITYPE = #{itype}
+		</select>
+
+		<!--查询统计综合能力评估项配置  k1327 2021-05-31 -->
+		<select id="queryComprehensiveAbilityList" parameterType="ppmKpiItemComprehensiveAbilityInfo" resultMap="PPMKPIITEM_ALL_COMPREHENSIVEABILITY_EXT">
+			select i.id,max(i.item) item,max(i.weight) weight,wm_concat(to_char(d.standard)) standard
+			from ppm_kpi_item i
+			left join ppm_kpi_item_detail d on i.id=d.rid
+			<trim prefix="WHERE" suffixOverrides="AND">
+				<if test="true"> i.ISDEL = '0' AND </if>
+				<if test="true"> i.ITYPE = '2' AND </if>
+				<if test="id != null " > i.ID = #{id} AND </if>
+				<if test="item != null  and item != '' " > i.ITEM like  '%'||#{item}||'%' AND </if>
+				<if test="userole != null  and userole != '' " > i.USEROLE = #{userole} AND </if>
+				<if test="centerid != null  and centerid != '' " > i.CENTERID = #{centerid} AND </if>
+				<if test="uptuserid != null  and uptuserid != '' " > i.UPTUSERID = #{uptuserid} AND </if>
+				<if test="uptdate != null " > i.UPTDATE = #{uptdate} AND </if>
+				<if test="weight != null " > i.WEIGHT = #{weight} AND </if>
+				<if test="mainpart != null  and mainpart != '' " > i.MAINPART = #{mainpart} AND </if>
+				<if test="userolename != null  and userolename != '' " > i.USEROLENAME = #{userolename} AND </if>
+			</trim>
+			group by i.id order by i.id asc
+		</select>
+		<!--查询综合能力评估项配置数据  k1327 2021-05-31 -->
+		<select id="queryComprehensiveAbilityDatas" parameterType="ppmKpiItemComprehensiveAbilityInfo" resultMap="PPMKPIITEM_ALL_COMPREHENSIVEABILITY_EXT">
+			select i.id,i.item,i.weight,d.standard,d.workcontent,d.value,d.finishdate,d.id did
+			from ppm_kpi_item i
+			left join ppm_kpi_item_detail d on i.id=d.rid
+			<trim prefix="WHERE" suffixOverrides="AND">
+				<if test="true"> i.ISDEL = '0' AND </if>
+				<if test="true"> d.isdel='0' AND </if>
+				<if test="true"> i.ITYPE = '2' AND </if>
+				<if test="id != null " > i.ID = #{id} AND </if>
+				<if test="item != null  and item != '' " > i.ITEM like  '%'||#{item}||'%' AND </if>
+				<if test="userole != null  and userole != '' " > i.USEROLE = #{userole} AND </if>
+				<if test="centerid != null  and centerid != '' " > i.CENTERID = #{centerid} AND </if>
+				<if test="uptuserid != null  and uptuserid != '' " > i.UPTUSERID = #{uptuserid} AND </if>
+				<if test="uptdate != null " > i.UPTDATE = #{uptdate} AND </if>
+				<if test="weight != null " > i.WEIGHT = #{weight} AND </if>
+				<if test="mainpart != null  and mainpart != '' " > i.MAINPART = #{mainpart} AND </if>
+				<if test="userolename != null  and userolename != '' " > i.USEROLENAME = #{userolename} AND </if>
+			</trim>
+			order by i.id asc
+		</select>
+		<!--查询考核数据主指标库 k1327 2021-05-31 -->
+		<select id="queryKpiItem" parameterType="ppmKpiItemInfo" resultMap="PPMKPIITEM_ALL_EXT">
+				select i.id,
+				i.item,
+				i.userole,
+				i.centerid,
+				i.itype,
+				i.uptuserid,
+				i.uptdate,
+				i.isdel,
+				i.weight,
+				i.mainpart,
+				i.userolename,
+				c.centername,
+				e.dictname itypename,
+				e1.dictname mainpartname
+				from ppm_kpi_item i
+				left join ppm_da_center c on i.centerid=c.id
+				left join eos_dict_entry e on i.itype=e.dictid and e.dicttypeid='KPI_TYPE'
+				left join eos_dict_entry e1 on i.mainpart=e1.dictid and e.dicttypeid='KPI_MAIN'
+				<trim prefix="WHERE" suffixOverrides="AND">
+					<if test="id != null " > i.ID = #{id} AND </if>
+					<if test="item != null  and item != '' " > i.ITEM = #{item} AND </if>
+					<if test="userole != null  and userole != '' " > i.USEROLE = #{userole} AND </if>
+					<if test="centerid != null  and centerid != '' " > i.CENTERID = #{centerid} AND </if>
+					<if test="itype != null " > i.ITYPE = #{itype} AND </if>
+					<if test="uptuserid != null  and uptuserid != '' " > i.UPTUSERID = #{uptuserid} AND </if>
+					<if test="uptdate != null " > i.UPTDATE = #{uptdate} AND </if>
+					<if test="isdel != null " > i.ISDEL = #{isdel} AND </if>
+					<if test="weight != null " > i.WEIGHT = #{weight} AND </if>
+					<if test="mainpart != null  and mainpart != '' " > i.MAINPART = #{mainpart} AND </if>
+					<if test="userolename != null  and userolename != '' " > i.USEROLENAME = #{userolename} AND </if>
+
+				</trim>
+		</select>
+
+
+	<!--查询履职评估项配置  k1327 2021-05-31 -->
+	<select id="queryPostEvaluationList" parameterType="ppmKpiItemPostEvaluationInfo" resultMap="PPMKPIITEM_ALL_POSTEVALUATION_EXT">
+		select i.id,max(i.item) item,max(i.weight) weight,wm_concat(to_char(d.standard)) standard,max(i.MAINPART) MAINPART,
+		max(e.dictname) mainpartname
+		from ppm_kpi_item i
+		left join ppm_kpi_item_detail d on i.id=d.rid
+		left join eos_dict_entry e on i.mainpart=e.dictid and e.dicttypeid='KPI_MAIN'
+		<trim prefix="WHERE" suffixOverrides="AND">
+			<if test="true"> i.ISDEL = '0' AND </if>
+			<if test="true"> i.ITYPE = '3' AND </if>
+			<if test="id != null " > i.ID = #{id} AND </if>
+			<if test="item != null  and item != '' " > i.ITEM like  '%'||#{item}||'%' AND </if>
+			<if test="userole != null  and userole != '' " > i.USEROLE = #{userole} AND </if>
+			<if test="centerid != null  and centerid != '' " > i.CENTERID = #{centerid} AND </if>
+			<if test="uptuserid != null  and uptuserid != '' " > i.UPTUSERID = #{uptuserid} AND </if>
+			<if test="uptdate != null " > i.UPTDATE = #{uptdate} AND </if>
+			<if test="weight != null " > i.WEIGHT = #{weight} AND </if>
+			<if test="mainpart != null  and mainpart != '' " > i.MAINPART = #{mainpart} AND </if>
+			<if test="userolename != null  and userolename != '' " > i.USEROLENAME = #{userolename} AND </if>
+		</trim>
+		group by i.id order by i.id asc
+	</select>
+
+	<!--查询综合能力评估项配置数据  k1327 2021-05-31 -->
+	<select id="queryPostEvaluationDatas" parameterType="ppmKpiItemPostEvaluationInfo" resultMap="PPMKPIITEM_ALL_POSTEVALUATION_EXT">
+		select i.id,i.item,i.weight,d.standard,d.workcontent,d.value,d.finishdate,i.MAINPART,
+		e.dictname mainpartname,d.id did
+		from ppm_kpi_item i
+		left join ppm_kpi_item_detail d on i.id=d.rid
+		left join eos_dict_entry e on i.mainpart=e.dictid and e.dicttypeid='KPI_MAIN'
+		<trim prefix="WHERE" suffixOverrides="AND">
+			<if test="true"> i.ISDEL = '0' AND </if>
+			<if test="true"> d.isdel='0' AND </if>
+			<if test="true"> i.ITYPE = '3' AND </if>
+			<if test="id != null " > i.ID = #{id} AND </if>
+			<if test="item != null  and item != '' " > i.ITEM like  '%'||#{item}||'%' AND </if>
+			<if test="userole != null  and userole != '' " > i.USEROLE = #{userole} AND </if>
+			<if test="centerid != null  and centerid != '' " > i.CENTERID = #{centerid} AND </if>
+			<if test="uptuserid != null  and uptuserid != '' " > i.UPTUSERID = #{uptuserid} AND </if>
+			<if test="uptdate != null " > i.UPTDATE = #{uptdate} AND </if>
+			<if test="weight != null " > i.WEIGHT = #{weight} AND </if>
+			<if test="mainpart != null  and mainpart != '' " > i.MAINPART = #{mainpart} AND </if>
+			<if test="userolename != null  and userolename != '' " > i.USEROLENAME = #{userolename} AND </if>
+		</trim>
+		order by i.id asc
+	</select>
+
+	<!--查询平衡计分评估项配置数据  k1327 2021-05-31 -->
+	<select id="queryBalanceDatas" parameterType="ppmKpiItemBalanceInfo" resultMap="PPMKPIITEM_ALL_BALANCE_EXT">
+		select i.id,
+		i.item,
+		i.userole,
+		i.centerid,
+		i.itype,
+		i.uptuserid,
+		i.uptdate,
+		i.isdel,
+		i.weight,
+		i.mainpart,
+		i.userolename,
+		d.standard,
+		d.workcontent,
+		d.value,
+		d.finishdate,
+		d.id did
+		from ppm_kpi_item i
+		left join ppm_kpi_item_detail d on i.id=d.rid
+		<trim prefix="WHERE" suffixOverrides="AND">
+			<if test="true"> i.ISDEL = '0' AND </if>
+			<if test="true"> d.isdel='0' AND </if>
+			<if test="true"> i.ITYPE = '4' AND </if>
+			<if test="id != null " > i.ID = #{id} AND </if>
+			<if test="item != null  and item != '' " > i.ITEM like  '%'||#{item}||'%' AND </if>
+			<if test="userole != null  and userole != '' " > i.USEROLE = #{userole} AND </if>
+			<if test="centerid != null  and centerid != '' " > i.CENTERID = #{centerid} AND </if>
+			<if test="uptuserid != null  and uptuserid != '' " > i.UPTUSERID = #{uptuserid} AND </if>
+			<if test="uptdate != null " > i.UPTDATE = #{uptdate} AND </if>
+			<if test="weight != null " > i.WEIGHT = #{weight} AND </if>
+			<if test="mainpart != null  and mainpart != '' " > i.MAINPART = #{mainpart} AND </if>
+			<if test="userolename != null  and userolename != '' " > i.USEROLENAME = #{userolename} AND </if>
+		</trim>
+		order by i.id asc
+	</select>
+	<!--查询考核指标项数据主表加详细表中所有数据  k1327 2021-05-31 -->
+	<select id="querykpiItemAll" parameterType="ppmKpiItemInsertInfo" resultMap="PPMKPIITEM_INSERT_ALL_EXT">
+		select i.id,
+		i.item,
+		i.userole,
+		i.centerid,
+		i.itype,
+		i.uptuserid,
+		i.uptdate,
+		i.isdel,
+		i.weight,
+		i.mainpart,
+		i.userolename,
+		d.id did,
+		d.rid,
+		d.isdel disdel,
+		d.value,
+		d.finishdate,
+		d.standard,
+		d.workcontent,
+		d.uptuserid duptuserid,
+		d.uptdate duptdate
+		from ppm_kpi_item i
+		left join ppm_kpi_item_detail d on i.id=d.rid
+		<trim prefix="WHERE" suffixOverrides="AND">
+			<if test="true"> i.ISDEL = '0' AND </if>
+			<if test="true"> d.ISDEL = '0' AND </if>
+			<if test="itype != null " > i.ITYPE = #{itype} AND </if>
+			<if test="id != null " > i.ID = #{id} AND </if>
+			<if test="item != null  and item != '' " > i.ITEM like  '%'||#{item}||'%' AND </if>
+			<if test="userole != null  and userole != '' " > i.USEROLE = #{userole} AND </if>
+			<if test="centerid != null  and centerid != '' " > i.CENTERID = #{centerid} AND </if>
+			<if test="uptuserid != null  and uptuserid != '' " > i.UPTUSERID = #{uptuserid} AND </if>
+			<if test="uptdate != null " > i.UPTDATE = #{uptdate} AND </if>
+			<if test="weight != null " > i.WEIGHT = #{weight} AND </if>
+			<if test="mainpart != null  and mainpart != '' " > i.MAINPART = #{mainpart} AND </if>
+			<if test="userolename != null  and userolename != '' " > i.USEROLENAME = #{userolename} AND </if>
+		</trim>
+	</select>
+
+
+	<!--查询kpi指标的下拉框  k1327 2021-05-31 -->
+	<select id="getKpiItems" parameterType="ppmKpiItem" resultMap="PPMKPIITEM_ALL">
+		select i.id,
+		       i.item
+		from ppm_kpi_item i
+		<trim prefix="WHERE" suffixOverrides="AND">
+			<if test="true"> i.ISDEL = '0' AND </if>
+			<if test="true"> i.ITYPE = '1' AND </if>
+			<if test="id != null " > i.ID = #{id} AND </if>
+			<if test="item != null  and item != '' " > i.ITEM like  '%'||#{item}||'%' AND </if>
+			<if test="userole != null  and userole != '' " > i.USEROLE like '%'||#{userole}||'%' AND</if>
+			<if test="centerid != null  and centerid != '' " > i.CENTERID = #{centerid} AND </if>
+			<if test="uptuserid != null  and uptuserid != '' " > i.UPTUSERID = #{uptuserid} AND </if>
+			<if test="uptdate != null " > i.UPTDATE = #{uptdate} AND </if>
+			<if test="weight != null " > i.WEIGHT = #{weight} AND </if>
+			<if test="mainpart != null  and mainpart != '' " > i.MAINPART = #{mainpart} AND </if>
+			<if test="userolename != null  and userolename != '' " > i.USEROLENAME = #{userolename} AND </if>
+		</trim>
+	</select>
+</mapper>

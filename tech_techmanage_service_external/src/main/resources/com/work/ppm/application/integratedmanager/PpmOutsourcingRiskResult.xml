@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k1327 2021-03-17 -->
+<mapper namespace="com.work.ppm.application.model.integratedmanager.PpmOutsourcingRiskResult">
+	 <resultMap type="ppmOutsourcingRiskResult" id="PPMOUTSOURCINGRISKRESULT_ALL">
+        <result property="id" column="ID" />
+		<result property="jobid" column="JOBID" />
+		<result property="username" column="USERNAME" />
+		<result property="certno" column="CERTNO" />
+		<result property="depid" column="DEPID" />
+		<result property="depname" column="DEPNAME" />
+		<result property="orgname" column="ORGNAME" />
+		<result property="orgcode" column="ORGCODE" />
+		<result property="explainstate" column="EXPLAINSTATE" />
+		<result property="depfeedback" column="DEPFEEDBACK" />
+		<result property="dealstatus" column="DEALSTATUS" />
+		<result property="manageuserid" column="MANAGEUSERID" />
+		<result property="risksuggest" column="RISKSUGGEST" />
+		<result property="riskdate" column="RISKDATE" />
+		<result property="remark" column="REMARK" />
+		<result property="risktype" column="RISKTYPE" />
+		<result property="regid" column="REGID" />
+		<result property="regtime" column="REGTIME" />
+		<result property="managesuggest" column="MANAGESUGGEST" />
+		<result property="tyear" column="TYEAR" />
+		<result property="tmonth" column="TMONTH" />
+		
+     </resultMap>
+
+     <!-- 所有字段名称 -->
+        <sql id="sql_flied_all">
+        	ID,
+			JOBID,
+			USERNAME,
+			CERTNO,
+			DEPID,
+			DEPNAME,
+			ORGNAME,
+			ORGCODE,
+			EXPLAINSTATE,
+			DEPFEEDBACK,
+			DEALSTATUS,
+			MANAGEUSERID,
+			RISKSUGGEST,
+			RISKDATE,
+			REMARK,
+			RISKTYPE,
+			REGID,
+			REGTIME,
+			MANAGESUGGEST,
+			TYEAR,
+			TMONTH
+        </sql>
+        <sql id="sql_select_condition">
+            <trim prefix="WHERE" suffixOverrides="AND">
+                <if test="id != null " > ID = #{id} AND </if>
+				<if test="jobid != null  and jobid != '' " > JOBID = #{jobid} AND </if>
+				<if test="username != null  and username != '' " > USERNAME = #{username} AND </if>
+				<if test="certno != null  and certno != '' " > CERTNO = #{certno} AND </if>
+				<if test="depid != null  and depid != '' " > DEPID = #{depid} AND </if>
+				<if test="depname != null  and depname != '' " > DEPNAME = #{depname} AND </if>
+				<if test="orgname != null  and orgname != '' " > ORGNAME = #{orgname} AND </if>
+				<if test="orgcode != null  and orgcode != '' " > ORGCODE = #{orgcode} AND </if>
+				<if test="explainstate != null  and explainstate != '' " > EXPLAINSTATE = #{explainstate} AND </if>
+				<if test="depfeedback != null  and depfeedback != '' " > DEPFEEDBACK = #{depfeedback} AND </if>
+				<if test="dealstatus != null " > DEALSTATUS = #{dealstatus} AND </if>
+				<if test="manageuserid != null  and manageuserid != '' " > MANAGEUSERID = #{manageuserid} AND </if>
+				<if test="risksuggest != null  and risksuggest != '' " > RISKSUGGEST = #{risksuggest} AND </if>
+				<if test="riskdate != null " > RISKDATE = #{riskdate} AND </if>
+				<if test="remark != null  and remark != '' " > REMARK = #{remark} AND </if>
+				<if test="risktype != null " > RISKTYPE = #{risktype} AND </if>
+				<if test="regid != null  and regid != '' " > REGID = #{regid} AND </if>
+				<if test="regtime != null " > REGTIME = #{regtime} AND </if>
+				<if test="managesuggest != null  and managesuggest != '' " > MANAGESUGGEST = #{managesuggest} AND </if>
+				<if test="tyear != null  and tyear != '' " > TYEAR = #{tyear} AND </if>
+				<if test="tmonth != null  and tmonth != '' " > TMONTH = #{tmonth} AND </if>
+				
+            </trim>
+        </sql>
+    	<!-- 查询分页  2021-03-17 k1327  -->
+        <select id="queryPagerList" parameterType="map" resultMap="PPMOUTSOURCINGRISKRESULT_ALL">
+        	SELECT
+            <include refid="sql_flied_all" />
+            FROM PPM_OUTSOURCING_RISK_RESULT
+            <include refid="sql_select_condition" />
+        </select>
+
+        <!-- 新增  2021-03-17 k1327  -->
+        <insert id="addPojo" parameterType="ppmOutsourcingRiskResult">
+    		INSERT INTO PPM_OUTSOURCING_RISK_RESULT (
+    		<trim suffixOverrides=",">
+    		 <if test="id != null " > ID , </if>
+				<if test="jobid != null  and jobid != '' " > JOBID , </if>
+				<if test="username != null  and username != '' " > USERNAME , </if>
+				<if test="certno != null  and certno != '' " > CERTNO , </if>
+				<if test="depid != null  and depid != '' " > DEPID , </if>
+				<if test="depname != null  and depname != '' " > DEPNAME , </if>
+				<if test="orgname != null  and orgname != '' " > ORGNAME , </if>
+				<if test="orgcode != null  and orgcode != '' " > ORGCODE , </if>
+				<if test="explainstate != null  and explainstate != '' " > EXPLAINSTATE , </if>
+				<if test="depfeedback != null  and depfeedback != '' " > DEPFEEDBACK , </if>
+				<if test="dealstatus != null " > DEALSTATUS , </if>
+				<if test="manageuserid != null  and manageuserid != '' " > MANAGEUSERID , </if>
+				<if test="risksuggest != null  and risksuggest != '' " > RISKSUGGEST , </if>
+				<if test="riskdate != null " > RISKDATE , </if>
+				<if test="remark != null  and remark != '' " > REMARK , </if>
+				<if test="risktype != null " > RISKTYPE , </if>
+				<if test="regid != null  and regid != '' " > REGID , </if>
+				<if test="regtime != null " > REGTIME , </if>
+				<if test="managesuggest != null  and managesuggest != '' " > MANAGESUGGEST , </if>
+				<if test="tyear != null  and tyear != '' " > TYEAR , </if>
+				<if test="tmonth != null  and tmonth != '' " > TMONTH , </if>
+				
+              </trim>
+    		)
+    		VALUES(
+    		<trim suffixOverrides=",">
+    		 <if test="id != null " > #{id} , </if>
+				<if test="jobid != null  and jobid != '' " > #{jobid} , </if>
+				<if test="username != null  and username != '' " > #{username} , </if>
+				<if test="certno != null  and certno != '' " > #{certno} , </if>
+				<if test="depid != null  and depid != '' " > #{depid} , </if>
+				<if test="depname != null  and depname != '' " > #{depname} , </if>
+				<if test="orgname != null  and orgname != '' " > #{orgname} , </if>
+				<if test="orgcode != null  and orgcode != '' " > #{orgcode} , </if>
+				<if test="explainstate != null  and explainstate != '' " > #{explainstate} , </if>
+				<if test="depfeedback != null  and depfeedback != '' " > #{depfeedback} , </if>
+				<if test="dealstatus != null " > #{dealstatus} , </if>
+				<if test="manageuserid != null  and manageuserid != '' " > #{manageuserid} , </if>
+				<if test="risksuggest != null  and risksuggest != '' " > #{risksuggest} , </if>
+				<if test="riskdate != null " > #{riskdate} , </if>
+				<if test="remark != null  and remark != '' " > #{remark} , </if>
+				<if test="risktype != null " > #{risktype} , </if>
+				<if test="regid != null  and regid != '' " > #{regid} , </if>
+				<if test="regtime != null " > #{regtime} , </if>
+				<if test="managesuggest != null  and managesuggest != '' " > #{managesuggest} , </if>
+				<if test="tyear != null  and tyear != '' " > #{tyear} , </if>
+				<if test="tmonth != null  and tmonth != '' " > #{tmonth} , </if>
+				
+            </trim>
+    		)
+        </insert>
+
+        <!--通过id查询  k1327 2021-03-17 -->
+        <select id="queryDetail" parameterType="ppmOutsourcingRiskResult" resultMap="PPMOUTSOURCINGRISKRESULT_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_OUTSOURCING_RISK_RESULT  WHERE ID=#{id}
+        </select>
+
+         <!--查询集合  k1327 2021-03-17 -->
+        <select id="getList" parameterType="ppmOutsourcingRiskResult" resultMap="PPMOUTSOURCINGRISKRESULT_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_OUTSOURCING_RISK_RESULT
+        	<include refid="sql_select_condition" />
+        </select>
+        <!-- update sql -->
+        <sql id="update_pojo_sql">
+        	<trim prefix="SET" suffixOverrides=",">
+        		<if test="id != null " > ID=#{id} , </if>
+				<if test="jobid != null  and jobid != '' " > JOBID=#{jobid} , </if>
+				<if test="username != null  and username != '' " > USERNAME=#{username} , </if>
+				<if test="certno != null  and certno != '' " > CERTNO=#{certno} , </if>
+				<if test="depid != null  and depid != '' " > DEPID=#{depid} , </if>
+				<if test="depname != null  and depname != '' " > DEPNAME=#{depname} , </if>
+				<if test="orgname != null  and orgname != '' " > ORGNAME=#{orgname} , </if>
+				<if test="orgcode != null  and orgcode != '' " > ORGCODE=#{orgcode} , </if>
+				<if test="explainstate != null  and explainstate != '' " > EXPLAINSTATE=#{explainstate} , </if>
+				<if test="depfeedback != null  and depfeedback != '' " > DEPFEEDBACK=#{depfeedback} , </if>
+				<if test="dealstatus != null " > DEALSTATUS=#{dealstatus} , </if>
+				<if test="manageuserid != null  and manageuserid != '' " > MANAGEUSERID=#{manageuserid} , </if>
+				<if test="risksuggest != null  and risksuggest != '' " > RISKSUGGEST=#{risksuggest} , </if>
+				<if test="riskdate != null " > RISKDATE=#{riskdate} , </if>
+				<if test="remark != null  and remark != '' " > REMARK=#{remark} , </if>
+				<if test="risktype != null " > RISKTYPE=#{risktype} , </if>
+				<if test="regid != null  and regid != '' " > REGID=#{regid} , </if>
+				<if test="regtime != null " > REGTIME=#{regtime} , </if>
+				<if test="managesuggest != null  and managesuggest != '' " > MANAGESUGGEST=#{managesuggest} , </if>
+				<if test="tyear != null  and tyear != '' " > TYEAR=#{tyear} , </if>
+				<if test="tmonth != null  and tmonth != '' " > TMONTH=#{tmonth} , </if>
+				
+            </trim>
+        </sql>
+
+        <!--通过id编辑 k1327 2021-03-17 -->
+    	<update id="updatePojo" parameterType="ppmOutsourcingRiskResult">
+        	UPDATE
+        	PPM_OUTSOURCING_RISK_RESULT
+        	<include refid="update_pojo_sql" />
+        	WHERE ID=#{id}
+        </update>
+
+        <!--通过id批量删除  k1327 2021-03-17 -->
+        <delete id="deleteById" parameterType="ppmOutsourcingRiskResult">
+        	DELETE
+        	FROM
+        	PPM_OUTSOURCING_RISK_RESULT
+        	WHERE ID = #{id}
+        </delete>
+
+
+	<!--查询外包加班数据统计根据科技部 k1327 2021-03-16 -->
+	<select id="getRiskResultData" parameterType="map" resultType="outRiskResultData">
+			select a.job_id jobid,'准入排查' risktype,a.entry_time riskdate,'已处理' risksuggest, a.courtinfo explainstate
+			from ppm_outsourcing_accessapply a
+			where a.job_id=#{jobid}
+			union
+			select * from (
+			select r.jobid,e1.dictname risktype,r.riskdate,e.dictname risksuggest,r.explainstate
+			from ppm_outsourcing_risk_result r
+			left join eos_dict_entry e on e.dicttypeid='PCYJ' and r.risksuggest=e.dictid
+			left join eos_dict_entry e1 on e1.dicttypeid='PCLX' and r.risktype=e1.dictid
+			where r.jobid=#{jobid} and rownum=1 and r.risktype='0' order by r.riskdate desc
+			)
+			union
+			select * from (
+			select r.jobid,e1.dictname risktype,r.riskdate,e.dictname risksuggest,r.explainstate
+			from ppm_outsourcing_risk_result r
+			left join eos_dict_entry e on e.dicttypeid='PCYJ' and r.risksuggest=e.dictid
+			left join eos_dict_entry e1 on e1.dicttypeid='PCLX' and r.risktype=e1.dictid
+			where r.jobid=#{jobid} and rownum=1 and r.risktype='1' order by r.riskdate desc
+			)
+			union
+			select * from (
+			select r.jobid,e1.dictname risktype,r.riskdate,e.dictname risksuggest,r.explainstate
+			from ppm_outsourcing_risk_result r
+			left join eos_dict_entry e on e.dicttypeid='PCYJ' and r.risksuggest=e.dictid
+			left join eos_dict_entry e1 on e1.dicttypeid='PCLX' and r.risktype=e1.dictid
+			where r.jobid=#{jobid} and rownum=1 and r.risktype='2' order by r.riskdate desc
+			)
+	</select>
+</mapper>

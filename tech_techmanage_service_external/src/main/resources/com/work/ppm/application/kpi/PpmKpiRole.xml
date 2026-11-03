@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k1327 2021-05-08 -->
+<mapper namespace="com.work.ppm.application.model.kpi.PpmKpiRole">
+	 <resultMap type="ppmKpiRole" id="PPMKPIROLE_ALL">
+        <result property="id" column="ID" />
+		<result property="badge" column="BADGE" />
+		<result property="empname" column="EMPNAME" />
+		<result property="role" column="ROLE" />
+		<result property="jobid" column="JOBID" />
+		<result property="depid" column="DEPID" />
+		<result property="centerid" column="CENTERID" />
+		<result property="headship" column="HEADSHIP" />
+		<result property="firstcheck" column="FIRSTCHECK" />
+		<result property="secondcheck" column="SECONDCHECK" />
+		<result property="isdel" column="ISDEL" />
+		<result property="tyear" column="TYEAR" />
+		<result property="lastmoduserid" column="LASTMODUSERID" />
+		<result property="lastmodtime" column="LASTMODTIME" />
+		
+     </resultMap>
+
+
+
+	<resultMap type="ppmKpiRoleInfo" id="PPMKPIROLE_ALL_EXT" extends="PPMKPIROLE_ALL">
+		<result property="rolename" column="ROLENAME" />
+		<result property="jobname" column="JOBNAME" />
+		<result property="depname" column="DEPNAME" />
+		<result property="centername" column="CENTERNAME" />
+		<result property="firstcheckname" column="FIRSTCHECKNAME" />
+		<result property="secondcheckname" column="SECONDCHECKNAME" />
+	</resultMap>
+     <!-- 所有字段名称 -->
+        <sql id="sql_flied_all">
+        	ID,
+			BADGE,
+			EMPNAME,
+			ROLE,
+			JOBID,
+			DEPID,
+			CENTERID,
+			HEADSHIP,
+			FIRSTCHECK,
+			SECONDCHECK,
+			ISDEL,
+			TYEAR,
+			LASTMODUSERID,
+			LASTMODTIME
+        </sql>
+        <sql id="sql_select_condition">
+            <trim prefix="WHERE" suffixOverrides="AND">
+                <if test="id != null " > ID = #{id} AND </if>
+				<if test="badge != null  and badge != '' " > BADGE = #{badge} AND </if>
+				<if test="empname != null  and empname != '' " > EMPNAME = #{empname} AND </if>
+				<if test="role != null  and role != '' " > ROLE = #{role} AND </if>
+				<if test="jobid != null  and jobid != '' " > JOBID = #{jobid} AND </if>
+				<if test="depid != null  and depid != '' " > DEPID = #{depid} AND </if>
+				<if test="centerid != null  and centerid != '' " > CENTERID = #{centerid} AND </if>
+				<if test="headship != null  and headship != '' " > HEADSHIP = #{headship} AND </if>
+				<if test="firstcheck != null  and firstcheck != '' " > FIRSTCHECK = #{firstcheck} AND </if>
+				<if test="secondcheck != null  and secondcheck != '' " > SECONDCHECK = #{secondcheck} AND </if>
+				<if test="isdel != null " > ISDEL = #{isdel} AND </if>
+				<if test="tyear != null  and tyear != '' " > TYEAR = #{tyear} AND </if>
+				<if test="lastmoduserid != null  and lastmoduserid != '' " > LASTMODUSERID = #{lastmoduserid} AND </if>
+				<if test="lastmodtime != null " > LASTMODTIME = #{lastmodtime} AND </if>
+				
+            </trim>
+        </sql>
+    	<!-- 查询分页  2021-05-08 k1327  -->
+        <select id="queryPagerList" parameterType="map" resultMap="PPMKPIROLE_ALL">
+        	SELECT
+            <include refid="sql_flied_all" />
+            FROM PPM_KPI_ROLE
+            <include refid="sql_select_condition" />
+        </select>
+
+        <!-- 新增  2021-05-08 k1327  -->
+        <insert id="addPojo" parameterType="ppmKpiRole">
+    		INSERT INTO PPM_KPI_ROLE (
+    		<trim suffixOverrides=",">
+    		 <if test="id != null " > ID , </if>
+				<if test="badge != null  and badge != '' " > BADGE , </if>
+				<if test="empname != null  and empname != '' " > EMPNAME , </if>
+				<if test="role != null  and role != '' " > ROLE , </if>
+				<if test="jobid != null  and jobid != '' " > JOBID , </if>
+				<if test="depid != null  and depid != '' " > DEPID , </if>
+				<if test="centerid != null  and centerid != '' " > CENTERID , </if>
+				<if test="headship != null  and headship != '' " > HEADSHIP , </if>
+				<if test="firstcheck != null  and firstcheck != '' " > FIRSTCHECK , </if>
+				<if test="secondcheck != null  and secondcheck != '' " > SECONDCHECK , </if>
+				<if test="isdel != null " > ISDEL , </if>
+				<if test="tyear != null  and tyear != '' " > TYEAR , </if>
+				<if test="lastmoduserid != null  and lastmoduserid != '' " > LASTMODUSERID , </if>
+				<if test="lastmodtime != null " > LASTMODTIME , </if>
+				
+              </trim>
+    		)
+    		VALUES(
+    		<trim suffixOverrides=",">
+    		 <if test="id != null " > #{id} , </if>
+				<if test="badge != null  and badge != '' " > #{badge} , </if>
+				<if test="empname != null  and empname != '' " > #{empname} , </if>
+				<if test="role != null  and role != '' " > #{role} , </if>
+				<if test="jobid != null  and jobid != '' " > #{jobid} , </if>
+				<if test="depid != null  and depid != '' " > #{depid} , </if>
+				<if test="centerid != null  and centerid != '' " > #{centerid} , </if>
+				<if test="headship != null  and headship != '' " > #{headship} , </if>
+				<if test="firstcheck != null  and firstcheck != '' " > #{firstcheck} , </if>
+				<if test="secondcheck != null  and secondcheck != '' " > #{secondcheck} , </if>
+				<if test="isdel != null " > #{isdel} , </if>
+				<if test="tyear != null  and tyear != '' " > #{tyear} , </if>
+				<if test="lastmoduserid != null  and lastmoduserid != '' " > #{lastmoduserid} , </if>
+				<if test="lastmodtime != null " > #{lastmodtime} , </if>
+				
+            </trim>
+    		)
+        </insert>
+
+        <!--通过id查询  k1327 2021-05-08 -->
+        <select id="queryDetail" parameterType="ppmKpiRole" resultMap="PPMKPIROLE_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_KPI_ROLE  WHERE ID=#{id}
+        </select>
+
+         <!--查询集合  k1327 2021-05-08 -->
+        <select id="getList" parameterType="ppmKpiRole" resultMap="PPMKPIROLE_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_KPI_ROLE
+        	<include refid="sql_select_condition" />
+        </select>
+        <!-- update sql -->
+        <sql id="update_pojo_sql">
+        	<trim prefix="SET" suffixOverrides=",">
+        		<if test="id != null " > ID=#{id} , </if>
+				<if test="badge != null  and badge != '' " > BADGE=#{badge} , </if>
+				<if test="empname != null  and empname != '' " > EMPNAME=#{empname} , </if>
+				<if test="role != null  and role != '' " > ROLE=#{role} , </if>
+				<if test="jobid != null  and jobid != '' " > JOBID=#{jobid} , </if>
+				<if test="depid != null  and depid != '' " > DEPID=#{depid} , </if>
+				<if test="centerid != null  and centerid != '' " > CENTERID=#{centerid} , </if>
+				<if test="headship != null  and headship != '' " > HEADSHIP=#{headship} , </if>
+				<if test="firstcheck != null  " > FIRSTCHECK=#{firstcheck} , </if>
+				<if test="secondcheck != null  and secondcheck != '' " > SECONDCHECK=#{secondcheck} , </if>
+				<if test="isdel != null " > ISDEL=#{isdel} , </if>
+				<if test="tyear != null  and tyear != '' " > TYEAR=#{tyear} , </if>
+				<if test="lastmoduserid != null  and lastmoduserid != '' " > LASTMODUSERID=#{lastmoduserid} , </if>
+				<if test="lastmodtime != null " > LASTMODTIME=#{lastmodtime} , </if>
+				
+            </trim>
+        </sql>
+
+        <!--通过id编辑 k1327 2021-05-08 -->
+    	<update id="updatePojo" parameterType="ppmKpiRole">
+        	UPDATE
+        	PPM_KPI_ROLE
+        	<include refid="update_pojo_sql" />
+        	WHERE ID=#{id}
+        </update>
+
+        <!--通过id批量删除  k1327 2021-05-08 -->
+        <delete id="deleteById" parameterType="ppmKpiRole">
+        	DELETE
+        	FROM
+        	PPM_KPI_ROLE
+        	WHERE ID = #{id}
+        </delete>
+		<!--查询集合  k1327 2021-05-08 -->
+		<select id="getEmpList" parameterType="ppmKpiRole" resultMap="PPMKPIROLE_ALL">
+			select e.badge,e.empname,e.jobid,e.depid,m.centerid,e.headship from comm_employee e
+			left join comm_department d on e.depid=d.depid
+			left join ppm_da_dept_manager m on e.depid=m.deptid
+			where d.adminid='7004' and d.depid!=131 and d.depid!=-6666 and e.empstatus in ('Norm','Prob','Prac')
+		</select>
+		<!--查询集合  k1327 2021-05-08 -->
+		<select id="getPpmKpiRoleView" parameterType="ppmKpiRoleInfo" resultMap="PPMKPIROLE_ALL_EXT">
+			select r.*,e.dictname rolename,j.location jobname,d.location depname,c.centername,
+			emp1.empname firstcheckname,emp2.empname secondcheckname from Ppm_Kpi_Role r
+			left join eos_dict_entry e on e.dicttypeid='KPI_ROLE' and e.dictid=r.role
+			left join comm_job j on r.jobid=j.jobid
+			left join comm_department d on r.depid=d.depid
+			left join ppm_da_center c on r.centerid=c.id
+			left join comm_employee emp1 on emp1.badge=r.firstcheck
+			left join comm_employee emp2 on emp2.badge=r.secondcheck
+			<trim prefix="WHERE" suffixOverrides="AND">
+				<if test="id != null " > r.ID = #{id} AND </if>
+				<if test="badge != null  and badge != '' " > r.BADGE = #{badge} AND </if>
+				<if test="empname != null  and empname != '' " > r.EMPNAME like '%'||#{empname}||'%' AND </if>
+				<if test="role != null  and role != '' " > r.ROLE = #{role} AND </if>
+				<if test="jobid != null  and jobid != '' " > r.JOBID = #{jobid} AND </if>
+				<if test="depid != null  and depid != '' " > r.DEPID = #{depid} AND </if>
+				<if test="centerid != null  and centerid != '' " > r.CENTERID = #{centerid} AND </if>
+				<if test="headship != null  and headship != '' " > r.HEADSHIP = #{headship} AND </if>
+				<if test="firstcheck != null  and firstcheck != '' " > r.FIRSTCHECK = #{firstcheck} AND </if>
+				<if test="secondcheck != null  and secondcheck != '' " > r.SECONDCHECK = #{secondcheck} AND </if>
+				<if test="isdel != null " > r.ISDEL = #{isdel} AND </if>
+				<if test="tyear != null  and tyear != '' " > r.TYEAR = #{tyear} AND </if>
+				<if test="lastmoduserid != null  and lastmoduserid != '' " > r.LASTMODUSERID = #{lastmoduserid} AND </if>
+				<if test="lastmodtime != null " > r.LASTMODTIME = #{lastmodtime} AND </if>
+			</trim>
+		</select>
+		<!--删除所有数据  k1327 2021-05-08 -->
+		<delete id="deleteAll" parameterType="ppmKpiRole">
+			DELETE
+			FROM
+			PPM_KPI_ROLE
+		</delete>
+
+		<!--通过badge查询  k1327 2021-05-08 -->
+		<select id="queryDetailByBadge" parameterType="ppmKpiRole" resultMap="PPMKPIROLE_ALL">
+			SELECT
+			<include refid="sql_flied_all" />
+			FROM PPM_KPI_ROLE  WHERE BADGE = #{badge}
+		</select>
+
+		<!--通过id查询  k1327 2021-05-08 -->
+		<select id="queryDetailById" parameterType="ppmKpiRole" resultMap="PPMKPIROLE_ALL">
+			SELECT
+			<include refid="sql_flied_all" />
+			FROM PPM_KPI_ROLE  WHERE ID = #{id}
+		</select>
+		<!--同步权限给考核表 k1327 2021-05-08 -->
+		<update id="updatePpmKpiPm" parameterType="ppmKpiRole">
+			update ppm_kpi_pm p set(p.depid,p.jobid,p.compid,p.headship,p.centerid,p.role) =
+			(
+			select r.depid,r.jobid,null,r.headship,r.centerid,r.role from ppm_kpi_role r where p.eid=r.badge and r.isdel=0
+			)
+			where p.tyear=#{tyear} and p.status !=7 and exists (select 1 from  ppm_kpi_role r1 where r1.badge=p.eid and r1.isdel=0)
+		</update>
+
+		<!--通过工号查询分管部门的人员  k1327 2021-05-08 -->
+		<select id="getPpmKpiRoleListByDirector" parameterType="map" resultMap="PPMKPIROLE_ALL">
+			select * from ppm_kpi_role r where r.depid in (select d.depid from ppm_kpi_dep_role d where d.director=#{badge})
+		</select>
+</mapper>

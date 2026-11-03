@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k4038 2021-09-28 -->
+<mapper namespace="com.work.ppm.application.model.onlinemanager.PpmProductionDay">
+    <resultMap type="ppmProductionDay" id="PPMPRODUCTIONDAY_ALL">
+        <result property="id" column="ID"/>
+        <result property="year" column="YEAR"/>
+        <result property="productdate" column="PRODUCTDATE"/>
+        <result property="isdel" column="ISDEL"/>
+        <result property="createtime" column="CREATETIME"/>
+        <result property="creators" column="CREATORS"/>
+        <result property="lastmodtime" column="LASTMODTIME"/>
+        <result property="lastmoduser" column="LASTMODUSER"/>
+        <result property="risktype" column="RISKTYPE"/>
+
+    </resultMap>
+
+    <!-- 所有字段名称 -->
+    <sql id="sql_flied_all">
+        ID,
+        YEAR,
+        PRODUCTDATE,
+        ISDEL,
+        CREATETIME,
+        CREATORS,
+        LASTMODTIME,
+        LASTMODUSER,
+        RISKTYPE
+    </sql>
+    <sql id="sql_select_condition">
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="id != null ">ID = #{id} AND</if>
+            <if test="year != null  and year != '' ">YEAR = #{year} AND</if>
+            <if test="productdate != null  and productdate != '' ">PRODUCTDATE = #{productdate} AND</if>
+            <if test="isdel != null ">ISDEL = #{isdel} AND</if>
+            <if test="createtime != null ">CREATETIME = #{createtime} AND</if>
+            <if test="creators != null  and creators != '' ">CREATORS = #{creators} AND</if>
+            <if test="lastmodtime != null ">LASTMODTIME = #{lastmodtime} AND</if>
+            <if test="lastmoduser != null  and lastmoduser != '' ">LASTMODUSER = #{lastmoduser} AND</if>
+            <if test="risktype != null  and risktype != '' ">RISKTYPE = #{risktype} AND</if>
+
+
+        </trim>
+    </sql>
+    <!-- 查询分页  2021-09-28 k4038  -->
+    <select id="queryPagerList" parameterType="map" resultMap="PPMPRODUCTIONDAY_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM PPM_PRODUCTION_DAY
+        <include refid="sql_select_condition"/>
+    </select>
+
+    <!--通过id查询  k4038 2021-09-28 -->
+    <select id="queryDetail" parameterType="ppmProductionDay" resultMap="PPMPRODUCTIONDAY_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM PPM_PRODUCTION_DAY WHERE ID=#{id}
+    </select>
+
+    <!--查询集合  k4038 2021-09-28 -->
+    <select id="queryProductionDay" parameterType="map" resultMap="PPMPRODUCTIONDAY_ALL">
+        select d.* from ppm_production_day d
+        where d.risktype in ('01','02','05','06')
+        and d.isdel='0'
+        and to_date(d.productdate,'yyyy-mm-dd')= to_date(#{tdate},'yyyy-mm-dd')
+        order by d.risktype
+    </select>
+    <!-- 是否变更日 -->
+    <select id="queryChangeDate" parameterType="map" resultMap="PPMPRODUCTIONDAY_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM PPM_PRODUCTION_DAY T
+        WHERE T.YEAR = TO_CHAR(SYSDATE, 'YYYY')
+        AND T.RISKTYPE IN ('01', '02')
+        AND T.PRODUCTDATE = #{productDate}
+    </select>
+
+</mapper>

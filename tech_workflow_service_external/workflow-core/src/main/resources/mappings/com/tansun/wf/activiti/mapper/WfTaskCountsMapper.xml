@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+  
+<mapper namespace="com.tansun.wf.activiti.mapper.WfTaskCountsMapper">
+    <select id="selectWfTasksCountByUser" parameterType="com.tansun.wf.activiti.query.WfTaskCountsQuery" resultType="hashMap">
+        SELECT ASSIGNEE_ as assignee,count(*) as total from act_ru_task WHERE ASSIGNEE_ in
+        <foreach collection="assignees" item="assignee"  open="(" separator="," close=")">
+            #{assignee}
+        </foreach>
+        <if test ="tenantId != null and  tenantId !='' ">
+            and  TENANT_ID_ =#{tenantId}
+        </if>
+         GROUP BY ASSIGNEE_
+    </select>
+</mapper>

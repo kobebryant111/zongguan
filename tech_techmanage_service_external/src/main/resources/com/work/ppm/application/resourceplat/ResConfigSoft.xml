@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k9597 2021-08-12 -->
+<mapper namespace="com.work.ppm.application.model.resourceplat.ResConfigSoft">
+    <resultMap type="ResConfigSoft" id="RESCONFIGSOFT_ALL">
+        <result property="id" column="ID"/>
+        <result property="type" column="TYPE"/>
+        <result property="subtype" column="SUBTYPE"/>
+        <result property="softname" column="SOFTNAME"/>
+        <result property="softversion" column="SOFTVERSION"/>
+        <result property="billingmode" column="BILLINGMODE"/>
+        <result property="price" column="PRICE"/>
+        <result property="status" column="STATUS"/>
+        <result property="creator" column="CREATOR"/>
+        <result property="createtime" column="CREATETIME"/>
+
+    </resultMap>
+
+    <!-- 获取软件报价列表数据 -->
+    <select id="querySoftList" parameterType="ResConfigSoft" resultMap="RESCONFIGSOFT_ALL">
+        SELECT T.*
+        FROM RES_CONFIG_SOFT T
+        WHERE T.STATUS IN ('1', '2')
+        AND T.TYPE =#{comboOneId}
+        ORDER BY T.ISCANCEL,T.STATUS,T.SUBTYPE,T.CREATETIME DESC
+    </select>
+
+    <!-- 获取软件报价列表数据 -->
+    <select id="querySoftViewList" parameterType="Map" resultMap="RESCONFIGSOFT_ALL">
+        SELECT T.*
+        FROM RES_CONFIG_SOFT T
+        WHERE 1=1
+        <if test='viewFlag != "3"' ><![CDATA[AND T.PRICE > 0  ]]></if>
+          AND T.STATUS ='2'
+          AND T.ISCANCEL ='0'
+          AND T.TYPE =#{comboOneId}
+        ORDER BY T.STATUS,T.SUBTYPE,T.CREATETIME DESC
+    </select>
+
+    <!-- 新增软件报价信息 -->
+    <insert id="addSoftData" parameterType="ResConfigSoft">
+        INSERT INTO RES_CONFIG_SOFT
+        (ID,
+        <trim suffixOverrides=",">
+            <if test="type != null  and type != '' " > TYPE , </if>
+            <if test="subtype != null  and subtype != '' " > SUBTYPE , </if>
+            <if test="softname != null  and softname != '' " > SOFTNAME , </if>
+            <if test="softversion != null  and softversion != '' " > SOFTVERSION , </if>
+            <if test="billingmode != null  and billingmode != '' " > BILLINGMODE , </if>
+            <if test="price != null  and price != '' " > PRICE, </if>
+            <if test="status != null  and status != '' " > STATUS, </if>
+            <if test="creator != null  and creator != '' " > CREATOR, </if>
+            <if test="createtime != null " > CREATETIME, </if>
+        </trim>)
+        VALUES(
+        #{id},
+        <trim suffixOverrides=",">
+            <if test="type != null  and type != '' " > #{type} , </if>
+            <if test="subtype != null  and subtype != '' " > #{subtype} , </if>
+            <if test="softname != null  and softname != '' " > #{softname} , </if>
+            <if test="softversion != null  and softversion != '' " > #{softversion} , </if>
+            <if test="billingmode != null  and billingmode != '' " > #{billingmode} , </if>
+            <if test="price != null  and price != '' " > #{price}, </if>
+            <if test="status != null  and status != '' " > #{status}, </if>
+            <if test="creator != null  and creator != '' " > #{creator}, </if>
+            <if test="createtime != null " > #{createtime}, </if>
+        </trim>)
+    </insert>
+
+    <!-- 更新软件报价信息 -->
+    <update id="upSoftData" parameterType="ResConfigSoft">
+        UPDATE RES_CONFIG_SOFT
+
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="softname != null  and softname != '' " > SOFTNAME =#{softname} , </if>
+            <if test="softversion != null  and softversion != '' " > SOFTVERSION =#{softversion} , </if>
+            <if test="billingmode != null  and billingmode != '' " > BILLINGMODE =#{billingmode} , </if>
+            <if test="price != null  and price != '' " > PRICE=#{price}, </if>
+            <if test="status != null  and status != '' " > STATUS=#{status}, </if>
+        </trim>
+        WHERE ID =#{id}
+    </update>
+
+    <!-- 更新软件报价状态 -->
+    <update id ="upSoftStatus" parameterType="map">
+        UPDATE RES_CONFIG_SOFT
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="status != null  and status != '' " > STATUS=#{status} , </if>
+            <if test="iscancel != null  and iscancel != '' " > ISCANCEL=#{iscancel} , </if>
+        </trim>
+        WHERE ID in
+            <foreach collection="ids" index="index" item="id" open="(" close=")" separator=",">
+                #{id}
+            </foreach>
+
+    </update>
+
+</mapper>

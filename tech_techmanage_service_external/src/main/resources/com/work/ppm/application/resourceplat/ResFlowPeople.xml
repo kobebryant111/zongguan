@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.work.ppm.application.model.resourceplat.ResFlowPeople">
+    <resultMap type="resFlowPeople" id="RES_FLOW_PEOPLE_INFO">
+        <result property="id" column="ID" />
+        <result property="nodeId" column="NODEID" />
+        <result property="nodeName" column="NODENAME" />
+        <result property="userId" column="USERID" />
+        <result property="userName" column="USERNAME" />
+    </resultMap>
+    <!-- 新增配置人员信息 -->
+    <insert id="insertFlowPeople" parameterType="resFlowPeople">
+        INSERT INTO RES_FLOW_PEOPLE_INFO(ID,NODEID,NODENAME,USERID,USERNAME)
+        VALUES (#{id},#{nodeId},#{nodeName},#{userId},#{userName})
+    </insert>
+    <!-- 删除配置人员信息 -->
+    <delete id="deleteFlowPeople" parameterType="Map">
+        DELETE FROM RES_FLOW_PEOPLE_INFO WHERE ID=#{id}
+    </delete>
+    <!-- 查询配置人员信息-->
+    <select id="queryFlowPeopleList"  resultType="Map">
+        SELECT *
+        FROM RES_FLOW_PEOPLE_INFO
+    </select>
+    <!-- 根据编号查询配置人员信息-->
+    <select id="queryFlowPeopleByNodeId"  resultType="resFlowPeople">
+        SELECT * FROM RES_FLOW_PEOPLE_INFO WHERE NODEID=#{nodeId}
+    </select>
+</mapper>
+

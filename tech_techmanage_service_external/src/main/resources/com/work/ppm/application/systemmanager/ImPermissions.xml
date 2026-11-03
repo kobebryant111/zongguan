@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k6991 2020-03-10 -->
+<mapper namespace="com.work.ppm.application.model.systemmanager.ImPermissions">
+	 <resultMap type="imPermissions" id="IMPERMISSIONS_ALL">
+        <result property="id" column="ID" />
+		<result property="rid" column="RID" />
+		<result property="mid" column="MID" />
+		<result property="createdate" column="CREATEDATE" />
+		<result property="sysType" column="SYS_TYPE" />
+     </resultMap>
+
+     <!-- 所有字段名称 -->
+        <sql id="sql_flied_all">
+        	ID,
+			RID,
+			MID,
+			CREATEDATE,
+			SYS_TYPE
+        </sql>
+    	<!-- 查询分页  2020-03-10 k6991  -->
+        <select id="queryPagerList" parameterType="map" resultMap="IMPERMISSIONS_ALL">
+        	SELECT
+            <include refid="sql_flied_all" />
+            FROM IM_PERMISSIONS
+            <trim prefix="WHERE" suffixOverrides="AND">
+                <if test="id != null  and id != '' " > ID = #{id} AND </if>
+				<if test="rid != null  and rid != '' " > RID = #{rid} AND </if>
+				<if test="mid != null  and mid != '' " > MID = #{mid} AND </if>
+				<if test="createdate != null " > CREATEDATE = #{createdate} AND </if>
+				<if test="sysType != null " > SYS_TYPE = #{sysType} AND </if>
+            </trim>
+        </select>
+
+        <!-- 新增  2020-03-10 k6991  -->
+        <insert id="addPojo" parameterType="imPermissions">
+			<selectKey keyProperty="id" resultType="string" order="BEFORE">
+				select sys_guid() from dual
+			</selectKey>
+    		INSERT INTO IM_PERMISSIONS (
+    		ID,
+			RID,
+			MID,
+			CREATEDATE,
+			SYS_TYPE
+    		)
+    		VALUES(
+    		#{id},
+			#{rid},
+			#{mid},
+			#{createdate},
+			#{sysType}
+    		)
+        </insert>
+
+        <!--通过id查询  k6991 2020-03-10 -->
+        <select id="getRidForList" parameterType="map" resultMap="IMPERMISSIONS_ALL">
+			SELECT MID FROM IM_PERMISSIONS WHERE RID=#{rid} and SYS_TYPE = #{sysType}
+        </select>
+
+         <!--查询集合  k6991 2020-03-10 -->
+        <select id="getList" parameterType="map" resultMap="IMPERMISSIONS_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM IM_PERMISSIONS
+        	<trim prefix="WHERE" suffixOverrides="AND">
+        		<if test="id != null  and id != '' " > ID=#{id} AND </if>
+				<if test="rid != null  and rid != '' " > RID=#{rid} AND </if>
+				<if test="mid != null  and mid != '' " > MID=#{mid} AND </if>
+				<if test="createdate != null " > CREATEDATE=#{createdate} AND </if>
+				<if test="sysType != null " > SYS_TYPE=#{sysType} AND </if>
+            </trim>
+        </select>
+        <!-- update sql -->
+        <sql id="update_pojo_sql">
+        	<trim prefix="SET" suffixOverrides=",">
+        		<if test="id != null  and id != '' " > ID=#{id} , </if>
+				<if test="rid != null  and rid != '' " > RID=#{rid} , </if>
+				<if test="mid != null  and mid != '' " > MID=#{mid} , </if>
+				<if test="createdate != null " > CREATEDATE=#{createdate} , </if>
+				<if test="sysType != null " > SYS_TYPE=#{sysType} , </if>
+            </trim>
+        </sql>
+
+        <!--通过id编辑 k6991 2020-03-10 -->
+    	<update id="updatePojo" parameterType="imPermissions">
+        	UPDATE
+        	IM_PERMISSIONS
+        	<include refid="update_pojo_sql" />
+        	WHERE ID=#{id} AND SYS_TYPE=#{sysType}
+        </update>
+
+        <!--通过id批量删除  k6991 2020-03-10 -->
+        <delete id="deleteByRid" parameterType="imPermissions">
+        	DELETE
+        	FROM
+        	IM_PERMISSIONS
+			<trim prefix="WHERE" suffixOverrides="AND">
+				<if test="rid != null  and rid != '' " > RID=#{rid} AND </if>
+				<if test="mid != null  and mid != '' " > MID=#{mid} AND </if>
+				<if test="sysType != null" > SYS_TYPE=#{sysType} AND </if>
+			</trim>
+        </delete>
+	<!-- 返回存在的记录数 2020-04-23 k6991 -->
+	<select id="authRelForMid" parameterType="map" resultType="long">
+		SELECT COUNT(ID) FROM IM_PERMISSIONS WHERE MID=#{mid} AND SYS_TYPE=#{sysType}
+	</select>
+
+	<!-- 新增  2020-03-10 k6991  -->
+	<insert id="addOperaPermissions" parameterType="imPermissions">
+		INSERT INTO OPERA_PERMISSIONS (ID, RID, MID, CREATEDATE,SYS_TYPE)
+		SELECT #{id},#{rid},#{mid},#{createdate},#{sysType}
+		FROM dual
+		WHERE NOT EXISTS (
+		SELECT 1
+		FROM OPERA_PERMISSIONS
+		WHERE RID=#{rid} AND MID=#{mid}
+		)
+	</insert>
+
+	<select id="getOperaList" parameterType="map" resultMap="IMPERMISSIONS_ALL">
+		SELECT MID FROM OPERA_PERMISSIONS WHERE RID=#{rid} and SYS_TYPE = #{sysType}
+	</select>
+
+
+	<delete id="deleteOperaPermissions" parameterType="map">
+		DELETE
+		FROM
+		OPERA_PERMISSIONS
+		<trim prefix="WHERE" suffixOverrides="AND">
+			<if test="rid != null  and rid != '' " > RID=#{rid} AND </if>
+			<if test="mid != null  and mid != '' " > MID=#{mid} AND </if>
+			<if test="sysType != null" > SYS_TYPE=#{sysType} AND </if>
+		</trim>
+	</delete>
+
+</mapper>

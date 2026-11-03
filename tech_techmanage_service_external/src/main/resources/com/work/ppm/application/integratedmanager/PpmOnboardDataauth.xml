@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k6991 2021-04-25 -->
+<mapper namespace="com.work.ppm.application.model.integratedmanager.PpmOnboardDataauth">
+	 <resultMap type="ppmOnboardDataauth" id="PPMONBOARDDATAAUTH_ALL">
+        <result property="id" column="ID" />
+		<result property="centerId" column="CENTER_ID" />
+		<result property="userId" column="USER_ID" />
+		<result property="userName" column="USER_NAME" />
+		
+     </resultMap>
+
+     <!-- 所有字段名称 -->
+        <sql id="sql_flied_all">
+        	ID,
+			CENTER_ID,
+			USER_ID,
+			USER_NAME
+        </sql>
+        <sql id="sql_select_condition">
+            <trim prefix="WHERE" suffixOverrides="AND">
+                <if test="id != null " > ID = #{id} AND </if>
+				<if test="centerId != null " > CENTER_ID = #{centerId} AND </if>
+				<if test="userId != null  and userId != '' " > INSTR(USER_ID , #{userId}) > 0 AND </if>
+				<if test="userName != null  and userName != '' " > USER_NAME = #{userName} AND </if>
+				
+            </trim>
+        </sql>
+
+        <!-- 新增  2021-04-25 k6991  -->
+        <insert id="addPojo" parameterType="ppmOnboardDataauth">
+    		INSERT INTO PPM_ONBOARD_DATAAUTH (
+    		<trim suffixOverrides=",">
+    		 <if test="id != null " > ID , </if>
+				<if test="centerId != null " > CENTER_ID , </if>
+				<if test="userId != null  and userId != '' " > USER_ID , </if>
+				<if test="userName != null  and userName != '' " > USER_NAME , </if>
+				
+              </trim>
+    		)
+    		VALUES(
+    		<trim suffixOverrides=",">
+    		 <if test="id != null " > #{id} , </if>
+				<if test="centerId != null " > #{centerId} , </if>
+				<if test="userId != null  and userId != '' " > #{userId} , </if>
+				<if test="userName != null  and userName != '' " > #{userName} , </if>
+				
+            </trim>
+    		)
+        </insert>
+
+        <!--通过id查询  k6991 2021-04-25 -->
+        <select id="queryDetail" parameterType="ppmOnboardDataauth" resultMap="PPMONBOARDDATAAUTH_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_ONBOARD_DATAAUTH  WHERE ID=#{id}
+        </select>
+
+         <!--查询集合  k6991 2021-04-25 -->
+        <select id="getList" parameterType="ppmOnboardDataauth" resultMap="PPMONBOARDDATAAUTH_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_ONBOARD_DATAAUTH
+        	<include refid="sql_select_condition" />
+        </select>
+        <!-- update sql -->
+        <sql id="update_pojo_sql">
+        	<trim prefix="SET" suffixOverrides=",">
+        		<if test="id != null " > ID=#{id} , </if>
+				<if test="centerId != null " > CENTER_ID=#{centerId} , </if>
+				<if test="userId != null  and userId != '' " > USER_ID=#{userId} , </if>
+				<if test="userName != null  and userName != '' " > USER_NAME=#{userName} , </if>
+				
+            </trim>
+        </sql>
+
+        <!--通过id编辑 k6991 2021-04-25 -->
+    	<update id="updatePojo" parameterType="ppmOnboardDataauth">
+        	UPDATE
+        	PPM_ONBOARD_DATAAUTH
+        	<include refid="update_pojo_sql" />
+        	WHERE ID=#{id}
+        </update>
+</mapper>

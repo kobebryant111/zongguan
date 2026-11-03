@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:ywwb905 2022-11-18 -->
+<!--  信息变更申请信息表 查询脚本 -->
+<mapper namespace="com.work.ppm.application.model.integratedmanager.PpmOutsourcUpdate">
+	 <resultMap type="ppmOutsourcUpdate" id="PPMOUTSOURCUPDATE_ALL">
+        <result property="id" column="ID" />
+		<result property="instanceid" column="INSTANCEID" />
+		<result property="applyer" column="APPLYER" />
+		<result property="applyerDept" column="APPLYER_DEPT" />
+		<result property="updateReason" column="UPDATE_REASON" />
+		<result property="applyerTime" column="APPLYER_TIME" />
+		<result property="state" column="STATE" />
+		<result property="stateName" column="STATE_NAME" />
+		<result property="currentId" column="CURRENT_ID" />
+		<result property="currentName" column="CURRENT_NAME" />
+		<result property="createdTime" column="CREATED_TIME" />
+		<result property="createdBy" column="CREATED_BY" />
+		<result property="modifiedTime" column="MODIFIED_TIME" />
+		<result property="modifiedBy" column="MODIFIED_BY" />
+		
+     </resultMap>
+
+     <!-- 所有字段名称 -->
+    <sql id="sql_flied_all">
+        ID,
+			INSTANCEID,
+			APPLYER,
+			APPLYER_DEPT,
+			UPDATE_REASON,
+			APPLYER_TIME,
+			STATE,
+			STATE_NAME,
+			CURRENT_ID,
+			CURRENT_NAME,
+			CREATED_TIME,
+			CREATED_BY,
+			MODIFIED_TIME,
+			MODIFIED_BY
+    </sql>
+    <sql id="sql_select_condition">
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="id != null " > ID = #{id} AND </if>
+				<if test="instanceid != null  and instanceid != '' " > INSTANCEID = #{instanceid} AND </if>
+				<if test="applyer != null  and applyer != '' " > APPLYER = #{applyer} AND </if>
+				<if test="applyerDept != null  and applyerDept != '' " > APPLYER_DEPT = #{applyerDept} AND </if>
+				<if test="updateReason != null  and updateReason != '' " > UPDATE_REASON = #{updateReason} AND </if>
+				<if test="applyerTime != null  and applyerTime != '' " > APPLYER_TIME = #{applyerTime} AND </if>
+				<if test="state != null  and state != '' " > STATE = #{state} AND </if>
+				<if test="stateName != null  and stateName != '' " > STATE_NAME = #{stateName} AND </if>
+				<if test="currentId != null  and currentId != '' " > CURRENT_ID = #{currentId} AND </if>
+				<if test="currentName != null  and currentName != '' " > CURRENT_NAME = #{currentName} AND </if>
+				<if test="createdTime != null " > CREATED_TIME = #{createdTime} AND </if>
+				<if test="createdBy != null  and createdBy != '' " > CREATED_BY = #{createdBy} AND </if>
+				<if test="modifiedTime != null " > MODIFIED_TIME = #{modifiedTime} AND </if>
+				<if test="modifiedBy != null  and modifiedBy != '' " > MODIFIED_BY = #{modifiedBy} AND </if>
+				
+        </trim>
+    </sql>
+    <!-- 查询分页  2022-11-18 ywwb905  -->
+    <select id="queryPagerList" parameterType="map" resultMap="PPMOUTSOURCUPDATE_ALL">
+        SELECT
+        <include refid="sql_flied_all" />
+        FROM PPM_OUTSOURC_UPDATE
+        <include refid="sql_select_condition" />
+    </select>
+
+    <!-- 新增  2022-11-18 ywwb905  -->
+    <insert id="addPojo" parameterType="ppmOutsourcUpdate">
+        INSERT INTO PPM_OUTSOURC_UPDATE (
+        <trim suffixOverrides=",">
+         <if test="id != null " > ID , </if>
+				<if test="instanceid != null  and instanceid != '' " > INSTANCEID , </if>
+				<if test="applyer != null  and applyer != '' " > APPLYER , </if>
+				<if test="applyerDept != null  and applyerDept != '' " > APPLYER_DEPT , </if>
+				<if test="updateReason != null  and updateReason != '' " > UPDATE_REASON , </if>
+				<if test="applyerTime != null  and applyerTime != '' " > APPLYER_TIME , </if>
+				<if test="state != null  and state != '' " > STATE , </if>
+				<if test="stateName != null  and stateName != '' " > STATE_NAME , </if>
+				<if test="currentId != null  and currentId != '' " > CURRENT_ID , </if>
+				<if test="currentName != null  and currentName != '' " > CURRENT_NAME , </if>
+				<if test="createdTime != null " > CREATED_TIME , </if>
+				<if test="createdBy != null  and createdBy != '' " > CREATED_BY , </if>
+				<if test="modifiedTime != null " > MODIFIED_TIME , </if>
+				<if test="modifiedBy != null  and modifiedBy != '' " > MODIFIED_BY , </if>
+				
+          </trim>
+        )
+        VALUES(
+        <trim suffixOverrides=",">
+         <if test="id != null " > #{id} , </if>
+				<if test="instanceid != null  and instanceid != '' " > #{instanceid} , </if>
+				<if test="applyer != null  and applyer != '' " > #{applyer} , </if>
+				<if test="applyerDept != null  and applyerDept != '' " > #{applyerDept} , </if>
+				<if test="updateReason != null  and updateReason != '' " > #{updateReason} , </if>
+				<if test="applyerTime != null  and applyerTime != '' " > #{applyerTime} , </if>
+				<if test="state != null  and state != '' " > #{state} , </if>
+				<if test="stateName != null  and stateName != '' " > #{stateName} , </if>
+				<if test="currentId != null and currentId != '' " > #{currentId} , </if>
+				<if test="currentName != null and currentName != '' " > #{currentName} , </if>
+				<if test="createdTime != null " > #{createdTime} , </if>
+				<if test="createdBy != null  and createdBy != '' " > #{createdBy} , </if>
+				<if test="modifiedTime != null " > #{modifiedTime} , </if>
+				<if test="modifiedBy != null  and modifiedBy != '' " > #{modifiedBy} , </if>
+				
+        </trim>
+        )
+    </insert>
+
+    <!--通过id查询  ywwb905 2022-11-18 -->
+    <select id="queryDetail" parameterType="ppmOutsourcUpdate" resultMap="PPMOUTSOURCUPDATE_ALL">
+        SELECT
+        <include refid="sql_flied_all" />
+        FROM PPM_OUTSOURC_UPDATE  
+		<trim prefix="WHERE" suffixOverrides="AND">
+            <if test="id != null " > ID = #{id} AND </if>
+			<if test="instanceid != null  and instanceid != '' " > INSTANCEID = #{instanceid} AND </if>				
+			<if test="id == null  and instanceid == null " > ID = #{id} AND </if>				
+        </trim>
+    </select>
+
+     <!--查询集合  ywwb905 2022-11-18 -->
+    <select id="getList" parameterType="ppmOutsourcUpdate" resultMap="PPMOUTSOURCUPDATE_ALL">
+        SELECT
+        <include refid="sql_flied_all" />
+        FROM PPM_OUTSOURC_UPDATE
+        <include refid="sql_select_condition" />
+    </select>
+    <!-- update sql -->
+    <sql id="update_pojo_sql">
+        <trim prefix="SET" suffixOverrides=",">
+			<if test="instanceid != null  and instanceid != '' " > INSTANCEID=#{instanceid} , </if>
+			<if test="applyer != null  and applyer != '' " > APPLYER=#{applyer} , </if>
+			<if test="applyerDept != null  and applyerDept != '' " > APPLYER_DEPT=#{applyerDept} , </if>
+			<if test="updateReason != null  and updateReason != '' " > UPDATE_REASON=#{updateReason} , </if>
+			<if test="applyerTime != null  and applyerTime != '' " > APPLYER_TIME=#{applyerTime} , </if>
+			<if test="state != null  and state != '' " > STATE=#{state} , </if>
+			<if test="stateName != null  and stateName != '' " > STATE_NAME=#{stateName} , </if>
+			<if test="currentId != null " > CURRENT_ID=#{currentId} , </if>
+			<if test="currentName != null " > CURRENT_NAME=#{currentName} , </if>
+			<if test="createdTime != null " > CREATED_TIME=#{createdTime} , </if>
+			<if test="createdBy != null  and createdBy != '' " > CREATED_BY=#{createdBy} , </if>
+			<if test="modifiedTime != null " > MODIFIED_TIME=#{modifiedTime} , </if>
+			<if test="modifiedBy != null  and modifiedBy != '' " > MODIFIED_BY=#{modifiedBy} , </if>
+				
+        </trim>
+    </sql>
+
+    <!--通过id编辑 ywwb905 2022-11-18 -->
+    <update id="updatePojo" parameterType="ppmOutsourcUpdate">
+        UPDATE
+        PPM_OUTSOURC_UPDATE
+        <include refid="update_pojo_sql" />
+        WHERE ID=#{id}
+    </update>
+
+    <!--通过id批量删除  ywwb905 2022-11-18 -->
+    <delete id="deleteById" parameterType="ppmOutsourcUpdate">
+        DELETE
+        FROM
+        PPM_OUTSOURC_UPDATE
+        WHERE ID = #{id}
+    </delete>
+	
+	<!--通过id批量删除  ywwb905 2022-11-18 -->
+    <delete id="deleteByInstanceId" parameterType="ppmOutsourcUpdate">
+        DELETE
+        FROM
+        PPM_OUTSOURC_UPDATE
+        WHERE INSTANCEID = #{instanceid}
+    </delete>
+	
+
+</mapper>

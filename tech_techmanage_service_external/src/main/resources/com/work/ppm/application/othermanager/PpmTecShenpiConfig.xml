@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k4038 2021-10-21 -->
+<mapper namespace="com.work.ppm.application.model.othermanager.PpmTecShenpiConfig">
+	 <resultMap type="ppmTecShenpiConfig" id="PPMTECSHENPICONFIG_ALL">
+        <result property="id" column="ID" />
+		<result property="deptno" column="DEPTNO" />
+		<result property="userid" column="USERID" />
+		
+     </resultMap>
+
+     <!-- 所有字段名称 -->
+        <sql id="sql_flied_all">
+        	ID,
+			DEPTNO,
+			USERID
+        </sql>
+        <sql id="sql_select_condition">
+            <trim prefix="WHERE" suffixOverrides="AND">
+                <if test="id != null " > ID = #{id} AND </if>
+				<if test="deptno != null  and deptno != '' " > DEPTNO = #{deptno} AND </if>
+				<if test="userid != null  and userid != '' " > USERID = #{userid} AND </if>
+				
+            </trim>
+        </sql>
+    	<!-- 查询分页  2021-10-21 k4038  -->
+        <select id="queryPagerList" parameterType="map" resultMap="PPMTECSHENPICONFIG_ALL">
+        	SELECT
+            <include refid="sql_flied_all" />
+            FROM PPM_TEC_SHENPI_CONFIG
+            <include refid="sql_select_condition" />
+        </select>
+
+        <!-- 新增  2021-10-21 k4038  -->
+        <insert id="addPojo" parameterType="ppmTecShenpiConfig">
+    		INSERT INTO PPM_TEC_SHENPI_CONFIG (
+    		<trim suffixOverrides=",">
+    		 <if test="id != null " > ID , </if>
+				<if test="deptno != null  and deptno != '' " > DEPTNO , </if>
+				<if test="userid != null  and userid != '' " > USERID , </if>
+				
+              </trim>
+    		)
+    		VALUES(
+    		<trim suffixOverrides=",">
+    		 <if test="id != null " > #{id} , </if>
+				<if test="deptno != null  and deptno != '' " > #{deptno} , </if>
+				<if test="userid != null  and userid != '' " > #{userid} , </if>
+				
+            </trim>
+    		)
+        </insert>
+
+        <!--通过id查询  k4038 2021-10-21 -->
+        <select id="queryDetail" parameterType="ppmTecShenpiConfig" resultMap="PPMTECSHENPICONFIG_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_TEC_SHENPI_CONFIG  WHERE ID=#{id}
+        </select>
+
+         <!--查询集合  k4038 2021-10-21 -->
+        <select id="getList" parameterType="ppmTecShenpiConfig" resultMap="PPMTECSHENPICONFIG_ALL">
+        	SELECT
+        	<include refid="sql_flied_all" />
+        	FROM PPM_TEC_SHENPI_CONFIG
+        	<include refid="sql_select_condition" />
+        </select>
+        <!-- update sql -->
+        <sql id="update_pojo_sql">
+        	<trim prefix="SET" suffixOverrides=",">
+        		<if test="id != null " > ID=#{id} , </if>
+				<if test="deptno != null  and deptno != '' " > DEPTNO=#{deptno} , </if>
+				<if test="userid != null  and userid != '' " > USERID=#{userid} , </if>
+				
+            </trim>
+        </sql>
+
+        <!--通过id编辑 k4038 2021-10-21 -->
+    	<update id="updatePojo" parameterType="ppmTecShenpiConfig">
+        	UPDATE
+        	PPM_TEC_SHENPI_CONFIG
+        	<include refid="update_pojo_sql" />
+        	WHERE ID=#{id}
+        </update>
+
+        <!--通过id批量删除  k4038 2021-10-21 -->
+        <delete id="deleteById" parameterType="ppmTecShenpiConfig">
+        	DELETE
+        	FROM
+        	PPM_TEC_SHENPI_CONFIG
+        	WHERE ID = #{id}
+        </delete>
+
+	<!--通过id查询  k4038 2021-10-21 -->
+	<select id="queryDetailByDeptno" parameterType="ppmTecShenpiConfig" resultMap="PPMTECSHENPICONFIG_ALL">
+		SELECT
+		<include refid="sql_flied_all" />
+		FROM PPM_TEC_SHENPI_CONFIG  WHERE deptno=#{deptno}
+	</select>
+
+</mapper>

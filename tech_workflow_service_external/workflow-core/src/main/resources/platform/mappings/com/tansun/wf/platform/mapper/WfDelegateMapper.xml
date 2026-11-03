@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tansun.wf.platform.mapper.WfDelegateMapper">
+
+	<resultMap id="wfDelegate" type="com.tansun.wf.platform.model.WfDelegateEntity">
+		<result column="id" property="id" javaType="java.lang.String"/>
+		<result column="task_id" property="taskId" javaType="java.lang.String"/>
+		<result column="tenant_id" property="tenantId" javaType="java.lang.String"/>
+		<result column="delegate_time" property="delegateTime" javaType="java.util.Date"/>
+		<result column="process_def_id" property="processDefId" javaType="java.lang.String"/>
+		<result column="task_def_key" property="taskDefKey" javaType="java.lang.String"/>
+		<result column="agent_user" property="agentUser" javaType="java.lang.String"/>
+		<result column="trust_user" property="trustUser" javaType="java.lang.String"/>
+		<result column="status" property="status" javaType="java.lang.String"/>
+		<result column="task_name"  property="taskName"  javaType="java.lang.String"/>
+		<result column="PROCESS_NAME"  property="processName"  javaType="java.lang.String"/>
+	</resultMap>
+    <sql id="wfDelegateColumns">
+	    a.id,
+	    a.task_id,
+	    a.tenant_id,
+		a.process_def_id,
+		a.task_def_key,
+		a.delegate_time,
+		a.agent_user,
+		a.trust_user,
+		a.status
+	</sql>
+
+	<delete id="delete" parameterType="com.tansun.wf.platform.model.WfDelegateEntity">
+        delete from wf_delegate where id = #{id}
+    </delete>
+
+    <select id="findList" parameterType="com.tansun.wf.platform.query.WfDelegateQuery" resultMap="wfDelegate">
+        SELECT
+        <include refid="wfDelegateColumns"/>
+		FROM wf_delegate  a
+		<where> 1=1
+			<if test="id != null and id != ''"  >
+				AND a.id = #{id}
+			</if>
+			<if test="tenantId != null and tenantId != ''">
+				AND a.tenant_id = #{tenantId}
+			</if>
+			<if test="processDefId != null and processDefId != ''"  >
+				AND a.process_def_id = #{processDefId}
+			</if>
+			
+			<if test="taskDefKey != null and taskDefKey != ''"  >
+				AND a.task_def_key = #{taskDefKey}
+			</if>
+			
+	
+			<if  test="trustUser !=null and trustUser !=''" >
+			   AND a.trust_user = #{trustUser}
+			</if>
+			
+			<if  test="agentUser !=null and agentUser !=''" >
+			  AND a.agent_user =#{agentUser}
+			</if>
+			
+			<if test="status !=null and status !=''" >
+			   AND a.status =#{status}
+			</if>
+		
+		   	<if test="taskId !=null and taskId !=''" >
+			   AND a.task_id =#{taskId}
+			</if>
+
+		</where>
+    </select>
+
+
+	<select id="selectById" parameterType="java.lang.String" resultType="com.tansun.wf.platform.model.WfDelegateEntity">
+		SELECT
+		<include refid="wfDelegateColumns"/>
+		FROM wf_delegate a
+		where id = #{id}
+	</select>
+
+	<update id="update"  parameterType="com.tansun.wf.platform.model.WfDelegateEntity"  >
+		UPDATE wf_delegate
+		<set>
+			<if test="tenantId != null">
+				tenant_id = #{tenantId},
+			</if>
+			<if test="agentUser != null">
+				agent_user = #{agentUser},
+			</if>
+			<if test="processDefId != null">
+				process_def_id = #{processDefId},
+			</if>
+			<if test="taskDefKey != null">
+				task_def_key = #{taskDefKey},
+			</if>
+			<if test="trustUser != null">
+				trust_user = #{trustUser},
+			</if>
+			<if test="status != null">
+				status = #{status}
+			</if>
+		</set>
+		WHERE id = #{id}
+	</update>
+
+	<insert id="insert" parameterType="com.tansun.wf.platform.model.WfDelegateEntity">
+		 INSERT INTO  wf_delegate (
+            id,
+            task_id,
+			process_def_id,
+			task_def_key,
+			delegate_time,
+			agent_user,
+			trust_user,
+			tenant_id,	
+			status
+        )
+        VALUES (
+          #{id},
+          #{taskId},
+          #{processDefId},
+          #{taskDefKey},
+          #{delegateTime},
+          #{agentUser},
+		  #{trustUser},
+		  #{tenantId},
+		  #{status}		  
+        )
+	</insert>
+	
+	<select  id="findDelegateList" parameterType="com.tansun.wf.platform.query.WfDelegateQuery" resultMap="wfDelegate">
+	  SELECT
+	        a.id,
+			a.TASK_ID ,
+			a.PROCESS_DEF_ID  ,
+			a.TASK_DEF_KEY ,
+			a.TRUST_USER  ,
+			a.AGENT_USER  ,
+			a.DELEGATE_TIME ,
+			a.STATUS  ,
+		    w.task_name  ,
+		    w.PROCESS_NAME	
+		FROM
+			WF_DELEGATE a,
+			WF_TASK_EXPAND_DATA w 
+		WHERE
+			a.TASK_ID = w.TASK_ID
+			and a.TENANT_ID  = w.TENANT_ID
+			and a.TENANT_ID =#{tenantId}
+			<if test="trustUser !=null and  trustUser !=''" >
+			   and  a.TRUST_USER =#{trustUser}
+			</if>
+			<if  test="status !=null and  status !=''">
+			    and a.status =#{status}
+			</if>
+	</select>
+
+</mapper>	

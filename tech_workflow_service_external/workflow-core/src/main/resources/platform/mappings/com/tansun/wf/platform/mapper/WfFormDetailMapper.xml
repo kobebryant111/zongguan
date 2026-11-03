@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tansun.wf.platform.mapper.WfFormDetailMapper">
+
+    <resultMap type="com.tansun.wf.platform.model.WfFormDetailEntity" id="wfFormDetailMap">
+        <result column="form_id" property="formId" javaType="java.lang.String"/>
+        <result column="name" property="name" javaType="java.lang.String"/>
+        <result column="comments" property="comments" javaType="java.lang.String"/>
+        <result column="field_type" property="fieldType" javaType="java.lang.String"/>
+        <result column="default_value" property="defaultValue" javaType="java.lang.String"/>
+        <result column="editable" property="editable" javaType="java.lang.String"/>
+        <result column="show_type" property="showType" javaType="java.lang.String"/>
+        <result column="dict_type" property="dictType" javaType="java.lang.String"/>
+        <result column="sort" property="sort" javaType="java.lang.String"/>
+        <result column="create_by" property="createBy" javaType="java.lang.String"/>
+        <result column="create_date" property="createDate" javaType="java.util.Date"/>
+        <result column="update_by" property="updateBy" javaType="java.lang.String"/>
+        <result column="update_date" property="updateDate" javaType="java.util.Date"/>
+        <result column="remarks" property="remarks" javaType="java.lang.String"/>
+        <result column="del_flag" property="delFlag" javaType="java.lang.String"/>
+        <result column="tenant_id" property="tenantId" javaType="java.lang.String"/>
+        <result column="id" property="id" javaType="java.lang.String"/>
+    </resultMap>
+
+    <sql id="wfFormDetailColumns">
+		a.id,
+		a.form_id,
+		a.name,
+		a.comments,
+		a.field_type,
+		a.default_value,
+		a.editable,
+		a.show_type,
+		a.dict_type,
+		a.sort,
+		a.create_by,
+		a.create_date,
+		a.update_by,
+		a.update_date,
+		a.remarks,
+		a.del_flag
+	</sql>
+
+    <delete id="delete" parameterType="com.tansun.wf.platform.model.WfFormDetailEntity">
+        delete from wf_form_detail where id = #{id}
+    </delete>
+
+    <select id="findList"  resultMap="wfFormDetailMap"  resultType="com.tansun.wf.platform.model.WfFormDetailEntity">
+        SELECT
+        <include refid="wfFormDetailColumns"/>
+        FROM wf_form_detail a
+        <where>
+            a.del_flag = '0'
+            <if test="id != null and id !=''">
+                AND a.id = #{id}
+            </if>
+            <if test="formId != null and formId !=''">
+                AND a.form_id = #{formId}
+            </if>
+            <if test="name != null and name != ''">
+            <bind name="likeName" value="'%' + _parameter.name + '%'"/>
+                AND a.name LIKE #{likeName}
+            </if>
+        </where>
+    </select>
+
+    <update id="update"  parameterType="com.tansun.wf.platform.model.WfFormDetailEntity">
+        UPDATE wf_form_detail w
+        <set>
+            <if test="formId != null">
+                w.form_id = #{formId},
+            </if>
+            <if test="name != null">
+                w.name = #{name},
+            </if>
+            <if test="comments != null">
+                w.comments = #{comments},
+            </if>
+            <if test="fieldType != null">
+                w.field_type = #{fieldType},
+            </if>
+            <if test="defaultValue != null">
+                w.default_value = #{defaultValue},
+            </if>
+            <if test="editable != null">
+                w.editable = #{editable},
+            </if>
+            <if test="showType != null">
+                w.show_type = #{showType},
+            </if>
+            <if test="dictType != null">
+                w.dict_type = #{dictType},
+            </if>
+            <if test="sort != null">
+                w.sort = #{sort},
+            </if>
+            <if test="remarks != null">
+                w.remarks = #{remarks},
+            </if>
+            <if test="updateDate != null">
+                w.update_date = #{updateDate},
+            </if>
+            <if test="updateBy != null">
+                w.update_by = #{updateBy},
+            </if>
+            <if test="remarks != null">
+                w.remarks = #{remarks},
+            </if>
+            <if test="delFlag != null">
+                w.del_flag = #{delFlag}
+            </if>
+        </set>
+        WHERE w.id = #{id}
+    </update>
+
+    <insert id="insert" parameterType="com.tansun.wf.platform.model.WfFormDetailEntity">
+		INSERT INTO wf_form_detail
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            id,
+            form_id,
+            <if test="_databaseId =='oracle'">
+                name,
+            </if>
+            <if test="_databaseId =='mysql'">
+                `name`,
+            </if>
+            comments,
+            field_type,
+            default_value,
+            create_by,
+            create_date,
+            update_by,
+            update_date,
+            remarks,
+            del_flag
+        </trim>
+		 VALUES (
+			#{id,jdbcType=VARCHAR},
+			#{formId,jdbcType=VARCHAR},
+			#{name,jdbcType=VARCHAR},
+			#{comments,jdbcType=VARCHAR},
+			#{fieldType,jdbcType=VARCHAR},
+			#{defaultValue,jdbcType=VARCHAR},
+			#{createBy,jdbcType=VARCHAR},
+			#{createDate,jdbcType=DATE},
+			#{updateBy,jdbcType=VARCHAR},
+			#{updateDate,jdbcType=DATE},
+			#{remarks,jdbcType=VARCHAR},
+			#{delFlag,jdbcType=VARCHAR}
+		)
+	</insert>
+</mapper>

@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- author:k76239 2021-11-22 -->
+<mapper namespace="com.work.ppm.application.model.depkpi.PpmDepkpiDepModel">
+    <resultMap type="ppmDepkpiDepModel" id="PPMDEPKPIDEPMODEL_ALL">
+        <result property="id" column="ID"/>
+        <result property="depid" column="DEPID"/>
+        <result property="modelid" column="MODELID"/>
+        <result property="commitflag" column="COMMITFLAG"/>
+        <result property="isdel" column="ISDEL"/>
+        <result property="lastmoduserid" column="LASTMODUSERID"/>
+        <result property="lastmodtime" column="LASTMODTIME"/>
+
+    </resultMap>
+    <resultMap type="PpmDepkpiDepModelInfo" id="PPMDEPKPIDEPMODEL_ALL_EXT" extends="PPMDEPKPIDEPMODEL_ALL">
+        <result property="total" column="TOTAL"/>
+        <result property="name" column="Name"/>
+    </resultMap>
+
+    <!-- 所有字段名称 -->
+    <sql id="sql_flied_all">
+        ID,
+        DEPID,
+        MODELID,
+        COMMITFLAG,
+        ISDEL,
+        LASTMODUSERID,
+        LASTMODTIME
+    </sql>
+    <sql id="sql_select_condition">
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="id != null ">ID = #{id} AND</if>
+            <if test="depid != null ">DEPID = #{depid} AND</if>
+            <if test="modelid != null ">MODELID = #{modelid} AND</if>
+            <if test="commitflag != null ">COMMITFLAG = #{commitflag} AND</if>
+            <if test="isdel != null ">ISDEL = #{isdel} AND</if>
+            <if test="lastmoduserid != null  and lastmoduserid != '' ">LASTMODUSERID = #{lastmoduserid} AND</if>
+            <if test="lastmodtime != null ">LASTMODTIME = #{lastmodtime} AND</if>
+        </trim>
+    </sql>
+    <!-- 查询分页  2021-11-22 k76239  -->
+    <select id="queryPagerList" parameterType="map" resultMap="PPMDEPKPIDEPMODEL_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM PPM_DEPKPI_DEP_MODEL
+        <include refid="sql_select_condition"/>
+    </select>
+
+    <!-- 新增  2021-11-22 k76239  -->
+    <insert id="addPojo" parameterType="ppmDepkpiDepModel">
+        INSERT INTO PPM_DEPKPI_DEP_MODEL (
+        <trim suffixOverrides=",">
+            <if test="id != null ">ID ,</if>
+            <if test="depid != null ">DEPID ,</if>
+            <if test="modelid != null ">MODELID ,</if>
+            <if test="commitflag != null ">COMMITFLAG ,</if>
+            <if test="isdel != null ">ISDEL ,</if>
+            <if test="lastmoduserid != null  and lastmoduserid != '' ">LASTMODUSERID ,</if>
+            <if test="lastmodtime != null ">LASTMODTIME ,</if>
+
+        </trim>
+        )
+        VALUES(
+        <trim suffixOverrides=",">
+            <if test="id != null ">#{id} ,</if>
+            <if test="depid != null ">#{depid} ,</if>
+            <if test="modelid != null ">#{modelid} ,</if>
+            <if test="commitflag != null ">#{commitflag} ,</if>
+            <if test="isdel != null ">#{isdel} ,</if>
+            <if test="lastmoduserid != null  and lastmoduserid != '' ">#{lastmoduserid} ,</if>
+            <if test="lastmodtime != null ">#{lastmodtime} ,</if>
+
+        </trim>
+        )
+    </insert>
+
+    <!--通过id查询  k76239 2021-11-22 -->
+    <select id="queryDetail" parameterType="ppmDepkpiDepModel" resultMap="PPMDEPKPIDEPMODEL_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM PPM_DEPKPI_DEP_MODEL WHERE ID=#{id}
+    </select>
+
+    <!--查询集合  k76239 2021-11-22 -->
+    <select id="getList" parameterType="ppmDepkpiDepModel" resultMap="PPMDEPKPIDEPMODEL_ALL">
+        SELECT
+        <include refid="sql_flied_all"/>
+        FROM PPM_DEPKPI_DEP_MODEL
+        <include refid="sql_select_condition"/>
+    </select>
+    <!-- update sql -->
+    <sql id="update_pojo_sql">
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="id != null ">ID=#{id} ,</if>
+            <if test="depid != null ">DEPID=#{depid} ,</if>
+            <if test="modelid != null ">MODELID=#{modelid} ,</if>
+            <if test="commitflag != null ">COMMITFLAG=#{commitflag} ,</if>
+            <if test="isdel != null ">ISDEL=#{isdel} ,</if>
+            <if test="lastmoduserid != null  and lastmoduserid != '' ">LASTMODUSERID=#{lastmoduserid} ,</if>
+            <if test="lastmodtime != null ">LASTMODTIME=#{lastmodtime} ,</if>
+        </trim>
+    </sql>
+
+    <!--通过id编辑 k76239 2021-11-22 -->
+    <update id="updatePojo" parameterType="ppmDepkpiDepModel">
+        UPDATE
+        PPM_DEPKPI_DEP_MODEL
+        <include refid="update_pojo_sql"/>
+        WHERE ID=#{id}
+    </update>
+
+    <!--通过id批量删除  k76239 2021-11-22 -->
+    <delete id="deleteById" parameterType="ppmDepkpiDepModel">
+        DELETE
+        FROM
+        PPM_DEPKPI_DEP_MODEL
+        WHERE ID = #{id}
+    </delete>
+
+    <!--通过部门id 修改模板id  k76239 2021-11-22 -->
+    <update id="updateDepModelByDepid" parameterType="ppmDepkpiDepModel">
+        UPDATE
+        PPM_DEPKPI_DEP_MODEL
+        <include refid="update_pojo_sql"/>
+        WHERE DEPID=#{depid}
+    </update>
+
+    <!--通过部门id 修改模板id  k76239 2021-11-22 -->
+    <update id="changeDepModelByDepid" parameterType="ppmDepkpiDepModel">
+        UPDATE
+        PPM_DEPKPI_DEP_MODEL
+        <trim prefix="SET" suffixOverrides=",">
+            COMMITFLAG=#{commitflag, jdbcType=INTEGER} ,
+            MODELID=#{modelid, jdbcType=INTEGER} ,
+            LASTMODUSERID=#{lastmoduserid, jdbcType=INTEGER} ,
+            LASTMODTIME=#{lastmodtime, jdbcType=TIMESTAMP} ,
+        </trim>
+        WHERE DEPID=#{depid, jdbcType=INTEGER}
+    </update>
+
+</mapper>

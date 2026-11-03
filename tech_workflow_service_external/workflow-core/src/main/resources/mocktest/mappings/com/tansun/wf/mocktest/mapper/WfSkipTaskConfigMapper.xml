@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+  
+<mapper namespace="com.tansun.wf.mocktest.mapper.WfSkipTaskConfigMapper">
+
+    <insert id="insert" parameterType="com.tansun.wf.mocktest.model.WfSkipTaskConfigEntity">
+        INSERT INTO WF_SKIP_TASK_CONFIG (
+            ID,
+            TENANT_ID,
+            TENANT_NAME,
+            PROCESS_DEF_KEY,
+            PROCESS_NAME,
+            TASK_ASSIGNEE,
+            TARGET_NODE_ID,
+            TARGET_NODE_NAME,
+            IS_OPEN,
+            IS_GLOBAL,
+            CREATE_TIME
+        )
+        VALUES (
+          #{id,jdbcType=VARCHAR},
+          #{tenantId,jdbcType=VARCHAR},
+          #{tenantName,jdbcType=VARCHAR},
+          #{processDefKey,jdbcType=VARCHAR},
+          #{processName,jdbcType=VARCHAR},
+          #{taskAssignee,jdbcType=VARCHAR},
+          #{targetNodeId,jdbcType=VARCHAR},
+          #{targetNodeName,jdbcType=VARCHAR},
+          #{isOpen,jdbcType=VARCHAR},
+          #{isGlobal,jdbcType=VARCHAR},
+          #{createTime,jdbcType=TIMESTAMP}
+        )
+    </insert>
+
+    <insert id="bulkInsert" parameterType="com.tansun.wf.mocktest.model.WfSkipTaskConfigEntity">
+        INSERT INTO WF_TEST_PLAN (
+        ID,
+        TENANT_ID,
+        TENANT_NAME,
+        PROCESS_DEF_KEY,
+        PROCESS_NAME,
+        TASK_ASSIGNEE,
+        TARGET_NODE_ID,
+        TARGET_NODE_NAME,
+        IS_OPEN,
+        IS_GLOBAL,
+        CREATE_TIME
+        )
+        VALUES
+        <foreach collection="list" item="copy" index="index" separator=",">
+          (#{id,jdbcType=VARCHAR},
+            #{tenantId,jdbcType=VARCHAR},
+            #{tenantName,jdbcType=VARCHAR},
+            #{processDefKey,jdbcType=VARCHAR},
+            #{processName,jdbcType=VARCHAR},
+            #{taskAssignee,jdbcType=VARCHAR},
+            #{targetNodeId,jdbcType=VARCHAR},
+            #{targetNodeName,jdbcType=VARCHAR},
+            #{isOpen,jdbcType=VARCHAR},
+            #{isGlobal,jdbcType=VARCHAR},
+            #{createTime,jdbcType=TIMESTAMP})
+        </foreach>
+    </insert>
+
+    <resultMap id="baseResultMap" type="com.tansun.wf.mocktest.model.WfSkipTaskConfigEntity" >
+        <id column="ID" property="id" jdbcType="VARCHAR" />
+        <result column="TENANT_ID" property="tenantId" jdbcType="VARCHAR" />
+        <result column="TENANT_NAME" property="tenantName" jdbcType="VARCHAR" />
+        <result column="PROCESS_DEF_KEY" property="processDefKey" jdbcType="VARCHAR" />
+        <result column="PROCESS_NAME" property="processName" jdbcType="VARCHAR" />
+        <result column="TASK_ASSIGNEE" property="taskAssignee" jdbcType="VARCHAR" />
+        <result column="TARGET_NODE_ID" property="targetNodeId" jdbcType="VARCHAR" />
+        <result column="TARGET_NODE_NAME" property="targetNodeName" jdbcType="VARCHAR" />
+        <result column="IS_OPEN" property="isOpen" jdbcType="VARCHAR" />
+        <result column="IS_GLOBAL" property="isGlobal" jdbcType="VARCHAR" />
+        <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    </resultMap>
+
+    <select id="findList" parameterType="com.tansun.wf.mocktest.query.WfSkipTaskConfigQuery" resultMap="baseResultMap">
+        select
+        ID,
+        TENANT_ID,
+        TENANT_NAME,
+        PROCESS_DEF_KEY,
+        PROCESS_NAME,
+        TASK_ASSIGNEE,
+        TARGET_NODE_ID,
+        TARGET_NODE_NAME,
+        IS_OPEN,
+        IS_GLOBAL,
+        CREATE_TIME
+
+        <include refid="selectWhere"/>
+
+    </select>
+
+    <sql id="selectWhere">
+        FROM WF_SKIP_TASK_CONFIG RES
+        <where>
+            <if test="processDefKey != null and processDefKey!=''">
+                AND RES.PROCESS_DEF_KEY like  #{processDefKey} || '%'
+            </if>
+            <if test="isOpen != null and isOpen!=''">
+                AND RES.IS_OPEN = #{isOpen}
+            </if>
+
+            <if test="isGlobal != null and isGlobal!=''">
+                AND RES.is_global = #{isGlobal}
+            </if>
+
+            <if test="tenantId != null and tenantId!=''">
+                AND RES.tenant_id = #{tenantId}
+            </if>
+        </where>
+         ORDER BY RES.CREATE_TIME DESC
+    </sql>
+
+    <select id="selectById" resultMap="baseResultMap" parameterType="java.lang.String" >
+        select
+        ID,
+        TENANT_ID,
+        TENANT_NAME,
+        PROCESS_DEF_KEY,
+        PROCESS_NAME,
+        TASK_ASSIGNEE,
+        TARGET_NODE_ID,
+        TARGET_NODE_NAME,
+        IS_OPEN,
+        IS_GLOBAL,
+        CREATE_TIME
+        from WF_SKIP_TASK_CONFIG
+        where ID = #{id,jdbcType=VARCHAR}
+    </select>
+
+    <delete id="delete" parameterType="com.tansun.wf.mocktest.query.WfSkipTaskConfigQuery">
+        delete from WF_SKIP_TASK_CONFIG where id = #{id}
+    </delete>
+
+    <delete id="deleteByIds" parameterType="java.util.List">
+        delete from WF_SKIP_TASK_CONFIG where id in
+        <if test="list!=null and list.size() > 0">
+            <foreach collection="list" item="id"  open="(" separator="," close=")">
+                ${id}
+            </foreach>
+        </if>
+    </delete>
+
+
+    <update id="update" parameterType="com.tansun.wf.mocktest.model.WfSkipTaskConfigEntity">
+        update WF_SKIP_TASK_CONFIG set
+          ID = #{id,jdbcType=VARCHAR},
+          TENANT_ID = #{tenantId,jdbcType=VARCHAR},
+          TENANT_NAME = #{tenantName,jdbcType=VARCHAR},
+          PROCESS_DEF_KEY = #{processDefKey,jdbcType=VARCHAR},
+          PROCESS_NAME = #{processName,jdbcType=VARCHAR},
+          TASK_ASSIGNEE = #{taskAssignee,jdbcType=VARCHAR},
+          TARGET_NODE_ID = #{targetNodeId,jdbcType=VARCHAR},
+          TARGET_NODE_NAME = #{targetNodeName,jdbcType=VARCHAR},
+          IS_OPEN = #{isOpen,jdbcType=VARCHAR},
+          IS_GLOBAL = #{isGlobal,jdbcType=VARCHAR}
+         where id = #{id}
+    </update>
+
+    <update id="changeOpenStatus">
+
+        update WF_SKIP_TASK_CONFIG set
+          IS_OPEN = #{isOpen,jdbcType=VARCHAR}
+          where id in
+        <if test="ids!=null and ids.size() > 0">
+            <foreach collection="ids" item="id"  open="(" separator="," close=")">
+                ${id}
+            </foreach>
+        </if>
+
+    </update>
+</mapper>
