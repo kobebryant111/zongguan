@@ -227,6 +227,9 @@
 		LEFT JOIN EOS_DICT_ENTRY E4 ON CM.EMPSTATUS = E4.DICTID AND E4.DICTTYPEID = 'COMM_EMPSTATUS'
 		<trim prefix="WHERE" suffixOverrides="AND">
             <if test="attendanceMonth != null and attendanceMonth != '' ">KI.ATTENDANCE_MONTH = #{attendanceMonth} AND</if>
+            <!-- 下载按年月区间查月汇总。列表不传这两个参数，仍是单月等于查询。yyyyMM 定长，字符串比较就是时间先后。 -->
+            <if test="attendanceMonthStart != null and attendanceMonthStart != '' ">KI.ATTENDANCE_MONTH &gt;= #{attendanceMonthStart} AND</if>
+            <if test="attendanceMonthEnd != null and attendanceMonthEnd != '' ">KI.ATTENDANCE_MONTH &lt;= #{attendanceMonthEnd} AND</if>
             <if test="userName != null and userName != '' ">KI.USER_NAME like '%'||#{userName}||'%' AND</if>
             <if test="deptId != null and deptId != '' ">CD.Depid = #{deptId} AND</if>
             <if test="deptId == null or deptId == '' ">CD.Depid IN (
@@ -252,7 +255,14 @@
 				</trim>
 				) AND</if>
         </trim>
-		ORDER BY KI.ID DESC
+		<choose>
+			<when test="attendanceMonthStart != null and attendanceMonthStart != '' ">
+				ORDER BY KI.ATTENDANCE_MONTH DESC, KI.JOB_ID
+			</when>
+			<otherwise>
+				ORDER BY KI.ID DESC
+			</otherwise>
+		</choose>
 	</select>
 
 	<!--通过id查询  ywwb1713 2023-11-03 -->

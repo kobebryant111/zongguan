@@ -1,6 +1,7 @@
 package com.work.ppm.application.services.bankmanager.impl;
 
 import com.work.ppm.application.dto.bankmamager.PpmEmpKqInfoDto;
+import com.work.ppm.application.dto.bankmamager.PpmEmpKqInfoExportDto;
 import com.work.ppm.application.dto.bankmamager.PpmEmpKqRecordDto;
 import com.work.ppm.application.dto.integratedmanager.PpmKqCalendarDto;
 import com.work.ppm.application.dto.systemmanager.CommOperatorDoLoginDto;
@@ -14,7 +15,9 @@ import com.work.ppm.application.services.bankmanager.IPpmEmpService;
 import com.work.ppm.application.services.integratedmanager.IPpmKqCalendarService;
 import com.work.ppm.application.services.integratedmanager.IPpmKqOvertimeConfigService;
 import com.work.ppm.application.services.systemmanager.ICommEmployeeService;
+import com.work.ppm.commons.ApiCode;
 import com.work.ppm.commons.dao.IMyBatisDao;
+import com.work.ppm.commons.exception.BizException;
 import com.work.ppm.commons.pager.Pager;
 import com.work.ppm.commons.utils.JsonUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -100,6 +103,123 @@ public class PpmEmpKqInfoService implements IPpmEmpKqInfoService, IPpmEmpKqInfoC
             infoDtos.add(ppmEmpKqInfoDto1);
         }
         pager.setList(infoDtos);
+    }
+
+    @Override
+    public List<PpmEmpKqInfoExportDto> exportExcel(PpmEmpKqInfoDto ppmEmpKqInfoDto, CommOperatorDoLoginDto user) {
+        String start = normalizeMonth(ppmEmpKqInfoDto.getAttendanceMonthStart(), "开始年月");
+        String end = normalizeMonth(ppmEmpKqInfoDto.getAttendanceMonthEnd(), "结束年月");
+        if (start.compareTo(end) > 0) {
+            throw new BizException(ApiCode.FAIL, "开始年月不能晚于结束年月");
+        }
+        // 日明细在 PPM_EMP_KQ_RECORD，这里只导出月汇总，区间按月封顶。
+        if (monthSpan(start, end) > 12) {
+            throw new BizException(ApiCode.FAIL, "下载区间不能超过12个月");
+        }
+        // 清掉单月条件，避免和区间条件叠成“既等于某月又落在区间里”。
+        ppmEmpKqInfoDto.setAttendanceMonth(null);
+        ppmEmpKqInfoDto.setAttendanceMonthStart(start);
+        ppmEmpKqInfoDto.setAttendanceMonthEnd(end);
+        if (ppmEmpKqInfoDto.getDeptId() != null) {
+            ppmEmpKqInfoDto.setDeptId(ppmEmpKqInfoDto.getDeptId().replace("dep", ""));
+        }
+        handleAuthCode(ppmEmpKqInfoDto, user);
+        // 与列表相同：jobId 在这条查询里表示当前用户工号，用来限定可见部门。
+        ppmEmpKqInfoDto.setJobId(user.getDeptId());
+        PpmEmpKqInfoDto query = JsonUtil.jsonToClass(ppmEmpKqInfoDto, PpmEmpKqInfoDto.class);
+        Map<String, Object> map = JsonUtil.objectTOMap(query, PpmEmpKqInfoDto.class);
+        List<PpmEmpKqInfoView> list = myBatisDao.selectListT(PPMEMPKQINFO, map, UNIQUE_NAME_VIEW_LIST);
+        List<PpmEmpKqInfoExportDto> rows = new ArrayList<>();
+        if (list == null) {
+            return rows;
+        }
+        for (PpmEmpKqInfoView item : list) {
+            rows.add(toExportRow(item));
+        }
+        return rows;
+    }
+
+    private PpmEmpKqInfoExportDto toExportRow(PpmEmpKqInfoView item) {
+        PpmEmpKqInfoExportDto row = new PpmEmpKqInfoExportDto();
+        row.setJobId(item.getJobId());
+        row.setUserName(item.getUserName());
+        row.setDeptName(shortDeptName(item.getDeptName()));
+        row.setStateName(stateText(item));
+        row.setAttendanceMonth(showMonth(item.getAttendanceMonth()));
+        row.setWorktimeHours(item.getWorktimeHours());
+        row.setRequiredAttendanceDays(item.getRequiredAttendanceDays());
+        row.setActualAttendanceDays(item.getActualAttendanceDays());
+        return row;
+    }
+
+    private String normalizeMonth(String value, String label) {
+        if (StringUtils.isBlank(value)) {
+            throw new BizException(ApiCode.FAIL, "请选择" + label);
+        }
+        String month = value.replace("-", "");
+        if (month.length() != 6 || !StringUtils.isNumeric(month)) {
+            throw new BizException(ApiCode.FAIL, label + "格式应为年月");
+        }
+        int monthOfYear = Integer.parseInt(month.substring(4, 6));
+        if (monthOfYear < 1 || monthOfYear > 12) {
+            throw new BizException(ApiCode.FAIL, label + "格式应为年月");
+        }
+        return month;
+    }
+
+    private int monthSpan(String start, String end) {
+        int startIndex = Integer.parseInt(start.substring(0, 4)) * 12 + Integer.parseInt(start.substring(4, 6));
+        int endIndex = Integer.parseInt(end.substring(0, 4)) * 12 + Integer.parseInt(end.substring(4, 6));
+        return endIndex - startIndex + 1;
+    }
+
+    /**
+     * 部门全称是「上级-本级」，列表只显示本级。
+     */
+    private String shortDeptName(String deptName) {
+        if (deptName == null) {
+            return null;
+        }
+        String[] parts = deptName.split("-");
+        if (parts.length > 1) {
+            return parts[1];
+        }
+        return deptName;
+    }
+
+    private String showMonth(String attendanceMonth) {
+        if (attendanceMonth != null && attendanceMonth.length() == 6) {
+            return attendanceMonth.substring(0, 4) + "-" + attendanceMonth.substring(4);
+        }
+        return attendanceMonth;
+    }
+
+    /**
+     * 优先用字典状态名。字典没有时按列表页同一套编码翻译。
+     */
+    private String stateText(PpmEmpKqInfoView item) {
+        if (StringUtils.isNotBlank(item.getStatename())) {
+            return item.getStatename();
+        }
+        if (item.getState() == null) {
+            return "";
+        }
+        if ("Loff".equals(item.getState())) {
+            return "离职";
+        }
+        if ("Norm".equals(item.getState())) {
+            return "在职";
+        }
+        if ("Prac".equals(item.getState())) {
+            return "实习";
+        }
+        if ("Reti".equals(item.getState())) {
+            return "退休";
+        }
+        if ("XLoff".equals(item.getState())) {
+            return "实习离职";
+        }
+        return item.getState();
     }
 
     @Override

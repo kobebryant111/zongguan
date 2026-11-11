@@ -15,6 +15,19 @@ export function queryPager(data) {
     })
 }
 
+/**
+ * 按考勤年月区间下载
+ * @param {*} data
+ */
+export function exportEmpExcel(data) {
+    return request({
+        responseType: 'blob',
+        url: '/ppmEmpKqInfo/exportInfo',
+        method: 'post',
+        data
+    })
+}
+
 /*
  * 详情
  */

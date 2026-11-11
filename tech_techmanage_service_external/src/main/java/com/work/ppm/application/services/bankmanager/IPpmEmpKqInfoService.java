@@ -1,6 +1,7 @@
 package com.work.ppm.application.services.bankmanager;
 
 import com.work.ppm.application.dto.bankmamager.PpmEmpKqInfoDto;
+import com.work.ppm.application.dto.bankmamager.PpmEmpKqInfoExportDto;
 import com.work.ppm.application.dto.systemmanager.CommOperatorDoLoginDto;
 import com.work.ppm.commons.pager.Pager;
 
@@ -20,6 +21,15 @@ public interface IPpmEmpKqInfoService {
      * @param pager        分页对象
      */
     void queryPager(PpmEmpKqInfoDto ppmKqInfoDto, Pager pager, CommOperatorDoLoginDto user);
+
+    /**
+     * 按考勤年月区间导出，筛选和权限与列表一致。
+     *
+     * @param ppmEmpKqInfoDto 查询条件，使用开始、结束年月
+     * @param user            当前用户
+     * @return 导出行
+     */
+    List<PpmEmpKqInfoExportDto> exportExcel(PpmEmpKqInfoDto ppmEmpKqInfoDto, CommOperatorDoLoginDto user);
 
     /**
      * 查询详情 根据id

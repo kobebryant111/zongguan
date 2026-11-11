@@ -44,9 +44,9 @@
         </div>
         <!-- 表格部分 -->
         <div class="table_box">
-            <!-- <el-row type="flex" justify="end" class="margin_bottom">
-                <button-common  buttonName="考勤信息导出"  :size="sizes_export"  :fns="clickExportButton"></button-common>
-            </el-row> -->
+            <el-row type="flex" justify="end" class="margin_bottom">
+                <button-common buttonName="下载" :size="sizes_export" :fns="openDownload"></button-common>
+            </el-row>
             <el-table
                 :data='crewData'
                 highlight-current-row height="510"
@@ -133,6 +133,32 @@
             <div class="pager_zb">
                 <pager :fns="getPager" :total="totalNumber" :pageSize="size" v-model="$attrs" ref="pager" />
             </div>
+
+            <el-dialog title="下载考勤" :visible.sync="downloadVisible" width="480px" :before-close="closeDownload">
+                <el-form label-width="90px">
+                    <el-form-item label="开始年月">
+                        <el-date-picker
+                            v-model="downloadForm.start"
+                            type="month"
+                            value-format="yyyy-MM"
+                            placeholder="开始年月"
+                        ></el-date-picker>
+                    </el-form-item>
+                    <el-form-item label="结束年月">
+                        <el-date-picker
+                            v-model="downloadForm.end"
+                            type="month"
+                            value-format="yyyy-MM"
+                            placeholder="结束年月"
+                        ></el-date-picker>
+                    </el-form-item>
+                    <p class="download-tip">按页面上的姓名、所属部门筛选，一次最多 12 个月。页面列表仍按单月查看。</p>
+                </el-form>
+                <span slot="footer" class="dialog-footer">
+                    <el-button @click="closeDownload">取 消</el-button>
+                    <el-button type="primary" :disabled="downloading" @click="downloadRange">下 载</el-button>
+                </span>
+            </el-dialog>
 
             <!-- 弹框部分 -->
             <el-dialog :visible="dislogVisible" title="开始加班时间配置" :before-close="handleClose" >
@@ -231,7 +257,7 @@
 
 <script>
 import common from "@/api/common";
-import { queryPager, importExcel, importErrorExcel, queryRole, exportNoVerify, exportExcel, exportRecordExcel, queryOvertimeConfig, addOvertimeConfig, infoDataCalculateRunBatch, annualVacationBatch } from '@/api/kqManager/empAttendance';
+import { queryPager, importExcel, importErrorExcel, queryRole, exportNoVerify, exportExcel, exportRecordExcel, exportEmpExcel, queryOvertimeConfig, addOvertimeConfig, infoDataCalculateRunBatch, annualVacationBatch } from '@/api/kqManager/empAttendance';
 import pager from "@/components/Pager";
 import { queryResourceDept } from "@/api/integrated/wbryzrlc";
 import Moment from 'moment';
@@ -294,7 +320,13 @@ export default {
             buttonExportDays: '导出日明细', //导出按钮
             sizes_export: 'medium', //按钮大小
             defaultDate: "", // 默认日期
-            exportDialogVisiable: false, 
+            exportDialogVisiable: false,
+            downloadVisible: false,
+            downloading: false,
+            downloadForm: {
+                start: '',
+                end: ''
+            }, 
             auth: false,
             kqAuth: false,
             typeTimeVisiable: false,
@@ -410,6 +442,71 @@ export default {
             // this.otherExportTimeVisiable = false;
         },
 
+        openDownload() {
+            const month = this.form.attendanceMonth || this.defaultDate
+            this.downloadForm.start = month
+            this.downloadForm.end = month
+            this.downloadVisible = true
+        },
+        closeDownload() {
+            this.downloadVisible = false
+        },
+        monthIndex(value) {
+            const parts = value.split('-')
+            return Number(parts[0]) * 12 + Number(parts[1])
+        },
+        // 下载的是月汇总区间，不是按天的打卡明细。姓名和部门沿用页面筛选。
+        downloadRange() {
+            const start = this.downloadForm.start
+            const end = this.downloadForm.end
+            if (!start || !end) {
+                this.$message.error('请选择开始年月和结束年月')
+                return
+            }
+            if (this.monthIndex(end) < this.monthIndex(start)) {
+                this.$message.error('开始年月不能晚于结束年月')
+                return
+            }
+            if (this.monthIndex(end) - this.monthIndex(start) + 1 > 12) {
+                this.$message.error('下载区间不能超过12个月')
+                return
+            }
+            const params = common.paramsFormat({
+                userName: this.form.userName,
+                deptId: this.form.deptId,
+                attendanceMonthStart: start,
+                attendanceMonthEnd: end
+            })
+            const self = this
+            this.downloading = true
+            const loading = common.loading(this)
+            exportEmpExcel(params).then(res => {
+                loading.close()
+                this.downloading = false
+                const data = res.data
+                if (data && data.type && data.type.indexOf('application/json') !== -1) {
+                    const reader = new FileReader()
+                    reader.onload = () => {
+                        let message = '下载失败'
+                        try {
+                            const body = JSON.parse(reader.result)
+                            message = body.message || message
+                        } catch (e) {
+                            message = '下载失败'
+                        }
+                        self.$message.error(message)
+                    }
+                    reader.readAsText(data)
+                    return
+                }
+                common.download(data, self, '员工考勤' + start + '_' + end + '.xls')
+                this.downloadVisible = false
+            }).catch(() => {
+                loading.close()
+                this.downloading = false
+                this.$message.error('下载失败')
+            })
+        },
         clickExportButton() {
             // let exportOption = this.exportOptions;
             if ((this.auth || this.kqAuth) && this.exportOptions.length < 3) {
@@ -753,6 +850,12 @@ export default {
 }
 .margin_bottom {
     margin-bottom: 15px
+}
+.download-tip {
+    margin: 0;
+    color: #8c8c8c;
+    font-size: 12px;
+    line-height: 1.5;
 }
 /* 分页组件位置 */
 .pager_zb {

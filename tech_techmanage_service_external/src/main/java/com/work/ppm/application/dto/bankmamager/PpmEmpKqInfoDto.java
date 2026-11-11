@@ -46,6 +46,14 @@ public class PpmEmpKqInfoDto {
     @ApiModelProperty(name = "attendanceMonth", value = "考勤年月", dataType = "String")
     private String attendanceMonth;
     /**
+     * 下载区间开始年月，格式 yyyy-MM 或 yyyyMM。只给导出用，列表不传。
+     */
+    private String attendanceMonthStart;
+    /**
+     * 下载区间结束年月，格式 yyyy-MM 或 yyyyMM。只给导出用，列表不传。
+     */
+    private String attendanceMonthEnd;
+    /**
      * 项目经理编号 PM_ID
      **/
     private String pmId;

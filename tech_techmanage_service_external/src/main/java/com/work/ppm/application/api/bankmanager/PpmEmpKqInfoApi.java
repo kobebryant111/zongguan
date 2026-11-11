@@ -1,6 +1,7 @@
 package com.work.ppm.application.api.bankmanager;
 
 import com.work.ppm.application.dto.bankmamager.PpmEmpKqInfoDto;
+import com.work.ppm.application.dto.bankmamager.PpmEmpKqInfoExportDto;
 import com.work.ppm.application.dto.systemmanager.CommOperatorDoLoginDto;
 import com.work.ppm.application.quartz.bankmanager.IPpmEmpKqInfoCalculateJobService;
 import com.work.ppm.application.quartz.bankmanager.IPpmEmpKqRecordCalculateJobService;
@@ -9,6 +10,7 @@ import com.work.ppm.commons.ApiCode;
 import com.work.ppm.commons.ApiResult;
 import com.work.ppm.commons.BaseApi;
 import com.work.ppm.commons.pager.Pager;
+import com.work.ppm.commons.utils.ExcelUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -21,6 +23,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -78,6 +82,21 @@ public class PpmEmpKqInfoApi extends BaseApi {
         result.setStatus(ApiCode.SUCCESS);
         result.setTotal(pager.getTotal());
         return result;
+    }
+
+    /**
+     * 按考勤年月区间下载。列表仍按单月查询。
+     *
+     * @param ppmEmpKqInfoDto 姓名、部门以及开始、结束年月
+     * @param request         request
+     * @param response        response
+     */
+    @PostMapping("exportInfo")
+    @ApiOperation(value = "员工考勤按时间区间下载")
+    public void exportInfo(PpmEmpKqInfoDto ppmEmpKqInfoDto, HttpServletRequest request, HttpServletResponse response) {
+        CommOperatorDoLoginDto user = super.getCurrentUser(request);
+        List<PpmEmpKqInfoExportDto> list = ppmEmpKqInfoService.exportExcel(ppmEmpKqInfoDto, user);
+        ExcelUtil.exportExcel(list, PpmEmpKqInfoExportDto.class, "员工考勤.xls", response);
     }
 
     /**
