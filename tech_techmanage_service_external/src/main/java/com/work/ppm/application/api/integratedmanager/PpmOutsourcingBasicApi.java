@@ -401,6 +401,21 @@ public class PpmOutsourcingBasicApi extends BaseApi {
 	}
 
 	/**
+	 * 编辑工号和是否关键人员
+	 * @param ppmOutsourcingBasic 原工号 jobId，新工号 oldId，是否关键人员 isKeyPerson
+	 * @return ApiResult
+	 */
+	@PostMapping("updateKeyPerson")
+	@ApiOperation(value = "编辑工号和是否关键人员")
+	public ApiResult updateKeyPerson(PpmOutsourcingBasic ppmOutsourcingBasic) {
+		ppmOutsourcingBasicService.updateKeyPerson(ppmOutsourcingBasic);
+		ApiResult result = new ApiResult();
+		result.setStatus(ApiCode.SUCCESS);
+		result.setMessage("保存成功");
+		return result;
+	}
+
+	/**
 	 * 外包花名册 - 分页
 	 * @return ApiResult
 	 */

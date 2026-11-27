@@ -88,6 +88,14 @@
           </el-col>
         </el-row>
       </div>
+      <div class="archives-modular">
+        <el-row :gutter="30">
+          <el-col :span="6">
+            <p class="xkg-color-grey xkg-fontsize-14px">关键人员</p>
+            <p>{{jibenData.isKeyPerson == '1' ? '是' : '否'}}</p>
+          </el-col>
+        </el-row>
+      </div>
     </div>
   </div>
 </template>

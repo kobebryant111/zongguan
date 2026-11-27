@@ -11,6 +11,7 @@
           </div>
           <div class="wrapper_right">
             <el-col :span="1.5">
+              <button-orange :button-name="buttonEdit" :size="size" :fns="openEdit" style="margin-right: 10px"/>
               <button-common v-if="rydaDisplay" :button-name="buttonClose" :size="size" :fns="close"/>
             </el-col>
           </div>
@@ -107,10 +108,28 @@
         </el-tabs>
       </div>
     </div>
+    <el-dialog title="编辑" :visible.sync="editVisible" width="420px" append-to-body>
+      <el-form label-width="110px">
+        <el-form-item label="工号">
+          <el-input v-model="editForm.jobId" size="mini"/>
+        </el-form-item>
+        <el-form-item label="是否关键人员">
+          <el-select v-model="editForm.isKeyPerson" size="mini" style="width: 100%">
+            <el-option label="是" value="1"/>
+            <el-option label="否" value="0"/>
+          </el-select>
+        </el-form-item>
+      </el-form>
+      <div slot="footer">
+        <el-button size="mini" @click="editVisible = false">取 消</el-button>
+        <el-button size="mini" type="warning" @click="saveEdit">保 存</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 <script>
 import buttonCommon from '@/components/eleButton/buttonCommon'
+import buttonOrange from '@/components/eleButton/buttonOrange'
 import hmcJiben from '@/views/crewManager/hmcArchives/hmcJiben'
 import hmcPzms from '@/views/crewManager/hmcArchives/hmcPzms'
 import hmcWorkCondition from '@/views/crewManager/hmcArchives/hmcWorkCondition'
@@ -126,6 +145,7 @@ import {
   getExtDetailAll,
   // eslint-disable-next-line no-unused-vars
   update,
+  updateKeyPerson,
   // eslint-disable-next-line no-unused-vars
   getIntervieweeInfo,
   // eslint-disable-next-line no-unused-vars
@@ -138,6 +158,7 @@ export default {
   name: 'HmcArchives',
   components: {
     buttonCommon,
+    buttonOrange,
     hmcJiben,
     hmcPzms,
     hmcWorkCondition,
@@ -156,7 +177,13 @@ export default {
   data() {
     return {
       buttonClose: '关 闭', // 取消按钮名字
+      buttonEdit: '编 辑',
       size: 'mini', // 按钮大小
+      editVisible: false,
+      editForm: {
+        jobId: '',
+        isKeyPerson: '0'
+      },
       activeTabName: 'jbxx', // 默认tab
       jobId: '',
       jibenData: {}, // 基本数据详情
@@ -297,6 +324,52 @@ export default {
     // 关闭按钮
     close() {
       this.$router.push({ name: 'wbrzManage' })
+    },
+
+    openEdit() {
+      this.editForm = {
+        jobId: this.jibenData.jobId || this.jobId || '',
+        isKeyPerson: this.jibenData.isKeyPerson === '1' ? '1' : '0'
+      }
+      this.editVisible = true
+    },
+
+    saveEdit() {
+      const newJobId = (this.editForm.jobId || '').trim()
+      if (!newJobId) {
+        this.$message.error('请填写工号')
+        return
+      }
+      const originJobId = this.jobId
+      const payload = {
+        id: this.jibenData.id,
+        jobId: originJobId,
+        isKeyPerson: this.editForm.isKeyPerson === '1' ? '1' : '0'
+      }
+      if (newJobId !== originJobId) {
+        payload.oldId = newJobId
+      }
+      const loading = common.loading(this)
+      updateKeyPerson(common.paramsFormat(payload)).then(res => {
+        loading.close()
+        if (res.data.status == 200) {
+          this.editVisible = false
+          this.$message.success('保存成功')
+          this.jobId = newJobId
+          if (newJobId !== originJobId) {
+            this.$router.replace({
+              name: 'hmcArchives',
+              query: { param: newJobId }
+            })
+          }
+          this.getJiBenDetail()
+        } else {
+          this.$message.error(res.data.message || '保存失败')
+        }
+      }).catch(error => {
+        loading.close()
+        this.$message.error(error)
+      })
     }
   }
 }

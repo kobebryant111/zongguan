@@ -230,4 +230,10 @@ public interface IPpmOutsourcingBasicService {
      */
     List<CommEmployeeInfo> exportBasicOutsourcing(CommEmployeeDto commEmployeeDto,
                                                   CommOperatorDoLoginDto user);
+
+    /**
+     * 编辑工号和是否关键人员。工号沿用原更新方式：原工号作条件，新工号写入 oldId。
+     * @param ppmOutsourcingBasic 原工号 jobId，新工号 oldId，是否关键人员 isKeyPerson
+     */
+    void updateKeyPerson(PpmOutsourcingBasic ppmOutsourcingBasic);
 }

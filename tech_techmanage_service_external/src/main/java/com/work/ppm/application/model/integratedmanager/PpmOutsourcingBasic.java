@@ -213,4 +213,8 @@ public class PpmOutsourcingBasic {
 	  * 定级时间
 	  */
 	 private Date evaluationTime;
+	 /**
+	  * 是否关键人员（1：是，0：否）
+	  */
+	 private String isKeyPerson;
 }

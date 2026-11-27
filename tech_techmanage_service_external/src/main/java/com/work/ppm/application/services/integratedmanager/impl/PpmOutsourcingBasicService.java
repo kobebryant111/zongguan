@@ -15,6 +15,7 @@ import com.work.ppm.application.dto.systemmanager.PpmSystemInfoDto;
 import com.work.ppm.application.model.integratedmanager.OutFlowData;
 import com.work.ppm.application.model.integratedmanager.PpmIntervieweeInfo;
 import com.work.ppm.application.model.integratedmanager.PpmOutsourcingBasic;
+import com.work.ppm.application.model.integratedmanager.PpmOutsourcingExt;
 import com.work.ppm.application.model.integratedmanager.ext.PpmOutsourcingBasicInfo;
 import com.work.ppm.application.model.othermanager.PpmDocument;
 import com.work.ppm.application.model.systemmanager.CommDepartment;
@@ -26,6 +27,7 @@ import com.work.ppm.application.quartz.interfaces.IPpmOutsourcingBasicJobService
 import com.work.ppm.application.services.integratedmanager.IPpmIntervieweeInfoService;
 import com.work.ppm.application.services.integratedmanager.IPpmKqProfesstionService;
 import com.work.ppm.application.services.integratedmanager.IPpmOutsourcingBasicService;
+import com.work.ppm.application.services.integratedmanager.IPpmOutsourcingExtService;
 import com.work.ppm.application.services.othermanager.IPpmDocumentService;
 import com.work.ppm.application.services.systemmanager.ICommDepartmentService;
 import com.work.ppm.application.services.systemmanager.ICommParttimejobService;
@@ -34,7 +36,9 @@ import com.work.ppm.application.services.systemmanager.impl.PpmProjectInfoServic
 import com.work.ppm.application.services.systemmanager.impl.PpmSystemInfoService;
 import com.work.ppm.application.services.usermanager.IPpmDaTeamGroupService;
 import com.work.ppm.application.services.usermanager.IPpmDaTeamUserService;
+import com.work.ppm.commons.ApiCode;
 import com.work.ppm.commons.dao.BaseDaoSupper;
+import com.work.ppm.commons.exception.BizException;
 import com.work.ppm.commons.dao.IMyBatisDao;
 import com.work.ppm.commons.pager.Pager;
 import com.work.ppm.commons.utils.DateUtil;
@@ -127,6 +131,9 @@ public class PpmOutsourcingBasicService extends BaseDaoSupper implements IPpmOut
      */
     @Autowired
     private IEosDictEntryService eosDictEntryService;
+
+    @Autowired
+    private IPpmOutsourcingExtService ppmOutsourcingExtService;
 
     @Value("${file.upload-path}")
     private String fileUploadPath;
@@ -641,10 +648,46 @@ public class PpmOutsourcingBasicService extends BaseDaoSupper implements IPpmOut
                 if (StringUtils.isNotEmpty(item.getEvaluationLevel())) {
                     item.setEvaluationLevel(dictMap.get(item.getEvaluationLevel()));
                 }
+                item.setIsKeyPerson("1".equals(item.getIsKeyPerson()) ? "是" : "否");
 
             });
         }
         return basicInfos;
+    }
+
+    @Override
+    @Transactional("defaultTx")
+    public void updateKeyPerson(PpmOutsourcingBasic basic) {
+        if (basic == null || StringUtils.isEmpty(basic.getJobId())) {
+            throw new BizException(ApiCode.FAIL, "工号不能为空");
+        }
+        String originJobId = basic.getJobId().trim();
+        String newJobId = StringUtils.isEmpty(basic.getOldId()) ? "" : basic.getOldId().trim();
+        boolean changeJobId = StringUtils.isNotEmpty(newJobId) && !originJobId.equals(newJobId);
+        if (changeJobId && selJobIdRepart(newJobId)) {
+            throw new BizException(ApiCode.BADGE_VERIFICATION_ERROR, "工号已存在");
+        }
+        String isKeyPerson = "1".equals(basic.getIsKeyPerson()) ? "1" : "0";
+        PpmOutsourcingBasic update = new PpmOutsourcingBasic();
+        update.setId(basic.getId());
+        update.setJobId(originJobId);
+        update.setIsKeyPerson(isKeyPerson);
+        if (changeJobId) {
+            update.setOldId(newJobId);
+        }
+        Integer rows = updatePpmOutsourcingBasic(update);
+        if (rows == null || rows <= 0) {
+            throw new BizException(ApiCode.FAIL, "更新失败");
+        }
+        if (changeJobId) {
+            PpmOutsourcingExt query = new PpmOutsourcingExt();
+            query.setUserId(originJobId);
+            PpmOutsourcingExt ext = ppmOutsourcingExtService.queryDetail(query);
+            if (ext != null) {
+                ext.setOldId(newJobId);
+                ppmOutsourcingExtService.updatePpmOutsourcingExt(ext);
+            }
+        }
     }
 
 }

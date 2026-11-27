@@ -202,3 +202,15 @@ export function queryCrewPage(data) {
         data
     })
 }
+
+/**
+ * 编辑工号和是否关键人员
+ * @param {*} data
+ */
+export function updateKeyPerson(data) {
+    return request({
+        url : '/ppmOutsourcingBasic/updateKeyPerson',
+        method : 'post',
+        data
+    })
+}

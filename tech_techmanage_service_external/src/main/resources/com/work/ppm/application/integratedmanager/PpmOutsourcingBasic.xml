@@ -51,6 +51,7 @@
         <result property="levelReason" column="LEVEL_REASON"/>
         <result property="evaluatorId" column="EVALUATOR_ID"/>
         <result property="evaluationTime" column="EVALUATION_TIME"/>
+        <result property="isKeyPerson" column="IS_KEY_PERSON"/>
     </resultMap>
     <resultMap id="PPMOUTSOURCINGBASIC_ALL_EXT" type="ppmOutsourcingBasicInfo" extends="PPMOUTSOURCINGBASIC_ALL">
         <result property="sexname" column="SEXNAME"/>
@@ -134,7 +135,8 @@
         EVALUATION_LEVEL,
         LEVEL_REASON,
         EVALUATOR_ID,
-        EVALUATION_TIME
+        EVALUATION_TIME,
+        IS_KEY_PERSON
     </sql>
     <sql id="sql_select_condition_detail">
         <trim prefix="WHERE" suffixOverrides="AND">
@@ -378,6 +380,7 @@
             <if test="entranceCard != null and entranceCard != '' ">ENTRANCE_CARD=#{entranceCard} ,</if>
             <if test="newContractId != null and newContractId != '' ">NEW_CONTRACT_ID=#{newContractId} ,</if>
             <if test="ceneralOfficeMotion != null and ceneralOfficeMotion != '' ">CENERAL_OFFICE_MOTION=#{ceneralOfficeMotion} ,</if>
+            <if test="isKeyPerson != null and isKeyPerson != '' ">IS_KEY_PERSON=#{isKeyPerson} ,</if>
 <!--            <if test="evaluationLevel != null  and evaluationLevel != '' ">EVALUATION_LEVEL = #{evaluationLevel} ,</if>-->
 <!--            <if test="levelReason != null  and levelReason != '' ">LEVEL_REASON = #{levelReason} ,</if>-->
 <!--            <if test="evaluatorId != null  and evaluatorId != '' ">EVALUATOR_ID = #{evaluatorId} ,</if>-->
@@ -564,6 +567,7 @@
         b.outsource_no,
 		b.new_contract_id,
 		b.ceneral_office_motion,
+        b.is_key_person,
         e.dictname sexname,
         i.outsourcname,
         e1.dictname certificate_typename,
@@ -661,6 +665,7 @@
         b.outsource_no,
         b.new_contract_id,
         b.ceneral_office_motion,
+        b.is_key_person,
         e.dictname sexname,
         i.outsourcname,
         e1.dictname certificate_typename,
@@ -981,13 +986,14 @@
         <result column="ENTRY_TIME" property="entryTime"/>
         <result column="LEAVING_TIME" property="leavingTime"/>
         <result column="EVALUATION_LEVEL" property="evaluationLevel"/>
+        <result column="IS_KEY_PERSON" property="isKeyPerson"/>
     </resultMap>
     <!-- 外包花名册分页 -1  k1327 2020-05-26 -->
     <select id="queryCrewPageList" parameterType="map" resultMap="CREWPAGELIST_MAP">
         SELECT
         E.JOB_ID ,E.USER_NAME ,E.MOBILE,WB.OUTSOURCE_TYPE_NAME,E.CERTIFICATE_TYPE,E.CERTIFICATE_NUMBER,
         E.GRADE,E.PRICE,D.LOCATION ,Y.DICTNAME ,G.GROUPNAME , M.EMPNAME,E.PERSON_IN_CHARGE,D.DEPID,G.ID, E.STATE,
-        E.PRESENCE_STATE,U.OUTSOURCNAME, E.ENTRY_TIME,E.LEAVING_TIME,E.EVALUATION_LEVEL
+        E.PRESENCE_STATE,U.OUTSOURCNAME, E.ENTRY_TIME,E.LEAVING_TIME,E.EVALUATION_LEVEL,E.IS_KEY_PERSON
         FROM PPM_OUTSOURCING_BASIC E
         LEFT JOIN COMM_DEPARTMENT D ON(E.Dept_Id=to_char(D.DEPID))
         LEFT JOIN (
@@ -1019,6 +1025,8 @@
             <if test="groups != null and groups != '' ">E.GROUP_ID in (${groups}) AND</if>
             <if test="orgcode != null and orgcode != '' ">E.OUTSOURCE_NO =#{orgcode} AND</if>
             <if test="presenceState != null and presenceState != '' ">E.PRESENCE_STATE = (#{presenceState}) AND</if>
+            <if test="isKeyPerson != null and isKeyPerson == '1'.toString()">E.IS_KEY_PERSON = '1' AND</if>
+            <if test="isKeyPerson != null and isKeyPerson == '0'.toString()">(E.IS_KEY_PERSON IS NULL OR E.IS_KEY_PERSON = '0') AND</if>
             D.LOCATION is not null AND
         </trim>
         ORDER BY E.ENTRY_TIME DESC,e.job_id,e.user_name

@@ -262,4 +262,8 @@ public class CommEmployeeDto {
      * 供应商编码
      */
     private String orgcode;
+    /**
+     * 是否关键人员（1：是，0：否）
+     */
+    private String isKeyPerson;
 }

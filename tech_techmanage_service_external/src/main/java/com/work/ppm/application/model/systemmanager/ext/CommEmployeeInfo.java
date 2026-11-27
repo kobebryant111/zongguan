@@ -114,6 +114,11 @@ public class CommEmployeeInfo extends CommEmployee {
     @Excel(name = "级别", orderNum = "3")
     private String evaluationLevel;
     /**
+     * 是否关键人员（1：是，0：否）
+     */
+    @Excel(name = "关键人员", orderNum = "11")
+    private String isKeyPerson;
+    /**
      * 入场时间 yyyy-MM-dd
      */
     @Excel(name = "入场时间", orderNum = "7")

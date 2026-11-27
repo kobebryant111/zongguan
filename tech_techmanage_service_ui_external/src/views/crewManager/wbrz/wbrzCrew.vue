@@ -123,6 +123,16 @@
                 </el-select>
               </el-form-item>
             </el-col>
+          </el-row>
+          <el-row>
+          <el-col :span="8">
+              <el-form-item label="关键人员：">
+                <el-select placeholder="是否关键人员" size="mini" v-model="paramsForm.isKeyPerson" clearable>
+                  <el-option label="是" value="1"/>
+                  <el-option label="否" value="0"/>
+                </el-select>
+              </el-form-item>
+            </el-col>
           <el-col :span="8">
             <el-row type="flex" justify="space-between">
               <el-col :span="15">
@@ -186,6 +196,11 @@
                 v-if="item.dictid == scope.row.evaluationLevel"
               >{{item.dictname}}</span>
             </template>
+        </el-table-column>
+        <el-table-column label="关键人员" width="90">
+          <template slot-scope="scope">
+            <span>{{ scope.row.isKeyPerson == '1' ? '是' : '否' }}</span>
+          </template>
         </el-table-column>
         <el-table-column label="电话" prop="mobiletelphone" width="120" show-overflow-tooltip/>
         <el-table-column label="供应商" prop="outsourcname" width="250" show-overflow-tooltip/>
@@ -265,7 +280,8 @@ export default {
         entryTime: null, //入职时间
         leavingTime: null, //离职时间
         orgcode: "", //供应商编码
-        presenceState: null //在场情况
+        presenceState: null, //在场情况
+        isKeyPerson: "" //是否关键人员 1是 0否
       },
       depName: "金融科技部",
       crewData: [], // 列表分页数据
@@ -377,6 +393,7 @@ export default {
       params.depid = depid.replace("dep", "");
       params.dep = this.paramsForm.dep;
       params.orgcode = this.paramsForm.orgcode;
+      params.isKeyPerson = this.paramsForm.isKeyPerson;
       this.init(params);
     },
 
@@ -426,6 +443,7 @@ export default {
       params.depid = depid.replace("dep", "");
       params.dep = this.paramsForm.dep;
       params.orgcode = this.paramsForm.orgcode;
+      params.isKeyPerson = this.paramsForm.isKeyPerson;
       params.size = size;
       params.index = index;
       this.size = size;
@@ -523,6 +541,7 @@ export default {
       searchData.depid = depid.replace("dep", "");
       searchData.dep = this.paramsForm.dep;
       searchData.orgcode = this.paramsForm.orgcode;
+      searchData.isKeyPerson = this.paramsForm.isKeyPerson;
       let params = common.paramsFormat(searchData);
       const self = this;
       exportOutsourcing(params).then(res => {
